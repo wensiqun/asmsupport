@@ -1,0 +1,40 @@
+/**
+ * 
+ */
+package jw.asmsupport.definition.variable;
+
+import jw.asmsupport.clazz.AClass;
+import jw.asmsupport.clazz.ArrayClass;
+import jw.asmsupport.entity.VariableEntity;
+import jw.asmsupport.exception.ASMSupportException;
+
+/**
+ * @author 温斯群(Joe Wen)
+ *
+ */
+public abstract class AbstractVariable implements IVariable {
+
+    @Override
+    public final void asArgument() {
+        //don't do anything if this class don't extends AbstractExecuteable
+    }
+
+    /**
+     * 通过名字和类获取全局变量
+     * @param aclass
+     * @param name
+     * @return
+     */
+    protected final GlobalVariable getGlobalVariable(AClass aclass, String name){
+        if(this.getParamterizedType() instanceof ArrayClass){
+            throw new ASMSupportException("cannot get global variable from array type variable : " + this);
+        }
+    	
+    	VariableEntity ve = aclass.getGlobalVariableEntity(name);
+        if(ve == null){
+        	throw new IllegalArgumentException("dosn't exist or cannot access \"" + name + "\" property of class " + aclass);
+        }
+        return new GlobalVariable(this, ve.getDeclareClass(), ve.getModifiers(), ve.getName());
+    }
+
+}

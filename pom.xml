@@ -1,0 +1,201 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	
+	<groupId>com.googlecode.amssupport</groupId>
+	<artifactId>asmsupport</artifactId>
+	<version>0.3-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>jw.asmsupport</name>
+    <description>
+        This project is will help developer to dynamic create/modify
+        class at runtime simply, and it's base on ASM framework. but 
+        it's different to ASM, it's make developer don't care about 
+        LocalVariables and Stack status at JVM layer, and also don't 
+        care the underlying instructions of JVM.
+    </description>
+    
+    <url>https://code.google.com/p/amssupport/</url>
+    
+    <licenses>
+	    <license>
+		    <name>The Apache Software License, Version 2.0</name>
+		    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		    <distribution>repo</distribution>
+	    </license>
+    </licenses>
+    
+    <scm>
+        <connection>scm:svn:http://amssupport.googlecode.com/svn/trunk/asmsupport/</connection>
+		<developerConnection>scm:svn:https://amssupport.googlecode.com/svn/trunk/asmsupport/</developerConnection>
+        <url>http://amssupport.googlecode.com/svn/trunk/asmsupport/</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <id>wensiqun</id>
+            <name>joe.wen</name>
+            <email>wensiqun at gmail.com</email>
+        </developer>
+    </developers>
+    
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+		    <!--Maven GPG Plugin-->
+			<!--When you release a Maven project, you have two options: 
+			you can use the manual signing technique shown above, or you
+			can use an automated approach. Manually signing and deploying
+			artifacts to a repository is very time-consuming. 
+			The maven-gpg-plugin is very handy in this case. With a few 
+			lines of configuration, it can help you automatically sign 
+			the maven artifacts.-->
+		    <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+				  <execution>
+					<id>sign-artifacts</id>
+					<phase>verify</phase>
+					<goals>
+					  <goal>sign</goal>
+					</goals>
+				  </execution>
+				</executions>
+			  </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<includes>
+						<includes>jw/**/*.*</includes>
+						<includes>org/objectweb/asm/**/*.*</includes>
+						<includes>org/apache/**/*.*</includes>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>add-test-application</id>
+						<phase>generate-sources</phase>
+						<!-- <phase>generate-test-sources</phase> -->
+						<goals>
+							<goal>add-test-source</goal>
+							<!-- <goal>add-source</goal> -->
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/sample</source>
+							</sources>
+						</configuration>
+					</execution>
+					<!-- sources code for dependency jar, if you want asmsupport contain the dependency source code -->
+					<!-- execution>
+					    <id>add-source</id>
+					    <phase>generate-sources</phase>
+					    <goals>
+					        <goal>add-source</goal>
+					    </goals>
+					    <configuration>
+							<sources>
+								<source>src/main/asm/base</source>
+								<source>src/main/asm/common</source>
+								<source>src/main/common/lang</source>
+								<source>src/main/common/collections</source>
+							</sources>
+						</configuration>
+					</execution-->
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<artifactId>asm-all</artifactId>
+			<groupId>asm</groupId>
+			<version>3.3.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+
+        <!-- option dependency start -->
+        <!-- you can remove all of those dependencies if you add those source code to asmsupport above -->
+        
+		<!-- dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
+		<dependency>
+			<artifactId>asm</artifactId>
+			<groupId>asm</groupId>
+			<version>3.3.1</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>asm-commons</artifactId>
+			<groupId>asm</groupId>
+			<version>3.3.1</version>
+		</dependency-->
+
+	    <dependency>
+		    <groupId>com.googlecode.jwcommon</groupId>
+		    <artifactId>jwcommon</artifactId>
+		    <version>0.1-SNAPSHOT</version>
+	    </dependency>
+		
+		<!-- option dependency end -->
+	</dependencies>
+	
+</project>

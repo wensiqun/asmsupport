@@ -1,0 +1,182 @@
+和当前README文件同级下面的example文件夹下存放着很多asmsupport的包，每个包中包括了很多实例代码。如果你首次使用或者学习asmsupport，建议您按照如下顺序
+ 学习asmsupport：
+
+1.example.helloworld
+2.example.create
+3.example.value
+4.example.variable
+5.example.operators
+6.example.block
+
+每个包中都有README文件，请详细阅读并按步骤操作
+
+如何执行上面实例呢.每个类都有个main函数。直接运行即可。
+
+备注：
+    
+1.如何查看生成的class文件:
+    对于ClassCreator或者ClassModifier有setClassOutPutPath方法，通过这个方法设置class文件输入路径，例如设置".\\"等。
+    成功运行完代码之后可到指定目录下找到class文件可通过反编译工具查看结果
+    
+2.如何查看log文件内容:
+  asmsupport采用log4j作为日志工具，配置直接采用log4j的配置。下面是段日志的例子：
+  DEBUG [main] create method: ------------main([Ljava/lang/String;)            //这里表示开始创建main(String[])方法
+  DEBUG [main] call method by variable :out                                    //这里表示调用了out变量的方法
+  DEBUG [main] put variable reference to stack                                 //既然要调用out变量的方法就需要将out变量的引用压入栈
+  DEBUG [main] get field out from class java.lang.System and push to stack!    //通过这句话就能明白原来是调用我们最常见的System.out
+  DEBUG [main] Instruction : GETSTATIC                                         //表执行JVM指令GETSTATIC(因为out是static类型的所以这里调用GETSTATIC指令获取out)
+  DEBUG [main] Stack states                                                    //接下来这个图表表示的是栈的模型,上面GETSTATIC执行的结果就是返回一个静态field并且压入栈
+  *********************************
+  |         |Type                 |
+  *********************************
+  | ____    |Ljava/io/PrintStream;|
+  |/ ___|   |                     |
+  |\___ \   |                     |
+  | ___) |  |                     |
+  ||____/   |                     |
+  *********************************
+  .....
+  DEBUG [main] store to local variable
+  DEBUG [main] local variables states                //下面这个图表是本地变量的模型，通过图已经看出已经存放了两个本地变量，那他们分别表示什么呢
+  ************************************************
+  |         |Type                 |Name |Fragment|
+  ************************************************
+  | _       |[Ljava/lang/String;  |args |false   |   //[Ljava/lang/String;类型不就是上面方法的参数类型吗。没错，这里存放的就是我们方法的参数。
+  || |      |Ljava/io/PrintStream;|myOut|false   |   //这里存放的就是上面栈中的out，是如何存的呢，继续往下看
+  || |      |                     |     |        |
+  || |___   |                     |     |        |
+  ||_____|  |                     |     |        |
+  |         |                     |     |        |
+  ************************************************
+  DEBUG [main] Instruction : ASTORE                  //找到了，就是这个指令ASTORE。它就是负责把栈顶元素弹出在然后存到本地变量的。
+  DEBUG [main] Stack states                          //往下看 发现栈里面没东西了吧，让ASTORE给拿到local variables里去了
+  ****************
+  |         |Type|
+  ****************
+  | ____    |    |
+  |/ ___|   |    |
+  |\___ \   |    |
+  | ___) |  |    |
+  ||____/   |    |
+  ****************
+  .....
+  DEBUG [main] Method : main([Ljava/lang/String;) Maxs(stack:1 locals:2) //这里值分配给栈和本地变量的最大值，通过上面的图就能看到栈和本地变量的最大值是多少了。
+    当然，这些log是需要你对jvm字节码有一定了解的才能看明白。这个给个网址可以参照：https://www.vmth.ucdavis.edu/incoming/Jasmin/jvmref.html
+  
+3.jw.asmsupport.clazz.AClass
+  _ASMSupport中很多地方我们都会用到一个类jw.asmsupport.clazz.AClass，这是ASMSupport对Class的一个特有封装。我们可以看到它的层级结构是这样的：
+  jw.asmsupport.clazz.AClass
+      ----jw.asmsupport.clazz.ArrayClass
+      ----NewMemberClass
+              ----jw.asmsupport.clazz.ProductClass
+              ----jw.asmsupport.clazz.SemiClass
+  AClass有两个直接的子类：
+      1.ArrayClass
+      2.NewMemberClass
+  ArrayClass表示的是一个数组类型Class，NewMemberClass则表示可以对其修改的class或者我们新创建的class。
+  _而NewMemberClass又有两个子类:
+      1.ProductClass:这个表示的是在我们程序在运行是内存中已经存在的Class封裝
+      2.SemiClass:而这个则是表示我们动态需要创建或正在创建的Class的封装。
+      
+  _那么如何去获取这些AClass呢。对于ArrayClass和ProductClass我们可以通过AClassFactory的如下静态方法获得:
+  1.public static AClass getProductClass(Class<?> cls)：
+      _这个方法我们将传递一个Class类型的参数，然后将会返回AClass，这个方法的参数可以是数组类型的比如String[].class
+      _如果是数组类型的Class将返回一个ArrayClass，否则返回一个ProductClass。这个方法也是使用最多的方法.
+  _接下来是三个重载的getArrayClass方法,都是获取ArrayClass的
+  2.public static ArrayClass getArrayClass(Class<?> arrayCls)
+      _这个方法和getProductClass方法类似，只不过这里的参数必须是一个数组类型Class，否则会抛出异常，返回的是ArrayClass
+  3.public static ArrayClass getArrayClass(Class<?> cls, int dim)
+      _这个方法有两个参数第一个是数组类型基本类型cls，第二个是数组的维度。这里的cls可以是一个数组类型的Class,也可以是一个
+      _非数组类型。比如：
+          1.getArrayClass(String.class, 2);将会得到一个String[][].class的ArrayClass，等同于调用getProductClass(String[][].class);
+          2.getArrayClass(String[].class, 2);将会得到一个String[][][].class的ArrayClass，等同于调用
+            getProductClass(String[][][].class);
+  4.public static ArrayClass getArrayClass(AClass cls, int dim)
+      _这个方法和上面的getArrayClass(Class<?> cls, int dim)类似，但是第一个参数是一个AClass类型的，并且不能是一个数组类型，也就是说cls不能是
+      ArrayClass类型。比如getArrayClass(AClass.STRING_ACLASS, 1);将获得String[].class的ArrayClass，等同于调用
+      getProductClass(String[].class);
+  
+  _当然一些常用的AClass可以直接通过AClass的常量获得比如AClass.STRING_ACLASS获得的是String类型的AClass.我们预先设置了如下的AClass:
+    /** java.lang.Boolean of AClass */
+    public static final AClass BOOLEAN_WRAP_ACLASS = AClassFactory.getProductClass(Boolean.class);
+
+    /** java.lang.Byte of AClass */
+    public static final AClass BYTE_WRAP_ACLASS = AClassFactory.getProductClass(Byte.class);
+
+    /** java.lang.Short of AClass */
+    public static final AClass SHORT_WRAP_ACLASS = AClassFactory.getProductClass(Short.class);
+
+    /** java.lang.Character of AClass */
+    public static final AClass CHARACTER_WRAP_ACLASS = AClassFactory.getProductClass(Character.class);
+
+    /** java.lang.Integer of AClass */
+    public static final AClass INTEGER_WRAP_ACLASS = AClassFactory.getProductClass(Integer.class);
+
+    /** java.lang.Long of AClass */
+    public static final AClass LONG_WRAP_ACLASS = AClassFactory.getProductClass(Long.class);
+
+    /** java.lang.Float of AClass */
+    public static final AClass FLOAT_WRAP_ACLASS = AClassFactory.getProductClass(Float.class);
+
+    /** java.lang.Double of AClass */
+    public static final AClass DOUBLE_WRAP_ACLASS = AClassFactory.getProductClass(Double.class);
+
+    /** boolean of AClass */
+    public static final AClass BOOLEAN_ACLASS = AClassFactory.getProductClass(boolean.class);
+
+    /** byte of AClass */
+    public static final AClass BYTE_ACLASS = AClassFactory.getProductClass(byte.class);
+
+    /** short of AClass */
+    public static final AClass SHORT_ACLASS = AClassFactory.getProductClass(short.class);
+
+    /** char of AClass */
+    public static final AClass CHAR_ACLASS = AClassFactory.getProductClass(char.class);
+
+    /** int of AClass */
+    public static final AClass INT_ACLASS = AClassFactory.getProductClass(int.class);
+
+    /** long of AClass */
+    public static final AClass LONG_ACLASS = AClassFactory.getProductClass(long.class);
+
+    /** float of AClass */
+    public static final AClass FLOAT_ACLASS = AClassFactory.getProductClass(float.class);
+
+    /** double of AClass */
+    public static final AClass DOUBLE_ACLASS = AClassFactory.getProductClass(double.class);
+
+    /** java.lang.Object of AClass */
+    public static final AClass OBJECT_ACLASS = AClassFactory.getProductClass(Object.class);
+
+    /** java.lang.Cloneable of AClass */
+    public static final AClass CLONEABLE_ACLASS = AClassFactory.getProductClass(Cloneable.class);
+
+    /** java.lang.Serializable of AClass */
+    public static final AClass SERIALIZABLE_ACLASS = AClassFactory.getProductClass(Serializable.class);
+
+    /** java.lang.String of AClass */
+    public static final AClass STRING_ACLASS = AClassFactory.getProductClass(String.class);
+
+    /** java.util.Iterator of AClass */
+    public static final AClass ITERATOR_ACLASS = AClassFactory.getProductClass(Iterator.class);
+
+    /** java.lang.Exception of AClass */
+    public static final AClass EXCEPTION_ACLASS = AClassFactory.getProductClass(Exception.class);
+
+    /** java.lang.Class of AClass */
+    public static final AClass CLASS_ACLASS = AClassFactory.getProductClass(Class.class);
+
+    /** java.lang.Throwable of AClass */
+    public static final AClass THROWABLE_ACLASS = AClassFactory.getProductClass(Throwable.class);
+    
+    /** java.lang.Void of AClass */
+    public static final AClass VOID_ACLASS = AClassFactory.getProductClass(void.class);
+    
+  _如何获得SemiClass呢。由于SemiClass表示正在创建的Class，所以我们只能通過ProgramBlock的getMethodOwner()获得。通过这个
+  _方法我们将会得到我们正在创建或者正在修改的Class。也就是说当我们正在修改一个Class的时候获得的是一个ProductClass。正在创建
+  Class的时候获得的将是SemiClass
+  
+  _总结：
+    1. AClassFactory.getProductClass(Class<?> cls)获取ProductClass或者ArrayClass
+    2. AClassFactory.getArrayClass(任意参数)获取ArrayClass
+    3. ProgramBlock.getMethodOwner()获取ProductClass或者SemiClass

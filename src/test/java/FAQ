@@ -1,0 +1,13 @@
+Q:在创建/修改方法的时候如何将当前操作的类作为方法的参数类型？
+A:
+  1.通过ClassCreator/EnumCreator/InterfaceCreator/ClassModifier的getCurrentClass方法获取当前操作的类比如
+  creator.createStaticMethod("main", new AClass[]{creator.getCurrentClass()}, new String[]{"arg"}, null, null, Opcodes.ACC_PUBLIC, new StaticMethodBody(){...});
+  
+  2._当然还可以通过ProgramBlock的getMethodOwner方法获取比如
+  creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+        @Override
+        public void generateBody(LocalVariable... argus) {
+           invokeConstructor(getMethodOwner());
+        }
+  });
