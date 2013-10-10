@@ -56,7 +56,7 @@
 			artifacts to a repository is very time-consuming. 
 			The maven-gpg-plugin is very handy in this case. With a few 
 			lines of configuration, it can help you automatically sign 
-			the maven artifacts.-->
+			the maven artifacts.
 		    <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -69,7 +69,7 @@
 					</goals>
 				  </execution>
 				</executions>
-			  </plugin>
+			 </plugin>-->
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

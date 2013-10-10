@@ -2,7 +2,7 @@ package jw.asmsupport.loader;
 
 import java.io.InputStream;
 
-import jw.asmsupport.asm.proxy.ClassModifierClassAdapter;
+import jw.asmsupport.asm.adapter.ClassModifierClassAdapter;
 import jw.asmsupport.creator.ClassModifier;
 import jw.asmsupport.exception.ASMSupportException;
 

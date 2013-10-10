@@ -6,29 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-
-
-import jw.asmsupport.asm.proxy.ClassNameRefactorAdapter;
-import jw.asmsupport.asm.proxy.VisitXInsnAdapter;
+import jw.asmsupport.asm.adapter.VisitXInsnAdapter;
 import jw.asmsupport.block.method.cinit.CInitBody;
 import jw.asmsupport.block.method.common.CommonMethodBody;
 import jw.asmsupport.block.method.common.MethodBodyForModify;
 import jw.asmsupport.block.method.common.StaticMethodBody;
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.clazz.NewMemberClass;
 import jw.asmsupport.clazz.ProductClass;
 import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.exception.NoSuchMethod;
 import jw.asmsupport.loader.ClassModifierClassLoader;
 import jw.asmsupport.utils.ASConstant;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+
 import com.googlecode.jwcommon.ClassFileUtils;
 
 

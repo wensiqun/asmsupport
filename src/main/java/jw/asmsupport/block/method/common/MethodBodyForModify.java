@@ -5,7 +5,7 @@ package jw.asmsupport.block.method.common;
 
 import java.util.List;
 
-import jw.asmsupport.asm.proxy.VisitXInsnAdapter;
+import jw.asmsupport.asm.adapter.VisitXInsnAdapter;
 import jw.asmsupport.block.operator.ThisVariableable;
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.entity.MethodEntity;
