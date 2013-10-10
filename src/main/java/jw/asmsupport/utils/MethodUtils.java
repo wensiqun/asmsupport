@@ -117,4 +117,15 @@ public class MethodUtils {
     	
     	getMethod(foundMethods, type.getSuperclass(), name, parameterTypes);
     }
+    
+    /**
+     * 
+     * @param method
+     * @return
+     */
+    public static String getMethodFullName(Method method){
+    	String name = method.getName();
+    	String owner = method.getDeclaringClass().getName();
+    	return owner + "." + name;
+    }
 }
