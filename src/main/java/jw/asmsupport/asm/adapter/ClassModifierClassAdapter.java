@@ -195,11 +195,11 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 	class ConstructorVisitor extends MethodAdapter {
         //是否调用了super
 		private boolean invokedSuper = false;
-		private String desc;
+		private String constructorDesc;
 		
 		public ConstructorVisitor(MethodVisitor mv, String desc) {
 			super(mv);
-			this.desc = desc;
+			this.constructorDesc = desc;
 		}
 
 		@Override
@@ -207,7 +207,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper) {
 				super.visitInsn(opcode);
 			}else{
-				addSuperConstructorMap(desc, new VisitInsnAdapter(opcode));	
+				addSuperConstructorMap(constructorDesc, new VisitInsnAdapter(opcode));	
 			}
 		}
 
@@ -216,7 +216,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitIntInsn(opcode, operand);
 			}else{
-				addSuperConstructorMap(desc, new VisitIntInsnAdapter(operand, operand));
+				addSuperConstructorMap(constructorDesc, new VisitIntInsnAdapter(operand, operand));
 			}
 		}
 
@@ -225,7 +225,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitVarInsn(opcode, var);
 			}else{
-				addSuperConstructorMap(desc, new VisitVarInsnAdapter(opcode, var));
+				addSuperConstructorMap(constructorDesc, new VisitVarInsnAdapter(opcode, var));
 			}
 		}
 
@@ -234,7 +234,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitTypeInsn(opcode, type);
 			}else{
-				addSuperConstructorMap(desc, new VisitTypeInsnAdapter(opcode, type));
+				addSuperConstructorMap(constructorDesc, new VisitTypeInsnAdapter(opcode, type));
 			}
 		}
 
@@ -244,7 +244,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitFieldInsn(opcode, owner, name, desc);
 			}else{
-				addSuperConstructorMap(desc, new VisitFieldInsnAdapter(opcode, owner, name, desc));
+				addSuperConstructorMap(constructorDesc, new VisitFieldInsnAdapter(opcode, owner, name, desc));
 			}
 		}
 
@@ -254,7 +254,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitMethodInsn(opcode, owner, name, desc);
 			}else{
-				addSuperConstructorMap(desc, new VisitMethodInsnAdapter(opcode, owner, name, desc));
+				addSuperConstructorMap(constructorDesc, new VisitMethodInsnAdapter(opcode, owner, name, desc));
 			}
 
 			if (opcode == Opcodes.INVOKESPECIAL) {
@@ -267,7 +267,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitLdcInsn(cst);
 			}else{
-				addSuperConstructorMap(desc, new VisitLdcInsnAdapter(cst));
+				addSuperConstructorMap(constructorDesc, new VisitLdcInsnAdapter(cst));
 			}
 		}
 
@@ -276,7 +276,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitIincInsn(var, increment);
 			}else{
-				addSuperConstructorMap(desc, new VisitIincInsnAdapter(var, increment));
+				addSuperConstructorMap(constructorDesc, new VisitIincInsnAdapter(var, increment));
 			}
 		}
 
@@ -285,7 +285,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			if (invokedSuper){
 				super.visitMultiANewArrayInsn(desc, dims);
 			}else{
-				addSuperConstructorMap(desc, new VisitMultiANewArrayInsnAdapter(desc, dims));
+				addSuperConstructorMap(constructorDesc, new VisitMultiANewArrayInsnAdapter(desc, dims));
 			}
 		}
 
