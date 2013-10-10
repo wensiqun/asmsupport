@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 import jw.asmsupport.clazz.AClass;
+import jw.asmsupport.utils.ModifierUtils;
 import jw.asmsupport.utils.finder.method.MethodInfoCollecter.MethodVisitorInfo;
 import jw.asmsupport.utils.finder.method.MethodInfoCollecter.VisitLocalVariableInfo;
 
@@ -13,8 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-
-import com.googlecode.jwcommon.ModifierUtils;
 
 public class StackLocalMethodVisitor extends LabelNumberMethodAdapter implements Opcodes {
 	

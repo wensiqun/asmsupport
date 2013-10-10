@@ -7,9 +7,9 @@ import java.util.List;
 import jw.asmsupport.clazz.NewMemberClass;
 import jw.asmsupport.clazz.SemiClass;
 import jw.asmsupport.exception.ClassException;
-import com.googlecode.jwcommon.ClassFileUtils;
+import jw.asmsupport.utils.ClassFileUtils;
 import jw.asmsupport.utils.MethodUtils;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;

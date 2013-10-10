@@ -11,7 +11,7 @@ import jw.asmsupport.definition.variable.GlobalVariable;
 import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.operators.array.ArrayValue;
 import jw.asmsupport.operators.method.MethodInvoker;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 /**
  * 

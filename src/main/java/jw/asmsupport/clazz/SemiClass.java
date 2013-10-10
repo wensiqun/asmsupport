@@ -4,10 +4,9 @@ import java.lang.reflect.Field;
 
 import jw.asmsupport.definition.variable.GlobalVariable;
 import jw.asmsupport.exception.ASMSupportException;
+import jw.asmsupport.utils.ModifierUtils;
 
 import org.objectweb.asm.Opcodes;
-
-import com.googlecode.jwcommon.ModifierUtils;
 
 
 /**

@@ -18,13 +18,12 @@ import jw.asmsupport.operators.array.ArrayValue;
 import jw.asmsupport.operators.numerical.crement.AbstractCrement;
 import jw.asmsupport.utils.AClassUtils;
 import jw.asmsupport.utils.ASConstant;
+import jw.asmsupport.utils.ModifierUtils;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Type;
-
-import com.googlecode.jwcommon.ModifierUtils;
 
 /**
  * 

@@ -3,7 +3,7 @@ package jw.asmsupport.operators.method;
 import jw.asmsupport.Parameterized;
 import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.clazz.AClass;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.logging.Log;

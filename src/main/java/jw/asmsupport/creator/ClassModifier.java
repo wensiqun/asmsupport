@@ -18,6 +18,7 @@ import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.exception.NoSuchMethod;
 import jw.asmsupport.loader.ClassModifierClassLoader;
 import jw.asmsupport.utils.ASConstant;
+import jw.asmsupport.utils.ClassFileUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -25,8 +26,6 @@ import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-
-import com.googlecode.jwcommon.ClassFileUtils;
 
 
 public class ClassModifier extends AbstractClassContext {

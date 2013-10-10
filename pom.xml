@@ -155,6 +155,24 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 
         <!-- option dependency start -->
         <!-- you can remove all of those dependencies if you add those source code to asmsupport above -->
@@ -188,12 +206,6 @@
 			<groupId>asm</groupId>
 			<version>3.3.1</version>
 		</dependency-->
-
-	    <dependency>
-		    <groupId>com.googlecode.jwcommon</groupId>
-		    <artifactId>jwcommon</artifactId>
-		    <version>0.1-SNAPSHOT</version>
-	    </dependency>
 		
 		<!-- option dependency end -->
 	</dependencies>

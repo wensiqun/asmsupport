@@ -10,6 +10,7 @@ import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.creator.ClassModifier;
 import jw.asmsupport.creator.IMethodCreator;
 import jw.asmsupport.utils.ASConstant;
+import jw.asmsupport.utils.ModifierUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.objectweb.asm.ClassAdapter;
@@ -18,8 +19,6 @@ import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-
-import com.googlecode.jwcommon.ModifierUtils;
 
 
 /**

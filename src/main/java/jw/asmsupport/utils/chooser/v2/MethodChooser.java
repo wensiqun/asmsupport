@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.ArrayUtils;
-
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.clazz.ArrayClass;
 import jw.asmsupport.clazz.ProductClass;
@@ -22,10 +18,14 @@ import jw.asmsupport.utils.ASConstant;
 import jw.asmsupport.utils.ClassUtils;
 import jw.asmsupport.utils.LinkedMultiValueMap;
 import jw.asmsupport.utils.MapLooper;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 import jw.asmsupport.utils.MultiValueMap;
 import jw.asmsupport.utils.chooser.DetermineMethodSignature;
 import jw.asmsupport.utils.chooser.IMethodChooser;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.ArrayUtils;
 
 
 public class MethodChooser implements IMethodChooser, DetermineMethodSignature {

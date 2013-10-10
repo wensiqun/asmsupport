@@ -1,11 +1,6 @@
 package jw.asmsupport.definition.method;
 
 
-import org.apache.commons.collections.CollectionUtils;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-
 import jw.asmsupport.Executeable;
 import jw.asmsupport.asm.CommonInstructionHelper;
 import jw.asmsupport.asm.InstructionHelper;
@@ -21,9 +16,14 @@ import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.operators.util.ThrowExceptionContainer;
 import jw.asmsupport.utils.ASConstant;
 import jw.asmsupport.utils.LocalVariables;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 import jw.asmsupport.utils.Scope;
 import jw.asmsupport.utils.Stack;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 
 /**

@@ -9,7 +9,7 @@ import jw.asmsupport.clazz.SemiClass;
 import jw.asmsupport.definition.method.Method;
 import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.utils.ASConstant;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 /**
  * 

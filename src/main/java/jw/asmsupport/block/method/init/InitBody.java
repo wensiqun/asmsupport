@@ -12,7 +12,7 @@ import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.operators.method.MethodInvoker;
 import jw.asmsupport.operators.method.SuperConstructorInvoker;
 import jw.asmsupport.operators.util.OperatorFactory;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 /**
  * 

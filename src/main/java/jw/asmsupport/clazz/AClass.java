@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
 
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-
-
 import jw.asmsupport.GetGlobalVariabled;
 import jw.asmsupport.definition.generic.GenericSignature.ClassSignature;
 import jw.asmsupport.definition.value.Value;
@@ -17,6 +13,9 @@ import jw.asmsupport.utils.ASConstant;
 import jw.asmsupport.utils.ClassUtils;
 import jw.asmsupport.utils.chooser.IMethodChooser;
 import jw.asmsupport.utils.chooser.v2.MethodChooser;
+
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 
 /**

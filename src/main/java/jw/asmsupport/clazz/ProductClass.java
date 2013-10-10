@@ -5,17 +5,17 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 
+import jw.asmsupport.definition.variable.GlobalVariable;
+import jw.asmsupport.entity.GlobalVariableEntity;
+import jw.asmsupport.exception.ASMSupportException;
+import jw.asmsupport.utils.ASConstant;
+import jw.asmsupport.utils.ModifierUtils;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.EmptyVisitor;
-
-import jw.asmsupport.definition.variable.GlobalVariable;
-import jw.asmsupport.entity.GlobalVariableEntity;
-import jw.asmsupport.exception.ASMSupportException;
-import jw.asmsupport.utils.ASConstant;
-import com.googlecode.jwcommon.ModifierUtils;
 
 
 /**

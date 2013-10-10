@@ -9,8 +9,7 @@ import jw.asmsupport.definition.variable.SuperVariable;
 import jw.asmsupport.definition.variable.ThisVariable;
 import jw.asmsupport.entity.GlobalVariableEntity;
 import jw.asmsupport.utils.ASConstant;
-
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
 
 
 public abstract class NewMemberClass extends AClass {

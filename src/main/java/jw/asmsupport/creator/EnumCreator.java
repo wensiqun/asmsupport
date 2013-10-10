@@ -3,10 +3,6 @@ package jw.asmsupport.creator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.objectweb.asm.Opcodes;
-
-
 import jw.asmsupport.block.method.cinit.EnumCInitBody;
 import jw.asmsupport.block.method.common.CommonMethodBody;
 import jw.asmsupport.block.method.common.StaticMethodBody;
@@ -16,7 +12,10 @@ import jw.asmsupport.clazz.AClassFactory;
 import jw.asmsupport.definition.variable.LocalVariable;
 import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.utils.ASConstant;
-import com.googlecode.jwcommon.ModifierUtils;
+import jw.asmsupport.utils.ModifierUtils;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.objectweb.asm.Opcodes;
 
 
 /**
