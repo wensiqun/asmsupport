@@ -10,8 +10,6 @@ import jw.asmsupport.clazz.AClassFactory;
 import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.loader.ASMClassLoader;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.MethodVisitor;

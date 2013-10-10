@@ -2,15 +2,12 @@ package jw.asmsupport.clazz;
 
 import java.lang.reflect.Field;
 
+import jw.asmsupport.definition.variable.GlobalVariable;
+import jw.asmsupport.exception.ASMSupportException;
+
 import org.objectweb.asm.Opcodes;
 
-
-import jw.asmsupport.definition.variable.GlobalVariable;
-import jw.asmsupport.entity.MethodEntity;
-import jw.asmsupport.exception.ASMSupportException;
 import com.googlecode.jwcommon.ModifierUtils;
-import jw.asmsupport.utils.chooser.IMethodChooser;
-import jw.asmsupport.utils.chooser.SemiClassMethodChooser;
 
 
 /**

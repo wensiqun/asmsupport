@@ -1,13 +1,9 @@
 package jw.asmsupport.clazz;
 
-import java.util.Hashtable;
-import java.util.Map;
-
-import org.objectweb.asm.Type;
-
-
 import jw.asmsupport.exception.ClassException;
 import jw.asmsupport.utils.ClassUtils;
+
+import org.objectweb.asm.Type;
 
 
 /**

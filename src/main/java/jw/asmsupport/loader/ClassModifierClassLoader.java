@@ -3,12 +3,9 @@ package jw.asmsupport.loader;
 import java.io.InputStream;
 
 import jw.asmsupport.asm.proxy.ClassModifierClassAdapter;
-import jw.asmsupport.asm.proxy.ClassNameRefactorAdapter;
 import jw.asmsupport.creator.ClassModifier;
 import jw.asmsupport.exception.ASMSupportException;
-import com.googlecode.jwcommon.ClassFileUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassReader;

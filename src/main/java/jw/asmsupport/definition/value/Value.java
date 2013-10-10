@@ -5,13 +5,12 @@ package jw.asmsupport.definition.value;
 
 import java.lang.reflect.Modifier;
 
-import org.objectweb.asm.Type;
-
-
 import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.clazz.AClassFactory;
 import jw.asmsupport.exception.ASMSupportException;
+
+import org.objectweb.asm.Type;
 
 
 /**

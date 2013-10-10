@@ -9,7 +9,6 @@ import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.clazz.ArrayClass;
 import jw.asmsupport.definition.method.Method;
-import jw.asmsupport.definition.value.Value;
 import jw.asmsupport.definition.variable.IVariable;
 import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.exception.ASMSupportException;
@@ -19,13 +18,13 @@ import jw.asmsupport.operators.array.ArrayValue;
 import jw.asmsupport.operators.numerical.crement.AbstractCrement;
 import jw.asmsupport.utils.AClassUtils;
 import jw.asmsupport.utils.ASConstant;
-import com.googlecode.jwcommon.ModifierUtils;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+
+import com.googlecode.jwcommon.ModifierUtils;
 
 /**
  * 

@@ -8,8 +8,8 @@ import jw.asmsupport.definition.variable.GlobalVariable;
 import jw.asmsupport.definition.variable.SuperVariable;
 import jw.asmsupport.definition.variable.ThisVariable;
 import jw.asmsupport.entity.GlobalVariableEntity;
-import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.utils.ASConstant;
+
 import com.googlecode.jwcommon.ModifierUtils;
 
 
