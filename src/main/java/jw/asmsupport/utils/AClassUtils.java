@@ -7,11 +7,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.objectweb.asm.Opcodes;
-
-
-
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.clazz.AClassFactory;
 import jw.asmsupport.clazz.ArrayClass;
@@ -19,6 +14,9 @@ import jw.asmsupport.clazz.ProductClass;
 import jw.asmsupport.clazz.SemiClass;
 import jw.asmsupport.definition.method.Method;
 import jw.asmsupport.entity.MethodEntity;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.objectweb.asm.Opcodes;
 
 /**
  * 

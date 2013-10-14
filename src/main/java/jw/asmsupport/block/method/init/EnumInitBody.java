@@ -12,7 +12,7 @@ import jw.asmsupport.operators.method.SuperConstructorInvoker;
 import jw.asmsupport.operators.util.OperatorFactory;
 import jw.asmsupport.utils.ASConstant;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 
 /**

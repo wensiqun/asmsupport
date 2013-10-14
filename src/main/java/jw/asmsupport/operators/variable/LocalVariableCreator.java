@@ -1,12 +1,12 @@
 package jw.asmsupport.operators.variable;
 
 
-import org.apache.commons.lang.StringUtils;
-import org.objectweb.asm.Type;
-
 import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.operators.AbstractOperator;
 import jw.asmsupport.utils.ScopeLogicVariable;
+import jw.asmsupport.utils.StringUtils;
+
+import org.objectweb.asm.Type;
 
 
 public class LocalVariableCreator extends AbstractOperator {

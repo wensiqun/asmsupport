@@ -20,7 +20,7 @@ import jw.asmsupport.utils.AClassUtils;
 import jw.asmsupport.utils.ASConstant;
 import jw.asmsupport.utils.ModifierUtils;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Type;

@@ -13,7 +13,7 @@ import jw.asmsupport.operators.AbstractOperator;
 import jw.asmsupport.operators.numerical.crement.AbstractCrement;
 import jw.asmsupport.utils.AClassUtils;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -6,8 +6,9 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
+import jw.asmsupport.utils.StringUtils;
+
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 
 
 /**

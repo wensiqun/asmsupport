@@ -1,9 +1,6 @@
 package example.operators;
 
 
-import org.apache.commons.lang.ArrayUtils;
-import org.objectweb.asm.Opcodes;
-
 import jw.asmsupport.Parameterized;
 import jw.asmsupport.block.method.common.StaticMethodBody;
 import jw.asmsupport.clazz.AClass;
@@ -13,6 +10,8 @@ import jw.asmsupport.definition.value.Value;
 import jw.asmsupport.definition.variable.LocalVariable;
 import jw.asmsupport.operators.array.ArrayValue;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.objectweb.asm.Opcodes;
 
 import example.AbstractExample;
 

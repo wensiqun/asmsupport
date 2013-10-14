@@ -5,7 +5,6 @@ import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.clazz.AClass;
 import jw.asmsupport.utils.ModifierUtils;
 
-import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Type;
@@ -23,7 +22,7 @@ public class StaticMethodInvoker extends MethodInvoker {
             Parameterized[] arguments) {
         super(block, owner, name, arguments);
         if (owner.isPrimitive()) {
-            throw new IllegalClassException("Cannot call static method from primitive");
+            throw new IllegalArgumentException("Cannot call static method from primitive");
         }
         //this.methodType = MethodType.STATIC;
         //默认不保存引用

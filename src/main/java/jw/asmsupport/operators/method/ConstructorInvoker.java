@@ -4,7 +4,6 @@ import jw.asmsupport.Parameterized;
 import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.clazz.AClass;
 
-import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -30,9 +29,9 @@ public class ConstructorInvoker extends MethodInvoker {
         super(block, aclass, METHOD_NAME_INIT, arguments);
         //this.methodType = MethodType.CONSTRUCTOR;
         if (aclass.isPrimitive()) {
-            throw new IllegalClassException("Cannot new a primitive class");
+            throw new IllegalArgumentException("Cannot new a primitive class");
         }else if(aclass.isAbstract()){
-            throw new IllegalClassException(aclass.getName() + "is an abstract class cannot new an abstract class");
+            throw new IllegalArgumentException(aclass.getName() + "is an abstract class cannot new an abstract class");
         }
         //默认不保存引用
         setSaveReference(false);

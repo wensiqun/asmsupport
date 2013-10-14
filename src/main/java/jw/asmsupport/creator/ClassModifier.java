@@ -19,8 +19,8 @@ import jw.asmsupport.exception.NoSuchMethod;
 import jw.asmsupport.loader.ClassModifierClassLoader;
 import jw.asmsupport.utils.ASConstant;
 import jw.asmsupport.utils.ClassFileUtils;
+import jw.asmsupport.utils.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassWriter;

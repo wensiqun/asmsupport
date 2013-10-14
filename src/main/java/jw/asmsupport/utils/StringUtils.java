@@ -8,7 +8,7 @@ import java.util.List;
  * @author 温斯群(Joe Wen)
  *
  */
-public class StringUtils extends org.apache.commons.lang.StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
     
     public static Integer[] findAllIndexes(String str, String searchStr){
         

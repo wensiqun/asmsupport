@@ -14,7 +14,7 @@ import jw.asmsupport.entity.MethodEntity;
 import jw.asmsupport.loader.ASMClassLoader;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.MethodVisitor;
@@ -27,7 +27,7 @@ import org.objectweb.asm.commons.EmptyVisitor;
  * @author 温斯群(Joe Wen)
  *
  */
-public class ClassUtils extends org.apache.commons.lang.ClassUtils {
+public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 	
 	/** 基本类型Class */
 	static Map<String, Class<?>> primitivesToClasses;

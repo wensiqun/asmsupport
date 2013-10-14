@@ -25,7 +25,7 @@ import jw.asmsupport.utils.chooser.IMethodChooser;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 
 public class MethodChooser implements IMethodChooser, DetermineMethodSignature {

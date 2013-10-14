@@ -10,10 +10,10 @@ import jw.asmsupport.exception.ClassException;
 import jw.asmsupport.utils.ClassFileUtils;
 import jw.asmsupport.utils.MethodUtils;
 import jw.asmsupport.utils.ModifierUtils;
+import jw.asmsupport.utils.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassWriter;

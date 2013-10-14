@@ -1,11 +1,11 @@
 package jw.asmsupport.utils;
 
 
-import org.apache.commons.lang.ArrayUtils;
+import jw.asmsupport.exception.ASMSupportException;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
-
-import jw.asmsupport.exception.ASMSupportException;
 
 
 /**
