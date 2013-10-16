@@ -15,11 +15,11 @@ import jw.asmsupport.operators.util.OperatorFactory;
  * @author 温斯群(Joe Wen)
  *
  */
-public class ReturnOperatoInCatchWithFinallyrListener extends NewOperatorListener {
+public class ReturnOperatoInCatchWithFinallyListener extends NewOperatorListener {
 	
 	private Finally finallyBlock;
 	
-	public ReturnOperatoInCatchWithFinallyrListener() {
+	public ReturnOperatoInCatchWithFinallyListener() {
 		super();
 	}
 	

@@ -38,4 +38,25 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
 		return new StringBuilder(str.substring(start, end).toUpperCase()).append(str.substring(end)).toString();
 	}
+	
+	
+	/**
+	 * 
+	 * @param str
+	 * @param len
+	 * @param chr
+	 * @return
+	 */
+	public static String appendIfBlank(String str, int len, char chr){
+		if(str.length() < len){
+			StringBuilder newStr = new StringBuilder(str);
+			int left = len - str.length();
+			while(left-- > 0){
+				newStr.append(chr);
+			}
+			return newStr.toString();
+		}else{
+			return str;
+		}
+	}
 }

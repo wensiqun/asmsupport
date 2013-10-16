@@ -93,7 +93,7 @@ public class ScopeLogicVariable extends Component implements Localable {
      * @return
      */
     private boolean isShareable(ScopeLogicVariable var) {
-        if (this.componentOrder < var.componentOrder || this.equals(var)) {
+        if (compareComponentOrder(this.componentOrder, var.componentOrder) == -1 || this.equals(var)) {
             return false;
         }
         
@@ -145,8 +145,8 @@ public class ScopeLogicVariable extends Component implements Localable {
             return true;
         }
 
-        if (this.componentOrder > com.componentOrder) {
-            return false;
+        if (compareComponentOrder(this.componentOrder, com.componentOrder) == 1) {
+        	return false;
         }
 
         // 当前变量与com相差的代数

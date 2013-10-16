@@ -10,7 +10,7 @@ import java.util.Vector;
 import jw.asmsupport.block.ProgramBlock;
 import jw.asmsupport.exception.ASMSupportException;
 import jw.asmsupport.operators.AbstractOperator;
-import jw.asmsupport.operators.listener.ReturnOperatoInCatchWithFinallyrListener;
+import jw.asmsupport.operators.listener.ReturnOperatoInCatchWithFinallyListener;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -21,7 +21,7 @@ public abstract class OperatorFactory {
 	private static List<NewOperatorListener> multiTimeListeners = new Vector<NewOperatorListener>();
 
 	static{
-		NewOperatorListener cfListener = new ReturnOperatoInCatchWithFinallyrListener();
+		NewOperatorListener cfListener = new ReturnOperatoInCatchWithFinallyListener();
         OperatorFactory.addMultiTimeListener(cfListener);
 	}
 	
