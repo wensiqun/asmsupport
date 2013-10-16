@@ -214,32 +214,6 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-		/*List<MethodEntity> methods;
-		for(; reallyClass != null ; reallyClass = reallyClass.getSuperclass()){
-			try {
-				methods = ClassUtils.getAllMethod(reallyClass, name);
-				for(MethodEntity me : methods){
-					potentially.add(me.getActuallyOwner(), me);
-				}
-				
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}*/
-		
-		/*java.lang.reflect.Method[] methods;
-		for(; reallyClass != null ; reallyClass = reallyClass.getSuperclass()){
-			methods = reallyClass.getDeclaredMethods();
-			if(ArrayUtils.isNotEmpty(methods)){
-				for(java.lang.reflect.Method method : methods){
-					
-					potentially.add(AClassFactory.getProductClass(reallyClass),
-							MethodEntity.methodToMethodEntity(directCallClass, method));
-				}
-			}
-		}*/
-		
 		return potentially;
 	}
 	
@@ -258,6 +232,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		List<MethodEntity> methods = ClassUtils.getAllMethod(where, name);
 		for(MethodEntity me : methods){
 			potentially.add(me.getActuallyOwner(), me);
+		}
+		
+		if(name.equals(ASConstant.INIT) || name.equals(ASConstant.CLINIT)){
+			return;
 		}
 		
 		fetchMatchMethod(potentially, where.getSuperclass(), name);
