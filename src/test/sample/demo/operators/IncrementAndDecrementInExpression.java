@@ -7,13 +7,12 @@ package demo.operators;
 
 import org.objectweb.asm.Opcodes;
 
+import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import demo.CreateMethod;
-
-import jw.asmsupport.block.method.common.CommonMethodBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.definition.value.Value;
-import jw.asmsupport.definition.variable.LocalVariable;
 
 /**
  * @author 温斯群(Joe Wen)

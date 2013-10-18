@@ -5,13 +5,12 @@ import java.lang.reflect.Method;
 
 import org.objectweb.asm.Opcodes;
 
-
-import jw.asmsupport.block.method.common.StaticMethodBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.EnumCreator;
-import jw.asmsupport.definition.variable.GlobalVariable;
-import jw.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.EnumCreator;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 
 
 @org.junit.Ignore

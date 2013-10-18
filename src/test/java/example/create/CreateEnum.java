@@ -6,7 +6,8 @@ import org.objectweb.asm.Opcodes;
 
 
 
-import jw.asmsupport.creator.EnumCreator;
+
+import cn.wensiqun.asmsupport.creator.EnumCreator;
 import example.AbstractExample;
 
 public class CreateEnum extends AbstractExample {

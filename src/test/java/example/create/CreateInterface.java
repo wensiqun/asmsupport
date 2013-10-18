@@ -5,14 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.objectweb.asm.Opcodes;
 
-
-import jw.asmsupport.block.method.cinit.CInitBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.InterfaceCreator;
-import jw.asmsupport.definition.value.Value;
-
-
+import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.InterfaceCreator;
+import cn.wensiqun.asmsupport.definition.value.Value;
 import example.AbstractExample;
 
 /**

@@ -3,17 +3,15 @@ package demo.control;
 
 import org.objectweb.asm.Opcodes;
 
-import jw.asmsupport.block.control.Catch;
-import jw.asmsupport.block.control.Finally;
-import jw.asmsupport.block.control.Try;
-import jw.asmsupport.block.method.common.CommonMethodBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.definition.value.Value;
-import jw.asmsupport.definition.variable.LocalVariable;
-
-
+import cn.wensiqun.asmsupport.block.control.Catch;
+import cn.wensiqun.asmsupport.block.control.Finally;
+import cn.wensiqun.asmsupport.block.control.Try;
+import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import demo.CreateMethod;
 
 public class TryCatch extends CreateMethod  {

@@ -4,8 +4,8 @@ package demoInterface;
 
 import org.objectweb.asm.Opcodes;
 
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.creator.InterfaceCreator;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.creator.InterfaceCreator;
 
 @org.junit.Ignore
 public class InterfaceCreatorDemo {

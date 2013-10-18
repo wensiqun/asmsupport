@@ -1,9 +1,9 @@
 package example;
 
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.creator.IClassContext;
-import jw.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.creator.IClassContext;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 
 public abstract class AbstractExample {
     

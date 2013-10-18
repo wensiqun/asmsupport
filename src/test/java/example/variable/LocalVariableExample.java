@@ -1,17 +1,16 @@
 package example.variable;
 
 
-import jw.asmsupport.Parameterized;
-import jw.asmsupport.block.method.common.StaticMethodBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.definition.value.Value;
-import jw.asmsupport.definition.variable.LocalVariable;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.objectweb.asm.Opcodes;
 
+import cn.wensiqun.asmsupport.Parameterized;
+import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import example.AbstractExample;
 
 /**

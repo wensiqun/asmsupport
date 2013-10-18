@@ -1,0 +1,58 @@
+/**
+ * 
+ */
+package cn.wensiqun.asmsupport.operators.numerical.crement;
+
+import cn.wensiqun.asmsupport.Crementable;
+import cn.wensiqun.asmsupport.Parameterized;
+import cn.wensiqun.asmsupport.block.ProgramBlock;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
+import cn.wensiqun.asmsupport.operators.Operators;
+import cn.wensiqun.asmsupport.operators.numerical.arithmetic.AbstractArithmetic;
+import cn.wensiqun.asmsupport.operators.numerical.arithmetic.Subtraction;
+import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
+
+/**
+ * @author 温斯群(Joe Wen)
+ *
+ */
+public abstract class AbstractDecrement extends AbstractCrement {
+
+    protected AbstractDecrement(ProgramBlock block, Crementable factor) {
+        super(block, factor);
+        operator = Operators.DECREMENT;
+        AClass ftrcls = factor.getParamterizedType();
+        if(factor instanceof GlobalVariable ||
+          ((ftrcls.getCastOrder() <= AClass.BOOLEAN_ACLASS.getCastOrder() || 
+           ftrcls.getCastOrder() > AClass.INT_ACLASS.getCastOrder()) &&
+           factor instanceof LocalVariable)){
+            AbstractArithmetic arithOperator = OperatorFactory.newOperator(Subtraction.class, 
+            		new Class<?>[]{ProgramBlock.class, Parameterized.class, Parameterized.class},
+            		block, factor, getValue());
+            
+            arithOperator.prepare();
+            
+            MemberVariable mvar = (MemberVariable) factor;
+            assigner = block.assign(mvar, arithOperator);
+            
+            assigner.prepare();
+            block.removeExe(assigner);
+        }
+    
+    }
+
+    @Override
+    public void executing() {
+        if(assigner == null){
+            LocalVariable lv = (LocalVariable) factor;
+            //insnHelper.iinc(lv.getScopeLogicVar().getPosition()[0], -1);
+            insnHelper.iinc(lv.getScopeLogicVar().getInitStartPos(), -1);
+        } else {
+            assigner.execute();
+        }
+    }
+    
+}

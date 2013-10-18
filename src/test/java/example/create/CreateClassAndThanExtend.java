@@ -8,22 +8,19 @@ import javax.swing.text.AbstractDocument.AbstractElement;
 
 import org.objectweb.asm.Opcodes;
 
-
-import jw.asmsupport.block.control.Else;
-import jw.asmsupport.block.control.IF;
-import jw.asmsupport.block.method.common.CommonMethodBody;
-import jw.asmsupport.block.method.common.MethodBodyForModify;
-import jw.asmsupport.block.method.common.StaticMethodBody;
-import jw.asmsupport.clazz.AClass;
-import jw.asmsupport.clazz.AClassFactory;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.creator.ClassModifier;
-import jw.asmsupport.definition.value.Value;
-import jw.asmsupport.definition.variable.GlobalVariable;
-import jw.asmsupport.definition.variable.LocalVariable;
-import jw.asmsupport.utils.ASConstant;
-
-
+import cn.wensiqun.asmsupport.block.control.Else;
+import cn.wensiqun.asmsupport.block.control.IF;
+import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
+import cn.wensiqun.asmsupport.block.method.common.MethodBodyForModify;
+import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
+import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.creator.ClassModifier;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.utils.ASConstant;
 import example.AbstractExample;
 
 public class CreateClassAndThanExtend extends AbstractExample {

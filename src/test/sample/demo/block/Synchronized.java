@@ -4,12 +4,12 @@ package demo.block;
 
 import org.objectweb.asm.Opcodes;
 
-import jw.asmsupport.Parameterized;
-import jw.asmsupport.block.method.common.CommonMethodBody;
-import jw.asmsupport.creator.ClassCreator;
-import jw.asmsupport.definition.value.Value;
-import jw.asmsupport.definition.variable.GlobalVariable;
-import jw.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.Parameterized;
+import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
+import cn.wensiqun.asmsupport.creator.ClassCreator;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import demo.CreateMethod;
 
 public class Synchronized extends CreateMethod   {
@@ -24,7 +24,7 @@ public class Synchronized extends CreateMethod   {
 			@Override
 			public void generateBody(LocalVariable... argus) {
 				final GlobalVariable gv = getMethodOwner().getGlobalVariable("testString");
-			    this.syn(new jw.asmsupport.block.Synchronized(gv){
+			    this.syn(new cn.wensiqun.asmsupport.block.Synchronized(gv){
 					@Override
 					public void generateBody(Parameterized synObj) {
 						invoke(out, "println", append(Value.value("testString has been synchronized : "), gv));
