@@ -6,11 +6,11 @@
 		<version>7</version>
 	</parent>
 	
-	<groupId>com.googlecode.amssupport</groupId>
+	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
 	<version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>jw.asmsupport</name>
+    <name>asmsupport</name>
     <description>
         This project is will help developer to dynamic create/modify
         class at runtime simply, and it's base on ASM framework. but 
@@ -19,7 +19,7 @@
         care the underlying instructions of JVM.
     </description>
     
-    <url>https://code.google.com/p/amssupport/</url>
+    <url>http://www.wensiqun.com/asmsupport/</url>
     
     <licenses>
 	    <license>
@@ -30,9 +30,9 @@
     </licenses>
     
     <scm>
-        <connection>scm:svn:http://amssupport.googlecode.com/svn/trunk/asmsupport/</connection>
-		<developerConnection>scm:svn:https://amssupport.googlecode.com/svn/trunk/asmsupport/</developerConnection>
-        <url>http://amssupport.googlecode.com/svn/trunk/asmsupport/</url>
+        <connection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</connection>
+		<developerConnection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</developerConnection>
+        <url>http://code.taobao.org/svn/asmsupport/trunk</url>
     </scm>
     
     <developers>
