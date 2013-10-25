@@ -275,6 +275,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				AClass[] potentialMethodArgs = entity.getArgClasses();
 						
 				if(ModifierUtils.isVarargs(entity.getModifier())){
+					if(ArrayUtils.getLength(argumentTypes) == 0){
+						return;
+					}
+					
 					AClass lastActuallyArg = argumentTypes[ArrayUtils.getLength(argumentTypes) - 1];
 					
 					if(!lastActuallyArg.isArray() || 

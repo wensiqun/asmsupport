@@ -132,13 +132,8 @@ public abstract class MethodInvoker extends AbstractOperator implements
 
                 ArrayValue variableVarifyArauments;
                 ArrayClass arrayClass = (ArrayClass)mtdEntity.getArgClasses()[mtdEntity.getArgClasses().length - 1];
-                /*if(fixedArgsLen == arguments.length){
-                	variableVarifyArauments = block.newArray(arrayClass, Value.value(0));
-                }else{*/
-                	variableVarifyArauments = block.newArrayWithValue(
-                			arrayClass, 
-                    		(Parameterized[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
-                //}
+                variableVarifyArauments = block.newArrayWithValue(arrayClass, 
+                       (Parameterized[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
                 variableVarifyArauments.asArgument();
                 
                 arguments = (Parameterized[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
