@@ -234,6 +234,10 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
         if(cls instanceof ArrayClass){
             return false;
         }
+        
+        if(this.isInterface() && clsName.equals(Object.class.getName())){
+        	return true;
+        }
 
         Class<?> superCls = getSuperClass();
         Class<?>[] interfaces = getInterfaces();
