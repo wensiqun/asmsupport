@@ -12,30 +12,14 @@ import cn.wensiqun.asmsupport.utils.ClassUtils;
  *
  */
 public abstract class AClassFactory {
-    
-/*	private final static Map<String, AClass> cache = new Hashtable<String, AClass>();
-	
-	protected static void cleanCach(){
-		cache.clear();
-	}
-	
-	private static void addToCache(String s, AClass a){
-		cache.put(s, a);
-	}*/
 	
 	private static AClass getAndAdd(Class<?> cls){
-	    String name = cls.getName();
-		/*if(cache.containsKey(name)){
-	    	return cache.get(name);
-	    }*/
-	
-		AClass aclass = null;
+		AClass aclass;
 		if(cls.isArray()){
 			aclass = getArrayClass(ClassUtils.getRootComponentType(cls), Type.getType(cls).getDimensions());
 		}else{
 			aclass = new ProductClass(cls);
 		}
-		//addToCache(cls.getName(), aclass);
 		return aclass;
 	}
 	
@@ -52,15 +36,6 @@ public abstract class AClassFactory {
         }
         arrayClassDesc.append(rootComponent.getDescription());
         return new ArrayClass(rootComponent, dim);
-        /*String arrayClassDescStr = arrayClassDesc.toString();
-        if(cache.containsKey(arrayClassDescStr)){
-        	ArrayClass ac = (ArrayClass) cache.get(arrayClassDescStr);
-        	return ac;
-        }else{
-        	ArrayClass arrayClass = new ArrayClass(rootComponent, dim);
-        	addToCache(arrayClassDescStr, arrayClass);
-        	return arrayClass;
-        }*/
 	}
 	
     /**

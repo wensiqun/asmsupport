@@ -118,23 +118,6 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		return new InvocationRenameMethodAdapter(methodVisitor);
 	}
 
-	@Deprecated
-	private boolean containAndRemove(String name, String desc) {
-		IMethodCreator imm = null;
-		for (IMethodCreator m : needModify) {
-			if (methodEqual(m, name, desc)) {
-				imm = m;
-				break;
-			}
-		}
-		if (imm != null) {
-			needModify.remove(imm);
-			return true;
-		}
-		return false;
-	}
-	
-
 	private boolean isModified(String name, String desc) {
 		IMethodCreator imm = null;
 		for (IMethodCreator m : needModify) {
