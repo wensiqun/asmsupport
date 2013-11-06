@@ -8,7 +8,7 @@
 	
 	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.3</version>
     <packaging>jar</packaging>
     <name>asmsupport</name>
     <description>
@@ -30,9 +30,9 @@
     </licenses>
     
     <scm>
-        <connection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</connection>
-		<developerConnection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</developerConnection>
-        <url>http://code.taobao.org/svn/asmsupport/trunk</url>
+        <connection>scm:svn:http://code.taobao.org/svn/asmsupport/tags/asmsupport-0.3</connection>
+		<developerConnection>scm:svn:http://code.taobao.org/svn/asmsupport/tags/asmsupport-0.3</developerConnection>
+        <url>http://code.taobao.org/svn/asmsupport/tags/asmsupport-0.3</url>
     </scm>
     
     <developers>
