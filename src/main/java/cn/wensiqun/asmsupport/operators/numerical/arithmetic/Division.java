@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.operators.Operators;
  * @author 温斯群(Joe Wen)
  *
  */
-public class Division extends AbstractArithmetic implements Parameterized{
+public class Division extends AbstractArithmetic {
 
     private static Log log = LogFactory.getLog(Division.class);
     

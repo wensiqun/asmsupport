@@ -30,8 +30,6 @@ public abstract class EnumInitBody extends SuperMethodBody implements IEnumInitB
             OperatorFactory.newOperator(SuperConstructorInvoker.class, 
             		new Class<?>[]{ProgramBlock.class, AClass.class, Parameterized[].class}, 
             		getExecuteBlock(), getMethodOwner(), new Parameterized[]{argments[0], argments[1]});
-    		/*new SuperConstructorInvoker(getExecuteBlock(), getMethodOwner(),  
-    				new Parameterized[]{argments[0], argments[1]});*/
             generateBody((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
     	}else{
     		generateBody(argments);

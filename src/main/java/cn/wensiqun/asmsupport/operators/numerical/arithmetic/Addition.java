@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.operators.Operators;
  * @author 温斯群(Joe Wen)
  *
  */
-public class Addition extends AbstractArithmetic implements Parameterized{
+public class Addition extends AbstractArithmetic {
 
     private static Log log = LogFactory.getLog(Addition.class);
     

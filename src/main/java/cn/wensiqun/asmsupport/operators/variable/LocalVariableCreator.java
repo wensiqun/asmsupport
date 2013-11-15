@@ -13,13 +13,6 @@ public class LocalVariableCreator extends AbstractOperator {
 
 	private ScopeLogicVariable slv;
 	
-	/*protected LocalVariableCreator(ProgramBlock block,
-			Type declareClass, Type actuallyClass) {
-		super(block);
-		block.removeExe(this);
-        this.slv = new ScopeLogicVariable(block.getScope(), declareClass, actuallyClass, true);
-	}*/
-	
 	protected LocalVariableCreator(ProgramBlock block, String name, Type declareClass,
             Type actuallyClass){
 	    super(block);	
@@ -31,19 +24,11 @@ public class LocalVariableCreator extends AbstractOperator {
 		}
 	}
 
-	
-	@Override
-	protected void firstPrepareProcess() {
-		//slv.store();
-	}
-
 	public ScopeLogicVariable getScopeLogicVariable(){
 		return slv;
 	}
 	
 	@Override
-	protected void executing() {
-
-	}
+	protected void executing() {}
 
 }

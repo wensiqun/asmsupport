@@ -22,10 +22,6 @@ public interface IClassContext {
      */
     ClassVisitor getClassVisitor();
     
-/*    SuperVariable getSuperVariable();
-    
-    ThisVariable getThisVariable();*/
-    
     Class<?> startup();
     
     NewMemberClass getCurrentClass();

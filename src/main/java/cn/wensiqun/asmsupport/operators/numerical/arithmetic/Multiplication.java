@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.operators.Operators;
  * @author 温斯群(Joe Wen)
  *
  */
-public class Multiplication extends AbstractArithmetic implements Parameterized{
+public class Multiplication extends AbstractArithmetic {
 
     private static Log log = LogFactory.getLog(Multiplication.class);
     

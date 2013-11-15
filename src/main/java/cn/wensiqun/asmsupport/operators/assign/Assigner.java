@@ -3,9 +3,6 @@
  */
 package cn.wensiqun.asmsupport.operators.assign;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
@@ -19,8 +16,6 @@ import cn.wensiqun.asmsupport.utils.AClassUtils;
  */
 public abstract class Assigner extends AbstractOperator implements Parameterized {
 
-    private static Log log = LogFactory.getLog(Assigner.class);
-    
     protected Parameterized value;
     
     private IVariable var;

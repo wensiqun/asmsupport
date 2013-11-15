@@ -121,27 +121,6 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
     	
         exp3.loadToStack(block);
         insnHelper.mark(l2);
-        
-        /*MethodVisitor mv = insnHelper.getMv();
-        Label l1 = new Label();
-        Label l2 = new Label();
-        Stack stack = block.getMethod().getStack();
-        
-        exp1.loadToStack(block);
-        mv.visitJumpInsn(Opcodes.IFEQ, l1);
-        stack.pop();
-        stack.push(Type.INT_TYPE);
-        
-        exp2.loadToStack(block);
-        stack.pop();
-        mv.visitJumpInsn(Opcodes.GOTO, l2);
-        
-        mv.visitLabel(l1);
-        exp3.loadToStack(block);
-        stack.pop();
-        mv.visitLabel(l2);
-
-        stack.push(resultClass.getType());*/
     }
     
     @Override

@@ -40,7 +40,6 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
         super();
         this.member = member;
         checkMember(member);
-        //continueLbl = new Label();
     }
     
     private void checkMember(MemberVariable member){
