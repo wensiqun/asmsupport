@@ -95,17 +95,11 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
 		</dependency>
-		
-		<dependency>
-			<artifactId>asm</artifactId>
-			<groupId>asm</groupId>
-			<version>3.3.1</version>
-		</dependency>
 
 		<dependency>
-			<artifactId>asm-commons</artifactId>
-			<groupId>asm</groupId>
-			<version>3.3.1</version>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>4.2</version>
 		</dependency>
 		
 	</dependencies>

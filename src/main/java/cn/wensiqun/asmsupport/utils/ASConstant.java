@@ -1,5 +1,7 @@
 package cn.wensiqun.asmsupport.utils;
 
+import org.objectweb.asm.Opcodes;
+
 public interface ASConstant {
 
     public final static String CLINIT = "<clinit>";
@@ -15,4 +17,6 @@ public interface ASConstant {
 
     public final static int METHOD_CREATE_MODE_ADD = 0;
     public final static int METHOD_CREATE_MODE_MODIFY = 1;
+    
+    public final static int ASM_VERSION = Opcodes.ASM4;
 }

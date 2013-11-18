@@ -9,13 +9,13 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.EmptyVisitor;
 
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 
 
 /**
@@ -189,7 +189,7 @@ public class ProductClass extends NewMemberClass {
 		
 		final boolean[] exist = new boolean[]{false};
 		
-		ClassVisitor cv = new EmptyVisitor(){
+		ClassVisitor cv = new ClassAdapter(){
 			@Override
 			public MethodVisitor visitMethod(int access, String name,
 					String desc, String signature, String[] exceptions) {

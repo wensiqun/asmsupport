@@ -13,14 +13,14 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.exception.InstructionException;
 import cn.wensiqun.asmsupport.utils.Stack;
 import cn.wensiqun.asmsupport.utils.Stackable;
+import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 
-public class StackLocalMethodVisitor implements MethodVisitor , Opcodes{
+public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes{
 
     private static Log log = LogFactory.getLog(StackLocalMethodVisitor.class);    
     private static final Type OBJECT_TYPE = Type.getType(Object.class);
     
 	private Stack stack;
-	private MethodVisitor mv;
 	private Type[] nextPushTypes;
 	
 	public Stack getStack(){
@@ -42,10 +42,8 @@ public class StackLocalMethodVisitor implements MethodVisitor , Opcodes{
 	}
 	
 	public StackLocalMethodVisitor(MethodVisitor mv, Stack stack) {
-		super();
+		super(mv);
 		this.stack = stack;
-		//this.locals = locals;
-		this.mv = mv;
 	}
 	
 	private void stackLocalOperator(int opcode){

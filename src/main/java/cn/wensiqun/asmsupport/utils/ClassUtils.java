@@ -10,16 +10,15 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.EmptyVisitor;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.loader.ASMClassLoader;
+import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 
 
 /**
@@ -256,7 +255,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 		ClassReader cr = new ClassReader(classStream);
 		final List<MethodEntity> list = new ArrayList<MethodEntity>();
 		
-		cr.accept(new ClassAdapter(new EmptyVisitor()){
+		cr.accept(new ClassAdapter(){
 
 			@Override
 			public MethodVisitor visitMethod(int access, String name,

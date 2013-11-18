@@ -1,13 +1,13 @@
 package cn.wensiqun.asmsupport.asm.adapter;
 
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 
 import cn.wensiqun.asmsupport.utils.ASConstant;
+import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
+import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 
 
 /**
