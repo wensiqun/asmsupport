@@ -315,7 +315,7 @@ public class AClassUtils {
         for(MethodEntity m1 : methods){
             same = false;
             for(int i=0; i < length ; i++){
-                if(MethodUtils.methodEqualInHierarchy(m1, list.get(i))){
+                if(MethodUtils.methodEqualWithoutOwnerInHierarchy(m1, list.get(i))){
                     same = true;
                     break;
                 }

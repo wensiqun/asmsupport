@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
 
+import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.exception.ClassException;
@@ -26,6 +27,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     protected SemiClass sc;
 
     protected boolean haveInitMethod;
+    
     
     public AbstractClassCreatorContext(int version, int access, String name,
             Class<?> superCls, Class<?>[] interfaces) {
@@ -81,6 +83,8 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         }
         
         checkUnImplementMethod();
+        
+        checkOverriedAndCreateBridgeMethod();
 
         for (IMemberCreator ifc : fieldCreators) {
             ifc.prepare();
@@ -120,6 +124,10 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     
     protected abstract void createDefaultConstructor();
     
+    
+    /**
+     * 
+     */
     private void checkUnImplementMethod() {
     	if(sc.isAbstract() || sc.isInterface()){
     		return;
@@ -156,10 +164,10 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     		Method abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
     		
-    		for(int j=0; j<scImplMethods.size(); j++ ) { //jw.asmsupport.definition.method.Method scImplMtd : scImplMethods){
+    		for(int j=0; j<scImplMethods.size(); j++ ) {
     			cn.wensiqun.asmsupport.definition.method.Method nonAbstractMethod = scImplMethods.get(j);
     			
-    			if(MethodUtils.methodEqual(nonAbstractMethod.getMethodEntity(), abstractMethod)){
+    			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMethodEntity(), abstractMethod)){
     				abstractMethods.remove(i);
     				scImplMethods.remove(j);
     				exist = true;
@@ -184,6 +192,12 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	
     }
     
+    /**
+     * 
+     * @param methods
+     * @param method
+     * @return
+     */
     private boolean containMethod(List<Method> methods, Method method){
     	if(CollectionUtils.isNotEmpty(methods)){
     		for(Method m : methods){
@@ -195,6 +209,13 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	return false;
     }
     
+    
+    /**
+     * 
+     * @param clazz
+     * @param abstractMethods
+     * @param nonAbstractMethods
+     */
     private void allMethodInClass(Class<?> clazz, List<Method> abstractMethods, List<Method> nonAbstractMethods){
         if(clazz == null || clazz.equals(Object.class)){
     		return;
@@ -226,4 +247,32 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	}
     }
 
+    
+    /**
+     * 检测那些新建的方法为重写方法，如果存在返回类型不同，则抛异常或者创建bridge方法
+     * 
+     */
+    private void checkOverriedAndCreateBridgeMethod(){
+    	
+    }
+    
+    /**
+     * 判断新创建的方法是否是重写的方法，如果是则返回被重写的方法。
+     * 
+     * @param newMethod
+     * @return
+     */
+    private Method isOverried(cn.wensiqun.asmsupport.definition.method.Method newMethod){
+    	return null;
+    }
+    
+    /**
+     * 创建bridge方法
+     * 
+     * @param newMethod 新创建重写的方法
+     * @param superReturnType 被重写的方法在父类中的返回类型。
+     */
+    private void createBridgeMethod(cn.wensiqun.asmsupport.definition.method.Method newMethod, AClass superReturnType){
+    	
+    }
 }

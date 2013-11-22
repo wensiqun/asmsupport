@@ -19,4 +19,23 @@ public interface ASConstant {
     public final static int METHOD_CREATE_MODE_MODIFY = 1;
     
     public final static int ASM_VERSION = Opcodes.ASM4;
+
+    public final static String ACCESS_TOKEN_PUBLIC = "public";
+    
+    public final static String ACCESS_TOKEN_PRIVATE = "private";
+
+    public final static String ACCESS_TOKEN_PROTECTED = "protected";
+    
+    public final static String ACCESS_TOKEN_STATIC = "static";
+    
+    public final static String ACCESS_TOKEN_FINAL = "final";
+    
+    public final static String ACCESS_TOKEN_SYNCHRONIZED = "synchronized";
+    
+    public final static String ACCESS_TOKEN_VOLATILE = "volatile";
+    
+    
+    public final static String ACCESS_TOKEN_ABSTRACT = "abstract";
+    
+    
 }

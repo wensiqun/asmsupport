@@ -65,41 +65,7 @@ public class ProductClass extends NewMemberClass {
         return entiey;
     }
 
-    /*@Override
-    public MethodEntity availableConstructor(AClass aclass, AClass[] parameterTypes) {
-    	MethodEntity me = super.availableConstructor(aclass, parameterTypes);
-    	if(me != null){
-    		return me;
-    	}
-    	
-    	me = availableMethod(aclass, ASConstant.INIT, parameterTypes);
-    	if(me != null){
-    		return me;
-    	}
-    	
-        Class<?>[] argClses = new Class<?>[parameterTypes.length];
-        String[] argNames = new String[parameterTypes.length];
-        for(int i=0; i<argClses.length; i++){
-            argClses[i] = ((ProductClass)parameterTypes[i]).reallyClass;
-            argNames[i] = "arg" + i;
-        }
-        
-        Constructor<?> constructor = null;
-        
-        try {
-            constructor = reallyClass.getDeclaredConstructor(argClses);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            throw new MethodInvokeException("no such method : "  + e.getMessage(), e);
-        }
-        
-        if(constructor != null){
-            me = new MethodEntity("<init>", this, this, parameterTypes, argNames, null, null, constructor.getModifiers());
-        }
-        
-        return me;
-    }*/
+    
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {
@@ -154,15 +120,18 @@ public class ProductClass extends NewMemberClass {
         }
         return order;
     }
-
-    /*@Override
-    public MethodEntity availableMethod(AClass aclass, String name,
-            AClass[] parameterTypes) {
-        IMethodChooser chooser = new ProductClassMethodChooser(aclass, this, name, parameterTypes);
-        return chooser.chooseMethod();
-    }*/
+    
+    
 
     @Override
+	public boolean isChildOrEqual(AClass cls) {
+    	if(cls instanceof ProductClass){
+    		return ((ProductClass)cls).getReallyClass().isAssignableFrom(reallyClass);
+    	}
+		return super.isChildOrEqual(cls);
+	}
+
+	@Override
     public boolean isPrimitive() {
         return reallyClass.isPrimitive();
     }
@@ -178,7 +147,6 @@ public class ProductClass extends NewMemberClass {
             throw new ASMSupportException("this class is not array");
         }
         return type.getDimensions();
-        //return StringUtils.splitPreserveAllTokens(name, '[').length - 1;
     }
 
 	@Override
@@ -202,11 +170,6 @@ public class ProductClass extends NewMemberClass {
 		
     	try {
     		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-    		/*//InputStream is = loader.getSystemResourceAsStream(reallyClass.getName().replace('.', '/') + ".class");
-    		InputStream is = reallyClass.getClassLoader().getSystemResourceAsStream(reallyClass.getName().replace('.', '/') + ".class");
-			*/
-    		
-    		//jw/jweb/annotation/DAO.class
     		
     		URL resource = loader.getResource(reallyClass.getName().replace('.', '/') + ".class");
     		if (resource != null) {
@@ -218,8 +181,6 @@ public class ProductClass extends NewMemberClass {
                     in.close();
                 }
             }
-    		/*ClassReader cr = new ClassReader(is);
-			cr.accept(cv, 0);*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

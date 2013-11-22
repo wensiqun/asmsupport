@@ -627,7 +627,17 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         return true;
     }
     
+    
+    /**
+     * 
+     * @param invoker
+     * @param acls
+     * @param name
+     * @param argumentTypes
+     * @return
+     */
     protected List<MethodEntity> applicableVariableVarifyMethod(AClass invoker, AClass acls, String name, AClass[] argumentTypes){
+    	
         List<MethodEntity> allVarArities = AClassUtils.allDeclareVariableArityMethod(invoker, acls, name, argumentTypes.length);
         
         List<MethodEntity> applicable = new ArrayList<MethodEntity>();

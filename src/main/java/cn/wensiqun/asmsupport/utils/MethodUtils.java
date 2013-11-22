@@ -15,16 +15,16 @@ import cn.wensiqun.asmsupport.entity.MethodEntity;
  *
  */
 public class MethodUtils {
-    /**
+    
+	/**
      * 
      * @param m1
      * @param m2
      * @return
      */
-    public static boolean methodEqualInHierarchy(MethodEntity m1, MethodEntity m2){
+    public static boolean methodEqualWithoutOwnerInHierarchy(MethodEntity m1, MethodEntity m2){
         if(m1.getName().equals(m2.getName()) &&
            m1.getReturnType().equals(m2.getReturnType())){
-                    
            /* Avoid unnecessary cloning */
             AClass[] params1 = m1.getArgClasses();
             AClass[] params2 = m2.getArgClasses();
@@ -46,7 +46,7 @@ public class MethodUtils {
      * @param method
      * @return
      */
-    public static boolean methodEqual(MethodEntity me, Method method){
+    public static boolean methodEqualWithoutOwner(MethodEntity me, Method method){
     	if(me.getName().equals(method.getName()) &&
     	   me.getReturnClass().getName().equals(method.getReturnType().getName())){
     		AClass[] mePara = me.getArgClasses();
@@ -63,6 +63,12 @@ public class MethodUtils {
     	return false;
     }
     
+    /**
+     * 
+     * @param m1
+     * @param m2
+     * @return
+     */
     public static boolean methodEqualWithoutOwner(Method m1, Method m2){
         if(m1.getName().equals(m2.getName()) &&
            m1.getReturnType().equals(m2.getReturnType())){
@@ -81,12 +87,29 @@ public class MethodUtils {
         return false;
     }
     
+    
+    /**
+     * 
+     * @param type
+     * @param name
+     * @param parameterTypes
+     * @return
+     */
     public static List<Method> getMethod(Class<?> type, String name, Class<?>... parameterTypes){
     	List<Method> methodArray = new ArrayList<Method>();
     	getMethod(methodArray, type, name, parameterTypes);
     	return methodArray;
     }
     
+    
+    /**
+     * 
+     * @param foundMethods
+     * @param type
+     * @param name
+     * @param parameterTypes
+     * @throws SecurityException
+     */
     private static void getMethod(List<Method> foundMethods, Class<?> type, String name, Class<?>... parameterTypes) throws SecurityException{
     	if(type == null){
     		return;

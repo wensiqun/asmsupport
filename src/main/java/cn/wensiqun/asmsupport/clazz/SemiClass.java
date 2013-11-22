@@ -55,13 +55,6 @@ public class SemiClass extends NewMemberClass {
     public int getCastOrder() {
         return 9;
     }
-    
-    /*@Override
-    public MethodEntity availableMethod(AClass aclass, String name,
-            AClass[] parameterTypes) {
-        IMethodChooser chooser = new SemiClassMethodChooser(aclass, this, name, parameterTypes);
-        return chooser.chooseMethod();
-    }*/
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {

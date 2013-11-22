@@ -74,19 +74,6 @@ public class ArrayClass extends AClass {
         return aclass.getGlobalVariableEntity(name);
     }
 
-    /*@Override
-    public MethodEntity availableConstructor(AClass aclass,
-            AClass[] parameterTypes) {
-        return aclass.availableConstructor(aclass, parameterTypes);
-    }*/
-
-    /*@Override
-    public MethodEntity availableMethod(AClass aclass, String name,
-            AClass[] parameterTypes) {
-        IMethodChooser chooser = new ArrayClassMethodChooser(aclass, this, name, parameterTypes);
-        return chooser.chooseMethod();
-    }*/
-
     @Override
     public boolean isPrimitive() {
         return false;
@@ -125,5 +112,22 @@ public class ArrayClass extends AClass {
         }
         return sb.toString();
     }
+
+	@Override
+	public boolean isChildOrEqual(AClass cls) {
+		if(cls instanceof ArrayClass){
+			String clsName = cls.getName();
+	        if (getName().equals(clsName)) {
+	            return true;
+	        }
+		}
+		
+		if(cls instanceof ProductClass){
+			if(((ProductClass)cls).getReallyClass().equals(Object.class)){
+				return true;
+			}
+		}
+		return false;
+	}
     
 }

@@ -300,5 +300,44 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 		
 		return list;
 	}
+	
+	
+	/**
+	 * get all interfaces
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public static List<Class<?>> getAllInterfaces(Class<?> clazz){
+		List<Class<?>> interfaceColl = new ArrayList<Class<?>>();
+		getAllInterfaces(interfaceColl, clazz);
+		return interfaceColl;
+	}
+	
+	
+	/**
+	 * 递归获取class的所有接口
+	 */
+	private static void getAllInterfaces(List<Class<?>> interfaceColl, Class<?> clazz){
+		if(clazz == null || Object.class.equals(clazz)){
+			return;
+		}
+
+		//get interface from super class
+		getAllInterfaces(interfaceColl, clazz.getSuperclass());
+		
+		Class<?>[] interfaces =	clazz.getInterfaces();
+		if(ArrayUtils.isNotEmpty(interfaces)){
+			for(Class<?> inter : interfaces){
+				if(!interfaceColl.contains(inter)){
+					interfaceColl.add(inter);
+				}
+
+				//get interface from current interface
+				getAllInterfaces(interfaceColl, inter);
+			}
+		}
+		
+	}
 
 }

@@ -23,6 +23,13 @@ public abstract class NewMemberClass extends AClass {
     /** */
     private List<Method> methods;
 
+    /**
+     * store bridge method.
+     * 1. overried method that return type is child of super method return type.
+     * 2. generice type method(implement future)
+     */
+    private List<Method> bridgeMethod;
+    
     private List<Method> constructors;
     
     private Method staticBlock;
@@ -49,7 +56,16 @@ public abstract class NewMemberClass extends AClass {
     	}
         return methods;
     }
+    
+    
+    public List<Method> getBridgeMethod() {
+    	if(bridgeMethod == null){
+   	        methods = new ArrayList<Method>();
+    	}
+		return bridgeMethod;
+	}
 
+	
     public Method getStaticBlock() {
         return staticBlock;
     }
@@ -126,30 +142,6 @@ public abstract class NewMemberClass extends AClass {
 		}
     	return false;
 	}
-
-	/*@Override
-    public MethodEntity availableConstructor(AClass aclass,
-            AClass[] parameterTypes) {
-        MethodEntity me = null;
-        for (Method m : getConstructors()) {
-            AClass[] actual = m.getMethodEntity().getArgClasses();
-            if (m.getMethodEntity().getName().equals("<init>")
-                    && actual.length == parameterTypes.length) {
-                me = m.getMethodEntity();
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    if (!parameterTypes[i].getName()
-                            .equals(actual[i].getName())) {
-                        me = null;
-                        break;
-                    }
-                }
-                if (me != null) {
-                    return me;
-                }
-            }
-        }
-        return null;
-    }*/
 
 	
     @Override
