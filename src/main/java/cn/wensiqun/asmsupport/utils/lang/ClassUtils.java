@@ -18,6 +18,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.loader.ASMClassLoader;
+import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 
 
@@ -339,5 +340,22 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 		}
 		
 	}
+	
+	
+	/**
+     * 判断是否可见
+     * 
+     * @param invoker 调用者所在的类
+     * @param invoked 被调用的方法或者field所在的类
+     * @param actuallyInvoked 被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
+     * @param mod 被调用的方法或者field的修饰符
+     * @return
+     */
+    public static boolean visible(Class<?> invoker, Class<?> invoked, Class<?> actuallyInvoked, int mod){
+        return AClassUtils.visible(
+        		AClassFactory.getProductClass(invoker), 
+        		AClassFactory.getProductClass(invoked), 
+        		AClassFactory.getProductClass(actuallyInvoked), mod);
+    }
 
 }

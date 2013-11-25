@@ -106,6 +106,7 @@ public class AClassUtils {
     
     /**
      * 判断是否可见
+     * 
      * @param invoker 调用者所在的类
      * @param invoked 被调用的方法或者field所在的类
      * @param actuallyInvoked 被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
@@ -316,7 +317,7 @@ public class AClassUtils {
         for(MethodEntity m1 : methods){
             same = false;
             for(int i=0; i < length ; i++){
-                if(MethodUtils.methodEqualWithoutOwnerInHierarchy(m1, list.get(i))){
+                if(MethodUtils.methodEqualWithoutOwner(m1, list.get(i))){
                     same = true;
                     break;
                 }

@@ -7,7 +7,10 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.utils.AClassUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 /**
  * 
@@ -15,6 +18,91 @@ import cn.wensiqun.asmsupport.entity.MethodEntity;
  *
  */
 public class MethodUtils {
+	
+	
+	/**
+	 * 获取哪个方法被传入方法重写
+	 * 
+	 * @param overrideMethod
+	 * @return
+	 */
+	public static Method getOverriddenMethod(Method overrideMethod){
+		Class<?> superClass = overrideMethod.getDeclaringClass().getSuperclass();
+		for(; superClass != null && !Object.class.equals(superClass);){
+			try {
+				Method method = superClass.getDeclaredMethod(overrideMethod.getName(), overrideMethod.getParameterTypes());
+				if(visible(overrideMethod, method)){
+					return method;
+				}
+			} catch (NoSuchMethodException e) {
+				superClass = superClass.getSuperclass();
+			}
+		}
+	    return null;	
+	}
+	
+	
+	/**
+	 * 获取被实现的接口
+	 * 
+	 * @param implementMethod
+	 * @return
+	 */
+	public static Method[] getImplementedMethod(Method implementMethod){
+		List<Method> list = new ArrayList<Method>();
+		List<Class<?>> interfaces = ClassUtils.getAllInterfaces(implementMethod.getDeclaringClass());
+		
+		for(Class<?> inter : interfaces)
+		{
+			try {
+				Method method = inter.getDeclaredMethod(implementMethod.getName(), implementMethod.getParameterTypes());
+				if(visible(implementMethod, method)){
+					boolean alreadyExist = false;
+					for(Method found : list){
+						if(methodSignatureEqualWithoutOwner(found, method)){
+							alreadyExist = true;
+							break;
+						}
+					}
+					if(!alreadyExist){
+						list.add(method);
+					}
+				}
+			} catch (NoSuchMethodException e) {
+			}
+		}
+		
+		return list.toArray(new Method[list.size()]);
+	}
+	
+
+	
+	/**
+	 * 在第一个参数所指的方法中能够调用第二个参数所指的方法。
+	 * 
+	 * @param caller
+	 * @param called
+	 * @return true表示可以调用
+	 */
+	public static boolean visible(Method caller, Method called){
+		AClass callerOwner = AClassFactory.getProductClass(caller.getDeclaringClass());
+		AClass calledOwner = AClassFactory.getProductClass(called.getDeclaringClass());
+		return AClassUtils.visible(callerOwner, calledOwner, calledOwner, called.getModifiers());
+	}
+	
+	/**
+	 * 
+	 * @param method1
+	 * @param method2
+	 * @return
+	 */
+	public static boolean methodSignatureEqualWithoutOwner(Method method1, Method method2)
+	{
+		if(methodEqualWithoutOwner(method1, method2)){
+			return method1.getReturnType().equals(method2.getReturnType());
+		}
+		return false;
+	}
     
 	/**
      * 
@@ -22,10 +110,8 @@ public class MethodUtils {
      * @param m2
      * @return
      */
-    public static boolean methodEqualWithoutOwnerInHierarchy(MethodEntity m1, MethodEntity m2){
-        if(m1.getName().equals(m2.getName()) &&
-           m1.getReturnType().equals(m2.getReturnType())){
-           /* Avoid unnecessary cloning */
+    public static boolean methodEqualWithoutOwner(MethodEntity m1, MethodEntity m2){
+        if(m1.getName().equals(m2.getName())){
             AClass[] params1 = m1.getArgClasses();
             AClass[] params2 = m2.getArgClasses();
             if (params1.length == params2.length) {
@@ -47,8 +133,7 @@ public class MethodUtils {
      * @return
      */
     public static boolean methodEqualWithoutOwner(MethodEntity me, Method method){
-    	if(me.getName().equals(method.getName()) &&
-    	   me.getReturnClass().getName().equals(method.getReturnType().getName())){
+    	if(me.getName().equals(method.getName())){
     		AClass[] mePara = me.getArgClasses();
     		Class<?>[] methodPara = method.getParameterTypes();
     		if(mePara.length == methodPara.length){
@@ -70,9 +155,7 @@ public class MethodUtils {
      * @return
      */
     public static boolean methodEqualWithoutOwner(Method m1, Method m2){
-        if(m1.getName().equals(m2.getName()) &&
-           m1.getReturnType().equals(m2.getReturnType())){
-            /* Avoid unnecessary cloning */
+        if(m1.getName().equals(m2.getName())){
             Class<?>[] params1 = m1.getParameterTypes();
             Class<?>[] params2 = m2.getParameterTypes();
             if (params1.length == params2.length) {
