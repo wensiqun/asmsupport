@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.operators.asmdirect.Marker;
 import cn.wensiqun.asmsupport.operators.asmdirect.NOP;
 import cn.wensiqun.asmsupport.operators.asmdirect.Store;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
-import cn.wensiqun.asmsupport.utils.Stack;
+import cn.wensiqun.asmsupport.utils.memory.Stack;
 
 /**
  * 

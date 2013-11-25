@@ -24,8 +24,8 @@ import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.loader.ClassModifierClassLoader;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ClassFileUtils;
-import cn.wensiqun.asmsupport.utils.StringUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassFileUtils;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 
 public class ClassModifier extends AbstractClassContext {

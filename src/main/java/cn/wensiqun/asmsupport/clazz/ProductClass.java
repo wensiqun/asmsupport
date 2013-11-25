@@ -14,8 +14,8 @@ import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**

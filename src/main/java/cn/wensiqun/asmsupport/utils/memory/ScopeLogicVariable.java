@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 
 import org.apache.commons.lang3.ArrayUtils;

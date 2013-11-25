@@ -94,8 +94,8 @@ import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
 import cn.wensiqun.asmsupport.operators.util.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.operators.variable.LocalVariableCreator;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.Scope;
-import cn.wensiqun.asmsupport.utils.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.utils.memory.Scope;
+import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
 
 /**
  * @author 温斯群(Joe Wen)

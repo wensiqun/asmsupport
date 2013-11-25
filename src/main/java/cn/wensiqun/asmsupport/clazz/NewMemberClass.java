@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 public abstract class NewMemberClass extends AClass {

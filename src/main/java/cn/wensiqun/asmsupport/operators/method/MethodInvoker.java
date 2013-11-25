@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.operators.array.ArrayValue;
 import cn.wensiqun.asmsupport.operators.numerical.crement.AbstractCrement;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 /**
  * 

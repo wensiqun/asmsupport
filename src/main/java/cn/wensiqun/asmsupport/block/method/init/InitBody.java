@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.method.MethodInvoker;
 import cn.wensiqun.asmsupport.operators.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 /**
  * 

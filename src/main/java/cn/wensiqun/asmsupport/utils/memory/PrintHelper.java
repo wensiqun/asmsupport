@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 /**
  * @author 温斯群(Joe Wen)

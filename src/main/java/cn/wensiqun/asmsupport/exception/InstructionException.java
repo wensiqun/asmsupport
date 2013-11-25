@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.exception;
 
-import cn.wensiqun.asmsupport.utils.Stack;
+import cn.wensiqun.asmsupport.utils.memory.Stack;
 
 public class InstructionException extends RuntimeException {
 

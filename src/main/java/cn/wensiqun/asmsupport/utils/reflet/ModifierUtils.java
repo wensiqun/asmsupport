@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.reflet;
 
 import java.lang.reflect.Modifier;
 

@@ -17,9 +17,9 @@ import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
 import cn.wensiqun.asmsupport.operators.variable.LocalVariableCreator;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.Component;
-import cn.wensiqun.asmsupport.utils.Scope;
-import cn.wensiqun.asmsupport.utils.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.utils.memory.Component;
+import cn.wensiqun.asmsupport.utils.memory.Scope;
+import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
 
 public abstract class SuperMethodBody extends ProgramBlock {
 

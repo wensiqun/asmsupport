@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.Method;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 /**
  * 

@@ -17,6 +17,7 @@ import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.Method;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
 
 /**
  * 

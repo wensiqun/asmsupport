@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.operators.Operators;
-import cn.wensiqun.asmsupport.utils.Stack;
+import cn.wensiqun.asmsupport.utils.memory.Stack;
 
 
 /**

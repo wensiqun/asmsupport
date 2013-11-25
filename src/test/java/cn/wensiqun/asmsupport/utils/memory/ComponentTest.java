@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 import junit.framework.Assert;
 
@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.utils.Component;
+import cn.wensiqun.asmsupport.utils.memory.Component;
 
 public class ComponentTest {
 

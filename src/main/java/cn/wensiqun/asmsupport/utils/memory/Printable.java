@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 /**
  * 实现这个接口表示能够打印

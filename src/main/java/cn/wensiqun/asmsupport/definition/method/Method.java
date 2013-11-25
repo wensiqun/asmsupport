@@ -20,10 +20,10 @@ import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.operators.util.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.LocalVariables;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
-import cn.wensiqun.asmsupport.utils.Scope;
-import cn.wensiqun.asmsupport.utils.Stack;
+import cn.wensiqun.asmsupport.utils.memory.LocalVariables;
+import cn.wensiqun.asmsupport.utils.memory.Scope;
+import cn.wensiqun.asmsupport.utils.memory.Stack;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**

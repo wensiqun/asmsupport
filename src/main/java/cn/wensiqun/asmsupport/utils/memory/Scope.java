@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 import java.util.ArrayList;
 import java.util.List;

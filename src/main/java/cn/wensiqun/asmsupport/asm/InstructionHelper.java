@@ -13,7 +13,7 @@ import org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
-import cn.wensiqun.asmsupport.utils.LocalVariables;
+import cn.wensiqun.asmsupport.utils.memory.LocalVariables;
 
 /**
  * 字节码操作的帮助类。 这里只需要操作栈。而本地变量的操作已经由LcoalVariables和ScopeLogicVariable封装完成了。

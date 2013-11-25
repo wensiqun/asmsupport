@@ -16,9 +16,9 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.creator.ClassModifier;
 import cn.wensiqun.asmsupport.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**

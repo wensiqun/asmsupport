@@ -11,9 +11,9 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.exception.InstructionException;
-import cn.wensiqun.asmsupport.utils.Stack;
-import cn.wensiqun.asmsupport.utils.Stackable;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
+import cn.wensiqun.asmsupport.utils.memory.Stack;
+import cn.wensiqun.asmsupport.utils.memory.Stackable;
 
 public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes{
 

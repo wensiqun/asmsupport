@@ -15,10 +15,10 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.exception.ClassException;
-import cn.wensiqun.asmsupport.utils.ClassFileUtils;
-import cn.wensiqun.asmsupport.utils.MethodUtils;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
-import cn.wensiqun.asmsupport.utils.StringUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassFileUtils;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 	

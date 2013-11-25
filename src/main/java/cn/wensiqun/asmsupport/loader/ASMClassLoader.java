@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import cn.wensiqun.asmsupport.utils.StringUtils;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 
 /**

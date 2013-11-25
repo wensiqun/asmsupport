@@ -1,7 +1,8 @@
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.lang;
 
 import java.io.File;
 import java.io.FileOutputStream;
+
 
 public class ClassFileUtils {
 	

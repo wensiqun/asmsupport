@@ -6,7 +6,7 @@ import org.objectweb.asm.Opcodes;
 
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**

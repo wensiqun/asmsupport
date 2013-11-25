@@ -9,8 +9,8 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.entity.LocalVariableEntity;
 import cn.wensiqun.asmsupport.entity.VariableEntity;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
-import cn.wensiqun.asmsupport.utils.Scope;
-import cn.wensiqun.asmsupport.utils.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.utils.memory.Scope;
+import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量

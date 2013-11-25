@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ClassUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 /**
  * 

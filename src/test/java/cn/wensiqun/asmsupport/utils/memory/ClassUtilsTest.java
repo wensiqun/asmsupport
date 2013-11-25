@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.memory;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.utils.ClassUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 public class ClassUtilsTest {
 

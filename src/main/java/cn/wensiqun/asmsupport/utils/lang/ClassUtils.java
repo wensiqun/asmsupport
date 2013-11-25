@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.lang;
 
 import java.io.IOException;
 import java.io.InputStream;

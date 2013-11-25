@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.wensiqun.asmsupport.utils;
+package cn.wensiqun.asmsupport.utils.collections;
 
 import java.util.List;
 import java.util.Map;

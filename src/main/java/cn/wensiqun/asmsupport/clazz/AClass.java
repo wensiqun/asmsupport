@@ -13,9 +13,9 @@ import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.ASConstant;
-import cn.wensiqun.asmsupport.utils.ClassUtils;
 import cn.wensiqun.asmsupport.utils.chooser.IMethodChooser;
 import cn.wensiqun.asmsupport.utils.chooser.MethodChooser;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 
 /**
