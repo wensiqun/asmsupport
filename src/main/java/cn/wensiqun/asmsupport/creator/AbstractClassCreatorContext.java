@@ -227,10 +227,6 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         Method[] methods = clazz.getDeclaredMethods();
         if(ArrayUtils.isNotEmpty(methods)){
         	for(Method m : methods){
-        		if(m.isBridge()){
-        			continue;
-        		}
-        		
         		if(ModifierUtils.isAbstract(m.getModifiers())){
         			if(!containMethod(abstractMethods, m)){
         				abstractMethods.add(m);

@@ -1,6 +1,5 @@
 package cn.wensiqun.asmsupport.utils.reflet;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -20,7 +19,7 @@ public class ModifierUtilsTest {
 
 	@Test
 	public void testIsBridge() {
-		Assert.assertTrue(ModifierUtils.isBridge(Opcodes.ACC_BRIDGE + Opcodes.ACC_VOLATILE));
+		Assert.assertTrue(ModifierUtils.isBridge(Opcodes.ACC_BRIDGE));
 	}
 
 }

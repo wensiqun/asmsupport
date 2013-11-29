@@ -295,7 +295,7 @@ public class AClassUtils {
         for (; actuallyMethodOwner != null; actuallyMethodOwner = actuallyMethodOwner.getSuperclass()) {
             mes = actuallyMethodOwner.getDeclaredMethods();
             for(int i=0; i<mes.length; i++){
-                if(mes[i].getName().equals(name) && mes[i].isVarArgs() && !mes[i].isBridge()){
+                if(mes[i].getName().equals(name) && mes[i].isVarArgs()){
                     methods.add(MethodEntity.methodToMethodEntity(invoked, mes[i]));
                 }
             }
