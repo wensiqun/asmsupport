@@ -1,8 +1,6 @@
 package cn.wensiqun.asmsupport.creator;
 
 import cn.wensiqun.asmsupport.Executeable;
-import cn.wensiqun.asmsupport.clazz.ProductClass;
-import cn.wensiqun.asmsupport.clazz.SemiClass;
 
 /**
  * 
@@ -14,15 +12,7 @@ public interface IMemberCreator extends Executeable{
     /**
      * 创建逻辑实体
      * @param cv
-     * @param owner
      */
-    public void create(IClassContext cv, SemiClass owner);
+    public void create(IClassContext cv);
 
-    /**
-     * 创建逻辑实体
-     * @param cv
-     * @param owner
-     */
-    void create(IClassContext cv, ProductClass owner);
-    
 }

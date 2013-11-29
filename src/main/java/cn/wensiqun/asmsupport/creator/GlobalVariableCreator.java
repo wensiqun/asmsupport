@@ -2,8 +2,6 @@ package cn.wensiqun.asmsupport.creator;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.clazz.ProductClass;
-import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
 
 /**
@@ -34,20 +32,12 @@ public class GlobalVariableCreator implements IGlobalVariableCreator {
     }
 
     @Override
-    public void create(IClassContext cv, SemiClass owner) {
-		create(cv, (NewMemberClass)owner);
-    }
-
-	@Override
-	public void create(IClassContext cv, ProductClass owner) {
-		create(cv, (NewMemberClass)owner);
-	}
-	
-	private void create(IClassContext cv, NewMemberClass owner){
-        this.context = cv;
+    public void create(IClassContext cv) {
+    	this.context = cv;
+    	NewMemberClass owner = cv.getCurrentClass();
         fe = new GlobalVariableEntity(owner, fieldClass, modifiers, name);
         owner.addGlobalVariableEntity(fe);
-	}
+    }
     
     @Override
     public void prepare() {

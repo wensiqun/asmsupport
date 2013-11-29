@@ -8,6 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
@@ -18,6 +19,45 @@ import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
  *
  */
 public class MethodUtils {
+	
+	/**
+	 * 获取哪个方法被传入方法重写
+	 * 
+	 * @param overrideMethod
+	 * @return
+	 */
+	public static Method getOverriddenMethod(cn.wensiqun.asmsupport.definition.method.Method overrideMethod){
+		Class<?> superClass = overrideMethod.getMethodOwner().getSuperClass();
+		MethodEntity entity = overrideMethod.getMethodEntity();
+		String methodName = entity.getName();
+		AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
+		Class<?>[] argTypes = new Class[argClasses.length];
+		for(int i=0; i<argTypes.length; i++){
+			AClass argAclass = argClasses[i];
+			if(argAclass instanceof ProductClass){
+				argTypes[i] = ((ProductClass)argAclass).getReallyClass();
+			}else{
+				return null;
+			}
+		}
+		
+		for(; superClass != null && !Object.class.equals(superClass);){
+			try {
+				Method method = superClass.getDeclaredMethod(methodName
+						, argTypes);
+
+				AClass callerOwner = overrideMethod.getMethodOwner();
+				AClass calledOwner = AClassFactory.getProductClass(method.getDeclaringClass());
+				if(AClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifiers())){
+					return method;
+				}
+				
+			} catch (NoSuchMethodException e) {
+				superClass = superClass.getSuperclass();
+			}
+		}
+	    return null;	
+	}
 	
 	
 	/**
@@ -43,36 +83,64 @@ public class MethodUtils {
 	
 	
 	/**
+	 * 
+	 * @param implementMethod
+	 * @return
+	 */
+	public static Method[] getImplementedMethod(cn.wensiqun.asmsupport.definition.method.Method implementMethod){
+		MethodEntity entity = implementMethod.getMethodEntity();
+		String methodName = entity.getName();
+		AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
+		Class<?>[] argTypes = new Class[argClasses.length];
+		for(int i=0; i<argTypes.length; i++){
+			AClass argAclass = argClasses[i];
+			if(argAclass instanceof ProductClass){
+				argTypes[i] = ((ProductClass)argAclass).getReallyClass();
+			}else{
+				return null;
+			}
+		}
+		
+		List<Method> foundList = new ArrayList<Method>();
+		List<Class<?>> interfaces = AClassUtils.getAllInterfaces(implementMethod.getMethodOwner());
+		
+		for(Class<?> inter : interfaces)
+		{
+			try {
+				Method method = inter.getDeclaredMethod(methodName, argTypes);
+				if(!foundList.contains(method)){
+					foundList.add(method);
+				}
+			} catch (NoSuchMethodException e) {
+			}
+		}
+		
+		return foundList.toArray(new Method[foundList.size()]);
+	}
+	
+	
+	/**
 	 * 获取被实现的接口
 	 * 
 	 * @param implementMethod
 	 * @return
 	 */
 	public static Method[] getImplementedMethod(Method implementMethod){
-		List<Method> list = new ArrayList<Method>();
+		List<Method> foundList = new ArrayList<Method>();
 		List<Class<?>> interfaces = ClassUtils.getAllInterfaces(implementMethod.getDeclaringClass());
 		
 		for(Class<?> inter : interfaces)
 		{
 			try {
 				Method method = inter.getDeclaredMethod(implementMethod.getName(), implementMethod.getParameterTypes());
-				if(visible(implementMethod, method)){
-					boolean alreadyExist = false;
-					for(Method found : list){
-						if(methodSignatureEqualWithoutOwner(found, method)){
-							alreadyExist = true;
-							break;
-						}
-					}
-					if(!alreadyExist){
-						list.add(method);
-					}
+				if(!foundList.contains(method)){
+					foundList.add(method);
 				}
 			} catch (NoSuchMethodException e) {
 			}
 		}
 		
-		return list.toArray(new Method[list.size()]);
+		return foundList.toArray(new Method[foundList.size()]);
 	}
 	
 

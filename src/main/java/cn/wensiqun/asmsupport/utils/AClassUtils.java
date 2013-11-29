@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.objectweb.asm.Opcodes;
 
@@ -17,7 +18,9 @@ import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.Method;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
+import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 /**
  * 
@@ -292,7 +295,7 @@ public class AClassUtils {
         for (; actuallyMethodOwner != null; actuallyMethodOwner = actuallyMethodOwner.getSuperclass()) {
             mes = actuallyMethodOwner.getDeclaredMethods();
             for(int i=0; i<mes.length; i++){
-                if(mes[i].getName().equals(name) && (mes[i].getModifiers() & Opcodes.ACC_VARARGS) != 0){
+                if(mes[i].getName().equals(name) && mes[i].isVarArgs() && !mes[i].isBridge()){
                     methods.add(MethodEntity.methodToMethodEntity(invoked, mes[i]));
                 }
             }
@@ -416,5 +419,39 @@ public class AClassUtils {
                 throw new IllegalArgumentException("Type mismatch: cannot convert from " + from + " to " + to + " you can add a cast");
             }            
         }
+    }
+    
+    /**
+     * 
+     * @param aclass
+     * @return
+     */
+    public static List<Class<?>> getAllInterfaces(AClass aclass){
+    	Class<?>[] interfaces = aclass.getInterfaces();
+    	Class<?> superClass = aclass.getSuperClass();
+		List<Class<?>> interfaceColl = new ArrayList<Class<?>>();
+		CollectionUtils.addAll(interfaceColl, interfaces);
+		for(Class<?> inter : interfaces){
+			ClassUtils.getAllInterfaces(interfaceColl, inter);
+		}
+		ClassUtils.getAllInterfaces(interfaceColl, superClass);
+		return interfaceColl;
+    }
+    
+    /**
+     * 
+     * @param clses
+     * @return
+     */
+    public static AClass[] convertToAClass(Class<?>[] clses){
+    	if(clses == null){
+    		return new AClass[0];
+    	}
+    	
+        AClass[] aclasses = new AClass[clses.length];
+        for(int i=0; i<clses.length; i++){
+            aclasses[i] = AClassFactory.getProductClass(clses[i]);
+        }
+        return aclasses;
     }
 }

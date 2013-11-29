@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.NoSuchMethod;
 
-public class Main {
+public class MainTest {
 
 	public static Class<?> generate(IClassContext creator){
 		creator.setClassOutPutPath(".//target//");

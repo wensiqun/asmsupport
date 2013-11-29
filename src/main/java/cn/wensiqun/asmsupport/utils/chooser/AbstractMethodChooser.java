@@ -540,17 +540,17 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                 try {
                 	AClass methodReturnType = null;
                 	int methodMidifiers;
-                	AClass[] exceptionTypes;
+                	AClass[] exceptionAclasses;
                 	
                 	if(name.equals(ASConstant.INIT)){
                         Constructor<?> constructor = actuallyMethodOwner.getDeclaredConstructor(argclses);
                         methodMidifiers = constructor.getModifiers();
-                        exceptionTypes = convertToAClass(constructor.getExceptionTypes());
+                        exceptionAclasses = AClassUtils.convertToAClass(constructor.getExceptionTypes());
                 	}else{
                         Method method = actuallyMethodOwner.getDeclaredMethod(name, argclses);
                         methodReturnType = AClassFactory.getProductClass(method.getReturnType());
                         methodMidifiers = method.getModifiers();
-                        exceptionTypes = convertToAClass(method.getExceptionTypes());
+                        exceptionAclasses = AClassUtils.convertToAClass(method.getExceptionTypes());
                 	}
                     
                     if(AClassUtils.visible(invoker, invoked, AClassFactory.getProductClass(actuallyMethodOwner),
@@ -564,7 +564,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                         }
                         me = new MethodEntity(name, AClassFactory.getProductClass(javaClass),
                                 AClassFactory.getProductClass(actuallyMethodOwner), pcs,
-                                arguNames, methodReturnType, exceptionTypes, methodMidifiers);
+                                arguNames, methodReturnType, exceptionAclasses, methodMidifiers);
                         
                         mes.add(me);
                         
@@ -692,12 +692,12 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
             	if(name.equals(ASConstant.INIT)){
                     Constructor<?> constructor = actually.getDeclaredConstructor();
                     methodMidifiers = constructor.getModifiers();
-                    exceptionTypes = convertToAClass(constructor.getExceptionTypes());
+                    exceptionTypes = AClassUtils.convertToAClass(constructor.getExceptionTypes());
             	}else{
                     Method method = actually.getDeclaredMethod(name);
                     methodReturnType = AClassFactory.getProductClass(method.getReturnType());
                     methodMidifiers = method.getModifiers();
-                    exceptionTypes = convertToAClass(method.getExceptionTypes());
+                    exceptionTypes = AClassUtils.convertToAClass(method.getExceptionTypes());
             	}
             	
                 AClass invoked =  AClassFactory.getProductClass(cls);
@@ -720,14 +720,6 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         return null;
     }
     
-    protected AClass[] convertToAClass(Class<?>[] clses){
-        AClass[] aclasses = new AClass[clses.length];
-        for(int i=0; i<clses.length; i++){
-            aclasses[i] = AClassFactory.getProductClass(clses[i]);
-        }
-        return aclasses;
-    }
-
     @Override
     public MethodEntity chooseMethod() {
         if(this.argumentTypes == null || this.argumentTypes.length == 0){

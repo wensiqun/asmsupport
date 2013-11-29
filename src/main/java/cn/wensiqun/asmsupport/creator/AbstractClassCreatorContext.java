@@ -11,10 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
 
-import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.exception.ClassException;
+import cn.wensiqun.asmsupport.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.utils.lang.ClassFileUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
@@ -27,7 +27,6 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     protected SemiClass sc;
 
     protected boolean haveInitMethod;
-    
     
     public AbstractClassCreatorContext(int version, int access, String name,
             Class<?> superCls, Class<?>[] interfaces) {
@@ -71,20 +70,20 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 
         // create default constructor
         checkOrCreateDefaultConstructor();
-
+        
         // create field
         for (IMemberCreator ifc : fieldCreators) {
-            ifc.create(this, sc);
+            ifc.create(this);
         }
 
         // create method
         for (IMethodCreator imc : methodCreaters) {
-            imc.create(this, sc);
+            imc.create(this);
         }
         
-        checkUnImplementMethod();
-        
         checkOverriedAndCreateBridgeMethod();
+        
+        checkUnImplementMethod();
 
         for (IMemberCreator ifc : fieldCreators) {
             ifc.prepare();
@@ -93,7 +92,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         for (IMethodCreator imc : methodCreaters) {
             imc.prepare();
         }
-
+        
         for (IMemberCreator ifc : fieldCreators) {
             ifc.execute();
         }
@@ -111,7 +110,6 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         if(LOG.isDebugEnabled()){
         	LOG.debug("End create class : " + sc.getName().replace('.', '/'));
         }
-        //cleanCach();
         
         return loadClass(sc.getName(), code);
     }
@@ -124,6 +122,8 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     
     protected abstract void createDefaultConstructor();
     
+    
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkUnImplementMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
     /**
      * 
@@ -159,7 +159,9 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     		}
     	}
     	
-    	List<cn.wensiqun.asmsupport.definition.method.Method> scImplMethods = sc.getMethods();
+    	//#30205 [BUG] 新建方法中无法调用重写的方法 
+    	List<cn.wensiqun.asmsupport.definition.method.Method> scImplMethods = 
+    			new ArrayList<cn.wensiqun.asmsupport.definition.method.Method>(sc.getMethods());
     	for(int i=0; i<abstractMethods.size(); ){
     		Method abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
@@ -224,6 +226,10 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         Method[] methods = clazz.getDeclaredMethods();
         if(ArrayUtils.isNotEmpty(methods)){
         	for(Method m : methods){
+        		if(m.isBridge()){
+        			continue;
+        		}
+        		
         		if(ModifierUtils.isAbstract(m.getModifiers())){
         			if(!containMethod(abstractMethods, m)){
         				abstractMethods.add(m);
@@ -248,31 +254,27 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     }
 
     
+   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>End checkUnImplementMethod>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    
+    
+
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkOverriedAndCreateBridgeMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     /**
      * 检测那些新建的方法为重写方法，如果存在返回类型不同，则抛异常或者创建bridge方法
      * 
      */
     private void checkOverriedAndCreateBridgeMethod(){
-    	
+    	List<cn.wensiqun.asmsupport.definition.method.Method> methods = 
+    			new ArrayList<cn.wensiqun.asmsupport.definition.method.Method>(sc.getMethods());
+    	for(cn.wensiqun.asmsupport.definition.method.Method validateMethod : methods){
+    		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
+    		List<MethodCreator> creatorList = obmc.getList();
+    		for(MethodCreator mc : creatorList){
+    			mc.create(this);
+    		}
+    		this.methodCreaters.addAll(creatorList);
+    	}
     }
     
-    /**
-     * 判断新创建的方法是否是重写的方法，如果是则返回被重写的方法。
-     * 
-     * @param newMethod
-     * @return
-     */
-    private Method isOverried(cn.wensiqun.asmsupport.definition.method.Method newMethod){
-    	return null;
-    }
-    
-    /**
-     * 创建bridge方法
-     * 
-     * @param newMethod 新创建重写的方法
-     * @param superReturnType 被重写的方法在父类中的返回类型。
-     */
-    private void createBridgeMethod(cn.wensiqun.asmsupport.definition.method.Method newMethod, AClass superReturnType){
-    	
-    }
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>End checkOverriedAndCreateBridgeMethod>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

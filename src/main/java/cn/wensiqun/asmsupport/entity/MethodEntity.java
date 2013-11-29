@@ -7,6 +7,7 @@ import org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.AClassUtils;
 
 
 /**
@@ -36,7 +37,7 @@ public class MethodEntity implements Cloneable {
     private int modifier;
 
     private AClass[] exceptions;
-
+    
     private AClass returnClass;
 
     private String methodStr;
@@ -114,11 +115,14 @@ public class MethodEntity implements Cloneable {
             argNames[i] = "arg" + i;
         }
 
+        Class<?>[] exceptionTypes = m.getExceptionTypes();
+        AClass[] exceptionAclasses = AClassUtils.convertToAClass(exceptionTypes);
+        
         MethodEntity me = new MethodEntity(m.getName(), owner,
                 AClassFactory.getProductClass(m.getDeclaringClass()), arguments,
                 argNames, AClassFactory.getProductClass(m.getReturnType()),
-                null, m.getModifiers());
-
+                exceptionAclasses, m.getModifiers());
+        
         return me;
     }
     

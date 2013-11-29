@@ -65,9 +65,6 @@ public class Method {
     /** 当前方法需要抛出的异常 */
     private ThrowExceptionContainer throwExceptions;
     
-    /** 当前method所属的类 */
-    private NewMemberClass methodOwner;
-    
     /** 当前方法的参数 */
     private LocalVariable[] arguments;
     
@@ -115,7 +112,6 @@ public class Method {
             this.methodBody.setScope(new Scope(this.locals, null));
             this.methodBody.setOwnerBlock(null);
             this.methodBody.setInsnHelper(insnHelper);
-        	methodOwner = context.getCurrentClass();
         }
     }
     
@@ -227,7 +223,7 @@ public class Method {
     }
 
 	public NewMemberClass getMethodOwner() {
-		return methodOwner;
+		return context.getCurrentClass();
 	}
 
 	public LocalVariable[] getArguments() {

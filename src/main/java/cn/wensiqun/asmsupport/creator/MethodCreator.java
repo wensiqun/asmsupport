@@ -2,10 +2,7 @@ package cn.wensiqun.asmsupport.creator;
 
 import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.clazz.ProductClass;
-import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.Method;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -22,7 +19,7 @@ public class MethodCreator implements IMethodCreator {
 	private AClass[] arguments;
 	private String[] argNames;
 	private AClass returnClass;
-	private Class<?>[] exceptions;
+	private AClass[] exceptions;
 	private int access;
 	private SuperMethodBody methodBody;
 	private MethodEntity me;
@@ -34,21 +31,21 @@ public class MethodCreator implements IMethodCreator {
 	}
 	
 	public static MethodCreator methodCreatorForModify(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, Class<?>[] exceptions, int access, SuperMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_MODIFY);
 		return mc;
 	}
 	
 	public static MethodCreator methodCreatorForAdd(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, Class<?>[] exceptions, int access, SuperMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_ADD);
 		return mc;
 	}
 	
 	private MethodCreator(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, Class<?>[] exceptions, int access, SuperMethodBody mb) {
+			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb) {
 		super();
 		this.name = name;
 		this.arguments = arguments;
@@ -72,32 +69,14 @@ public class MethodCreator implements IMethodCreator {
 	}
 
 	@Override
-	public void create(IClassContext context, SemiClass owner) {
-		create(context, (NewMemberClass)owner);
-	};
-
-	@Override
-	public void create(IClassContext context, ProductClass owner) {
-		create(context, (NewMemberClass)owner);
-	}
-	
-	private void create(IClassContext context, NewMemberClass owner){
-		AClass[] exces;
-		if(exceptions == null){
-			exces = new AClass[0];
-		}else{
-			exces = new AClass[exceptions.length];
-
-			for (int i = 0; i < exceptions.length; i++) {
-				exces[i] = AClassFactory.getProductClass(exceptions[i]);
-			}
-		}
-		
-		me = new MethodEntity(name, owner, owner, arguments, argNames, returnClass, exces, access);
-
+	public void create(IClassContext context){
+		NewMemberClass owner = context.getCurrentClass();
+		me = new MethodEntity(name, owner, owner, arguments, argNames, returnClass, exceptions, access);
 		method = new Method(me, context, methodBody, mtdCrtMode);
 		if(method.getMethodEntity().getName().equals(ASConstant.INIT)){
 			owner.addConstructor(method);
+		}else if(ModifierUtils.isBridge(method.getMethodEntity().getModifier())){
+			owner.getBridgeMethod().add(method);
 		}else{
 			owner.addMethod(method);
 		}
@@ -119,7 +98,7 @@ public class MethodCreator implements IMethodCreator {
 		return returnClass;
 	}
 
-	public Class<?>[] getExceptions() {
+	public AClass[] getExceptions() {
 		return exceptions;
 	}
 

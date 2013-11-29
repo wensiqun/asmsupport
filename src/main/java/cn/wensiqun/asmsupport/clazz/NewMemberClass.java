@@ -60,7 +60,7 @@ public abstract class NewMemberClass extends AClass {
     
     public List<Method> getBridgeMethod() {
     	if(bridgeMethod == null){
-   	        methods = new ArrayList<Method>();
+    		bridgeMethod = new ArrayList<Method>();
     	}
 		return bridgeMethod;
 	}

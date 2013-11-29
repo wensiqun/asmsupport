@@ -30,4 +30,8 @@ public class ModifierUtils extends Modifier {
     public static boolean isVarargs(int mod){
     	return (mod & Opcodes.ACC_VARARGS) != 0;
     }
+    
+    public static boolean isBridge(int mod){
+    	return (mod & Opcodes.ACC_BRIDGE) != 0;
+    }
 }

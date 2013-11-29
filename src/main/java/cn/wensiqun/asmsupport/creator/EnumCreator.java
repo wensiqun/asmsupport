@@ -91,7 +91,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @return
      */
     public final void createMethod(String name, AClass[] argClasses,
-            String[] argNames, AClass returnClass, Class<?>[] exceptions,
+            String[] argNames, AClass returnClass, AClass[] exceptions,
             int access, CommonMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
@@ -112,7 +112,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @return
      */
     public void createStaticMethod(String name, AClass[] argClasses,
-            String[] argNames, AClass returnClass, Class<?>[] exceptions,
+            String[] argNames, AClass returnClass, AClass[] exceptions,
             int access, StaticMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;

@@ -21,7 +21,7 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
 	
     protected ClassWriter cw;
     
-    protected void checkStaticBlock(){
+	protected void checkStaticBlock(){
     	if(existedStaticBlock){
     		throw new UnsupportedOperationException("the static block has alreay exist this method!");
     	}
@@ -51,4 +51,5 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         }
         return clazz;
     }
+    
 }

@@ -281,14 +281,13 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 								forName(Type.getReturnType(desc).getDescriptor()));
 						
 
-						AClass[] exceptionArray = new AClass[exceptions.length];
+						AClass[] exceptionAclassArray = new AClass[exceptions.length];
 						for(int i=0; i<exceptions.length; i++){
-							exceptionArray[i] = AClassFactory.getProductClass(forName(exceptions[i]));
+							exceptionAclassArray[i] = AClassFactory.getProductClass(forName(exceptions[i]));
 						}
 						
 						MethodEntity me = new MethodEntity(
-					    		name, owner, owner, aclass, args, returnType, exceptionArray, access);
-						
+					    		name, owner, owner, aclass, args, returnType, exceptionAclassArray, access);
 						list.add(me);
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
@@ -317,9 +316,9 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 	
 	
 	/**
-	 * 递归获取class的所有接口
+	 * 递归获取class的所有接口，并且保存到传入的List中
 	 */
-	private static void getAllInterfaces(List<Class<?>> interfaceColl, Class<?> clazz){
+	public static void getAllInterfaces(List<Class<?>> interfaceColl, Class<?> clazz){
 		if(clazz == null || Object.class.equals(clazz)){
 			return;
 		}

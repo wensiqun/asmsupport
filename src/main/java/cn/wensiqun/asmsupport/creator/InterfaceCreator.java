@@ -32,7 +32,7 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	 * @param returnClass method return type, if null than indicate void
 	 * @param exceptions what exception you want explicit throw.
 	 */
-	public void createMethod(String name, AClass[] argClasses, AClass returnClass, Class<?>[] exceptions) {
+	public void createMethod(String name, AClass[] argClasses, AClass returnClass, AClass[] exceptions) {
 		String[] argNames = new String[argClasses.length];
 		for(int i=0; i<argNames.length; i++){
 			argNames[i] = "arg" + i;

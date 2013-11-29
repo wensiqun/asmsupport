@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.loader.ClassModifierClassLoader;
+import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.lang.ClassFileUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
@@ -58,17 +59,17 @@ public class ClassModifier extends AbstractClassContext {
 		
         // create field
         for (IMemberCreator ifc : fieldCreators) {
-            ifc.create(this, productClass);
+            ifc.create(this);
         }
 
         // create method
         for (IMethodCreator imc : methodCreaters) {
-            imc.create(this, productClass);
+            imc.create(this);
         }
         
         // modify method
         for (IMethodCreator imc : methodModifiers) {
-            imc.create(this, productClass);
+            imc.create(this);
         }
 
 		if(modifyConstructorBodies != null){
@@ -159,15 +160,19 @@ public class ClassModifier extends AbstractClassContext {
 				modifyConstructorBodies.add(mb);
 				
 				Constructor<?> constructor = clazz.getDeclaredConstructor(argClasses);
-				/*Type[] argumentTypes = new Type[argClasses.length];
-				for(int i=0; i<argClasses.length; i++){
-					argumentTypes[i] = Type.getType(argClasses[i]);
-				}*/
-				methodCreator = MethodCreator.methodCreatorForModify(ASConstant.INIT, argCls, defaultArgNames, AClass.VOID_ACLASS, constructor.getExceptionTypes(),
+				methodCreator = MethodCreator.methodCreatorForModify(ASConstant.INIT, 
+						argCls, 
+						defaultArgNames, 
+						AClass.VOID_ACLASS, 
+						AClassUtils.convertToAClass(constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{
 				Method method = clazz.getDeclaredMethod(name, argClasses);
-				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, getProductClass(method.getReturnType()), method.getExceptionTypes(),
+				methodCreator = MethodCreator.methodCreatorForModify(name, 
+						argCls, 
+						defaultArgNames, 
+						getProductClass(method.getReturnType()), 
+						AClassUtils.convertToAClass(method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}
 			
@@ -189,7 +194,7 @@ public class ClassModifier extends AbstractClassContext {
      * @return
      */
     public final void createMethod(String name, AClass[] argClasses,
-            String[] argNames, AClass returnClass, Class<?>[] exceptions,
+            String[] argNames, AClass returnClass, AClass[] exceptions,
             int access, CommonMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
@@ -210,7 +215,7 @@ public class ClassModifier extends AbstractClassContext {
      * @return
      */
     public void createStaticMethod(String name, AClass[] argClasses,
-            String[] argNames, AClass returnClass, Class<?>[] exceptions,
+            String[] argNames, AClass returnClass, AClass[] exceptions,
             int access, StaticMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
