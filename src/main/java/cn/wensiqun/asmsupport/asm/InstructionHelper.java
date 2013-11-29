@@ -11,6 +11,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
 import cn.wensiqun.asmsupport.utils.memory.LocalVariables;
@@ -30,11 +31,11 @@ public abstract class InstructionHelper {
     private boolean castAndbox = true;
     
     private StackLocalMethodVisitor mv;
-    private cn.wensiqun.asmsupport.definition.method.Method method;
+    private AMethod method;
     /*protected Stack stack;*/
     protected LocalVariables locals;
 
-    public InstructionHelper(MethodVisitor mv, cn.wensiqun.asmsupport.definition.method.Method method) {
+    public InstructionHelper(MethodVisitor mv, AMethod method) {
         super();
         this.mv = new StackLocalMethodVisitor(mv, method.getStack());
         this.method = method;
@@ -42,7 +43,7 @@ public abstract class InstructionHelper {
         /*this.stack = this.method.getStack();*/
     }
 
-    public cn.wensiqun.asmsupport.definition.method.Method getMethod() {
+    public AMethod getMethod() {
         return method;
     }
 

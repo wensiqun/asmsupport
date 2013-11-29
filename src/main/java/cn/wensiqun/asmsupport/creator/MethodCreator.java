@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.creator;
 import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
@@ -23,7 +23,7 @@ public class MethodCreator implements IMethodCreator {
 	private int access;
 	private SuperMethodBody methodBody;
 	private MethodEntity me;
-	private Method method;
+	private AMethod method;
 	private int mtdCrtMode;
 	
 	void setMethodCreateMode(int mode){
@@ -72,7 +72,7 @@ public class MethodCreator implements IMethodCreator {
 	public void create(IClassContext context){
 		NewMemberClass owner = context.getCurrentClass();
 		me = new MethodEntity(name, owner, owner, arguments, argNames, returnClass, exceptions, access);
-		method = new Method(me, context, methodBody, mtdCrtMode);
+		method = new AMethod(me, context, methodBody, mtdCrtMode);
 		if(method.getMethodEntity().getName().equals(ASConstant.INIT)){
 			owner.addConstructor(method);
 		}else if(ModifierUtils.isBridge(method.getMethodEntity().getModifier())){

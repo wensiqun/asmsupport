@@ -9,7 +9,7 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
@@ -42,7 +42,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
         //******************************phase 1*************************************
         
         //find in current class
-        List<Method> methods = new ArrayList<Method>(methodOwner.getMethods());
+        List<AMethod> methods = new ArrayList<AMethod>(methodOwner.getMethods());
         //Collections.copy(methods, methodOwner.getMethods());
         TypeTreeNode[] ttns;
 
@@ -146,7 +146,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
 
     @Override
     protected MethodEntity foundMethodWithNoArguments() {
-        for (Method m : methodOwner.getMethods()) {
+        for (AMethod m : methodOwner.getMethods()) {
             AClass[] actual = m.getMethodEntity().getArgClasses();
             if (m.getMethodEntity().getName().equals(name) && 
                 (actual == null ||    

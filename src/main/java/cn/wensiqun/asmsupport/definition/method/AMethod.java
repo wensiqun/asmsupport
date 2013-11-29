@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
  * @author 温斯群(Joe Wen)
  * 
  */
-public class Method {
+public class AMethod {
 
 	/** 方法实体 */
     private MethodEntity me;
@@ -84,7 +84,7 @@ public class Method {
      * @param methodBody
      * @param mode
      */
-    public Method(MethodEntity me, IClassContext context, SuperMethodBody methodBody, int mode) {
+    public AMethod(MethodEntity me, IClassContext context, SuperMethodBody methodBody, int mode) {
         super();
         this.me = me;
         this.context = context;

@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.definition.AbstractExecuteable;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
@@ -128,7 +128,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     
     protected InstructionHelper insnHelper;
 
-    protected Method method;
+    protected AMethod method;
     
     /** 当前block是否已经返回 或者已经抛出异常了 */
     protected boolean returned;
@@ -405,7 +405,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
         return this.ownerBlock;
     }
     
-    public Method getMethod() {
+    public AMethod getMethod() {
         return method;
     }
     

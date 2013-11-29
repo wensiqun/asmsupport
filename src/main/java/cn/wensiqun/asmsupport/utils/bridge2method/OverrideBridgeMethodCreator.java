@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.creator.MethodCreator;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
@@ -24,9 +24,9 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
  */
 public class OverrideBridgeMethodCreator {
 	
-	private Method validateMethod;
+	private AMethod validateMethod;
 	
-	public OverrideBridgeMethodCreator(Method validateMethod) {
+	public OverrideBridgeMethodCreator(AMethod validateMethod) {
 		this.validateMethod = validateMethod;
 	}
 
@@ -75,7 +75,7 @@ public class OverrideBridgeMethodCreator {
     	return false;
     }
     
-    private boolean needBridge(Method method, java.lang.reflect.Method parent){
+    private boolean needBridge(AMethod method, java.lang.reflect.Method parent){
     	Type implReturnType = method.getMethodEntity().getReturnType();
     	Class<?> parentReturnClass = parent.getReturnType();
     	Type parentReturnType = parentReturnClass == null ? Type.VOID_TYPE : Type.getType(parentReturnClass);
@@ -91,7 +91,7 @@ public class OverrideBridgeMethodCreator {
      * @param method 新创建重写的方法
      * @param overriden 被重写的方法
      */
-    private MethodCreator createBridgeMethodCreator(Method method, java.lang.reflect.Method overriden){
+    private MethodCreator createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
     	final String name = method.getMethodEntity().getName();
     	
     	AClass[] argClasses = method.getMethodEntity().getArgClasses();

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
@@ -26,7 +27,7 @@ public class MethodUtils {
 	 * @param overrideMethod
 	 * @return
 	 */
-	public static Method getOverriddenMethod(cn.wensiqun.asmsupport.definition.method.Method overrideMethod){
+	public static Method getOverriddenMethod(AMethod overrideMethod){
 		Class<?> superClass = overrideMethod.getMethodOwner().getSuperClass();
 		MethodEntity entity = overrideMethod.getMethodEntity();
 		String methodName = entity.getName();
@@ -87,7 +88,7 @@ public class MethodUtils {
 	 * @param implementMethod
 	 * @return
 	 */
-	public static Method[] getImplementedMethod(cn.wensiqun.asmsupport.definition.method.Method implementMethod){
+	public static Method[] getImplementedMethod(AMethod implementMethod){
 		MethodEntity entity = implementMethod.getMethodEntity();
 		String methodName = entity.getName();
 		AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();

@@ -10,7 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
@@ -38,7 +38,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
     	
     	if(!CollectionUtils.isEmpty(methodOwner.getMethods())){
     		//find in current class
-            List<Method> methods = new ArrayList<Method>(methodOwner.getMethods());
+            List<AMethod> methods = new ArrayList<AMethod>(methodOwner.getMethods());
             //Collections.copy(methods, methodOwner.getMethods());
             TypeTreeNode[] ttns;
 
@@ -142,7 +142,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
 
     @Override
     protected MethodEntity foundMethodWithNoArguments() {
-    	for(Method m : methodOwner.getMethods()){
+    	for(AMethod m : methodOwner.getMethods()){
     		MethodEntity me = m.getMethodEntity();
     		if(m.getMode() == ASConstant.METHOD_CREATE_MODE_ADD &&
     		   me.getName().equals(this.name) &&

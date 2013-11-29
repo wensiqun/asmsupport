@@ -13,6 +13,7 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.exception.ClassException;
 import cn.wensiqun.asmsupport.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.utils.lang.ClassFileUtils;
@@ -160,14 +161,14 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	}
     	
     	//#30205 [BUG] 新建方法中无法调用重写的方法 
-    	List<cn.wensiqun.asmsupport.definition.method.Method> scImplMethods = 
-    			new ArrayList<cn.wensiqun.asmsupport.definition.method.Method>(sc.getMethods());
+    	List<AMethod> scImplMethods = 
+    			new ArrayList<AMethod>(sc.getMethods());
     	for(int i=0; i<abstractMethods.size(); ){
     		Method abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
     		
     		for(int j=0; j<scImplMethods.size(); j++ ) {
-    			cn.wensiqun.asmsupport.definition.method.Method nonAbstractMethod = scImplMethods.get(j);
+    			AMethod nonAbstractMethod = scImplMethods.get(j);
     			
     			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMethodEntity(), abstractMethod)){
     				abstractMethods.remove(i);
@@ -264,9 +265,9 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
      * 
      */
     private void checkOverriedAndCreateBridgeMethod(){
-    	List<cn.wensiqun.asmsupport.definition.method.Method> methods = 
-    			new ArrayList<cn.wensiqun.asmsupport.definition.method.Method>(sc.getMethods());
-    	for(cn.wensiqun.asmsupport.definition.method.Method validateMethod : methods){
+    	List<AMethod> methods = 
+    			new ArrayList<AMethod>(sc.getMethods());
+    	for(AMethod validateMethod : methods){
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
     		List<MethodCreator> creatorList = obmc.getList();
     		for(MethodCreator mc : creatorList){

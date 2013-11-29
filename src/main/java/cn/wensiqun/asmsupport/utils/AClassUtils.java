@@ -16,7 +16,7 @@ import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
@@ -276,7 +276,7 @@ public class AClassUtils {
         List<MethodEntity> list = new ArrayList<MethodEntity>();
         Class<?> reallyClass = null;
         if(owner instanceof SemiClass){
-            for(Method method : ((SemiClass)owner).getMethods()){
+            for(AMethod method : ((SemiClass)owner).getMethods()){
                 if((method.getMethodEntity().getModifier() & Opcodes.ACC_VARARGS) != 0 && 
                     method.getMethodEntity().getName().equals(name)){
                     list.add(method.getMethodEntity());

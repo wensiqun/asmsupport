@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.operators.exception;
 
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 
 public class ReturnException extends RuntimeException{
     
@@ -9,14 +9,14 @@ public class ReturnException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Method m;
+	private AMethod m;
 
-	public ReturnException(Method m, String msg) {
+	public ReturnException(AMethod m, String msg) {
 		super("exception throw when create method " + m.toString() + " "  + msg);
 		this.m = m;
 	}
 
-	public Method getMethod() {
+	public AMethod getMethod() {
 		return m;
 	}
 	

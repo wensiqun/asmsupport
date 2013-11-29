@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
@@ -100,7 +100,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
         }
         argumentClassList.toArray(argumentClasses);
         
-    	Method currentMethod = block.getMethod();
+    	AMethod currentMethod = block.getMethod();
         if(currentMethod.getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASConstant.METHOD_PROXY_SUFFIX)){
         	mtdEntity = (MethodEntity) currentMethod.getMethodEntity().clone();
             mtdEntity.setName(name);

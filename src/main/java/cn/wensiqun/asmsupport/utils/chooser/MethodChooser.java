@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -185,22 +185,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		Class<?> reallyClass = null;
 		if(directCallClass instanceof SemiClass){
 			if(ASConstant.INIT.equals(name)){
-				for(Method method : ((SemiClass)directCallClass).getConstructors()){
+				for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
 					potentially.add(directCallClass, method.getMethodEntity());
 				}
 			}else{
-				for(Method method : ((SemiClass)directCallClass).getMethods()){
+				for(AMethod method : ((SemiClass)directCallClass).getMethods()){
 					potentially.add(directCallClass, method.getMethodEntity());
 				}
 			}
 			reallyClass = directCallClass.getSuperClass();
 		}else if(directCallClass instanceof ProductClass){
 			if(ASConstant.INIT.equals(name)){
-				for(Method method : ((ProductClass)directCallClass).getConstructors()){
+				for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
 					potentially.add(directCallClass, method.getMethodEntity());
 				}
 			}else{
-				for(Method method : ((ProductClass)directCallClass).getMethods()){
+				for(AMethod method : ((ProductClass)directCallClass).getMethods()){
 					potentially.add(directCallClass, method.getMethodEntity());
 				}
 			}

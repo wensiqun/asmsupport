@@ -3,7 +3,7 @@
  */
 package cn.wensiqun.asmsupport.asm;
 
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 
 
 /**
@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.definition.method.Method;
  */
 public class CommonInstructionHelper extends InstructionHelper {
     
-    public CommonInstructionHelper( Method method) {
+    public CommonInstructionHelper( AMethod method) {
         super(null, method);
     }
 

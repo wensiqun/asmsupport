@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.clazz;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.definition.method.Method;
+import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
@@ -21,18 +21,18 @@ public abstract class NewMemberClass extends AClass {
     private ThisVariable thisVariable;
     
     /** */
-    private List<Method> methods;
+    private List<AMethod> methods;
 
     /**
      * store bridge method.
      * 1. overried method that return type is child of super method return type.
      * 2. generice type method(implement future)
      */
-    private List<Method> bridgeMethod;
+    private List<AMethod> bridgeMethod;
     
-    private List<Method> constructors;
+    private List<AMethod> constructors;
     
-    private Method staticBlock;
+    private AMethod staticBlock;
 
     private List<GlobalVariable> globalVariables;
 
@@ -50,27 +50,27 @@ public abstract class NewMemberClass extends AClass {
 		this.enumNum = enumNum;
 	}
 
-    public List<Method> getMethods() {
+    public List<AMethod> getMethods() {
     	if(methods == null){
-   	        methods = new ArrayList<Method>();
+   	        methods = new ArrayList<AMethod>();
     	}
         return methods;
     }
     
     
-    public List<Method> getBridgeMethod() {
+    public List<AMethod> getBridgeMethod() {
     	if(bridgeMethod == null){
-    		bridgeMethod = new ArrayList<Method>();
+    		bridgeMethod = new ArrayList<AMethod>();
     	}
 		return bridgeMethod;
 	}
 
 	
-    public Method getStaticBlock() {
+    public AMethod getStaticBlock() {
         return staticBlock;
     }
 
-    public void setStaticBlock(Method staticBlock) {
+    public void setStaticBlock(AMethod staticBlock) {
         this.staticBlock = staticBlock;
     }
     
@@ -79,7 +79,7 @@ public abstract class NewMemberClass extends AClass {
      * 
      * @param method
      */
-    public void addMethod(Method method) {
+    public void addMethod(AMethod method) {
     	getMethods().add(method);
     }
     
@@ -102,13 +102,13 @@ public abstract class NewMemberClass extends AClass {
      * 
      * @param constructor
      */
-    public void addConstructor(Method constructor) {
+    public void addConstructor(AMethod constructor) {
     	getConstructors().add(constructor);
     }
 
-	public List<Method> getConstructors() {
+	public List<AMethod> getConstructors() {
 		if(constructors == null){
-	        constructors = new ArrayList<Method>(3);
+	        constructors = new ArrayList<AMethod>(3);
 		}
 		return constructors;
 	}
@@ -135,7 +135,7 @@ public abstract class NewMemberClass extends AClass {
     
     @Override
 	public boolean existStaticInitBlock() {
-		for(Method m : this.getMethods()){
+		for(AMethod m : this.getMethods()){
 			if(m.getMethodEntity().getName().equals(ASConstant.CLINIT)){
 				return true;
 			}
