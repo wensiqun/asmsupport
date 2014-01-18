@@ -102,7 +102,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
         
     	AMethod currentMethod = block.getMethod();
         if(currentMethod.getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASConstant.METHOD_PROXY_SUFFIX)){
-        	mtdEntity = (AMethodMeta) currentMethod.getMethodEntity().clone();
+        	mtdEntity = (AMethodMeta) currentMethod.getMethodMeta().clone();
             mtdEntity.setName(name);
         }else{
             // 如果是构造方法则返回类型为自己本身

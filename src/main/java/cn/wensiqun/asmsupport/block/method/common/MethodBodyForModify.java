@@ -20,7 +20,7 @@ public abstract class MethodBodyForModify extends StaticMethodBody implements Th
 	private List<VisitXInsnAdapter> superConstructorOperators;
 	
     public AClass getOriginalMethodReturnClass(){
-    	return method.getMethodEntity().getReturnClass();
+    	return method.getMethodMeta().getReturnClass();
     }
     
 	public void setSuperConstructorOperators(
@@ -30,7 +30,7 @@ public abstract class MethodBodyForModify extends StaticMethodBody implements Th
 
 	@Override
     public void generateBody() {
-		AMethodMeta me = method.getMethodEntity();
+		AMethodMeta me = method.getMethodMeta();
 		if(me.getName().equals(ASConstant.INIT)){
 			//如果是构造方法，将被修改的构造方法中调用父类构造方法的那段字节码转移到新的构造方法中。
 			if(superConstructorOperators != null){

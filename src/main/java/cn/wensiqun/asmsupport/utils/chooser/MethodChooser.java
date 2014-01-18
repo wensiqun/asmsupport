@@ -186,22 +186,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		if(directCallClass instanceof SemiClass){
 			if(ASConstant.INIT.equals(name)){
 				for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
-					potentially.add(directCallClass, method.getMethodEntity());
+					potentially.add(directCallClass, method.getMethodMeta());
 				}
 			}else{
 				for(AMethod method : ((SemiClass)directCallClass).getMethods()){
-					potentially.add(directCallClass, method.getMethodEntity());
+					potentially.add(directCallClass, method.getMethodMeta());
 				}
 			}
 			reallyClass = directCallClass.getSuperClass();
 		}else if(directCallClass instanceof ProductClass){
 			if(ASConstant.INIT.equals(name)){
 				for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
-					potentially.add(directCallClass, method.getMethodEntity());
+					potentially.add(directCallClass, method.getMethodMeta());
 				}
 			}else{
 				for(AMethod method : ((ProductClass)directCallClass).getMethods()){
-					potentially.add(directCallClass, method.getMethodEntity());
+					potentially.add(directCallClass, method.getMethodMeta());
 				}
 			}
 			reallyClass = ((ProductClass) directCallClass).getReallyClass();

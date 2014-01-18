@@ -73,9 +73,9 @@ public class MethodCreator implements IMethodCreator {
 		NewMemberClass owner = context.getCurrentClass();
 		me = new AMethodMeta(name, owner, owner, arguments, argNames, returnClass, exceptions, access);
 		method = new AMethod(me, context, methodBody, mtdCrtMode);
-		if(method.getMethodEntity().getName().equals(ASConstant.INIT)){
+		if(method.getMethodMeta().getName().equals(ASConstant.INIT)){
 			owner.addConstructor(method);
-		}else if(ModifierUtils.isBridge(method.getMethodEntity().getModifier())){
+		}else if(ModifierUtils.isBridge(method.getMethodMeta().getModifier())){
 			owner.getBridgeMethod().add(method);
 		}else{
 			owner.addMethod(method);

@@ -50,7 +50,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
             for(int i=0, length = allArgTypes.size(); i<length; i++){
                 ttns = allArgTypes.get(i);
                 for(int k=0, mlen = methods.size();  k<mlen; k++){
-                    mte = methods.get(k).getMethodEntity();
+                    mte = methods.get(k).getMethodMeta();
                     //如果名字不相同直接跳过
                     if(!name.equals(mte.getName())){
                         continue;
@@ -143,7 +143,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
     @Override
     protected AMethodMeta foundMethodWithNoArguments() {
     	for(AMethod m : methodOwner.getMethods()){
-    		AMethodMeta me = m.getMethodEntity();
+    		AMethodMeta me = m.getMethodMeta();
     		if(m.getMode() == ASConstant.METHOD_CREATE_MODE_ADD &&
     		   me.getName().equals(this.name) &&
     		   me.getArgClasses().length == 0){

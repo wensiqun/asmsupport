@@ -26,7 +26,7 @@ public abstract class EnumInitBody extends SuperMethodBody implements IEnumInitB
 	
     @Override
     public final void generateBody() {
-    	if(getMethod().getMethodEntity().getName().equals(ASConstant.INIT)){
+    	if(getMethod().getMethodMeta().getName().equals(ASConstant.INIT)){
             OperatorFactory.newOperator(SuperConstructorInvoker.class, 
             		new Class<?>[]{ProgramBlock.class, AClass.class, Parameterized[].class}, 
             		getExecuteBlock(), getMethodOwner(), new Parameterized[]{argments[0], argments[1]});

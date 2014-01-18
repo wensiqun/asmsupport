@@ -515,7 +515,7 @@ public abstract class InstructionHelper {
      * Generates the instruction to load 'this' on the stack.
      */
     public void loadThis() {
-    	getMv().setNextPushTypes(method.getMethodEntity().getOwner().getType());
+    	getMv().setNextPushTypes(method.getMethodMeta().getOwner().getType());
         getMv().visitVarInsn(Opcodes.ALOAD, 0);
     }
 
@@ -1127,7 +1127,7 @@ public abstract class InstructionHelper {
     }
 
     public void maxs(int stack, int locals) {
-        log.debug("Method : " + method.getMethodEntity().getMethodString() + " Maxs(" + "stack:"
+        log.debug("Method : " + method.getMethodMeta().getMethodString() + " Maxs(" + "stack:"
                 + stack + " locals:" + locals + ")");
         getMv().visitMaxs(stack, locals);
     }

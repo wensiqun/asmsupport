@@ -1100,7 +1100,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     @Override
     public final MethodInvoker invokeOriginalMethod(){
     	if(getMethod().getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY){
-    		String originalMethodName = getMethod().getMethodEntity().getName();
+    		String originalMethodName = getMethod().getMethodMeta().getName();
     		if(originalMethodName.equals(ASConstant.CLINIT)){
     			originalMethodName = ASConstant.CLINIT_PROXY;
     		}else if(originalMethodName.equals(ASConstant.INIT)){
@@ -1123,7 +1123,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      */
     @Override
     public final Return runReturn() {
-        if (!method.getMethodEntity().getReturnType().equals(Type.VOID_TYPE)) {
+        if (!method.getMethodMeta().getReturnType().equals(Type.VOID_TYPE)) {
             throw new VerifyErrorException("Do not specify a return type! ");
         }
         return OperatorFactory.newOperator(Return.class, 

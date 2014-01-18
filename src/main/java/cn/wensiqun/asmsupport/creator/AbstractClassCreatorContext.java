@@ -170,7 +170,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     		for(int j=0; j<scImplMethods.size(); j++ ) {
     			AMethod nonAbstractMethod = scImplMethods.get(j);
     			
-    			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMethodEntity(), abstractMethod)){
+    			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMethodMeta(), abstractMethod)){
     				abstractMethods.remove(i);
     				scImplMethods.remove(j);
     				exist = true;

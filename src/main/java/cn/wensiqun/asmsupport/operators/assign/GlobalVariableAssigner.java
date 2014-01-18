@@ -37,7 +37,7 @@ public class GlobalVariableAssigner extends Assigner {
         //如果不是静态类则加载当前变量的引用入栈
         if(!Modifier.isStatic(var.getVariableEntity().getModifiers())){
             //如果当前方法是静态的抛异常
-            if(Modifier.isStatic(block.getMethod().getMethodEntity().getModifier())){
+            if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
             	throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getVariableEntity().getName() );
             }
             var.getVariableOwner().loadToStack(block);

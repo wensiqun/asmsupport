@@ -205,7 +205,7 @@ public class AMethod {
         return insnHelper;
     }
 
-    public AMethodMeta getMethodEntity() {
+    public AMethodMeta getMethodMeta() {
         return me;
     }
     

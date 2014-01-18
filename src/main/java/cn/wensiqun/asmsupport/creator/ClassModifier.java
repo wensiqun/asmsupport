@@ -74,7 +74,7 @@ public class ClassModifier extends AbstractClassContext {
 
 		if(modifyConstructorBodies != null){
 			for(MethodBodyForModify mbfm : modifyConstructorBodies){
-				 Type[] argumentTypes = mbfm.getMethod().getMethodEntity().getArgTypes();
+				 Type[] argumentTypes = mbfm.getMethod().getMethodMeta().getArgTypes();
 				 String desc = Type.getMethodDescriptor(Type.VOID_TYPE, argumentTypes);
 				 mbfm.setSuperConstructorOperators(superConstructorMap.get(desc));
 			}

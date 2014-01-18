@@ -52,13 +52,13 @@ public abstract class SuperMethodBody extends ProgramBlock {
 
 	@Override
     protected void init() {
-    	AMethodMeta me = method.getMethodEntity(); 
+    	AMethodMeta me = method.getMethodMeta(); 
         if (!method.isStatic()) {
-        	//new LocalVariableCreator(getExecuteBlock(), Constant.THIS, me.getOwner().getType(), method.getMethodEntity().getOwner().getType());
+        	//new LocalVariableCreator(getExecuteBlock(), Constant.THIS, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
             OperatorFactory.newOperator(LocalVariableCreator.class, 
             		new Class<?>[]{ProgramBlock.class, String.class, Type.class, Type.class}, 
-            		getExecuteBlock(), ASConstant.THIS, me.getOwner().getType(), method.getMethodEntity().getOwner().getType());
-        	//new ScopeLogicVariable("this", scope, me.getOwner().getType(), method.getMethodEntity().getOwner().getType());
+            		getExecuteBlock(), ASConstant.THIS, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
+        	//new ScopeLogicVariable("this", scope, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
         }
 
         String[] argNames = me.getArgNames();
@@ -79,7 +79,7 @@ public abstract class SuperMethodBody extends ProgramBlock {
     public final void executing() {
         if (log.isDebugEnabled()) {
             StringBuilder str = new StringBuilder("create method: ------------");
-            str.append(method.getMethodEntity().getMethodString());
+            str.append(method.getMethodMeta().getMethodString());
             log.debug(str);
         }
         
@@ -87,7 +87,7 @@ public abstract class SuperMethodBody extends ProgramBlock {
             insnHelper.tryCatchBlock(tci.start, tci.end, tci.hander, tci.exception);
         }
         
-        if(method.getMethodEntity().getName().equals("tryCatch")){
+        if(method.getMethodMeta().getName().equals("tryCatch")){
         	log.debug("");
         }
         

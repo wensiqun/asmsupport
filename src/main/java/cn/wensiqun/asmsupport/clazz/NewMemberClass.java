@@ -136,7 +136,7 @@ public abstract class NewMemberClass extends AClass {
     @Override
 	public boolean existStaticInitBlock() {
 		for(AMethod m : this.getMethods()){
-			if(m.getMethodEntity().getName().equals(ASConstant.CLINIT)){
+			if(m.getMethodMeta().getName().equals(ASConstant.CLINIT)){
 				return true;
 			}
 		}

@@ -54,7 +54,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
         for(int i=0, length = allArgTypes.size(); i<length; i++){
             ttns = allArgTypes.get(i);
             for(int k=0, mlen = methods.size();  k<mlen; k++){
-                mte = methods.get(k).getMethodEntity();
+                mte = methods.get(k).getMethodMeta();
                 //如果名字不相同直接跳过
                 if(!name.equals(mte.getName())){
                     continue;
@@ -147,11 +147,11 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
     @Override
     protected AMethodMeta foundMethodWithNoArguments() {
         for (AMethod m : methodOwner.getMethods()) {
-            AClass[] actual = m.getMethodEntity().getArgClasses();
-            if (m.getMethodEntity().getName().equals(name) && 
+            AClass[] actual = m.getMethodMeta().getArgClasses();
+            if (m.getMethodMeta().getName().equals(name) && 
                 (actual == null ||    
                 actual.length == 0)) {
-                return m.getMethodEntity();
+                return m.getMethodMeta();
             }
         }
         
