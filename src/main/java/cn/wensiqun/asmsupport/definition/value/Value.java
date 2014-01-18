@@ -14,14 +14,13 @@ import cn.wensiqun.asmsupport.exception.ASMSupportException;
 
 
 /**
- * 基本类型 String类型的值 以及null值
+ * 通常一些基本类型的常量值，String类型的值，null，Class类型，这些在编写java代码的时候都是直接可以获取的到，
+ * 那么这些值在ASMSupport中我们都要将其封装成ASMSupport内部可识别的对象, 这个类就是对这种内部可识别对象的类型。
  * 
  * @author 温斯群(Joe Wen)
  * 
  */
 public class Value implements IValue {
-
-    // private static Log log = LogFactory.getLog(Value.class);
 
     private AClass aclass;
     private Object value;
@@ -35,7 +34,7 @@ public class Value implements IValue {
      * boolean值
      * @param value
      */
-	public Value(Boolean value) {
+	private Value(Boolean value) {
         this.aclass = AClass.BOOLEAN_ACLASS;
         setProperites(value);
     }
@@ -44,7 +43,7 @@ public class Value implements IValue {
 	 * byte值
 	 * @param value
 	 */
-    public Value(Byte value) {
+	private Value(Byte value) {
         this.aclass = AClass.BYTE_ACLASS;
         setProperites(value);
     }
@@ -54,7 +53,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Short value) {
+	private Value(Short value) {
         this.aclass = AClass.SHORT_ACLASS;
         setProperites(value);
     }
@@ -64,7 +63,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Character value) {
+	private Value(Character value) {
         this.aclass = AClass.CHAR_ACLASS;
         setProperites(value);
     }
@@ -74,7 +73,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Integer value) {
+	private Value(Integer value) {
         this.aclass = AClass.INT_ACLASS;
         setProperites(value);
     }
@@ -84,7 +83,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Long value) {
+	private Value(Long value) {
         this.aclass = AClass.LONG_ACLASS;
         setProperites(value);
     }
@@ -94,7 +93,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Float value) {
+	private Value(Float value) {
         this.aclass = AClass.FLOAT_ACLASS;
         setProperites(value);
     }
@@ -104,7 +103,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(Double value) {
+	private Value(Double value) {
         this.aclass = AClass.DOUBLE_ACLASS;
         setProperites(value);
     }
@@ -114,7 +113,7 @@ public class Value implements IValue {
      * 
      * @param value
      */
-    public Value(String value) {
+	private Value(String value) {
         this.aclass = AClass.STRING_ACLASS;
         setProperites(value);
     }
@@ -122,7 +121,7 @@ public class Value implements IValue {
     private Value() {
     }
 
-    public Value(AClass aclass) {
+    private Value(AClass aclass) {
         this.aclass = AClass.CLASS_ACLASS;
         setProperites(aclass);
     }
@@ -254,7 +253,7 @@ public class Value implements IValue {
 
         } else if (obj instanceof Class) {
         	
-        	return new Value(AClassFactory.getProductClass((Class) obj));
+        	return new Value(AClassFactory.getProductClass((Class<?>) obj));
         	
         }
         throw new ASMSupportException("cannot support type " + obj.getClass() + " for this method!");
