@@ -16,8 +16,8 @@ import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.creator.IClassContext;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.operators.util.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.memory.LocalVariables;
@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 public class AMethod {
 
 	/** 方法实体 */
-    private MethodEntity me;
+    private AMethodMeta me;
 
     /** 该方法对应的栈 */
     private Stack stack;
@@ -84,7 +84,7 @@ public class AMethod {
      * @param methodBody
      * @param mode
      */
-    public AMethod(MethodEntity me, IClassContext context, SuperMethodBody methodBody, int mode) {
+    public AMethod(AMethodMeta me, IClassContext context, SuperMethodBody methodBody, int mode) {
         super();
         this.me = me;
         this.context = context;
@@ -205,7 +205,7 @@ public class AMethod {
         return insnHelper;
     }
 
-    public MethodEntity getMethodEntity() {
+    public AMethodMeta getMethodEntity() {
         return me;
     }
     

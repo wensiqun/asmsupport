@@ -16,7 +16,7 @@ import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.chooser.DetermineMethodSignature;
@@ -60,11 +60,11 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	}
 
 	@Override
-	public MethodEntity chooseMethod() {
+	public AMethodMeta chooseMethod() {
 		
 		potentially = identifyPotentiallyApplicableMethods();
         
-        MethodEntity me = firstPhase();
+        AMethodMeta me = firstPhase();
         if(me != null){
             return me;
         }
@@ -81,13 +81,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	}
 	
 	
-	public Map<AClass, List<MethodEntity>> identifyPotentiallyApplicableMethods(){
+	public Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods(){
 		
 		@SuppressWarnings("serial")
-		MultiValueMap<AClass,MethodEntity> potentially = new LinkedMultiValueMap<AClass, MethodEntity>(){
+		MultiValueMap<AClass,AMethodMeta> potentially = new LinkedMultiValueMap<AClass, AMethodMeta>(){
 
 			@Override
-			public void add(AClass key, MethodEntity value) {
+			public void add(AClass key, AMethodMeta value) {
 				//1.check name
 				//2.check accessible
 				if(!name.equals(value.getName()) ||
@@ -118,13 +118,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 
 			@Override
 			public boolean containsValue(Object value) {
-				if(value == null || !(value instanceof MethodEntity)){
+				if(value == null || !(value instanceof AMethodMeta)){
 					return false;
 				}
 				
-				Set<Entry<AClass, List<MethodEntity>>> entrySet = entrySet();
-				for(Entry<AClass, List<MethodEntity>> entry : entrySet){
-					if(containsValueInList(entry.getValue(), (MethodEntity) value)){
+				Set<Entry<AClass, List<AMethodMeta>>> entrySet = entrySet();
+				for(Entry<AClass, List<AMethodMeta>> entry : entrySet){
+					if(containsValueInList(entry.getValue(), (AMethodMeta) value)){
 						return true;
 					}
 				}
@@ -137,9 +137,9 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			 * @param value
 			 * @return
 			 */
-			private boolean containsValueInList(List<MethodEntity> list, MethodEntity value){
+			private boolean containsValueInList(List<AMethodMeta> list, AMethodMeta value){
 				if(!CollectionUtils.isEmpty(list)){
-					for(MethodEntity method : list){
+					for(AMethodMeta method : list){
 						if(isOverrideMethod(method, value)){
 							return true;
 						}
@@ -154,7 +154,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			 * @param super_
 			 * @return
 			 */
-			private boolean isOverrideMethod(MethodEntity child, MethodEntity super_){
+			private boolean isOverrideMethod(AMethodMeta child, AMethodMeta super_){
 				if(!child.getName().equals(super_.getName())){
 					return false;
 				}
@@ -224,13 +224,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @param name
 	 * @throws IOException
 	 */
-	private void fetchMatchMethod(MultiValueMap<AClass,MethodEntity> potentially, Class<?> where, String name) throws IOException{
+	private void fetchMatchMethod(MultiValueMap<AClass,AMethodMeta> potentially, Class<?> where, String name) throws IOException{
 		if(where == null){
 			return;
 		}
 		
-		List<MethodEntity> methods = ClassUtils.getAllMethod(where, name);
-		for(MethodEntity me : methods){
+		List<AMethodMeta> methods = ClassUtils.getAllMethod(where, name);
+		for(AMethodMeta me : methods){
 			potentially.add(me.getActuallyOwner(), me);
 		}
 		
@@ -250,28 +250,28 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	}
 
 	/** */
-	private Map<AClass, List<MethodEntity>> potentially;
+	private Map<AClass, List<AMethodMeta>> potentially;
 
-	private void removePotentiallyMethod(MethodEntity... entities){
+	private void removePotentiallyMethod(AMethodMeta... entities){
 		if(MapUtils.isNotEmpty(potentially) && ArrayUtils.isNotEmpty(entities)){
-			for(MethodEntity e : entities){
+			for(AMethodMeta e : entities){
 				potentially.get(e.getActuallyOwner()).remove(e);
 			}
 		}
 	}
 	
-	public MethodEntity firstPhase(){
+	public AMethodMeta firstPhase(){
 		//final MultiValueMap<AClass, MethodEntity> map = new LinkedMultiValueMap<AClass, MethodEntity>();
-		final List<MethodEntity> list = new ArrayList<MethodEntity>();
-		new MapLooper<AClass, List<MethodEntity>>(potentially){
+		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		new MapLooper<AClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<MethodEntity> value) {
-				for(MethodEntity e : value){
+			protected void process(AClass key, List<AMethodMeta> value) {
+				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, MethodEntity entity){
+			private void filter(AClass key, AMethodMeta entity){
 				AClass[] potentialMethodArgs = entity.getArgClasses();
 						
 				if(ModifierUtils.isVarargs(entity.getModifier())){
@@ -296,22 +296,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 		}.loop();
-		removePotentiallyMethod(list.toArray(new MethodEntity[list.size()]));
+		removePotentiallyMethod(list.toArray(new AMethodMeta[list.size()]));
 		return choosingTheMostSpecificMethod(list);
 	}
 
 	
-	public MethodEntity secondPhase(){
-		final List<MethodEntity> list = new ArrayList<MethodEntity>();
-		new MapLooper<AClass, List<MethodEntity>>(potentially){
+	public AMethodMeta secondPhase(){
+		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		new MapLooper<AClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<MethodEntity> value) {
-				for(MethodEntity e : value){
+			protected void process(AClass key, List<AMethodMeta> value) {
+				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, MethodEntity entity){
+			private void filter(AClass key, AMethodMeta entity){
 				if(ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
@@ -326,22 +326,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 		}.loop();
-		removePotentiallyMethod(list.toArray(new MethodEntity[list.size()]));
+		removePotentiallyMethod(list.toArray(new AMethodMeta[list.size()]));
 		return choosingTheMostSpecificMethod(list);
 	}
 
 	
-	public MethodEntity thirdPhase(){
-		final List<MethodEntity> list = new ArrayList<MethodEntity>();
-		new MapLooper<AClass, List<MethodEntity>>(potentially){
+	public AMethodMeta thirdPhase(){
+		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		new MapLooper<AClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<MethodEntity> value) {
-				for(MethodEntity e : value){
+			protected void process(AClass key, List<AMethodMeta> value) {
+				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, MethodEntity entity){
+			private void filter(AClass key, AMethodMeta entity){
 				if(!ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
@@ -393,15 +393,15 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	}
 	
 	@Override
-	public MethodEntity choosingTheMostSpecificMethod(List<MethodEntity> entities) {
-		Set<MethodEntity> most = null;
-		for(MethodEntity e : entities){
+	public AMethodMeta choosingTheMostSpecificMethod(List<AMethodMeta> entities) {
+		Set<AMethodMeta> most = null;
+		for(AMethodMeta e : entities){
 			if(CollectionUtils.isEmpty(most)){
-				most = new HashSet<MethodEntity>();
+				most = new HashSet<AMethodMeta>();
 				most.add(e);
 			}else{
-				Set<MethodEntity> newMost = new HashSet<MethodEntity>();
-				for(MethodEntity mostE : most){
+				Set<AMethodMeta> newMost = new HashSet<AMethodMeta>();
+				for(AMethodMeta mostE : most){
 					CollectionUtils.addAll(newMost, mostSpecificMethod(mostE, e));
 				}
 				most = newMost;
@@ -410,7 +410,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		
 		if(CollectionUtils.isNotEmpty(most)){
 			if(most.size() == 1){
-				return (MethodEntity) most.toArray()[0];
+				return (AMethodMeta) most.toArray()[0];
 			}else{
 				throw new IllegalArgumentException("The method invocation is ambiguous: " + name + "(" + ArrayUtils.toString(argumentTypes) + ")");
 			}
@@ -418,24 +418,24 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		return null;
 	}
 	
-	private MethodEntity[] mostSpecificMethod(MethodEntity method1, MethodEntity method2){
+	private AMethodMeta[] mostSpecificMethod(AMethodMeta method1, AMethodMeta method2){
 		
 		//fixed-arity method compare;
 		if(!ModifierUtils.isVarargs(method1.getModifier()) && !ModifierUtils.isVarargs(method2.getModifier())){
 			if(mostSpecificFixedArityMethod(method1, method2)){
-				return new MethodEntity[]{method1};
+				return new AMethodMeta[]{method1};
 			}else if(mostSpecificFixedArityMethod(method2, method1)){
-				return new MethodEntity[]{method2};
+				return new AMethodMeta[]{method2};
 			}else{
-				return new MethodEntity[]{method1, method2};
+				return new AMethodMeta[]{method1, method2};
 			}
 		}else if(ModifierUtils.isVarargs(method1.getModifier()) && ModifierUtils.isVarargs(method2.getModifier())){
 			if(mostSpecificVarargMethod(method1, method2)){
-				return new MethodEntity[]{method1};
+				return new AMethodMeta[]{method1};
 			}else if(mostSpecificVarargMethod(method2, method1)){
-				return new MethodEntity[]{method2};
+				return new AMethodMeta[]{method2};
 			}else{
-				return new MethodEntity[]{method1, method2};
+				return new AMethodMeta[]{method1, method2};
 			}
 		}
 		return null;
@@ -448,7 +448,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @param method2
 	 * @return
 	 */
-	private boolean mostSpecificFixedArityMethod(MethodEntity method1, MethodEntity method2){
+	private boolean mostSpecificFixedArityMethod(AMethodMeta method1, AMethodMeta method2){
 		AClass[] t = method1.getArgClasses();
 		AClass[] u = method2.getArgClasses();
 		int n = ArrayUtils.getLength(t);
@@ -472,7 +472,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @param m2
 	 * @return
 	 */
-	private boolean mostSpecificVarargMethod(MethodEntity m1, MethodEntity m2){
+	private boolean mostSpecificVarargMethod(AMethodMeta m1, AMethodMeta m2){
 		AClass[] t = m1.getArgClasses();
 		AClass[] u = m2.getArgClasses();
 		

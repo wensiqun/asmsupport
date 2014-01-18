@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.creator;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class GlobalVariableCreator implements IGlobalVariableCreator {
     private int modifiers;
     private AClass fieldClass;
 
-    private GlobalVariableEntity fe;
+    private GlobalVariableMeta fe;
     private IClassContext context;
     
     /**
@@ -35,7 +35,7 @@ public class GlobalVariableCreator implements IGlobalVariableCreator {
     public void create(IClassContext cv) {
     	this.context = cv;
     	NewMemberClass owner = cv.getCurrentClass();
-        fe = new GlobalVariableEntity(owner, fieldClass, modifiers, name);
+        fe = new GlobalVariableMeta(owner, fieldClass, modifiers, name);
         owner.addGlobalVariableEntity(fe);
     }
     

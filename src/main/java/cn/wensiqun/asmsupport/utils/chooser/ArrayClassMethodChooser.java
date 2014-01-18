@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.utils.chooser;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 
 /**
  * 
@@ -21,22 +21,22 @@ public class ArrayClassMethodChooser extends AbstractMethodChooser{
     }
 
     @Override
-    public MethodEntity firstPhase() {
+    public AMethodMeta firstPhase() {
         return chooser.firstPhase();
     }
 
     @Override
-    public MethodEntity secondPhase() {
+    public AMethodMeta secondPhase() {
         return chooser.secondPhase();
     }
 
     @Override
-    public MethodEntity thirdPhase() {
+    public AMethodMeta thirdPhase() {
         return chooser.thirdPhase();
     }
 
     @Override
-    protected MethodEntity foundMethodWithNoArguments() {
+    protected AMethodMeta foundMethodWithNoArguments() {
         return super.foundMethodWithNoArguments(Object.class);
     }
 

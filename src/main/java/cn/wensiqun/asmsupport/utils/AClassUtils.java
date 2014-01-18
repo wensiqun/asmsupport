@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
@@ -272,8 +272,8 @@ public class AClassUtils {
      * @param actualArgLength
      * @return
      */
-    public static List<MethodEntity> allDeclareVariableArityMethod(AClass invoker, AClass owner, String name, int actualArgLength){
-        List<MethodEntity> list = new ArrayList<MethodEntity>();
+    public static List<AMethodMeta> allDeclareVariableArityMethod(AClass invoker, AClass owner, String name, int actualArgLength){
+        List<AMethodMeta> list = new ArrayList<AMethodMeta>();
         Class<?> reallyClass = null;
         if(owner instanceof SemiClass){
             for(AMethod method : ((SemiClass)owner).getMethods()){
@@ -290,13 +290,13 @@ public class AClassUtils {
         Class<?> actuallyMethodOwner = reallyClass;
         AClass invoked = AClassFactory.getProductClass(reallyClass);
         //ACC_VARARGS
-        List<MethodEntity> methods = new ArrayList<MethodEntity>();
+        List<AMethodMeta> methods = new ArrayList<AMethodMeta>();
         java.lang.reflect.Method[] mes;
         for (; actuallyMethodOwner != null; actuallyMethodOwner = actuallyMethodOwner.getSuperclass()) {
             mes = actuallyMethodOwner.getDeclaredMethods();
             for(int i=0; i<mes.length; i++){
                 if(mes[i].getName().equals(name) && mes[i].isVarArgs()){
-                    methods.add(MethodEntity.methodToMethodEntity(invoked, mes[i]));
+                    methods.add(AMethodMeta.methodToMethodEntity(invoked, mes[i]));
                 }
             }
             addAndEliminateDupVariableArityMethod(invoker, invoked, name, actualArgLength, list, methods);
@@ -314,10 +314,10 @@ public class AClassUtils {
      * @param list
      * @param methods
      */
-    private static void addAndEliminateDupVariableArityMethod(AClass invoker, AClass invoked, String name, int actualArgLength, List<MethodEntity> list, List<MethodEntity> methods){
+    private static void addAndEliminateDupVariableArityMethod(AClass invoker, AClass invoked, String name, int actualArgLength, List<AMethodMeta> list, List<AMethodMeta> methods){
         boolean same;
         int length = list.size();
-        for(MethodEntity m1 : methods){
+        for(AMethodMeta m1 : methods){
             same = false;
             for(int i=0; i < length ; i++){
                 if(MethodUtils.methodEqualWithoutOwner(m1, list.get(i))){

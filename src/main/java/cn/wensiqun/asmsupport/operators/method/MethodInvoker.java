@@ -14,8 +14,8 @@ import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
@@ -46,7 +46,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
     private boolean saveReturn;
     
     /** found method entity will be called*/
-    protected MethodEntity mtdEntity;
+    protected AMethodMeta mtdEntity;
     
     /**
      * 
@@ -102,7 +102,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
         
     	AMethod currentMethod = block.getMethod();
         if(currentMethod.getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASConstant.METHOD_PROXY_SUFFIX)){
-        	mtdEntity = (MethodEntity) currentMethod.getMethodEntity().clone();
+        	mtdEntity = (AMethodMeta) currentMethod.getMethodEntity().clone();
             mtdEntity.setName(name);
         }else{
             // 如果是构造方法则返回类型为自己本身

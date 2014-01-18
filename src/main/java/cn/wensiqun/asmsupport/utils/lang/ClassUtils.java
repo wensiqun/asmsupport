@@ -16,7 +16,7 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.loader.ASMClassLoader;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
@@ -250,11 +250,11 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static List<MethodEntity> getAllMethod(Class<?> clazz, final String findName) throws IOException{
+	public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String findName) throws IOException{
 		final AClass owner = AClassFactory.getProductClass(clazz);
 		InputStream classStream = ASMClassLoader.asmClassLoader.getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
 		ClassReader cr = new ClassReader(classStream);
-		final List<MethodEntity> list = new ArrayList<MethodEntity>();
+		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
 		
 		cr.accept(new ClassAdapter(){
 
@@ -286,7 +286,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 							exceptionAclassArray[i] = AClassFactory.getProductClass(forName(exceptions[i]));
 						}
 						
-						MethodEntity me = new MethodEntity(
+						AMethodMeta me = new AMethodMeta(
 					    		name, owner, owner, aclass, args, returnType, exceptionAclassArray, access);
 						list.add(me);
 					} catch (ClassNotFoundException e) {

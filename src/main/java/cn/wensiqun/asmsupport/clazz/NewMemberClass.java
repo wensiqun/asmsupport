@@ -7,7 +7,7 @@ import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
@@ -125,7 +125,7 @@ public abstract class NewMemberClass extends AClass {
      * add
      * @param field
      */
-    public void addGlobalVariableEntity(GlobalVariableEntity e) {
+    public void addGlobalVariableEntity(GlobalVariableMeta e) {
         if (ModifierUtils.isStatic(e.getModifiers())) {
         	getGlobalVariables().add(new GlobalVariable(e.getOwner(), e));
         } else {
@@ -145,7 +145,7 @@ public abstract class NewMemberClass extends AClass {
 
 	
     @Override
-    public GlobalVariableEntity getGlobalVariableEntity(String name) {
+    public GlobalVariableMeta getGlobalVariableEntity(String name) {
         for (GlobalVariable f : getGlobalVariables()) {
             if (f.getGlobalVariableEntity().getName().equals(name)) {
                 return f.getGlobalVariableEntity();

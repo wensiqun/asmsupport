@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.clazz;
 import java.io.Serializable;
 
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 
 /**
  * 数组类型
@@ -41,7 +41,6 @@ public class ArrayClass extends AClass {
         descsb.append(cls.getDescription());
         desc = descsb.toString();
         name = desc;
-        
     }
     
     @Override
@@ -70,7 +69,7 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public GlobalVariableEntity getGlobalVariableEntity(String name) {
+    public GlobalVariableMeta getGlobalVariableEntity(String name) {
         return aclass.getGlobalVariableEntity(name);
     }
 

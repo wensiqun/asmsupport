@@ -15,12 +15,13 @@ import org.objectweb.asm.Opcodes;
 
 
 
+
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -152,9 +153,9 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
 
     static class MethodEntityTypeTreeNodeCombine{
         private TypeTreeNode[] nodes;
-        private MethodEntity entity;
+        private AMethodMeta entity;
 
-        MethodEntityTypeTreeNodeCombine(MethodEntity entity, TypeTreeNode[] nodes
+        MethodEntityTypeTreeNodeCombine(AMethodMeta entity, TypeTreeNode[] nodes
                 ) {
             super();
             this.nodes = nodes;
@@ -162,7 +163,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         }
     }
     
-    private MethodEntityTypeTreeNodeCombine[] translateToCombine(List<MethodEntity> mes, List<TypeTreeNode[]> ttns){
+    private MethodEntityTypeTreeNodeCombine[] translateToCombine(List<AMethodMeta> mes, List<TypeTreeNode[]> ttns){
         MethodEntityTypeTreeNodeCombine[] mettnc = new MethodEntityTypeTreeNodeCombine[ttns.size()];
         
         for(int i=0; i<mettnc.length; i++){
@@ -172,13 +173,13 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
     }
        
     @Override
-	public Map<AClass, List<MethodEntity>> identifyPotentiallyApplicableMethods() {
+	public Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods() {
 		return null;
 	}
 
 
 	@Override
-	public MethodEntity choosingTheMostSpecificMethod(List<MethodEntity> entities) {
+	public AMethodMeta choosingTheMostSpecificMethod(List<AMethodMeta> entities) {
 		return null;
 	}
 
@@ -509,7 +510,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         }
         
         //找到的方法
-        List<MethodEntity> mes = new ArrayList<MethodEntity>();
+        List<AMethodMeta> mes = new ArrayList<AMethodMeta>();
         
         List<TypeTreeNode[]> foundMethodArguments = new ArrayList<TypeTreeNode[]>(); 
         
@@ -535,7 +536,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
             
             AClass[] pcs;
             boolean sameToPass = true;
-            MethodEntity me;
+            AMethodMeta me;
             for (; actuallyMethodOwner != null; ) {
                 try {
                 	AClass methodReturnType = null;
@@ -562,7 +563,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                                 sameToPass = false;
                             }
                         }
-                        me = new MethodEntity(name, AClassFactory.getProductClass(javaClass),
+                        me = new AMethodMeta(name, AClassFactory.getProductClass(javaClass),
                                 AClassFactory.getProductClass(actuallyMethodOwner), pcs,
                                 arguNames, methodReturnType, exceptionAclasses, methodMidifiers);
                         
@@ -590,7 +591,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
      * @param mettnc
      * @return
      */
-    protected MethodEntity determineMostSpecificMethodEntity(MethodEntityTypeTreeNodeCombine[] mettnc){
+    protected AMethodMeta determineMostSpecificMethodEntity(MethodEntityTypeTreeNodeCombine[] mettnc){
         if(mettnc.length > 0){
             int mostIndex = mostSpecificIndex(mettnc);
             if(mostIndex == -1){
@@ -609,7 +610,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
      * @param argumentTypes
      * @return
      */
-    private boolean applicableVariableVarifyMethodEntity(MethodEntity m, AClass[] argumentTypes){
+    private boolean applicableVariableVarifyMethodEntity(AMethodMeta m, AClass[] argumentTypes){
         AClass[] formalParas = m.getArgClasses();//m.getParameterTypes();
         for(int i=0, length = formalParas.length - 1; i<length; i++){
             if(!canConvertedByMethodInvocationConversion(argumentTypes[i], formalParas[i])){
@@ -636,13 +637,13 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
      * @param argumentTypes
      * @return
      */
-    protected List<MethodEntity> applicableVariableVarifyMethod(AClass invoker, AClass acls, String name, AClass[] argumentTypes){
+    protected List<AMethodMeta> applicableVariableVarifyMethod(AClass invoker, AClass acls, String name, AClass[] argumentTypes){
     	
-        List<MethodEntity> allVarArities = AClassUtils.allDeclareVariableArityMethod(invoker, acls, name, argumentTypes.length);
+        List<AMethodMeta> allVarArities = AClassUtils.allDeclareVariableArityMethod(invoker, acls, name, argumentTypes.length);
         
-        List<MethodEntity> applicable = new ArrayList<MethodEntity>();
+        List<AMethodMeta> applicable = new ArrayList<AMethodMeta>();
         
-        for(MethodEntity m : allVarArities){
+        for(AMethodMeta m : allVarArities){
             if(applicableVariableVarifyMethodEntity(m, argumentTypes)){
                 applicable.add(m);
             }
@@ -651,11 +652,11 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         return applicable;
     }
     
-    protected List<TypeTreeNode[]> applicableVariableVarifyMethodArgumentsNodes(List<MethodEntity> applicable){
+    protected List<TypeTreeNode[]> applicableVariableVarifyMethodArgumentsNodes(List<AMethodMeta> applicable){
         List<TypeTreeNode[]> appliNodes = new ArrayList<TypeTreeNode[]>(applicable.size());
         AClass[] mtdParas;
         TypeTreeNode[] newttns;
-        for(MethodEntity m : applicable){
+        for(AMethodMeta m : applicable){
             mtdParas = m.getArgClasses();
             newttns = new TypeTreeNode[mtdParas.length];
             for(int i=0; i<newttns.length; i++){
@@ -673,15 +674,15 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
 
     }
     
-    protected abstract MethodEntity foundMethodWithNoArguments();
+    protected abstract AMethodMeta foundMethodWithNoArguments();
     
-    protected MethodEntity foundMethodWithNoArguments(Class<?> cls){
+    protected AMethodMeta foundMethodWithNoArguments(Class<?> cls){
         if(cls.isPrimitive()){
             throw new ASMSupportException("cannot invoke method in prmitive");
         }
         
         Class<?> actually = cls;
-        MethodEntity me;
+        AMethodMeta me;
         
         for(; actually != null ;){
             try {
@@ -707,7 +708,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                     throw new ASMSupportException("cannot invoke method by the modifiers " + Modifier.toString(methodMidifiers));
                 }
                 
-                me = new MethodEntity(name,invoked, actuallyInvoked,
+                me = new AMethodMeta(name,invoked, actuallyInvoked,
                         null, null, methodReturnType, exceptionTypes, methodMidifiers);
                 
                 return me;
@@ -721,12 +722,12 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
     }
     
     @Override
-    public MethodEntity chooseMethod() {
+    public AMethodMeta chooseMethod() {
         if(this.argumentTypes == null || this.argumentTypes.length == 0){
             return foundMethodWithNoArguments();
         }
         
-        MethodEntity me = firstPhase();
+        AMethodMeta me = firstPhase();
         if(me != null){
             return me;
         }

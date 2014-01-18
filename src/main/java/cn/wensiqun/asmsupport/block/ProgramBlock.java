@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
 import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.entity.LocalVariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.LocalVariableMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.exception.MethodInvokeException;
 import cn.wensiqun.asmsupport.exception.UnreachableCode;
@@ -440,7 +440,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
 		if(!anonymous && StringUtils.isBlank(name)){
 			throw new IllegalArgumentException("variable must be non-null if 'anonymous' is false");
 		}
-		LocalVariableEntity lve = new LocalVariableEntity(anonymous ? "anonymous" : name, 0, aClass);
+		LocalVariableMeta lve = new LocalVariableMeta(anonymous ? "anonymous" : name, 0, aClass);
         LocalVariableCreator lvc = OperatorFactory.newOperator(LocalVariableCreator.class, 
         		new Class<?>[]{ProgramBlock.class, String.class, Type.class, Type.class}, 
         		getExecuteBlock(), anonymous ? null : name, aClass.getType(), aClass.getType());

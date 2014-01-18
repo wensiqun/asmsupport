@@ -8,7 +8,7 @@ import java.util.List;
 import cn.wensiqun.asmsupport.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.block.operator.ThisVariableable;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 
 /**
@@ -30,7 +30,7 @@ public abstract class MethodBodyForModify extends StaticMethodBody implements Th
 
 	@Override
     public void generateBody() {
-		MethodEntity me = method.getMethodEntity();
+		AMethodMeta me = method.getMethodEntity();
 		if(me.getName().equals(ASConstant.INIT)){
 			//如果是构造方法，将被修改的构造方法中调用父类构造方法的那段字节码转移到新的构造方法中。
 			if(superConstructorOperators != null){

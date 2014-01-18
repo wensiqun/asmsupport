@@ -11,7 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -33,8 +33,8 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
 
 
     @Override
-    public MethodEntity firstPhase() {
-    	MethodEntity me4ReallyClass = determineMostSpecificMethodEntity(determineMethodInJavaClass(invoker, methodOwner.getReallyClass(), name, argumentTypes, allArgTypes));
+    public AMethodMeta firstPhase() {
+    	AMethodMeta me4ReallyClass = determineMostSpecificMethodEntity(determineMethodInJavaClass(invoker, methodOwner.getReallyClass(), name, argumentTypes, allArgTypes));
     	
     	if(!CollectionUtils.isEmpty(methodOwner.getMethods())){
     		//find in current class
@@ -46,7 +46,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
             List<MethodEntityTypeTreeNodeCombine> foundCombine = new ArrayList<MethodEntityTypeTreeNodeCombine>();
             //参数是否和传入的参数相同
             boolean sameToPass = true;
-            MethodEntity mte;
+            AMethodMeta mte;
             for(int i=0, length = allArgTypes.size(); i<length; i++){
                 ttns = allArgTypes.get(i);
                 for(int k=0, mlen = methods.size();  k<mlen; k++){
@@ -81,7 +81,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
             
             MethodEntityTypeTreeNodeCombine[] mettncs = foundCombine.toArray(new MethodEntityTypeTreeNodeCombine[foundCombine.size()]);
             
-            MethodEntity me4newCreateMethod = determineMostSpecificMethodEntity(mettncs);
+            AMethodMeta me4newCreateMethod = determineMostSpecificMethodEntity(mettncs);
             
             if(me4ReallyClass == null && me4newCreateMethod != null){
             	return me4newCreateMethod;
@@ -98,12 +98,12 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    public MethodEntity secondPhase() {
+    public AMethodMeta secondPhase() {
         List<AClass[]> list = new ArrayList<AClass[]>(AClassUtils.allArgumentWithBoxAndUnBoxCountExceptSelf(argumentTypes));
         AClassUtils.allArgumentWithBoxAndUnBox(argumentTypes, AClassUtils.primitiveFlag(argumentTypes), 0, new AClass[argumentTypes.length], list);
         
         int foundNumber = 0;
-        MethodEntity me = null;
+        AMethodMeta me = null;
         //MethodEntityTypeTreeNodeCombine[] mettnc;
         for(AClass[] argsTypes : list){
         	ProductClassMethodChooser pcmc = new ProductClassMethodChooser(invoker, methodOwner, name, argsTypes);
@@ -122,8 +122,8 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    public MethodEntity thirdPhase() {
-        List<MethodEntity> applicable = applicableVariableVarifyMethod(invoker, methodOwner, name, argumentTypes);
+    public AMethodMeta thirdPhase() {
+        List<AMethodMeta> applicable = applicableVariableVarifyMethod(invoker, methodOwner, name, argumentTypes);
         List<TypeTreeNode[]> appliNodes = applicableVariableVarifyMethodArgumentsNodes(applicable);
 
         if(appliNodes.size() > 0){
@@ -131,7 +131,7 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
             if(mostIndex == -1){
                 throw new ASMSupportException(" Ambiguous ...............");
             }else{
-                MethodEntity me = applicable.get(mostIndex);
+                AMethodMeta me = applicable.get(mostIndex);
                 return me;
             }
         }else{
@@ -141,9 +141,9 @@ public class ProductClassMethodChooser extends AbstractMethodChooser {
 
 
     @Override
-    protected MethodEntity foundMethodWithNoArguments() {
+    protected AMethodMeta foundMethodWithNoArguments() {
     	for(AMethod m : methodOwner.getMethods()){
-    		MethodEntity me = m.getMethodEntity();
+    		AMethodMeta me = m.getMethodEntity();
     		if(m.getMode() == ASConstant.METHOD_CREATE_MODE_ADD &&
     		   me.getName().equals(this.name) &&
     		   me.getArgClasses().length == 0){

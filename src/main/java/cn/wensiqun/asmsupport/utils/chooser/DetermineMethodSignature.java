@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 
 public interface DetermineMethodSignature {
     
@@ -23,7 +23,7 @@ public interface DetermineMethodSignature {
 	 * </p>
 	 * @return
 	 */
-	Map<AClass, List<MethodEntity>> identifyPotentiallyApplicableMethods();
+	Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods();
 	
 	/**
 	 * <p>
@@ -32,7 +32,7 @@ public interface DetermineMethodSignature {
      * <b>reference to : The Java™ Language Specification 15.12.2.2</b>
      * @return
      */
-    MethodEntity firstPhase();
+    AMethodMeta firstPhase();
     
     /**
 	 * <p>
@@ -41,7 +41,7 @@ public interface DetermineMethodSignature {
      * <b>reference to : The Java™ Language Specification 15.12.2.3</b>
      * @return
      */
-    MethodEntity secondPhase();
+    AMethodMeta secondPhase();
    
     /**
 	 * <p>
@@ -50,7 +50,7 @@ public interface DetermineMethodSignature {
      * <b>reference to : The Java™ Language Specification 15.12.2.4</b>
      * @return
      */
-    MethodEntity thirdPhase();
+    AMethodMeta thirdPhase();
     
     /**
 	 * <p>
@@ -59,5 +59,5 @@ public interface DetermineMethodSignature {
      * <b>reference to : The Java™ Language Specification 15.12.2.5</b>
      * @return
      */
-    MethodEntity choosingTheMostSpecificMethod(List<MethodEntity> entities);
+    AMethodMeta choosingTheMostSpecificMethod(List<AMethodMeta> entities);
 }

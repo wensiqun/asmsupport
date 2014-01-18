@@ -6,8 +6,8 @@ package cn.wensiqun.asmsupport.definition.variable;
 import cn.wensiqun.asmsupport.Crementable;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.entity.LocalVariableEntity;
-import cn.wensiqun.asmsupport.entity.VariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.LocalVariableMeta;
+import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
 import cn.wensiqun.asmsupport.utils.memory.Scope;
 import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
@@ -19,13 +19,13 @@ import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
  */
 public class LocalVariable extends MemberVariable implements Crementable{
 
-    private LocalVariableEntity lve;
+    private LocalVariableMeta lve;
 
     protected ScopeLogicVariable scopeLogicVar;
 
     private boolean isFirstAssign = true;
     
-    public LocalVariable(LocalVariableEntity lve) {
+    public LocalVariable(LocalVariableMeta lve) {
         this.lve = lve;
     }
 
@@ -50,7 +50,7 @@ public class LocalVariable extends MemberVariable implements Crementable{
         block.getMethod().getInsnHelper().loadInsn(lve.getDeclareClass().getType(), scopeLogicVar.getInitStartPos());
     }
 
-    public LocalVariableEntity getLocalVariableEntity() {
+    public LocalVariableMeta getLocalVariableEntity() {
         return lve;
     }
 
@@ -69,7 +69,7 @@ public class LocalVariable extends MemberVariable implements Crementable{
     }
 
     @Override
-    public VariableEntity getVariableEntity() {
+    public VariableMeta getVariableEntity() {
         return lve;
     }
 

@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ProductClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
@@ -29,7 +29,7 @@ public class MethodUtils {
 	 */
 	public static Method getOverriddenMethod(AMethod overrideMethod){
 		Class<?> superClass = overrideMethod.getMethodOwner().getSuperClass();
-		MethodEntity entity = overrideMethod.getMethodEntity();
+		AMethodMeta entity = overrideMethod.getMethodEntity();
 		String methodName = entity.getName();
 		AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
 		Class<?>[] argTypes = new Class[argClasses.length];
@@ -89,7 +89,7 @@ public class MethodUtils {
 	 * @return
 	 */
 	public static Method[] getImplementedMethod(AMethod implementMethod){
-		MethodEntity entity = implementMethod.getMethodEntity();
+		AMethodMeta entity = implementMethod.getMethodEntity();
 		String methodName = entity.getName();
 		AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
 		Class<?>[] argTypes = new Class[argClasses.length];
@@ -179,7 +179,7 @@ public class MethodUtils {
      * @param m2
      * @return
      */
-    public static boolean methodEqualWithoutOwner(MethodEntity m1, MethodEntity m2){
+    public static boolean methodEqualWithoutOwner(AMethodMeta m1, AMethodMeta m2){
         if(m1.getName().equals(m2.getName())){
             AClass[] params1 = m1.getArgClasses();
             AClass[] params2 = m2.getArgClasses();
@@ -201,7 +201,7 @@ public class MethodUtils {
      * @param method
      * @return
      */
-    public static boolean methodEqualWithoutOwner(MethodEntity me, Method method){
+    public static boolean methodEqualWithoutOwner(AMethodMeta me, Method method){
     	if(me.getName().equals(method.getName())){
     		AClass[] mePara = me.getArgClasses();
     		Class<?>[] methodPara = method.getParameterTypes();

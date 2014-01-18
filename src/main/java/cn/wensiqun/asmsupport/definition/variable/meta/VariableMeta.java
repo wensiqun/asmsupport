@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.entity;
+package cn.wensiqun.asmsupport.definition.variable.meta;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 
@@ -7,13 +7,13 @@ import cn.wensiqun.asmsupport.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class VariableEntity {
+public class VariableMeta {
 
     private String name;
     private int modifiers;
     private AClass declareClass;
 
-    public VariableEntity(String name, int modifiers, AClass declareClass) {
+    public VariableMeta(String name, int modifiers, AClass declareClass) {
         super();
         this.name = name;
         this.modifiers = modifiers;

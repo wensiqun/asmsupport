@@ -9,8 +9,8 @@ import org.objectweb.asm.Opcodes;
 
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
-import cn.wensiqun.asmsupport.entity.VariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 
@@ -20,11 +20,11 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  */
 public class ThisVariable extends AbstractVariable {
 
-    private GlobalVariableEntity gve;
+    private GlobalVariableMeta gve;
     
     
     public ThisVariable(AClass aclass) {
-        this.gve = new GlobalVariableEntity(aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
+        this.gve = new GlobalVariableMeta(aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
     }
     
     @Override
@@ -43,7 +43,7 @@ public class ThisVariable extends AbstractVariable {
     }
 
     @Override
-    public VariableEntity getVariableEntity() {
+    public VariableMeta getVariableEntity() {
         return gve;
     }
 

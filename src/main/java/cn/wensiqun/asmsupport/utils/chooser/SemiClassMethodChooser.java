@@ -10,7 +10,7 @@ import java.util.List;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.SemiClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.AClassUtils;
 
@@ -30,7 +30,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    public MethodEntity firstPhase() {
+    public AMethodMeta firstPhase() {
 /*        TypeTreeNode[] argTypeNodes = new TypeTreeNode[argumentTypes.length];
         for(int i = 0; i<argTypeNodes.length; i++){
             argTypeNodes[i] = translateToTypeTreeRoot(argumentTypes[i]);
@@ -38,7 +38,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
         //所有可能的参数
         //List<TypeTreeNode[]> allArgTypes = allPossibleArguments(argTypeNodes);
         allPossibleArguments(argTypeNodes);*/
-        MethodEntity foundMe = null;
+        AMethodMeta foundMe = null;
         //******************************phase 1*************************************
         
         //find in current class
@@ -50,7 +50,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
         List<MethodEntityTypeTreeNodeCombine> foundCombine = new ArrayList<MethodEntityTypeTreeNodeCombine>();
         //参数是否和传入的参数相同
         boolean sameToPass = true;
-        MethodEntity mte;
+        AMethodMeta mte;
         for(int i=0, length = allArgTypes.size(); i<length; i++){
             ttns = allArgTypes.get(i);
             for(int k=0, mlen = methods.size();  k<mlen; k++){
@@ -105,12 +105,12 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    public MethodEntity secondPhase() {
+    public AMethodMeta secondPhase() {
         List<AClass[]> list = new ArrayList<AClass[]>(AClassUtils.allArgumentWithBoxAndUnBoxCountExceptSelf(argumentTypes));
         AClassUtils.allArgumentWithBoxAndUnBox(argumentTypes, AClassUtils.primitiveFlag(argumentTypes), 0, new AClass[argumentTypes.length], list);
         
         int foundNumber = 0;
-        MethodEntity me = null;
+        AMethodMeta me = null;
         for(AClass[] argsTypes : list){
             SemiClassMethodChooser scmc = new SemiClassMethodChooser(invoker, methodOwner, name, argsTypes);
             //use the first phase's algorithm
@@ -127,8 +127,8 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    public MethodEntity thirdPhase() {
-        List<MethodEntity> applicable = applicableVariableVarifyMethod(invoker, methodOwner, name, argumentTypes);
+    public AMethodMeta thirdPhase() {
+        List<AMethodMeta> applicable = applicableVariableVarifyMethod(invoker, methodOwner, name, argumentTypes);
         List<TypeTreeNode[]> appliNodes = applicableVariableVarifyMethodArgumentsNodes(applicable);
         
         if(appliNodes.size() > 0){
@@ -136,7 +136,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
             if(mostIndex == -1){
                 throw new ASMSupportException(" Ambiguous ...............");
             }else{
-                MethodEntity me = applicable.get(mostIndex);
+                AMethodMeta me = applicable.get(mostIndex);
                 return me;
             }
         }else{
@@ -145,7 +145,7 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
     }
 
     @Override
-    protected MethodEntity foundMethodWithNoArguments() {
+    protected AMethodMeta foundMethodWithNoArguments() {
         for (AMethod m : methodOwner.getMethods()) {
             AClass[] actual = m.getMethodEntity().getArgClasses();
             if (m.getMethodEntity().getName().equals(name) && 

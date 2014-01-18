@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.entity;
+package cn.wensiqun.asmsupport.definition.method.meta;
 
 import java.lang.reflect.Method;
 
@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.utils.AClassUtils;
  * @author 温斯群(Joe Wen)
  *
  */
-public class MethodEntity implements Cloneable {
+public class AMethodMeta implements Cloneable {
 
     /** 方法名 */
     private String name;
@@ -42,7 +42,7 @@ public class MethodEntity implements Cloneable {
 
     private String methodStr;
 
-    public MethodEntity(String name, AClass owner, AClass actuallyOwner,
+    public AMethodMeta(String name, AClass owner, AClass actuallyOwner,
             AClass[] argClasses, String[] argNames, AClass returnClass,
             AClass[] exceptions, int modifier) {
         super();
@@ -106,7 +106,7 @@ public class MethodEntity implements Cloneable {
         return str.toString();
     }
 
-    public static MethodEntity methodToMethodEntity(AClass owner, Method m) {
+    public static AMethodMeta methodToMethodEntity(AClass owner, Method m) {
         Class<?>[] argCls = m.getParameterTypes();
         AClass[] arguments = new AClass[argCls.length];
         String[] argNames = new String[arguments.length];
@@ -118,7 +118,7 @@ public class MethodEntity implements Cloneable {
         Class<?>[] exceptionTypes = m.getExceptionTypes();
         AClass[] exceptionAclasses = AClassUtils.convertToAClass(exceptionTypes);
         
-        MethodEntity me = new MethodEntity(m.getName(), owner,
+        AMethodMeta me = new AMethodMeta(m.getName(), owner,
                 AClassFactory.getProductClass(m.getDeclaringClass()), arguments,
                 argNames, AClassFactory.getProductClass(m.getReturnType()),
                 exceptionAclasses, m.getModifiers());

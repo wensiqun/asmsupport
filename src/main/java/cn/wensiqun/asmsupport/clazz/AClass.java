@@ -9,9 +9,9 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.definition.generic.GenericSignature.ClassSignature;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.chooser.IMethodChooser;
 import cn.wensiqun.asmsupport.utils.chooser.MethodChooser;
@@ -263,7 +263,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
         return false;
     }
 
-    public abstract GlobalVariableEntity getGlobalVariableEntity(String name);
+    public abstract GlobalVariableMeta getGlobalVariableEntity(String name);
     
     /**
      * 获取当前Class对应的ASM中的Type
@@ -282,7 +282,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
      * @param parameterTypes 构造方法的的参数类型
      * @return
      */
-    public final MethodEntity availableConstructor(AClass aclass,
+    public final AMethodMeta availableConstructor(AClass aclass,
             AClass[] parameterTypes){
         IMethodChooser chooser = new MethodChooser(aclass, this, ASConstant.INIT, parameterTypes);
         return chooser.chooseMethod();
@@ -295,7 +295,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
      * @param parameterTypes 方法的参数类型
      * @return
      */
-    public final MethodEntity availableMethod(AClass where, String name,
+    public final AMethodMeta availableMethod(AClass where, String name,
             AClass[] parameterTypes){
     	IMethodChooser chooser = new MethodChooser(where, this, name, parameterTypes);
         return chooser.chooseMethod();
@@ -311,7 +311,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
      * @param arguments 
      * @return
      */
-    public MethodEntity getSuperMethod(String methodName, AClass[] parameterTypes){
+    public AMethodMeta getSuperMethod(String methodName, AClass[] parameterTypes){
         AClass superCls = AClassFactory.getProductClass(superClass);
         return superCls.availableMethod(null, methodName, parameterTypes);
     }
@@ -321,7 +321,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
      * @param parameterTypes
      * @return
      */
-    public MethodEntity getSuperConstructor(AClass[] parameterTypes){
+    public AMethodMeta getSuperConstructor(AClass[] parameterTypes){
         AClass superCls = AClassFactory.getProductClass(superClass);
         return superCls.availableConstructor(null, parameterTypes);
     }

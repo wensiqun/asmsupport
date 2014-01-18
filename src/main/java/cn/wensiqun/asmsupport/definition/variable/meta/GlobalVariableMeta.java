@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.entity;
+package cn.wensiqun.asmsupport.definition.variable.meta;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 
@@ -7,7 +7,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class GlobalVariableEntity extends VariableEntity{
+public class GlobalVariableMeta extends VariableMeta{
 
     private AClass owner;
     
@@ -17,7 +17,7 @@ public class GlobalVariableEntity extends VariableEntity{
      * @param modifiers 变量修饰符
      * @param name 变量名
      */
-    public GlobalVariableEntity(AClass owner, AClass declareClass, int modifiers,
+    public GlobalVariableMeta(AClass owner, AClass declareClass, int modifiers,
             String name) {
         super(name, modifiers, declareClass);
         this.owner = owner;

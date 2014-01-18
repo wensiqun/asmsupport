@@ -11,7 +11,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
@@ -50,13 +50,13 @@ public class ProductClass extends NewMemberClass {
     }
 
     @Override
-    public GlobalVariableEntity getGlobalVariableEntity(String name) {
+    public GlobalVariableMeta getGlobalVariableEntity(String name) {
         Class<?> fieldOwner = reallyClass;
-        GlobalVariableEntity entiey = null;
+        GlobalVariableMeta entiey = null;
         for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){
             try {
                 Field f = fieldOwner.getDeclaredField(name);
-                entiey = new GlobalVariableEntity(this, AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
+                entiey = new GlobalVariableMeta(this, AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
                 
             } catch (NoSuchFieldException e) {
                 //throw new IllegalArgumentException("no such method exception : " + methodName);

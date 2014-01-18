@@ -13,7 +13,8 @@ import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
  */
 public abstract class AClassFactory {
 	
-	private static AClass getAndAdd(Class<?> cls){
+	
+	private static AClass getAClass(Class<?> cls){
 		AClass aclass;
 		if(cls.isArray()){
 			aclass = getArrayClass(ClassUtils.getRootComponentType(cls), Type.getType(cls).getDimensions());
@@ -24,27 +25,13 @@ public abstract class AClassFactory {
 	}
 	
 	
-	private static ArrayClass getAndAddForArray(AClass rootComponent, int dim){
-        if(rootComponent.isArray()){
-            throw new ClassException("the class " + rootComponent + " has already a array clss");
-        }
-		
-        StringBuilder arrayClassDesc = new StringBuilder();
-        int tmpDim = dim;
-        while(tmpDim-- > 0){
-        	arrayClassDesc.append("[");
-        }
-        arrayClassDesc.append(rootComponent.getDescription());
-        return new ArrayClass(rootComponent, dim);
-	}
-	
     /**
      * 通过一个已经存在的Class获取一个AClass
      * @param cls
      * @return
      */
     public static AClass getProductClass(Class<?> cls){
-    	return getAndAdd(cls);
+    	return getAClass(cls);
     }
     
     
@@ -55,9 +42,9 @@ public abstract class AClassFactory {
      */
     public static ArrayClass getArrayClass(Class<?> arrayCls){
         if(!arrayCls.isArray()){
-            throw new ClassException("the class" + arrayCls + " is not a array class");
+            throw new ClassException("the class" + arrayCls + " is not an array class");
         }
-        return (ArrayClass) getProductClass(arrayCls);
+        return (ArrayClass) getAClass(arrayCls);
     }
     
     /**
@@ -67,7 +54,10 @@ public abstract class AClassFactory {
      * @return
      */
     public static ArrayClass getArrayClass(Class<?> cls, int dim){
-       return new ArrayClass(getProductClass(cls), dim);
+        if(cls.isArray()){
+            throw new ClassException("the class " + cls + " has already an array class");
+        }
+        return new ArrayClass(getProductClass(cls), dim);
     }
     
     /**
@@ -76,8 +66,18 @@ public abstract class AClassFactory {
      * @param dim
      * @return
      */
-    public static ArrayClass getArrayClass(AClass cls, int dim){
-        return getAndAddForArray(cls, dim);
+    public static ArrayClass getArrayClass(AClass rootComponent, int dim){
+    	if(rootComponent.isArray()){
+            throw new ClassException("the class " + rootComponent + " has already an array class");
+        }
+		
+        StringBuilder arrayClassDesc = new StringBuilder();
+        int tmpDim = dim;
+        while(tmpDim-- > 0){
+        	arrayClassDesc.append("[");
+        }
+        arrayClassDesc.append(rootComponent.getDescription());
+        return new ArrayClass(rootComponent, dim);
     }
     
     /**
@@ -89,8 +89,7 @@ public abstract class AClassFactory {
      * @param interfaces
      * @return
      */
-    protected static SemiClass newSemiClass(int version, int access, String name, Class<?> superCls,
-            Class<?>[] interfaces){
+    protected static SemiClass newSemiClass(int version, int access, String name, Class<?> superCls, Class<?>[] interfaces){
         return new SemiClass(version, access, name, superCls, interfaces);
     }
     

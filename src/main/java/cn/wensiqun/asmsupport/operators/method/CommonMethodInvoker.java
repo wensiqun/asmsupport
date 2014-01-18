@@ -9,7 +9,7 @@ import org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.entity.VariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 
 public class CommonMethodInvoker extends MethodInvoker {
@@ -65,7 +65,7 @@ public class CommonMethodInvoker extends MethodInvoker {
             }else{
                 log.info("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
-                	 VariableEntity ve = ((IVariable)callObjReference).getVariableEntity();
+                	 VariableMeta ve = ((IVariable)callObjReference).getVariableEntity();
                 	 if(ve.getName().equals(ASConstant.SUPER)){
                          insnHelper.invokeSuperMethod(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }else {

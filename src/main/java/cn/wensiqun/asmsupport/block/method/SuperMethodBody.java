@@ -11,9 +11,9 @@ import org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.Executeable;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.entity.LocalVariableEntity;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.LocalVariableMeta;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
 import cn.wensiqun.asmsupport.operators.variable.LocalVariableCreator;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -52,7 +52,7 @@ public abstract class SuperMethodBody extends ProgramBlock {
 
 	@Override
     protected void init() {
-    	MethodEntity me = method.getMethodEntity(); 
+    	AMethodMeta me = method.getMethodEntity(); 
         if (!method.isStatic()) {
         	//new LocalVariableCreator(getExecuteBlock(), Constant.THIS, me.getOwner().getType(), method.getMethodEntity().getOwner().getType());
             OperatorFactory.newOperator(LocalVariableCreator.class, 
@@ -67,7 +67,7 @@ public abstract class SuperMethodBody extends ProgramBlock {
         for (int i = 0; i < argNames.length; i++) {
             ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], scope, argClsses[i].getType(),
                     argClsses[i].getType());
-            LocalVariableEntity lve = new LocalVariableEntity(argNames[i], 0, argClsses[i]);
+            LocalVariableMeta lve = new LocalVariableMeta(argNames[i], 0, argClsses[i]);
             LocalVariable lv = new LocalVariable(lve);
             lv.setScopeLogicVar(slv);
             argments[i] = lv;

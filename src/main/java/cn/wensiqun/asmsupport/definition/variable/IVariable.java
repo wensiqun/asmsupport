@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.entity.VariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
 
 
@@ -64,6 +64,6 @@ public interface IVariable extends Parameterized, GetGlobalVariabled{
      * 获取当前变量的VariableEntity
      * @return
      */
-    VariableEntity getVariableEntity();
+    VariableMeta getVariableEntity();
 
 }

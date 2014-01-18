@@ -3,7 +3,7 @@
  */
 package cn.wensiqun.asmsupport.utils.chooser;
 
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 
 /**
  * 
@@ -12,5 +12,5 @@ import cn.wensiqun.asmsupport.entity.MethodEntity;
  */
 public interface IMethodChooser {
     
-    MethodEntity chooseMethod();
+    AMethodMeta chooseMethod();
 }

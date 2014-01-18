@@ -11,8 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import cn.wensiqun.asmsupport.Crementable;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.entity.GlobalVariableEntity;
-import cn.wensiqun.asmsupport.entity.VariableEntity;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
 
 /**
@@ -23,7 +23,7 @@ public class GlobalVariable extends MemberVariable implements Crementable{
 
     private static Log log = LogFactory.getLog(GlobalVariable.class);
     
-    private GlobalVariableEntity gve;
+    private GlobalVariableMeta gve;
     
     /**如果当前全局变量是静态变量，那么staticOwner表示静态变量的所属Class */
     private AClass staticOwner;
@@ -44,7 +44,7 @@ public class GlobalVariable extends MemberVariable implements Crementable{
      */
     public GlobalVariable(AClass owner, AClass declareClass,int modifiers,
             String name) {
-        gve = new GlobalVariableEntity(owner, declareClass,modifiers, name);
+        gve = new GlobalVariableMeta(owner, declareClass,modifiers, name);
         staticOwner = owner;
     }
     
@@ -53,7 +53,7 @@ public class GlobalVariable extends MemberVariable implements Crementable{
      * @param owner
      * @param gve
      */
-    public GlobalVariable(AClass owner, GlobalVariableEntity gve){
+    public GlobalVariable(AClass owner, GlobalVariableMeta gve){
         this.gve = gve;
         staticOwner = owner;
     }
@@ -67,7 +67,7 @@ public class GlobalVariable extends MemberVariable implements Crementable{
      */
     public GlobalVariable(IVariable var, AClass declareClass, int modifiers,
             String name) {
-        gve = new GlobalVariableEntity(var.getParamterizedType(), declareClass, modifiers, name);
+        gve = new GlobalVariableMeta(var.getParamterizedType(), declareClass, modifiers, name);
         variableOwner = var;
     }
     
@@ -76,7 +76,7 @@ public class GlobalVariable extends MemberVariable implements Crementable{
      * @param var
      * @param gve
      */
-    public GlobalVariable(IVariable var, GlobalVariableEntity gve){
+    public GlobalVariable(IVariable var, GlobalVariableMeta gve){
         this.gve = gve;
         variableOwner = var;
     }
@@ -127,12 +127,12 @@ public class GlobalVariable extends MemberVariable implements Crementable{
         return true;
     }
 
-    public GlobalVariableEntity getGlobalVariableEntity(){
+    public GlobalVariableMeta getGlobalVariableEntity(){
         return gve;
     }
     
     @Override
-    public VariableEntity getVariableEntity() {
+    public VariableMeta getVariableEntity() {
         return gve;
     }
 
