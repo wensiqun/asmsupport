@@ -4,7 +4,7 @@ import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
+import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.operators.assign.Assigner;
 
 /**
@@ -71,9 +71,9 @@ public interface VariableOperator {
 	 * <pre>
 	 * assign(i, getValue(10));
 	 * </pre>
-	 * @param mv
+	 * @param variable
 	 * @param val
 	 * @return
 	 */
-	public Assigner assign(MemberVariable mv, Parameterized val);
+	public Assigner assign(ExplicitVariable variable, Parameterized val);
 }

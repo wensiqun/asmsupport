@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
+import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.operators.Operators;
 import cn.wensiqun.asmsupport.operators.numerical.arithmetic.AbstractArithmetic;
 import cn.wensiqun.asmsupport.operators.numerical.arithmetic.Addition;
@@ -37,8 +37,8 @@ public abstract class AbstractIncrement extends AbstractCrement {
             
             arithOperator.prepare();
             
-            MemberVariable mvar = (MemberVariable) factor;
-            assigner = block.assign(mvar, arithOperator);
+            ExplicitVariable variable = (ExplicitVariable) factor;
+            assigner = block.assign(variable, arithOperator);
             
             assigner.prepare();
             block.removeExe(assigner);

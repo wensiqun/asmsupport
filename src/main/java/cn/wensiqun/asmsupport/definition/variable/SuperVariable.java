@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  * 全局变量。这个class只用于方法体内操作变量
  * @author 温斯群(Joe Wen)
  */
-public class SuperVariable extends AbstractVariable{
+public class SuperVariable extends ImplicitVariable{
 
     private GlobalVariableMeta gve;
     

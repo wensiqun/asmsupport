@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
  * 
  * @author 温斯群(Joe Wen)
  */
-public class LocalVariable extends MemberVariable implements Crementable{
+public class LocalVariable extends ExplicitVariable implements Crementable{
 
     private LocalVariableMeta lve;
 

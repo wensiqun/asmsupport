@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.operators.AbstractOperator;
  * 全局变量。这个class只用于方法体内操作变量
  * @author 温斯群(Joe Wen)
  */
-public class GlobalVariable extends MemberVariable implements Crementable{
+public class GlobalVariable extends ExplicitVariable implements Crementable{
 
     private static Log log = LogFactory.getLog(GlobalVariable.class);
     

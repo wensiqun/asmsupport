@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
+import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.definition.variable.meta.LocalVariableMeta;
@@ -508,15 +508,15 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     
     
     @Override
-    public final Assigner assign(MemberVariable mv, Parameterized val){
-        if(mv instanceof LocalVariable){
+    public final Assigner assign(ExplicitVariable variable, Parameterized val){
+        if(variable instanceof LocalVariable){
         	return OperatorFactory.newOperator(LocalVariableAssigner.class,
 	    			new Class<?>[]{ProgramBlock.class, LocalVariable.class, Parameterized.class}, 
-	    			getExecuteBlock(), (LocalVariable) mv, val);
-        }else if(mv instanceof GlobalVariable){
+	    			getExecuteBlock(), (LocalVariable) variable, val);
+        }else if(variable instanceof GlobalVariable){
         	return OperatorFactory.newOperator(GlobalVariableAssigner.class,
         	    			new Class<?>[]{ProgramBlock.class, GlobalVariable.class, Parameterized.class}, 
-        	    			getExecuteBlock(), (GlobalVariable) mv, val);
+        	    			getExecuteBlock(), (GlobalVariable) variable, val);
         }
         return null;
     }

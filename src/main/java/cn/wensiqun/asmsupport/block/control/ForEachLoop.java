@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.definition.variable.MemberVariable;
+import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.Jumpable;
 import cn.wensiqun.asmsupport.operators.asmdirect.GOTO;
@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.operators.asmdirect.NOP;
  */
 public abstract class ForEachLoop extends ProgramBlock implements ILoop{
     
-    private MemberVariable member;
+    private ExplicitVariable iteratorVar;
     
     private Parameterized condition;
     
@@ -36,13 +36,13 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
     private Label continueLbl = new Label();
     private Label endLbl = new Label();
     
-    public ForEachLoop(MemberVariable member) {
+    public ForEachLoop(ExplicitVariable iteratorVar) {
         super();
-        this.member = member;
-        checkMember(member);
+        this.iteratorVar = iteratorVar;
+        checkMember(iteratorVar);
     }
     
-    private void checkMember(MemberVariable member){
+    private void checkMember(ExplicitVariable member){
         AClass cls = member.getParamterizedType();
         if(!cls.isArray() &&
            !cls.isChildOrEqual(AClassFactory.getProductClass(Iterable.class))){
@@ -77,7 +77,7 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
     @Override
     public final void generateInsn() {
         new NOP(getExecuteBlock());
-        if(member.getParamterizedType().isArray()){
+        if(iteratorVar.getParamterizedType().isArray()){
             final LocalVariable i = createVariable(null, AClass.INT_ACLASS, true, Value.value(0));
             
             new GOTO(getExecuteBlock(), conditionLbl);
@@ -85,16 +85,16 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
             new Marker(getExecuteBlock(), startLbl);
             new NOP(getExecuteBlock());
             
-            LocalVariable obj = createVariable(null, ((ArrayClass)member.getParamterizedType()).getNextDimType(), true, arrayLoad(member, i) );
+            LocalVariable obj = createVariable(null, ((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), true, arrayLoad(iteratorVar, i) );
             generateBody(obj);
 
             new Marker(getExecuteBlock(), continueLbl);
             afterInc(i);
             new Marker(getExecuteBlock(), conditionLbl);
-            condition = lessThan(i, arrayLength(member));
+            condition = lessThan(i, arrayLength(iteratorVar));
             //((LessThan)condition).setJumpLable(startLbl);
         }else{
-        	final LocalVariable itr = createVariable(null, AClass.ITERATOR_ACLASS, true, invoke(member, "iterator"));
+        	final LocalVariable itr = createVariable(null, AClass.ITERATOR_ACLASS, true, invoke(iteratorVar, "iterator"));
             new GOTO(getExecuteBlock(), conditionLbl);
         	
         	new Marker(getExecuteBlock(), startLbl);
