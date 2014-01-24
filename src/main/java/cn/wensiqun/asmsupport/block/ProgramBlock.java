@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Type;
 
+import cn.wensiqun.asmsupport.AbstractExecuteable;
 import cn.wensiqun.asmsupport.Crementable;
 import cn.wensiqun.asmsupport.Executeable;
 import cn.wensiqun.asmsupport.Parameterized;
@@ -27,7 +28,6 @@ import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.definition.AbstractExecuteable;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;

@@ -3,10 +3,7 @@ package cn.wensiqun.asmsupport.utils.lang;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -28,36 +25,6 @@ import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
  *
  */
 public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
-	
-	/** 基本类型Class */
-	static Map<String, Class<?>> primitivesToClasses;
-
-    static
-    {
-		HashMap<String, Class<?>> tmp = new HashMap<String, Class<?>>();
-		tmp.put( "boolean", boolean.class );
-		tmp.put( "int", int.class );
-		tmp.put( "char", char.class );
-		tmp.put( "short", short.class );
-		tmp.put( "int", int.class );
-		tmp.put( "long", long.class );
-		tmp.put( "float", float.class );
-		tmp.put( "double", double.class );
-		tmp.put( "void", void.class );
-		
-		/*class description*/
-		tmp.put( "Z", boolean.class );
-		tmp.put( "B", byte.class );
-		tmp.put( "C", char.class );
-		tmp.put( "S", short.class );
-		tmp.put( "I", int.class );
-		tmp.put( "J", long.class );
-		tmp.put( "F", float.class );
-		tmp.put( "D", double.class );
-		tmp.put( "V", void.class );
-
-	    primitivesToClasses = Collections.unmodifiableMap( tmp );
-    }
 	
     /**
      * 
@@ -154,7 +121,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 	public static Class<?> forName(String className) throws ClassNotFoundException {
 		try {
 			
-			Class<?> clazz = primitivesToClasses.get(className);
+			Class<?> clazz = primitivesToClasses(className);
 			if(clazz != null){
 				return clazz;
 			}
@@ -168,7 +135,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 			
 			return Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			Class<?> cls = (Class<?>) primitivesToClasses.get(className);
+			Class<?> cls = (Class<?>) primitivesToClasses(className);
 			if(cls != null){
 				return cls;
 			}else{
@@ -181,6 +148,31 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 				}
 			}
 		}
+	}
+	
+	public static Class<?> primitivesToClasses(String primNameOrDesc)
+	{
+		if("boolean".equals(primNameOrDesc)){return boolean.class;}
+		if("int".equals(primNameOrDesc)){return int.class;}
+		if("char".equals(primNameOrDesc)){return char.class;}
+		if("short".equals(primNameOrDesc)){return short.class;}
+		if("int".equals(primNameOrDesc)){return int.class;}
+		if("long".equals(primNameOrDesc)){return long.class;}
+		if("float".equals(primNameOrDesc)){return float.class;}
+		if("double".equals(primNameOrDesc)){return double.class;}
+		if("void".equals(primNameOrDesc)){return void.class;}
+		
+		/*class description*/
+		if("Z".equals(primNameOrDesc)){return boolean.class;}
+		if("B".equals(primNameOrDesc)){return byte.class;}
+		if("C".equals(primNameOrDesc)){return char.class;}
+		if("S".equals(primNameOrDesc)){return short.class;}
+		if("I".equals(primNameOrDesc)){return int.class;}
+		if("J".equals(primNameOrDesc)){return long.class;}
+		if("F".equals(primNameOrDesc)){return float.class;}
+		if("D".equals(primNameOrDesc)){return double.class;}
+		if("V".equals(primNameOrDesc)){return void.class;}
+		return null;
 	}
 	
 	/**

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.entity.MethodEntity;
+import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 
 public class AbstractMethodChooserTest {
 
@@ -28,22 +28,22 @@ public class AbstractMethodChooserTest {
 				"work", new AClass[]{AClass.OBJECT_ACLASS}){
 
 			@Override
-			public MethodEntity firstPhase() {
+			public AMethodMeta firstPhase() {
 				return null;
 			}
 
 			@Override
-			public MethodEntity secondPhase() {
+			public AMethodMeta secondPhase() {
 				return null;
 			}
 
 			@Override
-			public MethodEntity thirdPhase() {
+			public AMethodMeta thirdPhase() {
 				return null;
 			}
 			
 		};
-		Map<AClass, List<MethodEntity>> map = am.identifyPotentiallyApplicableMethods();
+		Map<AClass, List<AMethodMeta>> map = am.identifyPotentiallyApplicableMethods();
 		System.out.println(map);
 	}
 

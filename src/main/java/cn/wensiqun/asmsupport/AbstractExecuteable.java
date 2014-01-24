@@ -1,9 +1,8 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.definition;
+package cn.wensiqun.asmsupport;
 
-import cn.wensiqun.asmsupport.Executeable;
 
 /**
  * @author 温斯群(Joe Wen)
