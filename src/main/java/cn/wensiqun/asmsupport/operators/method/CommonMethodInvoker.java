@@ -65,7 +65,7 @@ public class CommonMethodInvoker extends MethodInvoker {
             }else{
                 log.info("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
-                	 VariableMeta ve = ((IVariable)callObjReference).getVariableEntity();
+                	 VariableMeta ve = ((IVariable)callObjReference).getVariableMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){
                          insnHelper.invokeSuperMethod(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }else {

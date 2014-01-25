@@ -531,7 +531,7 @@ public abstract class InstructionHelper {
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
         locals.printState();
-        getMv().visitVarInsn(var.getVariableEntity().getDeclareClass().getType().getOpcode(Opcodes.ISTORE), 
+        getMv().visitVarInsn(var.getVariableMeta().getDeclareClass().getType().getOpcode(Opcodes.ISTORE), 
                 var.getScopeLogicVar().getInitStartPos());
     }
     

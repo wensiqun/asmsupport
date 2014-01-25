@@ -23,7 +23,7 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
 
     private static Log log = LogFactory.getLog(GlobalVariable.class);
     
-    private GlobalVariableMeta gve;
+    private GlobalVariableMeta globalVariableMeta;
     
     /**如果当前全局变量是静态变量，那么staticOwner表示静态变量的所属Class */
     private AClass staticOwner;
@@ -44,7 +44,7 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
      */
     public GlobalVariable(AClass owner, AClass declareClass,int modifiers,
             String name) {
-        gve = new GlobalVariableMeta(owner, declareClass,modifiers, name);
+        globalVariableMeta = new GlobalVariableMeta(owner, declareClass,modifiers, name);
         staticOwner = owner;
     }
     
@@ -54,7 +54,7 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
      * @param gve
      */
     public GlobalVariable(AClass owner, GlobalVariableMeta gve){
-        this.gve = gve;
+        this.globalVariableMeta = gve;
         staticOwner = owner;
     }
     
@@ -67,7 +67,7 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
      */
     public GlobalVariable(IVariable var, AClass declareClass, int modifiers,
             String name) {
-        gve = new GlobalVariableMeta(var.getParamterizedType(), declareClass, modifiers, name);
+        globalVariableMeta = new GlobalVariableMeta(var.getParamterizedType(), declareClass, modifiers, name);
         variableOwner = var;
     }
     
@@ -77,30 +77,30 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
      * @param gve
      */
     public GlobalVariable(IVariable var, GlobalVariableMeta gve){
-        this.gve = gve;
+        this.globalVariableMeta = gve;
         variableOwner = var;
     }
 
     @Override
     public AClass getParamterizedType() {
-        return gve.getDeclareClass();
+        return globalVariableMeta.getDeclareClass();
     }
 
     @Override
     public void loadToStack(ProgramBlock block) {
         //如果是静态
-        if(Modifier.isStatic(gve.getModifiers())){
+        if(Modifier.isStatic(globalVariableMeta.getModifiers())){
             if(log.isDebugEnabled()){
-                log.debug("get field " + gve.getName() + " from class " + gve.getOwner().getName() + " and push to stack!");
+                log.debug("get field " + globalVariableMeta.getName() + " from class " + globalVariableMeta.getOwner().getName() + " and push to stack!");
             }
             block.getInsnHelper().getStatic(staticOwner.getType(),
-                    gve.getName(), gve.getDeclareClass().getType());
+                    globalVariableMeta.getName(), globalVariableMeta.getDeclareClass().getType());
         }else{
             if(log.isDebugEnabled()){
-                log.debug("get field " + gve.getName() + " from variable " + gve.getName() + " and push to stack!");
+                log.debug("get field " + globalVariableMeta.getName() + " from variable " + globalVariableMeta.getName() + " and push to stack!");
             }
             variableOwner.loadToStack(block);
-            block.getInsnHelper().getField(gve.getOwner().getType(), gve.getName(), gve.getDeclareClass().getType());
+            block.getInsnHelper().getField(globalVariableMeta.getOwner().getType(), globalVariableMeta.getName(), globalVariableMeta.getDeclareClass().getType());
         }
     }
     
@@ -127,23 +127,23 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
         return true;
     }
 
-    public GlobalVariableMeta getGlobalVariableEntity(){
-        return gve;
+    public GlobalVariableMeta getGlobalVariableMeta(){
+        return globalVariableMeta;
     }
     
     @Override
-    public VariableMeta getVariableEntity() {
-        return gve;
+    public VariableMeta getVariableMeta() {
+        return globalVariableMeta;
     }
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(gve.getDeclareClass(), name);
+        return getGlobalVariable(globalVariableMeta.getDeclareClass(), name);
     }
     
     @Override
     public String toString() {
-        return gve.getName();
+        return globalVariableMeta.getName();
     }
 
 }

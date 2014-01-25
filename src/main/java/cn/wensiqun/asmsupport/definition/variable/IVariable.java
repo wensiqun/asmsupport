@@ -27,6 +27,6 @@ public interface IVariable extends Parameterized, GetGlobalVariabled{
      * 获取当前变量的VariableEntity
      * @return
      */
-    VariableMeta getVariableEntity();
+    VariableMeta getVariableMeta();
 
 }

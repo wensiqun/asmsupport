@@ -30,7 +30,7 @@ public abstract class AbstractVariable implements IVariable {
             throw new ASMSupportException("cannot get global variable from array type variable : " + this);
         }
     	
-    	VariableMeta ve = aclass.getGlobalVariableEntity(name);
+    	VariableMeta ve = aclass.getGlobalVariableMeta(name);
         if(ve == null){
         	throw new IllegalArgumentException("dosn't exist or cannot access \"" + name + "\" property of class " + aclass);
         }

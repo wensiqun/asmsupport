@@ -50,7 +50,7 @@ public class ProductClass extends NewMemberClass {
     }
 
     @Override
-    public GlobalVariableMeta getGlobalVariableEntity(String name) {
+    public GlobalVariableMeta getGlobalVariableMeta(String name) {
         Class<?> fieldOwner = reallyClass;
         GlobalVariableMeta entiey = null;
         for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){

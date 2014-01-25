@@ -50,7 +50,7 @@ public abstract class EnumCInitBody extends SuperMethodBody implements IEnumCIni
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
         GlobalVariable constant = getMethodOwner().getGlobalVariable(name);
-        if(!ModifierUtils.isEnum(constant.getGlobalVariableEntity().getModifiers())){
+        if(!ModifierUtils.isEnum(constant.getGlobalVariableMeta().getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
         enumArgumentsList.add(new EnumConstructorInfo(name, argus));

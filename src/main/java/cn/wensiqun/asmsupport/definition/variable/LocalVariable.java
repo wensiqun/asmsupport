@@ -19,14 +19,14 @@ import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
  */
 public class LocalVariable extends ExplicitVariable implements Crementable{
 
-    private LocalVariableMeta lve;
+    private LocalVariableMeta localVariableMeta;
 
     protected ScopeLogicVariable scopeLogicVar;
 
     private boolean isFirstAssign = true;
     
     public LocalVariable(LocalVariableMeta lve) {
-        this.lve = lve;
+        this.localVariableMeta = lve;
     }
 
     public boolean availableFor(AbstractOperator operator) {
@@ -47,11 +47,11 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public void loadToStack(ProgramBlock block) {
-        block.getMethod().getInsnHelper().loadInsn(lve.getDeclareClass().getType(), scopeLogicVar.getInitStartPos());
+        block.getMethod().getInsnHelper().loadInsn(localVariableMeta.getDeclareClass().getType(), scopeLogicVar.getInitStartPos());
     }
 
-    public LocalVariableMeta getLocalVariableEntity() {
-        return lve;
+    public LocalVariableMeta getLocalVariableMeta() {
+        return localVariableMeta;
     }
 
     private class VariableOperatorException extends RuntimeException {
@@ -59,18 +59,18 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
         private static final long serialVersionUID = 1L;
 
         private VariableOperatorException() {
-            super("the scope cannot use the variable \"" + lve.getName() + "\"");
+            super("the scope cannot use the variable \"" + localVariableMeta.getName() + "\"");
         }
     }
 
     @Override
     public AClass getParamterizedType() {
-        return lve.getDeclareClass();
+        return localVariableMeta.getDeclareClass();
     }
 
     @Override
-    public VariableMeta getVariableEntity() {
-        return lve;
+    public VariableMeta getVariableMeta() {
+        return localVariableMeta;
     }
 
     public void setScopeLogicVar(ScopeLogicVariable scopeLogicVar) {
@@ -94,12 +94,12 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(lve.getDeclareClass(), name);
+        return getGlobalVariable(localVariableMeta.getDeclareClass(), name);
     }
 
     @Override
     public String toString() {
-        return lve.getName();
+        return localVariableMeta.getName();
     }
 
 }

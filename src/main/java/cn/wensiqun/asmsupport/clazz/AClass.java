@@ -263,7 +263,7 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
         return false;
     }
 
-    public abstract GlobalVariableMeta getGlobalVariableEntity(String name);
+    public abstract GlobalVariableMeta getGlobalVariableMeta(String name);
     
     /**
      * 获取当前Class对应的ASM中的Type

@@ -69,8 +69,8 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public GlobalVariableMeta getGlobalVariableEntity(String name) {
-        return aclass.getGlobalVariableEntity(name);
+    public GlobalVariableMeta getGlobalVariableMeta(String name) {
+        return aclass.getGlobalVariableMeta(name);
     }
 
     @Override

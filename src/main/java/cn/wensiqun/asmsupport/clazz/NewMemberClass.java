@@ -145,10 +145,10 @@ public abstract class NewMemberClass extends AClass {
 
 	
     @Override
-    public GlobalVariableMeta getGlobalVariableEntity(String name) {
+    public GlobalVariableMeta getGlobalVariableMeta(String name) {
         for (GlobalVariable f : getGlobalVariables()) {
-            if (f.getGlobalVariableEntity().getName().equals(name)) {
-                return f.getGlobalVariableEntity();
+            if (f.getGlobalVariableMeta().getName().equals(name)) {
+                return f.getGlobalVariableMeta();
             }
         }
         return null;
@@ -157,7 +157,7 @@ public abstract class NewMemberClass extends AClass {
     @Override
     public GlobalVariable getGlobalVariable(String name) {
         for(GlobalVariable gv : getGlobalVariables()){
-            if(gv.getVariableEntity().getName().equals(name)){
+            if(gv.getVariableMeta().getName().equals(name)){
                 return gv;
             }
         }

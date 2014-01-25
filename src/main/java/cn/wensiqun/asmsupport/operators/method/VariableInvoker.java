@@ -28,9 +28,9 @@ public class VariableInvoker extends MethodInvoker {
      
     @Deprecated
     protected VariableInvoker(ProgramBlock block, IVariable var, String name, Parameterized[] arguments) {
-        super(block, var.getVariableEntity().getDeclareClass(), name, arguments);
-        if(var.getVariableEntity().getDeclareClass().isPrimitive()){
-            throw new IllegalArgumentException("primitive variable \"" + var.getVariableEntity().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");
+        super(block, var.getVariableMeta().getDeclareClass(), name, arguments);
+        if(var.getVariableMeta().getDeclareClass().isPrimitive()){
+            throw new IllegalArgumentException("primitive variable \"" + var.getVariableMeta().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");
         }
         this.var = var;
         //默认不保存引用
@@ -50,11 +50,11 @@ public class VariableInvoker extends MethodInvoker {
 
     @Override
     public void executing() {
-        VariableMeta ve = var.getVariableEntity();
+        VariableMeta ve = var.getVariableMeta();
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            log.debug("call method by variable :" + var.getVariableEntity().getName());
+            log.debug("call method by variable :" + var.getVariableMeta().getName());
             log.debug("put variable reference to stack");
             //变量入栈
             var.loadToStack(block);

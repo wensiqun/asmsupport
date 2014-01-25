@@ -20,11 +20,11 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  */
 public class ThisVariable extends ImplicitVariable {
 
-    private GlobalVariableMeta gve;
+    private GlobalVariableMeta globalVariableMeta;
     
     
     public ThisVariable(AClass aclass) {
-        this.gve = new GlobalVariableMeta(aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
+        this.globalVariableMeta = new GlobalVariableMeta(aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
     }
     
     @Override
@@ -39,17 +39,17 @@ public class ThisVariable extends ImplicitVariable {
 
     @Override
     public AClass getParamterizedType() {
-        return gve.getDeclareClass();
+        return globalVariableMeta.getDeclareClass();
     }
 
     @Override
-    public VariableMeta getVariableEntity() {
-        return gve;
+    public VariableMeta getVariableMeta() {
+        return globalVariableMeta;
     }
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(gve.getDeclareClass(), name);
+        return getGlobalVariable(globalVariableMeta.getDeclareClass(), name);
     }
 
     @Override

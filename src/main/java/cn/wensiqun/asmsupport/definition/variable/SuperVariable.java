@@ -21,14 +21,14 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  */
 public class SuperVariable extends ImplicitVariable{
 
-    private GlobalVariableMeta gve;
+    private GlobalVariableMeta globalVariableMeta;
     
     /**
      * 通过Class获取的全局变量
      * @param insnHelper
      */
     public SuperVariable(AClass aclass) {
-        this.gve = new GlobalVariableMeta(
+        this.globalVariableMeta = new GlobalVariableMeta(
                 AClassFactory.getProductClass(aclass.getSuperClass()), 
                 AClassFactory.getProductClass(aclass.getSuperClass()), 
                 Opcodes.ACC_FINAL, ASConstant.SUPER);
@@ -47,17 +47,17 @@ public class SuperVariable extends ImplicitVariable{
 
     @Override
     public AClass getParamterizedType() {
-        return gve.getDeclareClass();
+        return globalVariableMeta.getDeclareClass();
     }
 
     @Override
-    public VariableMeta getVariableEntity() {
-        return gve;
+    public VariableMeta getVariableMeta() {
+        return globalVariableMeta;
     }
 
     @Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(gve.getDeclareClass(), name);
+        return getGlobalVariable(globalVariableMeta.getDeclareClass(), name);
     }
 
     @Override

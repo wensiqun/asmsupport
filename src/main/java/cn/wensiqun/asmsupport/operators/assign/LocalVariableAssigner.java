@@ -28,7 +28,7 @@ public class LocalVariableAssigner extends Assigner {
     public void executing() {
         //检测是否可用
         var.availableFor(this);
-        log.debug("start execute assign value to variable '" + var.getLocalVariableEntity().getName() + "' from " + value.getParamterizedType());
+        log.debug("start execute assign value to variable '" + var.getLocalVariableMeta().getName() + "' from " + value.getParamterizedType());
         /*start--执行赋值操作--start*/
         //加载值到栈
         log.debug("load value to stack");
