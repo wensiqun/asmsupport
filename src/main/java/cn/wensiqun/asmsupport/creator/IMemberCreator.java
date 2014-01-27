@@ -1,13 +1,13 @@
 package cn.wensiqun.asmsupport.creator;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 
 /**
  * 
  * @author 温斯群(Joe Wen)
  *
  */
-public interface IMemberCreator extends Executeable{
+public interface IMemberCreator extends Executable{
 
     /**
      * 创建逻辑实体

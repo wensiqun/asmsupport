@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.block.control;
 
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
@@ -53,7 +53,7 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
     @Override
     public void executing() {
     	
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             exe.execute();
         }
         

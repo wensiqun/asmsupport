@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
@@ -46,10 +46,10 @@ public abstract class Try extends SeriesBlock {
     private ThrowExceptionContainer catchedExceptions;
 
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentExes;
+    private List<Executable> parentExes;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentPreExes;
+    private List<Executable> parentPreExes;
     
     /** Finally Block*/
     private Finally finallyBlock;
@@ -120,7 +120,7 @@ public abstract class Try extends SeriesBlock {
         insnHelper.nop();
         //boolean endMarked = false;
         Stack stack = insnHelper.getMv().getStack();
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             if(exe.equals(implicitCatchThrowableStore)){
                 insnHelper.mark(end);
                 stack.push(AClass.THROWABLE_ACLASS.getType());
@@ -194,11 +194,11 @@ public abstract class Try extends SeriesBlock {
         return fny;
     }
 
-    public void setParentExes(List<Executeable> parentExes) {
+    public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
     }
 
-    public void setParentPreExes(List<Executeable> parentPreExes) {
+    public void setParentPreExes(List<Executable> parentPreExes) {
         this.parentPreExes = parentPreExes;
     }
     

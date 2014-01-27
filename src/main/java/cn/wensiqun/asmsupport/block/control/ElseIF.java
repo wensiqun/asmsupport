@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.clazz.AClass;
@@ -24,10 +24,10 @@ public abstract class ElseIF extends ControlBlock {
     private ControlBlock elseifOrIfBlock;
 
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentExes;
+    private List<Executable> parentExes;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentPreExes;
+    private List<Executable> parentPreExes;
     
     public ElseIF(Parameterized condition) {
         super();
@@ -48,7 +48,7 @@ public abstract class ElseIF extends ControlBlock {
             insnHelper.ifZCmp(InstructionHelper.EQ, getEndLabel());
         }
     	insnHelper.nop();
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             exe.execute();
         }
         
@@ -103,11 +103,11 @@ public abstract class ElseIF extends ControlBlock {
         }
     }
 
-    public void setParentExes(List<Executeable> parentExes) {
+    public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
     }
 
-    public void setParentPreExes(List<Executeable> parentPreExes) {
+    public void setParentPreExes(List<Executable> parentPreExes) {
         this.parentPreExes = parentPreExes;
     }
 }

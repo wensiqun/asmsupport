@@ -6,7 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.asm.CommonInstructionHelper;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.asm.StackLocalMethodVisitor;
@@ -127,7 +127,7 @@ public class AMethod {
     		}
     	}
     	
-    	for(Executeable exe : block.getExecuteQueue()){
+    	for(Executable exe : block.getExecuteQueue()){
     		if(exe instanceof ProgramBlock){
     			getThrowExceptionsInProgramBlock((ProgramBlock)exe);
     		}
@@ -140,7 +140,7 @@ public class AMethod {
     private void createMethodVisitor(){
     	
     	if(!ModifierUtils.isAbstract(me.getModifier())){
-            for(Executeable exe : getMethodBody().getExecuteQueue()){
+            for(Executable exe : getMethodBody().getExecuteQueue()){
     		    if(exe instanceof ProgramBlock){
     			    getThrowExceptionsInProgramBlock((ProgramBlock)exe);
     		    }

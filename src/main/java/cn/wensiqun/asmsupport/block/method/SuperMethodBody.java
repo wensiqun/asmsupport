@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
@@ -91,7 +91,7 @@ public abstract class SuperMethodBody extends ProgramBlock {
         	log.debug("");
         }
         
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             exe.execute();
         }
         

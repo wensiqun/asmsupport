@@ -8,7 +8,7 @@ package cn.wensiqun.asmsupport;
  * @author 温斯群(Joe Wen)
  *
  */
-public interface Executeable {
+public interface Executable {
     
     /**
      * <p>执行execute的预先操作

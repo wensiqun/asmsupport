@@ -6,7 +6,7 @@ package cn.wensiqun.asmsupport.block.control;
 
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 
 
 /**
@@ -19,7 +19,7 @@ public abstract class Else extends ControlBlock {
 	@Override
     public void executing() {
         insnHelper.nop();
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             exe.execute();
         }
         insnHelper.mark(getEndLabel());

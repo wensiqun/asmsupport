@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
 import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
@@ -52,10 +52,10 @@ public abstract class Catch extends SeriesBlock {
     private Store implicitCatchThrowableStore;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentExes;
+    private List<Executable> parentExes;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> parentPreExes;
+    private List<Executable> parentPreExes;
     
     public Catch(AClass exception) {
         super();
@@ -81,7 +81,7 @@ public abstract class Catch extends SeriesBlock {
         stack.push(exception.getType());
         insnHelper.nop();
         
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             if(exe.equals(implicitCatchThrowableStore)){
                 stack.push(AClass.THROWABLE_ACLASS.getType());
             }
@@ -298,11 +298,11 @@ public abstract class Catch extends SeriesBlock {
      * 设置父类
      * @param parentExes
      */
-    public void setParentExes(List<Executeable> parentExes) {
+    public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
     }
 
-    public void setParentPreExes(List<Executeable> parentPreExes) {
+    public void setParentPreExes(List<Executable> parentPreExes) {
         this.parentPreExes = parentPreExes;
     }
     

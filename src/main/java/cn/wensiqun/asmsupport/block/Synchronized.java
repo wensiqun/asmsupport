@@ -7,7 +7,7 @@ package cn.wensiqun.asmsupport.block;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
@@ -68,10 +68,10 @@ public abstract class Synchronized extends ProgramBlock {
 
 	@Override
 	public void executing() {
-        Executeable returnInsn = null;
+        Executable returnInsn = null;
         
 		lock.loadToStack(this);
-		for (Executeable e : getExecuteQueue()) {
+		for (Executable e : getExecuteQueue()) {
 			if(e.equals(flag1)){
 				//e.execute();
 				insnHelper.monitorEnter();

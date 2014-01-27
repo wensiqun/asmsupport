@@ -6,7 +6,7 @@ package cn.wensiqun.asmsupport.block.control;
 
 import org.objectweb.asm.Label;
 
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 
 
 /**
@@ -36,7 +36,7 @@ public abstract class Finally extends SeriesBlock {
     public final void executing() {
         insnHelper.mark(startLbl);
         insnHelper.nop();
-        for(Executeable exe : getExecuteQueue()){
+        for(Executable exe : getExecuteQueue()){
             exe.execute();
         }
         insnHelper.mark(endLbl);

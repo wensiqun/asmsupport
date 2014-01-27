@@ -13,7 +13,7 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.AbstractExecuteable;
 import cn.wensiqun.asmsupport.Crementable;
-import cn.wensiqun.asmsupport.Executeable;
+import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.block.control.Catch;
@@ -121,10 +121,10 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     protected ProgramBlock ownerBlock;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> executeQueue;
+    private List<Executable> executeQueue;
     
     /** 该程序块中所有可执行的指令 */
-    private List<Executeable> preExecuteQueue;
+    private List<Executable> preExecuteQueue;
     
     protected InstructionHelper insnHelper;
 
@@ -190,11 +190,11 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
 		}
 	}
 
-    public List<Executeable> getPreExecuteInsn(){
+    public List<Executable> getPreExecuteInsn(){
     	return this.preExecuteQueue;
     }
 
-    public List<Executeable> getExecuteQueue(){
+    public List<Executable> getExecuteQueue(){
     	return this.executeQueue;
     }
     
@@ -235,8 +235,8 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      * @param parent
      */
     protected ProgramBlock() {
-    	executeQueue = new ArrayList<Executeable>();
-        preExecuteQueue = new ArrayList<Executeable>();
+    	executeQueue = new ArrayList<Executable>();
+        preExecuteQueue = new ArrayList<Executable>();
     }
 
     /**
@@ -346,12 +346,12 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      * 
      * @param exe
      */
-    public void addExe(Executeable exe) {
+    public void addExe(Executable exe) {
         getExecuteQueue().add(exe);
         getPreExecuteInsn().add(exe);
     }
     
-    public void addAllExe(int index, List<Executeable> exes) {
+    public void addAllExe(int index, List<Executable> exes) {
         getExecuteQueue().addAll(index, exes);
         getPreExecuteInsn().addAll(index, exes);
     }
@@ -360,7 +360,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      * 
      * @param exe
      */
-    public void removeExe(Executeable exe) {
+    public void removeExe(Executable exe) {
         for (int i = getExecuteQueue().size() - 1; i >= 0; i--) {
             if (getExecuteQueue().get(i).equals(exe)) {
                 getExecuteQueue().remove(i);
@@ -374,7 +374,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      * @param old
      * @param newp
      */
-    public void replaceExe(Executeable old, Executeable newp){
+    public void replaceExe(Executable old, Executable newp){
         for (int i = getExecuteQueue().size() - 1; i >= 0; i--) {
             if (getExecuteQueue().get(i).equals(old)) {
                 getExecuteQueue().remove(i);
