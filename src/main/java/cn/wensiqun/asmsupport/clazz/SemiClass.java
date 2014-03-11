@@ -68,6 +68,7 @@ public class SemiClass extends NewMemberClass {
         for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){
             try {
                 f = fieldOwner.getDeclaredField(name);
+                break;
             } catch (NoSuchFieldException e) {
             }
         }
@@ -77,6 +78,6 @@ public class SemiClass extends NewMemberClass {
         }
         
         return new GlobalVariable(AClassFactory.getProductClass(fieldOwner),
-                new ProductClass(f.getType()), 0, name);
+                new ProductClass(f.getType()), f.getModifiers(), name);
     }
 }

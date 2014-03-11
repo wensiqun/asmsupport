@@ -57,7 +57,7 @@ public class ProductClass extends NewMemberClass {
             try {
                 Field f = fieldOwner.getDeclaredField(name);
                 entiey = new GlobalVariableMeta(this, AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
-                
+                break;
             } catch (NoSuchFieldException e) {
                 //throw new IllegalArgumentException("no such method exception : " + methodName);
             }
