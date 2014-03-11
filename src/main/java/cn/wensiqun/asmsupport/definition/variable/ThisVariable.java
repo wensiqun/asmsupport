@@ -24,7 +24,7 @@ public class ThisVariable extends ImplicitVariable {
     
     
     public ThisVariable(AClass aclass) {
-        this.globalVariableMeta = new GlobalVariableMeta(aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
+        this.globalVariableMeta = new GlobalVariableMeta(aclass, aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
     }
     
     @Override

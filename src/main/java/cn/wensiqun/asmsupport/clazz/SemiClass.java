@@ -77,7 +77,7 @@ public class SemiClass extends NewMemberClass {
             throw new ASMSupportException("no such field exception : " + name);
         }
         
-        return new GlobalVariable(AClassFactory.getProductClass(fieldOwner),
+        return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
                 new ProductClass(f.getType()), f.getModifiers(), name);
     }
 }

@@ -5,7 +5,7 @@ package cn.wensiqun.asmsupport.definition.variable;
 
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
+import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 
 /**
@@ -30,11 +30,12 @@ public abstract class AbstractVariable implements IVariable {
             throw new ASMSupportException("cannot get global variable from array type variable : " + this);
         }
     	
-    	VariableMeta ve = aclass.getGlobalVariableMeta(name);
+        GlobalVariableMeta ve = aclass.getGlobalVariableMeta(name);
         if(ve == null){
         	throw new IllegalArgumentException("dosn't exist or cannot access \"" + name + "\" property of class " + aclass);
         }
-        return new GlobalVariable(this, ve.getDeclareClass(), ve.getModifiers(), ve.getName());
+        //return new GlobalVariable(this, ve.getDeclareClass(), ve.getModifiers(), ve.getName());
+        return new GlobalVariable(this, ve);
     }
 
 }

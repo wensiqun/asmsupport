@@ -36,15 +36,16 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
      * 
      * 通过Class获取的全局变量
      * @param owner 变量拥有者
+     * @param actuallyOwner 变量实际有用者
      * @param declareClass 变量声明类型
      * @param actuallyClass 变量真实类型
      * @param modifiers 变量的修饰符
      * @param name 变量名
      * 
      */
-    public GlobalVariable(AClass owner, AClass declareClass,int modifiers,
+    public GlobalVariable(AClass owner, AClass actuallyOwner, AClass declareClass,int modifiers,
             String name) {
-        globalVariableMeta = new GlobalVariableMeta(owner, declareClass,modifiers, name);
+    	globalVariableMeta = new GlobalVariableMeta(owner, actuallyOwner, declareClass,modifiers, name);
         staticOwner = owner;
     }
     
@@ -61,13 +62,14 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
     /**
      * 通过Variable获取的全局变量
      * @param var 变量
+     * @param actuallyOwner 变量实际有用者
      * @param varClass 变量类型
      * @param modifiers 变量修饰符
      * @param name 变量名
      */
-    public GlobalVariable(IVariable var, AClass declareClass, int modifiers,
+    public GlobalVariable(IVariable var, AClass actuallyOwner, AClass declareClass, int modifiers,
             String name) {
-        globalVariableMeta = new GlobalVariableMeta(var.getParamterizedType(), declareClass, modifiers, name);
+    	globalVariableMeta = new GlobalVariableMeta(var.getParamterizedType(), actuallyOwner, declareClass, modifiers, name);
         variableOwner = var;
     }
     

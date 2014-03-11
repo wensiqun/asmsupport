@@ -56,7 +56,9 @@ public class ProductClass extends NewMemberClass {
         for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){
             try {
                 Field f = fieldOwner.getDeclaredField(name);
-                entiey = new GlobalVariableMeta(this, AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
+                entiey = new GlobalVariableMeta(this, 
+                		AClassFactory.getProductClass(fieldOwner),
+                		AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
                 break;
             } catch (NoSuchFieldException e) {
                 //throw new IllegalArgumentException("no such method exception : " + methodName);
@@ -92,7 +94,7 @@ public class ProductClass extends NewMemberClass {
             throw new ASMSupportException("the field \"" + f.getName() + "\" is non-static, cannot use current method!");
         }
         
-        return new GlobalVariable(fieldOwner.equals(reallyClass) ? this : AClassFactory.getProductClass(fieldOwner),
+        return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
         		AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
     }
     

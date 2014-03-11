@@ -31,6 +31,7 @@ public class SuperVariable extends ImplicitVariable{
         this.globalVariableMeta = new GlobalVariableMeta(
                 AClassFactory.getProductClass(aclass.getSuperClass()), 
                 AClassFactory.getProductClass(aclass.getSuperClass()), 
+                AClassFactory.getProductClass(aclass.getSuperClass()), 
                 Opcodes.ACC_FINAL, ASConstant.SUPER);
     }
 

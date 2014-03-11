@@ -35,7 +35,7 @@ public class GlobalVariableCreator implements IGlobalVariableCreator {
     public void create(IClassContext cv) {
     	this.context = cv;
     	NewMemberClass owner = cv.getCurrentClass();
-        fe = new GlobalVariableMeta(owner, fieldClass, modifiers, name);
+        fe = new GlobalVariableMeta(owner, owner, fieldClass, modifiers, name);
         owner.addGlobalVariableEntity(fe);
     }
     
