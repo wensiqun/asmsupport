@@ -39,11 +39,15 @@ public class ASMClassLoader extends ClassLoader {
 		}else{
 			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 			if(systemClassLoader != null){
-				return new ASMClassLoader(systemClassLoader);
+				return getInstance(systemClassLoader);
 			}else{
-				return new ASMClassLoader(currentClassLoader);
+				return getInstance(currentClassLoader);
 			}
 		}
+	}
+
+	public static ASMClassLoader getInstance(ClassLoader parent){
+		return new ASMClassLoader(parent);
 	}
 	
 	public final Class<?> defineClass(String name, byte[] b) throws ClassFormatError {

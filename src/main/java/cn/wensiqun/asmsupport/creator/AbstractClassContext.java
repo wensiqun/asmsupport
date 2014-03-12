@@ -21,7 +21,10 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
 	
     protected ClassWriter cw;
     
-    private   ASMClassLoader classloader;
+    /**
+     * 
+     */
+    private   ClassLoader parentClassLoader;
     
 	protected void checkStaticBlock(){
     	if(existedStaticBlock){
@@ -32,11 +35,14 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
     protected Class<?> loadClass(String name, byte[] b) {
         Class<?> clazz = null;
         try {
-        	if(classloader == null){
-        		classloader = ASMClassLoader.getInstance();
+        	ASMClassLoader classLoader;
+        	if(parentClassLoader != null){
+        		classLoader = ASMClassLoader.getInstance(parentClassLoader);
+        	}else{
+        		classLoader = ASMClassLoader.getInstance();
         	}
-        	classloader.defineClass(name, b);
-        	clazz = classloader.findClass(name);
+        	classLoader.defineClass(name, b);
+        	clazz = classLoader.findClass(name);
         } catch (Exception e) {
             throw new RuntimeException("Error on define class." + e);
         }
@@ -56,12 +62,12 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         this.classOutPutPath = classOutPutPath;
     }
 
-	public ASMClassLoader getClassloader() {
-		return classloader;
+	public ClassLoader getParentClassLoader() {
+		return parentClassLoader;
 	}
 
-	public void setClassloader(ASMClassLoader classloader) {
-		this.classloader = classloader;
+	public void setParentClassLoader(ClassLoader parentClassLoader) {
+		this.parentClassLoader = parentClassLoader;
 	}
-    
+
 }

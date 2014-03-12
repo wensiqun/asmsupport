@@ -52,9 +52,8 @@ public class Main extends AbstractFix {
 			}
 			
 		});
-		System.out.println(ClassLoader.getSystemClassLoader());
-		//generate(creator);
-		/*Class Test65150 = null;
+		creator.startup();
+		Class Test65150 = null;
 		try {
 			Test65150 = Class.forName("bug.fixed.test65150.Test65150");
 			System.out.println(Test65150);
@@ -80,9 +79,24 @@ public class Main extends AbstractFix {
 			    runReturn();
 			}
 			
-		});
+		}); 
 		
-		generate(creator);*/
+
+		creator.startup();
+		Class Test65150_ALT = null;
+		try {
+			Test65150_ALT = Class.forName("bug.fixed.test65150.Test65150_ALT");
+			System.out.println(Test65150_ALT);
+		} catch (ClassNotFoundException e) {
+			Assert.fail();
+		}
+
+		try {
+			Test65150.getMethod("main", String[].class).invoke(Test65150, new Object[]{null});
+			Test65150_ALT.getMethod("main", String[].class).invoke(Test65150_ALT, new Object[]{null});
+		} catch (Exception e) {
+			Assert.fail();
+		}
 		
 	}
 	
