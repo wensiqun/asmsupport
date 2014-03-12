@@ -244,7 +244,7 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 	 */
 	public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String findName) throws IOException{
 		final AClass owner = AClassFactory.getProductClass(clazz);
-		InputStream classStream = ASMClassLoader.asmClassLoader.getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
+		InputStream classStream = ASMClassLoader.getInstance().getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
 		ClassReader cr = new ClassReader(classStream);
 		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
 		

@@ -43,11 +43,11 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
     protected Class<?> loadClass(String name, byte[] b) {
         Class<?> clazz = null;
         try {
-        	ASMClassLoader loader = ASMClassLoader.asmClassLoader;
+        	ASMClassLoader loader = ASMClassLoader.getInstance();
         	clazz = loader.defineClass(name, b);
         } catch (Exception e) {
-            e.printStackTrace();
             System.exit(1);
+            throw new RuntimeException("Error on define class." + e);
         }
         return clazz;
     }

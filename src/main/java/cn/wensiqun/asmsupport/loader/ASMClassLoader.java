@@ -2,9 +2,9 @@ package cn.wensiqun.asmsupport.loader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -13,17 +13,38 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 /**
  * 
- *
+ * <h3>Release notes</h3>
+ * <ul>
+ * <li><b>version 0.4</b> : Thanks for "aruanruan at vip.sina.com"(oschina account "aruan") suggestion. for detail see <a href="http://code.taobao.org/p/asmsupport/issue/31553/">http://code.taobao.org/p/asmsupport/issue/31553/</a> </li>
+ * </ul>
+ * 
+ * @author <b>wensiqun</b> at gmail, <b>aruanruan</b> at vip.sina.com
+ * @version 0.4
+ * 
  */
 public class ASMClassLoader extends ClassLoader {
-
-	public static ASMClassLoader asmClassLoader = new ASMClassLoader(Thread.currentThread().getContextClassLoader());
-
-	private Map<Key, byte[]> classByteMap;
+	
+	private static Map<Key, byte[]> classByteMap = new ConcurrentHashMap<Key, byte[]>();
 	
 	private ASMClassLoader(ClassLoader parent) {
 		super(parent);
-		classByteMap = new Hashtable<Key, byte[]>();
+	}
+	
+	public static ASMClassLoader getInstance() {
+		ASMClassLoader classloader = null;
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (cl != null) {
+			if (cl instanceof ASMClassLoader) {
+				classloader = (ASMClassLoader) cl;
+			} else {
+				classloader = new ASMClassLoader(Thread.currentThread()
+						.getContextClassLoader());
+			}
+		} else {
+			classloader = new ASMClassLoader(
+					ClassLoader.getSystemClassLoader());
+		}
+		return classloader;
 	}
 	
 	public final Class<?> defineClass(String name, byte[] b) throws ClassFormatError {
@@ -55,6 +76,10 @@ public class ASMClassLoader extends ClassLoader {
 		
 		if(stream == null){
 			stream = super.getResourceAsStream(name);
+		}
+		
+		if (stream == null) {
+			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(name);
 		}
 		return stream;
 	}

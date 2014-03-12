@@ -21,7 +21,7 @@ public class CustomObjectInputStream extends ObjectInputStream {
 	protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
 		try{
 			String name = desc.getName();
-			return ASMClassLoader.asmClassLoader.loadClass(name);
+			return ASMClassLoader.getInstance().loadClass(name);
 		}catch(Exception e){
 			return super.resolveClass(desc);
 		}
