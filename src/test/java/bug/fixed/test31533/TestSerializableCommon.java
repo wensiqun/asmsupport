@@ -22,4 +22,9 @@ public class TestSerializableCommon {
        System.out.println("after:" + user2);
 
     }
+    
+    @org.junit.Test
+	public void test() throws Exception{
+		main(null);
+	}
 }

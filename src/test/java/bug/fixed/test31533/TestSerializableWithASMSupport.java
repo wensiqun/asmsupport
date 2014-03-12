@@ -13,7 +13,6 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.creator.ClassCreator;
 import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.loader.ASMClassLoader;
 
 public class TestSerializableWithASMSupport {
    
@@ -80,4 +79,9 @@ public class TestSerializableWithASMSupport {
        System.out.println("after:" + user2);
 
     }
+    
+    @org.junit.Test
+	public void test() throws Exception{
+		main(null);
+	}
 }

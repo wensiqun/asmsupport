@@ -74,7 +74,7 @@ public class ASMClassLoader extends ClassLoader {
 		Set<Key> keySet = classByteMap.keySet();
 		if(CollectionUtils.isNotEmpty(keySet)){
 			for(Key k : keySet){
-				if(k.equals(new Key(name))){
+				if(k.equals(new Key(translateClassName(name)))){
 					return k.clazz;
 				}
 			}
@@ -82,6 +82,10 @@ public class ASMClassLoader extends ClassLoader {
 		return super.findClass(name);
 	}
 	
+	
+	/**
+	 * format like : a/b/c/D.class
+	 */
 	@Override
 	public InputStream getResourceAsStream(String name) {
 		byte[] byteArray = classByteMap.get(new Key(name));
@@ -115,7 +119,7 @@ public class ASMClassLoader extends ClassLoader {
 		private Class<?> clazz;
 
 		/**
-		 * class qualified name
+		 * format like :  a/b/c/D.class
 		 */
 		private String name;
 
@@ -123,8 +127,12 @@ public class ASMClassLoader extends ClassLoader {
 			this.clazz = clazz;
 		}
 
+		/**
+		 * name format like :  a/b/c/D.class
+		 * @param name
+		 */
 		private Key(String name) {
-			this.name = translateClassName(name);
+			this.name = name;
 		}
 		
 		@Override
