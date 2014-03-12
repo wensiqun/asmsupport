@@ -21,10 +21,26 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
 	
     protected ClassWriter cw;
     
+    private   ASMClassLoader classloader;
+    
 	protected void checkStaticBlock(){
     	if(existedStaticBlock){
     		throw new UnsupportedOperationException("the static block has alreay exist this method!");
     	}
+    }
+    
+    protected Class<?> loadClass(String name, byte[] b) {
+        Class<?> clazz = null;
+        try {
+        	if(classloader == null){
+        		classloader = ASMClassLoader.getInstance();
+        	}
+        	classloader.defineClass(name, b);
+        	clazz = classloader.findClass(name);
+        } catch (Exception e) {
+            throw new RuntimeException("Error on define class." + e);
+        }
+        return clazz;
     }
 
     @Override
@@ -40,16 +56,12 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         this.classOutPutPath = classOutPutPath;
     }
 
-    protected Class<?> loadClass(String name, byte[] b) {
-        Class<?> clazz = null;
-        try {
-        	ASMClassLoader loader = ASMClassLoader.getInstance();
-        	clazz = loader.defineClass(name, b);
-        } catch (Exception e) {
-            System.exit(1);
-            throw new RuntimeException("Error on define class." + e);
-        }
-        return clazz;
-    }
+	public ASMClassLoader getClassloader() {
+		return classloader;
+	}
+
+	public void setClassloader(ASMClassLoader classloader) {
+		this.classloader = classloader;
+	}
     
 }

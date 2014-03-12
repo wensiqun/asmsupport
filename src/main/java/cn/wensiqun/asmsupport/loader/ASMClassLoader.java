@@ -2,6 +2,7 @@ package cn.wensiqun.asmsupport.loader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,27 +32,38 @@ public class ASMClassLoader extends ClassLoader {
 	}
 	
 	public static ASMClassLoader getInstance() {
-		ASMClassLoader classloader = null;
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		if (cl != null) {
-			if (cl instanceof ASMClassLoader) {
-				classloader = (ASMClassLoader) cl;
-			} else {
-				classloader = new ASMClassLoader(Thread.currentThread()
-						.getContextClassLoader());
+		ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+		if(currentClassLoader != null && currentClassLoader instanceof ASMClassLoader)
+		{
+			return (ASMClassLoader) currentClassLoader;
+		}else{
+			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+			if(systemClassLoader != null){
+				return new ASMClassLoader(systemClassLoader);
+			}else{
+				return new ASMClassLoader(currentClassLoader);
 			}
-		} else {
-			classloader = new ASMClassLoader(
-					ClassLoader.getSystemClassLoader());
 		}
-		return classloader;
 	}
 	
 	public final Class<?> defineClass(String name, byte[] b) throws ClassFormatError {
-		Class<?> clazz = super.defineClass(name, b, 0, b.length);
+		Class<?> clazz = null;
+		ClassLoader loader = getParent();
+		Class<?> cls = ClassLoader.class;
+		try {
+			Method method = cls.getDeclaredMethod("defineClass", new Class[] {
+					String.class, byte[].class, int.class, int.class });
+			method.setAccessible(true);
+			Object[] args = new Object[] { name, b, new Integer(0),
+					new Integer(b.length) };
+			clazz = (Class<?>) method.invoke(loader, args);
+		} catch (Exception e) {
+			throw new ClassFormatError(e.getMessage());
+		}
 		classByteMap.put(new Key(clazz), b);
 		return clazz;
 	}
+	
 
 	@Override
 	public Class<?> findClass(String name) throws ClassNotFoundException {
@@ -103,12 +115,12 @@ public class ASMClassLoader extends ClassLoader {
 		 */
 		private String name;
 
-		public Key(Class<?> clazz) {
+		private Key(Class<?> clazz) {
 			this.clazz = clazz;
 		}
 
-		public Key(String name) {
-			this.name = name;
+		private Key(String name) {
+			this.name = translateClassName(name);
 		}
 		
 		@Override

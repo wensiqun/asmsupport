@@ -22,6 +22,12 @@ public interface IClassContext {
      */
     ClassVisitor getClassVisitor();
     
+    
+    /**
+     * 启动Creator开始生成class，注意，调用完这个参数以后将不不会触发生成的class的static程序块
+     * 
+     * @return
+     */
     Class<?> startup();
     
     NewMemberClass getCurrentClass();
