@@ -14,6 +14,7 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.operators.AbstractOperator;
+import cn.wensiqun.asmsupport.utils.AClassUtils;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
@@ -90,6 +91,15 @@ public class GlobalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public void loadToStack(ProgramBlock block) {
+    	
+    	if(!AClassUtils.visible(block.getMethodOwner(), globalVariableMeta.getOwner(), 
+    			globalVariableMeta.getActuallyOwner(), globalVariableMeta.getModifiers()))
+    	{
+    		throw new IllegalArgumentException("cannot access field " +
+    				globalVariableMeta.getOwner() + "." + globalVariableMeta.getName()
+    				+ " from " + block.getMethodOwner());
+    	}
+    	
         //如果是静态
         if(Modifier.isStatic(globalVariableMeta.getModifiers())){
             if(log.isDebugEnabled()){

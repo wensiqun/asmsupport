@@ -11,13 +11,12 @@ import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.creator.ClassCreator;
 import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.exception.NoSuchMethod;
 
 public class Main extends AbstractFix {
 
 	public static void main(String[] args) {
 		
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test65150", 
+		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
 				ParentClass.class, null);
 		
 		creator.createStaticMethod("main", new AClass[]{
