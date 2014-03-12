@@ -7,8 +7,7 @@ import junit.framework.Assert;
 
 import org.objectweb.asm.Opcodes;
 
-import utils.Utils;
-
+import bug.fixed.Utils;
 import bug.fixed.test4646.entity.Child;
 import bug.fixed.test4646.entity.ChildChild;
 import bug.fixed.test4646.entity.Super;

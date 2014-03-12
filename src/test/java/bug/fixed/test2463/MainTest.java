@@ -1,4 +1,4 @@
-package test.test2463;
+package bug.fixed.test2463;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -6,7 +6,7 @@ import junit.framework.Assert;
 
 import org.objectweb.asm.Opcodes;
 
-import utils.Utils;
+import bug.fixed.Utils;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;

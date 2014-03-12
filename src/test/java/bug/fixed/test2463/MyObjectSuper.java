@@ -1,4 +1,4 @@
-package test.test2463;
+package bug.fixed.test2463;
 
 public class MyObjectSuper {
 

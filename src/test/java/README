@@ -1,3 +1,9 @@
+和当前README文件同级下面的bug.fixed文件夹下存放的是对应bug修复后的测试类
+
+
+和当前README文件同级下面的cn.wensiqun.asmsupport.*文件夹下存放的是开发过程或者维护过程中对每个类的单元测试类。
+
+
 和当前README文件同级下面的example文件夹下存放着很多asmsupport的包，每个包中包括了很多实例代码。如果你首次使用或者学习asmsupport，建议您按照如下顺序
  学习asmsupport：
 
