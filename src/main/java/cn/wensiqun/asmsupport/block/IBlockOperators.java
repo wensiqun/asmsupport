@@ -32,8 +32,10 @@ LogicalOperator,
 CreateBlockOperator {
     
     /**
-     * checkcast a value to target type.
-     * 
+     * 转换类，将对象cc转换成目标类型to,对应下面的红色java代码
+     * <p style="border:1px solid;width:300px;padding:10px;">
+     * String cc1 = <b style="color:#FF3300">(String)cc;</b>
+     * </p>
      * @param cc value
      * @param to target type
      * @return
