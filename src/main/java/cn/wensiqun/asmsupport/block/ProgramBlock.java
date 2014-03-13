@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.block.control.IF;
 import cn.wensiqun.asmsupport.block.control.ILoop;
 import cn.wensiqun.asmsupport.block.control.Try;
 import cn.wensiqun.asmsupport.block.control.WhileLoop;
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
@@ -413,9 +413,9 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     	return method.getArguments();
     }
     
-    protected SuperMethodBody getMethodBody(){
-        if(this instanceof SuperMethodBody){
-            return (SuperMethodBody) this;
+    protected GenericMethodBody getMethodBody(){
+        if(this instanceof GenericMethodBody){
+            return (GenericMethodBody) this;
         }
         return ownerBlock.getMethodBody();
     }

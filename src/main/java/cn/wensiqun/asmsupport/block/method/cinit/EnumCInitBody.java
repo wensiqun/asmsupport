@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.Parameterized;
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.definition.value.Value;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
  * 
  *
  */
-public abstract class EnumCInitBody extends SuperMethodBody implements IEnumCInitBody {
+public abstract class EnumCInitBody extends GenericMethodBody implements IEnumCInitBody {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	

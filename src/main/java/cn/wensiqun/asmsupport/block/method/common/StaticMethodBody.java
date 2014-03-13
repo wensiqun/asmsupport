@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.block.method.common;
 
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 
-public abstract class StaticMethodBody extends SuperMethodBody {
+public abstract class StaticMethodBody extends GenericMethodBody {
 	
 	@Override
     public void generateBody() {

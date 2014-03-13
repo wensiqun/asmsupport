@@ -9,7 +9,7 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.operators.Return;
@@ -61,7 +61,7 @@ public abstract class Synchronized extends ProgramBlock {
 		}
 		lock.asArgument();
 
-        SuperMethodBody mb = getMethodBody();
+        GenericMethodBody mb = getMethodBody();
         mb.addTryCatchInfo(monitorenter, monitorexit, excetpionStart, null);
         mb.addTryCatchInfo(excetpionStart, excetpionEnd, excetpionStart, null);
 	}

@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.creator;
 
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
@@ -21,7 +21,7 @@ public class MethodCreator implements IMethodCreator {
 	private AClass returnClass;
 	private AClass[] exceptions;
 	private int access;
-	private SuperMethodBody methodBody;
+	private GenericMethodBody methodBody;
 	private AMethodMeta me;
 	private AMethod method;
 	private int mtdCrtMode;
@@ -31,21 +31,21 @@ public class MethodCreator implements IMethodCreator {
 	}
 	
 	public static MethodCreator methodCreatorForModify(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, GenericMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_MODIFY);
 		return mc;
 	}
 	
 	public static MethodCreator methodCreatorForAdd(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, GenericMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_ADD);
 		return mc;
 	}
 	
 	private MethodCreator(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, SuperMethodBody mb) {
+			AClass returnClass, AClass[] exceptions, int access, GenericMethodBody mb) {
 		super();
 		this.name = name;
 		this.arguments = arguments;

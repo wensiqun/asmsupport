@@ -9,7 +9,7 @@ import org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
@@ -97,7 +97,7 @@ public abstract class Catch extends SeriesBlock {
 
     @Override
     protected void init() {
-    	SuperMethodBody mb = getMethodBody();
+    	GenericMethodBody mb = getMethodBody();
         mb.addTryCatchInfo(entityTry.getStart(), entityTry.getEnd(), catchLbl, exception);
         
         //是最后一个Catch 并且存在Finally Block 则对try程序每个catch程序

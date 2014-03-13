@@ -9,7 +9,7 @@ import org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
@@ -136,7 +136,7 @@ public abstract class Try extends SeriesBlock {
 
     @Override
     protected void init() {
-    	SuperMethodBody mb = getMethodBody();
+    	GenericMethodBody mb = getMethodBody();
     	//如果存在try之后直接存在finally添加一个隐藏的catch块(此catch程序块将catch throwable异常)
         if(finallyBlock != null){
             mb.addTryCatchInfo(getStart(), getEnd(), implicitCatchStartLbl, null);

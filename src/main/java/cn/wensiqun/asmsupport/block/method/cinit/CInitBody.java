@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.block.method.cinit;
 
-import cn.wensiqun.asmsupport.block.method.SuperMethodBody;
+import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 
-public abstract class CInitBody extends SuperMethodBody implements ICInitBody {
+public abstract class CInitBody extends GenericMethodBody implements ICInitBody {
 
 	@Override
 	protected void init() {
