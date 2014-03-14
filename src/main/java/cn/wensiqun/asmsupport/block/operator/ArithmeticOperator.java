@@ -11,6 +11,7 @@ import cn.wensiqun.asmsupport.operators.numerical.arithmetic.Subtraction;
 /**
  * 生成算数运算
  *
+ * @author wensiqun(at)gmail
  */
 public interface ArithmeticOperator {
     
@@ -18,12 +19,12 @@ public interface ArithmeticOperator {
      * 生成加法操作指令例如：factor1 + factor2,对应下面的红色java代码
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 + factor12;</b>
+     * int count = <b style="color:#FF3300">factor1 + factor2;</b>
      * </p>
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link Addition}
      */
     public Addition add(Parameterized factor1, Parameterized factor2);
 
@@ -36,7 +37,7 @@ public interface ArithmeticOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link Subtraction}
      */
     public Subtraction sub(Parameterized factor1, Parameterized factor2);
     
@@ -49,7 +50,7 @@ public interface ArithmeticOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link Multiplication}
      */
     public Multiplication mul(Parameterized factor1, Parameterized factor2);
     
@@ -62,7 +63,7 @@ public interface ArithmeticOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link Division}
      */
     public Division div(Parameterized factor1, Parameterized factor2);
     
@@ -77,7 +78,7 @@ public interface ArithmeticOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link Modulus}
      */
     public Modulus mod(Parameterized factor1, Parameterized factor2);
     

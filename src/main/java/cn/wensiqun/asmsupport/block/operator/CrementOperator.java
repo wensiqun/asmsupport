@@ -6,37 +6,44 @@ import cn.wensiqun.asmsupport.operators.numerical.crement.AfterIncrement;
 import cn.wensiqun.asmsupport.operators.numerical.crement.BeforeDecrement;
 import cn.wensiqun.asmsupport.operators.numerical.crement.BeforeIncrement;
 
+
+/**
+ * 创建自增或自减操作
+ * 
+ * @author wensiqun(at)gmail
+ *
+ */
 public interface CrementOperator {
     
     /**
-     * --i
+     * 生成类似--i操作指令
      * 
      * @param crement
-     * @return
+     * @return {@link BeforeDecrement}
      */
     public BeforeDecrement beforeDec(Crementable crement);
     
     /**
-     * i--
+     * 生成类似i--操作指令
      * 
      * @param crement
-     * @return
+     * @return {@link AfterDecrement}
      */
     public AfterDecrement afterDec(Crementable crement);
     
     /**
-     * ++i
+     * 生成类似++i操作指令
      * 
      * @param crement
-     * @return
+     * @return {@link BeforeIncrement}
      */
     public BeforeIncrement beforeInc(Crementable crement);
     
     /**
-     * i++
+     * 生成类似i++操作指令
      * 
      * @param crement
-     * @return
+     * @return {@link AfterIncrement}
      */
     public AfterIncrement afterInc(Crementable crement);
     

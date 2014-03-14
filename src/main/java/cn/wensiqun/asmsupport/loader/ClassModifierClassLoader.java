@@ -2,8 +2,6 @@ package cn.wensiqun.asmsupport.loader;
 
 import java.io.InputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -13,8 +11,6 @@ import cn.wensiqun.asmsupport.creator.ClassModifier;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 
 public class ClassModifierClassLoader extends ClassLoader {
-	
-    private static Log log = LogFactory.getLog(ClassModifierClassLoader.class);
 	
 	private ClassModifier modifier;
 	private String className;

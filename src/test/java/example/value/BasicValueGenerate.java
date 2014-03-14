@@ -84,9 +84,9 @@ public class BasicValueGenerate extends AbstractExample {
 
 	        	invoke(systemOut, "println", append(Value.value("String value is : "), Value.value(strVal)));
 	        	invoke(systemOut, "println", append(Value.value("double default value is : "), Value.defaultValue(AClass.STRING_ACLASS)));
-	        	
+
 	        	//测试null的Value
-	        	LocalVariable arrayListNullValue = createVariable("arrayListNullValue", AClassFactory.getProductClass(List.class), false, Value.nullValue(AClassFactory.getProductClass(ArrayList.class)));
+	        	LocalVariable arrayListNullValue = createVariable("arrayListNullValue", AClassFactory.getProductClass(List.class), false, Value.getNullValue(AClassFactory.getProductClass(ArrayList.class)));
 	        	invoke(systemOut, "println", append(Value.value("I'm a null value and type is List: "), arrayListNullValue));
 			    runReturn();
 			}

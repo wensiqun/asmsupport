@@ -98,7 +98,10 @@ import cn.wensiqun.asmsupport.utils.memory.Scope;
 import cn.wensiqun.asmsupport.utils.memory.ScopeLogicVariable;
 
 /**
- * @author 温斯群(Joe Wen)
+ * 
+ * 
+ * 
+ * @author wensiqun(at)gmail
  * 
  */
 public abstract class ProgramBlock extends AbstractExecuteable implements IBlockOperators, Cloneable  {
@@ -523,26 +526,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     
     //*******************************************************************************************//
     //                                Value Operator                                             //
-    //*******************************************************************************************//    
-
-    /*
-     * got null value
-     * @param aclass
-     * @return
-     *//*
-    public final Value nullValue(AClass aclass){
-        return Value.nullValue(aclass);
-    }
-    
-    *//*
-     * get non null value
-     * support is primitive type, class type and String type 
-     * @param value
-     * @return
-     *//*
-    public final Value getValue(Object value) {
-        return Value.value(value);
-    }*/
+    //*******************************************************************************************//
     
     @Override
     public final ArrayValue newArray(final ArrayClass aClass, final Parameterized... allocateDims){

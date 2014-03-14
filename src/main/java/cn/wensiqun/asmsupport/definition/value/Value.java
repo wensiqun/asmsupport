@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.exception.ASMSupportException;
  * 通常一些基本类型的常量值，String类型的值，null，Class类型，这些在编写java代码的时候都是直接可以获取的到，
  * 那么这些值在ASMSupport中我们都要将其封装成ASMSupport内部可识别的对象, 这个类就是对这种内部可识别对象的类型。
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun(at)gmail.com
  * 
  */
 public class Value implements IValue {
@@ -194,7 +194,7 @@ public class Value implements IValue {
      * @param type
      * @return
      */
-    public static Value nullValue(AClass type) {
+    public static Value getNullValue(AClass type) {
         if(type.isPrimitive()){
             throw new IllegalArgumentException("the type of null value cannot be primitive type!");
         }

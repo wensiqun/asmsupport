@@ -10,7 +10,6 @@ import cn.wensiqun.asmsupport.block.operator.LogicalOperator;
 import cn.wensiqun.asmsupport.block.operator.MethodInvokeOperator;
 import cn.wensiqun.asmsupport.block.operator.RelationalOperator;
 import cn.wensiqun.asmsupport.block.operator.ThisVariableable;
-import cn.wensiqun.asmsupport.block.operator.ValueOperator;
 import cn.wensiqun.asmsupport.block.operator.VariableOperator;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.operators.Return;
@@ -20,7 +19,6 @@ import cn.wensiqun.asmsupport.operators.ternary.TernaryOperator;
 
 public interface IBlockOperators extends 
 ThisVariableable, 
-ValueOperator, 
 VariableOperator, 
 MethodInvokeOperator, 
 ArrayOperator, 

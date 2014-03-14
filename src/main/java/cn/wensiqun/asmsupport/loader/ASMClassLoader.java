@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
  * <li><b>version 0.4</b> : Thanks for "aruanruan at vip.sina.com"(oschina account "aruan") suggestion. for detail see <a href="http://code.taobao.org/p/asmsupport/issue/31553/">http://code.taobao.org/p/asmsupport/issue/31553/</a> </li>
  * </ul>
  * 
- * @author <b>wensiqun</b> at gmail, <b>aruanruan</b> at vip.sina.com
+ * @author wensiqun(at)gmail, aruanruan(at)vip.sina.com
  * @version 0.4
  * 
  */
