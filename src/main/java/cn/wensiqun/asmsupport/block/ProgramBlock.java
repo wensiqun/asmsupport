@@ -1017,7 +1017,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     }
 
     @Override
-    public final void breakout(){
+    public final void breakOut(){
         ProgramBlock pb = getExecuteBlock();
         while(pb != null){
             if(pb instanceof ILoop){
@@ -1030,7 +1030,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     }
 
     @Override
-    public final void continueout(){
+    public final void continueOut(){
         ProgramBlock pb = getExecuteBlock();
         while(pb != null){
             if(pb instanceof ILoop){

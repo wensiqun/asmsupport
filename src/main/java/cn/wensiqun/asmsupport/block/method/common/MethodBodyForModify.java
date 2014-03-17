@@ -6,7 +6,7 @@ package cn.wensiqun.asmsupport.block.method.common;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.asm.adapter.VisitXInsnAdapter;
-import cn.wensiqun.asmsupport.block.operator.ThisVariableable;
+import cn.wensiqun.asmsupport.block.operator.KeywordVariableable;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.ASConstant;
@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  * @author
  * 
  */
-public abstract class MethodBodyForModify extends StaticMethodBody implements ThisVariableable {
+public abstract class MethodBodyForModify extends StaticMethodBody implements KeywordVariableable {
     
 	private List<VisitXInsnAdapter> superConstructorOperators;
 	
