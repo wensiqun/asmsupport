@@ -54,11 +54,9 @@ public abstract class GenericMethodBody extends ProgramBlock {
     protected void init() {
     	AMethodMeta me = method.getMethodMeta(); 
         if (!method.isStatic()) {
-        	//new LocalVariableCreator(getExecuteBlock(), Constant.THIS, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
             OperatorFactory.newOperator(LocalVariableCreator.class, 
             		new Class<?>[]{ProgramBlock.class, String.class, Type.class, Type.class}, 
             		getExecuteBlock(), ASConstant.THIS, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
-        	//new ScopeLogicVariable("this", scope, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
         }
 
         String[] argNames = me.getArgNames();
@@ -108,7 +106,6 @@ public abstract class GenericMethodBody extends ProgramBlock {
         int s = method.getStack().getMaxSize();
         int l = scope.getLocals().getSize();
         insnHelper.maxs(s, l);
-        //insnHelper.endMethod();
     }
 
     /**
@@ -132,12 +129,6 @@ public abstract class GenericMethodBody extends ProgramBlock {
                 if(slv.isAnonymous()){
                     continue;
                 }
-                /*Label start;
-                if (lastBrotherScope == null) {
-                    start = parent.getStart();
-                } else {
-                    start = lastBrotherScope.outerEnd();
-                }*/
                 insnHelper.declarationVariable(slv.getName(), slv
                         .getDeclareType().getDescriptor(), null, slv.getSpecifiedStartLabel(), parent
                         .innerEnd(), slv.getInitStartPos());
