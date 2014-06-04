@@ -13,7 +13,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.asm.adapter.VisitXInsnAdapter;
-import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.MethodBodyForModify;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
@@ -231,7 +231,7 @@ public class ClassModifier extends AbstractClassContext {
     	super.checkStaticBlock();
     }
     
-    public void createStaticBlock(CInitBody mb){
+    public void createStaticBlock(ClinitBody mb){
     	checkStaticBlock();
     	existedStaticBlock = true;
         methodCreaters.add(0, MethodCreator.methodCreatorForAdd(ASConstant.CLINIT, null, null, null, null,

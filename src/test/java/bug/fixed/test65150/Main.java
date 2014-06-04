@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.objectweb.asm.Opcodes;
 
 import bug.fixed.AbstractFix;
-import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
@@ -22,7 +22,7 @@ public class Main extends AbstractFix {
 		
 		creator.createGlobalVariable("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClass.INT_ACLASS);
 		
-		creator.createStaticBlock(new CInitBody(){
+		creator.createStaticBlock(new ClinitBody(){
 
 			@Override
 			public void generateBody() {

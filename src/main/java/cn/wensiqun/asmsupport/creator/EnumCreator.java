@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.objectweb.asm.Opcodes;
 
-import cn.wensiqun.asmsupport.block.method.cinit.EnumCInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.EnumClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.block.method.init.EnumInitBody;
@@ -166,7 +166,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * 
      * @param mb
      */
-    public void createStaticBlock(final EnumCInitBody body) {
+    public void createStaticBlock(final EnumClinitBody body) {
     	checkStaticBlock();
     	body.setEnumNameList(enumConstantNameList);
 		if(existEnumConstant){
@@ -195,7 +195,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 	 */
 	private void createDefaultStaticBlock(){
     	if(!existedStaticBlock && !CollectionUtils.isEmpty(enumConstantNameList) && existNoArgumentsConstructor){
-    		createStaticBlock(new EnumCInitBody(){
+    		createStaticBlock(new EnumClinitBody(){
     			
     			{
     				enumNameList = enumConstantNameList;

@@ -6,7 +6,7 @@ package cn.wensiqun.asmsupport.creator;
 
 import org.objectweb.asm.Opcodes;
 
-import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 
@@ -71,11 +71,11 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
      * 
      * @param mb Method Body
      */
-    public InterfaceCreator createStaticBlock(CInitBody cinitb) {
+    public InterfaceCreator createStaticBlock(ClinitBody clinitb) {
     	checkStaticBlock();
     	existedStaticBlock = true;
         methodCreaters.add(0,  MethodCreator.methodCreatorForAdd(ASConstant.CLINIT, null, null, null, null,
-                Opcodes.ACC_STATIC, cinitb));
+                Opcodes.ACC_STATIC, clinitb));
         return this;
     }
 	

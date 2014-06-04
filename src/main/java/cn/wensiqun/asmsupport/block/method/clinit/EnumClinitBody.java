@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.block.method.cinit;
+package cn.wensiqun.asmsupport.block.method.clinit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
  * 
  *
  */
-public abstract class EnumCInitBody extends GenericMethodBody implements IEnumCInitBody {
+public abstract class EnumClinitBody extends GenericMethodBody implements IEnumClinitBody {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	

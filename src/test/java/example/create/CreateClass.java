@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.objectweb.asm.Opcodes;
 
-import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.block.method.init.InitBody;
@@ -86,7 +86,7 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 * 
 		 */
-		creator.createStaticBlock(new CInitBody(){
+		creator.createStaticBlock(new ClinitBody(){
 			@Override
 			public void generateBody() {
 				assign(getMethodOwner().getGlobalVariable("staticGlobalVariable"), Value.value("I'm a static global variable at class"));

@@ -1,9 +1,9 @@
-package cn.wensiqun.asmsupport.block.method.cinit;
+package cn.wensiqun.asmsupport.block.method.clinit;
 
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.IBlockOperators;
 
-public interface IEnumCInitBody extends IBlockOperators{
+public interface IEnumClinitBody extends IBlockOperators{
 
 	/**
 	 * 
