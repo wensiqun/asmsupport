@@ -1,5 +1,6 @@
 package enumdemo;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -41,6 +42,23 @@ public class WeekCreator {
         try {
 			Method m = c.getMethod("main", String[].class);
 			m.invoke(c, new Object[]{null});
+			
+			System.out.println("==========================");
+			
+            m = c.getMethod("values");
+            Object o = m.invoke(c);
+            int len = Array.getLength(o);
+            for(int i=0; i<len; i++)
+            {
+                System.out.println(Array.get(o, i));
+            }
+            
+            m = c.getMethod("valueOf", String.class);
+            System.out.println("==========================");
+            
+            System.out.println(m.invoke(c, "Monday"));
+            System.out.println(m.invoke(c, "Tuesday"));
+            
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {

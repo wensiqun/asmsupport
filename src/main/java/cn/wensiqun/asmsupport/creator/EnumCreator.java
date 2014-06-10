@@ -6,14 +6,20 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.objectweb.asm.Opcodes;
 
+import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.method.clinit.EnumClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.block.method.init.EnumInitBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.operators.array.ArrayLength;
+import cn.wensiqun.asmsupport.operators.method.MethodInvoker;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
@@ -190,6 +196,58 @@ public class EnumCreator extends AbstractClassCreatorContext {
         createDefaultStaticBlock();
     }
 
+	@Override
+	protected void beforeCreate(){
+	   
+	    final ArrayClass enumArrayType = AClassFactory.getArrayClass(sc, 1);
+	    
+	    
+	    //create "publis static Enum[] values()" method
+	    createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+
+            @Override
+            public void generateBody(LocalVariable... argus)
+            {
+                AClass owner = getMethodOwner();
+                //get ENUM$VALUES
+                GlobalVariable values = owner.getGlobalVariable("ENUM$VALUES");
+                
+                //get length operator
+                ArrayLength al = arrayLength(values);
+                LocalVariable copy = createArrayVariableWithAllocateDimension("", enumArrayType, true, al);
+                
+                //get lengt operator for tmpValues;
+                Parameterized copyLen = arrayLength(copy);
+                
+                //System
+                AClass systemClass = AClassFactory.getProductClass(System.class);
+                
+                //zero value
+                Value zero = Value.value(0);
+                
+                //call arraycopy
+                invokeStatic(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
+                
+                runReturn(copy);
+            }
+	        
+	    });
+	    
+	     //create "public static Enum valueOf(java.lang.String)" method
+        this.createStaticMethod("valueOf", new AClass[]{AClass.STRING_ACLASS}, new String[]{"name"}, sc, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+
+            @Override
+            public void generateBody(LocalVariable... argus)
+            {
+                LocalVariable name = argus[0];
+                AClass owner = getMethodOwner();
+                runReturn(checkCast(invokeStatic(owner, "valueOf", Value.value(owner), name), owner));
+            }
+            
+        });
+	    
+	}
+	
 	/**
 	 * 
 	 */

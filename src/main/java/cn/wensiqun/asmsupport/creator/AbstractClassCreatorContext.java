@@ -69,6 +69,9 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
                 sc.getName().replace('.', '/'), null,
                 Type.getInternalName(sc.getSuperClass()), interfaceStrs);
 
+        //beforeCreate        
+        this.beforeCreate();
+        
         // create default constructor
         checkOrCreateDefaultConstructor();
         
@@ -122,7 +125,8 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     }
     
     protected abstract void createDefaultConstructor();
-    
+
+    protected void beforeCreate(){};
     
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkUnImplementMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
