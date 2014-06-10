@@ -35,7 +35,7 @@ public class WhileAndDoWhile extends CreateMethod  {
 			        			ifthan(new IF(equal(i, Value.value(3))){
 									@Override
 									public void generateInsn() {
-										breakout();
+										breakOut();
 									}
 			        			});
 			        			invoke(out, "println", append(Value.value(" i = "), afterInc(i)));
@@ -53,7 +53,7 @@ public class WhileAndDoWhile extends CreateMethod  {
 									@Override
 									public void generateInsn() {
 										afterInc(i);
-										continueout();
+										continueOut();
 									}
 			        			});
 						}});

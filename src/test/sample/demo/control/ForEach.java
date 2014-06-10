@@ -52,7 +52,7 @@ public class ForEach extends CreateMethod  {
 								ifthan(new IF(equal(var, Value.value(4))){
 									@Override
 									public void generateInsn() {
-										continueout();
+									    continueOut();
 									}
 								});
 								invoke(out,  "println", var);

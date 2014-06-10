@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.objectweb.asm.Opcodes;
 
-import cn.wensiqun.asmsupport.block.method.cinit.CInitBody;
+import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
 import cn.wensiqun.asmsupport.block.method.init.InitBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
@@ -57,7 +57,7 @@ public class Demo {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "demo.Example", null, null);
 		creator.createGlobalVariable("testString", Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, AClass.STRING_ACLASS);
 		creator.createGlobalVariable("testInt",  Opcodes.ACC_PUBLIC, AClass.INT_ACLASS);
-		creator.createStaticBlock(new CInitBody(){
+		creator.createStaticBlock(new ClinitBody(){
 			@Override
 			public void generateBody() {
 				GlobalVariable testString = getMethodOwner().getGlobalVariable("testString");
@@ -143,7 +143,7 @@ public class Demo {
 						invoke(out, "println", Value.value("******************************************************************"));
 						invoke(out, "println", Value.value("**                       CheckCast Invoke                       **"));
 						invoke(out, "println", Value.value("******************************************************************"));
-						invoke(self, "checkCast", Value.nullValue(AClass.INTEGER_WRAP_ACLASS), Value.value(1));
+						invoke(self, "checkCast", Value.getNullValue(AClass.INTEGER_WRAP_ACLASS), Value.value(1));
 						invoke(out, "println", Value.value("******************************************************************"));
 						invoke(out, "println", Value.value("**                 String Append Operator                       **"));
 						invoke(out, "println", Value.value("******************************************************************"));

@@ -35,7 +35,7 @@ public class RelationalOperators extends CreateMethod {
 	        	invoke(out, "println", append(Value.value(" 2 >= 1L = "), greaterEqual(int1, long1)));
 	        	invoke(out, "println", append(Value.value(" 2 < 1L = "), lessThan(int1, long1)));
 	        	invoke(out, "println", append(Value.value(" 2 <= 1L = "), lessEqual(int1, long1)));
-	        	invoke(out, "println", append(Value.value(" 2 == 1L = "), equal(Value.value("test"), Value.nullValue(AClass.STRING_ACLASS))));
+	        	invoke(out, "println", append(Value.value(" 2 == 1L = "), equal(Value.value("test"), Value.getNullValue(AClass.STRING_ACLASS))));
 	        	invoke(out, "println", append(Value.value(" 2 != 1L = "), notEqual(int1, long1)));
 			    runReturn();
     	    }
