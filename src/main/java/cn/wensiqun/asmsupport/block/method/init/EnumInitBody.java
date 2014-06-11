@@ -12,7 +12,6 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.operators.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.operators.util.OperatorFactory;
-import cn.wensiqun.asmsupport.utils.ASConstant;
 
 
 /**
@@ -22,18 +21,12 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  */
 public abstract class EnumInitBody extends GenericMethodBody implements IEnumInitBody {
     
-	
-	
     @Override
     public final void generateBody() {
-    	if(getMethod().getMethodMeta().getName().equals(ASConstant.INIT)){
-            OperatorFactory.newOperator(SuperConstructorInvoker.class, 
-            		new Class<?>[]{ProgramBlock.class, AClass.class, Parameterized[].class}, 
-            		getExecuteBlock(), getMethodOwner(), new Parameterized[]{argments[0], argments[1]});
-            generateBody((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
-    	}else{
-    		generateBody(argments);
-    	}
+        OperatorFactory.newOperator(SuperConstructorInvoker.class, 
+        		new Class<?>[]{ProgramBlock.class, AClass.class, Parameterized[].class}, 
+        		getExecuteBlock(), getMethodOwner(), new Parameterized[]{argments[0], argments[1]});
+        generateBody((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
     }
     
     public abstract void generateBody(LocalVariable... argus);
