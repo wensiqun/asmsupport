@@ -1068,7 +1068,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     @Override
     public final ThisVariable getThis() {
     	if(getMethod().isStatic()){
-    		throw new ASMSupportException("cannnot use \"this\" keyword in static block");
+    		throw new ASMSupportException("cannot use \"this\" keyword in static block");
     	}
         return method.getMethodOwner().getThisVariable();
     }
@@ -1076,7 +1076,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     @Override
     public final SuperVariable getSuper() {
     	if(getMethod().isStatic()){
-    		throw new ASMSupportException("cannnot use \"super\" keyword in static block");
+    		throw new ASMSupportException("cannot use \"super\" keyword in static block");
     	}
         return method.getMethodOwner().getSuperVariable();
     }
