@@ -14,7 +14,7 @@ import cn.wensiqun.asmsupport.Executable;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class Else extends ControlBlock {
+public abstract class Else extends ConditionBranchBlock {
 	
 	@Override
     public void executing() {

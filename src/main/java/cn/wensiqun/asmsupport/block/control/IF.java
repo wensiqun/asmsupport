@@ -17,11 +17,11 @@ import cn.wensiqun.asmsupport.operators.Jumpable;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class IF extends ControlBlock {
+public abstract class IF extends ConditionBranchBlock {
 	
     private Parameterized condition;
     
-    private ControlBlock elseOrElseIFBlock;
+    private ConditionBranchBlock elseOrElseIFBlock;
 
     /** 该程序块中所有可执行的指令 */
     private List<Executable> parentExes;
