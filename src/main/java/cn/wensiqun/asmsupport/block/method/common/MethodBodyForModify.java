@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.utils.ASConstant;
  * @author
  * 
  */
-public abstract class MethodBodyForModify extends StaticMethodBody implements KeywordVariableable {
+public abstract class MethodBodyForModify extends CommonMethodBody implements KeywordVariableable {
     
 	private List<VisitXInsnAdapter> superConstructorOperators;
 	

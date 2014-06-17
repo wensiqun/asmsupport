@@ -14,7 +14,7 @@ import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 public abstract class CommonMethodBody extends GenericMethodBody implements KeywordVariableable {
     
 	@Override
-    public final void generateBody() {
+    public void generateBody() {
 		generateBody(argments);
     }
 
