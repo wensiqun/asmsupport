@@ -1097,7 +1097,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
         		return invoke(getThis(), methodNameByProxy, getMethodArguments());
     		}
     	}else{
-    		throw new ASMSupportException("this method is new and not modify!");
+    		throw new ASMSupportException("This method is new and not modify!");
     	}
     }
     

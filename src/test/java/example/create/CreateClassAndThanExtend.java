@@ -11,7 +11,7 @@ import org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.block.control.Else;
 import cn.wensiqun.asmsupport.block.control.IF;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.MethodBodyForModify;
+import cn.wensiqun.asmsupport.block.method.common.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
@@ -56,7 +56,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			}
 		});
 		
-		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new MethodBodyForModify(){
+		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBody(){
 			@Override
 			public void generateBody(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
@@ -69,7 +69,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			}
 		});
 		
-		byModifyModifer.modifyMethod("helloWorld", null, new MethodBodyForModify(){
+		byModifyModifer.modifyMethod("helloWorld", null, new ModifiedMethodBody(){
 
 			@Override
 			public void generateBody(LocalVariable... argus) {
@@ -96,7 +96,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			
 		});
 		
-		byModifyModifer.modifyMethod("String", null, new MethodBodyForModify(){
+		byModifyModifer.modifyMethod("String", null, new ModifiedMethodBody(){
 
 			@Override
 			public void generateBody(LocalVariable... argus) {

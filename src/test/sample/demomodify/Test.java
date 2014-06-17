@@ -8,7 +8,7 @@ import org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.block.control.Else;
 import cn.wensiqun.asmsupport.block.control.IF;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.MethodBodyForModify;
+import cn.wensiqun.asmsupport.block.method.common.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.creator.ClassModifier;
@@ -43,7 +43,7 @@ public class Test {
 			}
 		});
 		
-		cm.modifyMethod(ASConstant.CLINIT, null, new MethodBodyForModify(){
+		cm.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBody(){
 			@Override
 			public void generateBody(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
@@ -56,7 +56,7 @@ public class Test {
 			}
 		});
 		
-		cm.modifyMethod("helloWorld", null, new MethodBodyForModify(){
+		cm.modifyMethod("helloWorld", null, new ModifiedMethodBody(){
 
 			@Override
 			public void generateBody(LocalVariable... argus) {
@@ -83,7 +83,7 @@ public class Test {
 			
 		});
 		
-		cm.modifyMethod("String", null, new MethodBodyForModify(){
+		cm.modifyMethod("String", null, new ModifiedMethodBody(){
 
 			@Override
 			public void generateBody(LocalVariable... argus) {

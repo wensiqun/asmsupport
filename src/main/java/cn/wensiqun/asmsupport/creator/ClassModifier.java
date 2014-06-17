@@ -15,7 +15,7 @@ import org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.MethodBodyForModify;
+import cn.wensiqun.asmsupport.block.method.common.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
@@ -35,7 +35,7 @@ public class ClassModifier extends AbstractClassContext {
 	
     protected List<IMethodCreator> methodModifiers;
     
-    private List<MethodBodyForModify> modifyConstructorBodies;
+    private List<ModifiedMethodBody> modifyConstructorBodies;
     
 	private ProductClass productClass;
 	
@@ -73,7 +73,7 @@ public class ClassModifier extends AbstractClassContext {
         }
 
 		if(modifyConstructorBodies != null){
-			for(MethodBodyForModify mbfm : modifyConstructorBodies){
+			for(ModifiedMethodBody mbfm : modifyConstructorBodies){
 				 Type[] argumentTypes = mbfm.getMethod().getMethodMeta().getArgTypes();
 				 String desc = Type.getMethodDescriptor(Type.VOID_TYPE, argumentTypes);
 				 mbfm.setSuperConstructorOperators(superConstructorMap.get(desc));
@@ -137,7 +137,7 @@ public class ClassModifier extends AbstractClassContext {
 		}
 	}
 	
-	public final void modifyMethod(String name, Class<?>[] argClasses, MethodBodyForModify mb){
+	public final void modifyMethod(String name, Class<?>[] argClasses, ModifiedMethodBody mb){
 		Class<?> clazz = productClass.getReallyClass();
 		if(argClasses == null){
 			argClasses = new Class<?>[0];
@@ -155,7 +155,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClass.VOID_ACLASS, null, Opcodes.ACC_STATIC, mb);
 			}else if(name.equals(ASConstant.INIT)){
 				if(modifyConstructorBodies == null){
-					modifyConstructorBodies = new ArrayList<MethodBodyForModify>();
+					modifyConstructorBodies = new ArrayList<ModifiedMethodBody>();
 				}
 				modifyConstructorBodies.add(mb);
 				
