@@ -6,6 +6,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.loader.ASMClassLoader;
 
 
@@ -43,8 +44,8 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         	}
         	classLoader.defineClass(name, b);
         	clazz = classLoader.findClass(name);
-        } catch (Exception e) {
-            throw new RuntimeException("Error on define class." + e);
+        } catch (Throwable e) {
+            throw new ASMSupportException("Error on define class " + name, e);
         }
         return clazz;
     }

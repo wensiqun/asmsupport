@@ -2,6 +2,7 @@ package cn.wensiqun.asmsupport.loader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
@@ -50,20 +51,21 @@ public class ASMClassLoader extends ClassLoader {
 		return new ASMClassLoader(parent);
 	}
 	
-	public final Class<?> defineClass(String name, byte[] b) throws ClassFormatError {
-		Class<?> clazz = null;
-		ClassLoader loader = getParent();
-		Class<?> cls = ClassLoader.class;
-		try {
-			Method method = cls.getDeclaredMethod("defineClass", new Class[] {
-					String.class, byte[].class, int.class, int.class });
-			method.setAccessible(true);
-			Object[] args = new Object[] { name, b, new Integer(0),
-					new Integer(b.length) };
-			clazz = (Class<?>) method.invoke(loader, args);
-		} catch (Exception e) {
-			throw new ClassFormatError(e.getMessage());
+	public final Class<?> defineClass(String name, byte[] b) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+
+        Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] {
+                String.class, byte[].class, int.class, int.class });
+        method.setAccessible(true);
+        Object[] args = new Object[] { name, b, new Integer(0),
+                new Integer(b.length) };
+        
+        ClassLoader loader = getParent();
+        String resource = name.replace('.', '/') + ".class";
+		if(loader.getResource(resource) != null)
+		{
+		    loader = this;
 		}
+		Class<?> clazz = (Class<?>) method.invoke(loader, args);
 		classByteMap.put(new Key(clazz), b);
 		return clazz;
 	}
