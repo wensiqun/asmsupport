@@ -56,7 +56,7 @@ public abstract class WhileLoop extends ProgramBlock implements ILoop {
         if(condition instanceof Jumpable){
         	Jumpable jmp = (Jumpable) condition;
         	jmp.setJumpLable(startLbl);
-        	jmp.executeAndJump(ControlType.WHILE);
+        	jmp.executeAndJump(ControlType.LOOP);
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

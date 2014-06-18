@@ -132,7 +132,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
         factorsToStack();
         if(ctl.equals(ControlType.IF)){
         	relationalOperator();
-        }else if(ctl.equals(ControlType.WHILE)){
+        }else if(ctl.equals(ControlType.LOOP)){
         	relationalOperatorWithInLoopCondition();
         }
 	}
