@@ -1090,11 +1090,11 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     		}else if(originalMethodName.equals(ASConstant.INIT)){
     			originalMethodName = ASConstant.INIT_PROXY;
     		}
-			String methodNameByProxy = originalMethodName + ASConstant.METHOD_PROXY_SUFFIX;
+			originalMethodName += ASConstant.METHOD_PROXY_SUFFIX;
     		if(getMethod().isStatic()){
-    			return invokeStatic(getMethod().getMethodOwner(), methodNameByProxy, getMethodArguments());
+    			return invokeStatic(getMethod().getMethodOwner(), originalMethodName, getMethodArguments());
     		}else{
-        		return invoke(getThis(), methodNameByProxy, getMethodArguments());
+        		return invoke(getThis(), originalMethodName, getMethodArguments());
     		}
     	}else{
     		throw new ASMSupportException("This method is new and not modify!");

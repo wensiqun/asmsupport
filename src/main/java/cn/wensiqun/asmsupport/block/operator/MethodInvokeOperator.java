@@ -118,19 +118,19 @@ public interface MethodInvokeOperator {
      * 那么我们希望在返回"hello world"之后打印出所花费的时间,经过asmsupport修改之后就会出现下面方法内容
      * <pre>
      * 
-     * public String test@ByProxy(){
+     * public String test@original(){
      *     return "hello world".
      * }
      * 
      * public String test(){
      *     long start = System.currentTimeMillis();
-     *     String value = test@ByProxy();
+     *     String value = test@original();
      *     System.out.println(System.currentTimeMillis() - start);
      *     return value;
      * }
      * </pre>
      * 
-     * 在上面的代码中"test@ByProxy()"这个方法调用指令就是asmsupport调用了invokeOriginalMethod方法生成的。
+     * 在上面的代码中"test@original()"这个方法调用指令就是asmsupport调用了invokeOriginalMethod方法生成的。
      * @return {@link MethodInvoker}
      */
     public MethodInvoker invokeOriginalMethod();

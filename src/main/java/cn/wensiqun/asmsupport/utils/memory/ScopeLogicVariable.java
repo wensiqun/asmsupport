@@ -51,16 +51,16 @@ public class ScopeLogicVariable extends Component implements Localable {
         return anonymous;
     }
 
-    public void store() {
+    private void store() {
         int localSize = locals.getSize();
         int needSize = actuallyType.getSize();
         int i = 0;
-        if (localSize > 0 && locals.getLast(0) instanceof ScopeThis) {
+        if (localSize > 0 && locals.getLastVariable(0) instanceof ScopeThis) {
             i = 1;
         }
 
         for (; i < localSize; i++) {
-            ScopeLogicVariable survivor = (ScopeLogicVariable) locals.getLast(i);
+            ScopeLogicVariable survivor = (ScopeLogicVariable) locals.getLastVariable(i);
             if (isShareable(survivor)) {
                 this.positions = ArrayUtils.add(this.positions, i);
                 this.locals.store(i, this);
@@ -86,7 +86,7 @@ public class ScopeLogicVariable extends Component implements Localable {
         }
         this.initStartPos = this.positions[0];
     }
-
+    
     /**
      * var相对于当前变量是可共享空间的。
      * 

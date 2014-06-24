@@ -13,47 +13,47 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LocalVariables implements Printable, Cloneable{
 
-    private static class HLocalVariables implements Cloneable{
-        private List<Localable> hlocals;
-        private int maxVarIndex;
+    private static class LocalHistory implements Cloneable{
+        private List<Localable> variables;
+        private int activeIndex;
 
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Object clone() {
 			try {
-				HLocalVariables hlv = (HLocalVariables) super.clone();
-                hlv.hlocals = (List<Localable>) ((ArrayList<Localable>) hlocals).clone();
-                return hlv;
+				LocalHistory history = (LocalHistory) super.clone();
+                history.variables = (List<Localable>) ((ArrayList<Localable>) variables).clone();
+                return history;
 			} catch (CloneNotSupportedException e) {
 	            throw new InternalError();
 			}
 		}
         
-        private HLocalVariables() {
+        private LocalHistory() {
             super();
-            this.hlocals = new ArrayList<Localable>();
+            this.variables = new ArrayList<Localable>();
         }
         
-        private Localable getLocalVar(){
-            Localable l = hlocals.get(maxVarIndex);
+        private Localable getActiveVariable(){
+            Localable l = variables.get(activeIndex);
             return l;
         }
         
-        private Localable getLastLocalVar(){
-            return hlocals.get(hlocals.size() - 1);
+        private Localable getLastVariable(){
+            return variables.get(variables.size() - 1);
         }
         
         private void addVar(Localable l){
-            hlocals.add(l);
+            variables.add(l);
         }
         
         
     }
     
-    private static Log log = LogFactory.getLog(Stack.class);
+    private static Log log = LogFactory.getLog(LocalVariables.class);
 
-    private List<HLocalVariables> locals;
-    private PrintHelper ph;
+    private List<LocalHistory> histories;
+    private PrintHelper printHelper;
     private int maxPrintSize;
     private Localable cursor;
     
@@ -62,7 +62,7 @@ public class LocalVariables implements Printable, Cloneable{
 	public Object clone(){
 		try {
 			LocalVariables clo = (LocalVariables) super.clone();
-			clo.locals = (List<HLocalVariables>) ((ArrayList<HLocalVariables>) this.locals).clone();
+			clo.histories = (List<LocalHistory>) ((ArrayList<LocalHistory>) this.histories).clone();
 			return clo;
 		} catch (CloneNotSupportedException e) {
             throw new InternalError();
@@ -71,32 +71,32 @@ public class LocalVariables implements Printable, Cloneable{
 
 	public LocalVariables() {
         super();
-        locals = new ArrayList<HLocalVariables>();
-        ph = new PrintHelper();
+        histories = new ArrayList<LocalHistory>();
+        printHelper = new PrintHelper();
         maxPrintSize = -1;
     }
 
     public int getSize() {
-        return locals.size();
+        return histories.size();
     }
 
-    public Localable getLast(int index) {
-        return locals.get(index).getLastLocalVar();
+    public Localable getLastVariable(int index) {
+        return histories.get(index).getLastVariable();
     }
     
     public void store(int index, Localable var) {
-        locals.get(index).addVar(var);
+        histories.get(index).addVar(var);
     }
 
     public boolean store(Localable var) {
-        HLocalVariables hlv = new HLocalVariables();
-        hlv.addVar(var);
-        return locals.add(hlv);
+        LocalHistory history = new LocalHistory();
+        history.addVar(var);
+        return histories.add(history);
     }
 
     @Override
     public void printState(){
-        log.debug(ph.getGridString(generateGridArray(), true, "local variables states"));
+        log.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
     }
 
     public void setCursor(Localable cursor) {
@@ -105,10 +105,10 @@ public class LocalVariables implements Printable, Cloneable{
     }
 
     private void hierarchy(Localable cursor){
-        for(HLocalVariables hlv : locals){
-            for(int i=0, len = hlv.hlocals.size(); i<len; i++){
-                if(hlv.hlocals.get(i).equals(cursor)){
-                    hlv.maxVarIndex = i;
+        for(LocalHistory history : histories){
+            for(int i=0, len = history.variables.size(); i<len; i++){
+                if(history.variables.get(i).equals(cursor)){
+                    history.activeIndex = i;
                 }
             }
         }
@@ -127,7 +127,7 @@ public class LocalVariables implements Printable, Cloneable{
         int gridBodyRowSize = getSize();
         int i = 0;
         for(; i<gridBodyRowSize; i++){
-            Localable loc = locals.get(i).getLocalVar();
+            Localable loc = histories.get(i).getActiveVariable();
             grid[i + 1][0] = localGraph(i);
             grid[i + 1][1] = loc.getDeclareType().getDescriptor();
             grid[i + 1][2] = loc.getName();

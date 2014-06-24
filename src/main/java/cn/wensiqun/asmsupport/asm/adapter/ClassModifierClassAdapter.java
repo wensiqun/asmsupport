@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**
- * this adapter will be change the method name from format xxx to xxx@ByProxy
+ * this adapter will be change the method name from format xxx to xxx@original
  * 
  * @author
  * 
@@ -60,7 +60,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
      * we will modify method "a". and other method "b" will call method "a",
      * so we change method b to follow:
      * b(){
-     *     this.a@byProxy();
+     *     this.a@original();
      * }
      *
      */
