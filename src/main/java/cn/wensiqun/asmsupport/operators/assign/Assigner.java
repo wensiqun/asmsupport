@@ -20,6 +20,9 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
     
     private IVariable var;
     
+    /**该操作是否被其他操作引用 */
+    protected boolean byOtherUsed;
+    
     protected Assigner(ProgramBlock block, IVariable var, Parameterized value) {
         super(block);
         this.value = value;
@@ -58,6 +61,7 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
     
     @Override
 	public void loadToStack(ProgramBlock block) {
+        this.execute();
 		var.loadToStack(block);
 	}
 
@@ -68,7 +72,8 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
 
 	@Override
 	public void asArgument() {
-		var.asArgument();
+        byOtherUsed = true;
+        block.removeExe(this);
 	}
 
 	protected static class AssignerException extends RuntimeException{

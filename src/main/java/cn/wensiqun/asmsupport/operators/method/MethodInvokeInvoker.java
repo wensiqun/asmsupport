@@ -55,14 +55,14 @@ public class MethodInvokeInvoker extends MethodInvoker {
     }
 
     @Override
-    public void lastPrepareProcess() {
+    public void onEndPrepareProcess() {
         if(Modifier.isStatic(getModifiers())){
             block.removeExe(caller);
             MethodInvoker mi = new StaticMethodInvoker(block, getActuallyOwner(), name, arguments);
             block.removeExe(mi);
             block.replaceExe(this, mi);
         }
-        super.lastPrepareProcess();
+        super.onEndPrepareProcess();
     }
 
     @Override

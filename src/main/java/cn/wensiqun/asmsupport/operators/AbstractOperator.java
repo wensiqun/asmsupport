@@ -63,7 +63,7 @@ public abstract class AbstractOperator extends AbstractExecuteable {
 	@Override
     public final void prepare() {
 
-        firstPrepareProcess();
+        onStartPrepareProcess();
         
         beforeInitProperties();
         
@@ -73,10 +73,10 @@ public abstract class AbstractOperator extends AbstractExecuteable {
         
         afterInitProperties();
         
-        lastPrepareProcess();
+        onEndPrepareProcess();
     }
 
-    protected void firstPrepareProcess() {
+    protected void onStartPrepareProcess() {
     }
     
     protected void beforeInitProperties() {
@@ -97,7 +97,7 @@ public abstract class AbstractOperator extends AbstractExecuteable {
     protected void afterInitProperties() {
     }
 
-    protected void lastPrepareProcess() {
+    protected void onEndPrepareProcess() {
     }
 
     @Override

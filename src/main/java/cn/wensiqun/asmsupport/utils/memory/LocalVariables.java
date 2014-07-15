@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LocalVariables implements Printable, Cloneable{
 
-    private static class LocalHistory implements Cloneable{
+    public static class LocalHistory implements Cloneable{
         private List<Localable> variables;
         private int activeIndex;
 

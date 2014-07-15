@@ -119,14 +119,6 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
     }
 
     @Override
-    protected void firstPrepareProcess() {
-    }
-
-    @Override
-    protected void beforeInitProperties() {
-    }
-
-    @Override
     protected void verifyArgument() {
     	//当调用ArrayValue(ProgramBlock block, ArrayClass arrayCls, Parameterized... allocateDims)构造方法
     	if(allocateDims != null){
@@ -151,21 +143,9 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
     }
 
     @Override
-    protected void checkOutCrement() {
-    }
-
-    @Override
     protected void checkAsArgument() {
         batchAsArgument(allocateDims);
         batchAsArgument(values);
-    }
-
-    @Override
-    protected void afterInitProperties() {
-    }
-
-    @Override
-    protected void lastPrepareProcess() {
     }
     
     private void loopArray(AClass acls, Object arrayOrElement){

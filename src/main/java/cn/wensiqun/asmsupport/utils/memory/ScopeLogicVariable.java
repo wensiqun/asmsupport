@@ -71,7 +71,7 @@ public class ScopeLogicVariable extends Component implements Localable {
                     break;
                 }
             } else {
-                if(!survivor.isAnonymous()){
+                if(!this.isAnonymous() && !survivor.isAnonymous()){
                     if (survivor.getName().equals(this.name)) {
                         throw new DuplicateLocalVariableNameException();
                     }
