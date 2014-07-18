@@ -19,7 +19,6 @@ import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.array.ArrayLength;
-import cn.wensiqun.asmsupport.operators.method.MethodInvoker;
 import cn.wensiqun.asmsupport.utils.ASConstant;
 import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
@@ -189,7 +188,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
     protected void createDefaultConstructor() {
         createConstructor(null, null, new EnumInitBody() {
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 		    	runReturn();
             }
         });
@@ -206,7 +205,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 	    createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus)
+            public void body(LocalVariable... argus)
             {
                 AClass owner = getMethodOwner();
                 //get ENUM$VALUES
@@ -237,7 +236,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
         this.createStaticMethod("valueOf", new AClass[]{AClass.STRING_ACLASS}, new String[]{"name"}, sc, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus)
+            public void body(LocalVariable... argus)
             {
                 LocalVariable name = argus[0];
                 AClass owner = getMethodOwner();
@@ -265,11 +264,12 @@ public class EnumCreator extends AbstractClassCreatorContext {
 				    	newEnum(name);
 				    }
 				}
-    			
-			    @Override
-			    public void blockBody() {
-			    	runReturn();
-			    }
+
+                @Override
+                public void body(LocalVariable... argus)
+                {
+                    runReturn();
+                }
     		});
     	}
 	}

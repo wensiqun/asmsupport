@@ -9,6 +9,7 @@ import org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
+import cn.wensiqun.asmsupport.block.body.LocalVariableBody;
 import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
@@ -28,7 +29,7 @@ import cn.wensiqun.asmsupport.utils.memory.Stack;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class Catch extends SeriesBlock {
+public abstract class Catch extends SeriesBlock implements LocalVariableBody {
 
     private static Log log = LogFactory.getLog(Catch.class);
     
@@ -110,7 +111,7 @@ public abstract class Catch extends SeriesBlock {
         }
         
     }
-
+    
     @Override
     public final void generateInsn() {
     	
@@ -120,7 +121,8 @@ public abstract class Catch extends SeriesBlock {
         
         lv.getScopeLogicVar().setSpecifiedStartLabel(exceptionLbl);
         new Marker(getExecuteBlock(), exceptionLbl);
-        catchBody(lv);
+        
+        body(lv);
         
         new Marker(getExecuteBlock(), endCatchLbl1);
         new NOP(getExecuteBlock());
@@ -162,7 +164,6 @@ public abstract class Catch extends SeriesBlock {
         }
     }
     
-    public abstract void catchBody(LocalVariable e);
     
     /**
      *  generate a hidden catch block for other uncatch exception and the block code is same to finally block 
@@ -340,4 +341,6 @@ public abstract class Catch extends SeriesBlock {
 	public String toString() {
 		return "Catch Block:" + super.toString();
 	}
+	
+	
 }

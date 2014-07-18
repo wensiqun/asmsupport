@@ -244,28 +244,11 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     public void prepare() {
         init();
         generateInsn();
-/*        for(int i=0; i<getPreExecuteInsn().size(); i++){
-            Executeable exe = getPreExecuteInsn().get(i);*/
-            /*if(exe instanceof ProgramBlock){
-                ProgramBlock pb = (ProgramBlock) exe;
-                pb.setInsnHelper(insnHelper);
-                pb.setScope(new Scope(method.getLocals(), getScope()));
-                pb.setOwnerBlock(getExecuteBlock());
-            }*/
-/*            if(!(exe instanceof ProgramBlock)){
-                exe.prepare();
-            }
-        }*/
         new BlockEndFlag(getExecuteBlock());
     }
     
     protected void subBlockPrepare(ProgramBlock pb){
     	subBlockPrepare(pb, this);
-    	/*pb.setInsnHelper(insnHelper);
-    	pb.setScope(new Scope(method.getLocals(), getScope()));
-    	pb.setOwnerBlock(getExecuteBlock());
-    	pb.prepare();
-        new BlockEndFlag(pb);*/
     }
     
     /**

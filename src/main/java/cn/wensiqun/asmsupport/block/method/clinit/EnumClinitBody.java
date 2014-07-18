@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.Parameterized;
+import cn.wensiqun.asmsupport.block.body.ArgumentsBody;
 import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.definition.value.Value;
@@ -17,7 +18,7 @@ import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
  * 
  *
  */
-public abstract class EnumClinitBody extends GenericMethodBody implements IEnumClinitBody {
+public abstract class EnumClinitBody extends GenericMethodBody implements IEnumClinitBody, ArgumentsBody {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	
@@ -97,7 +98,7 @@ public abstract class EnumClinitBody extends GenericMethodBody implements IEnumC
 		
 		constructEachEnumConstant();
 		
-		blockBody();
+		body();
 	}
 	
 	/**
@@ -109,8 +110,4 @@ public abstract class EnumClinitBody extends GenericMethodBody implements IEnumC
 	 */
 	public abstract void constructEnumField();
 	
-	/**
-	 * 
-	 */
-	public abstract void blockBody();
 }

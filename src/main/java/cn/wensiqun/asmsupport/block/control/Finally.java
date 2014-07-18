@@ -7,13 +7,14 @@ package cn.wensiqun.asmsupport.block.control;
 import org.objectweb.asm.Label;
 
 import cn.wensiqun.asmsupport.Executable;
+import cn.wensiqun.asmsupport.block.body.Body;
 
 
 /**
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class Finally extends SeriesBlock {
+public abstract class Finally extends SeriesBlock implements Body {
     
     Label startLbl;
     Label endLbl;
@@ -32,6 +33,12 @@ public abstract class Finally extends SeriesBlock {
     @Override
     protected final void init() {}
 
+    @Override
+    public final void generateInsn()
+    {
+        body();
+    }
+    
     @Override
     public final void executing() {
         insnHelper.mark(startLbl);
@@ -52,5 +59,4 @@ public abstract class Finally extends SeriesBlock {
 	public String toString() {
 		return "Finally Block:" + super.toString();
 	}
-    
 }

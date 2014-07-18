@@ -7,6 +7,7 @@ import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
+import cn.wensiqun.asmsupport.block.body.Body;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.Jumpable;
@@ -17,7 +18,7 @@ import cn.wensiqun.asmsupport.operators.Jumpable;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class WhileLoop extends ProgramBlock implements ILoop {
+public abstract class WhileLoop extends ProgramBlock implements ILoop, Body  {
 
     private Parameterized condition;
 
@@ -37,6 +38,13 @@ public abstract class WhileLoop extends ProgramBlock implements ILoop {
     }
 
     @Override
+    public final void generateInsn()
+    {
+        body();
+    }
+
+
+    @Override
     public void executing() {
         insnHelper.nop();
         if(!isDoWhile){
@@ -49,9 +57,7 @@ public abstract class WhileLoop extends ProgramBlock implements ILoop {
             exe.execute();
         }
 
-        //if(!inversContinueLblMark){
         insnHelper.mark(condiLbl);
-        //}
 
         if(condition instanceof Jumpable){
         	Jumpable jmp = (Jumpable) condition;
@@ -71,7 +77,6 @@ public abstract class WhileLoop extends ProgramBlock implements ILoop {
            !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS) ){
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was " + condition.getParamterizedType());
         }
-        //condition.asArgument();
     }
     
     @Override

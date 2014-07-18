@@ -7,12 +7,13 @@ import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
+import cn.wensiqun.asmsupport.block.body.LocalVariableBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
+import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.Jumpable;
 import cn.wensiqun.asmsupport.operators.asmdirect.GOTO;
@@ -25,7 +26,7 @@ import cn.wensiqun.asmsupport.operators.asmdirect.NOP;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class ForEachLoop extends ProgramBlock implements ILoop{
+public abstract class ForEachLoop extends ProgramBlock implements ILoop, LocalVariableBody{
     
     private ExplicitVariable iteratorVar;
     
@@ -73,7 +74,7 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
     protected void init() {
     	
     }
-
+    
     @Override
     public final void generateInsn() {
         new NOP(getExecuteBlock());
@@ -86,7 +87,7 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
             new NOP(getExecuteBlock());
             
             LocalVariable obj = createVariable(null, ((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), true, arrayLoad(iteratorVar, i) );
-            generateBody(obj);
+            body(obj);
 
             new Marker(getExecuteBlock(), continueLbl);
             afterInc(i);
@@ -101,7 +102,7 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
             new NOP(getExecuteBlock());
 
             LocalVariable obj = createVariable(null, AClass.OBJECT_ACLASS, true, invoke(itr, "next"));
-            generateBody(obj);
+            body(obj);
 
             new Marker(getExecuteBlock(), continueLbl);
             new Marker(getExecuteBlock(), conditionLbl);
@@ -110,8 +111,6 @@ public abstract class ForEachLoop extends ProgramBlock implements ILoop{
         condition.asArgument();
     }
     
-    public abstract void generateBody(LocalVariable var);
-
     @Override
     public Label getBreakLabel() {
         return endLbl;

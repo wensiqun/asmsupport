@@ -111,7 +111,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
     protected void createDefaultConstructor() {
         createConstructor(null, null, new InitBody() {
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 invokeSuperConstructor();
                 runReturn();
             }

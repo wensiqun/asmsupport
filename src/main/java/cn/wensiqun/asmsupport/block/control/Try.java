@@ -9,6 +9,7 @@ import org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.block.ProgramBlock;
+import cn.wensiqun.asmsupport.block.body.Body;
 import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
@@ -29,7 +30,7 @@ import cn.wensiqun.asmsupport.utils.memory.Stack;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class Try extends SeriesBlock {
+public abstract class Try extends SeriesBlock implements Body {
 
     private static Log log = LogFactory.getLog(Try.class);
 
@@ -77,17 +78,14 @@ public abstract class Try extends SeriesBlock {
     		super.addException(exception);
     	}
     }
-
-    /**
-     * 创建程序块内的java程序
-     */
-	public abstract void generateBody();
 	
 	@Override
 	public final void generateInsn() {
-		generateBody();
+		body();
+		
 		boolean returnInTry = false;
-        try{
+        
+		try{
         	/*
         	 * 创建空操作，其作用是通过newOperator方法判断是否抛出UnreachableCode异常判断当前
         	 * 操作是否可到达。如果不可到达则不执行以下指令

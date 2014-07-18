@@ -7,6 +7,7 @@ package cn.wensiqun.asmsupport.block.control;
 import org.objectweb.asm.Label;
 
 import cn.wensiqun.asmsupport.Executable;
+import cn.wensiqun.asmsupport.block.body.Body;
 
 
 /**
@@ -14,7 +15,7 @@ import cn.wensiqun.asmsupport.Executable;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class Else extends ConditionBranchBlock {
+public abstract class Else extends ConditionBranchBlock implements Body {
 	
 	@Override
     public void executing() {
@@ -50,4 +51,12 @@ public abstract class Else extends ConditionBranchBlock {
     		getOwnerBlock().setReturned(returned);
     	}
 	}
+
+    @Override
+    public final void generateInsn()
+    {
+        body();
+    }
+    
+    
 }

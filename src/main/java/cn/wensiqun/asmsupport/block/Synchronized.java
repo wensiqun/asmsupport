@@ -9,6 +9,7 @@ import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
+import cn.wensiqun.asmsupport.block.body.ParameterizedBody;
 import cn.wensiqun.asmsupport.block.method.GenericMethodBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
@@ -21,7 +22,7 @@ import cn.wensiqun.asmsupport.operators.asmdirect.Marker;
  * @author 温斯群(Joe Wen)
  * 
  */
-public abstract class Synchronized extends ProgramBlock {
+public abstract class Synchronized extends ProgramBlock implements ParameterizedBody {
 
 	private Parameterized lock;
 	private LocalVariable dupSynArgument;
@@ -109,8 +110,7 @@ public abstract class Synchronized extends ProgramBlock {
 	public void generateInsn() {
 		dupSynArgument = createVariable(null, lock.getParamterizedType(), true, new DUP(this, lock.getParamterizedType()));
 		flag1 = new Marker(this, new Label());
-        generateBody(lock);
+        body(lock);
 	}
 
-	public abstract void generateBody(Parameterized synObj);
 }

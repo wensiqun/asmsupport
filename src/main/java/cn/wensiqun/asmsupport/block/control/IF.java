@@ -7,6 +7,7 @@ import org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.Executable;
 import cn.wensiqun.asmsupport.Parameterized;
 import cn.wensiqun.asmsupport.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.block.body.Body;
 import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.operators.Jumpable;
@@ -17,7 +18,7 @@ import cn.wensiqun.asmsupport.operators.Jumpable;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class IF extends ConditionBranchBlock {
+public abstract class IF extends ConditionBranchBlock implements Body {
 	
     private Parameterized condition;
     
@@ -32,6 +33,12 @@ public abstract class IF extends ConditionBranchBlock {
         this.condition = condition;
     }
 
+    @Override
+    public final void generateInsn()
+    {
+        body();
+    }
+    
 	@Override
     public void executing() {
         insnHelper.nop();

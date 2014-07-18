@@ -1,6 +1,5 @@
 package cn.wensiqun.asmsupport.utils.bridge2method;
 
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import cn.wensiqun.asmsupport.creator.MethodCreator;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
-import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 
 /**
@@ -109,7 +107,7 @@ public class OverrideBridgeMethodCreator {
                 returnClass, exceptions, access, new CommonMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						
 						runReturn(invoke(getThis(), name, argus));
 						
