@@ -54,9 +54,6 @@ public abstract class Catch extends SeriesBlock {
     /** 该程序块中所有可执行的指令 */
     private List<Executable> parentExes;
     
-    /** 该程序块中所有可执行的指令 */
-    private List<Executable> parentPreExes;
-    
     public Catch(AClass exception) {
         super();
         this.exception = exception;
@@ -230,13 +227,9 @@ public abstract class Catch extends SeriesBlock {
         this.nextCatch = ca;
         //执行队列添加ca
         parentExes.add(ca);
-        //准备队列添加ca
-        parentPreExes.add(ca);
         
         //设置ca的父执行队列
         ca.setParentExes(parentExes);
-        //设置ca的父准备执行队列
-        ca.setParentPreExes(parentPreExes);
         //设置当前catch对应的try
         ca.setEntityTry(this.entityTry);
         ca.setPrevious(this);
@@ -256,7 +249,7 @@ public abstract class Catch extends SeriesBlock {
         subBlockPrepare(fly, getOwnerBlock());
         
         parentExes.add(fly);
-        parentPreExes.add(fly);
+        
         return fly;
     }
     
@@ -300,10 +293,6 @@ public abstract class Catch extends SeriesBlock {
      */
     public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
-    }
-
-    public void setParentPreExes(List<Executable> parentPreExes) {
-        this.parentPreExes = parentPreExes;
     }
     
     /**

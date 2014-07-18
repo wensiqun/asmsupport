@@ -26,9 +26,6 @@ public abstract class IF extends ConditionBranchBlock {
     /** 该程序块中所有可执行的指令 */
     private List<Executable> parentExes;
     
-    /** 该程序块中所有可执行的指令 */
-    private List<Executable> parentPreExes;
-    
     public IF(Parameterized condition) {
         super();
         condition.asArgument();
@@ -80,7 +77,6 @@ public abstract class IF extends ConditionBranchBlock {
     public void elsethan(Else elseblock){
     	
         parentExes.add(elseblock);
-        parentPreExes.add(elseblock);
         this.elseOrElseIFBlock = elseblock;
         
         subBlockPrepare(elseblock, getOwnerBlock());
@@ -91,10 +87,8 @@ public abstract class IF extends ConditionBranchBlock {
     public ElseIF elseif(ElseIF elseIfBlock){
         
     	elseIfBlock.setParentExes(parentExes);
-    	elseIfBlock.setParentPreExes(parentPreExes);
         
         parentExes.add(elseIfBlock);
-        parentPreExes.add(elseIfBlock);
 
         subBlockPrepare(elseIfBlock, getOwnerBlock());
         
@@ -108,11 +102,6 @@ public abstract class IF extends ConditionBranchBlock {
     public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
     }
-
-    public void setParentPreExes(List<Executable> parentPreExes) {
-        this.parentPreExes = parentPreExes;
-    }
-
 
 	@Override
 	public String toString() {

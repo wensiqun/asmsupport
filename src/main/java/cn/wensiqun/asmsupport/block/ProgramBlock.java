@@ -126,9 +126,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     /** 该程序块中所有可执行的指令 */
     private List<Executable> executeQueue;
     
-    /** 该程序块中所有可执行的指令 */
-    private List<Executable> preExecuteQueue;
-    
     protected InstructionHelper insnHelper;
 
     protected AMethod method;
@@ -193,10 +190,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
 		}
 	}
 
-    public List<Executable> getPreExecuteInsn(){
-    	return this.preExecuteQueue;
-    }
-
     public List<Executable> getExecuteQueue(){
     	return this.executeQueue;
     }
@@ -239,7 +232,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      */
     protected ProgramBlock() {
     	executeQueue = new ArrayList<Executable>();
-        preExecuteQueue = new ArrayList<Executable>();
     }
 
     /**
@@ -351,12 +343,10 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      */
     public void addExe(Executable exe) {
         getExecuteQueue().add(exe);
-        getPreExecuteInsn().add(exe);
     }
     
     public void addAllExe(int index, List<Executable> exes) {
         getExecuteQueue().addAll(index, exes);
-        getPreExecuteInsn().addAll(index, exes);
     }
     
     /**
@@ -990,7 +980,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     public final IF ifthan(IF ifs){
         addExe(ifs);
         ifs.setParentExes(getExecuteQueue());
-        ifs.setParentPreExes(getPreExecuteInsn());
         subBlockPrepare(ifs);
         return ifs;
     }
@@ -1052,7 +1041,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     @Override
     public final Try tryDo(final Try t){
         t.setParentExes(getExecuteQueue());
-        t.setParentPreExes(getPreExecuteInsn());
         addExe(t);
         subBlockPrepare(t);
         return t;

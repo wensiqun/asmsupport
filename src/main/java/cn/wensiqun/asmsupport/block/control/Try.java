@@ -48,9 +48,6 @@ public abstract class Try extends SeriesBlock {
     /** 该程序块中所有可执行的指令 */
     private List<Executable> parentExes;
     
-    /** 该程序块中所有可执行的指令 */
-    private List<Executable> parentPreExes;
-    
     /** Finally Block*/
     private Finally finallyBlock;
     
@@ -165,9 +162,7 @@ public abstract class Try extends SeriesBlock {
         this.catchEntity = ca;
         ca.setEntityTry(this);
         parentExes.add(ca);
-        parentPreExes.add(ca);
         ca.setParentExes(parentExes);
-        ca.setParentPreExes(parentPreExes);
         ca.setPrevious(this);
         addCatchedException(ca.getException());
         subBlockPrepare(ca, getOwnerBlock());
@@ -190,16 +185,11 @@ public abstract class Try extends SeriesBlock {
         subBlockPrepare(fny, getOwnerBlock());
         
         parentExes.add(fny);
-        parentPreExes.add(fny);
         return fny;
     }
 
     public void setParentExes(List<Executable> parentExes) {
         this.parentExes = parentExes;
-    }
-
-    public void setParentPreExes(List<Executable> parentPreExes) {
-        this.parentPreExes = parentPreExes;
     }
     
     public void setFinallyBlock(Finally finallyBlock) {
