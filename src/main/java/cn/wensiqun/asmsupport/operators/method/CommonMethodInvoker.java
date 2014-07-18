@@ -54,16 +54,16 @@ public class CommonMethodInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            log.info("put reference to stack");
+            log.debug("put reference to stack");
             //变量入栈
             callObjReference.loadToStack(block);
             argumentsToStack();
             if(callObjReference.getParamterizedType().isInterface()){
-            	log.info("invoke interface method : " + name);
+            	log.debug("invoke interface method : " + name);
                 //如果是接口
                 insnHelper.invokeInterface(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
-                log.info("invoke class method : " + name);
+                log.debug("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VariableMeta ve = ((IVariable)callObjReference).getVariableMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){

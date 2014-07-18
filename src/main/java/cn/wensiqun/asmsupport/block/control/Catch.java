@@ -138,7 +138,7 @@ public abstract class Catch extends SeriesBlock implements LocalVariableBody {
         	    //如果程序能够走到这里 表示之前没有return或者throw操作，则将finally内容copy至当前catch块的末尾
         	    finallyBlock.clonerGenerate(getExecuteBlock());
             }catch(UnreachableCode uc){
-                log.info(uc.getMessage());
+                log.debug(uc.getMessage());
             }catch(RuntimeException e){
             	throw e;
             }
@@ -150,7 +150,7 @@ public abstract class Catch extends SeriesBlock implements LocalVariableBody {
             //如果程序能够走到这里 表示之前没有return或者throw操作，跳转到finally block的起始位置
             new GOTO(this.getExecuteBlock(), getTerminalEndLabelInCatch()); 
         }catch(UnreachableCode uc){
-            log.info("unreachable code");	
+            log.debug("unreachable code");	
         }catch(RuntimeException e){
         	throw e;
         }

@@ -94,7 +94,7 @@ public abstract class Try extends SeriesBlock implements Body {
             //创建GOTO指令。跳到整个try catch的结束部分 如果存在finally 则是finally起始部分
             new GOTO(getExecuteBlock(), getTerminalEndLabel()); 
         }catch(UnreachableCode uc){
-            log.info("unreachable code");
+            log.debug("unreachable code");
             returnInTry = true;
         }catch(RuntimeException e){
         	throw e;

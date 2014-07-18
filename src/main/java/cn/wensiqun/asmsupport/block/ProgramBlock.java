@@ -298,7 +298,7 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
 		            OperatorFactory.newOperator(NoneOperator.class, new Class<?>[]{ProgramBlock.class}, getExecuteBlock());
 					finallyBlock.prepare();
 		        }catch(UnreachableCode uc){
-		            log.info("unreachable code");	
+		            log.debug("unreachable code");	
 		        }catch(RuntimeException e){
 		        	throw e;
 		        }
