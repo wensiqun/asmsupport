@@ -23,14 +23,12 @@ public class Scope extends Component {
     private List<Component> components;
     // Scope的范围边界
     private Label start;
-    private Label innerEnd;
-    private Label outerEnd;
+    private Label end;
 
     public Scope(LocalVariables locals, Scope parent) {
         super(locals);
         this.start = new Label();
-        this.innerEnd = new Label();
-        this.outerEnd = new Label();
+        this.end = new Label();
         this.setParent(parent);
         if(parent != null){
             parent.addComponent(this);
@@ -54,12 +52,9 @@ public class Scope extends Component {
         return start;
     }
 
-    public Label innerEnd() {
-        return innerEnd;
+    public Label getEnd() {
+        return end;
     }
 
-    public Label outerEnd() {
-        return outerEnd;
-    }
 
 }

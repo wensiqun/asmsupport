@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
 
 import cn.wensiqun.asmsupport.AbstractExecuteable;
@@ -29,10 +30,10 @@ import cn.wensiqun.asmsupport.clazz.AClass;
 import cn.wensiqun.asmsupport.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.definition.method.AMethod;
+import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.definition.variable.meta.LocalVariableMeta;
@@ -40,7 +41,6 @@ import cn.wensiqun.asmsupport.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.exception.MethodInvokeException;
 import cn.wensiqun.asmsupport.exception.UnreachableCode;
 import cn.wensiqun.asmsupport.exception.VerifyErrorException;
-import cn.wensiqun.asmsupport.operators.AbstractOperator;
 import cn.wensiqun.asmsupport.operators.BlockEndFlag;
 import cn.wensiqun.asmsupport.operators.InstanceofOperator;
 import cn.wensiqun.asmsupport.operators.NoneOperator;
@@ -109,39 +109,40 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     private static Log log = LogFactory.getLog(ProgramBlock.class);
 
     /**执行Block, 通过当前Block所创建的操作，实际是executeBlock的代理*/
-	private ProgramBlock executeBlock = this;
+	private   ProgramBlock                 executeBlock = this;
+    protected Scope                        scope;
+    private   Label                        start;
+    private   Label                        end;
+    /** 属于哪个block。父block */
+    protected ProgramBlock                 ownerBlock;
+    /** 该程序块中所有可执行的指令 */
+    private   List<Executable>             executeQueue;
+    protected InstructionHelper            insnHelper;
+    protected AMethod                      method;
+    /** 当前block是否已经返回 或者已经抛出异常了 */
+    protected boolean                      returned;
+    /** 是否需要检测UnreachableCode, 即在创建一个操作的时候是否需要检测程序能够成功的运行到该操作 */
+    private   boolean                      needCheckUnreachableCode = true;
+    private   ThrowExceptionContainer      throwExceptions;
 
-	public void setExecuteBlock(ProgramBlock exeBlock) {
+    /******************* Getter Setter ************************/
+    
+    public void setExecuteBlock(ProgramBlock exeBlock) {
         this.executeBlock = exeBlock;
     }
     
     protected ProgramBlock getExecuteBlock(){
-    	return executeBlock;
+        return executeBlock;
     }
-	
-    protected Scope scope;
-    /** 属于哪个block。父block */
-    protected ProgramBlock ownerBlock;
-    
-    /** 该程序块中所有可执行的指令 */
-    private List<Executable> executeQueue;
-    
-    protected InstructionHelper insnHelper;
-
-    protected AMethod method;
-    
-    /** 当前block是否已经返回 或者已经抛出异常了 */
-    protected boolean returned;
-
-    /** 是否需要检测UnreachableCode, 即在创建一个操作的时候是否需要检测程序能够成功的运行到该操作 */
-    private boolean whetherCheckUnreachableCode = true;
-    
-    private ThrowExceptionContainer throwExceptions;
     
     public ThrowExceptionContainer getThrowExceptions() {
 		return throwExceptions;
 	}
+    
+    
 
+    /******************* Getter Setter ************************/
+    
     /**
      * 添加抛出的异常到方法签名中
      * @param exception
@@ -159,12 +160,12 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
     	}
     }
     
-	public boolean whetherCheckUnreachableCode() {
-		return whetherCheckUnreachableCode;
+	public boolean isNeedCheckUnreachableCode() {
+		return needCheckUnreachableCode;
 	}
 
-	public void setWhetherCheckUnreachableCode(boolean whetherCheckUnreachableCode) {
-		this.whetherCheckUnreachableCode = whetherCheckUnreachableCode;
+	public void setNeedCheckUnreachableCode(boolean whetherCheckUnreachableCode) {
+		this.needCheckUnreachableCode = whetherCheckUnreachableCode;
 	}
 
 	@Override
@@ -192,10 +193,6 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
 
     public List<Executable> getExecuteQueue(){
     	return this.executeQueue;
-    }
-    
-    public boolean isUnreachableCode(AbstractOperator currentOperator){
-    	return isReturned();
     }
     
     protected abstract void init();
@@ -232,6 +229,8 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
      */
     protected ProgramBlock() {
     	executeQueue = new ArrayList<Executable>();
+    	start = new Label();
+        end = new Label();
     }
 
     /**
@@ -312,9 +311,8 @@ public abstract class ProgramBlock extends AbstractExecuteable implements IBlock
         insnHelper.mark(getScope().getStart());
         insnHelper.nop();
         executing();
-        insnHelper.mark(getScope().innerEnd());
+        insnHelper.mark(getScope().getEnd());
         insnHelper.nop();
-        insnHelper.mark(getScope().outerEnd());
     }
     
     public abstract void executing();

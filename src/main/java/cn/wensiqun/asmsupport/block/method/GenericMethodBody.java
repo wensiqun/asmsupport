@@ -131,7 +131,7 @@ public abstract class GenericMethodBody extends ProgramBlock {
                 }
                 insnHelper.declarationVariable(slv.getName(), slv
                         .getDeclareType().getDescriptor(), null, slv.getSpecifiedStartLabel(), parent
-                        .innerEnd(), slv.getInitStartPos());
+                        .getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;
                 declarationVariable(lastBrotherScope);

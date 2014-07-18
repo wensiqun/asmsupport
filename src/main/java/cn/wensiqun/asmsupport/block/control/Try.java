@@ -241,8 +241,8 @@ public abstract class Try extends SeriesBlock implements Body {
      *  
      */
     private void generateThrowableCatch(){
-        boolean currentCheckUnrechableCode = getExecuteBlock().whetherCheckUnreachableCode();
-        getExecuteBlock().setWhetherCheckUnreachableCode(false);
+        boolean currentCheckUnrechableCode = getExecuteBlock().isNeedCheckUnreachableCode();
+        getExecuteBlock().setNeedCheckUnreachableCode(false);
         
         new Marker(this.getExecuteBlock(), implicitCatchStartLbl);
         
@@ -256,7 +256,7 @@ public abstract class Try extends SeriesBlock implements Body {
         OperatorFactory.newOperator(UnAddExceptionThrow.class, 
                 new Class<?>[]{ProgramBlock.class, Parameterized.class}, getExecuteBlock(), exception);
         
-        getExecuteBlock().setWhetherCheckUnreachableCode(currentCheckUnrechableCode);
+        getExecuteBlock().setNeedCheckUnreachableCode(currentCheckUnrechableCode);
     }
     
     /**

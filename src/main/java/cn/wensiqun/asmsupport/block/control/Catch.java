@@ -170,8 +170,8 @@ public abstract class Catch extends SeriesBlock implements LocalVariableBody {
      *  
      */
     private void generateThrowableCatch(){
-        boolean currentCheckUnrechableCode = getExecuteBlock().whetherCheckUnreachableCode();
-        getExecuteBlock().setWhetherCheckUnreachableCode(false);
+        boolean currentCheckUnrechableCode = getExecuteBlock().isNeedCheckUnreachableCode();
+        getExecuteBlock().setNeedCheckUnreachableCode(false);
         
         new Marker(this.getExecuteBlock(), implicitCatchStartLbl);
         
@@ -183,7 +183,7 @@ public abstract class Catch extends SeriesBlock implements LocalVariableBody {
         OperatorFactory.newOperator(Throw.class, 
                 new Class<?>[]{ProgramBlock.class, Parameterized.class, boolean.class}, getExecuteBlock(), exception, true);
         
-        getExecuteBlock().setWhetherCheckUnreachableCode(currentCheckUnrechableCode);
+        getExecuteBlock().setNeedCheckUnreachableCode(currentCheckUnrechableCode);
     }
     
     void setEntityTry(Try t){

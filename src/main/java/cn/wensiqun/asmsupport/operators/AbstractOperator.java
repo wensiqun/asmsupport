@@ -49,10 +49,10 @@ public abstract class AbstractOperator extends AbstractExecuteable {
     
     //判断当前操作程序是否能够到达
     public void checkUnreachableCode(){
-    	if(block.whetherCheckUnreachableCode()){
+    	if(block.isNeedCheckUnreachableCode()){
         	if(block.getExecuteQueue().contains(this) && 
         	  !(this instanceof Marker) && !(this instanceof NOP) && !(this instanceof BlockEndFlag)){
-        	   boolean unreach = block.isUnreachableCode(this);
+        	   boolean unreach = block.isReturned();
         	    if(unreach){
         	        throw new UnreachableCode("Unreachable code when " + this, block, this);
         	    }
