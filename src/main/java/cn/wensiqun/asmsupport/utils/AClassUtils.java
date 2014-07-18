@@ -20,7 +20,6 @@ import cn.wensiqun.asmsupport.definition.method.AMethod;
 import cn.wensiqun.asmsupport.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.utils.reflet.MethodUtils;
-import cn.wensiqun.asmsupport.utils.reflet.ModifierUtils;
 
 /**
  * 

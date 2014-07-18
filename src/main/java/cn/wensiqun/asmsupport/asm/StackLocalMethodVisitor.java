@@ -1242,7 +1242,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes{
         final int min,
         final int max,
         final Label dflt,
-        final Label[] labels)
+        final Label... labels)
     {
 		stackLocalOperator(TABLESWITCH);
         mv.visitTableSwitchInsn(min, max, dflt, labels);
