@@ -88,7 +88,7 @@ public class CreateClass extends AbstractExample {
 		 */
 		creator.createStaticBlock(new ClinitBody(){
 			@Override
-			public void generateBody() {
+			public void body() {
 				assign(getMethodOwner().getGlobalVariable("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
 				runReturn();
 			}
@@ -130,7 +130,7 @@ public class CreateClass extends AbstractExample {
 			 * 只有一个元素它的类型是int类型，名字是intVal。
 			 */
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				/*
 				 * 这里要注意的。 如果是创建构造方法，要显示的调用invokeSuperConstructor,他的作用
 				 * 就是等同于我们编写java代码的时候调用super()一样。只不过我们在用java创建个构造函数的时候有时候
@@ -166,7 +166,7 @@ public class CreateClass extends AbstractExample {
 		creator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PRIVATE, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", append(Value.value("staticGlobalVariable : "), getMethodOwner().getGlobalVariable("staticGlobalVariable")));
 				invoke(systemOut, "println", append(Value.value("globalVariable : "), getThis().getGlobalVariable("globalVariable")));
 				runReturn();
@@ -187,7 +187,7 @@ public class CreateClass extends AbstractExample {
 				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 	        @Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 	        	invoke(invokeConstructor(getMethodOwner(), Value.value(1024)), "commonMethod");
 	        	
 	        	invoke(systemOut, "println", append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));

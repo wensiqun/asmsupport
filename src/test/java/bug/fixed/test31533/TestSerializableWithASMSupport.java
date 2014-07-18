@@ -28,7 +28,7 @@ public class TestSerializableWithASMSupport {
     			null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						assign(getThis().getGlobalVariable("name"), argus[0]);
 						runReturn();
 					}
@@ -41,7 +41,7 @@ public class TestSerializableWithASMSupport {
     			AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						runReturn(getThis().getGlobalVariable("name"));
 					}
     		
@@ -53,7 +53,7 @@ public class TestSerializableWithASMSupport {
     			AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						runReturn(append(Value.value("User [name="), getThis().getGlobalVariable("name")));
 					}
     		

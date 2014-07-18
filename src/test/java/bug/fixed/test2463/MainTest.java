@@ -23,7 +23,7 @@ public class MainTest {
 		creator.createMethod("getMyObject", null, null, AClassFactory.getProductClass(MyObject.class),
 				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 		            	runReturn(invokeConstructor(AClassFactory.getProductClass(MyObject.class)));
 					}
 			
@@ -33,7 +33,7 @@ public class MainTest {
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 invoke(invokeConstructor(getMethodOwner()), "getMyObject");
             	runReturn();
             }

@@ -27,7 +27,7 @@ public class LocalVariableExample extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						
 						/* ***************************  */
 						/*      创建非数组类型的局部变量       */

@@ -25,24 +25,24 @@ public class IfElse extends CreateMethod  {
 		creator.createMethod("ifelse", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"str", "i"}, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						final LocalVariable str = argus[0];
 						final LocalVariable i = argus[1];
 						
 						ifthan(new IF(invoke(str, "equals", Value.value("A"))){
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is 'A', i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is 'A', i is not 0"));
 									}
 									
@@ -51,18 +51,18 @@ public class IfElse extends CreateMethod  {
 						}).elseif(new ElseIF(invoke(str, "equals", Value.value("B"))){
 
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is 'B', i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is 'B', i is not 0"));
 									}
 									
@@ -72,18 +72,18 @@ public class IfElse extends CreateMethod  {
 						}).elsethan(new Else(){
 
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is unknow, i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(out, "println", Value.value("str is unknow, i is not 0"));
 									}
 									

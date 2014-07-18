@@ -64,7 +64,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				/*
 				 * 1.首先我们需要创建一个数组。我们有两只方式创建数组，第一种是在创建数组的时候
 				 *   为其分配数组空间。第二种是创建数组的时候为其分配初试值

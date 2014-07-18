@@ -26,17 +26,17 @@ public class TryFinally extends CreateMethod  {
 		creator.createMethod("tryFinally", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						tryDo(new Try(){
 							@Override
-							public void generateBody() {
+							public void body() {
 								invoke(out, "println", getMethodOwner().getGlobalVariable("mtd_tryfinally_x"));
 								//invoke(getMethodOwner().getGlobalVariable("mtd_tryfinally_x"),"toString");
 							    runReturn();
 							}
 						}).finallyThan(new Finally(){
 							@Override
-							public void generateInsn() {
+							public void body() {
 								invoke(out, "println", Value.value("finally code"));
 							}
 						});

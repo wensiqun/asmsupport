@@ -28,7 +28,7 @@ public class Assignment extends CreateMethod {
 		creator.createMethod("assignment", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	LocalVariable a = createVariable("a", AClass.INT_ACLASS, false, Value.value(1)); //int a = 1;
 	        	LocalVariable b = createVariable("b", AClass.INT_ACLASS, false, Value.value(2)); //int b = 2;
 	        	LocalVariable c = createVariable("c", AClass.INT_ACLASS, false, Value.value(3)); //int c = 3;

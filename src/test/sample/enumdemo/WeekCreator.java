@@ -30,7 +30,7 @@ public class WeekCreator {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
 			    new StaticMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 					    invoke(out, "println", getMethodOwner().getGlobalVariable("Monday"));
 					    invoke(out, "println", getMethodOwner().getGlobalVariable("Tuesday"));
 						runReturn();

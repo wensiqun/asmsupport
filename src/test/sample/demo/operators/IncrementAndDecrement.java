@@ -28,7 +28,7 @@ public class IncrementAndDecrement extends CreateMethod {
 		creator.createMethod("incrementAndDecrement", null, null, null, null,
 				Opcodes.ACC_PUBLIC, new CommonMethodBody() {
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						LocalVariable count = createVariable("count", AClass.INT_ACLASS, false, Value.value(10)); // int count = // 10;
 						beforeInc(count); // ++count
 						beforeDec(count); // --count;

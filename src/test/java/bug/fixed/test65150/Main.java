@@ -25,7 +25,7 @@ public class Main extends AbstractFix {
 		creator.createStaticBlock(new ClinitBody(){
 
 			@Override
-			public void generateBody() {
+			public void body() {
 				
 				invoke(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
 				
@@ -42,7 +42,7 @@ public class Main extends AbstractFix {
 				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 	        @Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 	        	
 	        	invoke(systemOut, "println", append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
 	        	
@@ -72,7 +72,7 @@ public class Main extends AbstractFix {
 				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 	        @Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 	        	
 	        	invoke(systemOut, "println", append(Value.value("DEFAULT_VALUE : "), Test65150AClass.getGlobalVariable("DEFAULT_VALUE")));
 	        	

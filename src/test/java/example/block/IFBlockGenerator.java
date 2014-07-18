@@ -74,24 +74,24 @@ public class IFBlockGenerator extends AbstractExample{
 		creator.createStaticMethod("ifelse", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"str", "i"}, null, null, Opcodes.ACC_PUBLIC,
 		        new StaticMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						final LocalVariable str = argus[0];
 						final LocalVariable i = argus[1];
 						
 						ifthan(new IF(invoke(str, "equals", Value.value("A"))){
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is 'A', i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is 'A', i is not 0"));
 									}
 									
@@ -100,18 +100,18 @@ public class IFBlockGenerator extends AbstractExample{
 						}).elseif(new ElseIF(invoke(str, "equals", Value.value("B"))){
 
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is 'B', i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is 'B', i is not 0"));
 									}
 									
@@ -121,18 +121,18 @@ public class IFBlockGenerator extends AbstractExample{
 						}).elsethan(new Else(){
 
 							@Override
-							public void generateInsn() {
+							public void body() {
 								ifthan(new IF(equal(i, Value.value(0))){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is unknow, i is 0"));
 									}
 									
 								}).elsethan(new Else(){
 
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    invoke(systemOut, "println", Value.value("str is unknow, i is not 0"));
 									}
 									
@@ -150,7 +150,7 @@ public class IFBlockGenerator extends AbstractExample{
 		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
 						invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
 						invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));

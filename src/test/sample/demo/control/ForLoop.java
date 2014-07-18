@@ -26,7 +26,7 @@ public class ForLoop extends CreateMethod  {
 		creator.createMethod("forloop", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						AClass listCls = AClassFactory.getProductClass(List.class);
 						AClass arraylistCls = AClassFactory.getProductClass(ArrayList.class);
 						final LocalVariable list = createVariable("list", listCls, false, invokeConstructor(arraylistCls));
@@ -38,7 +38,7 @@ public class ForLoop extends CreateMethod  {
 						whileloop(new WhileLoop(lessThan(i, invoke(list, "size"))){
 
 							@Override
-							public void generateInsn() {
+							public void body() {
 								invoke(out, "println", invoke(list, "get", i));
 								afterInc(i);
 							}

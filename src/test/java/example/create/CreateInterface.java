@@ -7,7 +7,6 @@ import org.objectweb.asm.Opcodes;
 
 import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
 import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.creator.InterfaceCreator;
 import cn.wensiqun.asmsupport.definition.value.Value;
 import example.AbstractExample;
@@ -95,7 +94,7 @@ public class CreateInterface extends AbstractExample {
 		interfaceCreator.createStaticBlock(new ClinitBody(){
 
 			@Override
-			public void generateBody() {
+			public void body() {
 				/*
 				 * 这里是将"I'm a global variable at Interface"赋值给上面我们创建的globalValue全局变量
 				 * 对应的java代码可以理解为:

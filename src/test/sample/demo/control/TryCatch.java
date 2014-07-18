@@ -26,25 +26,25 @@ public class TryCatch extends CreateMethod  {
 		creator.createMethod("tryCatch", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						final AClass acls = AClassFactory.getProductClass(Class.class);
 						tryDo(new Try(){
 							@Override
-							public void generateBody() {
+							public void body() {
 								createVariable("stringClass", acls, false, invokeStatic(acls, "forName", Value.value("java.lang.String")));
 								//runReturn();
 							}
 						}).catchException(new Catch(AClassFactory.getProductClass(ClassNotFoundException.class)){
 
 							@Override
-							public void catchBody(LocalVariable e) {
+							public void body(LocalVariable e) {
 								invoke(e, "printStackTrace");
 								throwException(invokeConstructor(AClassFactory.getProductClass(RuntimeException.class), Value.value("test run time exception")));
 							}
 							
 						}).finallyThan(new Finally(){
 							@Override
-							public void generateInsn() {
+							public void body() {
 							    invoke(out, "println", Value.value("hello..."));
 							}
 							

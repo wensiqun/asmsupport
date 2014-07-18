@@ -28,7 +28,7 @@ public class BitwiseOperators extends CreateMethod {
 		creator.createMethod("bitwiseOperators", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	
 	        	
 	        	invoke(out, "println", append(Value.value(" 9 & 7 = "), bitAnd(Value.value(9), Value.value(7)))); //System.out.println(" 9 & 7 = " + 9 & 7);

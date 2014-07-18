@@ -30,7 +30,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 		creator.createStaticMethod("commonMethod", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				runReturn(Value.value("I'm from commonMethod"));
 			}
 		});
@@ -42,7 +42,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", invokeStatic(getMethodOwner(), "commonMethod"));
 				runReturn();
 			}

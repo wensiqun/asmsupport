@@ -40,7 +40,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 		 */
 		creator.createMethod("demonstrate", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody() {
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", Value.value("******************************demonstrate***************************"));
 				
 				//int a = 1;
@@ -75,7 +75,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 		 */
 		creator.createMethod("incrementAndDecrement", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody() {
 		    @Override
-		    public void generateBody(LocalVariable... argus) {
+		    public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
 				//int count = 10;
 				LocalVariable count = createVariable("count", AClass.INT_ACLASS, false, Value.value(10));
@@ -93,7 +93,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				LocalVariable currentObj = createVariable("currentObj", getMethodOwner(), false, invokeConstructor(getMethodOwner()));
 				invoke(currentObj, "demonstrate");
 				invoke(currentObj, "incrementAndDecrement");

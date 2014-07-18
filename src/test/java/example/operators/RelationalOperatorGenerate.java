@@ -45,7 +45,7 @@ public class RelationalOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				//Random rand = new Random();
 				LocalVariable rand = createVariable("rand", AClassFactory.getProductClass(Random.class), false, invokeConstructor(AClassFactory.getProductClass(Random.class)));
 				

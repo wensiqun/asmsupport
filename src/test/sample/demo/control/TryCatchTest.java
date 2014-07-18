@@ -41,7 +41,7 @@ public class TryCatchTest {
         creator.createConstructor(null, null, new InitBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invokeSuperConstructor();
 				runReturn();
 			}
@@ -56,7 +56,7 @@ public class TryCatchTest {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
 			    new StaticMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						AClass curCls = getMethodOwner();
 						LocalVariable self = createVariable("myMain", getMethodOwner(), false, invokeConstructor(curCls));
 
@@ -89,17 +89,17 @@ public class TryCatchTest {
 		creator.createMethod("tryFinally", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						final AClass acls = AClassFactory.getProductClass(Class.class);
 						tryDo(new Try(){
 							@Override
-							public void generateBody() {
+							public void body() {
 								createVariable("stringClass", acls, false, invokeStatic(acls, "forName", Value.value("java.lang.String")));
 								runReturn();
 							}
 						}).finallyThan(new Finally(){
 							@Override
-							public void generateInsn() {
+							public void body() {
 							    invoke(out, "println", Value.value("hello..."));
 							}
 							

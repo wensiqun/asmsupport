@@ -37,7 +37,7 @@ public class Test {
 		cm.createGlobalVariable("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClass.INT_ACLASS);
 		cm.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("created by asm"));
 				runReturn();
 			}
@@ -45,7 +45,7 @@ public class Test {
 		
 		cm.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBody(){
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
 				assign(age, Value.value(20));
 				this.invokeOriginalMethod();
@@ -59,20 +59,20 @@ public class Test {
 		cm.modifyMethod("helloWorld", null, new ModifiedMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getProductClass(Random.class);
 				LocalVariable random = this.createVariable("random", randomClass, false, this.invokeConstructor(randomClass, Value.value(1L)));
 				ifthan(new IF(invoke(random, "nextBoolean")){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invokeOriginalMethod();
 					}
 
 				}).elsethan(new Else(){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(out, "println", Value.value("call self"));
 					}
 					
@@ -86,7 +86,7 @@ public class Test {
 		cm.modifyMethod("String", null, new ModifiedMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("before"));
 				LocalVariable lv = this.createVariable(null, getOriginalMethodReturnClass(), true, invokeOriginalMethod());
 				invoke(out, "println", Value.value("after"));	

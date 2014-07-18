@@ -36,7 +36,7 @@ public class MainTest {
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 invokeConstructor(AClassFactory.getProductClass(MyObject.class), Value.value("i'm direct pass argument."));
             	runReturn();
             }

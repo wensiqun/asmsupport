@@ -25,16 +25,16 @@ public class WhileAndDoWhile extends CreateMethod  {
 		creator.createMethod("whileAndDoWhile", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						final LocalVariable i = createVariable("i", AClass.INT_ACLASS, false, Value.value(0));
 			        	
 			        	whileloop(new WhileLoop(lessThan(i, Value.value(5))){
 							
 			        		@Override
-							public void generateInsn() {
+							public void body() {
 			        			ifthan(new IF(equal(i, Value.value(3))){
 									@Override
-									public void generateInsn() {
+									public void body() {
 										breakOut();
 									}
 			        			});
@@ -47,11 +47,11 @@ public class WhileAndDoWhile extends CreateMethod  {
                         dowhile(new DoWhileLoop(lessThan(i, Value.value(5))){
 							
 			        		@Override
-							public void generateInsn() {
+							public void body() {
 			        			invoke(out, "println", append(Value.value(" i = "), afterInc(i)));
 			        			ifthan(new IF(equal(i, Value.value(3))){
 									@Override
-									public void generateInsn() {
+									public void body() {
 										afterInc(i);
 										continueOut();
 									}

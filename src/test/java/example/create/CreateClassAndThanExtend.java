@@ -1,10 +1,6 @@
 package example.create;
 
-import java.util.Enumeration;
 import java.util.Random;
-
-import javax.swing.text.Element;
-import javax.swing.text.AbstractDocument.AbstractElement;
 
 import org.objectweb.asm.Opcodes;
 
@@ -34,7 +30,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		superCreator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", Value.value("say hello!"));
 				runReturn();
 			}
@@ -50,7 +46,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		byModifyModifer.createGlobalVariable("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClass.INT_ACLASS);
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("created by asm"));
 				runReturn();
 			}
@@ -58,7 +54,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		
 		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBody(){
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
 				assign(age, Value.value(20));
 				this.invokeOriginalMethod();
@@ -72,20 +68,20 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		byModifyModifer.modifyMethod("helloWorld", null, new ModifiedMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getProductClass(Random.class);
 				LocalVariable random = this.createVariable("random", randomClass, false, this.invokeConstructor(randomClass, Value.value(1L)));
 				ifthan(new IF(invoke(random, "nextBoolean")){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invokeOriginalMethod();
 					}
 
 				}).elsethan(new Else(){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(out, "println", Value.value("call self"));
 					}
 					
@@ -99,7 +95,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		byModifyModifer.modifyMethod("String", null, new ModifiedMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(out, "println", Value.value("before"));
 				LocalVariable lv = this.createVariable(null, getOriginalMethodReturnClass(), true, invokeOriginalMethod());
 				invoke(out, "println", Value.value("after"));	
@@ -115,7 +111,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		/*childCreator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", Value.value("say hello!"));
 				runReturn();
 			}
@@ -126,7 +122,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 	        @Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 	        	invoke(invokeConstructor(getMethodOwner()), "helloWorld");
 			    runReturn();
 			}

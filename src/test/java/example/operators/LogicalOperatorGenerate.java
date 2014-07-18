@@ -71,7 +71,7 @@ public class LogicalOperatorGenerate extends AbstractExample {
 		creator.createStaticMethod("main", new AClass[] { AClassFactory.getProductClass(String[].class) }, new String[] { "args" }, null, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody() {
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
 								"Conditional AND (&&)", "false && false", (false && false),
 								"false && true", (false && true), "true && false",

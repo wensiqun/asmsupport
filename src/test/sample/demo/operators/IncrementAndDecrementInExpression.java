@@ -29,7 +29,7 @@ public class IncrementAndDecrementInExpression extends CreateMethod {
 		creator.createMethod("incrementAndDecrementInExpression", null, null, AClass.INT_ACLASS, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 				LocalVariable numA = createVariable("numA", AClass.INT_ACLASS, false, Value.value(5));  //int numA = 10;
 				LocalVariable numB = createVariable("numB", AClass.INT_ACLASS, false, Value.value(10));  //int numB = 10;
 				LocalVariable numC = createVariable("numC", AClass.INT_ACLASS, false, Value.value(0));  //int numC = 10;

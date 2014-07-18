@@ -29,7 +29,7 @@ public class InstanceofOperators extends CreateMethod {
 		creator.createMethod("instanceofOperators", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	LocalVariable str = createVariable("str", AClass.STRING_ACLASS, false, Value.value("String"));
 	        	invoke(out, "println", Value.value("String str = \"test string\" "));
 	        	invoke(out, "println", append(Value.value(" str instanceof CharSequence = "), instanceOf(str, AClassFactory.getProductClass(CharSequence.class))));

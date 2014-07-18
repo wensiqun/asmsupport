@@ -41,7 +41,7 @@ public class MainTest {
 				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				runReturn(invokeConstructor(childChild));
 			}
 					
@@ -52,7 +52,7 @@ public class MainTest {
 				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				runReturn(invokeConstructor(childChild));
 			}
 					
@@ -63,7 +63,7 @@ public class MainTest {
 				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				runReturn(invokeConstructor(childChild));
 			}
 					
@@ -74,7 +74,7 @@ public class MainTest {
 				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				runReturn(invokeConstructor(childChild));
 			}
 					

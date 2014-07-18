@@ -28,7 +28,7 @@ public class TernaryOperators extends CreateMethod {
 		creator.createMethod("ternaryOperators", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	LocalVariable i = createVariable("i", AClass.INT_ACLASS, false, Value.value(10));
 	        	invoke(out, "println", Value.value("i = 10"));
 	        	LocalVariable k = createVariable("k", AClass.INT_ACLASS, false, ternary(lessThan(i, Value.value(0)), neg(i), i));

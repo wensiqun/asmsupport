@@ -27,7 +27,7 @@ public class ForEach extends CreateMethod  {
 		creator.createMethod("foreach", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						AClass listCls = AClassFactory.getProductClass(List.class);
 						AClass arraylistCls = AClassFactory.getProductClass(ArrayList.class);
 						LocalVariable list = createVariable("list", listCls, false, invokeConstructor(arraylistCls));
@@ -37,7 +37,7 @@ public class ForEach extends CreateMethod  {
 						
 						forEach(new ForEachLoop(list){
 							@Override
-							public void generateBody(LocalVariable var) {
+							public void body(LocalVariable var) {
 								invoke(out, "println", var);
 							}
 						});
@@ -48,10 +48,10 @@ public class ForEach extends CreateMethod  {
 						
 						forEach(new ForEachLoop(array){
 							@Override
-							public void generateBody(final LocalVariable var) {
+							public void body(final LocalVariable var) {
 								ifthan(new IF(equal(var, Value.value(4))){
 									@Override
-									public void generateInsn() {
+									public void body() {
 									    continueOut();
 									}
 								});

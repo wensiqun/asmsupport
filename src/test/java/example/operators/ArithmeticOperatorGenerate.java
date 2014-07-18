@@ -26,7 +26,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		creator.createStaticMethod("printInt", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"s", "i"}, null, null, 0, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", append(argus[0], Value.value(" = "), argus[1]));
 				runReturn();
 			}
@@ -37,7 +37,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		creator.createStaticMethod("printFloat", new AClass[]{AClass.STRING_ACLASS, AClass.FLOAT_ACLASS}, new String[]{"s", "f"}, null, null, 0, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invoke(systemOut, "println", append(argus[0], Value.value(" = "), argus[1]));
 				runReturn();
 			}
@@ -49,7 +49,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_STATIC, new StaticMethodBody() {
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
 						LocalVariable rand = createVariable("rand", AClassFactory.getProductClass(Random.class), false, invokeConstructor(AClassFactory.getProductClass(Random.class)));
 						

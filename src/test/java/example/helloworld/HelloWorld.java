@@ -31,7 +31,7 @@ public class HelloWorld extends AbstractExample{
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						invoke(systemOut, "println", Value.value("Hello World"));
 						//don't forget return.
 						runReturn();

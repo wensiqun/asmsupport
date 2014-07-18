@@ -59,7 +59,7 @@ public class Demo {
 		creator.createGlobalVariable("testInt",  Opcodes.ACC_PUBLIC, AClass.INT_ACLASS);
 		creator.createStaticBlock(new ClinitBody(){
 			@Override
-			public void generateBody() {
+			public void body() {
 				GlobalVariable testString = getMethodOwner().getGlobalVariable("testString");
 				assign(testString, Value.value("testString"));
 				runReturn();
@@ -68,7 +68,7 @@ public class Demo {
         creator.createConstructor(null, null, new InitBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				invokeSuperConstructor();
 				GlobalVariable testArray = getMethodOwner().getGlobalVariable("testArray");
 				assign(testArray, newArray(AClassFactory.getArrayClass(int.class, 3), Value.value(1), Value.value(2), Value.value(3)));
@@ -103,7 +103,7 @@ public class Demo {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
 			    new CommonMethodBody(){
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						AClass curCls = getMethodOwner();
 						
 						
@@ -243,7 +243,7 @@ public class Demo {
 		creator.createMethod("methodInvoke", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				
                 AClass msu = AClassFactory.getProductClass(MyStaticUtils.class);
                 invokeStatic(AClassFactory.getProductClass(msu.getSuperClass()), "s");
@@ -255,7 +255,7 @@ public class Demo {
 		creator.createMethod("arrayOperator", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				/*LocalVariable lav = createArrayVariable("array1", AClassFactory.getArrayClass(int[][][].class), false, Value.value(1), Value.value(2), Value.value(3));
 				invoke(out, "println", arrayLoad(lav, Value.value(0), Value.value(0)));
 				invoke(out,"println", arrayLoad(lav, Value.value(0), Value.value(0), Value.value(0)));
@@ -270,7 +270,7 @@ public class Demo {
 				new String[]{"arg1", "arg2"},  null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
 					@Override
-					public void generateBody(LocalVariable... argus) {
+					public void body(LocalVariable... argus) {
 						AClass arrayList = AClassFactory.getProductClass(ArrayList.class);
 						LocalVariable list1 = createVariable("list1", AClassFactory.getProductClass(List.class), false,invokeConstructor(arrayList, Value.value(1)));
 						createVariable("list2", arrayList, false, checkCast(list1, arrayList));
@@ -283,7 +283,7 @@ public class Demo {
 		        new CommonMethodBody(){
 			        
 			        @Override
-		            public void generateBody(LocalVariable... argus) {
+		            public void body(LocalVariable... argus) {
 			        	LocalVariable arg = argus[0];
 			        	LocalVariable b1 = createVariable("b1", AClass.STRING_ACLASS, false, Value.value(" world"));
 			        	invoke(out,  "println", append(arg, b1, Value.value(" "), Value.value(true), Value.value(" to here "), Value.value(1L)));

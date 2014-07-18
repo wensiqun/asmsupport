@@ -28,7 +28,7 @@ public class ArithmeticCalculations extends CreateMethod {
 		creator.createMethod("crementforfloat", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 				LocalVariable a = createVariable("a", AClass.DOUBLE_ACLASS, false, Value.value(12.12D));  //double a = 12.12;
 	        	invoke(out, "println", afterDec(a)); //System.out.println(a--);
 	        	invoke(out, "println", afterInc(a)); //System.out.println(a++);

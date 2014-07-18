@@ -28,7 +28,7 @@ public class RelationalOperators extends CreateMethod {
 		creator.createMethod("relationalOperators", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	LocalVariable int1 = createVariable("int1", AClass.INT_ACLASS, false, Value.value(2));
 	        	LocalVariable long1 = createVariable("long1", AClass.LONG_ACLASS, false, Value.value(1L));
 	        	invoke(out, "println", append(Value.value(" 2 > 1L = "), greaterThan(int1, long1)));

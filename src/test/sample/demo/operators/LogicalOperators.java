@@ -28,7 +28,7 @@ public class LogicalOperators extends CreateMethod {
 		creator.createMethod("logicalOperators", null, null, null, null, Opcodes.ACC_PUBLIC,
 		        new CommonMethodBody(){
 	        @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
 	        	LocalVariable b1 = createVariable("b1", AClass.BOOLEAN_ACLASS, false, Value.value(true));
 	        	LocalVariable b2 = createVariable("b2", AClass.BOOLEAN_WRAP_ACLASS, false, Value.value(false));
 	        	invoke(out, "println", Value.value(" b1 = true "));

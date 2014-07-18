@@ -32,7 +32,7 @@ public class BasicValueGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
 
 	        @Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 
 	        	/* ************************************************************************************************************** */
 	        	/* 1.Value.value(Object obj): 获取基本类型值。该方法直接受的参数类型是String类型以及基本类型或者其封装类型.                 */

@@ -22,11 +22,11 @@ public class Synchronized extends CreateMethod   {
 	public void createMethod() {
 		creator.createMethod("synchronizedMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				final GlobalVariable gv = getMethodOwner().getGlobalVariable("testString");
 			    this.syn(new cn.wensiqun.asmsupport.block.Synchronized(gv){
 					@Override
-					public void generateBody(Parameterized synObj) {
+					public void body(Parameterized synObj) {
 						invoke(out, "println", append(Value.value("testString has been synchronized : "), gv));
 					}
 			    });

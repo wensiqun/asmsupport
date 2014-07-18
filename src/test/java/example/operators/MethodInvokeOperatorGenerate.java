@@ -63,7 +63,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
         creator.createMethod("toString", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 //通常我们将super看作是一个变量所以我们用invoke(Parameterized caller, String methodName, Parameterized... arguments)
                 //方法实现super.xxxx。通过getSuper方法获取super变量
                 MethodInvoker superToString = invoke(getSuper(), "toString");
@@ -82,7 +82,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
         creator.createMethod("description", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 /**
                  * 这里和调用super.xxx是一样的。调用当前类中的非静态方法都是通过
                  * invoke(Parameterized caller, String methodName, Parameterized... arguments)方法调用。
@@ -103,7 +103,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 /**
                  * 和上面。
                  * 这里argus[0]就是我们定义的参数obj。如果需要传递参数可以直接在
@@ -123,7 +123,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
             @Override
-            public void generateBody(LocalVariable... argus) {
+            public void body(LocalVariable... argus) {
                 /**
                  * 首先调用构造方法生成MyObject obj = new MyObject();
                  * 通过invokeConstructor方法实现调用构造方法

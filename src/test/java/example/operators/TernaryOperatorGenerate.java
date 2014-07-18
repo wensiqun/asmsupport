@@ -39,7 +39,7 @@ public class TernaryOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				//int i = 10;
 				LocalVariable i = createVariable("i", AClass.INT_ACLASS, false, Value.value(10));
 				

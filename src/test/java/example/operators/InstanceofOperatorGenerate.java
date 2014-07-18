@@ -110,7 +110,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
 
 			@Override
-			public void generateBody(LocalVariable... argus) {
+			public void body(LocalVariable... argus) {
 				AClass A_AClass = AClassFactory.getProductClass(A);
 				AClass B_AClass = AClassFactory.getProductClass(B);
 				AClass C_AClass = AClassFactory.getProductClass(C);
@@ -132,7 +132,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				      System.out.println("a is instance of A");*/
 				ifthan(new IF(instanceOf(a, A_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("a is instance of A"));
 					}
 				});
@@ -141,7 +141,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				    System.out.println("b is instance of B");*/
 				ifthan(new IF(instanceOf(b, B_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("b is instance of B"));
 					}
 				});
@@ -150,7 +150,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				    System.out.println("b is instance of B");*/
 				ifthan(new IF(instanceOf(c, C_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("c is instance of C"));
 					}
 				});
@@ -160,7 +160,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				    System.out.println("c can be cast to A");*/
 				ifthan(new IF(instanceOf(c, A_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("c can be cast to A"));
 					}
 				});
@@ -169,7 +169,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				    System.out.println("a can be cast to C");*/
 				ifthan(new IF(instanceOf(a, C_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("a can be cast to C"));
 					}
 				});
@@ -185,7 +185,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 		           System.out.println();*/
 				ifthan(new IF(instanceOf(ob, D_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("ob is instance of D"));
 					}
 				});
@@ -202,12 +202,12 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				invoke(systemOut, "println", Value.value("ob now refers to c"));
 				ifthan(new IF(instanceOf(ob, D_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("ob can be cast to D"));
 					}
 				}).elsethan(new Else(){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("ob cannot be cast to D"));
 					}
 					
@@ -219,7 +219,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				 */
 				ifthan(new IF(instanceOf(ob, A_AClass)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("ob can be cast to A"));
 					}
 				});
@@ -231,7 +231,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				 */
 				ifthan(new IF(instanceOf(a, AClass.OBJECT_ACLASS)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("a may be cast to Object"));
 					}
 				});
@@ -242,7 +242,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				 */
 				ifthan(new IF(instanceOf(b, AClass.OBJECT_ACLASS)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("b may be cast to Object"));
 					}
 				});
@@ -253,7 +253,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				 */
 				ifthan(new IF(instanceOf(c, AClass.OBJECT_ACLASS)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("c may be cast to Object"));
 					}
 				});
@@ -264,7 +264,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				 */
 				ifthan(new IF(instanceOf(d, AClass.OBJECT_ACLASS)){
 					@Override
-					public void generateInsn() {
+					public void body() {
 						invoke(systemOut, "println", Value.value("d may be cast to Object"));
 					}
 				});
