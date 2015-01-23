@@ -1,24 +1,22 @@
 package bug.fixed.test2054;
 
 import junit.framework.Assert;
-
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.creator.IClassContext;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.exception.NoSuchMethod;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
+import cn.wensiqun.asmsupport.generic.creator.IClassContext;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class MainTest {
 
 	public static Class<?> generate(IClassContext creator){
 		creator.setClassOutPutPath(".//target//");
 		Class<?> cls = creator.startup();
-		if(creator instanceof ClassCreator){
+		if(creator instanceof ClassCreatorInternal){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {
@@ -29,16 +27,16 @@ public class MainTest {
 	}
 	
 	public static void main(String[] args) {
-		ClassCreator creator = 
-				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test2054", null, null);
+		ClassCreatorInternal creator = 
+				new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test2054", null, null);
         
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+                new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
-                invokeConstructor(AClassFactory.getProductClass(MyObject.class), Value.value("i'm direct pass argument."));
-            	runReturn();
+                _new(AClassFactory.getProductClass(MyObject.class), Value.value("i'm direct pass argument."));
+            	_return();
             }
         });
 		generate(creator);

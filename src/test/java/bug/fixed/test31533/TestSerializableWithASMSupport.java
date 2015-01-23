@@ -6,55 +6,54 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class TestSerializableWithASMSupport {
    
     public static void main(String[] args) throws Exception{
 
-    	ClassCreator creator = 
-				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
+    	ClassCreatorInternal creator = 
+				new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
-    	creator.createGlobalVariable("name", Opcodes.ACC_PRIVATE, AClass.STRING_ACLASS);
+    	creator.createField("name", Opcodes.ACC_PRIVATE, AClass.STRING_ACLASS);
 		
-    	creator.createMethod("setName", 
+    	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
     			new AClass[]{AClass.STRING_ACLASS}, new String[]{"name"}, 
-    			null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+    			null, null, new CommonMethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
-						assign(getThis().getGlobalVariable("name"), argus[0]);
-						runReturn();
+						_assign(_this().getGlobalVariable("name"), argus[0]);
+						_return();
 					}
     		
     	});
     	
 
-    	creator.createMethod("getName", 
+    	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+    			AClass.STRING_ACLASS, null,new CommonMethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
-						runReturn(getThis().getGlobalVariable("name"));
+						_return(_this().getGlobalVariable("name"));
 					}
     		
     	});
     	
 
-    	creator.createMethod("toString", 
+    	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+    			AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
-						runReturn(append(Value.value("User [name="), getThis().getGlobalVariable("name")));
+						_return(_append(Value.value("User [name="), _this().getGlobalVariable("name")));
 					}
     		
     	});

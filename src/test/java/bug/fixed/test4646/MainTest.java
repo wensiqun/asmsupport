@@ -4,19 +4,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import junit.framework.Assert;
-
-import org.objectweb.asm.Opcodes;
-
 import bug.fixed.Utils;
 import bug.fixed.test4646.entity.Child;
 import bug.fixed.test4646.entity.ChildChild;
 import bug.fixed.test4646.entity.Super;
 import bug.fixed.test4646.parent.AbstractClass;
-import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 
 public class MainTest {
@@ -30,52 +28,52 @@ public class MainTest {
 	 * @throws IllegalArgumentException 
 	 */
 	public static void main(String[] args) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		ClassCreator creator = 
-				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
+		ClassCreatorInternal creator = 
+				new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
 						AbstractClass.class, null);
         
 		final AClass childChild = AClassFactory.getProductClass(ChildChild.class);
 		
-		creator.createMethod("abstractClassAbstractMethod", 
+		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+				null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				runReturn(invokeConstructor(childChild));
+				_return(_new(childChild));
 			}
 					
 		});
 		
-		creator.createMethod("interfaceMethod", 
+		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+				null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				runReturn(invokeConstructor(childChild));
+				_return(_new(childChild));
 			}
 					
 		});
 		
-		creator.createMethod("abstractClassMethod", 
+		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+				null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				runReturn(invokeConstructor(childChild));
+				_return(_new(childChild));
 			}
 					
 		});
 		
-		creator.createMethod("interfaceReturnTypeIsChild", 
+		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceReturnTypeIsChild", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+				null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				runReturn(invokeConstructor(childChild));
+				_return(_new(childChild));
 			}
 					
 		});

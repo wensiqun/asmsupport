@@ -2,17 +2,16 @@ package example.block;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.control.Else;
-import cn.wensiqun.asmsupport.block.control.ElseIF;
-import cn.wensiqun.asmsupport.block.control.IF;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseIFInternal;
+import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseInternal;
+import cn.wensiqun.asmsupport.core.block.classes.control.condition.IFInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 /**
@@ -69,95 +68,99 @@ public class IFBlockGenerator extends AbstractExample{
 	 */
 	public static void main(String[] args) {
 		
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.IFBlockGeneratorExample", null, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.IFBlockGeneratorExample", null, null);
 		
-		creator.createStaticMethod("ifelse", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"str", "i"}, null, null, Opcodes.ACC_PUBLIC,
-		        new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, 
+				"ifelse", 
+				new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, 
+				new String[]{"str", "i"}, null, null,
+		        
+				new StaticMethodBodyInternal(){
 					@Override
 					public void body(LocalVariable... argus) {
 						final LocalVariable str = argus[0];
 						final LocalVariable i = argus[1];
 						
-						ifthan(new IF(invoke(str, "equals", Value.value("A"))){
+						_if(new IFInternal(_invoke(str, "equals", Value.value("A"))){
 							@Override
 							public void body() {
-								ifthan(new IF(equal(i, Value.value(0))){
+								_if(new IFInternal(_equals(i, Value.value(0))){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is 'A', i is 0"));
+									    _invoke(systemOut, "println", Value.value("str is 'A', i is 0"));
 									}
 									
-								}).elsethan(new Else(){
+								})._else(new ElseInternal(){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is 'A', i is not 0"));
+									    _invoke(systemOut, "println", Value.value("str is 'A', i is not 0"));
 									}
 									
 								});
 							}
-						}).elseif(new ElseIF(invoke(str, "equals", Value.value("B"))){
+						})._elseif(new ElseIFInternal(_invoke(str, "equals", Value.value("B"))){
 
 							@Override
 							public void body() {
-								ifthan(new IF(equal(i, Value.value(0))){
+								_if(new IFInternal(_equals(i, Value.value(0))){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is 'B', i is 0"));
+									    _invoke(systemOut, "println", Value.value("str is 'B', i is 0"));
 									}
 									
-								}).elsethan(new Else(){
+								})._else(new ElseInternal(){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is 'B', i is not 0"));
+									    _invoke(systemOut, "println", Value.value("str is 'B', i is not 0"));
 									}
 									
 								});
 							}
 							
-						}).elsethan(new Else(){
+						})._else(new ElseInternal(){
 
 							@Override
 							public void body() {
-								ifthan(new IF(equal(i, Value.value(0))){
+								_if(new IFInternal(_equals(i, Value.value(0))){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is unknow, i is 0"));
+									    _invoke(systemOut, "println", Value.value("str is unknow, i is 0"));
 									}
 									
-								}).elsethan(new Else(){
+								})._else(new ElseInternal(){
 
 									@Override
 									public void body() {
-									    invoke(systemOut, "println", Value.value("str is unknow, i is not 0"));
+									    _invoke(systemOut, "println", Value.value("str is unknow, i is not 0"));
 									}
-									
+								
 								});
 							}
 							
 						});
 						
-					    runReturn();
+					    _return();
 					}
 		        }
 		);
 		
 		
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 					@Override
 					public void body(LocalVariable... argus) {
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(1));
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(0));
-						invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(1));
-						runReturn();
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(1));
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(0));
+						_invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(1));
+						_return();
 					}
 			
 		});

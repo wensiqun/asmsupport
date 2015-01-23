@@ -1,16 +1,15 @@
 package example.variable;
 
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.Parameterized;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 /**
@@ -22,9 +21,10 @@ import example.AbstractExample;
 public class LocalVariableExample extends AbstractExample {
     
 	public static void main(String[] args){
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+				"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -42,8 +42,8 @@ public class LocalVariableExample extends AbstractExample {
 						 * 第四个参数：初始值，可以为null，null则表示
 						 * 这里的第三个参数是个boolean类型。如果设置成true，则所设置的变量名将不起作用。
 						 */
-						LocalVariable localVariable1 = createVariable("localVariable1", AClass.STRING_ACLASS, false, Value.value("This is a Local Variable"));
-                        invoke(systemOut, "println", localVariable1);
+						LocalVariable localVariable1 = _createVariable("localVariable1", AClass.STRING_ACLASS, false, Value.value("This is a Local Variable"));
+                        _invoke(systemOut, "println", localVariable1);
                         
 						/* ***************************************************************
 						       创建数组类型的局部变量                                                                                                         
@@ -63,23 +63,23 @@ public class LocalVariableExample extends AbstractExample {
                          * 这段代码将创建一个String类型的二维数组的变量,对应的java代码如下
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
-                        LocalVariable localArrayVariable1 = createArrayVariableWithAllocateDimension("localArrayVariable1", AClassFactory.getArrayClass(String[][].class), false, Value.value(2), Value.value(2));
-                        invoke(systemOut, "println", append(Value.value("example 1 : "), invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
+                        LocalVariable localArrayVariable1 = _createArrayVariableWithAllocateDimension("localArrayVariable1", AClassFactory.getArrayClass(String[][].class), false, Value.value(2), Value.value(2));
+                        _invoke(systemOut, "println", _append(Value.value("example 1 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
-                        LocalVariable localArrayVariable2 = createArrayVariableWithAllocateDimension("localArrayVariable2", AClassFactory.getArrayClass(String[][].class), false, Value.value(2));
-                        invoke(systemOut, "println", append(Value.value("example 2 : "), invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
+                        LocalVariable localArrayVariable2 = _createArrayVariableWithAllocateDimension("localArrayVariable2", AClassFactory.getArrayClass(String[][].class), false, Value.value(2));
+                        _invoke(systemOut, "println", _append(Value.value("example 2 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
-                        LocalVariable localArrayVariable3 = createArrayVariableWithAllocateDimension("localArrayVariable3", AClassFactory.getArrayClass(String[][].class), false, (Parameterized[])null);
-                        invoke(systemOut, "println", append(Value.value("example 3 : "), invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
+                        LocalVariable localArrayVariable3 = _createArrayVariableWithAllocateDimension("localArrayVariable3", AClassFactory.getArrayClass(String[][].class), false, (Parameterized[])null);
+                        _invoke(systemOut, "println", _append(Value.value("example 3 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
                         
-                        runReturn();
+                        _return();
 					}
 			
 		});

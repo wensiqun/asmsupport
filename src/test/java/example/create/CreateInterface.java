@@ -3,12 +3,11 @@ package example.create;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.creator.InterfaceCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
+import cn.wensiqun.asmsupport.core.block.classes.method.clinit.ClinitBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 /**
@@ -39,7 +38,7 @@ public class CreateInterface extends AbstractExample {
 		 * 2.接口的全路径名
 		 * 3.接口所继承哪些接口,是一个Class的数组
 		 */
-		InterfaceCreator interfaceCreator = new InterfaceCreator(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
+		InterfaceCreatorInternal interfaceCreator = new InterfaceCreatorInternal(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
 		
 		/*
 		 * 通过createMethod声明方法
@@ -91,7 +90,7 @@ public class CreateInterface extends AbstractExample {
 		 * 的时候可以写多个static块在同一个类中，但是java编译器到最后会将所有写在static块中的代
 		 * 码归并到<cinit>方法当中去。
 		 */
-		interfaceCreator.createStaticBlock(new ClinitBody(){
+		interfaceCreator.createStaticBlock(new ClinitBodyInternal(){
 
 			@Override
 			public void body() {
@@ -110,14 +109,14 @@ public class CreateInterface extends AbstractExample {
 				 * 具体如何使用全局变量在以后的例子中有详细的解释。
 				 * 
 				 */
-				assign(getMethodOwner().getGlobalVariable("globalValue"), Value.value("I'm a global variable at Interface"));
+				_assign(getMethodOwner().getGlobalVariable("globalValue"), Value.value("I'm a global variable at Interface"));
 				/*
 				 * 这段代码是调用println方法 
 				 * 
 				 * 具体如何调用方法在以后的例子中有详细的解释。
 				 */
-			    invoke(systemOut, "println", Value.value("I'm in static block at interface"));
-				runReturn();
+			    _invoke(systemOut, "println", Value.value("I'm in static block at interface"));
+				_return();
 			}
 			
 		});

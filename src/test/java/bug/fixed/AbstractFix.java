@@ -1,9 +1,9 @@
 package bug.fixed;
 
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.creator.IClassContext;
-import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.generic.creator.IClassContext;
 
 public abstract class AbstractFix {
     
@@ -22,7 +22,7 @@ public abstract class AbstractFix {
 		Class<?> cls = creator.startup();
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
-		if(creator instanceof ClassCreator){
+		if(creator instanceof ClassCreatorInternal){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {

@@ -1,54 +1,52 @@
 package bug.fixed.test65150;
 
 import junit.framework.Assert;
-
-import org.objectweb.asm.Opcodes;
-
 import bug.fixed.AbstractFix;
-import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.clinit.ClinitBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class Main extends AbstractFix {
 
 	public static void main(String[] args) {
 		
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
 				ParentClass.class, null);
 		
-		creator.createGlobalVariable("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClass.INT_ACLASS);
+		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClass.INT_ACLASS);
 		
-		creator.createStaticBlock(new ClinitBody(){
+		creator.createStaticBlock(new ClinitBodyInternal(){
 
 			@Override
 			public void body() {
 				
-				invoke(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
+				_invoke(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
 				
-				assign(this.getMethodOwner().getGlobalVariable("DEFAULT_VALUE"), Value.value(100));
+				_assign(this.getMethodOwner().getGlobalVariable("DEFAULT_VALUE"), Value.value(100));
 				
-			    runReturn();
+			    _return();
 			}
 			
 		});
 		
-		creator.createStaticMethod("main", new AClass[]{
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
 				AClassFactory.getProductClass(String[].class)}, 
 				new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
+				new StaticMethodBodyInternal(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	invoke(systemOut, "println", append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
+	        	_invoke(systemOut, "println", _append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
 	        	
-	        	invoke(systemOut, "println", append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
+	        	_invoke(systemOut, "println", _append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
 	        	
-			    runReturn();
+			    _return();
 			}
 			
 		});
@@ -63,20 +61,20 @@ public class Main extends AbstractFix {
 		
 		final AClass Test65150AClass = AClassFactory.getProductClass(Test65150);
 		
-		creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
+		creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
-		creator.createStaticMethod("main", new AClass[]{
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
 				AClassFactory.getProductClass(String[].class)}, 
 				new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
+				new StaticMethodBodyInternal(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	invoke(systemOut, "println", append(Value.value("DEFAULT_VALUE : "), Test65150AClass.getGlobalVariable("DEFAULT_VALUE")));
+	        	_invoke(systemOut, "println", _append(Value.value("DEFAULT_VALUE : "), Test65150AClass.getGlobalVariable("DEFAULT_VALUE")));
 	        	
-			    runReturn();
+			    _return();
 			}
 			
 		}); 

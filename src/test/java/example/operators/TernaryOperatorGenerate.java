@@ -1,14 +1,13 @@
 package example.operators;
 
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 public class TernaryOperatorGenerate extends AbstractExample {
@@ -30,42 +29,43 @@ public class TernaryOperatorGenerate extends AbstractExample {
 	 */
 	public static void main(String[] args) {
 		
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.TernaryOperatorGenerateExample", null, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.TernaryOperatorGenerateExample", null, null);
 		
 		/*
 		 * 生成一个main方法，方法内容和willGenerate内容相同
 		 */
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+				"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
 				//int i = 10;
-				LocalVariable i = createVariable("i", AClass.INT_ACLASS, false, Value.value(10));
+				LocalVariable i = _createVariable("i", AClass.INT_ACLASS, false, Value.value(10));
 				
 				//ternary方法将生成三元操作
 				//int k = i < 0 ? -i : i;
-				LocalVariable k = createVariable("k", AClass.INT_ACLASS, false, ternary(lessThan(i, Value.value(0)), neg(i), i));
+				LocalVariable k = _createVariable("k", AClass.INT_ACLASS, false, _ternary(_lessThan(i, Value.value(0)), _neg(i), i));
 				
 				//System.out.print("Absolute value of ");
-				invoke(systemOut, "print", Value.value("Absolute value of "));
+				_invoke(systemOut, "print", Value.value("Absolute value of "));
 				
 				//System.out.println(i + " is " + k);
-				invoke(systemOut, "println", append(i, Value.value(" is "), k));
+				_invoke(systemOut, "println", _append(i, Value.value(" is "), k));
 				
 				//i = -10;
-				assign(i, Value.value(-10));
+				_assign(i, Value.value(-10));
 				
 				//k = i < 0 ? -i : i;
-				assign(k, ternary(lessThan(i, Value.value(0)), neg(i), i));
+				_assign(k, _ternary(_lessThan(i, Value.value(0)), _neg(i), i));
 
 				//System.out.print("Absolute value of ");
-				invoke(systemOut, "print", Value.value("Absolute value of "));
+				_invoke(systemOut, "print", Value.value("Absolute value of "));
 				
 				//System.out.println(i + " is " + k);
-				invoke(systemOut, "println", append(i, Value.value(" is "), k));
+				_invoke(systemOut, "println", _append(i, Value.value(" is "), k));
 				
-				runReturn();
+				_return();
 			}
         });
 		generate(creator);

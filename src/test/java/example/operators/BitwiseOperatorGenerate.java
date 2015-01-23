@@ -1,14 +1,13 @@
 package example.operators;
 
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 public class BitwiseOperatorGenerate extends AbstractExample {
@@ -41,13 +40,13 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 	 */
 	public static void main(String[] args) {
 		
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.BitwiseOperatorGenerateExample", null, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.BitwiseOperatorGenerateExample", null, null);
 		
 		/*
 		 * 生成一个main方法，方法内容和main1内容相同
 		 */
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -55,52 +54,52 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 			      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 			      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"
 			    };*/
-				LocalVariable binary = createArrayVariable("binary", AClassFactory.getArrayClass(String[].class), false, newArrayWithValue(AClassFactory.getArrayClass(String[].class), stringValueArray(new String[]{
+				LocalVariable binary = _createArrayVariable("binary", AClassFactory.getArrayClass(String[].class), false, _newArrayWithValue(AClassFactory.getArrayClass(String[].class), stringValueArray(new String[]{
 					      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 					      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"})));
 			    //int a = 3; 
-				LocalVariable a = createVariable("a", AClass.INT_ACLASS, false, Value.value(3));
+				LocalVariable a = _createVariable("a", AClass.INT_ACLASS, false, Value.value(3));
 			    
 			    //int b = 6; 
-				LocalVariable b = createVariable("b", AClass.INT_ACLASS, false, Value.value(6));
+				LocalVariable b = _createVariable("b", AClass.INT_ACLASS, false, Value.value(6));
 				
 			    //int c = a | b;
-				LocalVariable c = createVariable("c", AClass.INT_ACLASS, false, this.bitOr(a, b));
+				LocalVariable c = _createVariable("c", AClass.INT_ACLASS, false, this._bitOr(a, b));
 				
 			    //int d = a & b;
-				LocalVariable d = createVariable("d", AClass.INT_ACLASS, false, this.bitAnd(a, b));
+				LocalVariable d = _createVariable("d", AClass.INT_ACLASS, false, this._bitAnd(a, b));
 				
 			    //int e = a ^ b;
-				LocalVariable e = createVariable("e", AClass.INT_ACLASS, false, this.bitXor(a, b));
+				LocalVariable e = _createVariable("e", AClass.INT_ACLASS, false, this._bitXor(a, b));
 				
 			    //int f = (~a & b) | (a & ~b);
-				LocalVariable f = createVariable("f", AClass.INT_ACLASS, false, bitOr(bitAnd(inverts(a), b), bitAnd(a, inverts(b))));
+				LocalVariable f = _createVariable("f", AClass.INT_ACLASS, false, _bitOr(_bitAnd(_inverts(a), b), _bitAnd(a, _inverts(b))));
 				
 			    //int g = ~a & 0x0f;
-				LocalVariable g = createVariable("g", AClass.INT_ACLASS, false, this.bitAnd(inverts(a), Value.value(0x0f)));
+				LocalVariable g = _createVariable("g", AClass.INT_ACLASS, false, this._bitAnd(_inverts(a), Value.value(0x0f)));
 				
 			    //System.out.println("        a = " + binary[a]);
-				invoke(systemOut, "println", append(Value.value("        a = "), arrayLoad(binary, a)));
+				_invoke(systemOut, "println", _append(Value.value("        a = "), _arrayLoad(binary, a)));
 				
 			    //System.out.println("        b = " + binary[b]);
-				invoke(systemOut, "println", append(Value.value("        b = "), arrayLoad(binary, b)));
+				_invoke(systemOut, "println", _append(Value.value("        b = "), _arrayLoad(binary, b)));
 				
 			    //System.out.println("      a|b = " + binary[c]);
-				invoke(systemOut, "println", append(Value.value("      a|b = "), arrayLoad(binary, c)));
+				_invoke(systemOut, "println", _append(Value.value("      a|b = "), _arrayLoad(binary, c)));
 				
 			    //System.out.println("      a&b = " + binary[d]);
-				invoke(systemOut, "println", append(Value.value("      a&b = "), arrayLoad(binary, d)));
+				_invoke(systemOut, "println", _append(Value.value("      a&b = "), _arrayLoad(binary, d)));
 				
 			    //System.out.println("      a^b = " + binary[e]);
-				invoke(systemOut, "println", append(Value.value("      a^b = "), arrayLoad(binary, e)));
+				_invoke(systemOut, "println", _append(Value.value("      a^b = "), _arrayLoad(binary, e)));
 				
 			    //System.out.println("~a&b|a&~b = " + binary[f]);
-				invoke(systemOut, "println", append(Value.value("~a&b|a&~b = "), arrayLoad(binary, f)));
+				_invoke(systemOut, "println", _append(Value.value("~a&b|a&~b = "), _arrayLoad(binary, f)));
 				
 			    //System.out.println("       ~a = " + binary[g]);
-				invoke(systemOut, "println", append(Value.value("       ~a = "), arrayLoad(binary, g)));
+				_invoke(systemOut, "println", _append(Value.value("       ~a = "), _arrayLoad(binary, g)));
 				
-				runReturn();
+				_return();
 			}
         });
 		generate(creator);

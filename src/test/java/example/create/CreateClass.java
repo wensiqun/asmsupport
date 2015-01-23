@@ -2,17 +2,16 @@ package example.create;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.clinit.ClinitBody;
-import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.block.method.init.InitBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.clinit.ClinitBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.init.InitBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 
@@ -68,7 +67,7 @@ public class CreateClass extends AbstractExample {
          *    父类,如果为null则是继承自Object.class
          * 5: interface 实现的接口, 可以是null,类型是Class[]
 		 */
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample", ParentCreateClassExample.class, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample", ParentCreateClassExample.class, null);
 		
 		/*
 		 * 这部分是创建一个静态全局 变量。基本和CreateInterface.java中如何创建和赋值是一样的
@@ -78,7 +77,7 @@ public class CreateClass extends AbstractExample {
 		 * private static String staticGlobalVariable;
 		 *
 		 */
-		creator.createGlobalVariable("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, AClass.STRING_ACLASS);
+		creator.createField("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, AClass.STRING_ACLASS);
 		/*
 		 * 对应java代码：
 		 * static{
@@ -86,11 +85,11 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 * 
 		 */
-		creator.createStaticBlock(new ClinitBody(){
+		creator.createStaticBlock(new ClinitBodyInternal(){
 			@Override
 			public void body() {
-				assign(getMethodOwner().getGlobalVariable("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
-				runReturn();
+				_assign(getMethodOwner().getGlobalVariable("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
+				_return();
 			}
 		});
 		
@@ -105,7 +104,7 @@ public class CreateClass extends AbstractExample {
 		 * public int globalVariable;
 		 * 
 		 */
-		creator.createGlobalVariable("globalVariable", Opcodes.ACC_PUBLIC, AClass.INT_ACLASS);
+		creator.createField("globalVariable", Opcodes.ACC_PUBLIC, AClass.INT_ACLASS);
 		
 		/* 
 		 * 创建一个构造方法。对于ClassCreator来说。如果没有创建任何构造方法，将会自动创建一个无参的默认构造函数
@@ -121,7 +120,7 @@ public class CreateClass extends AbstractExample {
 		 * 3.构造参数的方法体
 		 * 4.构造方法的修饰符
 		 */
-		creator.createConstructor(new AClass[]{AClassFactory.getProductClass(int.class)}, new String[]{"intVal"}, new InitBody(){
+		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.getProductClass(int.class)}, new String[]{"intVal"}, new InitBodyInternal(){
 
 			/*
 			 * 这个方法中的内容就是我们创建的构造方法里面需要执行的内容了，他有一个变元参数 argus。
@@ -146,11 +145,11 @@ public class CreateClass extends AbstractExample {
 				 * 由于我们创建的globalVariable是非static的。所以通过getThis()获取globalVariable。
 				 * getThis()对应于java代码中就是this关键字。
 				 */
-				assign(getThis().getGlobalVariable("globalVariable"), argus[0]);
-				runReturn();
+				_assign(_this().getGlobalVariable("globalVariable"), argus[0]);
+				_return();
 			}
 			
-		}, Opcodes.ACC_PUBLIC);
+		});
 		
 		/*
 		 * 创建一个private的commonMethod方法。
@@ -163,13 +162,13 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 * 
 		 */
-		creator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PRIVATE, new CommonMethodBody(){
+		creator.createMethod(Opcodes.ACC_PRIVATE, "commonMethod", null, null, null, null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", append(Value.value("staticGlobalVariable : "), getMethodOwner().getGlobalVariable("staticGlobalVariable")));
-				invoke(systemOut, "println", append(Value.value("globalVariable : "), getThis().getGlobalVariable("globalVariable")));
-				runReturn();
+				_invoke(systemOut, "println", _append(Value.value("staticGlobalVariable : "), getMethodOwner().getGlobalVariable("staticGlobalVariable")));
+				_invoke(systemOut, "println", _append(Value.value("globalVariable : "), _this().getGlobalVariable("globalVariable")));
+				_return();
 			}
 			
 		});
@@ -183,20 +182,20 @@ public class CreateClass extends AbstractExample {
 		 *     new CreateClassExample(1024).commonMethod();
 		 * }
 		 */
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	invoke(invokeConstructor(getMethodOwner(), Value.value(1024)), "commonMethod");
+	        	_invoke(_new(getMethodOwner(), Value.value(1024)), "commonMethod");
 	        	
-	        	invoke(systemOut, "println", append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
+	        	_invoke(systemOut, "println", _append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
 	        	
-	        	invoke(systemOut, "println", append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
+	        	_invoke(systemOut, "println", _append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
 				
 	        	//invoke(systemOut, "println", append(Value.value("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
 				
-			    runReturn();
+			    _return();
 			}
 			
 		});

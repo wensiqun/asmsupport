@@ -2,12 +2,16 @@ package example.create;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.objectweb.asm.Opcodes;
 
 
 
 
-import cn.wensiqun.asmsupport.creator.EnumCreator;
+
+
+
+
+import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreatorInternal;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 public class CreateEnum extends AbstractExample {
@@ -29,7 +33,7 @@ public class CreateEnum extends AbstractExample {
 		 * 枚举类型只允许是public的。
 		 * 
 		 */
-		EnumCreator enumCreator = new EnumCreator(Opcodes.V1_6, "generated.create.CreateEnumExample", null);
+		EnumCreatorInternal enumCreator = new EnumCreatorInternal(Opcodes.V1_6, "generated.create.CreateEnumExample", null);
 		
 		/*
 		 * 创建每个枚举类别

@@ -1,16 +1,15 @@
 package example.operators;
 
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.operators.method.MethodInvoker;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 /**
@@ -50,7 +49,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
      */
     public static void main(String[] args) {
         
-        ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.MethodInvokeOperatorGenerateExample", null, null);
+        ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.MethodInvokeOperatorGenerateExample", null, null);
         
         /**
          * 实现如下方法
@@ -60,14 +59,14 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 这里我们将看到如何生产调用父类方法
          */
-        creator.createMethod("toString", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
                 //通常我们将super看作是一个变量所以我们用invoke(Parameterized caller, String methodName, Parameterized... arguments)
                 //方法实现super.xxxx。通过getSuper方法获取super变量
-                MethodInvoker superToString = invoke(getSuper(), "toString");
-                runReturn(append(Value.value("description is \""), superToString, Value.value("\"")));
+                MethodInvoker superToString = _invoke(_super(), "toString");
+                _return(_append(Value.value("description is \""), superToString, Value.value("\"")));
             }
             
         });
@@ -79,7 +78,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 
          */
-        creator.createMethod("description", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -88,7 +87,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                  * invoke(Parameterized caller, String methodName, Parameterized... arguments)方法调用。
                  * 通过getThis方法获取this变量
                  */
-                runReturn(invoke(getThis(), "toString"));                
+                _return(_invoke(_this(), "toString"));                
             }
             
         });
@@ -99,8 +98,8 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     return obj.description();
          * }
          */
-        creator.createStaticMethod("getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClass.STRING_ACLASS, null,
-                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClass.STRING_ACLASS, null,
+                new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -109,7 +108,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                  * 这里argus[0]就是我们定义的参数obj。如果需要传递参数可以直接在
                  * 方法调用的时候添加需要传递的参数，因为这是个变元方法
                  */
-                runReturn(invoke(argus[0], "description"));
+                _return(_invoke(argus[0], "description"));
             }
         });
         
@@ -119,8 +118,9 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     System.out.println("Call static method : " + MyObject.getDescription(obj));
          * }
          */
-        creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
+        		"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+                new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -131,7 +131,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                  * 1.表示需要构造的类，这里我们通过调用getMethodOwner获取当前操作类
                  * 2.表示构造方法的参数。这个参数是个变元参数
                  */
-            	LocalVariable obj = createVariable("obj", getMethodOwner(), false, invokeConstructor(getMethodOwner()));
+            	LocalVariable obj = _createVariable("obj", getMethodOwner(), false, _new(getMethodOwner()));
                 
             	/**
             	 * 实现System.out.println("Call static method : " + MyObject.getDescription(obj));
@@ -144,11 +144,11 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
             	 * 2.静态方法的名称
             	 * 3.参数
             	 */
-            	MethodInvoker getDescriptionInvoker = invokeStatic(getMethodOwner(), "getDescription", obj);
+            	MethodInvoker getDescriptionInvoker = _invokeStatic(getMethodOwner(), "getDescription", obj);
             	
-            	invoke(systemOut, "println", append(Value.value("Call static method : "), getDescriptionInvoker));
+            	_invoke(systemOut, "println", _append(Value.value("Call static method : "), getDescriptionInvoker));
                 
-            	runReturn();
+            	_return();
             }
         });
         generate(creator);

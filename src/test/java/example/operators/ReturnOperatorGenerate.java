@@ -1,14 +1,13 @@
 package example.operators;
 
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 /**
@@ -22,29 +21,30 @@ public class ReturnOperatorGenerate extends AbstractExample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.ReturnOperatorGenerateExample", null, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.ReturnOperatorGenerateExample", null, null);
 		
 		/* 
 		 * 有返回类型的方法
 		 */
-		creator.createStaticMethod("commonMethod", null, null, AClass.STRING_ACLASS, null, Opcodes.ACC_PUBLIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, AClass.STRING_ACLASS, null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				runReturn(Value.value("I'm from commonMethod"));
+				_return(Value.value("I'm from commonMethod"));
 			}
 		});
 		
 		/* 
 		 * 无返回类型的方法
 		 */
-		creator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+				"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", invokeStatic(getMethodOwner(), "commonMethod"));
-				runReturn();
+				_invoke(systemOut, "println", _invokeStatic(getMethodOwner(), "commonMethod"));
+				_return();
 			}
         });
 		generate(creator);

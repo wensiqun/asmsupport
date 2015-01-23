@@ -2,21 +2,20 @@ package example.create;
 
 import java.util.Random;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.control.Else;
-import cn.wensiqun.asmsupport.block.control.IF;
-import cn.wensiqun.asmsupport.block.method.common.CommonMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.ModifiedMethodBody;
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.creator.ClassModifier;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseInternal;
+import cn.wensiqun.asmsupport.core.block.classes.control.condition.IFInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.ModifiedMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifierInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 public class CreateClassAndThanExtend extends AbstractExample {
@@ -25,14 +24,14 @@ public class CreateClassAndThanExtend extends AbstractExample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassCreator superCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExampleSuper", null, null);
+		ClassCreatorInternal superCreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExampleSuper", null, null);
 		
-		superCreator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+		superCreator.createMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, null, null, new CommonMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", Value.value("say hello!"));
-				runReturn();
+				_invoke(systemOut, "println", Value.value("say hello!"));
+				_return();
 			}
 		});
 		
@@ -42,71 +41,71 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		
 		final GlobalVariable out = systemOut;
 		
-		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
+		ClassModifierInternal byModifyModifer = new ClassModifierInternal(ByModify.class);
 		byModifyModifer.createGlobalVariable("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClass.INT_ACLASS);
-		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
+		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new CommonMethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(out, "println", Value.value("created by asm"));
-				runReturn();
+				_invoke(out, "println", Value.value("created by asm"));
+				_return();
 			}
 		});
 		
-		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBody(){
+		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
-				assign(age, Value.value(20));
-				this.invokeOriginalMethod();
+				_assign(age, Value.value(20));
+				this._invokeOriginalMethod();
 				GlobalVariable name = getMethodOwner().getGlobalVariable("name");
-				assign(name, Value.value("wensiqun"));
-				invoke(out, "println", name);
-				runReturn();
+				_assign(name, Value.value("wensiqun"));
+				_invoke(out, "println", name);
+				_return();
 			}
 		});
 		
-		byModifyModifer.modifyMethod("helloWorld", null, new ModifiedMethodBody(){
+		byModifyModifer.modifyMethod("helloWorld", null, new ModifiedMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(out, "println", Value.value("before"));
+				_invoke(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getProductClass(Random.class);
-				LocalVariable random = this.createVariable("random", randomClass, false, this.invokeConstructor(randomClass, Value.value(1L)));
-				ifthan(new IF(invoke(random, "nextBoolean")){
+				LocalVariable random = this._createVariable("random", randomClass, false, this._new(randomClass, Value.value(1L)));
+				_if(new IFInternal(_invoke(random, "nextBoolean")){
 					@Override
 					public void body() {
-						invokeOriginalMethod();
+						_invokeOriginalMethod();
 					}
 
-				}).elsethan(new Else(){
+				})._else(new ElseInternal(){
 					@Override
 					public void body() {
-						invoke(out, "println", Value.value("call self"));
+						_invoke(out, "println", Value.value("call self"));
 					}
 					
 				});
-				invoke(out, "println", Value.value("after"));
-				runReturn();
+				_invoke(out, "println", Value.value("after"));
+				_return();
 			}
 			
 		});
 		
-		byModifyModifer.modifyMethod("String", null, new ModifiedMethodBody(){
+		byModifyModifer.modifyMethod("String", null, new ModifiedMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(out, "println", Value.value("before"));
-				LocalVariable lv = this.createVariable(null, getOriginalMethodReturnClass(), true, invokeOriginalMethod());
-				invoke(out, "println", Value.value("after"));	
-				runReturn(lv);
+				_invoke(out, "println", Value.value("before"));
+				LocalVariable lv = this._createVariable(null, getOriginalMethodReturnClass(), true, _invokeOriginalMethod());
+				_invoke(out, "println", Value.value("after"));	
+				_return(lv);
 			}
 			
 		});
 		byModifyModifer.setClassOutPutPath("./generated");
 		Class<?> ByModify = byModifyModifer.startup();
 		
-        ClassCreator childCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExample", ByModify, null);
+        ClassCreatorInternal childCreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExample", ByModify, null);
 		
 		/*childCreator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
 
@@ -118,13 +117,13 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		});*/
 		
 
-		childCreator.createStaticMethod("main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
-				Opcodes.ACC_PUBLIC, new StaticMethodBody(){
+		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				new StaticMethodBodyInternal(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	invoke(invokeConstructor(getMethodOwner()), "helloWorld");
-			    runReturn();
+	        	_invoke(_new(getMethodOwner()), "helloWorld");
+			    _return();
 			}
 			
 		});
@@ -136,7 +135,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		Class<?> cls = childCreator.startup();
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
-		if(childCreator instanceof ClassCreator){
+		if(childCreator instanceof ClassCreatorInternal){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {

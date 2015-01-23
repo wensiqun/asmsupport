@@ -1,11 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-	
 	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
 	<version>0.4-SNAPSHOT</version>
@@ -19,20 +13,19 @@
         care the underlying instructions of JVM.
     </description>
     
-    <url>http://www.wensiqun.com/asmsupport/</url>
+    <url>https://github.com/wensiqun/asmsupport</url>
     
     <licenses>
 	    <license>
 		    <name>The Apache Software License, Version 2.0</name>
 		    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		    <distribution>repo</distribution>
 	    </license>
     </licenses>
     
     <scm>
-        <connection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</connection>
-		<developerConnection>scm:svn:http://code.taobao.org/svn/asmsupport/trunk/</developerConnection>
-        <url>http://code.taobao.org/svn/asmsupport/trunk</url>
+        <connection>scm:git:git@github.com:wensiqun/asmsupport.git</connection>
+		<developerConnection>scm:git:git@github.com:wensiqun/asmsupport.git</developerConnection>
+        <url>git@github.com:wensiqun/asmsupport.git</url>
     </scm>
     
     <developers>
@@ -71,12 +64,6 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -84,7 +71,7 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
@@ -94,13 +81,8 @@
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>4.2</version>
-		</dependency>
+		</dependency> -->
+		
 		
 	</dependencies>
 	

@@ -2,16 +2,15 @@ package example.operators;
 
 import java.util.Random;
 
-import org.objectweb.asm.Opcodes;
-
-import cn.wensiqun.asmsupport.block.method.common.StaticMethodBody;
-import cn.wensiqun.asmsupport.clazz.AClass;
-import cn.wensiqun.asmsupport.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.creator.ClassCreator;
-import cn.wensiqun.asmsupport.definition.value.Value;
-import cn.wensiqun.asmsupport.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.operators.method.MethodInvoker;
-import cn.wensiqun.asmsupport.operators.numerical.arithmetic.Addition;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
 
 public class ArithmeticOperatorGenerate extends AbstractExample {
@@ -20,157 +19,156 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
+		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
 
 		//printIn方法
-		creator.createStaticMethod("printInt", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"s", "i"}, null, null, 0, new StaticMethodBody(){
+		creator.createStaticMethod(0, "printInt", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, new String[]{"s", "i"}, null, null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", append(argus[0], Value.value(" = "), argus[1]));
-				runReturn();
+				_invoke(systemOut, "println", _append(argus[0], Value.value(" = "), argus[1]));
+				_return();
 			}
 			
 		});
 		
 		//printIn方法
-		creator.createStaticMethod("printFloat", new AClass[]{AClass.STRING_ACLASS, AClass.FLOAT_ACLASS}, new String[]{"s", "f"}, null, null, 0, new StaticMethodBody(){
+		creator.createStaticMethod(0, "printFloat", new AClass[]{AClass.STRING_ACLASS, AClass.FLOAT_ACLASS}, new String[]{"s", "f"}, null, null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", append(argus[0], Value.value(" = "), argus[1]));
-				runReturn();
+				_invoke(systemOut, "println", _append(argus[0], Value.value(" = "), argus[1]));
+				_return();
 			}
 			
 		});		
 		
-		creator.createStaticMethod("main", new AClass[] { AClassFactory.getProductClass(String[].class) }, new String[] { "args" }, null, null, Opcodes.ACC_PUBLIC +
-
-				Opcodes.ACC_STATIC, new StaticMethodBody() {
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+				new AClass[] { AClassFactory.getProductClass(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
 
 					@Override
 					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
-						LocalVariable rand = createVariable("rand", AClassFactory.getProductClass(Random.class), false, invokeConstructor(AClassFactory.getProductClass(Random.class)));
+						LocalVariable rand = _createVariable("rand", AClassFactory.getProductClass(Random.class), false, _new(AClassFactory.getProductClass(Random.class)));
 						
 						//rand.nextInt(100) + 1
-						Addition add1 = add(invoke(rand, "nextInt", Value.value(100)), Value.value(1));
+						Addition add1 = _add(_invoke(rand, "nextInt", Value.value(100)), Value.value(1));
 						
 						//int j = rand.nextInt(100) + 1;
-						LocalVariable j = createVariable("j", AClass.INT_ACLASS, false, add1);
+						LocalVariable j = _createVariable("j", AClass.INT_ACLASS, false, add1);
 						
 						//int k = rand.nextInt(100) + 1;
-						LocalVariable k = createVariable("k", AClass.INT_ACLASS, false, add1);
+						LocalVariable k = _createVariable("k", AClass.INT_ACLASS, false, add1);
 						
 						//printInt("j", j);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("j"), j);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("j"), j);
 
 						//printInt("k", k);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("k"), k);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("k"), k);
 						
 						//j + k
-						Addition add2 = add(j, k);
+						Addition add2 = _add(j, k);
 						//int i = j + k;
-						LocalVariable i = createVariable("i", AClass.INT_ACLASS, false, add2);
+						LocalVariable i = _createVariable("i", AClass.INT_ACLASS, false, add2);
 						
 						//printInt("j + k", i);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("j + k"), i);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("j + k"), i);
 						
 						//i = j - k;
-						assign(i, sub(j, k));
+						_assign(i, _sub(j, k));
 						
 						//printInt("j - k", i);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("j - k"), i);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("j - k"), i);
 						
                         //i = k / j;
-						assign(i, div(k, j));
+						_assign(i, _div(k, j));
 						
 						//printInt("k / j", i);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("k / j"), i);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("k / j"), i);
 						
 						//i = k * j;
-						assign(i, mul(k, j));
+						_assign(i, _mul(k, j));
 						
 						//printInt("k * j", i);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("k * j"), i);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("k * j"), i);
 						
 						//i = k % j;
-						assign(i, mod(k, j));
+						_assign(i, _mod(k, j));
 						
 						//printInt("k % j", i);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("k % j"), i);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("k % j"), i);
 						
 						//j %= k;
-						assign(j, mod(j, k));
+						_assign(j, _mod(j, k));
 						
 						//printInt("j %= k", j);
-						invokeStatic(getMethodOwner(), "printInt", Value.value("j %= k"), j);
+						_invokeStatic(getMethodOwner(), "printInt", Value.value("j %= k"), j);
 						
 						
 						//rand.nextFloat()
-						MethodInvoker nextFloat = invoke(rand, "nextFloat");
+						MethodInvoker nextFloat = _invoke(rand, "nextFloat");
 						
 						//v = rand.nextFloat();
-						LocalVariable v = createVariable("v", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable v = _createVariable("v", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//w = rand.nextFloat();
-						LocalVariable w = createVariable("w", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable w = _createVariable("w", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//printFloat("v", v);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("v"), v);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v"), v);
 						
 						//printFloat("w", w);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("w"), w);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("w"), w);
 						
 						//u = v + w;
-						LocalVariable u = createVariable("u", AClass.FLOAT_ACLASS, false, add(v,w));
+						LocalVariable u = _createVariable("u", AClass.FLOAT_ACLASS, false, _add(v,w));
 						
 						//printFloat("v + w", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("v + w"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v + w"), u);
 
 						//u = v - w;
-						assign(u, sub(v, w));
+						_assign(u, _sub(v, w));
 						
 						//printFloat("v - w", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("v - w"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v - w"), u);
 						
 						//u = v * w;
-						assign(u, mul(v, w));
+						_assign(u, _mul(v, w));
 						
 						//printFloat("v * w", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("v * w"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v * w"), u);
 						
 						//u = v / w;
-						assign(u, div(v, w));
+						_assign(u, _div(v, w));
 						
 						//printFloat("v / w", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("v / w"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v / w"), u);
 						
 						//u += v;
-						assign(u, add(u, v));
+						_assign(u, _add(u, v));
 						
 						//printFloat("u += v", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("u += v"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("u += v"), u);
 						
 						//u -= v;
-						assign(u, sub(u, v));
+						_assign(u, _sub(u, v));
 						
 						//printFloat("u -= v", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("u -= v"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("u -= v"), u);
 						
 						//u *= v;
-						assign(u, mul(u, v));
+						_assign(u, _mul(u, v));
 						
 						//printFloat("u *= v", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("u *= v"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("u *= v"), u);
 						
 						//u /= v;
-						assign(u, div(u, v));
+						_assign(u, _div(u, v));
 						
 						//printFloat("u /= v", u);
-						invokeStatic(getMethodOwner(), "printFloat", Value.value("u /= v"), u);
+						_invokeStatic(getMethodOwner(), "printFloat", Value.value("u /= v"), u);
 						
-						runReturn();
+						_return();
 					}
 				});
 		generate(creator);
