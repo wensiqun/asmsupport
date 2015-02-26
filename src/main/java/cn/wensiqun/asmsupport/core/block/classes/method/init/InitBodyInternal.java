@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.generic.body.LocalVariablesBody;
+import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
 
 /**
  * 

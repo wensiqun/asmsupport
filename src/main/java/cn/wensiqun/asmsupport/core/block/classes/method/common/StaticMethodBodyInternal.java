@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.core.block.classes.method.common;
 
 import cn.wensiqun.asmsupport.core.block.classes.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.generic.method.IStaticMethodBody;
+import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
 
 public abstract class StaticMethodBodyInternal extends AbstractMethodBody implements IStaticMethodBody {
     

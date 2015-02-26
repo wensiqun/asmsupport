@@ -4,7 +4,7 @@
 package cn.wensiqun.asmsupport.core.block.classes.method.common;
 
 import cn.wensiqun.asmsupport.core.block.classes.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.generic.method.IMethodBody;
+import cn.wensiqun.asmsupport.standard.method.IMethodBody;
 
 /**
  * @author 温斯群(Joe Wen)

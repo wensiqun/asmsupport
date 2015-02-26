@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.generic.method.IEnumStaticBlockBody;
+import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 
 /**
  * 

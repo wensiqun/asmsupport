@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.core.block.classes.control.exception;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.block.classes.control.EpisodeBlock;
-import cn.wensiqun.asmsupport.generic.excep.IFinally;
+import cn.wensiqun.asmsupport.standard.excep.IFinally;
 
 public abstract class FinallyInternal extends EpisodeBlock<ExceptionSerialBlock> implements IFinally
 {

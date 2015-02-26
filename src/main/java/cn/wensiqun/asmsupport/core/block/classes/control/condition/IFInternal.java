@@ -7,8 +7,8 @@ import cn.wensiqun.asmsupport.core.block.classes.control.ControlType;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
-import cn.wensiqun.asmsupport.generic.branch.IIF;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.standard.branch.IIF;
 
 public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal>
 {

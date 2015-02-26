@@ -3,7 +3,7 @@ package example;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.generic.creator.IClassContext;
+import cn.wensiqun.asmsupport.standard.creator.IClassContext;
 
 public abstract class AbstractExample {
     

@@ -3,7 +3,7 @@ package bug.fixed;
 import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
-import cn.wensiqun.asmsupport.generic.creator.IClassContext;
+import cn.wensiqun.asmsupport.standard.creator.IClassContext;
 
 public class Utils {
 

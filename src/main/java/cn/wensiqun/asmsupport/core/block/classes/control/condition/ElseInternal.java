@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.core.block.classes.control.condition;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.generic.branch.IElse;
+import cn.wensiqun.asmsupport.standard.branch.IElse;
 
 public abstract class ElseInternal extends ConditionBranchBlock implements IElse
 {

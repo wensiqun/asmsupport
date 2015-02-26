@@ -8,7 +8,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
-import cn.wensiqun.asmsupport.generic.excep.ICatch;
+import cn.wensiqun.asmsupport.standard.excep.ICatch;
 
 public abstract class CatchInternal extends EpisodeBlock<ExceptionSerialBlock> implements ICatch<CatchInternal, FinallyInternal>
 {

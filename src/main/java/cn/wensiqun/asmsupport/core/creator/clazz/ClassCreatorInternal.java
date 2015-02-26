@@ -12,8 +12,8 @@ import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreatorInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.generic.creator.IClassCreator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.creator.IClassCreator;
 
 
 /**
