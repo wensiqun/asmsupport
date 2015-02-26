@@ -10,7 +10,7 @@ import org.junit.Test;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.utils.chooser.MethodChooser;
+import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 
 public class AbstractMethodChooserTest {
 

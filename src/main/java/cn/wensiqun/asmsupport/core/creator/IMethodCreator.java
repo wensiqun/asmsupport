@@ -2,7 +2,6 @@ package cn.wensiqun.asmsupport.core.creator;
 
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.creator.IClassContext;
 
 /**
  * 

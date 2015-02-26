@@ -11,6 +11,7 @@ import cn.wensiqun.asmsupport.core.block.classes.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -23,7 +24,6 @@ import cn.wensiqun.asmsupport.org.apache.commons.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.creator.IClassContext;
 
 
 /**
@@ -67,11 +67,6 @@ public class AMethod {
     
     /** 当前方法的参数 */
     private LocalVariable[] arguments;
-    
-    /**
-     * 
-     */
-    private boolean anonymous;
     
     /**
      * 

@@ -178,15 +178,54 @@ public class Value implements IValue {
         return defaultValue(type);
     }
 
-    /**
-     * 
-     * 
-     * @param obj
-     * @return
-     */
-    public static Value value(Object obj) {
+
+    public static Value value(Integer obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Short obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Byte obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Boolean obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Long obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Double obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Character obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Float obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(AClass obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(String obj) {
+        return value((Object)obj);
+    }
+
+    public static Value value(Class<?> obj) {
+        return value((Object)obj);
+    }
+    
+    private static Value value(Object obj) {
         if(obj == null){
-        	throw new NullPointerException("cannot support null value for this method, use nullValue(AClass type) method to get null value if you want get null!");
+        	throw new NullPointerException("Cannot support null value for this method, use nullValue(AClass type) method to get null value if you want get null!");
         }
         if (obj instanceof Integer) {
 
@@ -233,7 +272,7 @@ public class Value implements IValue {
         	return new Value(AClassFactory.getProductClass((Class<?>) obj));
         	
         }
-        throw new ASMSupportException("cannot support type " + obj.getClass() + " for this method!");
+        throw new ASMSupportException("Cannot support type " + obj.getClass() + " for this method!");
     }
 
     

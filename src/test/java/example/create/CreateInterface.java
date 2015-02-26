@@ -3,9 +3,9 @@ package example.create;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.ClinitBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import example.AbstractExample;
@@ -38,7 +38,7 @@ public class CreateInterface extends AbstractExample {
 		 * 2.接口的全路径名
 		 * 3.接口所继承哪些接口,是一个Class的数组
 		 */
-		InterfaceCreatorInternal interfaceCreator = new InterfaceCreatorInternal(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
+		InterfaceCreator interfaceCreator = new InterfaceCreator(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
 		
 		/*
 		 * 通过createMethod声明方法
@@ -60,7 +60,7 @@ public class CreateInterface extends AbstractExample {
 		 * public static final String globalValue;
 		 * 
 		 */
-		interfaceCreator.createGlobalVariable("globalValue", AClass.STRING_ACLASS);
+		interfaceCreator.createField("globalValue", AClass.STRING_ACLASS);
 		
 		/*
 		 * 通过createStaticBlock创建static块。
@@ -90,7 +90,7 @@ public class CreateInterface extends AbstractExample {
 		 * 的时候可以写多个static块在同一个类中，但是java编译器到最后会将所有写在static块中的代
 		 * 码归并到<cinit>方法当中去。
 		 */
-		interfaceCreator.createStaticBlock(new ClinitBodyInternal(){
+		interfaceCreator.createStaticBlock(new StaticBlockBodyInternal(){
 
 			@Override
 			public void body() {

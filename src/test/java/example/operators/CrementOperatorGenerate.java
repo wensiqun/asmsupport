@@ -1,11 +1,11 @@
 package example.operators;
 
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -18,7 +18,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 	 */
 	public static void main(String[] args) {
 
-		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.CrementOperatorGenerateExample", null, null);
+		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.CrementOperatorGenerateExample", null, null);
 		
 		/*
 		 * 对应java代码
@@ -37,7 +37,7 @@ public class CrementOperatorGenerate extends AbstractExample {
          *     System.out.println("d = " + d);
          * }
 		 */
-		creator.createMethod(Opcodes.ACC_PUBLIC, "demonstrate", null, null, null, null, new CommonMethodBodyInternal() {
+		creator.createMethod(Opcodes.ACC_PUBLIC, "demonstrate", null, null, null, null, new MethodBodyInternal() {
 			@Override
 			public void body(LocalVariable... argus) {
 				_invoke(systemOut, "println", Value.value("******************************demonstrate***************************"));
@@ -72,7 +72,7 @@ public class CrementOperatorGenerate extends AbstractExample {
          *    System.out.println(count);
          * }
 		 */
-		creator.createMethod(Opcodes.ACC_PUBLIC, "incrementAndDecrement", null, null, null, null, new CommonMethodBodyInternal() {
+		creator.createMethod(Opcodes.ACC_PUBLIC, "incrementAndDecrement", null, null, null, null, new MethodBodyInternal() {
 		    @Override
 		    public void body(LocalVariable... argus) {
 				_invoke(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));

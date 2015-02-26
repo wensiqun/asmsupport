@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.core.loader;
 import java.io.InputStream;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.ClassModifierClassAdapter;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifierInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
@@ -11,11 +11,11 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 
 public class ClassModifierClassLoader extends ClassLoader {
 	
-	private ClassModifierInternal modifier;
+	private ClassModifier modifier;
 	private String className;
 	private byte[] modifiedClassBytes;
 	
-	public ClassModifierClassLoader(ClassModifierInternal modifier){
+	public ClassModifierClassLoader(ClassModifier modifier){
 		this.modifier = modifier;
 		className = modifier.getCurrentClass().getName();
 	}

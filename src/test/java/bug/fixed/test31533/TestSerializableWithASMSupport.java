@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -17,14 +17,14 @@ public class TestSerializableWithASMSupport {
    
     public static void main(String[] args) throws Exception{
 
-    	ClassCreatorInternal creator = 
-				new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
+    	ClassCreator creator = 
+				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
     	creator.createField("name", Opcodes.ACC_PRIVATE, AClass.STRING_ACLASS);
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
     			new AClass[]{AClass.STRING_ACLASS}, new String[]{"name"}, 
-    			null, null, new CommonMethodBodyInternal(){
+    			null, null, new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -37,7 +37,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClass.STRING_ACLASS, null,new CommonMethodBodyInternal(){
+    			AClass.STRING_ACLASS, null,new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -49,7 +49,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
+    			AClass.STRING_ACLASS, null, new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {

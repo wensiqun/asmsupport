@@ -10,7 +10,6 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
 import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
 
 

@@ -2,11 +2,11 @@ package bug.fixed.test65150;
 
 import junit.framework.Assert;
 import bug.fixed.AbstractFix;
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.ClinitBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -15,12 +15,12 @@ public class Main extends AbstractFix {
 
 	public static void main(String[] args) {
 		
-		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
+		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
 				ParentClass.class, null);
 		
 		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClass.INT_ACLASS);
 		
-		creator.createStaticBlock(new ClinitBodyInternal(){
+		creator.createStaticBlock(new StaticBlockBodyInternal(){
 
 			@Override
 			public void body() {
@@ -61,7 +61,7 @@ public class Main extends AbstractFix {
 		
 		final AClass Test65150AClass = AClassFactory.getProductClass(Test65150);
 		
-		creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
+		creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{

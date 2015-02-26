@@ -1,6 +1,11 @@
+/**
+ * Unused now.
+ */
+
 package cn.wensiqun.asmsupport.standard.creator;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.creator.IClassContext;
 
 /**
  * 
@@ -70,7 +75,7 @@ public interface IClassCreator<_StaticBlockBody, _ConstructorBody, _MethodBody, 
 	 * @return
 	 */
 	_MethodCreator createConstructor(int access, AClass[] argTypes,
-            String[] argNames, _ConstructorBody body);
+            String[] argNames, AClass[] exceptions, _ConstructorBody body);
 
 	_MethodCreator createStaticBlock(_StaticBlockBody block);
 }

@@ -1,13 +1,13 @@
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IMethodBody;
 
-public abstract class MethodBody extends ProgramBlock<CommonMethodBodyInternal> implements IMethodBody {
+public abstract class MethodBody extends ProgramBlock<MethodBodyInternal> implements IMethodBody {
 
 	public MethodBody() {
-	     target = new CommonMethodBodyInternal() {
+	     target = new MethodBodyInternal() {
 
 			@Override
 			public void body(LocalVariable... args) {

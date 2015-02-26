@@ -1,7 +1,6 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.Serializable;
-import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.core.definition.generic.GenericSignature.ClassSignature;
@@ -9,8 +8,8 @@ import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.chooser.IMethodChooser;
-import cn.wensiqun.asmsupport.core.utils.chooser.MethodChooser;
+import cn.wensiqun.asmsupport.core.utils.jls15_12_2.IMethodChooser;
+import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;

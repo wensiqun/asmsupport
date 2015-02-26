@@ -3,9 +3,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.classes.common;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
@@ -98,8 +95,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * 
  */
 public abstract class ProgramBlockInternal extends AbstractBlockInternal implements IBlock  {
-
-    private static Log log = LogFactory.getLog(ProgramBlockInternal.class);
 
     /**执行Block, 通过当前Block所创建的操作，实际是executeBlock的代理*/
     private   ProgramBlockInternal                executor = this;

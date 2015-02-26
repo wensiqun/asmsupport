@@ -3,13 +3,13 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.loader.ASMClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
-import cn.wensiqun.asmsupport.standard.creator.IClassContext;
 
 
 public abstract class AbstractClassContext extends AClassFactory implements IClassContext{

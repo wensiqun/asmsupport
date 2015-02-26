@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
  * @author
  * 
  */
-public abstract class ModifiedMethodBodyInternal extends CommonMethodBodyInternal implements IModifiedMethodBody {
+public abstract class ModifiedMethodBodyInternal extends MethodBodyInternal implements IModifiedMethodBody {
     
 	private List<VisitXInsnAdapter> superConstructorOperators;
 	

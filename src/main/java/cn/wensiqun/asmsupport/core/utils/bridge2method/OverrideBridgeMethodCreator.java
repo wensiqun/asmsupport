@@ -3,10 +3,10 @@ package cn.wensiqun.asmsupport.core.utils.bridge2method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.MethodCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
@@ -27,8 +27,8 @@ public class OverrideBridgeMethodCreator {
 		this.validateMethod = validateMethod;
 	}
 
-	public List<MethodCreatorInternal> getList(){
-		List<MethodCreatorInternal> creatorList = new ArrayList<MethodCreatorInternal>();
+	public List<MethodCreator> getList(){
+		List<MethodCreator> creatorList = new ArrayList<MethodCreator>();
 		List<java.lang.reflect.Method> parentMethods = foundParentMethod();
 		for(java.lang.reflect.Method method : parentMethods){
 			if(needBridge(validateMethod, method)){
@@ -88,7 +88,7 @@ public class OverrideBridgeMethodCreator {
      * @param method 新创建重写的方法
      * @param overriden 被重写的方法
      */
-    private MethodCreatorInternal createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
+    private MethodCreator createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
     	final String name = method.getMethodMeta().getName();
     	
     	AClass[] argClasses = method.getMethodMeta().getArgClasses();
@@ -102,8 +102,8 @@ public class OverrideBridgeMethodCreator {
     	//先消除abstract的flag，再加入bridge的flag
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
-    	return MethodCreatorInternal.methodCreatorForAdd(name, argClasses, argNames,
-                returnClass, exceptions, access, new CommonMethodBodyInternal(){
+    	return MethodCreator.methodCreatorForAdd(name, argClasses, argNames,
+                returnClass, exceptions, access, new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {

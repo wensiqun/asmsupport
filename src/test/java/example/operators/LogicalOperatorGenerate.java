@@ -4,7 +4,7 @@ package example.operators;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -59,7 +59,7 @@ public class LogicalOperatorGenerate extends AbstractExample {
 
 	public static void main(String[] args) {
 		//willGenerate(args);
-		ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5,
+		ClassCreator creator = new ClassCreator(Opcodes.V1_5,
 				Opcodes.ACC_PUBLIC,
 				"generated.operators.LogicalOperatorGenerateExample", null,
 				null);

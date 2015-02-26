@@ -8,7 +8,7 @@ import java.util.Map;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifierInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.core.utils.asm.MethodAdapter;
@@ -29,12 +29,12 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public class ClassModifierClassAdapter extends ClassAdapter {
 
 	private List<IMethodCreator> needModify;
-	private ClassModifierInternal classModifer;
+	private ClassModifier classModifer;
 	private String classInternalName;
 
     private Map<String, List<VisitXInsnAdapter>> superConstructorMap;
 	
-	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifierInternal classModifer) {
+	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifier classModifer) {
 		super(cv);
 		this.classModifer = classModifer;
 		this.needModify = new LinkedList<IMethodCreator>();

@@ -4,7 +4,7 @@ package example.operators;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -74,28 +74,28 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 
 	public static void main(String[] args) {
         //create class A
-		ClassCreatorInternal ACreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
+		ClassCreator ACreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
 		ACreator.createField("i", 0, AClass.INT_ACLASS);
 		ACreator.createField("j", 0, AClass.INT_ACLASS);
 		final Class A = ACreator.startup();
 		
         //create class B
-		ClassCreatorInternal BCreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
+		ClassCreator BCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
 		BCreator.createField("i", 0, AClass.INT_ACLASS);
 		BCreator.createField("j", 0, AClass.INT_ACLASS);
 		final Class B = BCreator.startup();
 		
 		//create class C
-		ClassCreatorInternal CCreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
+		ClassCreator CCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
 		CCreator.createField("k", 0, AClass.INT_ACLASS);
 		final Class C = CCreator.startup();
 
 		//create class D
-		ClassCreatorInternal DCreator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
+		ClassCreator DCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
 		DCreator.createField("k", 0, AClass.INT_ACLASS);
 		final Class D = DCreator.startup();
 		
-        ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
+        ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
 		
 		/*
 		 * 生成一个main方法

@@ -1,11 +1,11 @@
 package example.operators;
 
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -49,7 +49,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
      */
     public static void main(String[] args) {
         
-        ClassCreatorInternal creator = new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.MethodInvokeOperatorGenerateExample", null, null);
+        ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.MethodInvokeOperatorGenerateExample", null, null);
         
         /**
          * 实现如下方法
@@ -59,7 +59,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 这里我们将看到如何生产调用父类方法
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClass.STRING_ACLASS, null, new MethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -78,7 +78,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClass.STRING_ACLASS, null, new CommonMethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClass.STRING_ACLASS, null, new MethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {

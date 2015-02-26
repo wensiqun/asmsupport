@@ -1,3 +1,7 @@
+/**
+ * Unuse now.
+ */
+
 package cn.wensiqun.asmsupport.core.definition.generic;
 
 import java.io.IOException;

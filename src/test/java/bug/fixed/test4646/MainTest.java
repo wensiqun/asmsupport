@@ -9,10 +9,10 @@ import bug.fixed.test4646.entity.Child;
 import bug.fixed.test4646.entity.ChildChild;
 import bug.fixed.test4646.entity.Super;
 import bug.fixed.test4646.parent.AbstractClass;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.CommonMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreatorInternal;
+import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
@@ -28,15 +28,15 @@ public class MainTest {
 	 * @throws IllegalArgumentException 
 	 */
 	public static void main(String[] args) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		ClassCreatorInternal creator = 
-				new ClassCreatorInternal(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
+		ClassCreator creator = 
+				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
 						AbstractClass.class, null);
         
 		final AClass childChild = AClassFactory.getProductClass(ChildChild.class);
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, new CommonMethodBodyInternal(){
+				null, new MethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -47,7 +47,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, new CommonMethodBodyInternal(){
+				null, new MethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -58,7 +58,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassMethod", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, new CommonMethodBodyInternal(){
+				null, new MethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -69,7 +69,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceReturnTypeIsChild", 
 				null, null, AClassFactory.getProductClass(ChildChild.class),
-				null, new CommonMethodBodyInternal(){
+				null, new MethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {

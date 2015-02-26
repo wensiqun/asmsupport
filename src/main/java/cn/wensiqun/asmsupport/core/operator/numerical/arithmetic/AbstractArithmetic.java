@@ -3,9 +3,6 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -20,8 +17,6 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 public abstract class AbstractArithmetic extends AbstractNumerical implements
         Parameterized {
 
-    private static Log log = LogFactory.getLog(AbstractArithmetic.class);
-    
     /**算数因子1 */
     protected Parameterized factor1;
 
