@@ -4,13 +4,14 @@ import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {
 
     /** Version of Class File Format */
-    private int javaVersion = Opcodes.V1_6;
+    private int javaVersion = CommonUtils.getSystemJDKVersion();
 
     /** Package name of class */
     private String packageName = StringUtils.EMPTY;
@@ -264,7 +265,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyClass newStaticBlock(StaticBlockBody staticBlock) {
-        if(staticBlock != null) {
+        if(this.staticBlock != null) {
             throw new ASMSupportException("Static Block is already existes.");
         }
         this.staticBlock = staticBlock;

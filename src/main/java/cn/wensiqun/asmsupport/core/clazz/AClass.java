@@ -3,7 +3,6 @@ package cn.wensiqun.asmsupport.core.clazz;
 import java.io.Serializable;
 
 import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
-import cn.wensiqun.asmsupport.core.definition.generic.GenericSignature.ClassSignature;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
@@ -123,9 +122,6 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
     
     /** 当前的Class的包名 */
     protected String pkg;
-    
-    /** Class signature */
-    protected ClassSignature signature;
     
     /**
      * 判断当前Class是否是数组

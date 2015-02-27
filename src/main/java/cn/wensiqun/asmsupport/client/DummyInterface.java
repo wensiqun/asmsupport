@@ -5,13 +5,14 @@ import java.util.LinkedList;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyInterface {
 
     /** Version of Class File Format */
-    private int javaVersion = Opcodes.V1_6;
+    private int javaVersion = CommonUtils.getSystemJDKVersion();
 
     /** Package name of class */
     private String packageName = StringUtils.EMPTY;
@@ -214,11 +215,23 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyField newField(AClass type, String name) {
+    public DummyInterface newField(AClass type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
         field._type(type)._name(name);
-        return field;
+        return this;
+    }
+    
+    /**
+     * Create a field
+     * 
+     * @return
+     */
+    public DummyInterface newField(Class<?> type, String name) {
+        DummyField field = new DummyField(); 
+        fieldDummies.add(field);
+        field._type(type)._name(name);
+        return this;
     }
     
 
@@ -239,7 +252,7 @@ public class DummyInterface {
      * @return
      */
     public DummyInterface newStaticBlock(StaticBlockBody staticBlock) {
-        if(staticBlock != null) {
+        if(this.staticBlock != null) {
             throw new ASMSupportException("Static Block is already existes.");
         }
         this.staticBlock = staticBlock;

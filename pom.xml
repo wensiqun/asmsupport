@@ -51,7 +51,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<!-- plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.9.1</version>
@@ -63,12 +63,11 @@
 				            <goal>add-test-source</goal>
 				        </goals>
 				        <configuration>
-							<resources>
-								<resource>
-									<directory>src/issue/java</directory>
-									<targetPath>issue-classes</targetPath>
-								</resource>
-							</resources>
+							<sources>
+								<source>src/issue/java</source>
+								<source>src/sample/java</source>
+								<source>src/dummy/java</source>
+							</sources>
 				        </configuration>
 				    </execution>
 				    <execution>
@@ -81,13 +80,14 @@
 							<resources>
 								<resource>
 									<directory>src/issue/resources</directory>
-									<targetPath>issue-classes</targetPath>
+									<directory>src/sample/resources</directory>
+									<directory>src/dummy/resources</directory>
 								</resource>
 							</resources>
 				        </configuration>
 				    </execution>
 				</executions>
-			</plugin-->
+			</plugin>
 		</plugins>
 	</build>
 

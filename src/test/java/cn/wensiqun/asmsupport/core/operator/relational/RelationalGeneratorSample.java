@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.core.operator.relational;
 
-import example.AbstractExample;
+import sample.AbstractExample;
 
 public class RelationalGeneratorSample extends AbstractExample 
 {

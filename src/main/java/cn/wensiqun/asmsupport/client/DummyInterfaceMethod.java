@@ -122,7 +122,7 @@ public class DummyInterfaceMethod {
      * @param exceptionTypes
      * @return
      */
-    public DummyInterfaceMethod _throws(AClass[] exceptionTypes){
+    public DummyInterfaceMethod _throws(AClass... exceptionTypes){
         this.exceptionTypes = exceptionTypes;
         return this;
     }

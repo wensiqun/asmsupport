@@ -11,6 +11,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import sample.AbstractExample;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.classes.common.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.block.classes.control.exception.CatchInternal;
@@ -25,7 +26,6 @@ import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import example.AbstractExample;
 
 public class SynchronizedGeneratorTest extends AbstractExample {
 

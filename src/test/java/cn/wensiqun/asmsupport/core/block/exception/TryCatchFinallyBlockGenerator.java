@@ -1,5 +1,6 @@
 package cn.wensiqun.asmsupport.core.block.exception;
 
+import sample.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.classes.control.exception.CatchInternal;
 import cn.wensiqun.asmsupport.core.block.classes.control.exception.FinallyInternal;
@@ -13,7 +14,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import example.AbstractExample;
 
 public class TryCatchFinallyBlockGenerator extends AbstractExample
 {

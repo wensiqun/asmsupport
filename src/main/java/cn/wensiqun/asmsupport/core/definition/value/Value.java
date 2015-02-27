@@ -178,7 +178,6 @@ public class Value implements IValue {
         return defaultValue(type);
     }
 
-
     public static Value value(Integer obj) {
         return value((Object)obj);
     }
@@ -215,11 +214,11 @@ public class Value implements IValue {
         return value((Object)obj);
     }
 
-    public static Value value(String obj) {
+    public static Value value(Class<?> obj) {
         return value((Object)obj);
     }
 
-    public static Value value(Class<?> obj) {
+    public static Value value(String obj) {
         return value((Object)obj);
     }
     

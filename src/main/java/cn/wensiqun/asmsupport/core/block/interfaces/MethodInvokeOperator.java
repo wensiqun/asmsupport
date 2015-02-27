@@ -104,6 +104,14 @@ public interface MethodInvokeOperator {
      */
     public MethodInvoker _new(AClass owner, Parameterized... arguments);
     
+    /**
+     * @param owner
+     * @param arguments
+     * @return
+     * @see #_new(AClass, Parameterized...)
+     */
+    public MethodInvoker _new(Class<?> owner, Parameterized... arguments);
+    
     
     /**
      * 这个是用在修改class的时候，当我们修改某个方法的时候，ASMSupport会自动为这个方法生成一个代理方法，

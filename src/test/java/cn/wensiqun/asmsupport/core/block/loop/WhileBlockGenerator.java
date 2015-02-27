@@ -1,5 +1,6 @@
 package cn.wensiqun.asmsupport.core.block.loop;
 
+import sample.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.classes.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -9,7 +10,6 @@ import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import example.AbstractExample;
 
 public class WhileBlockGenerator extends AbstractExample {
 

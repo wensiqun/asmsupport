@@ -136,6 +136,12 @@ public class ProgramBlockInternalAdapter extends ByteCodeExecutor implements IBl
     }
 
     @Override
+    public MethodInvoker _new(Class<?> owner, Parameterized... arguments)
+    {
+        return target._new(owner, arguments);
+    }
+
+    @Override
     public MethodInvoker _new(AClass owner, Parameterized... arguments)
     {
         return target._new(owner, arguments);

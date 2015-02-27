@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.core.block.exception;
 
+import sample.AbstractExample;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
-import example.AbstractExample;
 
 public class TryCatchFinallyBlockGeneratorSample extends AbstractExample
 {

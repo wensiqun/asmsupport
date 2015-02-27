@@ -16,6 +16,7 @@ import cn.wensiqun.asmsupport.core.block.classes.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.classes.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.block.interfaces.IBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
@@ -825,12 +826,18 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class, String.class, Parameterized[].class}, 
                 getExecutor(), owner, methodName, arguments);
     }
-    
+
+    @Override
     public final MethodInvoker _new(AClass owner, Parameterized... arguments){
         invokeVerify(owner);
         return OperatorFactory.newOperator(ConstructorInvoker.class, 
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class, Parameterized[].class}, 
                 getExecutor(), owner, arguments);
+    }
+
+    @Override
+    public final MethodInvoker _new(Class<?> owner, Parameterized... arguments){
+        return this._new(AClassFactory.getProductClass(owner), arguments);
     }
     
     //*******************************************************************************************//
