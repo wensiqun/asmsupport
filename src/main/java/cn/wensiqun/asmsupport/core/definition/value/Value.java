@@ -5,7 +5,7 @@ package cn.wensiqun.asmsupport.core.definition.value;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;

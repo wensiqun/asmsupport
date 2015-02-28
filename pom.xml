@@ -57,7 +57,19 @@
 				<version>1.9.1</version>
 				<executions>
 				    <execution>
-				        <id>add-issue-sources</id>
+				        <id>add-additional-main-sources</id>
+				        <phase>generate-sources</phase>
+				        <goals>
+				            <goal>add-source</goal>
+				        </goals>
+				        <configuration>
+							<sources>
+								<source>src/third/java</source>
+							</sources>
+				        </configuration>
+				    </execution>
+				    <execution>
+				        <id>add-additional-test-sources</id>
 				        <phase>generate-test-sources</phase>
 				        <goals>
 				            <goal>add-test-source</goal>
@@ -68,22 +80,6 @@
 								<source>src/sample/java</source>
 								<source>src/dummy/java</source>
 							</sources>
-				        </configuration>
-				    </execution>
-				    <execution>
-				        <id>add-issue-resources</id>
-				        <phase>generate-test-resources</phase>
-				        <goals>
-				            <goal>add-test-resource</goal>
-				        </goals>
-				        <configuration>
-							<resources>
-								<resource>
-									<directory>src/issue/resources</directory>
-									<directory>src/sample/resources</directory>
-									<directory>src/dummy/resources</directory>
-								</resource>
-							</resources>
 				        </configuration>
 				    </execution>
 				</executions>

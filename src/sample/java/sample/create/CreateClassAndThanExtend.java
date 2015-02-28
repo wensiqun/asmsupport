@@ -3,11 +3,11 @@ package sample.create;
 import java.util.Random;
 
 import sample.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseInternal;
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.IFInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.ModifiedMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.ElseInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.ModifiedMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;

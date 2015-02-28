@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 

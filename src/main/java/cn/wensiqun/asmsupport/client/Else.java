@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.ElseInternal;
 import cn.wensiqun.asmsupport.standard.branch.IElse;
 
 public abstract class Else extends ProgramBlock<ElseInternal> implements IElse  {

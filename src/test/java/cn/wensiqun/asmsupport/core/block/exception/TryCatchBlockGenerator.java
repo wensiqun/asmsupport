@@ -1,10 +1,10 @@
 package cn.wensiqun.asmsupport.core.block.exception;
 
 import sample.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.classes.control.exception.CatchInternal;
-import cn.wensiqun.asmsupport.core.block.classes.control.exception.TryInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
+import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;

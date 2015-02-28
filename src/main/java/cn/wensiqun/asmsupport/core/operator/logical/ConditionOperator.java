@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 
 import cn.wensiqun.asmsupport.core.Parameterized;
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 

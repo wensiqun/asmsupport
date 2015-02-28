@@ -1,8 +1,8 @@
 package fixed.test65150;
 
 import junit.framework.Assert;
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;

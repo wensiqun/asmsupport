@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.core.exception;
 
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 
 public class UnreachableCodeException extends ASMSupportException {

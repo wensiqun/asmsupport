@@ -1,10 +1,10 @@
 package cn.wensiqun.asmsupport.core.creator.clazz;
 
 
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;

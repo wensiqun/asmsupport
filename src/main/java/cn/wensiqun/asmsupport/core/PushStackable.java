@@ -3,7 +3,7 @@
  */
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 
 /**
  * 

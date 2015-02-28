@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.block.classes.control.loop.ForEachInternal;
+import cn.wensiqun.asmsupport.core.block.control.loop.ForEachInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.loop.IForEach;

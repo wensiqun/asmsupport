@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IMethodBody;
 

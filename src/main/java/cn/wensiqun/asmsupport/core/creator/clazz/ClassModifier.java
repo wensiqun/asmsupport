@@ -10,11 +10,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.ModifiedMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.ModifiedMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;

@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.core.operator;
 
 
 import cn.wensiqun.asmsupport.core.Parameterized;
-import cn.wensiqun.asmsupport.core.block.classes.control.ControlType;
+import cn.wensiqun.asmsupport.core.block.control.ControlType;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 

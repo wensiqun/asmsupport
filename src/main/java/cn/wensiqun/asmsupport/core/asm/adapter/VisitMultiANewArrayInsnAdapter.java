@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.VisitMultiANewArrayInsn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 

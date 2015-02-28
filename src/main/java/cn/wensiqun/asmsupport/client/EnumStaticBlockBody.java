@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
-import cn.wensiqun.asmsupport.core.block.classes.method.clinit.EnumStaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 

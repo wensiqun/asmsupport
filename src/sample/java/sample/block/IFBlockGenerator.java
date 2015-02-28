@@ -3,10 +3,10 @@ package sample.block;
 import java.lang.reflect.InvocationTargetException;
 
 import sample.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseIFInternal;
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.ElseInternal;
-import cn.wensiqun.asmsupport.core.block.classes.control.condition.IFInternal;
-import cn.wensiqun.asmsupport.core.block.classes.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.ElseIFInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.ElseInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;

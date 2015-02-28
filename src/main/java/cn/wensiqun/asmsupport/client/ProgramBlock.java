@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.Parameterized;
-import cn.wensiqun.asmsupport.core.block.classes.common.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
@@ -49,8 +49,9 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
+import cn.wensiqun.asmsupport.standard.operator.OperateSet;
 
-public class ProgramBlock<B extends ProgramBlockInternal> implements IBlock
+public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<IF , While, DoWhile, ForEach, Try, Synchronized>
 {
 
     B target;
@@ -126,7 +127,7 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements IBlock
     }
 
     @Override
-    public MethodInvoker _new(Class owner, Parameterized... arguments)
+    public MethodInvoker _new(Class<?> owner, Parameterized... arguments)
     {
         return target._new(owner, arguments);
     }
@@ -500,33 +501,39 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements IBlock
         return target._return(parame);
     }
 
+    @Override
 	public IF _if(IF ifBlock) {
 		target._if(ifBlock.target);
 		return ifBlock;
 	}
 
+    @Override
     public While _while(While whileLoop)
     {
     	target._while(whileLoop.target);
     	return whileLoop;
     }
 
+    @Override
 	public DoWhile _dowhile(DoWhile doWhile) {
 	    target._dowhile(doWhile.target);
 	    return doWhile;
 	}
 
+    @Override
 	public ForEach _for(ForEach forEach) {
 		target._for(forEach.target);
 		return forEach;
 	}
 
+    @Override
     public Try _try(Try tryClient)
     {
         target._try(tryClient.target);
         return tryClient;
     }
-    
+
+    @Override
 	public Synchronized _sync(Synchronized sync) {
 		target._sync(sync.target);
 		return sync;
