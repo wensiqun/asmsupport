@@ -118,6 +118,11 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     {
         return target._invoke(objRef, methodName, arguments);
     }
+    
+	@Override
+	public MethodInvoker _invoke(String methodName, Parameterized... args) {
+		return target._invoke(methodName, args);
+	}
 
     @Override
     public MethodInvoker _invokeStatic(AClass owner, String methodName, Parameterized... arguments)

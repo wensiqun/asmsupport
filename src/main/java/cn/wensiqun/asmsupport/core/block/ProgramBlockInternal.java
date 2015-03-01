@@ -808,8 +808,14 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, String.class, Parameterized[].class}, 
                 getExecutor(), caller, methodName, arguments);
     }
+    
 
-    protected final void invokeVerify(AClass a){
+    @Override
+	public MethodInvoker _invoke(String methodName, Parameterized... args) {
+		return _invoke(_this(), methodName, args);
+	}
+
+	protected final void invokeVerify(AClass a){
         if(a.isInterface()){
             throw new MethodInvokeException("the class " + getExecutor().getMethodOwner() + " is a interface and interfaces have no static methods");
         }

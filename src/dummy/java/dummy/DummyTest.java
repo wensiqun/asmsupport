@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyInterface;
 import cn.wensiqun.asmsupport.client.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -14,12 +15,12 @@ public class DummyTest {
 
     public String amsupportTest() {
         
-        DummyInterface dummyClass = new DummyInterface();
-        dummyClass._classOutPutPath(".//target//dummy-generated");
-        dummyClass._public()._package("dummy")._name("ExceptedInterface")
+        DummyInterface excIter = new DummyInterface();
+        excIter._classOutPutPath(".//target//dummy-generated");
+        excIter._public()._package("dummy")._name("ExceptedInterface")
                   .newField(String.class, "interface_field_string")
                   .newField(List.class, "interface_field_list");
-        dummyClass.newStaticBlock(new StaticBlockBody(){
+        excIter.newStaticBlock(new StaticBlockBody(){
             @Override
             public void body() {
                 GlobalVariable interface_field_string = getMethodOwner().getGlobalVariable("interface_field_string");
@@ -29,10 +30,15 @@ public class DummyTest {
                 _assign(interface_field_list, this._new(ArrayList.class));
             }
         });
-        dummyClass.newMethod()._returnType(String.class)._name("method1")._throws(IllegalArgumentException.class);
-        dummyClass.newMethod()._returnType(String.class)._name("method2");
+        excIter.newMethod()._returnType(String.class)._name("method1")._throws(IllegalArgumentException.class);
+        excIter.newMethod()._returnType(String.class)._name("method2");
         
-        dummyClass.build();
+        Class<?> exceptedInterface = excIter.build();
+        
+        
+        DummyClass excAbsCls = new DummyClass();
+        excAbsCls._package("dummy")
+            ._name("ExceptedAbstractClass")._implements(exceptedInterface);
         
         return "";
     }

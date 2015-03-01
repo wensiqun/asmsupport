@@ -54,6 +54,18 @@ public interface MethodInvokeOperator {
     public MethodInvoker _invoke(Parameterized objRef, String methodName, Parameterized... arguments);
 
     /**
+     * Generate method invoke, this method equivalence to 
+     * <pre>
+     * _invoke(_this(), methodName, arguments);
+     * </pre>
+     * 
+     * @param methodName
+     * @param args
+     * @return
+     */
+    public MethodInvoker _invoke(String methodName, Parameterized... args);
+    
+    /**
      * 
      * <p>
      * 调用静态方法， 对应下面红色部分的代码
@@ -77,6 +89,7 @@ public interface MethodInvokeOperator {
      * @return {@link MethodInvoker}
      */
     public MethodInvoker _invokeStatic(AClass owner, String methodName, Parameterized... arguments);
+    
     
     /**
      * 
