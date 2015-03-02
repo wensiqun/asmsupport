@@ -14,6 +14,7 @@ import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
@@ -112,10 +113,15 @@ public class AMethod {
         this.insnHelper = new CommonInstructionHelper(this);
         
         if(!ModifierUtils.isAbstract(me.getModifier())){
-            // 设置method属性
-            this.methodBody = methodBody;
-            this.methodBody.setScope(new Scope(this.locals, null));
-            this.methodBody.setInsnHelper(insnHelper);
+            if(methodBody != null) {
+                // 设置method属性
+                this.methodBody = methodBody;
+                this.methodBody.setScope(new Scope(this.locals, null));
+                this.methodBody.setInsnHelper(insnHelper);
+            } else {
+                throw new ASMSupportException("Error while create method '" + me.getName() 
+                        + "', cause by not found method body and it not abstract method.");
+            }
         }
     }
     

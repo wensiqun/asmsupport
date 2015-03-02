@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
-public class DummyConstructor extends DummyAccessControl<DummyField> {
+public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 
     /** The constructor argument types.*/
     private AClass[] argTypes;

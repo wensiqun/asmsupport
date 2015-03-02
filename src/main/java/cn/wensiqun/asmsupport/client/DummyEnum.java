@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
@@ -43,6 +44,19 @@ public class DummyEnum {
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
+
+    public DummyEnum() {
+    }
+    
+    public DummyEnum(String qualifiedName) {
+        if(StringUtils.isNotBlank(qualifiedName)) {
+            int lastDot = qualifiedName.lastIndexOf('.');
+            if(lastDot > 0) {
+                packageName = qualifiedName.substring(0, lastDot);
+                name = qualifiedName.substring(lastDot + 1);
+            }
+        }
+    }
     
     /**
      * Set the jdk version of Class File Format
@@ -216,19 +230,37 @@ public class DummyEnum {
      * 
      * @return
      */
-    public DummyField newField() {
-        fieldDummies.add(new DummyField());
+    public DummyField newField(AClass type, String name) {
+        DummyField field = new DummyField(); 
+        fieldDummies.add(field);
+        field._type(type)._name(name);
         return fieldDummies.getLast();
     }
+    
+    /**
+     * Create a field
+     * 
+     * @return
+     */
+    public DummyField newField(Class<?> type, String name) {
+        DummyField field = new DummyField(); 
+        fieldDummies.add(field);
+        field._type(type)._name(name);
+        return fieldDummies.getLast();
+    }
+    
+    
 
     /**
      * Create a method.
      * 
      * @return
      */
-    public DummyMethod newMethod() {
-        methodDummies.add(new DummyMethod());
-        return methodDummies.getLast();
+    public DummyMethod newMethod(String name) {
+        DummyMethod method = new DummyMethod();
+        methodDummies.add(method);
+        method._name(name);
+        return method;
     }
     
 

@@ -3,6 +3,7 @@ package cn.wensiqun.asmsupport.standard.operator;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
@@ -13,7 +14,55 @@ import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
  */
 public interface VariableOperator {
 
-	/**
+    /**
+     * create a local variable, this method equivalent to following code :
+     * <p>
+     * _createVariable(name, {@link AClassFactory#getProductClass(type)}, false, para)
+     * </p>
+     * @param name
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable _createVariable(final String name, final Class<?> type, final Parameterized para);
+
+    /**
+     * create a local variable, this method equivalent to following code :
+     * <p>
+     * _createVariable("", {@link AClassFactory#getProductClass(type)}, true, para)
+     * </p>
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable _createVariable(final Class<?> type, final Parameterized para);
+    
+
+
+    /**
+     * create a local variable, this method equivalent to following code :
+     * <p>
+     * _createVariable(name, type, false, para)
+     * </p>
+     * @param name
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable _createVariable(final String name, final AClass type, final Parameterized para);
+
+    /**
+     * create a local variable, this method equivalent to following code :
+     * <p>
+     * _createVariable("", type, true, para)
+     * </p>
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable _createVariable(final AClass type, final Parameterized para);
+    
+    /**
 	 * create a local variable
 	 * 
 	 * @param name variable name.

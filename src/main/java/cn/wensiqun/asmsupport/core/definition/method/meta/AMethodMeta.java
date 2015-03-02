@@ -6,6 +6,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 
@@ -44,7 +45,14 @@ public class AMethodMeta implements Cloneable {
     public AMethodMeta(String name, AClass owner, AClass actuallyOwner,
             AClass[] argClasses, String[] argNames, AClass returnClass,
             AClass[] exceptions, int modifier) {
-        super();
+        
+        if(ArrayUtils.isNotEmpty(argClasses) && ArrayUtils.isEmpty(argNames)) {
+            argNames = new String[argClasses.length];
+            for(int i=0; i<argNames.length; i++) {
+                argNames[i] = "arg" + i;
+            }
+        }
+        
         if (argClasses == null) {
             argClasses = new AClass[0];
         }
@@ -64,7 +72,7 @@ public class AMethodMeta implements Cloneable {
 
         if (argClasses.length != argNames.length) {
             throw new ASMSupportException(
-                    "different length between argClasses and argNames");
+                    "Different length between argClasses and argNames when create method : " + name);
         }
 
         this.argTypes = new Type[argClasses.length];

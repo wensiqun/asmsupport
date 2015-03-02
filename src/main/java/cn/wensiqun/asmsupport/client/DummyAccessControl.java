@@ -16,7 +16,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      */
     @SuppressWarnings("unchecked")
     public T _private() {
-        modifiers = (modifiers | ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
+        modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PRIVATE;
         return (T) this;
     }
@@ -37,7 +37,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      */
     @SuppressWarnings("unchecked")
     public T _public() {
-        modifiers = (modifiers | ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
+        modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PUBLIC;
         return (T) this;
     }
@@ -58,7 +58,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      */
     @SuppressWarnings("unchecked")
     public T _protected() {
-        modifiers = (modifiers | ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
+        modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PROTECTED;
         return (T) this;
     }
@@ -79,7 +79,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      */
     @SuppressWarnings("unchecked")
     public T _default() {
-        modifiers = (modifiers | ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED));
+        modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED));
         return (T) this;
     }
 
@@ -100,7 +100,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      */
     @SuppressWarnings("unchecked")
     public T _final() {
-        modifiers = (modifiers | ~Opcodes.ACC_FINAL) + Opcodes.ACC_FINAL;
+        modifiers = (modifiers & ~Opcodes.ACC_FINAL) + Opcodes.ACC_FINAL;
         return (T) this;
     }
     

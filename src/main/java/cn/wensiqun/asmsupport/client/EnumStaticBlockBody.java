@@ -16,25 +16,15 @@ public abstract class EnumStaticBlockBody extends ProgramBlock<EnumStaticBlockBo
 			}
 
 			@Override
-			public void constructEnumField() {
-				EnumStaticBlockBody.this.constructEnumField();
+			public void constructEnumConsts() {
+				EnumStaticBlockBody.this.constructEnumConsts();
 			}
 		};
 	}
 	
 	@Override
-	public void newEnum(String name, Parameterized... argus) {
-		target.newEnum(name, argus);
+	public void constructEnumConst(String name, Parameterized... argus) {
+		target.constructEnumConst(name, argus);
 	}
-	
-	/**
-	 * call newEnum method at this method.
-	 * get some information about current enum type constructor
-	 * 
-	 * 在此方法中调用newEnum方法， 获取构造枚举列表中每个枚举类型需要的参数信息，枚举类型名等信息。
-	 * 
-	 */
-	public abstract void constructEnumField();
-	
 	
 }

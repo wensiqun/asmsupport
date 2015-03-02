@@ -277,9 +277,9 @@ public class EnumCreator extends AbstractClassCreatorContext {
     			}
 
 				@Override
-				public void constructEnumField() {
+				public void constructEnumConsts() {
 				    for(String name : enumNameList){
-				    	newEnum(name);
+				    	constructEnumConst(name);
 				    }
 				}
 

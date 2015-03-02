@@ -315,6 +315,26 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
+    public LocalVariable _createVariable(String name, Class<?> type, Parameterized para) {
+        return _createVariable(name, AClassFactory.getProductClass(type), false, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(Class<?> type, Parameterized para) {
+        return _createVariable("", AClassFactory.getProductClass(type), true, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(String name, AClass type, Parameterized para) {
+        return _createVariable(name, type, true, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(AClass type, Parameterized para) {
+        return _createVariable("", type, true, para);
+    }
+    
+    @Override
     public final LocalVariable _createVariable(final String name, final AClass aClass, boolean anonymous, final Parameterized para) {
         if(aClass.isArray()){
             throw new IllegalArgumentException(aClass + " is Array type exchange to createArrayVariable to create the array variable");
@@ -927,12 +947,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
      }
 
     @Override
-     public final SynchronizedInternal _sync(SynchronizedInternal s){
-        s.setParent(getExecutor());
-        getQueue().add(s);
-        s.prepare();
-        return s;
-     }
+    public final SynchronizedInternal _sync(SynchronizedInternal s){
+       s.setParent(getExecutor());
+       getQueue().add(s);
+       s.prepare();
+       return s;
+    }
     
     @Override
     public final ThisVariable _this() {
@@ -940,6 +960,11 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
         return getMethodOwner().getThisVariable();
+    }
+    
+    @Override
+    public final GlobalVariable _this(String name) {
+        return _this().getGlobalVariable(name);
     }
     
     @Override

@@ -44,13 +44,26 @@ public class DummyInterface {
      */
     protected int modifiers = Opcodes.ACC_ABSTRACT;
     
+    public DummyInterface() {
+    }
+    
+    public DummyInterface(String qualifiedName) {
+        if(StringUtils.isNotBlank(qualifiedName)) {
+            int lastDot = qualifiedName.lastIndexOf('.');
+            if(lastDot > 0) {
+                packageName = qualifiedName.substring(0, lastDot);
+                name = qualifiedName.substring(lastDot + 1);
+            }
+        }
+    }
+    
     /**
      * Set the access to private.
      * 
      * @return
      */
     public DummyInterface _public() {
-        modifiers = (modifiers | ~Opcodes.ACC_PUBLIC) + Opcodes.ACC_PUBLIC;
+        modifiers = (modifiers & ~Opcodes.ACC_PUBLIC) + Opcodes.ACC_PUBLIC;
         return this;
     }
 
@@ -70,7 +83,7 @@ public class DummyInterface {
      * @return
      */
     public DummyInterface _default() {
-        modifiers = modifiers | ~ Opcodes.ACC_PUBLIC;
+        modifiers = modifiers & ~ Opcodes.ACC_PUBLIC;
         return this;
     }
     
@@ -240,9 +253,11 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyInterfaceMethod newMethod() {
-        methodDummies.add(new DummyInterfaceMethod());
-        return methodDummies.getLast();
+    public DummyInterfaceMethod newMethod(String name) {
+        DummyInterfaceMethod method = new DummyInterfaceMethod();
+        method._name(name);
+        methodDummies.add(method);
+        return method;
     }    
 
 

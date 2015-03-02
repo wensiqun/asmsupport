@@ -112,19 +112,19 @@ public class ClassCreator extends AbstractClassCreatorContext {
      * 
      * @param access          the method modifiers
      * @param name            the method name
-     * @param argClasses      the method argument type list
+     * @param argTypes      the method argument type list
      * @param argNames        the method arguments name list
      * @param returnClass     the method return class
      * @param exceptions      throw exceptions for this method
      * @param body            method body that is method logic implementation
      * @return
      */
-	public IMethodCreator createStaticMethod(int access, String name, AClass[] argClasses, String[] argNames,
+	public IMethodCreator createStaticMethod(int access, String name, AClass[] argTypes, String[] argNames,
 			AClass returnClass, AClass[] exceptions, StaticMethodBodyInternal body) {
 		if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
     	}
-		IMethodCreator creator = MethodCreator.methodCreatorForAdd(name, argClasses, argNames,
+		IMethodCreator creator = MethodCreator.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
         methodCreaters.add(creator);
         return creator;
@@ -150,7 +150,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
         createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new ConstructorBodyInternal() {
             @Override
             public void body(LocalVariable... argus) {
-                invokeSuperConstructor();
+                _super();
                 _return();
             }
             

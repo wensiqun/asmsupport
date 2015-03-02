@@ -12,13 +12,29 @@ public class DummyField extends DummyAccessControl<DummyField> {
     /** Field name */
     private String name;
 
+    public DummyField() {
+    }
+    
+    public DummyField(AClass type) {
+        this.type = type;
+    }
+    
+    public DummyField(String name) {
+        this.name = name;
+    }
+
+    public DummyField(AClass type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
     /**
      * Set to static
      * 
      * @return
      */
     public DummyField _static() {
-        modifiers = (modifiers | ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
+        modifiers = (modifiers & ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
         return this;
     }
 
@@ -37,7 +53,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @return
      */
     public DummyField _transient() {
-        modifiers = (modifiers | ~Opcodes.ACC_TRANSIENT) + Opcodes.ACC_TRANSIENT;
+        modifiers = (modifiers & ~Opcodes.ACC_TRANSIENT) + Opcodes.ACC_TRANSIENT;
         return this;
     } 
     
@@ -56,7 +72,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @return
      */
     public DummyField _volatile() {
-        modifiers = (modifiers | ~Opcodes.ACC_VOLATILE) + Opcodes.ACC_VOLATILE;
+        modifiers = (modifiers & ~Opcodes.ACC_VOLATILE) + Opcodes.ACC_VOLATILE;
         return this;
     }
     

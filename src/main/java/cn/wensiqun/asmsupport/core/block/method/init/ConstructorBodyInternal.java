@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.standard.method.IContructorBody;
  */
 public abstract class ConstructorBodyInternal extends AbstractMethodBody implements IContructorBody {
 
-	public MethodInvoker invokeSuperConstructor(Parameterized... arguments) {
+	public MethodInvoker _supercall(Parameterized... arguments) {
     	AClass owner = getMethodOwner();
     	if(ModifierUtils.isEnum(getMethodOwner().getModifiers())){
     		throw new ASMSupportException("Cannot invoke super constructor from enum type " + owner);

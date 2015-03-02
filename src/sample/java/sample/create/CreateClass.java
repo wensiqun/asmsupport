@@ -139,7 +139,7 @@ public class CreateClass extends AbstractExample {
 				 * 这个方法存在一个变元参数arguments。他表示我们调用super()的时候需要传递的参数
 				 * 
 				 */
-				invokeSuperConstructor();
+				_super();
 				
 				/*
 				 * 由于我们创建的globalVariable是非static的。所以通过getThis()获取globalVariable。

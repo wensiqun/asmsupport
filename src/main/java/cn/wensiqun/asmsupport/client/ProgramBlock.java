@@ -7,6 +7,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
@@ -74,11 +75,37 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     {
         return target._this();
     }
+    
+    @Override
+    public GlobalVariable _this(String name) 
+    {
+        return target._this(name);
+    }
 
     @Override
     public SuperVariable _super()
     {
         return target._super();
+    }
+
+    @Override
+    public LocalVariable _createVariable(String name, Class<?> type, Parameterized para) {
+        return target._createVariable(name, type, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(Class<?> type, Parameterized para) {
+        return target._createVariable(type, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(String name, AClass type, Parameterized para) {
+        return target._createVariable(name, type, para);
+    }
+
+    @Override
+    public LocalVariable _createVariable(AClass type, Parameterized para) {
+        return target._createVariable(type, para);
     }
 
     @Override

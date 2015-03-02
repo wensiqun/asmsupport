@@ -101,9 +101,11 @@ public class DummyModifiedClass {
      * 
      * @return
      */
-    public DummyMethod newMethod() {
-        methodDummies.add(new DummyMethod());
-        return methodDummies.getLast();
+    public DummyMethod newMethod(String name) {
+        DummyMethod method = new DummyMethod();
+        method._name(name);
+        methodDummies.add(method);
+        return method;
     }
 
     /**

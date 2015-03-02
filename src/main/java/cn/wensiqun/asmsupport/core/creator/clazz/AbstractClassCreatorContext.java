@@ -14,6 +14,7 @@ import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassFileUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
@@ -271,6 +272,9 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	List<AMethod> methods = 
     			new ArrayList<AMethod>(sc.getMethods());
     	for(AMethod validateMethod : methods){
+    	    if(ASConstant.CLINIT.equals(validateMethod.getMethodMeta().getName())) {
+    	        continue;
+    	    }
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
     		List<MethodCreator> creatorList = obmc.getList();
     		for(MethodCreator mc : creatorList){

@@ -46,7 +46,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	}
 
 	@Override
-	public void newEnum(String name, Parameterized... argus) {
+	public void constructEnumConst(String name, Parameterized... argus) {
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
@@ -62,7 +62,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	 */
 	private void constructEachEnumConstant(){
 
-		constructEnumField();
+		constructEnumConsts();
 		
 		if(getMethodOwner().getEnumNum() != enumArgumentsList.size()){
 			throw new ASMSupportException("exist unassign enum constant!");
@@ -101,13 +101,5 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 		body();
 	}
 	
-	/**
-	 * call newEnum method at this method.
-	 * get some information about current enum type constructor
-	 * 
-	 * 在此方法中调用newEnum方法， 获取构造枚举列表中每个枚举类型需要的参数信息，枚举类型名等信息。
-	 * 
-	 */
-	public abstract void constructEnumField();
 	
 }

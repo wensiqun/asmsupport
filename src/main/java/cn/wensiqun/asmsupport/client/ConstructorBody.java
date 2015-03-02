@@ -20,7 +20,7 @@ public abstract class ConstructorBody extends ProgramBlock<ConstructorBodyIntern
 	}
 
 	@Override
-	public MethodInvoker invokeSuperConstructor(Parameterized... arguments) {
-    	return target.invokeSuperConstructor(arguments);
+	public MethodInvoker _supercall(Parameterized... arguments) {
+    	return target._supercall(arguments);
 	}
 }

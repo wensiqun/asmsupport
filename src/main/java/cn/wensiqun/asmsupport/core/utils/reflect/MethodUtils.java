@@ -111,8 +111,7 @@ public class MethodUtils {
 				if(!foundList.contains(method)){
 					foundList.add(method);
 				}
-			} catch (NoSuchMethodException e) {
-			}
+			} catch (NoSuchMethodException e) {}
 		}
 		
 		return foundList.toArray(new Method[foundList.size()]);

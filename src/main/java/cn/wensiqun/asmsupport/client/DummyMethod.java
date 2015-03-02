@@ -31,7 +31,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod _static() {
-        modifiers = (modifiers | ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
+        modifiers = (modifiers & ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
         return this;
     }
 
@@ -50,7 +50,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod _synchronized() {
-        modifiers = (modifiers | ~Opcodes.ACC_SYNCHRONIZED) + Opcodes.ACC_SYNCHRONIZED;
+        modifiers = (modifiers & ~Opcodes.ACC_SYNCHRONIZED) + Opcodes.ACC_SYNCHRONIZED;
         return this;
     }
     
@@ -69,7 +69,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod _abstract() {
-        modifiers = (modifiers | ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_ABSTRACT;
+        modifiers = (modifiers & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_ABSTRACT;
         return this;
     }
     
@@ -88,7 +88,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod _native() {
-        modifiers = (modifiers | ~Opcodes.ACC_NATIVE) + Opcodes.ACC_NATIVE;
+        modifiers = (modifiers & ~Opcodes.ACC_NATIVE) + Opcodes.ACC_NATIVE;
         return this;
     }
     
@@ -108,7 +108,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod _strictfp() {
-        modifiers = (modifiers | ~Opcodes.ACC_STRICT) + Opcodes.ACC_STRICT;
+        modifiers = (modifiers & ~Opcodes.ACC_STRICT) + Opcodes.ACC_STRICT;
         return this;
     }
     
@@ -127,7 +127,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param ret
      * @return
      */
-    public DummyMethod _returnType(AClass ret) {
+    public DummyMethod _return(AClass ret) {
         this.returnType = ret;
         return this;
     }
@@ -138,7 +138,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param ret
      * @return
      */
-    public DummyMethod _returnType(Class<?> ret) {
+    public DummyMethod _return(Class<?> ret) {
         this.returnType = AClassFactory.getProductClass(ret);
         return this;
     }

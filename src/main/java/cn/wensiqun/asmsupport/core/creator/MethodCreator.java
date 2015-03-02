@@ -7,6 +7,7 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 
 /**
  * 
@@ -46,7 +47,6 @@ public class MethodCreator implements IMethodCreator {
 	
 	private MethodCreator(String name, AClass[] arguments, String[] argNames,
 			AClass returnClass, AClass[] exceptions, int access, AbstractMethodBody mb) {
-		super();
 		this.name = name;
 		this.arguments = arguments;
 		this.argNames = argNames;

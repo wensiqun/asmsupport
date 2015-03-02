@@ -67,10 +67,10 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
             @Override
             public void body(LocalVariable... argus) {
-            	  invokeSuperConstructor(argus);
+            	_supercall(argus);
                 _assign(_this().getGlobalVariable("lock"), _new(AClass.OBJECT_ACLASS));
                 _assign(_this().getGlobalVariable("list"), _new(AClassFactory.getProductClass(ArrayList.class)));
-				  this._return();
+				_return();
             }
             
         });
@@ -150,7 +150,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-          	   invokeSuperConstructor();
+          	   _super();
 				_assign(_this().getGlobalVariable("sgst"), argus[0]);
 				this._return();
 			}

@@ -2,6 +2,7 @@ package cn.wensiqun.asmsupport.client;
 
 import java.util.LinkedList;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
@@ -42,6 +43,20 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     
     /** class static block */
     private StaticBlockBody staticBlock;
+    
+    public DummyClass() {
+    }
+    
+    public DummyClass(String qualifiedName) {
+        this();
+        if(StringUtils.isNotBlank(qualifiedName)) {
+            int lastDot = qualifiedName.lastIndexOf('.');
+            if(lastDot > 0) {
+                packageName = qualifiedName.substring(0, lastDot);
+                name = qualifiedName.substring(lastDot + 1);
+            }
+        }
+    }
 
     /**
      * Set to static
@@ -49,7 +64,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyClass _static() {
-        modifiers = (modifiers | ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
+        modifiers = (modifiers & ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
         return this;
     }
 
@@ -129,7 +144,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyClass _abstract() {
-        modifiers = (modifiers | ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_ABSTRACT;
+        modifiers = (modifiers & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_ABSTRACT;
         return this;
     }
 
@@ -234,8 +249,22 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public DummyField newField() {
-        fieldDummies.add(new DummyField());
+    public DummyField newField(AClass type, String name) {
+        DummyField field = new DummyField(); 
+        fieldDummies.add(field);
+        field._type(type)._name(name);
+        return fieldDummies.getLast();
+    }
+
+    /**
+     * Create a field
+     * 
+     * @return
+     */
+    public DummyField newField(Class<?> type, String name) {
+        DummyField field = new DummyField(); 
+        fieldDummies.add(field);
+        field._type(type)._name(name);
         return fieldDummies.getLast();
     }
 
@@ -254,9 +283,11 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public DummyMethod newMethod() {
-        methodDummies.add(new DummyMethod());
-        return methodDummies.getLast();
+    public DummyMethod newMethod(String name) {
+        DummyMethod method = new DummyMethod();
+        methodDummies.add(method);
+        method._name(name);
+        return method;
     }
 
     /**
@@ -300,7 +331,8 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         
         for(DummyMethod dummy : methodDummies) {
             cci.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgumentTypes(),
-                    dummy.getArgumentNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().target);
+                    dummy.getArgumentNames(), dummy.getReturnType(), dummy.getThrows(), 
+                    dummy.getMethodBody() == null ? null : dummy.getMethodBody().target);
         }
         
         if(staticBlock != null) {

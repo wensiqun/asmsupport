@@ -24,7 +24,7 @@ public class DummyInterfaceMethod {
      * @param ret
      * @return
      */
-    public DummyInterfaceMethod _returnType(AClass ret) {
+    public DummyInterfaceMethod _return(AClass ret) {
         this.returnType = ret;
         return this;
     }
@@ -35,7 +35,7 @@ public class DummyInterfaceMethod {
      * @param ret
      * @return
      */
-    public DummyInterfaceMethod _returnType(Class<?> ret) {
+    public DummyInterfaceMethod _return(Class<?> ret) {
         this.returnType = AClassFactory.getProductClass(ret);
         return this;
     }
