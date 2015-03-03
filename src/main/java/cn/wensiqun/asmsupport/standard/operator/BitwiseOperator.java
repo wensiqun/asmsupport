@@ -16,7 +16,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedRightShift;
  * 
  * @author wensiqun(at)163.com
  */
-public interface Bitwise {
+public interface BitwiseOperator {
 	
     /**
      * 生成取反操作指令,对应下面的红色java代码

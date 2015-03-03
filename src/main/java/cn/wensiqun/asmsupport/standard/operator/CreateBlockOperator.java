@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.standard.operator;
 
-import cn.wensiqun.asmsupport.core.block.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
+import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
 
 
 /**

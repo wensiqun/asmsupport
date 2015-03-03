@@ -1,11 +1,12 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.core.block;
+package cn.wensiqun.asmsupport.core.block.sync;
 
 
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;

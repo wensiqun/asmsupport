@@ -14,6 +14,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.ForEachInternal;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
@@ -98,9 +99,9 @@ import cn.wensiqun.asmsupport.standard.operator.OperateSet;
 public abstract class ProgramBlockInternal extends AbstractBlockInternal implements OperateSet<IFInternal , WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal>  {
 
     /**执行Block, 通过当前Block所创建的操作，实际是executeBlock的代理*/
-    private   ProgramBlockInternal                executor = this;
+    private   ProgramBlockInternal        executor = this;
     
-    private   ProgramBlockInternal                parent;
+    private   ProgramBlockInternal        parent;
     
     private   Scope                       scope;
     
@@ -180,8 +181,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         try {
             return (ProgramBlockInternal) clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            throw new ASMSupportException();
+            throw new ASMSupportException(e);
         }
     }
     
@@ -282,6 +282,11 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         return getMethod().getMethodOwner();
     }
 
+    /**
+     * Get the {@link InstructionHelper}
+     * 
+     * @return
+     */
     public InstructionHelper getInsnHelper() {
         return insnHelper;
     }

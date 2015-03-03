@@ -16,12 +16,12 @@ import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
  *
  */
 public interface OperateSet<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> extends 
-KeywordVariableable, 
+KeywordOperator, 
 VariableOperator, 
 MethodInvokeOperator, 
 ArrayOperator, 
 ArithmeticOperator, 
-Bitwise, 
+BitwiseOperator, 
 CrementOperator,
 RelationalOperator,
 LogicalOperator,

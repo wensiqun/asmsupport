@@ -11,7 +11,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
  * @author wensiqun(at)163.com
  *
  */
-public interface KeywordVariableable {
+public interface KeywordOperator {
 	
 	/**
 	 * 

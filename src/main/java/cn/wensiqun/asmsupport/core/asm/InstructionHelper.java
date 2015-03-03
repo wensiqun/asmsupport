@@ -18,8 +18,12 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
+ * <p>
  * 字节码操作的帮助类。 这里只需要操作栈。而本地变量的操作已经由LcoalVariables和ScopeLogicVariable封装完成了。
- * 
+ * </p>
+ * <p>
+ * this class wrap same asm api make to easy
+ * </p>
  * @author 温斯群(Joe Wen)
  */
 public abstract class InstructionHelper {

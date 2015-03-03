@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.standard.method;
 
 import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
-import cn.wensiqun.asmsupport.standard.operator.KeywordVariableable;
+import cn.wensiqun.asmsupport.standard.operator.KeywordOperator;
 
-public interface IMethodBody extends KeywordVariableable, LocalVariablesBody{
+public interface IMethodBody extends KeywordOperator, LocalVariablesBody{
 
 }

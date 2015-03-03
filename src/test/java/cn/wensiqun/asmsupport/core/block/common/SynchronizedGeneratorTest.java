@@ -13,12 +13,12 @@ import org.junit.Test;
 
 import sample.AbstractExample;
 import cn.wensiqun.asmsupport.core.Parameterized;
-import cn.wensiqun.asmsupport.core.block.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
