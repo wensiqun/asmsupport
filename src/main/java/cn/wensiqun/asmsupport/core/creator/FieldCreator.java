@@ -18,6 +18,7 @@ public class FieldCreator implements IFieldCreator {
     private GlobalVariableMeta fe;
     private IClassContext context;
     
+    
     /**
      * 
      * @param name

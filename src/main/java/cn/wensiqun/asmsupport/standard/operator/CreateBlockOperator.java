@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
  * 
  * 创建程序块
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface CreateBlockOperator<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> {

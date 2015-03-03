@@ -150,7 +150,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-          	   _super();
+          	   _supercall();
 				_assign(_this().getGlobalVariable("sgst"), argus[0]);
 				this._return();
 			}

@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 /**
  * 生成关系运算操作
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface RelationalOperator {

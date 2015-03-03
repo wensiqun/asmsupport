@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard;
+package cn.wensiqun.asmsupport.standard.sync;
 
 import cn.wensiqun.asmsupport.standard.body.ParameterizedBody;
 

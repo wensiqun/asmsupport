@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
 /**
  * 逻辑操作
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface LogicalOperator {

@@ -150,7 +150,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
         createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new ConstructorBodyInternal() {
             @Override
             public void body(LocalVariable... argus) {
-                _super();
+                _supercall();
                 _return();
             }
             

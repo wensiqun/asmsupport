@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
 /**
  * 创建自增或自减操作
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface CrementOperator {

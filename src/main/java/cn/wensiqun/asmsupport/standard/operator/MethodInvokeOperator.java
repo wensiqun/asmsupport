@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
  * 
  * 生成方法调用操作
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface MethodInvokeOperator {

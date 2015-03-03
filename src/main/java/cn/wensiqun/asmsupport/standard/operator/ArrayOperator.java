@@ -14,7 +14,7 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 /**
  * 数组操作
  *
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  */
 public interface ArrayOperator {
     

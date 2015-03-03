@@ -92,7 +92,7 @@ import cn.wensiqun.asmsupport.standard.operator.OperateSet;
  * 
  * 
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  * 
  */
 public abstract class ProgramBlockInternal extends AbstractBlockInternal implements OperateSet<IFInternal , WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal>  {

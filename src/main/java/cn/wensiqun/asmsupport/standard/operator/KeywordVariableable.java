@@ -8,7 +8,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
  * 
  * This和Super关键字操作
  * 
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  *
  */
 public interface KeywordVariableable {

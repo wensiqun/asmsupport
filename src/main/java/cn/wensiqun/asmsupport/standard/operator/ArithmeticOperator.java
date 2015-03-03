@@ -11,7 +11,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
 /**
  * 生成算数运算
  *
- * @author wensiqun(at)gmail
+ * @author wensiqun(at)163.com
  */
 public interface ArithmeticOperator {
     

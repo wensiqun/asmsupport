@@ -324,11 +324,11 @@ public class DummyTest {
     
     @Test
     public void test() {
-        try {
+        /*try {
             System.out.println(amsupportTest());
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         //System.out.println(ExceptedDummy.excepted());
     }
     
