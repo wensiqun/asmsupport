@@ -24,6 +24,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.LocalVariableMeta;
@@ -41,8 +43,9 @@ import cn.wensiqun.asmsupport.core.operator.array.ArrayStorer;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
-import cn.wensiqun.asmsupport.core.operator.assign.GlobalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.assign.LocalVariableAssigner;
+import cn.wensiqun.asmsupport.core.operator.assign.NonStaticGlobalVariableAssigner;
+import cn.wensiqun.asmsupport.core.operator.assign.StaticGlobalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
 import cn.wensiqun.asmsupport.core.operator.logical.LogicalAnd;
 import cn.wensiqun.asmsupport.core.operator.logical.LogicalOr;
@@ -392,11 +395,15 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         if(variable instanceof LocalVariable){
             return OperatorFactory.newOperator(LocalVariableAssigner.class,
                     new Class<?>[]{ProgramBlockInternal.class, LocalVariable.class, Parameterized.class}, 
-                    getExecutor(), (LocalVariable) variable, val);
-        }else if(variable instanceof GlobalVariable){
-            return OperatorFactory.newOperator(GlobalVariableAssigner.class,
-                            new Class<?>[]{ProgramBlockInternal.class, GlobalVariable.class, Parameterized.class}, 
-                            getExecutor(), (GlobalVariable) variable, val);
+                    getExecutor(), variable, val);
+        }else if(variable instanceof StaticGlobalVariable){
+            return OperatorFactory.newOperator(StaticGlobalVariableAssigner.class,
+                            new Class<?>[]{ProgramBlockInternal.class, StaticGlobalVariable.class, Parameterized.class}, 
+                            getExecutor(), variable, val);
+        }else if(variable instanceof NonStaticGlobalVariable){
+            return OperatorFactory.newOperator(NonStaticGlobalVariableAssigner.class,
+                    new Class<?>[]{ProgramBlockInternal.class, NonStaticGlobalVariable.class, Parameterized.class}, 
+                    getExecutor(),  variable, val);
         }
         return null;
     }

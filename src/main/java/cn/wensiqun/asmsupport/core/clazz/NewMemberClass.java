@@ -1,15 +1,15 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 
 
 public abstract class NewMemberClass extends AClass {
@@ -34,7 +34,8 @@ public abstract class NewMemberClass extends AClass {
     
     private AMethod staticBlock;
 
-    private List<GlobalVariable> globalVariables;
+    private Set<GlobalVariableMeta> globalVariableMetas;
+    //private List<GlobalVariable> globalVariables;
 
     //available only create enum class
     private int enumNum;
@@ -113,11 +114,11 @@ public abstract class NewMemberClass extends AClass {
 		return constructors;
 	}
     
-    protected List<GlobalVariable> getGlobalVariables() {
-    	if(globalVariables == null){
-            globalVariables = new ArrayList<GlobalVariable>();
+    protected Set<GlobalVariableMeta> getGlobalVariableMetas() {
+    	if(globalVariableMetas == null){
+    	    globalVariableMetas = new HashSet<GlobalVariableMeta>();
     	}
-		return globalVariables;
+		return globalVariableMetas;
 	}
     
 	/**
@@ -125,12 +126,8 @@ public abstract class NewMemberClass extends AClass {
      * add
      * @param field
      */
-    public void addGlobalVariableEntity(GlobalVariableMeta e) {
-        if (ModifierUtils.isStatic(e.getModifiers())) {
-        	getGlobalVariables().add(new GlobalVariable(e.getOwner(), e));
-        } else {
-        	getGlobalVariables().add(new GlobalVariable(getThisVariable(), e));
-        } 
+    public void addGlobalVariableMeta(GlobalVariableMeta e) {
+        getGlobalVariableMetas().add(e);
     }
     
     @Override
@@ -144,17 +141,18 @@ public abstract class NewMemberClass extends AClass {
 	}
 
 	
-    @Override
-    public GlobalVariableMeta getGlobalVariableMeta(String name) {
+    
+    /*@Override
+    public final GlobalVariableMeta getGlobalVariableMeta(String name) {
         for (GlobalVariable f : getGlobalVariables()) {
             if (f.getGlobalVariableMeta().getName().equals(name)) {
                 return f.getGlobalVariableMeta();
             }
         }
         return null;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
         for(GlobalVariable gv : getGlobalVariables()){
             if(gv.getVariableMeta().getName().equals(name)){
@@ -162,6 +160,6 @@ public abstract class NewMemberClass extends AClass {
             }
         }
         return null;
-    }
+    }*/
 
 }

@@ -291,7 +291,7 @@ public class DummyEnum {
             if(dummy.getName() == null) {
                 throw new ASMSupportException("Not specify field name.");
             }
-            eci.createField(dummy.getName(), dummy.getModifiers(), dummy.getType());
+            eci.createField(dummy.getName(), dummy.getModifiers(), dummy.getType(), dummy.getValue());
         }
         
         for(DummyMethod dummy : methodDummies) {

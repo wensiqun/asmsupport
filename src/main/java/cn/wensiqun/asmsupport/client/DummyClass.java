@@ -326,7 +326,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
             if(dummy.getName() == null) {
                 throw new ASMSupportException("Not specify field name.");
             }
-            cci.createField(dummy.getName(), dummy.getModifiers(), dummy.getType());
+            cci.createField(dummy.getName(), dummy.getModifiers(), dummy.getType(), dummy.getValue());
         }
         
         for(DummyMethod dummy : methodDummies) {

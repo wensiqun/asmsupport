@@ -5,13 +5,15 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyField extends DummyAccessControl<DummyField> {
-
+    
     /** Field type */
     private AClass type;
     
     /** Field name */
     private String name;
 
+    private Object value;
+    
     public DummyField() {
     }
     
@@ -26,6 +28,127 @@ public class DummyField extends DummyAccessControl<DummyField> {
     public DummyField(AClass type, String name) {
         this.type = type;
         this.name = name;
+    }
+    
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */
+    public DummyField _value(Boolean val) {
+        return _value((Object)val);
+    }
+
+    
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */
+    public DummyField _value(Character val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */
+    public DummyField _value(Byte val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */   
+    public DummyField _value(Short val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */    
+    public DummyField _value(Integer val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */   
+    public DummyField _value(Float val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */    
+    public DummyField _value(Long val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */    
+    public DummyField _value(Double val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */    
+    public DummyField _value(String val) {
+        return _value((Object)val);
+    }
+
+    /**
+     * Set initial value, this is only support static field, 
+     * otherwise will ignored.
+     * 
+     * @param val
+     * @return
+     */    
+    private DummyField _value(Object val) {
+        value = val;
+        return this;
+    }
+    
+    /**
+     * Get the field initial value
+     * 
+     * @return
+     */
+    public Object getValue() {
+        return this.value;
     }
 
     /**

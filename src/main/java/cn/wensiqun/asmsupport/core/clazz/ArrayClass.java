@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.Serializable;
+import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 
 /**
@@ -53,10 +53,10 @@ public class ArrayClass extends AClass {
         return desc;
     }
 
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
         return aclass.getGlobalVariable(name);
-    }
+    }*/
 
     @Override
     public boolean isArray() {
@@ -69,8 +69,9 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public GlobalVariableMeta getGlobalVariableMeta(String name) {
-        return aclass.getGlobalVariableMeta(name);
+    public List<GlobalVariableMeta> getGlobalVariableMeta(String name) {
+        //return aclass.getGlobalVariableMeta(name);
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -9,8 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -541,7 +542,7 @@ public abstract class InstructionHelper {
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
         locals.printState();
-        getMv().visitVarInsn(var.getVariableMeta().getDeclareClass().getType().getOpcode(Opcodes.ISTORE), 
+        getMv().visitVarInsn(var.getVariableMeta().getDeclareType().getType().getOpcode(Opcodes.ISTORE), 
                 var.getScopeLogicVar().getInitStartPos());
     }
     
@@ -781,18 +782,18 @@ public abstract class InstructionHelper {
     	{
     		storeInsn((LocalVariable)var);
     	}
-    	else if(var instanceof GlobalVariable)
+    	else if(var instanceof NonStaticGlobalVariable)
     	{
-    		GlobalVariable gv = (GlobalVariable) var;
-    		if(gv.getStaticOwner() != null){
-                putStatic(gv.getStaticOwner().getType(), 
+    	    NonStaticGlobalVariable gv = (NonStaticGlobalVariable) var;
+    	    putField(gv.getOwner().getVariableMeta().getDeclareType().getType(), 
                     gv.getVariableMeta().getName(),
-                    gv.getVariableMeta().getDeclareClass().getType());
-            }else if(gv.getVariableOwner() != null){
-                putField(gv.getVariableOwner().getVariableMeta().getDeclareClass().getType(), 
+                    gv.getVariableMeta().getDeclareType().getType());
+    	    
+    	} else if (var instanceof StaticGlobalVariable) {
+    	    StaticGlobalVariable gv = (StaticGlobalVariable) var;
+    	    putStatic(gv.getOwner().getType(), 
                     gv.getVariableMeta().getName(),
-                    gv.getVariableMeta().getDeclareClass().getType());
-            }
+                    gv.getVariableMeta().getDeclareType().getType());
     	}
     	
     	

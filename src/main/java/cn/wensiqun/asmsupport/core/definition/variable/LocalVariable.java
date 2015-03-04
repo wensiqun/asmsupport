@@ -47,7 +47,7 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public void loadToStack(ProgramBlockInternal block) {
-        block.getMethod().getInsnHelper().loadInsn(localVariableMeta.getDeclareClass().getType(), scopeLogicVar.getInitStartPos());
+        block.getMethod().getInsnHelper().loadInsn(localVariableMeta.getDeclareType().getType(), scopeLogicVar.getInitStartPos());
     }
 
     public LocalVariableMeta getLocalVariableMeta() {
@@ -65,7 +65,7 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public AClass getParamterizedType() {
-        return localVariableMeta.getDeclareClass();
+        return localVariableMeta.getDeclareType();
     }
 
     @Override
@@ -92,10 +92,10 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
         }
     }
 
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(localVariableMeta.getDeclareClass(), name);
-    }
+        return getGlobalVariable(localVariableMeta.getDeclareType(), name);
+    }*/
 
     @Override
     public String toString() {

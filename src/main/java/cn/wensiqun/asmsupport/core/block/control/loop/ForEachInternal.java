@@ -103,7 +103,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             condition = _lessThan(i, _arrayLength(iteratorVar));
             //((LessThan)condition).setJumpLable(startLbl);
         }else{
-        	final LocalVariable itr = _createVariable(null, AClass.ITERABLE_ACLASS, true, _invoke(iteratorVar, "iterator"));
+        	final LocalVariable itr = _createVariable(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 

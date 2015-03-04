@@ -240,11 +240,11 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyInterface newField(Class<?> type, String name) {
+    public DummyField newField(Class<?> type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
         field._type(type)._name(name);
-        return this;
+        return field;
     }
     
 
@@ -289,7 +289,7 @@ public class DummyInterface {
             if(dummy.getName() == null) {
                 throw new ASMSupportException("Not specify field name.");
             }
-            ici.createField(dummy.getName(), dummy.getType());
+            ici.createField(dummy.getName(), dummy.getType(), dummy.getValue());
         }
         
         for(DummyInterfaceMethod dummy : methodDummies) {

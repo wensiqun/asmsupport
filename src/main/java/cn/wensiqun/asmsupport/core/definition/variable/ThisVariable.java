@@ -38,7 +38,7 @@ public class ThisVariable extends ImplicitVariable {
 
     @Override
     public AClass getParamterizedType() {
-        return globalVariableMeta.getDeclareClass();
+        return globalVariableMeta.getDeclareType();
     }
 
     @Override
@@ -46,10 +46,10 @@ public class ThisVariable extends ImplicitVariable {
         return globalVariableMeta;
     }
 
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(globalVariableMeta.getDeclareClass(), name);
-    }
+        return getGlobalVariable(globalVariableMeta.getDeclareType(), name);
+    }*/
 
     @Override
     public String toString() {

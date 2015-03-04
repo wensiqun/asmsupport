@@ -1,15 +1,20 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
 import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.IMethodChooser;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -20,7 +25,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable {
+public abstract class AClass implements GetGlobalVariabled{
 
     /** java.lang.Boolean of AClass */
     public static final AClass BOOLEAN_WRAP_ACLASS = AClassFactory.getProductClass(Boolean.class);
@@ -82,8 +87,8 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
     /** java.lang.String of AClass */
     public static final AClass STRING_ACLASS = AClassFactory.getProductClass(String.class);
 
-    /** java.lang.Iterable of AClass */
-    public static final AClass ITERABLE_ACLASS = AClassFactory.getProductClass(Iterable.class);
+    /** java.lang.Iterator of AClass */
+    public static final AClass ITERATOR_ACLASS = AClassFactory.getProductClass(Iterator.class);
 
     /** java.lang.Exception of AClass */
     public static final AClass EXCEPTION_ACLASS = AClassFactory.getProductClass(Exception.class);
@@ -255,7 +260,41 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
         return false;
     }
 
-    public abstract GlobalVariableMeta getGlobalVariableMeta(String name);
+    /**
+     * Get all global variable metadata, that possible contain static and non-static field.
+     * 
+     * @param name
+     * @return
+     */
+    public abstract List<GlobalVariableMeta> getGlobalVariableMeta(String name);
+    
+    @Override
+    public final StaticGlobalVariable getGlobalVariable(String name) {
+        
+        List<GlobalVariableMeta> metas = getGlobalVariableMeta(name);
+        if(metas.isEmpty()) {
+            throw new ASMSupportException("No such field " + name);
+        }
+        
+        GlobalVariableMeta found = null;
+        StringBuilder errorSuffix = new StringBuilder();
+        for(GlobalVariableMeta meta : metas) {
+            if(ModifierUtils.isStatic(meta.getModifiers())) {
+                if(found != null) {
+                    errorSuffix.append(found.getActuallyOwnerType()).append(',')
+                               .append(meta.getActuallyOwnerType());
+                    throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
+                }
+                found = meta;
+            }
+        }
+        
+        if(found == null) {
+            throw new ASMSupportException("No such field " + name);
+        }
+        
+        return new StaticGlobalVariable(this, found);
+    }
     
     /**
      * 获取当前Class对应的ASM中的Type
@@ -348,10 +387,14 @@ public abstract class AClass implements GetGlobalVariabled{//, MethodInvokeable 
     
     public abstract boolean existStaticInitBlock();
 
+    
+    
     @Override
     public String toString() {
         return getName();
-        //return Modifier.toString(mod ^ Opcodes.ACC_SUPER) + " " + this.getDescription();
     }
+    
+    
+    
     
 }

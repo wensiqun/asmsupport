@@ -31,17 +31,35 @@ public class ClassCreator extends AbstractClassCreatorContext {
 
     /**
      * 
-     * Create a field for a class.
+     * Create a field with null value.
      * 
      * @param name            the field name
      * @param modifiers       the field modifiers
-     * @param fieldClass      the field type
+     * @param type      the field type
      * @return
      */
-    public IFieldCreator createField(String name, int modifiers,
-            AClass fieldClass) {
-        IFieldCreator fc = new FieldCreator(name, modifiers,
-                fieldClass);
+    public IFieldCreator createField(String name, int modifiers, AClass type) {
+        return createField(name, modifiers, type, null);
+    }
+    
+    /**
+     * Create a field with special value
+     * 
+     * @param name
+     * @param modifiers
+     * @param type
+     * @param value The initial value, this value is only support static field, 
+     *              otherwise will ignored.This parameter, which may be null 
+     *              if the field does not have an initial value, 
+     *              must be an Integer, a Float, a Long, a Double or a 
+     *              String (for int, float, long or String fields respectively). 
+     *              This parameter is only used for static fields. Its value is 
+     *              ignored for non static fields, which must be initialized 
+     *              through bytecode instructions in constructors or methods. 
+     * @return
+     */
+    public IFieldCreator createField(String name, int modifiers, AClass type, Object val) {
+        IFieldCreator fc = new FieldCreator(name, modifiers, type, val);
         fieldCreators.add(fc);
         return fc;
     }

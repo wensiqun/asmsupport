@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -32,11 +32,11 @@ public class AnyException extends AClass
         System.out.print(t.getSort() + ":" + t.getSize());
     }*/
     
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name)
     {
         throw new UnsupportedOperationException();
-    }
+    }*/
 
     @Override
     public boolean isArray()
@@ -57,7 +57,7 @@ public class AnyException extends AClass
     }
 
     @Override
-    public GlobalVariableMeta getGlobalVariableMeta(String name)
+    public List<GlobalVariableMeta> getGlobalVariableMeta(String name)
     {
         throw new UnsupportedOperationException();
     }

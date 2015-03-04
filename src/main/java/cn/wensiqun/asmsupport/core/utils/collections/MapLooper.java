@@ -10,7 +10,6 @@ public abstract class MapLooper<K, V> {
 	private Map<K, V> map;
 
 	public MapLooper(Map<K, V> map) {
-		super();
 		this.map = map;
 	}
 	

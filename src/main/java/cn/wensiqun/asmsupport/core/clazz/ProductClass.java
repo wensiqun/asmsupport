@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.LinkedList;
 
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -49,53 +49,77 @@ public class ProductClass extends NewMemberClass {
     }
 
     @Override
-    public GlobalVariableMeta getGlobalVariableMeta(String name) {
-        Class<?> fieldOwner = reallyClass;
-        GlobalVariableMeta entiey = null;
-        for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){
-            try {
-                Field f = fieldOwner.getDeclaredField(name);
-                entiey = new GlobalVariableMeta(this, 
-                		AClassFactory.getProductClass(fieldOwner),
-                		AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
-                break;
-            } catch (NoSuchFieldException e) {
-                //throw new IllegalArgumentException("no such method exception : " + methodName);
+    public LinkedList<GlobalVariableMeta> getGlobalVariableMeta(final String name) {
+        
+        final LinkedList<GlobalVariableMeta> found = new LinkedList<GlobalVariableMeta>();
+        
+        for(GlobalVariableMeta gv : getGlobalVariableMetas()){
+            if(gv.getName().equals(name)){
+                found.add(gv);
             }
         }
-        return entiey;
+        
+        if(found.isEmpty()) {
+            Class<?> fieldOwner = reallyClass;
+            for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
+                try {
+                    Field f = fieldOwner.getDeclaredField(name);
+                    found.add(new GlobalVariableMeta(this,
+                            AClassFactory.getProductClass(fieldOwner),
+                            AClassFactory.getProductClass(f.getType()), f.getModifiers(), name));
+                    break;
+                } catch (NoSuchFieldException e) {
+                }
+            }
+        }
+        
+        new InterfaceLooper() {
+            @Override
+            protected boolean process(Class<?> inter) {
+                try {
+                    Field f = inter.getDeclaredField(name);
+                    found.add(new GlobalVariableMeta(ProductClass.this,
+                            AClassFactory.getProductClass(inter),
+                            AClassFactory.getProductClass(f.getType()), f.getModifiers(), name));
+                    return true;
+                } catch (NoSuchFieldException e) {
+                    return false;
+                }
+            }
+        }.loop(reallyClass.getInterfaces());
+        return found;
     }
-
     
 
-    @Override
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
-    	GlobalVariable gv = super.getGlobalVariable(name);
-    	if(gv != null){
-    		return gv;
-    	}
+        for(GlobalVariable gv : getGlobalVariables()){
+            if(gv.getVariableMeta().getName().equals(name)){
+                return gv;
+            }
+        }
     	
         Class<?> fieldOwner = reallyClass;
-        Field f = null;
+        Field field = null;
         for(;fieldOwner!=null ;fieldOwner = fieldOwner.getSuperclass()){
             try {
-                f = fieldOwner.getDeclaredField(name);
+                field = fieldOwner.getDeclaredField(name);
                 break;
             } catch (NoSuchFieldException e) {
             }
         }
         
-        if(f == null){
-            throw new ASMSupportException("no such field exception : " + name);
+        if(field == null){
+            throw new ASMSupportException("No such field : " + name);
         }
         
-        if(!ModifierUtils.isStatic(f.getModifiers())){
-            throw new ASMSupportException("the field \"" + f.getName() + "\" is non-static, cannot use current method!");
+        if(!ModifierUtils.isStatic(field.getModifiers())){
+            throw new ASMSupportException("The field \"" + field.getName() + "\" is non-static, cannot use current method!");
         }
         
         return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
-        		AClassFactory.getProductClass(f.getType()), f.getModifiers(), name);
-    }
+        		AClassFactory.getProductClass(field.getType()), field.getModifiers(), name);
+    }*/
     
     @Override
     public int getCastOrder(){

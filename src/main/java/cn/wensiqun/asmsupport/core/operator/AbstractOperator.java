@@ -126,7 +126,11 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     @Override
     public void execute() {
         compileOrder = insnHelper.getMethod().nextInsNumber();
-        doExecute();
+        try {
+            doExecute();
+        } catch (Exception e) {
+            throw new ASMSupportException("Error while generate bytecode (" + toString() + ")", e);
+        } 
     }
 
     protected abstract void doExecute();

@@ -1,9 +1,11 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
@@ -56,10 +58,54 @@ public class SemiClass extends NewMemberClass {
     }
 
     @Override
+    public List<GlobalVariableMeta> getGlobalVariableMeta(final String name) {
+        
+        final LinkedList<GlobalVariableMeta> found = new LinkedList<GlobalVariableMeta>();
+        
+        for(GlobalVariableMeta gv : getGlobalVariableMetas()){
+            if(gv.getName().equals(name)){
+                found.add(gv);
+            }
+        }
+        
+        if(found.isEmpty()) {
+            Class<?> fieldOwner = getSuperClass();
+            for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
+                try {
+                    Field f = fieldOwner.getDeclaredField(name);
+                    found.add(new GlobalVariableMeta(this,
+                            AClassFactory.getProductClass(fieldOwner),
+                            AClassFactory.getProductClass(f.getType()), f.getModifiers(), name));
+                    break;
+                } catch (NoSuchFieldException e) {
+                }
+            }
+        }
+        
+        new InterfaceLooper() {
+            @Override
+            protected boolean process(Class<?> inter) {
+                try {
+                    Field f = inter.getDeclaredField(name);
+                    found.add(new GlobalVariableMeta(SemiClass.this,
+                            AClassFactory.getProductClass(inter),
+                            AClassFactory.getProductClass(f.getType()), f.getModifiers(), name));
+                    return true;
+                } catch (NoSuchFieldException e) {
+                    return false;
+                }
+            }
+        }.loop(getInterfaces());
+        
+        return found;
+    }
+
+    /*@Override
     public GlobalVariable getGlobalVariable(String name) {
-    	GlobalVariable gv = super.getGlobalVariable(name);
-    	if(gv != null){
-        	return gv;
+        for(GlobalVariable gv : getGlobalVariables()){
+            if(gv.getVariableMeta().getName().equals(name)){
+                return gv;
+            }
         }
         
         Class<?> fieldOwner = superClass;
@@ -78,5 +124,5 @@ public class SemiClass extends NewMemberClass {
         
         return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
                 new ProductClass(f.getType()), f.getModifiers(), name);
-    }
+    }*/
 }

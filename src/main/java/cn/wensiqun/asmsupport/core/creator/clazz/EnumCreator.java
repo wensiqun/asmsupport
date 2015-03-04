@@ -12,6 +12,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
+import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -21,6 +22,7 @@ import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.CollectionUtils;
+import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 
@@ -53,21 +55,42 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
     /**
      * 
-     * @param name
-     * @param modifiers
-     * @param fieldClass
-     * @param value
+     * Create a field with null value.
+     * 
+     * @param name            the field name
+     * @param modifiers       the field modifiers
+     * @param type      the field type
      * @return
      */
-    public void createField(String name, int modifiers,
-            AClass fieldClass) {
+    public IFieldCreator createField(String name, int modifiers, AClass type) {
+        return createField(name, modifiers, type, null);
+    }
+    
+    
+    /**
+     * Create a field with special value.
+     * 
+     * @param name
+     * @param modifiers
+     * @param type
+     * @param value The initial value, this value is only support static field, 
+     *              otherwise will ignored.This parameter, which may be null 
+     *              if the field does not have an initial value, 
+     *              must be an Integer, a Float, a Long, a Double or a 
+     *              String (for int, float, long or String fields respectively). 
+     *              This parameter is only used for static fields. Its value is 
+     *              ignored for non static fields, which must be initialized 
+     *              through bytecode instructions in constructors or methods.
+     * @return
+     */
+    public IFieldCreator createField(String name, int modifiers, AClass type, Object value) {
         if(!existEnumConstant){
             throw new ASMSupportException("first field must be an enum object of current enum type " + sc.getName());
         }
-        FieldCreator fc = new FieldCreator(name, modifiers,
-                fieldClass);
+        FieldCreator fc = new FieldCreator(name, modifiers, type, value);
         fieldCreators.add(fc);
         existField = !ModifierUtils.isEnum(modifiers);
+        return fc;
     }
     
     /**
@@ -155,15 +178,22 @@ public class EnumCreator extends AbstractClassCreatorContext {
     public void createConstructor(AClass[] argClasses,
             String[] argNames, EnumConstructorBodyInternal mb) {
     	
+    	if(ArrayUtils.isNotEmpty(argClasses) && ArrayUtils.isEmpty(argNames)) {
+            argNames = new String[argClasses.length];
+            for(int i=0; i<argNames.length; i++) {
+                argNames[i] = "arg" + i;
+            }
+        }
+    	
     	if(argNames == null){
-    		argNames = new String[0];
-    	}
-    	if(argClasses == null){
-    		argClasses = new AClass[0];
-    	}
+            argNames = new String[0];
+        }
+        if(argClasses == null){
+            argClasses = new AClass[0];
+        }
     	
     	if(argNames.length != argClasses.length){
-    		throw new IllegalArgumentException("different arugment class number and argument name number");
+    		throw new IllegalArgumentException("Different arugment class number and argument name number");
     	}
     	
     	if(argNames.length == 0){

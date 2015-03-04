@@ -178,7 +178,7 @@ public class DummyModifiedClass {
             if(dummy.getName() == null) {
                 throw new ASMSupportException("Not specify field name.");
             }
-            cmi.createField(dummy.getName(), dummy.getModifiers(), dummy.getType());
+            cmi.createField(dummy.getName(), dummy.getModifiers(), dummy.getType(), dummy.getValue());
         }
         
         for(DummyMethod dummy : methodDummies) {

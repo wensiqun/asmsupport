@@ -28,8 +28,8 @@ public class VariableInvoker extends MethodInvoker {
      
     @Deprecated
     protected VariableInvoker(ProgramBlockInternal block, IVariable var, String name, Parameterized[] arguments) {
-        super(block, var.getVariableMeta().getDeclareClass(), name, arguments);
-        if(var.getVariableMeta().getDeclareClass().isPrimitive()){
+        super(block, var.getVariableMeta().getDeclareType(), name, arguments);
+        if(var.getVariableMeta().getDeclareType().isPrimitive()){
             throw new IllegalArgumentException("primitive variable \"" + var.getVariableMeta().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");
         }
         this.var = var;
@@ -59,16 +59,16 @@ public class VariableInvoker extends MethodInvoker {
             //变量入栈
             var.loadToStack(block);
             argumentsToStack();
-            if(ve.getDeclareClass().isInterface()){
+            if(ve.getDeclareType().isInterface()){
                 log.debug("invoke interface method : " + name);
                 //如果是接口
-                insnHelper.invokeInterface(ve.getDeclareClass().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                insnHelper.invokeInterface(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
                 log.debug("invoke class method : " + name);
                 if(ve.getName().equals(ASConstant.SUPER)){
-                    insnHelper.invokeSuperMethod(ve.getDeclareClass().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                    insnHelper.invokeSuperMethod(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                 }else {
-                    insnHelper.invokeVirtual(ve.getDeclareClass().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                    insnHelper.invokeVirtual(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                 }
             }
             if(!isSaveReference()){

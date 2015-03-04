@@ -7,6 +7,7 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
+import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -44,10 +45,28 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
     }
 	
 	/**
+     * <P>
+     *     create a global variable. the modifiers "public static final".</br>
+     *     The default value is same to JVM</br>
+     * </p>
+     * 
+     * <p>
+     *     if you want assign special value to this variable, <br>
+     *     you need do it at static block.
+     * </p>
+     * 
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	public IFieldCreator createField(String name, AClass type) {
+	    return createField(name, type, null);
+	}
+    
+	/**
 	 * <P>
-	 *     create a global variable. the modifiers "public static final".</br>
-	 *     if type is primitive than the default value is same to JVM</br>
-	 *     if type if Object than default value is null.
+	 *     create a global variable with special value. the modifiers "public static final".</br>
+	 *     The default value is same to JVM</br>
 	 * </p>
 	 * 
 	 * <p>
@@ -56,11 +75,20 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	 * </p>
 	 * 
 	 * @param name variable name
-	 * @param fieldClass
+	 * @param type
+	 * @param value The initial value, this value is only support static field, 
+     *              otherwise will ignored.This parameter, which may be null 
+     *              if the field does not have an initial value, 
+     *              must be an Integer, a Float, a Long, a Double or a 
+     *              String (for int, float, long or String fields respectively). 
+     *              This parameter is only used for static fields. Its value is 
+     *              ignored for non static fields, which must be initialized 
+     *              through bytecode instructions in constructors or methods.
 	 */
-    public void createField(String name, AClass fieldClass){
-    	FieldCreator fc = new FieldCreator(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, fieldClass);
+    public IFieldCreator createField(String name, AClass type, Object value){
+    	FieldCreator fc = new FieldCreator(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, type, value);
         fieldCreators.add(fc);
+        return fc;
     }
 	
     /**

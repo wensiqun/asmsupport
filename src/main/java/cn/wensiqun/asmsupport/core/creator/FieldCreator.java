@@ -2,8 +2,9 @@ package cn.wensiqun.asmsupport.core.creator;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 
 /**
  * 
@@ -11,7 +12,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
  *
  */
 public class FieldCreator implements IFieldCreator {
-
+    
     private String name;
     private int modifiers;
     private AClass type;
@@ -54,7 +55,7 @@ public class FieldCreator implements IFieldCreator {
     	this.context = cv;
     	NewMemberClass owner = cv.getCurrentClass();
         fe = new GlobalVariableMeta(owner, owner, type, modifiers, name);
-        owner.addGlobalVariableEntity(fe);
+        owner.addGlobalVariableMeta(fe);
     }
     
     @Override
@@ -64,7 +65,14 @@ public class FieldCreator implements IFieldCreator {
 
     @Override
     public void execute() {
-        context.getClassVisitor().visitField(fe.getModifiers(), name, fe.getDeclareClass().getDescription(), null, value).visitEnd();
+        if(value != null && !ModifierUtils.isStatic(modifiers)) {
+            throw new ASMSupportException("The initial value '" + value + "' of field '" + name + 
+                    "' is invaild, cause by the field is not static, and the initial value only support static field.");
+        }
+        if(value != null && value instanceof Boolean) {
+            value = (Boolean) value ? 1 : 0;
+        }
+        context.getClassVisitor().visitField(fe.getModifiers(), name, fe.getDeclareType().getDescription(), null, value).visitEnd();
     }
 
 }
