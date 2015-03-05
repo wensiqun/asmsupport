@@ -49,16 +49,16 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 					@Override
 					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
-						LocalVariable rand = _createVariable("rand", AClassFactory.getProductClass(Random.class), false, _new(AClassFactory.getProductClass(Random.class)));
+						LocalVariable rand = _var("rand", AClassFactory.getProductClass(Random.class), false, _new(AClassFactory.getProductClass(Random.class)));
 						
 						//rand.nextInt(100) + 1
 						Addition add1 = _add(_invoke(rand, "nextInt", Value.value(100)), Value.value(1));
 						
 						//int j = rand.nextInt(100) + 1;
-						LocalVariable j = _createVariable("j", AClass.INT_ACLASS, false, add1);
+						LocalVariable j = _var("j", AClass.INT_ACLASS, false, add1);
 						
 						//int k = rand.nextInt(100) + 1;
-						LocalVariable k = _createVariable("k", AClass.INT_ACLASS, false, add1);
+						LocalVariable k = _var("k", AClass.INT_ACLASS, false, add1);
 						
 						//printInt("j", j);
 						_invokeStatic(getMethodOwner(), "printInt", Value.value("j"), j);
@@ -69,7 +69,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						//j + k
 						Addition add2 = _add(j, k);
 						//int i = j + k;
-						LocalVariable i = _createVariable("i", AClass.INT_ACLASS, false, add2);
+						LocalVariable i = _var("i", AClass.INT_ACLASS, false, add2);
 						
 						//printInt("j + k", i);
 						_invokeStatic(getMethodOwner(), "printInt", Value.value("j + k"), i);
@@ -109,10 +109,10 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						MethodInvoker nextFloat = _invoke(rand, "nextFloat");
 						
 						//v = rand.nextFloat();
-						LocalVariable v = _createVariable("v", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable v = _var("v", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//w = rand.nextFloat();
-						LocalVariable w = _createVariable("w", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable w = _var("w", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//printFloat("v", v);
 						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v"), v);
@@ -121,7 +121,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						_invokeStatic(getMethodOwner(), "printFloat", Value.value("w"), w);
 						
 						//u = v + w;
-						LocalVariable u = _createVariable("u", AClass.FLOAT_ACLASS, false, _add(v,w));
+						LocalVariable u = _var("u", AClass.FLOAT_ACLASS, false, _add(v,w));
 						
 						//printFloat("v + w", u);
 						_invokeStatic(getMethodOwner(), "printFloat", Value.value("v + w"), u);

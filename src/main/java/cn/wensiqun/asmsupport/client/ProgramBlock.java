@@ -89,29 +89,29 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
-    public LocalVariable _createVariable(String name, Class<?> type, Parameterized para) {
-        return target._createVariable(name, type, para);
+    public LocalVariable _var(String name, Class<?> type, Parameterized para) {
+        return target._var(name, type, para);
     }
 
     @Override
-    public LocalVariable _createVariable(Class<?> type, Parameterized para) {
-        return target._createVariable(type, para);
+    public LocalVariable _var(Class<?> type, Parameterized para) {
+        return target._var(type, para);
     }
 
     @Override
-    public LocalVariable _createVariable(String name, AClass type, Parameterized para) {
-        return target._createVariable(name, type, para);
+    public LocalVariable _var(String name, AClass type, Parameterized para) {
+        return target._var(name, type, para);
     }
 
     @Override
-    public LocalVariable _createVariable(AClass type, Parameterized para) {
-        return target._createVariable(type, para);
+    public LocalVariable _var(AClass type, Parameterized para) {
+        return target._var(type, para);
     }
 
     @Override
-    public LocalVariable _createVariable(String name, AClass aClass, boolean anonymous, Parameterized para)
+    public LocalVariable _var(String name, AClass aClass, boolean anonymous, Parameterized para)
     {
-        return target._createVariable(name, aClass, anonymous, para);
+        return target._var(name, aClass, anonymous, para);
     }
 
     @Override

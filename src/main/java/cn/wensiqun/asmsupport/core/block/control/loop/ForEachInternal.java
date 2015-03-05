@@ -77,7 +77,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         //?
         //?new NOP(getExecutor());
         if(iteratorVar.getParamterizedType().isArray()){
-            final LocalVariable i = _createVariable(null, AClass.INT_ACLASS, true, Value.value(0));
+            final LocalVariable i = _var(null, AClass.INT_ACLASS, true, Value.value(0));
             
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -94,7 +94,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             //?new NOP(getExecutor());
             
-            LocalVariable obj = _createVariable(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), _arrayLoad(iteratorVar, i) );
+            LocalVariable obj = _var(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), _arrayLoad(iteratorVar, i) );
             body(obj);
 
             OperatorFactory.newOperator(Marker.class, 
@@ -104,7 +104,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             condition = _lessThan(i, _arrayLength(iteratorVar));
         }else{
-        	final LocalVariable itr = _createVariable(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
+        	final LocalVariable itr = _var(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -115,8 +115,8 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                _createVariable(AClass.OBJECT_ACLASS, _invoke(itr, "next")) :
-                                _createVariable(elementType, _checkcast(_invoke(itr, "next"), elementType));
+                                _var(AClass.OBJECT_ACLASS, _invoke(itr, "next")) :
+                                _var(elementType, _checkcast(_invoke(itr, "next"), elementType));
             body(obj);
 
             OperatorFactory.newOperator(Marker.class, 

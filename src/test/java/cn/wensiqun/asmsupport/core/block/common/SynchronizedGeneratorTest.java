@@ -83,7 +83,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 _sync(new SynchronizedInternal(_this()){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = _createVariable("i", AClass.INT_ACLASS, false, Value.value(0));
+                        final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
                         _while(new WhileInternal(_lessThan(i, Value.value(10))){
 
                             @Override
@@ -109,7 +109,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 _sync(new SynchronizedInternal(_this().getGlobalVariable("lock")){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = _createVariable("i", AClass.INT_ACLASS, false, Value.value(0));
+                        final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
                         _while(new WhileInternal(_lessThan(i, Value.value(10))){
 
                             @Override
@@ -201,21 +201,21 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
             @Override
             public void body(LocalVariable... argus) {
-                 final LocalVariable sgst = _createVariable("sgst", syncCls, false, _new(syncCls));
+                 final LocalVariable sgst = _var("sgst", syncCls, false, _new(syncCls));
                 
-                 final LocalVariable es = _createVariable(
+                 final LocalVariable es = _var(
                         "es", 
                         AClassFactory.getProductClass(ExecutorService.class),
                         false, 
                         _invokeStatic(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
                 );
-                 final LocalVariable objs = _createVariable(
+                 final LocalVariable objs = _var(
                         "objs", 
                         AClassFactory.getProductClass(List.class),
                         false, 
                         _new(AClassFactory.getProductClass(ArrayList.class))
                 );
-                 final LocalVariable i = _createVariable(
+                 final LocalVariable i = _var(
                         "i", 
                         AClass.INT_ACLASS,
                         false, 

@@ -43,13 +43,13 @@ public class CrementOperatorGenerate extends AbstractExample {
 				_invoke(systemOut, "println", Value.value("******************************demonstrate***************************"));
 				
 				//int a = 1;
-			    LocalVariable a = _createVariable("a", AClass.INT_ACLASS, false, Value.value(1));
+			    LocalVariable a = _var("a", AClass.INT_ACLASS, false, Value.value(1));
 			    //int b = 2;
-			    LocalVariable b = _createVariable("b", AClass.INT_ACLASS, false, Value.value(2));
+			    LocalVariable b = _var("b", AClass.INT_ACLASS, false, Value.value(2));
 			    //int c = ++b;
-			    LocalVariable c = _createVariable("c", AClass.INT_ACLASS, false, _preInc(b));
+			    LocalVariable c = _var("c", AClass.INT_ACLASS, false, _preInc(b));
 			    //d = a++;
-			    LocalVariable d = _createVariable("d", AClass.INT_ACLASS, false, _postInc(a));
+			    LocalVariable d = _var("d", AClass.INT_ACLASS, false, _postInc(a));
 			    //c++;
 			    _postInc(c);
 			    
@@ -77,7 +77,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 		    public void body(LocalVariable... argus) {
 				_invoke(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
 				//int count = 10;
-				LocalVariable count = _createVariable("count", AClass.INT_ACLASS, false, Value.value(10));
+				LocalVariable count = _var("count", AClass.INT_ACLASS, false, Value.value(10));
 				// ++count
 				_preInc(count); 
 				// --count;
@@ -94,7 +94,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				LocalVariable currentObj = _createVariable("currentObj", getMethodOwner(), false, _new(getMethodOwner()));
+				LocalVariable currentObj = _var("currentObj", getMethodOwner(), false, _new(getMethodOwner()));
 				_invoke(currentObj, "demonstrate");
 				_invoke(currentObj, "incrementAndDecrement");
 				_return();

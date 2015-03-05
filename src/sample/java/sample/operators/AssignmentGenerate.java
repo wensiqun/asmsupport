@@ -32,7 +32,7 @@ public class AssignmentGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//创建个String变量默认赋值为null
-				LocalVariable string = _createVariable("string", AClass.STRING_ACLASS, false, null);
+				LocalVariable string = _var("string", AClass.STRING_ACLASS, false, null);
 				
 				_assign(string, _invokeStatic(getMethodOwner(), "commonMethod"));
 				_invoke(systemOut, "println", _append(Value.value("first asign :"), string));

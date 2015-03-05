@@ -71,7 +71,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 				_invoke(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getProductClass(Random.class);
-				LocalVariable random = this._createVariable("random", randomClass, false, this._new(randomClass, Value.value(1L)));
+				LocalVariable random = this._var("random", randomClass, false, this._new(randomClass, Value.value(1L)));
 				_if(new IFInternal(_invoke(random, "nextBoolean")){
 					@Override
 					public void body() {
@@ -96,7 +96,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				_invoke(out, "println", Value.value("before"));
-				LocalVariable lv = this._createVariable(null, getOriginalMethodReturnClass(), true, _invokeOriginalMethod());
+				LocalVariable lv = this._var(null, getOriginalMethodReturnClass(), true, _invokeOriginalMethod());
 				_invoke(out, "println", Value.value("after"));	
 				_return(lv);
 			}

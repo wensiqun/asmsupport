@@ -108,7 +108,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class}, 
                 this, lock.getParamterizedType());
         
-		dupSynArgument = _createVariable(null, lock.getParamterizedType(), true, dup);
+		dupSynArgument = _var(null, lock.getParamterizedType(), true, dup);
 		
 		flag1 = OperatorFactory.newOperator(Marker.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Label.class}, 

@@ -17,50 +17,50 @@ public interface VariableOperator {
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _createVariable(name, {@link AClassFactory#getProductClass(type)}, false, para)
+     * _var(name, {@link AClassFactory#getProductClass(type)}, false, para)
      * </p>
      * @param name
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable _createVariable(final String name, final Class<?> type, final Parameterized para);
+    public LocalVariable _var(final String name, final Class<?> type, final Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _createVariable("", {@link AClassFactory#getProductClass(type)}, true, para)
+     * _var("", {@link AClassFactory#getProductClass(type)}, true, para)
      * </p>
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable _createVariable(final Class<?> type, final Parameterized para);
+    public LocalVariable _var(final Class<?> type, final Parameterized para);
     
 
 
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _createVariable(name, type, false, para)
+     * _var(name, type, false, para)
      * </p>
      * @param name
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable _createVariable(final String name, final AClass type, final Parameterized para);
+    public LocalVariable _var(final String name, final AClass type, final Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _createVariable("", type, true, para)
+     * _var("", type, true, para)
      * </p>
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable _createVariable(final AClass type, final Parameterized para);
+    public LocalVariable _var(final AClass type, final Parameterized para);
     
     /**
 	 * create a local variable
@@ -71,7 +71,7 @@ public interface VariableOperator {
 	 * @param para this variable initial value, set to null if you want the initial is null.
 	 * @return the LocalVariable
 	 */
-	public LocalVariable _createVariable(final String name, final AClass aClass, boolean anonymous, final Parameterized para);
+	public LocalVariable _var(final String name, final AClass aClass, boolean anonymous, final Parameterized para);
 	
 	/**
 	 * 

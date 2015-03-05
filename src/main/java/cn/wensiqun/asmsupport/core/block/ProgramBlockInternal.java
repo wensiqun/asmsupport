@@ -323,27 +323,27 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public LocalVariable _createVariable(String name, Class<?> type, Parameterized para) {
-        return _createVariable(name, AClassFactory.getProductClass(type), false, para);
+    public LocalVariable _var(String name, Class<?> type, Parameterized para) {
+        return _var(name, AClassFactory.getProductClass(type), false, para);
     }
 
     @Override
-    public LocalVariable _createVariable(Class<?> type, Parameterized para) {
-        return _createVariable("", AClassFactory.getProductClass(type), true, para);
+    public LocalVariable _var(Class<?> type, Parameterized para) {
+        return _var("", AClassFactory.getProductClass(type), true, para);
     }
 
     @Override
-    public LocalVariable _createVariable(String name, AClass type, Parameterized para) {
-        return _createVariable(name, type, false, para);
+    public LocalVariable _var(String name, AClass type, Parameterized para) {
+        return _var(name, type, false, para);
     }
 
     @Override
-    public LocalVariable _createVariable(AClass type, Parameterized para) {
-        return _createVariable("", type, true, para);
+    public LocalVariable _var(AClass type, Parameterized para) {
+        return _var("", type, true, para);
     }
     
     @Override
-    public final LocalVariable _createVariable(final String name, final AClass aClass, boolean anonymous, final Parameterized para) {
+    public final LocalVariable _var(final String name, final AClass aClass, boolean anonymous, final Parameterized para) {
         if(aClass.isArray()){
             throw new IllegalArgumentException(aClass + " is Array type exchange to createArrayVariable to create the array variable");
         }

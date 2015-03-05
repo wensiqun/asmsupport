@@ -26,7 +26,7 @@ public class ForEachBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    LocalVariable list  = _createVariable("list", List.class, _new(ArrayList.class));
+                    LocalVariable list  = _var("list", List.class, _new(ArrayList.class));
                     _invoke(list, "add", Value.value("ForEach "));
                     _invoke(list, "add", Value.value("Test "));
                     _for(new ForEachInternal(list){

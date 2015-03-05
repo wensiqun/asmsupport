@@ -277,7 +277,7 @@ public class DummyTest {
             @Override
             public void body(LocalVariable... args) {
                 //LocalVariable dm = _createVariable("dm", getMethodOwner(), _new(getMethodOwner()));
-                final LocalVariable sb = _createVariable("sb", StringBuilder.class, _new(StringBuilder.class));
+                final LocalVariable sb = _var("sb", StringBuilder.class, _new(StringBuilder.class));
                 
                 AClass ExceptedInterfaceAClass = AClassFactory.getProductClass(ExceptedInterface);
                 GlobalVariable interface_field_list = ExceptedInterfaceAClass.getGlobalVariable("interface_field_list");
@@ -289,7 +289,7 @@ public class DummyTest {
                     @Override
                     public void body(LocalVariable str) {
                         _invoke(sb, "append", str);
-                        LocalVariable len = _createVariable("len", long.class, _invoke(str, "length"));
+                        LocalVariable len = _var("len", long.class, _invoke(str, "length"));
                         _invoke(sb, "append", len);
                     }
                     

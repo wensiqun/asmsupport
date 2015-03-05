@@ -58,25 +58,25 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 					      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 					      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"})));
 			    //int a = 3; 
-				LocalVariable a = _createVariable("a", AClass.INT_ACLASS, false, Value.value(3));
+				LocalVariable a = _var("a", AClass.INT_ACLASS, false, Value.value(3));
 			    
 			    //int b = 6; 
-				LocalVariable b = _createVariable("b", AClass.INT_ACLASS, false, Value.value(6));
+				LocalVariable b = _var("b", AClass.INT_ACLASS, false, Value.value(6));
 				
 			    //int c = a | b;
-				LocalVariable c = _createVariable("c", AClass.INT_ACLASS, false, this._bitOr(a, b));
+				LocalVariable c = _var("c", AClass.INT_ACLASS, false, this._bitOr(a, b));
 				
 			    //int d = a & b;
-				LocalVariable d = _createVariable("d", AClass.INT_ACLASS, false, this._bitAnd(a, b));
+				LocalVariable d = _var("d", AClass.INT_ACLASS, false, this._bitAnd(a, b));
 				
 			    //int e = a ^ b;
-				LocalVariable e = _createVariable("e", AClass.INT_ACLASS, false, this._bitXor(a, b));
+				LocalVariable e = _var("e", AClass.INT_ACLASS, false, this._bitXor(a, b));
 				
 			    //int f = (~a & b) | (a & ~b);
-				LocalVariable f = _createVariable("f", AClass.INT_ACLASS, false, _bitOr(_bitAnd(_inverts(a), b), _bitAnd(a, _inverts(b))));
+				LocalVariable f = _var("f", AClass.INT_ACLASS, false, _bitOr(_bitAnd(_inverts(a), b), _bitAnd(a, _inverts(b))));
 				
 			    //int g = ~a & 0x0f;
-				LocalVariable g = _createVariable("g", AClass.INT_ACLASS, false, this._bitAnd(_inverts(a), Value.value(0x0f)));
+				LocalVariable g = _var("g", AClass.INT_ACLASS, false, this._bitAnd(_inverts(a), Value.value(0x0f)));
 				
 			    //System.out.println("        a = " + binary[a]);
 				_invoke(systemOut, "println", _append(Value.value("        a = "), _arrayLoad(binary, a)));
