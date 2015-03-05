@@ -254,7 +254,7 @@ public class Label {
      */
     public Label() {
     }
-    
+    //Customize Constructor
     private String name;
     
     public Label(String name)
@@ -271,7 +271,7 @@ public class Label {
     {
         this.name = name;
     }
-    
+
     // ------------------------------------------------------------------------
     // Methods to compute offsets and to manage forward references
     // ------------------------------------------------------------------------
@@ -490,7 +490,7 @@ public class Label {
     void addToSubroutine(final long id, final int nbSubroutines) {
         if ((status & VISITED) == 0) {
             status |= VISITED;
-            srcAndRefPositions = new int[(nbSubroutines - 1) / 32 + 1];
+            srcAndRefPositions = new int[nbSubroutines / 32 + 1];
         }
         srcAndRefPositions[(int) (id >>> 32)] |= (int) id;
     }
