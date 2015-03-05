@@ -86,7 +86,7 @@ public abstract class AbstractVariable implements IVariable {
         }
         
         if(ModifierUtils.isStatic(found.getModifiers())){
-            return new StaticGlobalVariable(found.getDeclareType(), found);
+            return new StaticGlobalVariable(found.getActuallyOwnerType(), found);
         } else {
             return new NonStaticGlobalVariable(this, found);
         }

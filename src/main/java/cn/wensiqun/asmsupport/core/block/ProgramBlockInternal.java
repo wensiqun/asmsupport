@@ -334,7 +334,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable _createVariable(String name, AClass type, Parameterized para) {
-        return _createVariable(name, type, true, para);
+        return _createVariable(name, type, false, para);
     }
 
     @Override
@@ -568,12 +568,16 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     @Override
     public final CheckCast _checkcast(Parameterized cc, AClass to){
         if(to.isPrimitive()){
-                throw new IllegalArgumentException("cannot cache cast to type : " + to);
-          }
+            throw new IllegalArgumentException("Cannot check cast to type " + to + " from " + cc.getParamterizedType());
+        }
         return OperatorFactory.newOperator(CheckCast.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, AClass.class}, 
                 getExecutor(), cc, to);
-        //return new CheckCast(getExecuteBlock(), cc, to);
+    }
+
+    @Override
+    public final CheckCast _checkcast(Parameterized cc, Class<?> to){
+        return _checkcast(cc, AClassFactory.getProductClass(to));
     }
     
     //*******************************************************************************************//

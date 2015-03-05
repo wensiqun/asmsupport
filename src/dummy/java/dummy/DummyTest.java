@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 
 import cn.wensiqun.asmsupport.client.ConstructorBody;
@@ -20,6 +22,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyTest {
     
@@ -79,16 +82,18 @@ public class DummyTest {
         
         public static String excepted() {
             
-            ExceptedDummy dm = new ExceptedDummy();
-            StringBuilder sb = new StringBuilder("Start===");
+            //ExceptedDummy dm = new ExceptedDummy();
+            StringBuilder sb = new StringBuilder();
             
-            ExceptedInterface.interface_field_list.add("hello asmsupport.");
-            sb.append(ExceptedInterface.interface_field_string);
+            /*ExceptedInterface.interface_field_list.add("hello asmsupport.");
+            sb.append(ExceptedInterface.interface_field_string);*/
             for(String str : ExceptedInterface.interface_field_list) {
                 sb.append(str);
+                long len = str.length();
+                sb.append(len);
             }
             
-            sb.append(dm.abstract_class_field_string);
+            /*sb.append(dm.abstract_class_field_string);
             for(String str : ExceptedAbstractClass.abstract_class_field_list) {
                 sb.append(str);
             }
@@ -98,8 +103,8 @@ public class DummyTest {
             
             dm.appendString1(sb);
             dm.appendString2(sb);
-         
-            sb.append(ExceptedEnum.ENUM1.getEnumName()).append("\n").append(ExceptedEnum.ENUM2);
+        
+            sb.append(ExceptedEnum.ENUM1.getEnumName()).append("\n").append(ExceptedEnum.ENUM2);*/
             
             return sb.toString();
         }
@@ -121,12 +126,16 @@ public class DummyTest {
         
     }
 
+    //##################################
+    // The following method we will  
+    // generate the classes of preceding.
+    //##################################
     public String amsupportTest() throws Exception {
         
         //Generate ExceptedInterface
         DummyInterface excIter = new DummyInterface();
         excIter._classOutPutPath(".//target//dummy-generated")
-               ._public()._package("dummy")._name("ExceptedInterface");
+               ._public()._package("dummy")._name("ExceptedInterface")._javaVersion(Opcodes.V1_6);
         excIter.newField(String.class, "interface_field_string")._value("ExceptedInterface\n");
         excIter.newField(List.class, "interface_field_list");
         
@@ -146,7 +155,7 @@ public class DummyTest {
         
         //Generate ExceptedAbstractClass
         DummyClass excAbsCls = new DummyClass("dummy.ExceptedAbstractClass")._classOutPutPath(".//target//dummy-generated")
-                ._abstract()._implements(ExceptedInterface);
+                ._abstract()._implements(ExceptedInterface)._javaVersion(Opcodes.V1_6);
         excAbsCls.newField(String.class, "abstract_class_field_string")._protected();
         excAbsCls.newField(List.class, "abstract_class_field_list")._public()._static();
         excAbsCls.newStaticBlock(new StaticBlockBody() {
@@ -191,7 +200,7 @@ public class DummyTest {
         Class<?> ExceptedAbstractClass = excAbsCls.build();
         
         //Crate enum class ExceptedEnum
-        DummyEnum excEnum = new DummyEnum("dummy.ExceptedEnum")._classOutPutPath(".//target//dummy-generated");
+        DummyEnum excEnum = new DummyEnum("dummy.ExceptedEnum")._classOutPutPath(".//target//dummy-generated")._javaVersion(Opcodes.V1_6);
         excEnum.newEnum("ENUM1").newEnum("ENUM2");
         excEnum.newField(String.class, "field");
         excEnum.newConstructor()._argumentTypes(String.class)._body(new EnumConstructorBody(){
@@ -230,7 +239,7 @@ public class DummyTest {
         
         final Class<?> ExceptedEnum = excEnum.build();
         
-        DummyClass excDummy = new DummyClass("dummy.ExceptedDummy")._extends(ExceptedAbstractClass)._classOutPutPath(".//target//dummy-generated");
+        DummyClass excDummy = new DummyClass("dummy.ExceptedDummy")._extends(ExceptedAbstractClass)._classOutPutPath(".//target//dummy-generated")._javaVersion(Opcodes.V1_6);
         
         excDummy.newMethod("method1")._public()._return(String.class)._throws(IllegalArgumentException.class)
                 ._body(new MethodBody() {
@@ -267,24 +276,26 @@ public class DummyTest {
 
             @Override
             public void body(LocalVariable... args) {
-                LocalVariable dm = _createVariable("dm", getMethodOwner(), _new(getMethodOwner()));
+                //LocalVariable dm = _createVariable("dm", getMethodOwner(), _new(getMethodOwner()));
                 final LocalVariable sb = _createVariable("sb", StringBuilder.class, _new(StringBuilder.class));
                 
                 AClass ExceptedInterfaceAClass = AClassFactory.getProductClass(ExceptedInterface);
                 GlobalVariable interface_field_list = ExceptedInterfaceAClass.getGlobalVariable("interface_field_list");
                 
-                _invoke(interface_field_list, "add", Value.value("hello asmsupport."));
-                _invoke(sb, "append", ExceptedInterfaceAClass.getGlobalVariable("interface_field_string"));
-                /* _for(new ForEach(interface_field_list) {
+                /*_invoke(interface_field_list, "add", Value.value("hello asmsupport."));
+                _invoke(sb, "append", ExceptedInterfaceAClass.getGlobalVariable("interface_field_string"));*/
+                _for(new ForEach(interface_field_list, String.class) {
 
                     @Override
                     public void body(LocalVariable str) {
                         _invoke(sb, "append", str);
+                        LocalVariable len = _createVariable("len", long.class, _invoke(str, "length"));
+                        _invoke(sb, "append", len);
                     }
                     
                 });
                 
-                _invoke(sb, "append", dm.getGlobalVariable("abstract_class_field_string"));
+                /*_invoke(sb, "append", dm.getGlobalVariable("abstract_class_field_string"));
                 _for(new ForEach(dm.getGlobalVariable("abstract_class_field_list")) {
 
                     @Override
@@ -318,17 +329,15 @@ public class DummyTest {
         Method exceptedMethod = ExceptedDummyCls.getMethod("excepted");
         
         return (String) exceptedMethod.invoke(ExceptedDummyCls);
-        //return "";
     }
     
     @Test
     public void test() {
         try {
-            System.out.println(amsupportTest());
+            Assert.assertEquals(ExceptedDummy.excepted(), amsupportTest());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail(e.getMessage());
         }
-        System.out.println(ExceptedDummy.excepted());
     }
     
 }

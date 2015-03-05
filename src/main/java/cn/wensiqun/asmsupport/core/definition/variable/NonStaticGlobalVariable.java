@@ -39,7 +39,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
         if(!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), 
                 meta.getActuallyOwnerType(), meta.getModifiers())){
             throw new IllegalArgumentException("cannot access field " +
-                    meta.getOwner() + "." + meta.getName()
+                    meta.getActuallyOwnerType() + "#" + meta.getName()
                     + " from " + block.getMethodOwner());
         }
         

@@ -480,6 +480,11 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
+    public CheckCast _checkcast(Parameterized cc, Class<?> to) {
+        return target._checkcast(cc, to);
+    }
+
+    @Override
     public Negative _neg(Parameterized factor)
     {
         return target._neg(factor);

@@ -47,6 +47,24 @@ CreateBlockOperator<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
     public CheckCast _checkcast(Parameterized cc, AClass to);
     
     /**
+     * 转换类，将对象cc转换成目标类型to,对应下面的红色java代码
+     * <p style="border:1px solid;width:300px;padding:10px;">
+     * String cc1 = <b style="color:#FF3300">(String)cc;</b>
+     * </p>
+     * 
+     * 红色部分对应的asmsupport代码：
+     * <p style="border:1px solid;width:300px;padding:10px;">
+     * checkCast(cc_para, Stirng.class);
+     * </p>
+     * 
+     * 
+     * @param cc 需要被强制转换的对象
+     * @param to 需要被转换成的类型
+     * @return
+     */
+    public CheckCast _checkcast(Parameterized cc, Class<?> to);
+    
+    /**
      * 取负操作,对应下面的红色java代码
      * <p style="border:1px solid;width:300px;padding:10px;">
      * int negValue = <b style="color:#FF3300">-factor;</b>

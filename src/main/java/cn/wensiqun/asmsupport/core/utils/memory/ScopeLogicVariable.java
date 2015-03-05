@@ -215,10 +215,6 @@ public class ScopeLogicVariable extends Component implements Localable {
         return specifiedStartLabel;
     }
 
-    /*public void setSpecifiedStartLabel(Label specifiedStartLabel) {
-        this.specifiedStartLabel = specifiedStartLabel;
-    }*/
-
     @Override
     public String toString() {
         return getDeclareType() + " " + getName();

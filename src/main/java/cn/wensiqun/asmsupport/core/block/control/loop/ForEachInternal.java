@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
 public abstract class ForEachInternal extends ProgramBlockInternal implements Loop, IForEach {
     
     private ExplicitVariable iteratorVar;
-    
     private Parameterized condition;
+    private AClass elementType;
     
     private Label startLbl = new Label();
     private Label conditionLbl = new Label();
@@ -38,15 +38,17 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     private Label endLbl = new Label();
     
     public ForEachInternal(ExplicitVariable iteratorVar) {
-        super();
-        this.iteratorVar = iteratorVar;
-        checkMember(iteratorVar);
+        this(iteratorVar, null);
     }
     
-    private void checkMember(ExplicitVariable member){
-        AClass cls = member.getParamterizedType();
-        if(!cls.isArray() &&
-           !cls.isChildOrEqual(AClassFactory.getProductClass(Iterable.class))){
+    public ForEachInternal(ExplicitVariable iteratorVar, AClass elementType) {
+        super();
+        this.iteratorVar = iteratorVar;
+        this.elementType = elementType;
+        
+        AClass type = iteratorVar.getParamterizedType();
+        if(!type.isArray() &&
+           !type.isChildOrEqual(AClassFactory.getProductClass(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
         }
     }
@@ -92,35 +94,34 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             //?new NOP(getExecutor());
             
-            LocalVariable obj = _createVariable(null, ((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), true, _arrayLoad(iteratorVar, i) );
+            LocalVariable obj = _createVariable(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), _arrayLoad(iteratorVar, i) );
             body(obj);
 
-            //?new Marker(getExecutor(), continueLbl);
-            
+            OperatorFactory.newOperator(Marker.class, 
+                    new Class[]{ProgramBlockInternal.class, Label.class}, 
+                    getExecutor(), conditionLbl);
             _postInc(i);
             
-            //?new Marker(getExecutor(), conditionLbl);
             condition = _lessThan(i, _arrayLength(iteratorVar));
-            //((LessThan)condition).setJumpLable(startLbl);
         }else{
         	final LocalVariable itr = _createVariable(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), conditionLbl);
-            //new GOTO(getExecutor(), conditionLbl);
         	
             OperatorFactory.newOperator(Marker.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), startLbl);
-        	//new Marker(getExecutor(), startLbl);
-            //?new NOP(getExecutor());
 
-            LocalVariable obj = _createVariable(null, AClass.OBJECT_ACLASS, true, _invoke(itr, "next"));
+            LocalVariable obj = elementType == null ? 
+                                _createVariable(AClass.OBJECT_ACLASS, _invoke(itr, "next")) :
+                                _createVariable(elementType, _checkcast(_invoke(itr, "next"), elementType));
             body(obj);
 
-            //?new Marker(getExecutor(), continueLbl);
-            
+            OperatorFactory.newOperator(Marker.class, 
+                    new Class[]{ProgramBlockInternal.class, Label.class}, 
+                    getExecutor(), conditionLbl);
         	condition = _invoke(itr, "hasNext");
         }
         condition.asArgument();

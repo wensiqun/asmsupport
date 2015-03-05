@@ -41,7 +41,7 @@ public class StaticGlobalVariable extends GlobalVariable  {
                 meta.getActuallyOwnerType(), meta.getModifiers()))
         {
             throw new IllegalArgumentException("Cannot access field " +
-                    meta.getOwner() + "." + meta.getName()
+                    meta.getActuallyOwnerType() + "#" + meta.getName()
                     + " from " + block.getMethodOwner());
         }
         
