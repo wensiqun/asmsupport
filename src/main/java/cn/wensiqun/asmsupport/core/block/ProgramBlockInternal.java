@@ -112,10 +112,6 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     
     private   ThrowExceptionContainer     throwExceptions;
     
-    private   Label                       start;
-    
-    private   Label                       end;
-    
     /** 当前block是否已经返回 或者已经抛出异常了 */
     private   boolean                     finish = false;
     
@@ -236,8 +232,6 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     public void setScope(Scope scope) {
         this.scope = scope;
-        this.start = scope.getStart();
-        this.end = scope.getEnd();
     }
 
     public Scope getScope() {
@@ -246,12 +240,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     
     public Label getStart()
     {
-        return start;
+        return scope.getStart();
     }
 
     public Label getEnd()
     {
-        return end;
+        return scope.getEnd();
     }
 
     public void setInsnHelper(InstructionHelper insnHelper) {

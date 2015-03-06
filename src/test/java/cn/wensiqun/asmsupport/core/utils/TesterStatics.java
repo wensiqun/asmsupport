@@ -26,14 +26,14 @@ public class TesterStatics
     {
         EXPECTED.append(str).append("|");
         if(printable)
-        	System.out.print(str + "|");
+        	System.out.println(str + "|");
     }
 
     public static void actuallyPrintln(String str)
     {
         ACTUALLY.append(str).append("|");
         if(printable)
-        	System.out.print(str + "|");
+        	System.out.println(str + "|");
     }
     
     public static void clear()

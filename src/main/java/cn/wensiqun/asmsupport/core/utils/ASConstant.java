@@ -18,7 +18,7 @@ public interface ASConstant {
     public final static int METHOD_CREATE_MODE_ADD = 0;
     public final static int METHOD_CREATE_MODE_MODIFY = 1;
     
-    public final static int ASM_VERSION = Opcodes.ASM4;
+    public final static int ASM_VERSION = Opcodes.ASM5;
 
     public final static String ACCESS_TOKEN_PUBLIC = "public";
     

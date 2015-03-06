@@ -14,7 +14,7 @@ The asmsupport is a java class byte code operate library, it make easier to writ
           |-.../asmsupport 
             |-standard             : The asmsupport api 
             |-client               : The dummy api
-            
+            |-core                 : The asmsupport core implements
         |-resource                 : Maven standard source resources  
       |-src/test
         |-java                     : Maven standard test
