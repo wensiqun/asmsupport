@@ -53,12 +53,7 @@ public class ScopeLogicVariable extends Component implements Localable {
     private void store() {
         int localSize = locals.getSize();
         int needSize = actuallyType.getSize();
-        int i = 0;
-        if (localSize > 0 && locals.getLastVariable(0) instanceof ScopeThis) {
-            i = 1;
-        }
-
-        for (; i < localSize; i++) {
+        for (int i = 0; i < localSize; i++) {
             ScopeLogicVariable survivor = (ScopeLogicVariable) locals.getLastVariable(i);
             if (isShareable(survivor)) {
                 this.positions = ArrayUtils.add(this.positions, i);

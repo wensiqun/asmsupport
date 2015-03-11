@@ -21,7 +21,7 @@ public class LogicalXor extends BinaryLogical {
     }
 
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         insnHelper.bitXor(AClass.BOOLEAN_ACLASS.getType());
     }
 

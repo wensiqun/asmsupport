@@ -21,7 +21,7 @@ public class LogicalAnd extends BinaryLogical {
     }
 
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         insnHelper.bitAnd(AClass.BOOLEAN_ACLASS.getType());    
     }
 

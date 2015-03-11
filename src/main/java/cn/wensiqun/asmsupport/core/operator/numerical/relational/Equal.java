@@ -7,6 +7,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -22,13 +23,13 @@ public class Equal extends AbstractNullCompareRelational {
     
     
     @Override
-    protected void relationalOperator() {
-        ifCmp(targetClass.getType(), InstructionHelper.NE, falseLbl);
+    protected void negativeCmp(Label lbl) {
+        ifCmp(targetClass.getType(), InstructionHelper.NE, lbl);
     }
 
 	@Override
-	protected void relationalOperatorWithInLoopCondition() {
-        ifCmp(targetClass.getType(), InstructionHelper.EQ, falseLbl);
+	protected void positiveCmp(Label lbl) {
+        ifCmp(targetClass.getType(), InstructionHelper.EQ, lbl);
 	}
 
 	

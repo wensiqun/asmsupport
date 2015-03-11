@@ -14,39 +14,25 @@ import org.apache.commons.logging.LogFactory;
 public class LocalVariables implements Printable, Cloneable{
 
     public static class LocalHistory implements Cloneable{
-        private List<Localable> variables;
+        private List<ScopeLogicVariable> variables;
         private int activeIndex;
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected Object clone() {
-			try {
-				LocalHistory history = (LocalHistory) super.clone();
-                history.variables = (List<Localable>) ((ArrayList<Localable>) variables).clone();
-                return history;
-			} catch (CloneNotSupportedException e) {
-	            throw new InternalError();
-			}
-		}
         
         private LocalHistory() {
             super();
-            this.variables = new ArrayList<Localable>();
+            this.variables = new ArrayList<ScopeLogicVariable>();
         }
         
-        private Localable getActiveVariable(){
-            Localable l = variables.get(activeIndex);
-            return l;
+        private ScopeLogicVariable getActiveVariable(){
+            return variables.get(activeIndex);
         }
         
-        private Localable getLastVariable(){
+        private ScopeLogicVariable getLastVariable(){
             return variables.get(variables.size() - 1);
         }
         
-        private void addVar(Localable l){
+        private void addVar(ScopeLogicVariable l){
             variables.add(l);
         }
-        
         
     }
     
@@ -57,18 +43,6 @@ public class LocalVariables implements Printable, Cloneable{
     private int maxPrintSize;
     private Localable cursor;
     
-    @SuppressWarnings("unchecked")
-	@Override
-	public Object clone(){
-		try {
-			LocalVariables clo = (LocalVariables) super.clone();
-			clo.histories = (List<LocalHistory>) ((ArrayList<LocalHistory>) this.histories).clone();
-			return clo;
-		} catch (CloneNotSupportedException e) {
-            throw new InternalError();
-		}
-	}
-
 	public LocalVariables() {
         super();
         histories = new ArrayList<LocalHistory>();
@@ -84,11 +58,11 @@ public class LocalVariables implements Printable, Cloneable{
         return histories.get(index).getLastVariable();
     }
     
-    public void store(int index, Localable var) {
+    public void store(int index, ScopeLogicVariable var) {
         histories.get(index).addVar(var);
     }
 
-    public boolean store(Localable var) {
+    public boolean store(ScopeLogicVariable var) {
         LocalHistory history = new LocalHistory();
         history.addVar(var);
         return histories.add(history);
@@ -112,6 +86,19 @@ public class LocalVariables implements Printable, Cloneable{
                 }
             }
         }
+    }
+    
+    public List<Localable> getFrameLocals(Scope scope) {
+        List<Localable> locals = new ArrayList<Localable>();
+        for(LocalHistory his : histories) {
+            ScopeLogicVariable var = his.getActiveVariable();
+            if(var.getParent().generation > scope.generation || 
+               var.equals(cursor)) {
+               break; 
+            }
+            locals.add(var);
+        }
+        return locals;
     }
     
     public String[][] generateGridArray() {

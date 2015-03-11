@@ -26,7 +26,7 @@ public class Not extends UnaryLogical {
     }
 
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         MethodVisitor mv = insnHelper.getMv();
         mv.visitJumpInsn(Opcodes.IFEQ, trueLbl);
         

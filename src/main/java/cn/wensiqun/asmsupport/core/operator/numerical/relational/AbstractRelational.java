@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.control.ControlType;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
@@ -109,10 +108,10 @@ public abstract class AbstractRelational extends AbstractOperator implements
 
     protected abstract void factorsToStack();
 
-    @Override
+    /*@Override
 	public void setJumpLable(Label lbl) {
 		this.falseLbl = lbl;
-	}
+	}*/
 
 	@Override
     protected void doExecute() {
@@ -125,9 +124,11 @@ public abstract class AbstractRelational extends AbstractOperator implements
 	 */
 	protected void instructionGenerate(){
 		factorsToStack();
-        relationalOperator();
+		
+        negativeCmp(falseLbl);
 
         MethodVisitor mv = insnHelper.getMv();
+        
         //push true to stack
         mv.visitInsn(Opcodes.ICONST_0 + 1);
         mv.visitJumpInsn(Opcodes.GOTO, trueLbl);
@@ -148,21 +149,23 @@ public abstract class AbstractRelational extends AbstractOperator implements
 	}
 	
 	@Override
-	public final void executeAndJump(ControlType ctl){
+	public final void executeAndJump(int cmpType, Label lbl){
         factorsToStack();
-        if(ctl.equals(ControlType.IF)){
-        	relationalOperator();
-        }else if(ctl.equals(ControlType.LOOP)){
-        	relationalOperatorWithInLoopCondition();
+        switch(cmpType) {
+        case Opcodes.CMP_POSITIVE :
+            positiveCmp(lbl);break;
+        case Opcodes.CMP_NEGATIVE : 
+            negativeCmp(lbl);break;
         }
+        /*if(ctl.equals(ControlType.IF)){
+        	negativeCmp();
+        }else if(ctl.equals(ControlType.LOOP)){
+        	positiveCmp();
+        }*/
 	}
 	
-	protected abstract void relationalOperator();
+	protected abstract void negativeCmp(Label lbl);
 	
-	protected abstract void relationalOperatorWithInLoopCondition();
+	protected abstract void positiveCmp(Label lbl);
     
-	/*protected void ifCmp(final Type type, final int mode, final Label label) 
-	{
-	    insnHelper.ifCmp(type, mode, label);
-	}*/
 }

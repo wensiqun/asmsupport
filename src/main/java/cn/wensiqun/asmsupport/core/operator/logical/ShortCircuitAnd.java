@@ -28,7 +28,7 @@ public class ShortCircuitAnd extends ConditionOperator {
     
     
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         MethodVisitor mv = insnHelper.getMv();
         AClass ftrCls1 = factor1.getParamterizedType();
         AClass ftrCls2 = factor2.getParamterizedType();

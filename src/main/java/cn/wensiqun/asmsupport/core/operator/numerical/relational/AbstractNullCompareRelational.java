@@ -37,7 +37,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		        block.getMethod().getStack().push(Type.INT_TYPE);
 		        return;
 			}
-		}else if(!(!isNullValue(factor1) && !isNullValue(factor2))){
+		}else if(isNullValue(factor1) || isNullValue(factor2)){
 			instructionGenerate();
 	        block.getMethod().getStack().pop();
 	        block.getMethod().getStack().push(Type.INT_TYPE);

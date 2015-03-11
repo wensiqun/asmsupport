@@ -21,7 +21,7 @@ public class LogicalOr extends BinaryLogical {
     }
 
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         insnHelper.bitOr(AClass.BOOLEAN_ACLASS.getType());
     }
 

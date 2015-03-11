@@ -7,6 +7,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -28,7 +29,7 @@ public class ShortCircuitOr extends ConditionOperator {
     
     
     @Override
-    protected void executingProcess() {
+    protected void executing() {
         MethodVisitor mv = insnHelper.getMv();
         AClass ftrCls1 = factor1.getParamterizedType();
         AClass ftrCls2 = factor2.getParamterizedType();

@@ -5,11 +5,11 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.control.ControlType;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
 
 
@@ -50,9 +50,7 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
         insnHelper.mark(conditionLbl);
 
         if(condition instanceof Jumpable){
-        	Jumpable jmp = (Jumpable) condition;
-        	jmp.setJumpLable(contentStart);
-        	jmp.executeAndJump(ControlType.LOOP);
+        	((Jumpable) condition).executeAndJump(Opcodes.CMP_POSITIVE, contentStart);
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

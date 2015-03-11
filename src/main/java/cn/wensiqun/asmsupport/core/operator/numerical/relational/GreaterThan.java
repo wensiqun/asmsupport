@@ -7,6 +7,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -20,14 +21,14 @@ public class GreaterThan extends NumericalRelational {
     }
 
     @Override
-    protected void relationalOperator() {
-        insnHelper.ifCmp(targetClass.getType(), InstructionHelper.LE, falseLbl);
+    protected void negativeCmp(Label lbl) {
+        insnHelper.ifCmp(targetClass.getType(), InstructionHelper.LE, lbl);
         
     }
 
 	@Override
-	protected void relationalOperatorWithInLoopCondition() {
-	    insnHelper.ifCmp(targetClass.getType(), InstructionHelper.GT, falseLbl);
+	protected void positiveCmp(Label lbl) {
+	    insnHelper.ifCmp(targetClass.getType(), InstructionHelper.GT, lbl);
 	}
 
 }

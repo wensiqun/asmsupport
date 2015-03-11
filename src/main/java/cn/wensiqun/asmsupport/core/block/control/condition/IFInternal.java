@@ -3,11 +3,11 @@ package cn.wensiqun.asmsupport.core.block.control.condition;
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.control.ControlType;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
 
 public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal>
@@ -40,9 +40,7 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
     {
         Label endLbl = getEnd();
         if(condition instanceof Jumpable){
-            Jumpable jmp = (Jumpable) condition;
-            jmp.setJumpLable(endLbl);
-            jmp.executeAndJump(ControlType.IF);
+            ((Jumpable) condition).executeAndJump(Opcodes.CMP_NEGATIVE, endLbl);
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());
@@ -56,7 +54,10 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
         if(nextBranch != null)
         {
         	insnHelper.goTo(getSerialEnd());
+        } else {
+            
         }
+        
     }
 
     @Override

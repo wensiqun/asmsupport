@@ -7,13 +7,13 @@ package cn.wensiqun.asmsupport.core.operator.numerical.ternary;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.control.ControlType;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 
 /**
@@ -94,8 +94,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
         Label l2 = new Label();
     	if(exp1 instanceof Jumpable){
         	Jumpable jmp = (Jumpable) exp1;
-        	jmp.setJumpLable(l1);
-        	jmp.executeAndJump(ControlType.IF);
+        	jmp.executeAndJump(Opcodes.CMP_NEGATIVE, l1);
         }else{
         	exp1.loadToStack(block);
             insnHelper.unbox(exp1.getParamterizedType().getType());
