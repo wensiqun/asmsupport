@@ -148,24 +148,31 @@ public abstract class AbstractRelational extends AbstractOperator implements
         block.getMethod().getStack().push(Type.INT_TYPE);
 	}
 	
-	@Override
-	public final void executeAndJump(int cmpType, Label lbl){
+	/*@Override
+	public final void executeJump(int cmpType, Label lbl){
         factorsToStack();
         switch(cmpType) {
-        case Opcodes.CMP_POSITIVE :
+        case Opcodes.JUMP_POSITIVE :
             positiveCmp(lbl);break;
-        case Opcodes.CMP_NEGATIVE : 
+        case Opcodes.JUMP_NEGATIVE : 
             negativeCmp(lbl);break;
         }
-        /*if(ctl.equals(ControlType.IF)){
-        	negativeCmp();
-        }else if(ctl.equals(ControlType.LOOP)){
-        	positiveCmp();
-        }*/
-	}
+	}*/
 	
-	protected abstract void negativeCmp(Label lbl);
-	
-	protected abstract void positiveCmp(Label lbl);
+    @Override
+    public void jumpPositive(Label posLbl, Label negLbl) {
+        factorsToStack();
+        positiveCmp(posLbl);
+    }
+
+    @Override
+    public void jumpNegative(Label posLbl, Label negLbl) {
+        factorsToStack();
+        negativeCmp(negLbl);
+    }
+    
+    protected abstract void negativeCmp(Label lbl);
+
+    protected abstract void positiveCmp(Label lbl);
     
 }

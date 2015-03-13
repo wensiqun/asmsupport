@@ -7,7 +7,6 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
 
 public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal>
@@ -38,15 +37,17 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
     @Override
     protected void doExecute()
     {
-        Label endLbl = getEnd();
+        Label posLbl = new Label();
+        
         if(condition instanceof Jumpable){
-            ((Jumpable) condition).executeAndJump(Opcodes.CMP_NEGATIVE, endLbl);
+            ((Jumpable) condition).jumpNegative(posLbl, getEnd());//.executeJump(Opcodes.JUMP_NEGATIVE, endLbl);
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());
-            insnHelper.ifZCmp(InstructionHelper.EQ, endLbl);
+            insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
         
+        insnHelper.mark(posLbl);
         for(ByteCodeExecutor exe : getQueue()){
             exe.execute();
         }
@@ -54,8 +55,6 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
         if(nextBranch != null)
         {
         	insnHelper.goTo(getSerialEnd());
-        } else {
-            
         }
         
     }

@@ -359,7 +359,7 @@ public interface Opcodes {
     // int GOTO_W = 200; // -
     // int JSR_W = 201; // -
     
-    int CMP_POSITIVE = 0;
-    int CMP_NEGATIVE = 1;
+    int JUMP_POSITIVE = 0;
+    int JUMP_NEGATIVE = 1;
     
 }

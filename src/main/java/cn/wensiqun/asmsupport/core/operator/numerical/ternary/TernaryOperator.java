@@ -13,7 +13,6 @@ import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 
 /**
@@ -90,17 +89,19 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
     
     @Override
     protected void doExecute() {
+        Label posLbl = new Label();
         Label l1 = new Label();
         Label l2 = new Label();
     	if(exp1 instanceof Jumpable){
         	Jumpable jmp = (Jumpable) exp1;
-        	jmp.executeAndJump(Opcodes.CMP_NEGATIVE, l1);
+        	jmp.jumpNegative(posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
         	exp1.loadToStack(block);
             insnHelper.unbox(exp1.getParamterizedType().getType());
             insnHelper.ifZCmp(InstructionHelper.EQ, l1);
         }
-    	
+
+        insnHelper.mark(posLbl);
     	exp2.loadToStack(block);
         block.getMethod().getStack().pop();
         insnHelper.goTo(l2);

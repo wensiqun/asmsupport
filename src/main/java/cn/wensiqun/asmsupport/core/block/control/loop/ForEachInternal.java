@@ -17,7 +17,6 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
 
@@ -59,9 +58,8 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         for(Executable exe : getQueue()){
             exe.execute();
         }
-        
         if(condition instanceof Jumpable){
-        	((Jumpable) condition).executeAndJump(Opcodes.CMP_POSITIVE, startLbl);
+        	((Jumpable) condition).jumpPositive(startLbl, getEnd());
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

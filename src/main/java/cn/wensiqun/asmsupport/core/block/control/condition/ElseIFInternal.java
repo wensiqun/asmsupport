@@ -7,7 +7,6 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.branch.IElseIF;
 
 public abstract class ElseIFInternal extends ConditionBranchBlock implements IElseIF<ElseIFInternal, ElseInternal>
@@ -37,16 +36,17 @@ public abstract class ElseIFInternal extends ConditionBranchBlock implements IEl
     @Override
     protected void doExecute()
     {
-        Label endLbl = getEnd();
+        Label posLbl = new Label();
     	insnHelper.nop();
     	if(condition instanceof Jumpable){
-        	((Jumpable) condition).executeAndJump(Opcodes.CMP_NEGATIVE, endLbl);
+        	((Jumpable) condition).jumpNegative(posLbl, getEnd());
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());
-            insnHelper.ifZCmp(InstructionHelper.EQ, endLbl);
+            insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
-
+    	
+        insnHelper.mark(posLbl);
     	for(Executable exe : getQueue()){
             exe.execute();
         }

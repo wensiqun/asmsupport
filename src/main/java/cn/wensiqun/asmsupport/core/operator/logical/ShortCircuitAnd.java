@@ -6,9 +6,10 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -19,7 +20,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * @author 温斯群(Joe Wen)
  *
  */
-public class ShortCircuitAnd extends ConditionOperator {
+public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
     
     protected ShortCircuitAnd(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
@@ -29,18 +30,26 @@ public class ShortCircuitAnd extends ConditionOperator {
     
     @Override
     protected void executing() {
+        Label trueLbl = new Label();
+        Label falseLbl = new Label();
         MethodVisitor mv = insnHelper.getMv();
-        AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
+
+        if(factor1 instanceof Jumpable) {
+            ((Jumpable) factor1).jumpNegative(trueLbl, falseLbl);
+        } else {
+            factor1.loadToStack(block);
+            insnHelper.unbox(factor1.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
+        }
         
-        factor1.loadToStack(block);
-        insnHelper.unbox(ftrCls1.getType());
-        mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
-        
-        factor2.loadToStack(block);
-        insnHelper.unbox(ftrCls2.getType());
-        mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
-        
+
+        if(factor2 instanceof Jumpable) {
+            ((Jumpable) factor2).jumpNegative(trueLbl, falseLbl);
+        } else {
+            factor2.loadToStack(block);
+            insnHelper.unbox(factor2.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
+        }
 
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitJumpInsn(Opcodes.GOTO, trueLbl);
@@ -52,7 +61,47 @@ public class ShortCircuitAnd extends ConditionOperator {
         stack.pop();
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);
-        
+    }
+
+    @Override
+    public void jumpPositive(Label posLbl, Label negLbl) {
+        MethodVisitor mv = insnHelper.getMv();
+        if(factor1 instanceof Jumpable) {
+            ((Jumpable) factor1).jumpNegative(posLbl, negLbl);
+        } else {
+            factor1.loadToStack(block);
+            insnHelper.unbox(factor1.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
+        }
+
+        if(factor2 instanceof Jumpable) {
+            ((Jumpable) factor2).jumpPositive(posLbl, negLbl);
+        } else {
+            factor2.loadToStack(block);
+            insnHelper.unbox(factor2.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFNE, posLbl);
+        }
+    }
+
+
+    @Override
+    public void jumpNegative(Label posLbl, Label negLbl) {
+        MethodVisitor mv = insnHelper.getMv();
+        if(factor1 instanceof Jumpable) {
+            ((Jumpable) factor1).jumpNegative(posLbl, negLbl);
+        } else {
+            factor1.loadToStack(block);
+            insnHelper.unbox(factor1.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
+        }
+
+        if(factor2 instanceof Jumpable) {
+            ((Jumpable) factor2).jumpNegative(posLbl, negLbl);
+        } else {
+            factor2.loadToStack(block);
+            insnHelper.unbox(factor2.getParamterizedType().getType());
+            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
+        }
     }
 
 }
