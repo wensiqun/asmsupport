@@ -64,19 +64,19 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 				LocalVariable b = _var("b", AClass.INT_ACLASS, false, Value.value(6));
 				
 			    //int c = a | b;
-				LocalVariable c = _var("c", AClass.INT_ACLASS, false, this._bitOr(a, b));
+				LocalVariable c = _var("c", AClass.INT_ACLASS, false, this._bor(a, b));
 				
 			    //int d = a & b;
-				LocalVariable d = _var("d", AClass.INT_ACLASS, false, this._bitAnd(a, b));
+				LocalVariable d = _var("d", AClass.INT_ACLASS, false, this._band(a, b));
 				
 			    //int e = a ^ b;
-				LocalVariable e = _var("e", AClass.INT_ACLASS, false, this._bitXor(a, b));
+				LocalVariable e = _var("e", AClass.INT_ACLASS, false, this._bxor(a, b));
 				
 			    //int f = (~a & b) | (a & ~b);
-				LocalVariable f = _var("f", AClass.INT_ACLASS, false, _bitOr(_bitAnd(_inverts(a), b), _bitAnd(a, _inverts(b))));
+				LocalVariable f = _var("f", AClass.INT_ACLASS, false, _bor(_band(_reverse(a), b), _band(a, _reverse(b))));
 				
 			    //int g = ~a & 0x0f;
-				LocalVariable g = _var("g", AClass.INT_ACLASS, false, this._bitAnd(_inverts(a), Value.value(0x0f)));
+				LocalVariable g = _var("g", AClass.INT_ACLASS, false, this._band(_reverse(a), Value.value(0x0f)));
 				
 			    //System.out.println("        a = " + binary[a]);
 				_invoke(systemOut, "println", _append(Value.value("        a = "), _arrayLoad(binary, a)));

@@ -70,7 +70,7 @@ public interface LogicalOperator {
      * @param factor2
      * @return {@link ShortCircuitAnd}
      */
-    public ShortCircuitAnd _conditionalAnd(Parameterized factor1, Parameterized factor2);
+    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
@@ -84,7 +84,7 @@ public interface LogicalOperator {
      * @param factor2
      * @return {@link ShortCircuitOr}
      */
-    public ShortCircuitOr _conditionalOr(Parameterized factor1, Parameterized factor2);
+    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2);
     
     /**
      * 生成条件非操作指令,对应下面的红色java代码

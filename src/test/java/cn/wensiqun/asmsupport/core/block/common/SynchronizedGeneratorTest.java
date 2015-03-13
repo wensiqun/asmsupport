@@ -84,7 +84,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                     @Override
                     public void body(Parameterized e) {
                         final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
-                        _while(new WhileInternal(_lessThan(i, Value.value(10))){
+                        _while(new WhileInternal(_lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
@@ -110,7 +110,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                     @Override
                     public void body(Parameterized e) {
                         final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
-                        _while(new WhileInternal(_lessThan(i, Value.value(10))){
+                        _while(new WhileInternal(_lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
@@ -221,7 +221,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                         false, 
                         Value.value(0)
                );
-                this._while(new WhileInternal(_lessThan(i, Value.value(10))){
+                this._while(new WhileInternal(_lt(i, Value.value(10))){
 						@Override
 						public void body() {
 							_invoke(objs, "add", _invoke(es, "submit", _new(threadClass, sgst)));
@@ -239,7 +239,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), _invoke(sgst.getGlobalVariable("list"), "size"));
                 
                 _assign(i, Value.value(0));
-                _while(new WhileInternal(_lessThan(i, Value.value(100))) {
+                _while(new WhileInternal(_lt(i, Value.value(100))) {
 
 					@Override
 					public void body() {

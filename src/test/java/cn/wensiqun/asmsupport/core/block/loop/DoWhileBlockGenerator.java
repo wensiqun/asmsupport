@@ -25,7 +25,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable intVar1  = _var("intVar1", AClass.INT_ACLASS, false, Value.value(10));
                     
-                    _dowhile(new DoWhileInternal(_greaterThan(_postDec(intVar1), Value.value(0))){
+                    _dowhile(new DoWhileInternal(_gt(_postDec(intVar1), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -37,7 +37,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable intVar2  = _var("intVar2", AClass.INT_ACLASS, false, Value.value(10));
                     
-                    _dowhile(new DoWhileInternal(_greaterThan(_preDec(intVar2), Value.value(0))){
+                    _dowhile(new DoWhileInternal(_gt(_preDec(intVar2), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -49,7 +49,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	                
                     final LocalVariable byteVar  = _var("byteVar", AClass.BYTE_ACLASS, false, Value.value((byte)10));
                     
-	            	_dowhile(new DoWhileInternal(_greaterThan(_postDec(byteVar), Value.value(0))){
+	            	_dowhile(new DoWhileInternal(_gt(_postDec(byteVar), Value.value(0))){
 
 						@Override
 						public void body() {
@@ -61,7 +61,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	            	
 	            	final LocalVariable doubleVar  = _var("doubleVar", AClass.DOUBLE_ACLASS, false, Value.value(10D));
                     
-                    _dowhile(new DoWhileInternal(_greaterThan(_preDec(doubleVar), Value.value(0))){
+                    _dowhile(new DoWhileInternal(_gt(_preDec(doubleVar), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -73,7 +73,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable shortObj  = _var("shortObj", AClass.SHORT_WRAP_ACLASS, false, Value.value((short)10));
                     
-                    _dowhile(new DoWhileInternal(_greaterThan(_postDec(shortObj), Value.value((short)0))){
+                    _dowhile(new DoWhileInternal(_gt(_postDec(shortObj), Value.value((short)0))){
 
                         @Override
                         public void body() {
@@ -85,7 +85,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable longObj  = _var("longObj", AClass.LONG_WRAP_ACLASS, false, Value.value(10L));
                     
-                    _dowhile(new DoWhileInternal(_greaterThan(_preDec(longObj), Value.value(0))){
+                    _dowhile(new DoWhileInternal(_gt(_preDec(longObj), Value.value(0))){
 
                         @Override
                         public void body() {

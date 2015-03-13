@@ -45,7 +45,7 @@ public class TernaryOperatorGenerate extends AbstractExample {
 				
 				//ternary方法将生成三元操作
 				//int k = i < 0 ? -i : i;
-				LocalVariable k = _var("k", AClass.INT_ACLASS, false, _ternary(_lessThan(i, Value.value(0)), _neg(i), i));
+				LocalVariable k = _var("k", AClass.INT_ACLASS, false, _ternary(_lt(i, Value.value(0)), _neg(i), i));
 				
 				//System.out.print("Absolute value of ");
 				_invoke(systemOut, "print", Value.value("Absolute value of "));
@@ -57,7 +57,7 @@ public class TernaryOperatorGenerate extends AbstractExample {
 				_assign(i, Value.value(-10));
 				
 				//k = i < 0 ? -i : i;
-				_assign(k, _ternary(_lessThan(i, Value.value(0)), _neg(i), i));
+				_assign(k, _ternary(_lt(i, Value.value(0)), _neg(i), i));
 
 				//System.out.print("Absolute value of ");
 				_invoke(systemOut, "print", Value.value("Absolute value of "));

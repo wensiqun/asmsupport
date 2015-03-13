@@ -34,10 +34,10 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Inverts;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.LeftShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.RightShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedRightShift;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
@@ -338,45 +338,45 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
-    public Inverts _inverts(Parameterized factor)
+    public Reverse _reverse(Parameterized factor)
     {
-        return target._inverts(factor);
+        return target._reverse(factor);
     }
 
     @Override
-    public BitAnd _bitAnd(Parameterized factor1, Parameterized factor2)
+    public BitAnd _band(Parameterized factor1, Parameterized factor2)
     {
-        return target._bitAnd(factor1, factor2);
+        return target._band(factor1, factor2);
     }
 
     @Override
-    public BitOr _bitOr(Parameterized factor1, Parameterized factor2)
+    public BitOr _bor(Parameterized factor1, Parameterized factor2)
     {
-        return target._bitOr(factor1, factor2);
+        return target._bor(factor1, factor2);
     }
 
     @Override
-    public BitXor _bitXor(Parameterized factor1, Parameterized factor2)
+    public BitXor _bxor(Parameterized factor1, Parameterized factor2)
     {
-        return target._bitXor(factor1, factor2);
+        return target._bxor(factor1, factor2);
     }
 
     @Override
-    public LeftShift _leftShift(Parameterized factor1, Parameterized factor2)
+    public ShiftLeft _shl(Parameterized factor1, Parameterized factor2)
     {
-        return target._leftShift(factor1, factor2);
+        return target._shl(factor1, factor2);
     }
 
     @Override
-    public RightShift _rightShift(Parameterized factor1, Parameterized factor2)
+    public ShiftRight _shr(Parameterized factor1, Parameterized factor2)
     {
-        return target._rightShift(factor1, factor2);
+        return target._shr(factor1, factor2);
     }
 
     @Override
-    public UnsignedRightShift _unsignedRightShift(Parameterized factor1, Parameterized factor2)
+    public UnsignedShiftRight _ushr(Parameterized factor1, Parameterized factor2)
     {
-        return target._unsignedRightShift(factor1, factor2);
+        return target._ushr(factor1, factor2);
     }
 
 
@@ -402,39 +402,39 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
 	
 
     @Override
-    public GreaterThan _greaterThan(Parameterized factor1, Parameterized factor2)
+    public GreaterThan _gt(Parameterized factor1, Parameterized factor2)
     {
-        return target._greaterThan(factor1, factor2);
+        return target._gt(factor1, factor2);
     }
 
     @Override
-    public GreaterEqual _greaterEqual(Parameterized factor1, Parameterized factor2)
+    public GreaterEqual _ge(Parameterized factor1, Parameterized factor2)
     {
-        return target._greaterEqual(factor1, factor2);
+        return target._ge(factor1, factor2);
     }
 
     @Override
-    public LessThan _lessThan(Parameterized factor1, Parameterized factor2)
+    public LessThan _lt(Parameterized factor1, Parameterized factor2)
     {
-        return target._lessThan(factor1, factor2);
+        return target._lt(factor1, factor2);
     }
 
     @Override
-    public LessEqual _lessEqual(Parameterized factor1, Parameterized factor2)
+    public LessEqual _le(Parameterized factor1, Parameterized factor2)
     {
-        return target._lessEqual(factor1, factor2);
+        return target._le(factor1, factor2);
     }
 
     @Override
-    public Equal _equals(Parameterized factor1, Parameterized factor2)
+    public Equal _eq(Parameterized factor1, Parameterized factor2)
     {
-        return target._equals(factor1, factor2);
+        return target._eq(factor1, factor2);
     }
 
     @Override
-    public NotEqual _notEquals(Parameterized factor1, Parameterized factor2)
+    public NotEqual _ne(Parameterized factor1, Parameterized factor2)
     {
-        return target._notEquals(factor1, factor2);
+        return target._ne(factor1, factor2);
     }
 
     @Override
@@ -456,15 +456,15 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
-    public ShortCircuitAnd _conditionalAnd(Parameterized factor1, Parameterized factor2)
+    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2)
     {
-        return target._conditionalAnd(factor1, factor2);
+        return target._and(factor1, factor2);
     }
 
     @Override
-    public ShortCircuitOr _conditionalOr(Parameterized factor1, Parameterized factor2)
+    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2)
     {
-        return target._conditionalOr(factor1, factor2);
+        return target._or(factor1, factor2);
     }
 
     @Override

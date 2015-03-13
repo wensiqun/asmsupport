@@ -4,10 +4,10 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Inverts;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.LeftShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.RightShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedRightShift;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
 
 
 /**
@@ -19,19 +19,18 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedRightShift;
 public interface BitwiseOperator {
 	
     /**
-     * 生成取反操作指令,对应下面的红色java代码
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">～factor1</b>
      * </p>
      * 
      * @param factor
-     * @return {@link Inverts}
+     * @return {@link Reverse}
      */
-    public Inverts _inverts(Parameterized factor);
+    public Reverse _reverse(Parameterized factor);
     
     /**
-     * 生成与操作指令,对应下面的红色java代码
+     * The bit and operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 & factor2</b>
@@ -41,11 +40,11 @@ public interface BitwiseOperator {
      * @param factor2
      * @return {@link BitAnd}
      */
-    public BitAnd _bitAnd(Parameterized factor1, Parameterized factor2);
+    public BitAnd _band(Parameterized factor1, Parameterized factor2);
 	
     /**
      * 
-     * 生成或操作指令,对应下面的红色java代码
+     * The bit or operator, the following code is the sample :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 | factor2</b>
@@ -55,11 +54,11 @@ public interface BitwiseOperator {
      * @param factor2
      * @return {@link BitOr}
      */
-    public BitOr _bitOr(Parameterized factor1, Parameterized factor2);
+    public BitOr _bor(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
-     * 生成异或操作指令,对应下面的红色java代码
+     * The xor operator, the following code is the sample.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 ^ factor2</b>
@@ -70,11 +69,11 @@ public interface BitwiseOperator {
      * @param factor2
      * @return {@link BitXor}
      */
-    public BitXor _bitXor(Parameterized factor1, Parameterized factor2);
+    public BitXor _bxor(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
-     * 生成左移操作指令,对应下面的红色java代码
+     * The shift left operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 << factor2</b>
@@ -82,13 +81,12 @@ public interface BitwiseOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link LeftShift}
+     * @return {@link ShiftLeft}
      */
-    public LeftShift _leftShift(Parameterized factor1, Parameterized factor2);
+    public ShiftLeft _shl(Parameterized factor1, Parameterized factor2);
     
     /**
-     * 
-     * 生成右移操作指令,对应下面的红色java代码
+     * The bitwise shift right operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 >> factor2</b>
@@ -96,12 +94,12 @@ public interface BitwiseOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link RightShift}
+     * @return {@link ShiftRight}
      */
-    public RightShift _rightShift(Parameterized factor1, Parameterized factor2);
+    public ShiftRight _shr(Parameterized factor1, Parameterized factor2);
     
     /**
-     * 生成无符号右移操作指令,对应下面的红色java代码
+     * The unsigned shift right operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 >>> factor2</b>
@@ -109,8 +107,8 @@ public interface BitwiseOperator {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link UnsignedRightShift}
+     * @return {@link UnsignedShiftRight}
      */
-    public UnsignedRightShift _unsignedRightShift(Parameterized factor1, Parameterized factor2);
+    public UnsignedShiftRight _ushr(Parameterized factor1, Parameterized factor2);
     
 }

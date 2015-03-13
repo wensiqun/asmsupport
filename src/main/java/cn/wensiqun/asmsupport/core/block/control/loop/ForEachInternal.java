@@ -98,7 +98,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
                     getExecutor(), conditionLbl);
             _postInc(i);
             
-            condition = _lessThan(i, _arrayLength(iteratorVar));
+            condition = _lt(i, _arrayLength(iteratorVar));
         }else{
         	final LocalVariable itr = _var(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
         	

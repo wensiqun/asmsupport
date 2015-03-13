@@ -11,9 +11,9 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  * @author 温斯群(Joe Wen)
  *
  */
-public class UnsignedRightShift extends BinaryBitwise {
+public class UnsignedShiftRight extends BinaryBitwise {
 
-    protected UnsignedRightShift(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected UnsignedShiftRight(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
         this.operator = Operators.UNSIGNED_RIGHT_SHIFT;
     }

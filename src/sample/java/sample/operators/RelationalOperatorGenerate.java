@@ -62,28 +62,28 @@ public class RelationalOperatorGenerate extends AbstractExample {
 				_invoke(systemOut, "println", _append(Value.value("j = "), j));
 				
 			    //System.out.println("i > j is " + (i > j));
-				_invoke(systemOut, "println", _append(Value.value("i > j is "), _greaterThan(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i > j is "), _gt(i, j)));
 				
 			    //System.out.println("i < j is " + (i < j));
-				_invoke(systemOut, "println", _append(Value.value("i < j is "), _lessThan(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i < j is "), _lt(i, j)));
 				
 			    //System.out.println("i >= j is " + (i >= j));
-				_invoke(systemOut, "println", _append(Value.value("i >= j is "), _greaterEqual(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i >= j is "), _ge(i, j)));
 				
 			    //System.out.println("i <= j is " + (i <= j));
-				_invoke(systemOut, "println", _append(Value.value("i <= j is "), _lessEqual(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i <= j is "), _le(i, j)));
 				
 			    //System.out.println("i == j is " + (i == j));
-				_invoke(systemOut, "println", _append(Value.value("i == j is "), _equals(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i == j is "), _eq(i, j)));
 				
 			    //System.out.println("i != j is " + (i != j));
-				_invoke(systemOut, "println", _append(Value.value("i != j is "), _notEquals(i, j)));
+				_invoke(systemOut, "println", _append(Value.value("i != j is "), _ne(i, j)));
 				
 			    //System.out.println("(i < 10) && (j < 10) is " + ((i < 10) && (j < 10)));
-				_invoke(systemOut, "println", _append(Value.value("(i < 10) && (j < 10) is "), _conditionalAnd(_lessThan(i, Value.value(10)), _lessThan(j, Value.value(10)))));
+				_invoke(systemOut, "println", _append(Value.value("(i < 10) && (j < 10) is "), _and(_lt(i, Value.value(10)), _lt(j, Value.value(10)))));
 				
 			    //System.out.println("(i < 10) || (j < 10) is " + ((i < 10) || (j < 10)));
-				_invoke(systemOut, "println", _append(Value.value("(i < 10) || (j < 10) is "), _conditionalOr(_lessThan(i, Value.value(10)), _lessThan(j, Value.value(10)))));
+				_invoke(systemOut, "println", _append(Value.value("(i < 10) || (j < 10) is "), _or(_lt(i, Value.value(10)), _lt(j, Value.value(10)))));
 				
 				_return();
 			}

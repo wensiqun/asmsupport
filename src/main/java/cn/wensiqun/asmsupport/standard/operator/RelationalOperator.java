@@ -20,7 +20,7 @@ public interface RelationalOperator {
     
     /**
      * 
-     * 生成大于操作指令,对应下面的红色java代码
+     * The greater than operator
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 > factor2;</b>
@@ -31,11 +31,11 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public GreaterThan _greaterThan(Parameterized factor1, Parameterized factor2);
+    public GreaterThan _gt(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
-     * 生成大于等于操作指令,对应下面的红色java代码
+     * The greater equals operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 >= factor2;</b>
@@ -45,10 +45,10 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public GreaterEqual _greaterEqual(Parameterized factor1, Parameterized factor2);
+    public GreaterEqual _ge(Parameterized factor1, Parameterized factor2);
     
     /**
-     * 生成小于操作指令,对应下面的红色java代码
+     * The less than equals.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 < factor2;</b>
@@ -58,11 +58,11 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public LessThan _lessThan(Parameterized factor1, Parameterized factor2);
+    public LessThan _lt(Parameterized factor1, Parameterized factor2);
 
     /**
      * 
-     * 生成小于等于操作指令,对应下面的红色java代码
+     * The less equals operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 <= factor2;</b>
@@ -72,11 +72,11 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public LessEqual _lessEqual(Parameterized factor1, Parameterized factor2);
+    public LessEqual _le(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
-     * 生成等于操作指令,对应下面的红色java代码
+     * The equal operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 == factor2;</b>
@@ -86,11 +86,11 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public Equal _equals(Parameterized factor1, Parameterized factor2);
+    public Equal _eq(Parameterized factor1, Parameterized factor2);
 
     /**
      * 
-     * 生成不等于操作指令,对应下面的红色java代码
+     * The not equal operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 != factor2;</b>
@@ -100,5 +100,5 @@ public interface RelationalOperator {
      * @param factor2
      * @return
      */
-    public NotEqual _notEquals(Parameterized factor1, Parameterized factor2);
+    public NotEqual _ne(Parameterized factor1, Parameterized factor2);
 }

@@ -80,13 +80,13 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
 								Value.value("Conditional AND (&&)"), 
 								Value.value("false && false"), 
-								_conditionalAnd(Value.value(false), Value.value(false)), 
+								_and(Value.value(false), Value.value(false)), 
 								Value.value("false && true"), 
-								_conditionalAnd(Value.value(false), Value.value(true)), 
+								_and(Value.value(false), Value.value(true)), 
 								Value.value("true && false"), 
-								_conditionalAnd(Value.value(true), Value.value(false)),  
+								_and(Value.value(true), Value.value(false)),  
 								Value.value("true && true"), 
-								_conditionalAnd(Value.value(true), Value.value(true))
+								_and(Value.value(true), Value.value(true))
 								);
 
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
@@ -96,10 +96,10 @@ public class LogicalOperatorGenerate extends AbstractExample {
 						_invoke(systemOut, "printf", 
 								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
 								Value.value("Conditional OR (||)"), 
-								Value.value("false || false"),  _conditionalOr(Value.value(false), Value.value(false)), 
-								Value.value("false || true"),  _conditionalOr(Value.value(false), Value.value(true)), 
-								Value.value("true || false"),  _conditionalOr(Value.value(true), Value.value(false)),  
-								Value.value("true || true"),  _conditionalOr(Value.value(true), Value.value(true))
+								Value.value("false || false"),  _or(Value.value(false), Value.value(false)), 
+								Value.value("false || true"),  _or(Value.value(false), Value.value(true)), 
+								Value.value("true || false"),  _or(Value.value(true), Value.value(false)),  
+								Value.value("true || true"),  _or(Value.value(true), Value.value(true))
 								);
 						
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",

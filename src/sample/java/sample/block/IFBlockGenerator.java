@@ -84,7 +84,7 @@ public class IFBlockGenerator extends AbstractExample{
 						_if(new IFInternal(_invoke(str, "equals", Value.value("A"))){
 							@Override
 							public void body() {
-								_if(new IFInternal(_equals(i, Value.value(0))){
+								_if(new IFInternal(_eq(i, Value.value(0))){
 
 									@Override
 									public void body() {
@@ -104,7 +104,7 @@ public class IFBlockGenerator extends AbstractExample{
 
 							@Override
 							public void body() {
-								_if(new IFInternal(_equals(i, Value.value(0))){
+								_if(new IFInternal(_eq(i, Value.value(0))){
 
 									@Override
 									public void body() {
@@ -125,7 +125,7 @@ public class IFBlockGenerator extends AbstractExample{
 
 							@Override
 							public void body() {
-								_if(new IFInternal(_equals(i, Value.value(0))){
+								_if(new IFInternal(_eq(i, Value.value(0))){
 
 									@Override
 									public void body() {

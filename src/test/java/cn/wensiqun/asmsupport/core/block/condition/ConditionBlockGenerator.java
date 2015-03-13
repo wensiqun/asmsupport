@@ -63,7 +63,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	
                 });
                 
-                _if(new IFInternal(_equals(Value.value(1), _invoke(str, "length"))){
+                _if(new IFInternal(_eq(Value.value(1), _invoke(str, "length"))){
 
 					@Override
 					public void body() {
@@ -81,7 +81,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	
                 });
                 
-                _if(new IFInternal(_equals(Value.value(2), _invoke(str, "length"))){
+                _if(new IFInternal(_eq(Value.value(2), _invoke(str, "length"))){
 
 					@Override
 					public void body() {
@@ -99,7 +99,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	
                 });
                 
-                _if(new IFInternal(_equals(Value.value(3), _invoke(str, "length"))){
+                _if(new IFInternal(_eq(Value.value(3), _invoke(str, "length"))){
 
 					@Override
 					public void body() {
@@ -134,7 +134,7 @@ public class ConditionBlockGenerator extends AbstractExample
 								 _invokeStatic(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith A!"));
 								
-								 _if(new IFInternal(_equals(_invoke(str, "length"), Value.value(2))){
+								 _if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
@@ -142,7 +142,7 @@ public class ConditionBlockGenerator extends AbstractExample
 												 "actuallyPrintln", Value.value("            length is 2!"));
 									}
 										 
-							    })._elseif(new ElseIFInternal(_equals(_invoke(str, "length"), Value.value(3))){
+							    })._elseif(new ElseIFInternal(_eq(_invoke(str, "length"), Value.value(3))){
 
 									@Override
 									public void body() {
@@ -171,13 +171,13 @@ public class ConditionBlockGenerator extends AbstractExample
 								_invokeStatic(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith B!"));
 								 
-								_if(new IFInternal(_equals(_invoke(str, "length"), Value.value(2))){
+								_if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
 										_invokeStatic(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 2!"));
-										_if(new IFInternal(_equals(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
+										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
@@ -196,7 +196,7 @@ public class ConditionBlockGenerator extends AbstractExample
 										});
 									}
 									
-								})._elseif(new ElseIFInternal(_equals(_invoke(str, "length"), Value.value(3))){
+								})._elseif(new ElseIFInternal(_eq(_invoke(str, "length"), Value.value(3))){
 
 									@Override
 									public void body() {
@@ -204,7 +204,7 @@ public class ConditionBlockGenerator extends AbstractExample
 										_invokeStatic(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 3!"));
 										
-										_if(new IFInternal(_equals(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
+										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
@@ -212,7 +212,7 @@ public class ConditionBlockGenerator extends AbstractExample
 														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
 											}
 											
-										})._elseif(new ElseIFInternal(_equals(_invoke(str, "charAt", Value.value(1)), Value.value('2'))){
+										})._elseif(new ElseIFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('2'))){
 
 											@Override
 											public void body() {
@@ -220,7 +220,7 @@ public class ConditionBlockGenerator extends AbstractExample
 														 "actuallyPrintln", Value.value("                charAt 1 is '2'!"));
 											}
 											
-										})._elseif(new ElseIFInternal(_equals(_invoke(str, "charAt", Value.value(1)), Value.value('3'))){
+										})._elseif(new ElseIFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('3'))){
 
 											@Override
 											public void body() {

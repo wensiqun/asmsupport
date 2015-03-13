@@ -66,10 +66,10 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Inverts;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.LeftShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.RightShift;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedRightShift;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
@@ -625,49 +625,49 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     //*******************************************************************************************//
 
     @Override
-    public final Inverts _inverts(Parameterized factor){
-        return OperatorFactory.newOperator(Inverts.class, 
+    public final Reverse _reverse(Parameterized factor){
+        return OperatorFactory.newOperator(Reverse.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class},
                 getExecutor(), factor);
     }
 
     @Override
-    public final BitAnd _bitAnd(Parameterized factor1, Parameterized factor2){
+    public final BitAnd _band(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(BitAnd.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     } 
 
     @Override
-    public final BitOr _bitOr(Parameterized factor1, Parameterized factor2){
+    public final BitOr _bor(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(BitOr.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     } 
 
     @Override
-    public final BitXor _bitXor(Parameterized factor1, Parameterized factor2){
+    public final BitXor _bxor(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(BitXor.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     } 
 
     @Override
-    public final LeftShift _leftShift(Parameterized factor1, Parameterized factor2){
-        return OperatorFactory.newOperator(LeftShift.class, 
+    public final ShiftLeft _shl(Parameterized factor1, Parameterized factor2){
+        return OperatorFactory.newOperator(ShiftLeft.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
     
-    public final RightShift _rightShift(Parameterized factor1, Parameterized factor2){
-        return OperatorFactory.newOperator(RightShift.class, 
+    public final ShiftRight _shr(Parameterized factor1, Parameterized factor2){
+        return OperatorFactory.newOperator(ShiftRight.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final UnsignedRightShift _unsignedRightShift(Parameterized factor1, Parameterized factor2){
-        return OperatorFactory.newOperator(UnsignedRightShift.class, 
+    public final UnsignedShiftRight _ushr(Parameterized factor1, Parameterized factor2){
+        return OperatorFactory.newOperator(UnsignedShiftRight.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
@@ -709,42 +709,42 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     //*******************************************************************************************//
 
     @Override
-    public final GreaterThan _greaterThan(Parameterized factor1, Parameterized factor2){
+    public final GreaterThan _gt(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(GreaterThan.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final GreaterEqual _greaterEqual(Parameterized factor1, Parameterized factor2){
+    public final GreaterEqual _ge(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(GreaterEqual.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LessThan _lessThan(Parameterized factor1, Parameterized factor2){
+    public final LessThan _lt(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(LessThan.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LessEqual _lessEqual(Parameterized factor1, Parameterized factor2){
+    public final LessEqual _le(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(LessEqual.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Equal _equals(Parameterized factor1, Parameterized factor2){
+    public final Equal _eq(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(Equal.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final NotEqual _notEquals(Parameterized factor1, Parameterized factor2){
+    public final NotEqual _ne(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(NotEqual.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class},
                 getExecutor(), factor1, factor2);
@@ -777,14 +777,14 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public final ShortCircuitAnd _conditionalAnd(Parameterized factor1, Parameterized factor2){
+    public final ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(ShortCircuitAnd.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
                 getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final ShortCircuitOr _conditionalOr(Parameterized factor1, Parameterized factor2){
+    public final ShortCircuitOr _or(Parameterized factor1, Parameterized factor2){
         return OperatorFactory.newOperator(ShortCircuitOr.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
                 getExecutor(), factor1, factor2);

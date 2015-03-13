@@ -29,7 +29,7 @@ public interface Operators {
     
     static final String XOR = "^";
     
-    static final String INVERTS = "~";
+    static final String REVERSE = "~";
     
     static final String LEFT_SHIFT = "<<";
     
