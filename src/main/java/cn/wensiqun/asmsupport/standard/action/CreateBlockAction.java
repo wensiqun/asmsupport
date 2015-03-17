@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
  * @author wensiqun(at)163.com
  *
  */
-public interface CreateBlockOperator<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> {
+public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> {
 
     /**
      * 创建if程序块.

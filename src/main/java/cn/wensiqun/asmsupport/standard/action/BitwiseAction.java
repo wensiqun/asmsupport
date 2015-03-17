@@ -16,7 +16,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
  * 
  * @author wensiqun(at)163.com
  */
-public interface BitwiseOperator {
+public interface BitwiseAction {
 	
     /**
      * 

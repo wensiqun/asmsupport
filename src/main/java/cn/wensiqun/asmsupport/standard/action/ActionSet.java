@@ -15,17 +15,17 @@ import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
  * @author wensiqun(at)gamil
  *
  */
-public interface OperateSet<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> extends 
-KeywordOperator, 
-VariableOperator, 
-MethodInvokeOperator, 
-ArrayOperator, 
-Arithmetic, 
-BitwiseOperator, 
-CrementOperator,
-RelationalOperator,
-LogicalOperator,
-CreateBlockOperator<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> 
+public interface ActionSet<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> extends 
+KeywordAction, 
+VariableAction, 
+MethodInvokeAction, 
+ArrayAction, 
+ArithmeticAction, 
+BitwiseAction, 
+CrementAction,
+RelationalAction,
+LogicalAction,
+CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> 
 {
     
     /**

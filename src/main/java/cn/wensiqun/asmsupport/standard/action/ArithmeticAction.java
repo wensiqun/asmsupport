@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
  *
  * @author wensiqun(at)163.com
  */
-public interface Arithmetic {
+public interface ArithmeticAction {
     
     /**
      * 生成加法操作指令例如：factor1 + factor2,对应下面的红色java代码

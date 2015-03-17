@@ -91,7 +91,7 @@ import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.action.OperateSet;
+import cn.wensiqun.asmsupport.standard.action.ActionSet;
 
 /**
  * 
@@ -100,7 +100,7 @@ import cn.wensiqun.asmsupport.standard.action.OperateSet;
  * @author wensiqun(at)163.com
  * 
  */
-public abstract class ProgramBlockInternal extends AbstractBlockInternal implements OperateSet<IFInternal , WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal>  {
+public abstract class ProgramBlockInternal extends AbstractBlockInternal implements ActionSet<IFInternal , WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal>  {
 
     /**执行Block, 通过当前Block所创建的操作，实际是executeBlock的代理*/
     private   ProgramBlockInternal        executor = this;

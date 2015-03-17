@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
  * @author wensiqun(at)163.com
  *
  */
-public interface CrementOperator {
+public interface CrementAction {
     
     /**
      * 生成类似--i操作指令

@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
  * @author wensiqun(at)163.com
  *
  */
-public interface MethodInvokeOperator {
+public interface MethodInvokeAction {
     
     /**
      * <p>

@@ -50,9 +50,9 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
-import cn.wensiqun.asmsupport.standard.action.OperateSet;
+import cn.wensiqun.asmsupport.standard.action.ActionSet;
 
-public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<IF , While, DoWhile, ForEach, Try, Synchronized>
+public class ProgramBlock<B extends ProgramBlockInternal> implements ActionSet<IF , While, DoWhile, ForEach, Try, Synchronized>
 {
 
     B target;

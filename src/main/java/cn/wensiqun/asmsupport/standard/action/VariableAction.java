@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
  * 变量操作
  *
  */
-public interface VariableOperator {
+public interface VariableAction {
 
     /**
      * create a local variable, this method equivalent to following code :

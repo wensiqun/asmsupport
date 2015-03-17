@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
  * @author wensiqun(at)163.com
  *
  */
-public interface RelationalOperator {
+public interface RelationalAction {
     
     
     /**

@@ -15,7 +15,7 @@ import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
  * @author wensiqun(at)163.com
  *
  */
-public interface LogicalOperator {
+public interface LogicalAction {
     /**
      * 生成逻辑与操作指令,对应下面的红色java代码
      * 
