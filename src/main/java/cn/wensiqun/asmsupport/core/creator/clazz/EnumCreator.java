@@ -273,7 +273,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 Value zero = Value.value(0);
                 
                 //call arraycopy
-                _invokeStatic(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
+                _invoke(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
                 
                 _return(copy);
             }
@@ -288,7 +288,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
             {
                 LocalVariable name = argus[0];
                 AClass owner = getMethodOwner();
-                _return(_checkcast(_invokeStatic(owner, "valueOf", Value.value(owner), name), owner));
+                _return(_checkcast(_invoke(owner, "valueOf", Value.value(owner), name), owner));
             }
             
         });

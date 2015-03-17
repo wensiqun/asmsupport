@@ -30,7 +30,7 @@ public class RelationalGenerator extends AbstractExample
            new StaticMethodBodyInternal(){
                @Override
                public void body(LocalVariable... argus) {
-                   _invokeStatic(getMethodOwner(), "test");
+                   _invoke(getMethodOwner(), "test");
                    _return();
                }
        

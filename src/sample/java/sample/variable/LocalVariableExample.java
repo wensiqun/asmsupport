@@ -64,20 +64,20 @@ public class LocalVariableExample extends AbstractExample {
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
                         LocalVariable localArrayVariable1 = _createArrayVariableWithAllocateDimension("localArrayVariable1", AClassFactory.getArrayClass(String[][].class), false, Value.value(2), Value.value(2));
-                        _invoke(systemOut, "println", _append(Value.value("example 1 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
+                        _invoke(systemOut, "println", _append(Value.value("example 1 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
                         LocalVariable localArrayVariable2 = _createArrayVariableWithAllocateDimension("localArrayVariable2", AClassFactory.getArrayClass(String[][].class), false, Value.value(2));
-                        _invoke(systemOut, "println", _append(Value.value("example 2 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
+                        _invoke(systemOut, "println", _append(Value.value("example 2 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
                         LocalVariable localArrayVariable3 = _createArrayVariableWithAllocateDimension("localArrayVariable3", AClassFactory.getArrayClass(String[][].class), false, (Parameterized[])null);
-                        _invoke(systemOut, "println", _append(Value.value("example 3 : "), _invokeStatic(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
+                        _invoke(systemOut, "println", _append(Value.value("example 3 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
                         
                         _return();
 					}

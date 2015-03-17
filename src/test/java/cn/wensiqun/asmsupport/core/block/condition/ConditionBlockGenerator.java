@@ -35,7 +35,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith A!"));
 					}
                 	
@@ -46,7 +46,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith B!"));
 					}
                 	
@@ -57,7 +57,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith C!"));
 					}
                 	
@@ -67,7 +67,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 1!"));
 					}
                 	
@@ -75,7 +75,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 1!"));
 					}
                 	
@@ -85,7 +85,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 2!"));
 					}
                 	
@@ -93,7 +93,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 2!"));
 					}
                 	
@@ -103,7 +103,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 3!"));
 					}
                 	
@@ -111,7 +111,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-	                    _invokeStatic(TesterStatics.ATesterStatics, 
+	                    _invoke(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 3!"));
 					}
                 	
@@ -123,7 +123,7 @@ public class ConditionBlockGenerator extends AbstractExample
 					@Override
 					public void body() {
 						
-						 _invokeStatic(TesterStatics.ATesterStatics, 
+						 _invoke(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Z!"));
 						 
 						 _if(new IFInternal(_invoke(str, "startsWith", Value.value("A"))){
@@ -131,14 +131,14 @@ public class ConditionBlockGenerator extends AbstractExample
 							@Override
 							public void body() {
 
-								 _invokeStatic(TesterStatics.ATesterStatics, 
+								 _invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith A!"));
 								
 								 _if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 2!"));
 									}
 										 
@@ -146,7 +146,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 3!"));
 										
 									}
@@ -155,7 +155,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is Other!"));
 									}
 							    	
@@ -168,20 +168,20 @@ public class ConditionBlockGenerator extends AbstractExample
 
 							@Override
 							public void body() {
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith B!"));
 								 
 								_if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 2!"));
 										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
 											}
 											
@@ -189,7 +189,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
 											}
 											
@@ -201,14 +201,14 @@ public class ConditionBlockGenerator extends AbstractExample
 									@Override
 									public void body() {
 
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 3!"));
 										
 										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
 											}
 											
@@ -216,7 +216,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '2'!"));
 											}
 											
@@ -224,7 +224,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '3'!"));
 											}
 											
@@ -232,7 +232,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 											@Override
 											public void body() {
-												_invokeStatic(TesterStatics.ATesterStatics, 
+												_invoke(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
 											}
 											
@@ -243,7 +243,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is Other!"));
 									}
 									
@@ -258,13 +258,13 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-						_invokeStatic(TesterStatics.ATesterStatics, 
+						_invoke(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Y!"));
 						_if(new IFInternal(_invoke(str, "startsWith", Value.value("A"))){
 
 							@Override
 							public void body() {
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith A!"));
 							}
 							
@@ -274,7 +274,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 							@Override
 							public void body() {
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith B!"));
 							}
 							
@@ -285,7 +285,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-						_invokeStatic(TesterStatics.ATesterStatics, 
+						_invoke(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Other!"));
 						
 						_if(new IFInternal(_invoke(str, "endsWith", Value.value("X"))){
@@ -293,7 +293,7 @@ public class ConditionBlockGenerator extends AbstractExample
 							@Override
 							public void body() {
 
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith X!"));
 							}
 							
@@ -302,7 +302,7 @@ public class ConditionBlockGenerator extends AbstractExample
 							@Override
 							public void body() {
 
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith W!"));
 							}
 							
@@ -310,7 +310,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 							@Override
 							public void body() {
-								_invokeStatic(TesterStatics.ATesterStatics, 
+								_invoke(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith Other!"));
 								
 								_if(new IFInternal(_invoke(str, "endsWith", Value.value("V"))){
@@ -318,7 +318,7 @@ public class ConditionBlockGenerator extends AbstractExample
 									@Override
 									public void body() {
 
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith V!"));
 									}
 									
@@ -327,7 +327,7 @@ public class ConditionBlockGenerator extends AbstractExample
 									@Override
 									public void body() {
 
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith U!"));
 									}
 									
@@ -335,7 +335,7 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										_invokeStatic(TesterStatics.ATesterStatics, 
+										_invoke(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith Other!"));
 										
 										
@@ -365,7 +365,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	List<String> list = ConditionBlockGeneratorSample.allPossiable();
                 	for(String str : list)
                 	{
-                		_invokeStatic(getMethodOwner(), "test", Value.value(str));
+                		_invoke(getMethodOwner(), "test", Value.value(str));
                 	}
                     _return();
                 }

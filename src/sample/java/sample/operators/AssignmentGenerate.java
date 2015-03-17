@@ -34,7 +34,7 @@ public class AssignmentGenerate extends AbstractExample {
 				//创建个String变量默认赋值为null
 				LocalVariable string = _var("string", AClass.STRING_ACLASS, false, null);
 				
-				_assign(string, _invokeStatic(getMethodOwner(), "commonMethod"));
+				_assign(string, _invoke(getMethodOwner(), "commonMethod"));
 				_invoke(systemOut, "println", _append(Value.value("first asign :"), string));
 				
 				_assign(string, Value.value("second assing value"));

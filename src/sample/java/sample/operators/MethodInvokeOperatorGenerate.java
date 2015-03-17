@@ -144,7 +144,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
             	 * 2.静态方法的名称
             	 * 3.参数
             	 */
-            	MethodInvoker getDescriptionInvoker = _invokeStatic(getMethodOwner(), "getDescription", obj);
+            	MethodInvoker getDescriptionInvoker = _invoke(getMethodOwner(), "getDescription", obj);
             	
             	_invoke(systemOut, "println", _append(Value.value("Call static method : "), getDescriptionInvoker));
                 

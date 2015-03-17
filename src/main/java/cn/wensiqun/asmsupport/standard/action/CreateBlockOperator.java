@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard.operator;
+package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;

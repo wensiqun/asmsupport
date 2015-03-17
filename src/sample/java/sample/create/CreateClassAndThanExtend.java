@@ -56,7 +56,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			public void body(LocalVariable... argus) {
 				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
 				_assign(age, Value.value(20));
-				this._invokeOriginalMethod();
+				this._invokeOriginal();
 				GlobalVariable name = getMethodOwner().getGlobalVariable("name");
 				_assign(name, Value.value("wensiqun"));
 				_invoke(out, "println", name);
@@ -75,7 +75,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 				_if(new IFInternal(_invoke(random, "nextBoolean")){
 					@Override
 					public void body() {
-						_invokeOriginalMethod();
+						_invokeOriginal();
 					}
 
 				})._else(new ElseInternal(){
@@ -96,7 +96,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				_invoke(out, "println", Value.value("before"));
-				LocalVariable lv = this._var(null, getOriginalMethodReturnClass(), true, _invokeOriginalMethod());
+				LocalVariable lv = this._var(null, getOriginalMethodReturnClass(), true, _invokeOriginal());
 				_invoke(out, "println", Value.value("after"));	
 				_return(lv);
 			}

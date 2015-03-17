@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard.operator;
+package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
  *
  * @author wensiqun(at)163.com
  */
-public interface ArithmeticOperator {
+public interface Arithmetic {
     
     /**
      * 生成加法操作指令例如：factor1 + factor2,对应下面的红色java代码

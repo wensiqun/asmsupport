@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard.operator;
+package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;

@@ -53,8 +53,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -62,7 +62,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -81,8 +81,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -90,7 +90,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -109,7 +109,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -117,8 +117,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -137,7 +137,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -145,8 +145,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -165,8 +165,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -174,8 +174,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -194,8 +194,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -203,8 +203,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -223,8 +223,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -232,8 +232,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -252,8 +252,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -261,8 +261,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -281,8 +281,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -290,7 +290,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -298,7 +298,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -317,8 +317,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -326,7 +326,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -334,7 +334,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -353,8 +353,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -362,7 +362,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -370,7 +370,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -389,8 +389,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -398,7 +398,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -406,7 +406,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -425,7 +425,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -433,8 +433,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -442,7 +442,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -461,7 +461,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -469,8 +469,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -478,7 +478,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -497,7 +497,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -505,7 +505,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -513,8 +513,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -533,7 +533,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -541,7 +541,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -549,8 +549,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -569,8 +569,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -578,8 +578,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -587,7 +587,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -606,8 +606,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -615,8 +615,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -624,7 +624,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -643,8 +643,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -652,8 +652,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -661,7 +661,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -680,8 +680,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -689,8 +689,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -698,7 +698,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -716,8 +716,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -725,7 +725,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -733,8 +733,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -752,8 +752,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -761,7 +761,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -769,8 +769,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -788,8 +788,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -797,7 +797,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -805,8 +805,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -824,8 +824,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -833,7 +833,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -841,8 +841,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -861,8 +861,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -870,8 +870,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -879,8 +879,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -899,8 +899,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -908,8 +908,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -917,8 +917,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -937,8 +937,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -946,8 +946,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -955,8 +955,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -975,8 +975,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(getMethodOwner(), "exception");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -984,8 +984,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -993,8 +993,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -1013,8 +1013,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -1022,8 +1022,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -1031,8 +1031,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -1051,8 +1051,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -1060,8 +1060,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -1069,8 +1069,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -1089,8 +1089,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -1098,8 +1098,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -1107,8 +1107,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
                 });
@@ -1129,8 +1129,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _invokeStatic(getMethodOwner(), "exception");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        _invoke(getMethodOwner(), "exception");
                     }
                     
                 })._catch(new CatchInternal(runtime){
@@ -1138,8 +1138,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(getMethodOwner(), "runtimeException");
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
                 })._catch(new CatchInternal(AClass.EXCEPTION_ACLASS){
@@ -1147,8 +1147,8 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        _invokeStatic(getMethodOwner(), "runtimeException");
+                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
+                        _invoke(getMethodOwner(), "runtimeException");
                     }
                     
                 });
@@ -1178,13 +1178,13 @@ public class TryCatchBlockGenerator extends AbstractExample
     
     private static void noExceptionCall(ProgramBlockInternal block, final String methodName)
     {
-        block._invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
+        block._invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
         block._try(new TryInternal(){
 
             @Override
             public void body()
             {
-                _invokeStatic(getMethodOwner(), methodName);
+                _invoke(getMethodOwner(), methodName);
             }
             
         })._catch(new CatchInternal(AClass.THROWABLE_ACLASS){

@@ -154,12 +154,12 @@ public class IFBlockGenerator extends AbstractExample{
 				new StaticMethodBodyInternal(){
 					@Override
 					public void body(LocalVariable... argus) {
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("B"), Value.value(1));
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(0));
-						_invokeStatic(getMethodOwner(), "ifelse", Value.value("C"), Value.value(1));
+						_invoke(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
+						_invoke(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
+						_invoke(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));
+						_invoke(getMethodOwner(), "ifelse", Value.value("B"), Value.value(1));
+						_invoke(getMethodOwner(), "ifelse", Value.value("C"), Value.value(0));
+						_invoke(getMethodOwner(), "ifelse", Value.value("C"), Value.value(1));
 						_return();
 					}
 			

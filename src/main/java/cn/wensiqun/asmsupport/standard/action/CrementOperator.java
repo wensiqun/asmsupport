@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard.operator;
+package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;

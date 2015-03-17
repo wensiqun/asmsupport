@@ -165,7 +165,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 					@Override
 					public void body() {
-						_invokeStatic(AClassFactory.getProductClass(Thread.class), "sleep", Value.value(100));
+						_invoke(AClassFactory.getProductClass(Thread.class), "sleep", Value.value(100));
 					    _invoke(_this().getGlobalVariable("sgst"), "sync" + name);
 					}
 					
@@ -207,7 +207,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                         "es", 
                         AClassFactory.getProductClass(ExecutorService.class),
                         false, 
-                        _invokeStatic(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
+                        _invoke(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
                 );
                  final LocalVariable objs = _var(
                         "objs", 
@@ -235,7 +235,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 							
 						}
 					});
-                _invokeStatic(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+                _invoke(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
                 		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), _invoke(sgst.getGlobalVariable("list"), "size"));
                 
                 _assign(i, Value.value(0));
@@ -243,7 +243,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 					@Override
 					public void body() {
-		                _invokeStatic(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+		                _invoke(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
 		                		i,
 		                		_mod(i, Value.value(10)), 
 		                		_invoke(_checkcast(_invoke(sgst.getGlobalVariable("list"), "get", i), AClass.INTEGER_WRAP_ACLASS), "intValue"));

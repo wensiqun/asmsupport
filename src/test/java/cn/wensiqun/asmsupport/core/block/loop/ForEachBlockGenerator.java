@@ -33,7 +33,7 @@ public class ForEachBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body(LocalVariable l) {
-                            _invokeStatic(TesterStatics.ATesterStatics, "actuallyPrintln", _checkcast(l, String.class));
+                            _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", _checkcast(l, String.class));
                         }
                         
                     });
@@ -45,7 +45,7 @@ public class ForEachBlockGenerator extends AbstractExample {
             new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {
-                	_invokeStatic(getMethodOwner(), "test");
+                	_invoke(getMethodOwner(), "test");
                     _return();
                 }
         

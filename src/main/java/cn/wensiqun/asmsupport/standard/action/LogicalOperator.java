@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.standard.operator;
+package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.operator.logical.LogicalAnd;
@@ -70,7 +70,7 @@ public interface LogicalOperator {
      * @param factor2
      * @return {@link ShortCircuitAnd}
      */
-    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2);
+    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2, Parameterized... otherFactors);
     
     /**
      * 
@@ -84,7 +84,7 @@ public interface LogicalOperator {
      * @param factor2
      * @return {@link ShortCircuitOr}
      */
-    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2);
+    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2, Parameterized... otherFactors);
     
     /**
      * 生成条件非操作指令,对应下面的红色java代码

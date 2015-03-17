@@ -87,10 +87,11 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.operator.OperateSet;
+import cn.wensiqun.asmsupport.standard.action.OperateSet;
 
 /**
  * 
@@ -777,17 +778,33 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public final ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2){
-        return OperatorFactory.newOperator(ShortCircuitAnd.class, 
+    public final ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2, Parameterized... otherFactors){
+        ShortCircuitAnd sca = OperatorFactory.newOperator(ShortCircuitAnd.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
                 getExecutor(), factor1, factor2);
+        if(ArrayUtils.isNotEmpty(otherFactors)) {
+            for(Parameterized factor : otherFactors) {
+                sca = OperatorFactory.newOperator(ShortCircuitAnd.class, 
+                        new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
+                        getExecutor(), sca, factor);
+            }
+        }
+        return sca;
     }
 
     @Override
-    public final ShortCircuitOr _or(Parameterized factor1, Parameterized factor2){
-        return OperatorFactory.newOperator(ShortCircuitOr.class, 
+    public final ShortCircuitOr _or(Parameterized factor1, Parameterized factor2, Parameterized... otherFactors){
+        ShortCircuitOr sco = OperatorFactory.newOperator(ShortCircuitOr.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
                 getExecutor(), factor1, factor2);
+        if(ArrayUtils.isNotEmpty(otherFactors)) {
+            for(Parameterized factor : otherFactors) {
+                sco = OperatorFactory.newOperator(ShortCircuitOr.class, 
+                        new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class}, 
+                        getExecutor(), sco, factor);
+            }
+        }
+        return sco;
     }
 
     @Override
@@ -856,7 +873,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public final MethodInvoker _invokeStatic(AClass owner, String methodName, Parameterized... arguments) {
+    public final MethodInvoker _invoke(AClass owner, String methodName, Parameterized... arguments) {
         invokeVerify(owner);
         return OperatorFactory.newOperator(StaticMethodInvoker.class, 
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class, String.class, Parameterized[].class}, 
@@ -986,7 +1003,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
     
     @Override
-    public final MethodInvoker _invokeOriginalMethod(){
+    public final MethodInvoker _invokeOriginal(){
         if(getMethod().getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY){
             String originalMethodName = getMethod().getMethodMeta().getName();
             if(originalMethodName.equals(ASConstant.CLINIT)){
@@ -996,7 +1013,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
             }
             originalMethodName += ASConstant.METHOD_PROXY_SUFFIX;
             if(getMethod().isStatic()){
-                return _invokeStatic(getMethod().getMethodOwner(), originalMethodName, getMethodArguments());
+                return _invoke(getMethod().getMethodOwner(), originalMethodName, getMethodArguments());
             }else{
                 return _invoke(_this(), originalMethodName, getMethodArguments());
             }

@@ -29,8 +29,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body() {
-                            _invokeStatic(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", intVar1));
+                            _invoke(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", intVar1));
                         }
                         
                     });
@@ -41,8 +41,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body() {
-                            _invokeStatic(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", intVar2));
+                            _invoke(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", intVar2));
                         }
                         
                     });
@@ -53,8 +53,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
 						@Override
 						public void body() {
-							_invokeStatic(TesterStatics.ATesterStatics, 
-		                    		"actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", byteVar));
+							_invoke(TesterStatics.ATesterStatics, 
+		                    		"actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", byteVar));
 						}
 	            		
 	            	});
@@ -65,8 +65,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body() {
-                            _invokeStatic(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", doubleVar));
+                            _invoke(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", doubleVar));
                         }
                         
                     });
@@ -77,8 +77,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body() {
-                            _invokeStatic(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", shortObj));
+                            _invoke(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", shortObj));
                         }
                         
                     });
@@ -89,8 +89,8 @@ public class WhileBlockGenerator extends AbstractExample {
 
                         @Override
                         public void body() {
-                            _invokeStatic(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invokeStatic(AClass.STRING_ACLASS, "valueOf", longObj));
+                            _invoke(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", longObj));
                         }
                         
                     });
@@ -104,7 +104,7 @@ public class WhileBlockGenerator extends AbstractExample {
             new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {
-                	_invokeStatic(getMethodOwner(), "test");
+                	_invoke(getMethodOwner(), "test");
                     _return();
                 }
         

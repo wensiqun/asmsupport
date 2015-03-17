@@ -50,7 +50,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
-import cn.wensiqun.asmsupport.standard.operator.OperateSet;
+import cn.wensiqun.asmsupport.standard.action.OperateSet;
 
 public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<IF , While, DoWhile, ForEach, Try, Synchronized>
 {
@@ -152,10 +152,10 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
 	}
 
     @Override
-    public MethodInvoker _invokeStatic(AClass owner, String methodName, Parameterized... arguments)
+    public MethodInvoker _invoke(AClass owner, String methodName, Parameterized... arguments)
     {
         
-        return target._invokeStatic(owner, methodName, arguments);
+        return target._invoke(owner, methodName, arguments);
     }
 
     @Override
@@ -171,9 +171,9 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
-    public MethodInvoker _invokeOriginalMethod()
+    public MethodInvoker _invokeOriginal()
     {
-        return target._invokeOriginalMethod();
+        return target._invokeOriginal();
     }
 
     @Override
@@ -456,15 +456,15 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements OperateSet<
     }
 
     @Override
-    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2)
+    public ShortCircuitAnd _and(Parameterized factor1, Parameterized factor2, Parameterized... otherFactor)
     {
-        return target._and(factor1, factor2);
+        return target._and(factor1, factor2, otherFactor);
     }
 
     @Override
-    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2)
+    public ShortCircuitOr _or(Parameterized factor1, Parameterized factor2, Parameterized... otherFactor)
     {
-        return target._or(factor1, factor2);
+        return target._or(factor1, factor2, otherFactor);
     }
 
     @Override
