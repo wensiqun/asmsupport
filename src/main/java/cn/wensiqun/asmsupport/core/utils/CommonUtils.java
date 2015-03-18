@@ -4,11 +4,18 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class CommonUtils {
 
+    /**
+     * Get system jdk version for bytecode indication, 
+     * current only support jdk1.6- cause asmsupport 
+     * dosn't support frame.
+     * 
+     * @return
+     */
     public static int getSystemJDKVersion() {
         String str = System.getProperty("java.version");
-        if(str.startsWith("1.7")) {
+        /*if(str.startsWith("1.7")) {
             return Opcodes.V1_7;
-        }
+        }*/
         if(str.startsWith("1.6")) {
             return Opcodes.V1_6;
         }

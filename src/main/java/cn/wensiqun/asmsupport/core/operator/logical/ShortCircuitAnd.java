@@ -35,7 +35,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         MethodVisitor mv = insnHelper.getMv();
 
         if(factor1 instanceof Jumpable) {
-            ((Jumpable) factor1).jumpNegative(trueLbl, falseLbl);
+            ((Jumpable) factor1).jumpNegative(this, trueLbl, falseLbl);
         } else {
             factor1.loadToStack(block);
             insnHelper.unbox(factor1.getParamterizedType().getType());
@@ -44,7 +44,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         
 
         if(factor2 instanceof Jumpable) {
-            ((Jumpable) factor2).jumpNegative(trueLbl, falseLbl);
+            ((Jumpable) factor2).jumpNegative(this, trueLbl, falseLbl);
         } else {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getParamterizedType().getType());
@@ -64,10 +64,13 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
     }
 
     @Override
-    public void jumpPositive(Label posLbl, Label negLbl) {
+    public void jumpPositive(Parameterized from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
-        if(factor1 instanceof Jumpable) {
-            ((Jumpable) factor1).jumpNegative(posLbl, negLbl);
+        Label label4Or = new Label();
+        if(factor1 instanceof ShortCircuitOr) {
+            ((Jumpable) factor1).jumpNegative(this, posLbl, label4Or);
+        }else if(factor1 instanceof Jumpable) {
+            ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
         } else {
             factor1.loadToStack(block);
             insnHelper.unbox(factor1.getParamterizedType().getType());
@@ -75,20 +78,21 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         }
 
         if(factor2 instanceof Jumpable) {
-            ((Jumpable) factor2).jumpPositive(posLbl, negLbl);
+            ((Jumpable) factor2).jumpPositive(this, posLbl, negLbl);
         } else {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getParamterizedType().getType());
             mv.visitJumpInsn(Opcodes.IFNE, posLbl);
         }
+        insnHelper.mark(label4Or);
     }
 
 
     @Override
-    public void jumpNegative(Label posLbl, Label negLbl) {
+    public void jumpNegative(Parameterized from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
         if(factor1 instanceof Jumpable) {
-            ((Jumpable) factor1).jumpNegative(posLbl, negLbl);
+            ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
         } else {
             factor1.loadToStack(block);
             insnHelper.unbox(factor1.getParamterizedType().getType());
@@ -96,7 +100,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         }
 
         if(factor2 instanceof Jumpable) {
-            ((Jumpable) factor2).jumpNegative(posLbl, negLbl);
+            ((Jumpable) factor2).jumpNegative(this, posLbl, negLbl);
         } else {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getParamterizedType().getType());

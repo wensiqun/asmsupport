@@ -48,7 +48,7 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
         insnHelper.mark(conditionLbl);
 
         if(condition instanceof Jumpable){
-        	((Jumpable) condition).jumpPositive(contentStart, getEnd());
+        	((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

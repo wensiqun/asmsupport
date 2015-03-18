@@ -39,7 +39,7 @@ public abstract class ElseIFInternal extends ConditionBranchBlock implements IEl
         Label posLbl = new Label();
     	insnHelper.nop();
     	if(condition instanceof Jumpable){
-        	((Jumpable) condition).jumpNegative(posLbl, getEnd());
+        	((Jumpable) condition).jumpNegative(null, posLbl, getEnd());
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

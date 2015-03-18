@@ -94,7 +94,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
         Label l2 = new Label();
     	if(exp1 instanceof Jumpable){
         	Jumpable jmp = (Jumpable) exp1;
-        	jmp.jumpNegative(posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
+        	jmp.jumpNegative(this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
         	exp1.loadToStack(block);
             insnHelper.unbox(exp1.getParamterizedType().getType());

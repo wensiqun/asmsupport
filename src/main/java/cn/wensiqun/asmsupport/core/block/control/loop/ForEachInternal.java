@@ -59,7 +59,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             exe.execute();
         }
         if(condition instanceof Jumpable){
-        	((Jumpable) condition).jumpPositive(startLbl, getEnd());
+        	((Jumpable) condition).jumpPositive(null, startLbl, getEnd());
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

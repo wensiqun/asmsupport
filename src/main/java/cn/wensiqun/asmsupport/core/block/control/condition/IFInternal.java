@@ -40,7 +40,7 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
         Label posLbl = new Label();
         
         if(condition instanceof Jumpable){
-            ((Jumpable) condition).jumpNegative(posLbl, getEnd());//.executeJump(Opcodes.JUMP_NEGATIVE, endLbl);
+            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());//.executeJump(Opcodes.JUMP_NEGATIVE, endLbl);
         }else{
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());

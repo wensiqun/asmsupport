@@ -160,13 +160,13 @@ public abstract class AbstractRelational extends AbstractOperator implements
 	}*/
 	
     @Override
-    public void jumpPositive(Label posLbl, Label negLbl) {
+    public void jumpPositive(Parameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         positiveCmp(posLbl);
     }
 
     @Override
-    public void jumpNegative(Label posLbl, Label negLbl) {
+    public void jumpNegative(Parameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         negativeCmp(negLbl);
     }

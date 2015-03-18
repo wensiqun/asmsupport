@@ -1,41 +1,42 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
 	<version>0.4-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>asmsupport</name>
-    <description>
+	<packaging>jar</packaging>
+	<name>asmsupport</name>
+	<description>
         This project is will help developer to dynamic create/modify
         class at runtime simply, and it's base on ASM framework. but 
         it's different to ASM, it's make developer don't care about 
         LocalVariables and Stack status at JVM layer, and also don't 
         care the underlying instructions of JVM.
     </description>
-    
-    <url>https://github.com/wensiqun/asmsupport</url>
-    
-    <licenses>
-	    <license>
-		    <name>The Apache Software License, Version 2.0</name>
-		    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-	    </license>
-    </licenses>
-    
-    <scm>
-        <connection>scm:git:git@github.com:wensiqun/asmsupport.git</connection>
+
+	<url>https://github.com/wensiqun/asmsupport</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:wensiqun/asmsupport.git</connection>
 		<developerConnection>scm:git:git@github.com:wensiqun/asmsupport.git</developerConnection>
-        <url>git@github.com:wensiqun/asmsupport.git</url>
-    </scm>
-    
-    <developers>
-        <developer>
-            <id>wensiqun</id>
-            <name>joe.wen</name>
-            <email>wensiqun at gmail.com</email>
-        </developer>
-    </developers>
-    
+		<url>git@github.com:wensiqun/asmsupport.git</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>wensiqun</id>
+			<name>joe.wen</name>
+			<email>wensiqun at gmail.com</email>
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -56,38 +57,62 @@
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.9.1</version>
 				<executions>
-				    <execution>
-				        <id>add-additional-main-sources</id>
-				        <phase>generate-sources</phase>
-				        <goals>
-				            <goal>add-source</goal>
-				        </goals>
-				        <configuration>
+					<execution>
+						<id>add-additional-main-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
 							<sources>
 								<source>src/third/java</source>
 							</sources>
-				        </configuration>
-				    </execution>
-				    <execution>
-				        <id>add-additional-test-sources</id>
-				        <phase>generate-test-sources</phase>
-				        <goals>
-				            <goal>add-test-source</goal>
-				        </goals>
-				        <configuration>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-additional-test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
 							<sources>
 								<source>src/issue/java</source>
 								<source>src/sample/java</source>
 								<source>src/dummy/java</source>
 							</sources>
-				        </configuration>
-				    </execution>
+						</configuration>
+					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.4</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-webdav</artifactId>
+						<version>1.0-beta-2</version>
+					</dependency>
+				</dependencies>
+				<!-- <executions> <execution> <id>site-deploy</id> <phase>release</phase> 
+					<goals> <goal>perform</goal> </goals> </execution> </executions> -->
 			</plugin>
 		</plugins>
 	</build>
 
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.18.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 	<dependencies>
 
 		<dependency>
@@ -96,13 +121,13 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 </project>
