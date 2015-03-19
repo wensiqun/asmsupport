@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
   <body>
-    <menu name="Override">
-      <item name="Release Notes" href="release-notes.html"/>
+    <menu name="概述">
+      <item name="Summary" href="summary.html"/>
     </menu>
 
     <menu ref="parent"/>

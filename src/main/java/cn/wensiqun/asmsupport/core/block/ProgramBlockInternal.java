@@ -224,10 +224,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     public final void execute()
     {
         getInsnHelper().mark(scope.getStart());
-        getInsnHelper().nop();
+        //getInsnHelper().nop();
         doExecute();
         getInsnHelper().mark(scope.getEnd());
-        getInsnHelper().nop();
+        //getInsnHelper().nop();
     }
     
     protected abstract void doExecute();
