@@ -6,6 +6,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -575,5 +576,70 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements ActionSet<I
 		target._sync(sync.target);
 		return sync;
 	}
+
+    @Override
+    public Value val(Integer val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Short val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Byte val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Boolean val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Long val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Double val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Character val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Float val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(AClass val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(Class<?> val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value val(String val) {
+        return target.val(val);
+    }
+
+    @Override
+    public Value _null(AClass type) {
+        return target._null(type);
+    }
+
+    @Override
+    public Value _null(Class<?> type) {
+        return target._null(type);
+    }
 
 }

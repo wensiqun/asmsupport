@@ -20,6 +20,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -1045,5 +1046,71 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         return OperatorFactory.newOperator(Return.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class}, getExecutor(), parame);
     }
+
+    @Override
+    public Value val(Integer val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Short val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Byte val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Boolean val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Long val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Double val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Character val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Float val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(AClass val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(Class<?> val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value val(String val) {
+        return Value.value(val);
+    }
+
+    @Override
+    public Value _null(AClass type) {
+        return Value.getNullValue(type);
+    }
+
+    @Override
+    public Value _null(Class<?> type) {
+        return Value.getNullValue(AClassFactory.getProductClass(type));
+    }
+    
     
 }

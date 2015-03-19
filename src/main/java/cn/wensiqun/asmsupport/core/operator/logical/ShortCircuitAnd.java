@@ -34,7 +34,9 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         Label falseLbl = new Label();
         MethodVisitor mv = insnHelper.getMv();
 
-        if(factor1 instanceof Jumpable) {
+        jumpNegative(this, trueLbl, falseLbl);
+        
+        /*if(factor1 instanceof Jumpable) {
             ((Jumpable) factor1).jumpNegative(this, trueLbl, falseLbl);
         } else {
             factor1.loadToStack(block);
@@ -49,7 +51,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getParamterizedType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
-        }
+        }*/
 
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitJumpInsn(Opcodes.GOTO, trueLbl);
@@ -69,7 +71,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
         Label label4Or = new Label();
         if(factor1 instanceof ShortCircuitOr) {
             ((Jumpable) factor1).jumpNegative(this, posLbl, label4Or);
-        }else if(factor1 instanceof Jumpable) {
+        } else if(factor1 instanceof Jumpable) {
             ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
         } else {
             factor1.loadToStack(block);
@@ -91,7 +93,10 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
     @Override
     public void jumpNegative(Parameterized from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
-        if(factor1 instanceof Jumpable) {
+        Label label4Or = new Label();
+        if(factor1 instanceof ShortCircuitOr) {
+            ((Jumpable) factor1).jumpNegative(this, posLbl, label4Or);
+        } else if(factor1 instanceof Jumpable) {
             ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
         } else {
             factor1.loadToStack(block);
@@ -106,6 +111,7 @@ public class ShortCircuitAnd extends ConditionOperator implements Jumpable {
             insnHelper.unbox(factor2.getParamterizedType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
+        insnHelper.mark(label4Or);
     }
 
 }

@@ -166,7 +166,7 @@ public class Value implements IValue {
     }
 
     /**
-     * 获取Null值
+     * Get {@code null} value
      * 
      * @param type
      * @return
@@ -178,46 +178,113 @@ public class Value implements IValue {
         return defaultValue(type);
     }
 
+    /**
+     * Get {@code int} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Integer obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code short} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Short obj) {
         return value((Object)obj);
     }
-
+    
+    /**
+     * Get {@code byte} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Byte obj) {
         return value((Object)obj);
     }
 
+
+    /**
+     * Get {@code boolean} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Boolean obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code long} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Long obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code double} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Double obj) {
         return value((Object)obj);
     }
-
+    
+    /**
+     * Get {@code char} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Character obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code float} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Float obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code class} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(AClass obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code class} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(Class<?> obj) {
         return value((Object)obj);
     }
 
+    /**
+     * Get {@code null} value
+     * 
+     * @param val
+     * @return
+     */
     public static Value value(String obj) {
         return value((Object)obj);
     }
