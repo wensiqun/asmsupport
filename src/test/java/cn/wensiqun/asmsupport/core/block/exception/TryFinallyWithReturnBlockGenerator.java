@@ -29,24 +29,24 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
         });
 
@@ -55,44 +55,44 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("start"));
-                _try(new TryInternal(){
+                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("start"));
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try{"));
-                        _try(new TryInternal(){
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try{"));
+                        try_(new TryInternal(){
                             
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
                             
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
                             }
                             
                         });
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    }"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    }"));
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("end"));
-                _return();
+                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("end"));
+                return_();
             }
             
         });
@@ -102,13 +102,13 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        _return();
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        return_();
                     }
                     
                     public void setFinish(boolean f)
@@ -116,16 +116,16 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     	super.setFinish(f);
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -135,43 +135,43 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                return_();
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
                             }
                             
                         });
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -181,43 +181,43 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                return_();
                             }
                             
                         });
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -227,43 +227,43 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
                             }
                             
                         });
-                        _return();
+                        return_();
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -273,43 +273,43 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
                             }
                             
                         });
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
-                        _return();
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        return_();
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -319,44 +319,44 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                return_();
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                return_();
                             }
                             
                         });
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -366,44 +366,44 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
                             }
                             
                         });
-                        _return();
+                        return_();
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
-                        _return();
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        return_();
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -413,45 +413,45 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                _try(new TryInternal(){
+                try_(new TryInternal(){
 
                     @Override
                     public void body()
                     {
                         
-                        _try(new TryInternal(){
+                        try_(new TryInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                return_();
                             }
                             
-                        })._finally(new FinallyInternal(){
+                        }).finally_(new FinallyInternal(){
 
                             @Override
                             public void body()
                             {
-                                _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
-                                _return();
+                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                return_();
                             }
                             
                         });
                         
                     }
                     
-                })._finally(new FinallyInternal(){
+                }).finally_(new FinallyInternal(){
 
                     @Override
                     public void body()
                     {
-                        _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
-                        _return();
+                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        return_();
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -465,7 +465,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     {
                         noExceptionCall(this, name);
                     }
-                    _return();
+                    return_();
                 }
         
         });
@@ -476,16 +476,16 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
     
     private static void noExceptionCall(ProgramBlockInternal block, final String methodName)
     {
-        block._invoke(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
-        block._try(new TryInternal(){
+        block.call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
+        block.try_(new TryInternal(){
 
             @Override
             public void body()
             {
-                _invoke(getMethodOwner(), methodName);
+                call(getMethodOwner(), methodName);
             }
             
-        })._catch(new CatchInternal(AClass.THROWABLE_ACLASS){
+        }).catch_(new CatchInternal(AClass.THROWABLE_ACLASS){
 
             @Override
             public void body(LocalVariable e)

@@ -269,7 +269,7 @@ public abstract class AClass implements GetGlobalVariabled{
     public abstract List<GlobalVariableMeta> getGlobalVariableMeta(String name);
     
     @Override
-    public final StaticGlobalVariable getGlobalVariable(String name) {
+    public final StaticGlobalVariable field(String name) {
         
         List<GlobalVariableMeta> metas = getGlobalVariableMeta(name);
         if(metas.isEmpty()) {

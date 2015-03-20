@@ -42,7 +42,7 @@ public interface MethodInvokeAction {
      * 
      * <p>
      * 这个方法同样也可以调用静态方法，如果传入的方法名在对象中是一个静态方法，那么ASMSuppport底层就自动生成调用今天方法的指令。当然我们也可以直接通过
-     * 调用{@link #_invoke(AClass, String, Parameterized...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
+     * 调用{@link #call(AClass, String, Parameterized...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
      * 一样的，当我们调用某一个变量的方法时候，如果这个方法是静态方法，我们可以采用"变量名.方法名()"和"类名.方法名()"这两种方式。
      * </p>
      * 
@@ -51,7 +51,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker _invoke(Parameterized objRef, String methodName, Parameterized... arguments);
+    public MethodInvoker call(Parameterized objRef, String methodName, Parameterized... arguments);
 
     /**
      * Generate method invoke, this method equivalence to 
@@ -63,7 +63,7 @@ public interface MethodInvokeAction {
      * @param args
      * @return
      */
-    public MethodInvoker _invoke(String methodName, Parameterized... args);
+    public MethodInvoker call(String methodName, Parameterized... args);
     
     /**
      * 
@@ -88,7 +88,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker _invoke(AClass owner, String methodName, Parameterized... arguments);
+    public MethodInvoker call(AClass owner, String methodName, Parameterized... arguments);
     
     
     /**
@@ -114,15 +114,15 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker _new(AClass owner, Parameterized... arguments);
+    public MethodInvoker new_(AClass owner, Parameterized... arguments);
     
     /**
      * @param owner
      * @param arguments
      * @return
-     * @see #_new(AClass, Parameterized...)
+     * @see #new_(AClass, Parameterized...)
      */
-    public MethodInvoker _new(Class<?> owner, Parameterized... arguments);
+    public MethodInvoker new_(Class<?> owner, Parameterized... arguments);
     
     
     /**
@@ -153,6 +153,6 @@ public interface MethodInvokeAction {
      * 在上面的代码中"test@original()"这个方法调用指令就是asmsupport调用了invokeOriginalMethod方法生成的。
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker _invokeOriginal();
+    public MethodInvoker callOrig();
     
 }

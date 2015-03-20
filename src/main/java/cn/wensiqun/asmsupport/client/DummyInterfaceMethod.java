@@ -24,7 +24,7 @@ public class DummyInterfaceMethod {
      * @param ret
      * @return
      */
-    public DummyInterfaceMethod _return(AClass ret) {
+    public DummyInterfaceMethod return_(AClass ret) {
         this.returnType = ret;
         return this;
     }
@@ -35,7 +35,7 @@ public class DummyInterfaceMethod {
      * @param ret
      * @return
      */
-    public DummyInterfaceMethod _return(Class<?> ret) {
+    public DummyInterfaceMethod return_(Class<?> ret) {
         this.returnType = AClassFactory.getProductClass(ret);
         return this;
     }
@@ -55,7 +55,7 @@ public class DummyInterfaceMethod {
      * @param name
      * @return
      */
-    public DummyInterfaceMethod _name(String name) {
+    public DummyInterfaceMethod name(String name) {
         this.name = name;
         return this;
     }
@@ -75,7 +75,7 @@ public class DummyInterfaceMethod {
      * @param argus
      * @return
      */
-    public DummyInterfaceMethod _argumentTypes(AClass... argus){
+    public DummyInterfaceMethod argTypes(AClass... argus){
         argTypes = argus;
         return this;
     }
@@ -86,7 +86,7 @@ public class DummyInterfaceMethod {
      * @param argus
      * @return
      */
-    public DummyInterfaceMethod _argumentTypes(Class<?>... argus){
+    public DummyInterfaceMethod argTypes(Class<?>... argus){
         this.argTypes = AClassUtils.convertToAClass(argus);
         return this;
     }
@@ -111,7 +111,7 @@ public class DummyInterfaceMethod {
      * @param exceptionTypes
      * @return
      */
-    public DummyInterfaceMethod _throws(Class<?>... exceptionTypes){
+    public DummyInterfaceMethod throws_(Class<?>... exceptionTypes){
         this.exceptionTypes = AClassUtils.convertToAClass(exceptionTypes);
         return this;
     }
@@ -122,7 +122,7 @@ public class DummyInterfaceMethod {
      * @param exceptionTypes
      * @return
      */
-    public DummyInterfaceMethod _throws(AClass... exceptionTypes){
+    public DummyInterfaceMethod throws_(AClass... exceptionTypes){
         this.exceptionTypes = exceptionTypes;
         return this;
     }

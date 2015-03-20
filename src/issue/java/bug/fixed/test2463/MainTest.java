@@ -22,7 +22,7 @@ public class MainTest {
 				null, new MethodBodyInternal(){
 					@Override
 					public void body(LocalVariable... argus) {
-		            	_return(_new(AClassFactory.getProductClass(MyObject.class)));
+		            	return_(new_(AClassFactory.getProductClass(MyObject.class)));
 					}
 			
 		});
@@ -33,8 +33,8 @@ public class MainTest {
 
             @Override
             public void body(LocalVariable... argus) {
-                _invoke(_new(getMethodOwner()), "getMyObject");
-            	_return();
+                call(new_(getMethodOwner()), "getMyObject");
+            	return_();
             }
         });
 		Utils.generate(creator);

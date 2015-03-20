@@ -40,7 +40,7 @@ public class MainTest {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(_new(childChild));
+				return_(new_(childChild));
 			}
 					
 		});
@@ -51,7 +51,7 @@ public class MainTest {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(_new(childChild));
+				return_(new_(childChild));
 			}
 					
 		});
@@ -62,7 +62,7 @@ public class MainTest {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(_new(childChild));
+				return_(new_(childChild));
 			}
 					
 		});
@@ -73,7 +73,7 @@ public class MainTest {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(_new(childChild));
+				return_(new_(childChild));
 			}
 					
 		});

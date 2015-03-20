@@ -37,8 +37,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */
-    public DummyField _value(Boolean val) {
-        return _value((Object)val);
+    public DummyField val(Boolean val) {
+        return val((Object)val);
     }
 
     
@@ -49,8 +49,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */
-    public DummyField _value(Character val) {
-        return _value((Object)val);
+    public DummyField val(Character val) {
+        return val((Object)val);
     }
 
     /**
@@ -60,8 +60,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */
-    public DummyField _value(Byte val) {
-        return _value((Object)val);
+    public DummyField val(Byte val) {
+        return val((Object)val);
     }
 
     /**
@@ -71,8 +71,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */   
-    public DummyField _value(Short val) {
-        return _value((Object)val);
+    public DummyField val(Short val) {
+        return val((Object)val);
     }
 
     /**
@@ -82,8 +82,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */    
-    public DummyField _value(Integer val) {
-        return _value((Object)val);
+    public DummyField val(Integer val) {
+        return val((Object)val);
     }
 
     /**
@@ -93,8 +93,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */   
-    public DummyField _value(Float val) {
-        return _value((Object)val);
+    public DummyField val(Float val) {
+        return val((Object)val);
     }
 
     /**
@@ -104,8 +104,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */    
-    public DummyField _value(Long val) {
-        return _value((Object)val);
+    public DummyField val(Long val) {
+        return val((Object)val);
     }
 
     /**
@@ -115,8 +115,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */    
-    public DummyField _value(Double val) {
-        return _value((Object)val);
+    public DummyField val(Double val) {
+        return val((Object)val);
     }
 
     /**
@@ -126,8 +126,8 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */    
-    public DummyField _value(String val) {
-        return _value((Object)val);
+    public DummyField val(String val) {
+        return val((Object)val);
     }
 
     /**
@@ -137,7 +137,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param val
      * @return
      */    
-    private DummyField _value(Object val) {
+    private DummyField val(Object val) {
         value = val;
         return this;
     }
@@ -156,7 +156,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * 
      * @return
      */
-    public DummyField _static() {
+    public DummyField static_() {
         modifiers = (modifiers & ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
         return this;
     }
@@ -175,7 +175,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * 
      * @return
      */
-    public DummyField _transient() {
+    public DummyField transient_() {
         modifiers = (modifiers & ~Opcodes.ACC_TRANSIENT) + Opcodes.ACC_TRANSIENT;
         return this;
     } 
@@ -194,7 +194,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * 
      * @return
      */
-    public DummyField _volatile() {
+    public DummyField volatile_() {
         modifiers = (modifiers & ~Opcodes.ACC_VOLATILE) + Opcodes.ACC_VOLATILE;
         return this;
     }
@@ -214,7 +214,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
      * @param type
      * @return
      */
-	public DummyField _type(AClass type){
+	public DummyField type(AClass type){
 	    this.type = type;
 	    return this;
 	}	
@@ -225,7 +225,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
 	 * @param type
 	 * @return
 	 */
-	public DummyField _type(Class<?> type) {
+	public DummyField type(Class<?> type) {
         this.type = AClassFactory.getProductClass(type);
         return this;
 	}
@@ -245,7 +245,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
 	 * @param name
 	 * @return
 	 */
-	public DummyField _name(String name) {
+	public DummyField name(String name) {
 	    this.name = name;
         return this;
 	}

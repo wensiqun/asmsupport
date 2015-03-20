@@ -67,10 +67,10 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
             @Override
             public void body(LocalVariable... argus) {
-            	_supercall(argus);
-                _assign(_this().getGlobalVariable("lock"), _new(AClass.OBJECT_ACLASS));
-                _assign(_this().getGlobalVariable("list"), _new(AClassFactory.getProductClass(ArrayList.class)));
-				_return();
+            	supercall(argus);
+                assign(this_().field("lock"), new_(AClass.OBJECT_ACLASS));
+                assign(this_().field("list"), new_(AClassFactory.getProductClass(ArrayList.class)));
+				return_();
             }
             
         });
@@ -79,24 +79,24 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
             @Override
             public void body(LocalVariable... argus) {
-                final GlobalVariable list = _this().getGlobalVariable("list");
-                _sync(new SynchronizedInternal(_this()){
+                final GlobalVariable list = this_().field("list");
+                sync(new SynchronizedInternal(this_()){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
-                        _while(new WhileInternal(_lt(i, Value.value(10))){
+                        final LocalVariable i = var("i", AClass.INT_ACLASS, false, Value.value(0));
+                        while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
-                                _invoke(list, "add", i);
-                                _postInc(i);
+                                call(list, "add", i);
+                                postinc(i);
                             }
                             
                         });
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -105,24 +105,24 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
             @Override
             public void body(LocalVariable... argus) {
-                final GlobalVariable list = _this().getGlobalVariable("list");
-                _sync(new SynchronizedInternal(_this().getGlobalVariable("lock")){
+                final GlobalVariable list = this_().field("list");
+                sync(new SynchronizedInternal(this_().field("lock")){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(0));
-                        _while(new WhileInternal(_lt(i, Value.value(10))){
+                        final LocalVariable i = var("i", AClass.INT_ACLASS, false, Value.value(0));
+                        while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
-                                _invoke(list, "add", i);
-                                _postInc(i);
+                                call(list, "add", i);
+                                postinc(i);
                             }
                             
                         });
                     }
                     
                 });
-                _return();
+                return_();
             }
             
         });
@@ -150,9 +150,9 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-          	   _supercall();
-				_assign(_this().getGlobalVariable("sgst"), argus[0]);
-				this._return();
+          	   supercall();
+				assign(this_().field("sgst"), argus[0]);
+				this.return_();
 			}
         	
         });
@@ -161,22 +161,22 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				this._try(new TryInternal(){
+				this.try_(new TryInternal(){
 
 					@Override
 					public void body() {
-						_invoke(AClassFactory.getProductClass(Thread.class), "sleep", Value.value(100));
-					    _invoke(_this().getGlobalVariable("sgst"), "sync" + name);
+						call(AClassFactory.getProductClass(Thread.class), "sleep", Value.value(100));
+					    call(this_().field("sgst"), "sync" + name);
 					}
 					
-				})._catch(new CatchInternal(AClassFactory.getProductClass(InterruptedException.class)) {
+				}).catch_(new CatchInternal(AClassFactory.getProductClass(InterruptedException.class)) {
 
 					@Override
 					public void body(LocalVariable e) {
 					}
 					
 				});
-				_return();
+				return_();
 			}
         	
         });
@@ -201,58 +201,58 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
             @Override
             public void body(LocalVariable... argus) {
-                 final LocalVariable sgst = _var("sgst", syncCls, false, _new(syncCls));
+                 final LocalVariable sgst = var("sgst", syncCls, false, new_(syncCls));
                 
-                 final LocalVariable es = _var(
+                 final LocalVariable es = var(
                         "es", 
                         AClassFactory.getProductClass(ExecutorService.class),
                         false, 
-                        _invoke(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
+                        call(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
                 );
-                 final LocalVariable objs = _var(
+                 final LocalVariable objs = var(
                         "objs", 
                         AClassFactory.getProductClass(List.class),
                         false, 
-                        _new(AClassFactory.getProductClass(ArrayList.class))
+                        new_(AClassFactory.getProductClass(ArrayList.class))
                 );
-                 final LocalVariable i = _var(
+                 final LocalVariable i = var(
                         "i", 
                         AClass.INT_ACLASS,
                         false, 
                         Value.value(0)
                );
-                this._while(new WhileInternal(_lt(i, Value.value(10))){
+                this.while_(new WhileInternal(lt(i, Value.value(10))){
 						@Override
 						public void body() {
-							_invoke(objs, "add", _invoke(es, "submit", _new(threadClass, sgst)));
-							_postInc(i);
+							call(objs, "add", call(es, "submit", new_(threadClass, sgst)));
+							postinc(i);
 						}
 					});
-                _invoke(es, "shutdown");
-                _while(new WhileInternal(_not(_invoke(es, "isTerminated"))){
+                call(es, "shutdown");
+                while_(new WhileInternal(no(call(es, "isTerminated"))){
 						@Override
 						public void body() {
 							
 						}
 					});
-                _invoke(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
-                		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), _invoke(sgst.getGlobalVariable("list"), "size"));
+                call(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+                		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), call(sgst.field("list"), "size"));
                 
-                _assign(i, Value.value(0));
-                _while(new WhileInternal(_lt(i, Value.value(100))) {
+                assign(i, Value.value(0));
+                while_(new WhileInternal(lt(i, Value.value(100))) {
 
 					@Override
 					public void body() {
-		                _invoke(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+		                call(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
 		                		i,
-		                		_mod(i, Value.value(10)), 
-		                		_invoke(_checkcast(_invoke(sgst.getGlobalVariable("list"), "get", i), AClass.INTEGER_WRAP_ACLASS), "intValue"));
-						_postInc(i);
+		                		mod(i, Value.value(10)), 
+		                		call(checkcast(call(sgst.field("list"), "get", i), AClass.INTEGER_WRAP_ACLASS), "intValue"));
+						postinc(i);
 					}
                 	
                 });
                 
-                _return();
+                return_();
             }
             
         });

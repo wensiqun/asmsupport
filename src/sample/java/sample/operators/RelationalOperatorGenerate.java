@@ -47,45 +47,45 @@ public class RelationalOperatorGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//Random rand = new Random();
-				LocalVariable rand = _var("rand", AClassFactory.getProductClass(Random.class), false, _new(AClassFactory.getProductClass(Random.class)));
+				LocalVariable rand = var("rand", AClassFactory.getProductClass(Random.class), false, new_(AClassFactory.getProductClass(Random.class)));
 				
 				//int i = rand.nextInt(100);
-				LocalVariable i = _var("i", AClass.INT_ACLASS, false, _invoke(rand, "nextInt", Value.value(100)));
+				LocalVariable i = var("i", AClass.INT_ACLASS, false, call(rand, "nextInt", Value.value(100)));
 				
 			    //int j = rand.nextInt(100);
-				LocalVariable j = _var("j", AClass.INT_ACLASS, false, _invoke(rand, "nextInt", Value.value(100)));
+				LocalVariable j = var("j", AClass.INT_ACLASS, false, call(rand, "nextInt", Value.value(100)));
 				
 			    //System.out.println("i = " + i);
-				_invoke(systemOut, "println", _append(Value.value("i = "), i));
+				call(systemOut, "println", stradd(Value.value("i = "), i));
 				
 			    //System.out.println("j = " + j);
-				_invoke(systemOut, "println", _append(Value.value("j = "), j));
+				call(systemOut, "println", stradd(Value.value("j = "), j));
 				
 			    //System.out.println("i > j is " + (i > j));
-				_invoke(systemOut, "println", _append(Value.value("i > j is "), _gt(i, j)));
+				call(systemOut, "println", stradd(Value.value("i > j is "), gt(i, j)));
 				
 			    //System.out.println("i < j is " + (i < j));
-				_invoke(systemOut, "println", _append(Value.value("i < j is "), _lt(i, j)));
+				call(systemOut, "println", stradd(Value.value("i < j is "), lt(i, j)));
 				
 			    //System.out.println("i >= j is " + (i >= j));
-				_invoke(systemOut, "println", _append(Value.value("i >= j is "), _ge(i, j)));
+				call(systemOut, "println", stradd(Value.value("i >= j is "), ge(i, j)));
 				
 			    //System.out.println("i <= j is " + (i <= j));
-				_invoke(systemOut, "println", _append(Value.value("i <= j is "), _le(i, j)));
+				call(systemOut, "println", stradd(Value.value("i <= j is "), le(i, j)));
 				
 			    //System.out.println("i == j is " + (i == j));
-				_invoke(systemOut, "println", _append(Value.value("i == j is "), _eq(i, j)));
+				call(systemOut, "println", stradd(Value.value("i == j is "), eq(i, j)));
 				
 			    //System.out.println("i != j is " + (i != j));
-				_invoke(systemOut, "println", _append(Value.value("i != j is "), _ne(i, j)));
+				call(systemOut, "println", stradd(Value.value("i != j is "), ne(i, j)));
 				
 			    //System.out.println("(i < 10) && (j < 10) is " + ((i < 10) && (j < 10)));
-				_invoke(systemOut, "println", _append(Value.value("(i < 10) && (j < 10) is "), _and(_lt(i, Value.value(10)), _lt(j, Value.value(10)))));
+				call(systemOut, "println", stradd(Value.value("(i < 10) && (j < 10) is "), and(lt(i, Value.value(10)), lt(j, Value.value(10)))));
 				
 			    //System.out.println("(i < 10) || (j < 10) is " + ((i < 10) || (j < 10)));
-				_invoke(systemOut, "println", _append(Value.value("(i < 10) || (j < 10) is "), _or(_lt(i, Value.value(10)), _lt(j, Value.value(10)))));
+				call(systemOut, "println", stradd(Value.value("(i < 10) || (j < 10) is "), or(lt(i, Value.value(10)), lt(j, Value.value(10)))));
 				
-				_return();
+				return_();
 			}
         });
 		generate(creator);

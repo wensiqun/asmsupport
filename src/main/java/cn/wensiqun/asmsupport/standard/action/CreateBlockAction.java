@@ -18,25 +18,25 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
     /**
      * 创建if程序块.
      * <ul>
-     * <li>通过{@link IFInternal#_else(cn.wensiqun.asmsupport.block.control.Else)}或者
-     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#_else(cn.wensiqun.asmsupport.block.control.Else)}
+     * <li>通过{@link IFInternal#else_(cn.wensiqun.asmsupport.block.control.Else)}或者
+     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#else_(cn.wensiqun.asmsupport.block.control.Else)}
      * 创建else程序块
      * </li>
      * <li>
-     * 通过{@link If#_elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}或者
-     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#_elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}
+     * 通过{@link If#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}或者
+     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}
      * 创建else if程序块
      *</li>
      * </ul>
      * 
      * @param ifs IF对象
      * @return {@link If}
-     * @see IFInternal#_else(cn.wensiqun.asmsupport.block.control.Else)
-     * @see IFInternal#_elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
-     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#_else(cn.wensiqun.asmsupport.block.control.Else)
-     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#_elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
+     * @see IFInternal#else_(cn.wensiqun.asmsupport.block.control.Else)
+     * @see IFInternal#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
+     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#else_(cn.wensiqun.asmsupport.block.control.Else)
+     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
      */
-    public _IF _if(_IF ifBlock);
+    public _IF if_(_IF ifBlock);
     
     /**
      * 
@@ -45,7 +45,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param whileLoop WhileLoop对象
      * @return {@link WhileInternal}
      */
-    public _While _while(_While whileLoop);
+    public _While while_(_While whileLoop);
     
     /**
      * 创建do...while程序块
@@ -53,7 +53,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param doWhileLoop DoWhileLoop对象
      * @return {@link DoWhileLoop}
      */
-    public _DoWhile _dowhile(_DoWhile doWhile);
+    public _DoWhile dowhile(_DoWhile doWhile);
     
     /**
      * 创建for each程序块
@@ -61,19 +61,19 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param forEach ForEachLoop对象
      * @return {@link ForEachLoop}
      */
-    public _ForEach _for(final _ForEach forEach);
+    public _ForEach for_(final _ForEach forEach);
     
     
     /**
      * 创建try程序块.
      * 
      * <ul>
-     * <li>通过{@link TryInternal#_catch(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}或者
-     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#_catch(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}创建
+     * <li>通过{@link TryInternal#catch_(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}或者
+     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#catch_(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}创建
      * catch程序块
      * </li>
-     * <li>通过{@link TryInternal#_finally(cn.wensiqun.asmsupport.block.control.Finally)}或者
-     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#_finally(cn.wensiqun.asmsupport.block.control.Finally)}创建
+     * <li>通过{@link TryInternal#finally_(cn.wensiqun.asmsupport.block.control.Finally)}或者
+     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#finally_(cn.wensiqun.asmsupport.block.control.Finally)}创建
      * finally程序块
      * </li>
      * </ul>
@@ -81,13 +81,13 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param tryPara
      * @return
      */
-    public _Try _try(final _Try tryPara);
+    public _Try try_(final _Try tryPara);
     
     /**
      * 创建Synchronized同步块
      * @param sync Synchronized对象
      * @return {@link SynchronizedInternal}
      */
-    public _Synchronized _sync(_Synchronized sync);
+    public _Synchronized sync(_Synchronized sync);
 	
 }

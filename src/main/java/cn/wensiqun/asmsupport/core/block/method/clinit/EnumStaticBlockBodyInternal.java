@@ -50,7 +50,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
-        GlobalVariable constant = getMethodOwner().getGlobalVariable(name);
+        GlobalVariable constant = getMethodOwner().field(name);
         if(!ModifierUtils.isEnum(constant.getVariableMeta().getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
@@ -72,7 +72,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
-			enumConstant = getMethodOwner().getGlobalVariable(enumArgu.name);
+			enumConstant = getMethodOwner().field(enumArgu.name);
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
@@ -82,15 +82,15 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	        enumArgus[1] = Value.value(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
 	        
-	        MethodInvoker mi = _new(getMethodOwner(), enumArgus);
-	        _assign(enumConstant, mi);
+	        MethodInvoker mi = new_(getMethodOwner(), enumArgus);
+	        assign(enumConstant, mi);
 	        i++;
 		}
 		
-		GlobalVariable gv = getMethodOwner().getGlobalVariable("ENUM$VALUES");
+		GlobalVariable gv = getMethodOwner().field("ENUM$VALUES");
 		
-		ArrayValue av = _newArrayWithValue(AClassFactory.getArrayClass(getMethodOwner(), 1), values);
-		_assign(gv, av);
+		ArrayValue av = newarrayWithValue(AClassFactory.getArrayClass(getMethodOwner(), 1), values);
+		assign(gv, av);
 	}
 	
 	@Override

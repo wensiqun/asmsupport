@@ -17,14 +17,14 @@ public abstract class Catch extends ProgramBlock<CatchInternal> implements ICatc
 		};
 	}
 	
-    public Catch _catch(Catch catchBlock)
+    public Catch catch_(Catch catchBlock)
     {
-        target._catch(catchBlock.target);
+        target.catch_(catchBlock.target);
         return catchBlock;
     }
     
-    public Finally _finally(Finally finallyClient) {
-    	target._finally(finallyClient.target);
+    public Finally finally_(Finally finallyClient) {
+    	target.finally_(finallyClient.target);
     	return finallyClient;
     }
 	

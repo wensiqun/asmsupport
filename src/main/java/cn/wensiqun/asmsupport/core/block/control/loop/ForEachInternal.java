@@ -73,7 +73,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         //?
         //?new NOP(getExecutor());
         if(iteratorVar.getParamterizedType().isArray()){
-            final LocalVariable i = _var(null, AClass.INT_ACLASS, true, Value.value(0));
+            final LocalVariable i = var(null, AClass.INT_ACLASS, true, Value.value(0));
             
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -90,17 +90,17 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             //?new NOP(getExecutor());
             
-            LocalVariable obj = _var(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), _arrayLoad(iteratorVar, i) );
+            LocalVariable obj = var(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), arrayLoad(iteratorVar, i) );
             body(obj);
 
             OperatorFactory.newOperator(Marker.class, 
                     new Class[]{ProgramBlockInternal.class, Label.class}, 
                     getExecutor(), conditionLbl);
-            _postInc(i);
+            postinc(i);
             
-            condition = _lt(i, _arrayLength(iteratorVar));
+            condition = lt(i, arrayLength(iteratorVar));
         }else{
-        	final LocalVariable itr = _var(null, AClass.ITERATOR_ACLASS, true, _invoke(iteratorVar, "iterator"));
+        	final LocalVariable itr = var(null, AClass.ITERATOR_ACLASS, true, call(iteratorVar, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -111,14 +111,14 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                _var(AClass.OBJECT_ACLASS, _invoke(itr, "next")) :
-                                _var(elementType, _checkcast(_invoke(itr, "next"), elementType));
+                                var(AClass.OBJECT_ACLASS, call(itr, "next")) :
+                                var(elementType, checkcast(call(itr, "next"), elementType));
             body(obj);
 
             OperatorFactory.newOperator(Marker.class, 
                     new Class[]{ProgramBlockInternal.class, Label.class}, 
                     getExecutor(), conditionLbl);
-        	condition = _invoke(itr, "hasNext");
+        	condition = call(itr, "hasNext");
         }
         condition.asArgument();
     }

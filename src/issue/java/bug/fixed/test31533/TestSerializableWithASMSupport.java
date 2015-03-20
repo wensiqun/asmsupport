@@ -28,8 +28,8 @@ public class TestSerializableWithASMSupport {
 
 					@Override
 					public void body(LocalVariable... argus) {
-						_assign(_this().getGlobalVariable("name"), argus[0]);
-						_return();
+						assign(this_().field("name"), argus[0]);
+						return_();
 					}
     		
     	});
@@ -41,7 +41,7 @@ public class TestSerializableWithASMSupport {
 
 					@Override
 					public void body(LocalVariable... argus) {
-						_return(_this().getGlobalVariable("name"));
+						return_(this_().field("name"));
 					}
     		
     	});
@@ -53,7 +53,7 @@ public class TestSerializableWithASMSupport {
 
 					@Override
 					public void body(LocalVariable... argus) {
-						_return(_append(Value.value("User [name="), _this().getGlobalVariable("name")));
+						return_(stradd(Value.value("User [name="), this_().field("name")));
 					}
     		
     	});

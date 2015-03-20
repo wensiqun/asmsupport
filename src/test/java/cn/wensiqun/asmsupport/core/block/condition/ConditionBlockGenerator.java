@@ -31,131 +31,131 @@ public class ConditionBlockGenerator extends AbstractExample
             public void body(LocalVariable... argus)
             {
             	final LocalVariable str = argus[0];
-                _if(new IFInternal(_invoke(str, "startsWith", Value.value("A"))){
+                if_(new IFInternal(call(str, "startsWith", Value.value("A"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith A!"));
 					}
                 	
                 });
                 
 
-                _if(new IFInternal(_invoke(str, "startsWith", Value.value("B"))){
+                if_(new IFInternal(call(str, "startsWith", Value.value("B"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith B!"));
 					}
                 	
                 });
                 
 
-                _if(new IFInternal(_invoke(str, "startsWith", Value.value("C"))){
+                if_(new IFInternal(call(str, "startsWith", Value.value("C"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    startsWith C!"));
 					}
                 	
                 });
                 
-                _if(new IFInternal(_eq(Value.value(1), _invoke(str, "length"))){
+                if_(new IFInternal(eq(Value.value(1), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 1!"));
 					}
                 	
-                })._else(new ElseInternal(){
+                }).else_(new ElseInternal(){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 1!"));
 					}
                 	
                 });
                 
-                _if(new IFInternal(_eq(Value.value(2), _invoke(str, "length"))){
+                if_(new IFInternal(eq(Value.value(2), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 2!"));
 					}
                 	
-                })._else(new ElseInternal(){
+                }).else_(new ElseInternal(){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 2!"));
 					}
                 	
                 });
                 
-                _if(new IFInternal(_eq(Value.value(3), _invoke(str, "length"))){
+                if_(new IFInternal(eq(Value.value(3), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is 3!"));
 					}
                 	
-                })._else(new ElseInternal(){
+                }).else_(new ElseInternal(){
 
 					@Override
 					public void body() {
-	                    _invoke(TesterStatics.ATesterStatics, 
+	                    call(TesterStatics.ATesterStatics, 
 	                    		"actuallyPrintln", Value.value("    length is not 3!"));
 					}
                 	
                 });
                 
                 
-                _if(new IFInternal(_invoke(str, "endsWith", Value.value("Z"))){
+                if_(new IFInternal(call(str, "endsWith", Value.value("Z"))){
 
 					@Override
 					public void body() {
 						
-						 _invoke(TesterStatics.ATesterStatics, 
+						 call(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Z!"));
 						 
-						 _if(new IFInternal(_invoke(str, "startsWith", Value.value("A"))){
+						 if_(new IFInternal(call(str, "startsWith", Value.value("A"))){
 
 							@Override
 							public void body() {
 
-								 _invoke(TesterStatics.ATesterStatics, 
+								 call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith A!"));
 								
-								 _if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
+								 if_(new IFInternal(eq(call(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 2!"));
 									}
 										 
-							    })._elseif(new ElseIFInternal(_eq(_invoke(str, "length"), Value.value(3))){
+							    }).elseif(new ElseIFInternal(eq(call(str, "length"), Value.value(3))){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 3!"));
 										
 									}
 							    	
-							    })._else(new ElseInternal(){
+							    }).else_(new ElseInternal(){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is Other!"));
 									}
 							    	
@@ -164,86 +164,86 @@ public class ConditionBlockGenerator extends AbstractExample
 							 
 						 });
 						 
-						 _if(new IFInternal(_invoke(str, "startsWith", Value.value("B"))){
+						 if_(new IFInternal(call(str, "startsWith", Value.value("B"))){
 
 							@Override
 							public void body() {
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith B!"));
 								 
-								_if(new IFInternal(_eq(_invoke(str, "length"), Value.value(2))){
+								if_(new IFInternal(eq(call(str, "length"), Value.value(2))){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 2!"));
-										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
+										if_(new IFInternal(eq(call(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
 											}
 											
-										})._else(new ElseInternal(){
+										}).else_(new ElseInternal(){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
 											}
 											
 										});
 									}
 									
-								})._elseif(new ElseIFInternal(_eq(_invoke(str, "length"), Value.value(3))){
+								}).elseif(new ElseIFInternal(eq(call(str, "length"), Value.value(3))){
 
 									@Override
 									public void body() {
 
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is 3!"));
 										
-										_if(new IFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('1'))){
+										if_(new IFInternal(eq(call(str, "charAt", Value.value(1)), Value.value('1'))){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
 											}
 											
-										})._elseif(new ElseIFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('2'))){
+										}).elseif(new ElseIFInternal(eq(call(str, "charAt", Value.value(1)), Value.value('2'))){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '2'!"));
 											}
 											
-										})._elseif(new ElseIFInternal(_eq(_invoke(str, "charAt", Value.value(1)), Value.value('3'))){
+										}).elseif(new ElseIFInternal(eq(call(str, "charAt", Value.value(1)), Value.value('3'))){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is '3'!"));
 											}
 											
-										})._else(new ElseInternal(){
+										}).else_(new ElseInternal(){
 
 											@Override
 											public void body() {
-												_invoke(TesterStatics.ATesterStatics, 
+												call(TesterStatics.ATesterStatics, 
 														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
 											}
 											
 										});
 									}
 									
-								})._else(new ElseInternal(){
+								}).else_(new ElseInternal(){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            length is Other!"));
 									}
 									
@@ -254,88 +254,88 @@ public class ConditionBlockGenerator extends AbstractExample
 						 });
 					}
                 	
-                })._elseif(new ElseIFInternal(_invoke(str, "endsWith", Value.value("Y"))){
+                }).elseif(new ElseIFInternal(call(str, "endsWith", Value.value("Y"))){
 
 					@Override
 					public void body() {
-						_invoke(TesterStatics.ATesterStatics, 
+						call(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Y!"));
-						_if(new IFInternal(_invoke(str, "startsWith", Value.value("A"))){
+						if_(new IFInternal(call(str, "startsWith", Value.value("A"))){
 
 							@Override
 							public void body() {
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith A!"));
 							}
 							
 						});
 					
-						_if(new IFInternal(_invoke(str, "startsWith", Value.value("B"))){
+						if_(new IFInternal(call(str, "startsWith", Value.value("B"))){
 
 							@Override
 							public void body() {
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        startsWith B!"));
 							}
 							
 						});
 					}
                 	
-                })._else(new ElseInternal(){
+                }).else_(new ElseInternal(){
 
 					@Override
 					public void body() {
-						_invoke(TesterStatics.ATesterStatics, 
+						call(TesterStatics.ATesterStatics, 
 								 "actuallyPrintln", Value.value("    endsWith Other!"));
 						
-						_if(new IFInternal(_invoke(str, "endsWith", Value.value("X"))){
+						if_(new IFInternal(call(str, "endsWith", Value.value("X"))){
 
 							@Override
 							public void body() {
 
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith X!"));
 							}
 							
-						})._elseif(new ElseIFInternal(_invoke(str, "endsWith", Value.value("W"))){
+						}).elseif(new ElseIFInternal(call(str, "endsWith", Value.value("W"))){
 
 							@Override
 							public void body() {
 
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith W!"));
 							}
 							
-						})._else(new ElseInternal(){
+						}).else_(new ElseInternal(){
 
 							@Override
 							public void body() {
-								_invoke(TesterStatics.ATesterStatics, 
+								call(TesterStatics.ATesterStatics, 
 										 "actuallyPrintln", Value.value("        endsWith Other!"));
 								
-								_if(new IFInternal(_invoke(str, "endsWith", Value.value("V"))){
+								if_(new IFInternal(call(str, "endsWith", Value.value("V"))){
 
 									@Override
 									public void body() {
 
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith V!"));
 									}
 									
-								})._elseif(new ElseIFInternal(_invoke(str, "endsWith", Value.value("U"))){
+								}).elseif(new ElseIFInternal(call(str, "endsWith", Value.value("U"))){
 
 									@Override
 									public void body() {
 
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith U!"));
 									}
 									
-								})._else(new ElseInternal(){
+								}).else_(new ElseInternal(){
 
 									@Override
 									public void body() {
-										_invoke(TesterStatics.ATesterStatics, 
+										call(TesterStatics.ATesterStatics, 
 												 "actuallyPrintln", Value.value("            endsWith Other!"));
 										
 										
@@ -354,7 +354,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	
                 	
                 
-                _return();
+                return_();
             }
         });
         
@@ -365,9 +365,9 @@ public class ConditionBlockGenerator extends AbstractExample
                 	List<String> list = ConditionBlockGeneratorSample.allPossiable();
                 	for(String str : list)
                 	{
-                		_invoke(getMethodOwner(), "test", Value.value(str));
+                		call(getMethodOwner(), "test", Value.value(str));
                 	}
-                    _return();
+                    return_();
                 }
         
         });

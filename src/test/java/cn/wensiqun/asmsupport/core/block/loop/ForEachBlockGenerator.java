@@ -26,18 +26,18 @@ public class ForEachBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    LocalVariable list  = _var("list", List.class, _new(ArrayList.class));
-                    _invoke(list, "add", Value.value("ForEach "));
-                    _invoke(list, "add", Value.value("Test "));
-                    _for(new ForEachInternal(list){
+                    LocalVariable list  = var("list", List.class, new_(ArrayList.class));
+                    call(list, "add", Value.value("ForEach "));
+                    call(list, "add", Value.value("Test "));
+                    for_(new ForEachInternal(list){
 
                         @Override
                         public void body(LocalVariable l) {
-                            _invoke(TesterStatics.ATesterStatics, "actuallyPrintln", _checkcast(l, String.class));
+                            call(TesterStatics.ATesterStatics, "actuallyPrintln", checkcast(l, String.class));
                         }
                         
                     });
-					_return();
+					return_();
 	            }
 		 });
 	        
@@ -45,8 +45,8 @@ public class ForEachBlockGenerator extends AbstractExample {
             new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {
-                	_invoke(getMethodOwner(), "test");
-                    _return();
+                	call(getMethodOwner(), "test");
+                    return_();
                 }
         
         });

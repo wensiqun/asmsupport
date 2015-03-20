@@ -25,11 +25,11 @@ public class Main extends AbstractFix {
 			@Override
 			public void body() {
 				
-				_invoke(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
+				call(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
 				
-				_assign(this.getMethodOwner().getGlobalVariable("DEFAULT_VALUE"), Value.value(100));
+				assign(this.getMethodOwner().field("DEFAULT_VALUE"), Value.value(100));
 				
-			    _return();
+			    return_();
 			}
 			
 		});
@@ -42,11 +42,11 @@ public class Main extends AbstractFix {
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	_invoke(systemOut, "println", _append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), getMethodOwner().field("COMMON_PRE")));
 	        	
-	        	_invoke(systemOut, "println", _append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), getMethodOwner().field("COMMON_POST")));
 	        	
-			    _return();
+			    return_();
 			}
 			
 		});
@@ -72,9 +72,9 @@ public class Main extends AbstractFix {
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	_invoke(systemOut, "println", _append(Value.value("DEFAULT_VALUE : "), Test65150AClass.getGlobalVariable("DEFAULT_VALUE")));
+	        	call(systemOut, "println", stradd(Value.value("DEFAULT_VALUE : "), Test65150AClass.field("DEFAULT_VALUE")));
 	        	
-			    _return();
+			    return_();
 			}
 			
 		}); 

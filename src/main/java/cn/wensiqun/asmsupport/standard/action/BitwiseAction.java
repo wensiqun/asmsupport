@@ -27,7 +27,7 @@ public interface BitwiseAction {
      * @param factor
      * @return {@link Reverse}
      */
-    public Reverse _reverse(Parameterized factor);
+    public Reverse reverse(Parameterized factor);
     
     /**
      * The bit and operator.
@@ -40,7 +40,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitAnd}
      */
-    public BitAnd _band(Parameterized factor1, Parameterized factor2);
+    public BitAnd band(Parameterized factor1, Parameterized factor2);
 	
     /**
      * 
@@ -54,7 +54,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitOr}
      */
-    public BitOr _bor(Parameterized factor1, Parameterized factor2);
+    public BitOr bor(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
@@ -69,7 +69,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitXor}
      */
-    public BitXor _bxor(Parameterized factor1, Parameterized factor2);
+    public BitXor bxor(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
@@ -83,7 +83,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link ShiftLeft}
      */
-    public ShiftLeft _shl(Parameterized factor1, Parameterized factor2);
+    public ShiftLeft shl(Parameterized factor1, Parameterized factor2);
     
     /**
      * The bitwise shift right operator.
@@ -96,7 +96,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link ShiftRight}
      */
-    public ShiftRight _shr(Parameterized factor1, Parameterized factor2);
+    public ShiftRight shr(Parameterized factor1, Parameterized factor2);
     
     /**
      * The unsigned shift right operator.
@@ -109,6 +109,6 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link UnsignedShiftRight}
      */
-    public UnsignedShiftRight _ushr(Parameterized factor1, Parameterized factor2);
+    public UnsignedShiftRight ushr(Parameterized factor1, Parameterized factor2);
     
 }

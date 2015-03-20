@@ -41,31 +41,31 @@ public class TernaryOperatorGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//int i = 10;
-				LocalVariable i = _var("i", AClass.INT_ACLASS, false, Value.value(10));
+				LocalVariable i = var("i", AClass.INT_ACLASS, false, Value.value(10));
 				
 				//ternary方法将生成三元操作
 				//int k = i < 0 ? -i : i;
-				LocalVariable k = _var("k", AClass.INT_ACLASS, false, _ternary(_lt(i, Value.value(0)), _neg(i), i));
+				LocalVariable k = var("k", AClass.INT_ACLASS, false, ternary(lt(i, Value.value(0)), neg(i), i));
 				
 				//System.out.print("Absolute value of ");
-				_invoke(systemOut, "print", Value.value("Absolute value of "));
+				call(systemOut, "print", Value.value("Absolute value of "));
 				
 				//System.out.println(i + " is " + k);
-				_invoke(systemOut, "println", _append(i, Value.value(" is "), k));
+				call(systemOut, "println", stradd(i, Value.value(" is "), k));
 				
 				//i = -10;
-				_assign(i, Value.value(-10));
+				assign(i, Value.value(-10));
 				
 				//k = i < 0 ? -i : i;
-				_assign(k, _ternary(_lt(i, Value.value(0)), _neg(i), i));
+				assign(k, ternary(lt(i, Value.value(0)), neg(i), i));
 
 				//System.out.print("Absolute value of ");
-				_invoke(systemOut, "print", Value.value("Absolute value of "));
+				call(systemOut, "print", Value.value("Absolute value of "));
 				
 				//System.out.println(i + " is " + k);
-				_invoke(systemOut, "println", _append(i, Value.value(" is "), k));
+				call(systemOut, "println", stradd(i, Value.value(" is "), k));
 				
-				_return();
+				return_();
 			}
         });
 		generate(creator);

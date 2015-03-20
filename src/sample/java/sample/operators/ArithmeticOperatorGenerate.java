@@ -26,8 +26,8 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", _append(argus[0], Value.value(" = "), argus[1]));
-				_return();
+				call(systemOut, "println", stradd(argus[0], Value.value(" = "), argus[1]));
+				return_();
 			}
 			
 		});
@@ -37,8 +37,8 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", _append(argus[0], Value.value(" = "), argus[1]));
-				_return();
+				call(systemOut, "println", stradd(argus[0], Value.value(" = "), argus[1]));
+				return_();
 			}
 			
 		});		
@@ -49,126 +49,126 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 					@Override
 					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
-						LocalVariable rand = _var("rand", AClassFactory.getProductClass(Random.class), false, _new(AClassFactory.getProductClass(Random.class)));
+						LocalVariable rand = var("rand", AClassFactory.getProductClass(Random.class), false, new_(AClassFactory.getProductClass(Random.class)));
 						
 						//rand.nextInt(100) + 1
-						Addition add1 = _add(_invoke(rand, "nextInt", Value.value(100)), Value.value(1));
+						Addition add1 = add(call(rand, "nextInt", Value.value(100)), Value.value(1));
 						
 						//int j = rand.nextInt(100) + 1;
-						LocalVariable j = _var("j", AClass.INT_ACLASS, false, add1);
+						LocalVariable j = var("j", AClass.INT_ACLASS, false, add1);
 						
 						//int k = rand.nextInt(100) + 1;
-						LocalVariable k = _var("k", AClass.INT_ACLASS, false, add1);
+						LocalVariable k = var("k", AClass.INT_ACLASS, false, add1);
 						
 						//printInt("j", j);
-						_invoke(getMethodOwner(), "printInt", Value.value("j"), j);
+						call(getMethodOwner(), "printInt", Value.value("j"), j);
 
 						//printInt("k", k);
-						_invoke(getMethodOwner(), "printInt", Value.value("k"), k);
+						call(getMethodOwner(), "printInt", Value.value("k"), k);
 						
 						//j + k
-						Addition add2 = _add(j, k);
+						Addition add2 = add(j, k);
 						//int i = j + k;
-						LocalVariable i = _var("i", AClass.INT_ACLASS, false, add2);
+						LocalVariable i = var("i", AClass.INT_ACLASS, false, add2);
 						
 						//printInt("j + k", i);
-						_invoke(getMethodOwner(), "printInt", Value.value("j + k"), i);
+						call(getMethodOwner(), "printInt", Value.value("j + k"), i);
 						
 						//i = j - k;
-						_assign(i, _sub(j, k));
+						assign(i, sub(j, k));
 						
 						//printInt("j - k", i);
-						_invoke(getMethodOwner(), "printInt", Value.value("j - k"), i);
+						call(getMethodOwner(), "printInt", Value.value("j - k"), i);
 						
                         //i = k / j;
-						_assign(i, _div(k, j));
+						assign(i, div(k, j));
 						
 						//printInt("k / j", i);
-						_invoke(getMethodOwner(), "printInt", Value.value("k / j"), i);
+						call(getMethodOwner(), "printInt", Value.value("k / j"), i);
 						
 						//i = k * j;
-						_assign(i, _mul(k, j));
+						assign(i, mul(k, j));
 						
 						//printInt("k * j", i);
-						_invoke(getMethodOwner(), "printInt", Value.value("k * j"), i);
+						call(getMethodOwner(), "printInt", Value.value("k * j"), i);
 						
 						//i = k % j;
-						_assign(i, _mod(k, j));
+						assign(i, mod(k, j));
 						
 						//printInt("k % j", i);
-						_invoke(getMethodOwner(), "printInt", Value.value("k % j"), i);
+						call(getMethodOwner(), "printInt", Value.value("k % j"), i);
 						
 						//j %= k;
-						_assign(j, _mod(j, k));
+						assign(j, mod(j, k));
 						
 						//printInt("j %= k", j);
-						_invoke(getMethodOwner(), "printInt", Value.value("j %= k"), j);
+						call(getMethodOwner(), "printInt", Value.value("j %= k"), j);
 						
 						
 						//rand.nextFloat()
-						MethodInvoker nextFloat = _invoke(rand, "nextFloat");
+						MethodInvoker nextFloat = call(rand, "nextFloat");
 						
 						//v = rand.nextFloat();
-						LocalVariable v = _var("v", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable v = var("v", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//w = rand.nextFloat();
-						LocalVariable w = _var("w", AClass.FLOAT_ACLASS, false, nextFloat);
+						LocalVariable w = var("w", AClass.FLOAT_ACLASS, false, nextFloat);
 						
 						//printFloat("v", v);
-						_invoke(getMethodOwner(), "printFloat", Value.value("v"), v);
+						call(getMethodOwner(), "printFloat", Value.value("v"), v);
 						
 						//printFloat("w", w);
-						_invoke(getMethodOwner(), "printFloat", Value.value("w"), w);
+						call(getMethodOwner(), "printFloat", Value.value("w"), w);
 						
 						//u = v + w;
-						LocalVariable u = _var("u", AClass.FLOAT_ACLASS, false, _add(v,w));
+						LocalVariable u = var("u", AClass.FLOAT_ACLASS, false, add(v,w));
 						
 						//printFloat("v + w", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("v + w"), u);
+						call(getMethodOwner(), "printFloat", Value.value("v + w"), u);
 
 						//u = v - w;
-						_assign(u, _sub(v, w));
+						assign(u, sub(v, w));
 						
 						//printFloat("v - w", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("v - w"), u);
+						call(getMethodOwner(), "printFloat", Value.value("v - w"), u);
 						
 						//u = v * w;
-						_assign(u, _mul(v, w));
+						assign(u, mul(v, w));
 						
 						//printFloat("v * w", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("v * w"), u);
+						call(getMethodOwner(), "printFloat", Value.value("v * w"), u);
 						
 						//u = v / w;
-						_assign(u, _div(v, w));
+						assign(u, div(v, w));
 						
 						//printFloat("v / w", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("v / w"), u);
+						call(getMethodOwner(), "printFloat", Value.value("v / w"), u);
 						
 						//u += v;
-						_assign(u, _add(u, v));
+						assign(u, add(u, v));
 						
 						//printFloat("u += v", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("u += v"), u);
+						call(getMethodOwner(), "printFloat", Value.value("u += v"), u);
 						
 						//u -= v;
-						_assign(u, _sub(u, v));
+						assign(u, sub(u, v));
 						
 						//printFloat("u -= v", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("u -= v"), u);
+						call(getMethodOwner(), "printFloat", Value.value("u -= v"), u);
 						
 						//u *= v;
-						_assign(u, _mul(u, v));
+						assign(u, mul(u, v));
 						
 						//printFloat("u *= v", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("u *= v"), u);
+						call(getMethodOwner(), "printFloat", Value.value("u *= v"), u);
 						
 						//u /= v;
-						_assign(u, _div(u, v));
+						assign(u, div(u, v));
 						
 						//printFloat("u /= v", u);
-						_invoke(getMethodOwner(), "printFloat", Value.value("u /= v"), u);
+						call(getMethodOwner(), "printFloat", Value.value("u /= v"), u);
 						
-						_return();
+						return_();
 					}
 				});
 		generate(creator);

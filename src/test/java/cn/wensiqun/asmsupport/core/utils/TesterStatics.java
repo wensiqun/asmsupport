@@ -17,9 +17,9 @@ public class TesterStatics
     
     public static final AClass ATesterStatics = AClassFactory.getProductClass(TesterStatics.class);
     
-    public static final GlobalVariable GV_EXPECTED = ATesterStatics.getGlobalVariable("EXPECTED");
+    public static final GlobalVariable GV_EXPECTED = ATesterStatics.field("EXPECTED");
     
-    public static final GlobalVariable GV_ACTUALLY = ATesterStatics.getGlobalVariable("ACTUALLY");
+    public static final GlobalVariable GV_ACTUALLY = ATesterStatics.field("ACTUALLY");
     
     
     public static void expectedPrintln(String str)

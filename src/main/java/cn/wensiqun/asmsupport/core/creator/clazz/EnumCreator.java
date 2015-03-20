@@ -237,7 +237,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
         createConstructor(null, null, new EnumConstructorBodyInternal() {
             @Override
             public void body(LocalVariable... argus) {
-		    	_return();
+		    	return_();
             }
         });
         createDefaultStaticBlock();
@@ -257,14 +257,14 @@ public class EnumCreator extends AbstractClassCreatorContext {
             {
                 AClass owner = getMethodOwner();
                 //get ENUM$VALUES
-                GlobalVariable values = owner.getGlobalVariable("ENUM$VALUES");
+                GlobalVariable values = owner.field("ENUM$VALUES");
                 
                 //get length operator
-                ArrayLength al = _arrayLength(values);
-                LocalVariable copy = _createArrayVariableWithAllocateDimension("", enumArrayType, true, al);
+                ArrayLength al = arrayLength(values);
+                LocalVariable copy = arrayVarWithDimension("", enumArrayType, true, al);
                 
                 //get lengt operator for tmpValues;
-                Parameterized copyLen = _arrayLength(copy);
+                Parameterized copyLen = arrayLength(copy);
                 
                 //System
                 AClass systemClass = AClassFactory.getProductClass(System.class);
@@ -273,9 +273,9 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 Value zero = Value.value(0);
                 
                 //call arraycopy
-                _invoke(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
+                call(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
                 
-                _return(copy);
+                return_(copy);
             }
 	        
 	    });
@@ -288,7 +288,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
             {
                 LocalVariable name = argus[0];
                 AClass owner = getMethodOwner();
-                _return(_checkcast(_invoke(owner, "valueOf", Value.value(owner), name), owner));
+                return_(checkcast(call(owner, "valueOf", Value.value(owner), name), owner));
             }
             
         });
@@ -316,7 +316,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 @Override
                 public void body(LocalVariable... argus)
                 {
-                    _return();
+                    return_();
                 }
     		});
     	}

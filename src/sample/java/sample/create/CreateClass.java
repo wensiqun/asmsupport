@@ -88,8 +88,8 @@ public class CreateClass extends AbstractExample {
 		creator.createStaticBlock(new StaticBlockBodyInternal(){
 			@Override
 			public void body() {
-				_assign(getMethodOwner().getGlobalVariable("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
-				_return();
+				assign(getMethodOwner().field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
+				return_();
 			}
 		});
 		
@@ -139,14 +139,14 @@ public class CreateClass extends AbstractExample {
 				 * 这个方法存在一个变元参数arguments。他表示我们调用super()的时候需要传递的参数
 				 * 
 				 */
-				_supercall();
+				supercall();
 				
 				/*
 				 * 由于我们创建的globalVariable是非static的。所以通过getThis()获取globalVariable。
 				 * getThis()对应于java代码中就是this关键字。
 				 */
-				_assign(_this().getGlobalVariable("globalVariable"), argus[0]);
-				_return();
+				assign(this_().field("globalVariable"), argus[0]);
+				return_();
 			}
 			
 		});
@@ -166,9 +166,9 @@ public class CreateClass extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", _append(Value.value("staticGlobalVariable : "), getMethodOwner().getGlobalVariable("staticGlobalVariable")));
-				_invoke(systemOut, "println", _append(Value.value("globalVariable : "), _this().getGlobalVariable("globalVariable")));
-				_return();
+				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), getMethodOwner().field("staticGlobalVariable")));
+				call(systemOut, "println", stradd(Value.value("globalVariable : "), this_().field("globalVariable")));
+				return_();
 			}
 			
 		});
@@ -187,15 +187,15 @@ public class CreateClass extends AbstractExample {
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	_invoke(_new(getMethodOwner(), Value.value(1024)), "commonMethod");
+	        	call(new_(getMethodOwner(), Value.value(1024)), "commonMethod");
 	        	
-	        	_invoke(systemOut, "println", _append(Value.value("COMMON_PRE : "), getMethodOwner().getGlobalVariable("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), getMethodOwner().field("COMMON_PRE")));
 	        	
-	        	_invoke(systemOut, "println", _append(Value.value("COMMON_POST : "), getMethodOwner().getGlobalVariable("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), getMethodOwner().field("COMMON_POST")));
 				
 	        	//invoke(systemOut, "println", append(Value.value("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
 				
-			    _return();
+			    return_();
 			}
 			
 		});

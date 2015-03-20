@@ -30,8 +30,8 @@ public class CreateClassAndThanExtend extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", Value.value("say hello!"));
-				_return();
+				call(systemOut, "println", Value.value("say hello!"));
+				return_();
 			}
 		});
 		
@@ -46,21 +46,21 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new MethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(out, "println", Value.value("created by asm"));
-				_return();
+				call(out, "println", Value.value("created by asm"));
+				return_();
 			}
 		});
 		
 		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
-				GlobalVariable age = getMethodOwner().getGlobalVariable("age");
-				_assign(age, Value.value(20));
-				this._invokeOriginal();
-				GlobalVariable name = getMethodOwner().getGlobalVariable("name");
-				_assign(name, Value.value("wensiqun"));
-				_invoke(out, "println", name);
-				_return();
+				GlobalVariable age = getMethodOwner().field("age");
+				assign(age, Value.value(20));
+				this.callOrig();
+				GlobalVariable name = getMethodOwner().field("name");
+				assign(name, Value.value("wensiqun"));
+				call(out, "println", name);
+				return_();
 			}
 		});
 		
@@ -68,25 +68,25 @@ public class CreateClassAndThanExtend extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(out, "println", Value.value("before"));
+				call(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getProductClass(Random.class);
-				LocalVariable random = this._var("random", randomClass, false, this._new(randomClass, Value.value(1L)));
-				_if(new IFInternal(_invoke(random, "nextBoolean")){
+				LocalVariable random = this.var("random", randomClass, false, this.new_(randomClass, Value.value(1L)));
+				if_(new IFInternal(call(random, "nextBoolean")){
 					@Override
 					public void body() {
-						_invokeOriginal();
+						callOrig();
 					}
 
-				})._else(new ElseInternal(){
+				}).else_(new ElseInternal(){
 					@Override
 					public void body() {
-						_invoke(out, "println", Value.value("call self"));
+						call(out, "println", Value.value("call self"));
 					}
 					
 				});
-				_invoke(out, "println", Value.value("after"));
-				_return();
+				call(out, "println", Value.value("after"));
+				return_();
 			}
 			
 		});
@@ -95,10 +95,10 @@ public class CreateClassAndThanExtend extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(out, "println", Value.value("before"));
-				LocalVariable lv = this._var(null, getOriginalMethodReturnClass(), true, _invokeOriginal());
-				_invoke(out, "println", Value.value("after"));	
-				_return(lv);
+				call(out, "println", Value.value("before"));
+				LocalVariable lv = this.var(null, getOriginalMethodReturnClass(), true, callOrig());
+				call(out, "println", Value.value("after"));	
+				return_(lv);
 			}
 			
 		});
@@ -122,8 +122,8 @@ public class CreateClassAndThanExtend extends AbstractExample {
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	_invoke(_new(getMethodOwner()), "helloWorld");
-			    _return();
+	        	call(new_(getMethodOwner()), "helloWorld");
+			    return_();
 			}
 			
 		});

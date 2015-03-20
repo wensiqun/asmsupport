@@ -108,7 +108,7 @@ public class OverrideBridgeMethodCreator {
 					@Override
 					public void body(LocalVariable... argus) {
 						
-						_return(_invoke(_this(), name, argus));
+						return_(call(this_(), name, argus));
 						
 					}
     		

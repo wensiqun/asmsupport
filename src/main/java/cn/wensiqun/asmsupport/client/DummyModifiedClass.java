@@ -42,7 +42,7 @@ public class DummyModifiedClass {
      * @param cl
      * @return
      */
-    public DummyModifiedClass _classLoader(ClassLoader cl) {
+    public DummyModifiedClass setClassLoader(ClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -62,7 +62,7 @@ public class DummyModifiedClass {
      * @param path
      * @return
      */
-    public DummyModifiedClass _classOutPutPath(String path) {
+    public DummyModifiedClass setClassOutPutPath(String path) {
         this.classOutPutPath = path;
         return this;
     }
@@ -103,7 +103,7 @@ public class DummyModifiedClass {
      */
     public DummyMethod newMethod(String name) {
         DummyMethod method = new DummyMethod();
-        method._name(name);
+        method.name(name);
         methodDummies.add(method);
         return method;
     }

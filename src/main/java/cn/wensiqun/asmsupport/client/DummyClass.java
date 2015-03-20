@@ -63,7 +63,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public DummyClass _static() {
+    public DummyClass static_() {
         modifiers = (modifiers & ~Opcodes.ACC_STATIC) + Opcodes.ACC_STATIC;
         return this;
     }
@@ -83,7 +83,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param packageName
      * @return
      */
-    public DummyClass _package(String packageName) {
+    public DummyClass package_(String packageName) {
         this.packageName = packageName;
         return this;
     }
@@ -103,7 +103,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param name
      * @return
      */
-    public DummyClass _name(String name) {
+    public DummyClass name(String name) {
         this.name = name;
         return this;
     }
@@ -123,7 +123,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param version
      * @return
      */
-    public DummyClass _javaVersion(int version) {
+    public DummyClass setJavaVersion(int version) {
         javaVersion = version;
         return this;
     }
@@ -143,7 +143,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public DummyClass _abstract() {
+    public DummyClass abstract_() {
         modifiers = (modifiers & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_ABSTRACT;
         return this;
     }
@@ -164,7 +164,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param parent
      * @return
      */
-    public DummyClass _extends(Class<?> parent) {
+    public DummyClass extends_(Class<?> parent) {
         this.parent = parent;
         return this;
     }
@@ -184,7 +184,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param interfaces
      * @return
      */
-    public DummyClass _implements(Class<?>... interfaces) {
+    public DummyClass implements_(Class<?>... interfaces) {
         this.interfaces = interfaces;
         return this;
     }
@@ -210,7 +210,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param cl
      * @return
      */
-    public DummyClass _classLoader(ClassLoader cl) {
+    public DummyClass setClassLoader(ClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -230,7 +230,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param path
      * @return
      */
-    public DummyClass _classOutPutPath(String path) {
+    public DummyClass setClassOutPutPath(String path) {
         this.classOutPutPath = path;
         return this;
     }
@@ -252,7 +252,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     public DummyField newField(AClass type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return fieldDummies.getLast();
     }
 
@@ -264,7 +264,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     public DummyField newField(Class<?> type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return fieldDummies.getLast();
     }
 
@@ -286,7 +286,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     public DummyMethod newMethod(String name) {
         DummyMethod method = new DummyMethod();
         methodDummies.add(method);
-        method._name(name);
+        method.name(name);
         return method;
     }
 

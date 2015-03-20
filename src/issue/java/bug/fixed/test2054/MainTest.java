@@ -35,8 +35,8 @@ public class MainTest {
 
             @Override
             public void body(LocalVariable... argus) {
-                _new(AClassFactory.getProductClass(MyObject.class), Value.value("i'm direct pass argument."));
-            	_return();
+                new_(AClassFactory.getProductClass(MyObject.class), Value.value("i'm direct pass argument."));
+            	return_();
             }
         });
 		generate(creator);

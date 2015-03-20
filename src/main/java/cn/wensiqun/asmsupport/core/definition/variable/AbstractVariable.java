@@ -60,7 +60,7 @@ public abstract class AbstractVariable implements IVariable {
     }*/
 
     @Override
-    public final GlobalVariable getGlobalVariable(String name) {
+    public final GlobalVariable field(String name) {
         if(this.getParamterizedType() instanceof ArrayClass){
             throw new ASMSupportException("Cannot get global variable from array type variable : " + this);
         }

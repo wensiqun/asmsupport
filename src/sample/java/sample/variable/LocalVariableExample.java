@@ -42,8 +42,8 @@ public class LocalVariableExample extends AbstractExample {
 						 * 第四个参数：初始值，可以为null，null则表示
 						 * 这里的第三个参数是个boolean类型。如果设置成true，则所设置的变量名将不起作用。
 						 */
-						LocalVariable localVariable1 = _var("localVariable1", AClass.STRING_ACLASS, false, Value.value("This is a Local Variable"));
-                        _invoke(systemOut, "println", localVariable1);
+						LocalVariable localVariable1 = var("localVariable1", AClass.STRING_ACLASS, false, Value.value("This is a Local Variable"));
+                        call(systemOut, "println", localVariable1);
                         
 						/* ***************************************************************
 						       创建数组类型的局部变量                                                                                                         
@@ -63,23 +63,23 @@ public class LocalVariableExample extends AbstractExample {
                          * 这段代码将创建一个String类型的二维数组的变量,对应的java代码如下
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
-                        LocalVariable localArrayVariable1 = _createArrayVariableWithAllocateDimension("localArrayVariable1", AClassFactory.getArrayClass(String[][].class), false, Value.value(2), Value.value(2));
-                        _invoke(systemOut, "println", _append(Value.value("example 1 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
+                        LocalVariable localArrayVariable1 = arrayVarWithDimension("localArrayVariable1", AClassFactory.getArrayClass(String[][].class), false, Value.value(2), Value.value(2));
+                        call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
-                        LocalVariable localArrayVariable2 = _createArrayVariableWithAllocateDimension("localArrayVariable2", AClassFactory.getArrayClass(String[][].class), false, Value.value(2));
-                        _invoke(systemOut, "println", _append(Value.value("example 2 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
+                        LocalVariable localArrayVariable2 = arrayVarWithDimension("localArrayVariable2", AClassFactory.getArrayClass(String[][].class), false, Value.value(2));
+                        call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
-                        LocalVariable localArrayVariable3 = _createArrayVariableWithAllocateDimension("localArrayVariable3", AClassFactory.getArrayClass(String[][].class), false, (Parameterized[])null);
-                        _invoke(systemOut, "println", _append(Value.value("example 3 : "), _invoke(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
+                        LocalVariable localArrayVariable3 = arrayVarWithDimension("localArrayVariable3", AClassFactory.getArrayClass(String[][].class), false, (Parameterized[])null);
+                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.getProductClass(ArrayUtils.class), "toString", localArrayVariable3)));
                         
-                        _return();
+                        return_();
 					}
 			
 		});

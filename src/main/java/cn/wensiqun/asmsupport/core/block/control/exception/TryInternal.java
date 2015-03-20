@@ -23,7 +23,7 @@ public abstract class TryInternal extends EpisodeBlock<ExceptionSerialBlock> imp
     }
 
     @Override
-    public CatchInternal _catch(CatchInternal catchBlock)
+    public CatchInternal catch_(CatchInternal catchBlock)
     {
         ExceptionSerialBlock serial = getSerial();
         
@@ -36,7 +36,7 @@ public abstract class TryInternal extends EpisodeBlock<ExceptionSerialBlock> imp
     }
     
     @Override
-    public FinallyInternal _finally(FinallyInternal block)
+    public FinallyInternal finally_(FinallyInternal block)
     {
         ExceptionSerialBlock serial = getSerial();
         if(serial.getFinally() != null)

@@ -15,7 +15,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T _private() {
+    public T private_() {
         modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PRIVATE;
         return (T) this;
@@ -36,7 +36,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T _public() {
+    public T public_() {
         modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PUBLIC;
         return (T) this;
@@ -57,7 +57,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T _protected() {
+    public T protected_() {
         modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED))
                 + Opcodes.ACC_PROTECTED;
         return (T) this;
@@ -78,7 +78,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T _default() {
+    public T default_() {
         modifiers = (modifiers & ~(Opcodes.ACC_PRIVATE + Opcodes.ACC_PUBLIC + Opcodes.ACC_PROTECTED));
         return (T) this;
     }
@@ -99,7 +99,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T _final() {
+    public T final_() {
         modifiers = (modifiers & ~Opcodes.ACC_FINAL) + Opcodes.ACC_FINAL;
         return (T) this;
     }

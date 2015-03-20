@@ -24,7 +24,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable _var(final String name, final Class<?> type, final Parameterized para);
+    public LocalVariable var(final String name, final Class<?> type, final Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
@@ -35,7 +35,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable _var(final Class<?> type, final Parameterized para);
+    public LocalVariable var(final Class<?> type, final Parameterized para);
     
 
 
@@ -49,7 +49,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable _var(final String name, final AClass type, final Parameterized para);
+    public LocalVariable var(final String name, final AClass type, final Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
@@ -60,7 +60,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable _var(final AClass type, final Parameterized para);
+    public LocalVariable var(final AClass type, final Parameterized para);
     
     /**
 	 * create a local variable
@@ -71,16 +71,16 @@ public interface VariableAction {
 	 * @param para this variable initial value, set to null if you want the initial is null.
 	 * @return the LocalVariable
 	 */
-	public LocalVariable _var(final String name, final AClass aClass, boolean anonymous, final Parameterized para);
+	public LocalVariable var(final String name, final AClass aClass, boolean anonymous, final Parameterized para);
 	
 	/**
 	 * 
 	 * <p>创建数组变量，可分配数组空间大小</p>
 	 * 
 	 * <pre>
-	 * _createArrayVariableWithAllocateDimension("array", AClassFactory.getArrayClass(String[][].class), false, null) --> String[][] array = null;
-	 * _createArrayVariableWithAllocateDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3)) --> String[][] array = new String[3][];
-	 * _createArrayVariableWithAllocateDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3), Value.value(2)) --> String[][] array = new String[3][2];
+	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, null) --> String[][] array = null;
+	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3)) --> String[][] array = new String[3][];
+	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3), Value.value(2)) --> String[][] array = new String[3][2];
 	 * <pre>
 	 * 
 	 * @param name   变量名
@@ -89,7 +89,7 @@ public interface VariableAction {
 	 * @param allocateDim 预分配的数组空间
 	 * @return
 	 */
-	public LocalVariable _createArrayVariableWithAllocateDimension(final String name, final ArrayClass aClass, boolean anonymous, Parameterized... allocateDim);
+	public LocalVariable arrayVarWithDimension(final String name, final ArrayClass aClass, boolean anonymous, Parameterized... allocateDim);
 
 	/**
 	 * 
@@ -98,7 +98,7 @@ public interface VariableAction {
 	 * @param value
 	 * @return
 	 */
-	public LocalVariable _createArrayVariable(final String name, final ArrayClass aClass, boolean anonymous, final Parameterized value);
+	public LocalVariable arrayVar(final String name, final ArrayClass aClass, boolean anonymous, final Parameterized value);
 	
 	
 	/**
@@ -108,7 +108,7 @@ public interface VariableAction {
 	 * @param parameterizedArray
 	 * @return
 	 */
-	public LocalVariable _createArrayVariable(final String name, final ArrayClass aClass, boolean anonymous, final Object parameterizedArray);
+	public LocalVariable arrayVar(final String name, final ArrayClass aClass, boolean anonymous, final Object parameterizedArray);
 	
 	/**
 	 * assign a value to a variable. for exampel:
@@ -124,5 +124,5 @@ public interface VariableAction {
 	 * @param val
 	 * @return
 	 */
-	public Assigner _assign(ExplicitVariable variable, Parameterized val);
+	public Assigner assign(ExplicitVariable variable, Parameterized val);
 }

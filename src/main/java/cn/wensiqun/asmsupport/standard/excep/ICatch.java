@@ -6,8 +6,8 @@ import cn.wensiqun.asmsupport.standard.body.LocalVariableBody;
 
 public interface ICatch<_Catch extends IBody, _Finally extends IBody> extends LocalVariableBody {
 
-	public _Catch _catch(_Catch catchBlock);
+	public _Catch catch_(_Catch catchBlock);
     
-    public _Finally _finally(_Finally finallyClient);
+    public _Finally finally_(_Finally finallyClient);
 	
 }

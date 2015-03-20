@@ -14,6 +14,6 @@ public interface IContructorBody extends LocalVariablesBody {
      * @param arguments
      * @return
      */
-	MethodInvoker _supercall(Parameterized... arguments);
+	MethodInvoker supercall(Parameterized... arguments);
 
 }

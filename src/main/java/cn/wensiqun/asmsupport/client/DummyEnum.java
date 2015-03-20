@@ -64,7 +64,7 @@ public class DummyEnum {
      * @param version
      * @return
      */
-    public DummyEnum _javaVersion(int version) {
+    public DummyEnum setJavaVersion(int version) {
         javaVersion = version;
         return this;
     }
@@ -87,7 +87,7 @@ public class DummyEnum {
      * @param packageName
      * @return
      */
-    public DummyEnum _package(String packageName) {
+    public DummyEnum package_(String packageName) {
         this.packageName = packageName;
         return this;
     }
@@ -107,7 +107,7 @@ public class DummyEnum {
      * @param name
      * @return
      */
-    public DummyEnum _name(String name) {
+    public DummyEnum name(String name) {
         this.name = name;
         return this;
     }
@@ -127,7 +127,7 @@ public class DummyEnum {
      * @param interfaces
      * @return
      */
-    public DummyEnum _implements(Class<?>... interfaces) {
+    public DummyEnum implements_(Class<?>... interfaces) {
         this.interfaces = interfaces;
         return this;
     }
@@ -139,7 +139,7 @@ public class DummyEnum {
      * @param cl
      * @return
      */
-    public DummyEnum _classLoader(ClassLoader cl) {
+    public DummyEnum setClassLoader(ClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -159,7 +159,7 @@ public class DummyEnum {
      * @param path
      * @return
      */
-    public DummyEnum _classOutPutPath(String path) {
+    public DummyEnum setClassOutPutPath(String path) {
         this.classOutPutPath = path;
         return this;
     }
@@ -233,7 +233,7 @@ public class DummyEnum {
     public DummyField newField(AClass type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return fieldDummies.getLast();
     }
     
@@ -245,7 +245,7 @@ public class DummyEnum {
     public DummyField newField(Class<?> type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return fieldDummies.getLast();
     }
     
@@ -259,7 +259,7 @@ public class DummyEnum {
     public DummyMethod newMethod(String name) {
         DummyMethod method = new DummyMethod();
         methodDummies.add(method);
-        method._name(name);
+        method.name(name);
         return method;
     }
     

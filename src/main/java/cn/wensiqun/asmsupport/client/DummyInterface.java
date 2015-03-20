@@ -62,7 +62,7 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyInterface _public() {
+    public DummyInterface public_() {
         modifiers = (modifiers & ~Opcodes.ACC_PUBLIC) + Opcodes.ACC_PUBLIC;
         return this;
     }
@@ -82,7 +82,7 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyInterface _default() {
+    public DummyInterface default_() {
         modifiers = modifiers & ~ Opcodes.ACC_PUBLIC;
         return this;
     }
@@ -102,7 +102,7 @@ public class DummyInterface {
      * @param packageName
      * @return
      */
-    public DummyInterface _package(String packageName) {
+    public DummyInterface package_(String packageName) {
         this.packageName = packageName;
         return this;
     }
@@ -122,7 +122,7 @@ public class DummyInterface {
      * @param name
      * @return
      */
-    public DummyInterface _name(String name) {
+    public DummyInterface name(String name) {
         this.name = name;
         return this;
     }
@@ -142,7 +142,7 @@ public class DummyInterface {
      * @param version
      * @return
      */
-    public DummyInterface _javaVersion(int version) {
+    public DummyInterface setJavaVersion(int version) {
         javaVersion = version;
         return this;
     }
@@ -164,7 +164,7 @@ public class DummyInterface {
      * @param interfaces
      * @return
      */
-    public DummyInterface _extends(Class<?>... interfaces) {
+    public DummyInterface extends_(Class<?>... interfaces) {
         this.interfaces = interfaces;
         return this;
     }
@@ -189,7 +189,7 @@ public class DummyInterface {
      * @param cl
      * @return
      */
-    public DummyInterface _classLoader(ClassLoader cl) {
+    public DummyInterface setClassLoader(ClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -209,7 +209,7 @@ public class DummyInterface {
      * @param path
      * @return
      */
-    public DummyInterface _classOutPutPath(String path) {
+    public DummyInterface setClassOutPutPath(String path) {
         this.classOutPutPath = path;
         return this;
     }
@@ -231,7 +231,7 @@ public class DummyInterface {
     public DummyInterface newField(AClass type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return this;
     }
     
@@ -243,7 +243,7 @@ public class DummyInterface {
     public DummyField newField(Class<?> type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
-        field._type(type)._name(name);
+        field.type(type).name(name);
         return field;
     }
     
@@ -255,7 +255,7 @@ public class DummyInterface {
      */
     public DummyInterfaceMethod newMethod(String name) {
         DummyInterfaceMethod method = new DummyInterfaceMethod();
-        method._name(name);
+        method.name(name);
         methodDummies.add(method);
         return method;
     }    

@@ -22,7 +22,7 @@ public class RelationalGenerator extends AbstractExample
                {
                    
                    
-                   _return();
+                   return_();
                }
         });
            
@@ -30,8 +30,8 @@ public class RelationalGenerator extends AbstractExample
            new StaticMethodBodyInternal(){
                @Override
                public void body(LocalVariable... argus) {
-                   _invoke(getMethodOwner(), "test");
-                   _return();
+                   call(getMethodOwner(), "test");
+                   return_();
                }
        
        });

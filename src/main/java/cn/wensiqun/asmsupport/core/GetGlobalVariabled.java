@@ -17,5 +17,5 @@ public interface GetGlobalVariabled {
      * @param name
      * @return
      */
-    GlobalVariable getGlobalVariable(String name);
+    GlobalVariable field(String name);
 }

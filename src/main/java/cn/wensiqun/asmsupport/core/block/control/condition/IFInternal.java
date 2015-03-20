@@ -60,14 +60,14 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
     }
 
     @Override
-    public ElseIFInternal _elseif(ElseIFInternal elsIf)
+    public ElseIFInternal elseif(ElseIFInternal elsIf)
     {
     	initNextBranch(elsIf);
     	return elsIf;
     }
     
     @Override
-    public ElseInternal _else(ElseInternal els)
+    public ElseInternal else_(ElseInternal els)
     {
     	initNextBranch(els);
     	return els;

@@ -22,7 +22,7 @@ public class AssignmentGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(Value.value("I'm from commonMethod"));
+				return_(Value.value("I'm from commonMethod"));
 			}
 		});
 		
@@ -32,15 +32,15 @@ public class AssignmentGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//创建个String变量默认赋值为null
-				LocalVariable string = _var("string", AClass.STRING_ACLASS, false, null);
+				LocalVariable string = var("string", AClass.STRING_ACLASS, false, null);
 				
-				_assign(string, _invoke(getMethodOwner(), "commonMethod"));
-				_invoke(systemOut, "println", _append(Value.value("first asign :"), string));
+				assign(string, call(getMethodOwner(), "commonMethod"));
+				call(systemOut, "println", stradd(Value.value("first asign :"), string));
 				
-				_assign(string, Value.value("second assing value"));
-				_invoke(systemOut, "println", _append(Value.value("second asign :"), string));
+				assign(string, Value.value("second assing value"));
+				call(systemOut, "println", stradd(Value.value("second asign :"), string));
 				
-				_return();
+				return_();
 			}
         });
 		generate(creator);

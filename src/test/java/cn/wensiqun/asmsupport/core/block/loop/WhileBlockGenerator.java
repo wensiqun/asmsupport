@@ -23,80 +23,80 @@ public class WhileBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    final LocalVariable intVar1  = _var("intVar1", AClass.INT_ACLASS, false, Value.value(10));
+                    final LocalVariable intVar1  = var("intVar1", AClass.INT_ACLASS, false, Value.value(10));
                     
-                    _while(new WhileInternal(_gt(_postDec(intVar1), Value.value(0))){
+                    while_(new WhileInternal(gt(postdec(intVar1), Value.value(0))){
 
                         @Override
                         public void body() {
-                            _invoke(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", intVar1));
+                            call(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", intVar1));
                         }
                         
                     });
                     
-                    final LocalVariable intVar2  = _var("intVar2", AClass.INT_ACLASS, false, Value.value(10));
+                    final LocalVariable intVar2  = var("intVar2", AClass.INT_ACLASS, false, Value.value(10));
                     
-                    _while(new WhileInternal(_gt(_preDec(intVar2), Value.value(0))){
+                    while_(new WhileInternal(gt(predec(intVar2), Value.value(0))){
 
                         @Override
                         public void body() {
-                            _invoke(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", intVar2));
+                            call(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", intVar2));
                         }
                         
                     });
 	                
-                    final LocalVariable byteVar  = _var("byteVar", AClass.BYTE_ACLASS, false, Value.value((byte)10));
+                    final LocalVariable byteVar  = var("byteVar", AClass.BYTE_ACLASS, false, Value.value((byte)10));
                     
-	            	_while(new WhileInternal(_gt(_postDec(byteVar), Value.value(0))){
+	            	while_(new WhileInternal(gt(postdec(byteVar), Value.value(0))){
 
 						@Override
 						public void body() {
-							_invoke(TesterStatics.ATesterStatics, 
-		                    		"actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", byteVar));
+							call(TesterStatics.ATesterStatics, 
+		                    		"actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", byteVar));
 						}
 	            		
 	            	});
 	            	
-	            	final LocalVariable doubleVar  = _var("doubleVar", AClass.DOUBLE_ACLASS, false, Value.value(10D));
+	            	final LocalVariable doubleVar  = var("doubleVar", AClass.DOUBLE_ACLASS, false, Value.value(10D));
                     
-                    _while(new WhileInternal(_gt(_preDec(doubleVar), Value.value(0))){
+                    while_(new WhileInternal(gt(predec(doubleVar), Value.value(0))){
 
                         @Override
                         public void body() {
-                            _invoke(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", doubleVar));
+                            call(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", doubleVar));
                         }
                         
                     });
                     
-                    final LocalVariable shortObj  = _var("shortObj", AClass.SHORT_WRAP_ACLASS, false, Value.value((short)10));
+                    final LocalVariable shortObj  = var("shortObj", AClass.SHORT_WRAP_ACLASS, false, Value.value((short)10));
                     
-                    _while(new WhileInternal(_gt(_postDec(shortObj), Value.value((short)0))){
+                    while_(new WhileInternal(gt(postdec(shortObj), Value.value((short)0))){
 
                         @Override
                         public void body() {
-                            _invoke(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", shortObj));
+                            call(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", shortObj));
                         }
                         
                     });
                     
-                    final LocalVariable longObj  = _var("longObj", AClass.LONG_WRAP_ACLASS, false, Value.value(10L));
+                    final LocalVariable longObj  = var("longObj", AClass.LONG_WRAP_ACLASS, false, Value.value(10L));
                     
-                    _while(new WhileInternal(_gt(_preDec(longObj), Value.value(0))){
+                    while_(new WhileInternal(gt(predec(longObj), Value.value(0))){
 
                         @Override
                         public void body() {
-                            _invoke(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", _invoke(AClass.STRING_ACLASS, "valueOf", longObj));
+                            call(TesterStatics.ATesterStatics, 
+                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", longObj));
                         }
                         
                     });
                     
                     
-					_return();
+					return_();
 	            }
 		 });
 	        
@@ -104,8 +104,8 @@ public class WhileBlockGenerator extends AbstractExample {
             new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {
-                	_invoke(getMethodOwner(), "test");
-                    _return();
+                	call(getMethodOwner(), "test");
+                    return_();
                 }
         
         });

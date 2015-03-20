@@ -20,7 +20,7 @@ public class DummyEnumConstructor {
      * @param argus
      * @return
      */
-    public DummyEnumConstructor _argumentTypes(AClass... argus){
+    public DummyEnumConstructor argTypes(AClass... argus){
         argTypes = argus;
         return this;
     }
@@ -31,7 +31,7 @@ public class DummyEnumConstructor {
      * @param argus
      * @return
      */
-    public DummyEnumConstructor _argumentTypes(Class<?>... argus){
+    public DummyEnumConstructor argTypes(Class<?>... argus){
         this.argTypes = AClassUtils.convertToAClass(argus);
         return this;
     }
@@ -56,7 +56,7 @@ public class DummyEnumConstructor {
      * @param argNames
      * @return
      */
-    public DummyEnumConstructor _argumentNames(String... argNames){
+    public DummyEnumConstructor argNames(String... argNames){
         this.argNames = argNames;
         return this;
     }
@@ -82,7 +82,7 @@ public class DummyEnumConstructor {
 	 * @param body
 	 * @return
 	 */
-    public DummyEnumConstructor _body(EnumConstructorBody body){
+    public DummyEnumConstructor body(EnumConstructorBody body){
         this.body = body;
         return this;
     }

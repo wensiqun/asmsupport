@@ -16,14 +16,14 @@ public abstract class IF extends ProgramBlock<IFInternal> implements IIF<ElseIF,
 	}
 	
 	@Override
-	public ElseIF _elseif(ElseIF elseif) {
-		target._elseif(elseif.target);
+	public ElseIF elseif(ElseIF elseif) {
+		target.elseif(elseif.target);
 		return elseif;
 	}
 	
 	@Override
-	public Else _else(Else els) {
-		target._else(els.target);
+	public Else else_(Else els) {
+		target.else_(els.target);
 		return els;
 	}
 }

@@ -31,9 +31,9 @@ public class HelloWorld extends AbstractExample{
 
 					@Override
 					public void body(LocalVariable... argus) {
-						_invoke(systemOut, "println", Value.value("Hello World"));
+						call(systemOut, "println", Value.value("Hello World"));
 						//don't forget return.
-						_return();
+						return_();
 					}
 			
 		});

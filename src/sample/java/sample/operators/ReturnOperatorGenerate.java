@@ -30,7 +30,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_return(Value.value("I'm from commonMethod"));
+				return_(Value.value("I'm from commonMethod"));
 			}
 		});
 		
@@ -43,8 +43,8 @@ public class ReturnOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", _invoke(getMethodOwner(), "commonMethod"));
-				_return();
+				call(systemOut, "println", call(getMethodOwner(), "commonMethod"));
+				return_();
 			}
         });
 		generate(creator);

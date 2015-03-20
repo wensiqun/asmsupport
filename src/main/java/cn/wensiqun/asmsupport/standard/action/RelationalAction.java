@@ -31,7 +31,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterThan _gt(Parameterized factor1, Parameterized factor2);
+    public GreaterThan gt(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
@@ -45,7 +45,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterEqual _ge(Parameterized factor1, Parameterized factor2);
+    public GreaterEqual ge(Parameterized factor1, Parameterized factor2);
     
     /**
      * The less than equals.
@@ -58,7 +58,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessThan _lt(Parameterized factor1, Parameterized factor2);
+    public LessThan lt(Parameterized factor1, Parameterized factor2);
 
     /**
      * 
@@ -72,7 +72,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessEqual _le(Parameterized factor1, Parameterized factor2);
+    public LessEqual le(Parameterized factor1, Parameterized factor2);
     
     /**
      * 
@@ -86,7 +86,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public Equal _eq(Parameterized factor1, Parameterized factor2);
+    public Equal eq(Parameterized factor1, Parameterized factor2);
 
     /**
      * 
@@ -100,5 +100,5 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public NotEqual _ne(Parameterized factor1, Parameterized factor2);
+    public NotEqual ne(Parameterized factor1, Parameterized factor2);
 }

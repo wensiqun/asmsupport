@@ -40,25 +40,25 @@ public class CrementOperatorGenerate extends AbstractExample {
 		creator.createMethod(Opcodes.ACC_PUBLIC, "demonstrate", null, null, null, null, new MethodBodyInternal() {
 			@Override
 			public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", Value.value("******************************demonstrate***************************"));
+				call(systemOut, "println", Value.value("******************************demonstrate***************************"));
 				
 				//int a = 1;
-			    LocalVariable a = _var("a", AClass.INT_ACLASS, false, Value.value(1));
+			    LocalVariable a = var("a", AClass.INT_ACLASS, false, Value.value(1));
 			    //int b = 2;
-			    LocalVariable b = _var("b", AClass.INT_ACLASS, false, Value.value(2));
+			    LocalVariable b = var("b", AClass.INT_ACLASS, false, Value.value(2));
 			    //int c = ++b;
-			    LocalVariable c = _var("c", AClass.INT_ACLASS, false, _preInc(b));
+			    LocalVariable c = var("c", AClass.INT_ACLASS, false, preinc(b));
 			    //d = a++;
-			    LocalVariable d = _var("d", AClass.INT_ACLASS, false, _postInc(a));
+			    LocalVariable d = var("d", AClass.INT_ACLASS, false, postinc(a));
 			    //c++;
-			    _postInc(c);
+			    postinc(c);
 			    
 			    //System.out.println("a = " + a);
-				_invoke(systemOut, "println", _append(Value.value("a = "), a)); 
-				_invoke(systemOut, "println", _append(Value.value("b = "), b)); 
-				_invoke(systemOut, "println", _append(Value.value("c = "), c)); 
-				_invoke(systemOut, "println", _append(Value.value("d = "), d)); 
-				_return();
+				call(systemOut, "println", stradd(Value.value("a = "), a)); 
+				call(systemOut, "println", stradd(Value.value("b = "), b)); 
+				call(systemOut, "println", stradd(Value.value("c = "), c)); 
+				call(systemOut, "println", stradd(Value.value("d = "), d)); 
+				return_();
 			}
 		});
 		
@@ -75,16 +75,16 @@ public class CrementOperatorGenerate extends AbstractExample {
 		creator.createMethod(Opcodes.ACC_PUBLIC, "incrementAndDecrement", null, null, null, null, new MethodBodyInternal() {
 		    @Override
 		    public void body(LocalVariable... argus) {
-				_invoke(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
+				call(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
 				//int count = 10;
-				LocalVariable count = _var("count", AClass.INT_ACLASS, false, Value.value(10));
+				LocalVariable count = var("count", AClass.INT_ACLASS, false, Value.value(10));
 				// ++count
-				_preInc(count); 
+				preinc(count); 
 				// --count;
-				_postDec(count); 
+				postdec(count); 
 				// System.out.println("count = " +  count);
-				_invoke(systemOut, "println", _append(Value.value("count = "), count));
-				_return();
+				call(systemOut, "println", stradd(Value.value("count = "), count));
+				return_();
 			}
 		});
 		
@@ -94,10 +94,10 @@ public class CrementOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				LocalVariable currentObj = _var("currentObj", getMethodOwner(), false, _new(getMethodOwner()));
-				_invoke(currentObj, "demonstrate");
-				_invoke(currentObj, "incrementAndDecrement");
-				_return();
+				LocalVariable currentObj = var("currentObj", getMethodOwner(), false, new_(getMethodOwner()));
+				call(currentObj, "demonstrate");
+				call(currentObj, "incrementAndDecrement");
+				return_();
 			}
         });
 		generate(creator);

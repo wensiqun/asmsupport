@@ -23,7 +23,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @param argus
      * @return
      */
-    public DummyConstructor _argumentTypes(AClass... argus){
+    public DummyConstructor argTypes(AClass... argus){
         argTypes = argus;
         return this;
     }
@@ -34,7 +34,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @param argus
      * @return
      */
-    public DummyConstructor _argumentTypes(Class<?>... argus){
+    public DummyConstructor argTypes(Class<?>... argus){
         this.argTypes = AClassUtils.convertToAClass(argus);
         return this;
     }
@@ -59,7 +59,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @param argNames
      * @return
      */
-    public DummyConstructor _argumentNames(String... argNames){
+    public DummyConstructor argNames(String... argNames){
         this.argNames = argNames;
         return this;
     }
@@ -87,7 +87,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @param exceptionTypes
      * @return
      */
-    public DummyConstructor _throws(Class<?>... exceptionTypes){
+    public DummyConstructor throws_(Class<?>... exceptionTypes){
         this.exceptionTypes = AClassUtils.convertToAClass(exceptionTypes);
         return this;
     }
@@ -98,7 +98,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 	 * @param exceptionTypes
 	 * @return
 	 */
-    public DummyConstructor _throws(AClass[] exceptionTypes){
+    public DummyConstructor throws_(AClass[] exceptionTypes){
         this.exceptionTypes = exceptionTypes;
         return this;
     }
@@ -124,7 +124,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 	 * @param body
 	 * @return
 	 */
-    public DummyConstructor _body(ConstructorBody body){
+    public DummyConstructor body(ConstructorBody body){
         this.body = body;
         return this;
     }
