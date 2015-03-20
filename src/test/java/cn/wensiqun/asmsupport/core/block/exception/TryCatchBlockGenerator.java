@@ -19,7 +19,7 @@ public class TryCatchBlockGenerator extends AbstractExample
     
     public static void main(String[] args)
     {
-        final AClass runtime = AClassFactory.getProductClass(RuntimeException.class);
+        final AClass runtime = AClassFactory.deftype(RuntimeException.class);
         
         final MyList testMethodNames = new MyList();
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryCatchBlockGeneratorExample", null, null);
@@ -1159,7 +1159,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
              new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {

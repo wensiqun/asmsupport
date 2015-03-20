@@ -45,7 +45,7 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 		/*
 		 * 生成一个main方法，方法内容和main1内容相同
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
@@ -54,7 +54,7 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 			      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 			      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"
 			    };*/
-				LocalVariable binary = arrayVar("binary", AClassFactory.getArrayClass(String[].class), false, newarrayWithValue(AClassFactory.getArrayClass(String[].class), stringValueArray(new String[]{
+				LocalVariable binary = arrayVar("binary", AClassFactory.defArrayType(String[].class), false, newarrayWithValue(AClassFactory.defArrayType(String[].class), stringValueArray(new String[]{
 					      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 					      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"})));
 			    //int a = 3; 

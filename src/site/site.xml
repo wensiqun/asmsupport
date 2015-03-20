@@ -7,8 +7,7 @@
         <item name="Get It" href="getit.html"/>
     </menu>
     <menu name="Manual">
-        <item name="Introduction" href="manual/introduction.html"/>
-        <item name="Create Class" href="create-class.html"/>
+        <item name="Operators" href="operators.html"/>
         <item name="Create Interface" href="create-interface.html"/>
         <item name="Create Enum" href="create-enum.html"/>
     </menu>

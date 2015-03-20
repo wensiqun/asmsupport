@@ -61,7 +61,7 @@ public class MethodUtils {
 						, argTypes);
 
 				AClass callerOwner = overrideMethod.getMethodOwner();
-				AClass calledOwner = AClassFactory.getProductClass(method.getDeclaringClass());
+				AClass calledOwner = AClassFactory.deftype(method.getDeclaringClass());
 				if(AClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifiers())){
 					return method;
 				}
@@ -166,8 +166,8 @@ public class MethodUtils {
 	 * @return true表示可以调用
 	 */
 	public static boolean visible(Method caller, Method called){
-		AClass callerOwner = AClassFactory.getProductClass(caller.getDeclaringClass());
-		AClass calledOwner = AClassFactory.getProductClass(called.getDeclaringClass());
+		AClass callerOwner = AClassFactory.deftype(caller.getDeclaringClass());
+		AClass calledOwner = AClassFactory.deftype(called.getDeclaringClass());
 		return AClassUtils.visible(callerOwner, calledOwner, calledOwner, called.getModifiers());
 	}
 	

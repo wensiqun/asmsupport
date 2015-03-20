@@ -30,7 +30,7 @@ public abstract class AClassFactory {
 	private static AClass getAClass(Class<?> cls){
 		AClass aclass;
 		if(cls.isArray()){
-			aclass = getArrayClass(ClassUtils.getRootComponentType(cls), Type.getType(cls).getDimensions());
+			aclass = defArrayType(ClassUtils.getRootComponentType(cls), Type.getType(cls).getDimensions());
 		}else{
 			aclass = new ProductClass(cls);
 		}
@@ -43,7 +43,7 @@ public abstract class AClassFactory {
      * @param cls
      * @return
      */
-    public static AClass getProductClass(Class<?> cls){
+    public static AClass deftype(Class<?> cls){
     	return getAClass(cls);
     }
     
@@ -53,7 +53,7 @@ public abstract class AClassFactory {
      * @param arrayCls
      * @return
      */
-    public static ArrayClass getArrayClass(Class<?> arrayCls){
+    public static ArrayClass defArrayType(Class<?> arrayCls){
         if(!arrayCls.isArray()){
             throw new ClassException("the class" + arrayCls + " is not an array class");
         }
@@ -66,11 +66,11 @@ public abstract class AClassFactory {
      * @param dim
      * @return
      */
-    public static ArrayClass getArrayClass(Class<?> cls, int dim){
+    public static ArrayClass defArrayType(Class<?> cls, int dim){
         if(cls.isArray()){
             throw new ClassException("the class " + cls + " has already an array class");
         }
-        return new ArrayClass(getProductClass(cls), dim);
+        return new ArrayClass(deftype(cls), dim);
     }
     
     /**
@@ -79,7 +79,7 @@ public abstract class AClassFactory {
      * @param dim
      * @return
      */
-    public static ArrayClass getArrayClass(AClass rootComponent, int dim){
+    public static ArrayClass defArrayType(AClass rootComponent, int dim){
     	if(rootComponent.isArray()){
             throw new ClassException("the class " + rootComponent + " has already an array class");
         }

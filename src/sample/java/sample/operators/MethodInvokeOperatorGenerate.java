@@ -119,7 +119,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-        		"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+        		"main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
                 new StaticMethodBodyInternal(){
 
             @Override

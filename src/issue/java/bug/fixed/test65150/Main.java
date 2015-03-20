@@ -35,7 +35,7 @@ public class Main extends AbstractFix {
 		});
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
-				AClassFactory.getProductClass(String[].class)}, 
+				AClassFactory.deftype(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
@@ -59,13 +59,13 @@ public class Main extends AbstractFix {
 			Assert.fail();
 		}
 		
-		final AClass Test65150AClass = AClassFactory.getProductClass(Test65150);
+		final AClass Test65150AClass = AClassFactory.deftype(Test65150);
 		
 		creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
-				AClassFactory.getProductClass(String[].class)}, 
+				AClassFactory.deftype(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 

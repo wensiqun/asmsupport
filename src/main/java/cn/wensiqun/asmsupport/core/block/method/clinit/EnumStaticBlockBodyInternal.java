@@ -103,7 +103,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 		
 		GlobalVariable gv = getMethodOwner().field("ENUM$VALUES");
 		
-		ArrayValue av = newarrayWithValue(AClassFactory.getArrayClass(getMethodOwner(), 1), values);
+		ArrayValue av = newarrayWithValue(AClassFactory.defArrayType(getMethodOwner(), 1), values);
 		assign(gv, av);
 	}
 	

@@ -70,7 +70,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			public void body(LocalVariable... argus) {
 				call(out, "println", Value.value("before"));
 				
-				AClass randomClass = AClassFactory.getProductClass(Random.class);
+				AClass randomClass = AClassFactory.deftype(Random.class);
 				LocalVariable random = this.var("random", randomClass, false, this.new_(randomClass, Value.value(1L)));
 				if_(new IFInternal(call(random, "nextBoolean")){
 					@Override
@@ -117,7 +117,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		});*/
 		
 
-		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 	        @Override

@@ -31,6 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
  */
 public interface ActionSet<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> extends 
 ValueAction,
+AClassDefAction,
 KeywordAction, 
 VariableAction, 
 MethodInvokeAction, 

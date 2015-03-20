@@ -109,7 +109,7 @@ public class OverrideBridgeMethodCreator {
     	
     	String[] argNames = method.getMethodMeta().getArgNames();
     	
-    	AClass returnClass = AClassFactory.getProductClass(overriden.getReturnType());
+    	AClass returnClass = AClassFactory.deftype(overriden.getReturnType());
     	
     	AClass[] exceptions = method.getMethodMeta().getExceptions();
     	

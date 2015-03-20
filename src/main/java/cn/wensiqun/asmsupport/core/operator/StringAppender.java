@@ -41,7 +41,7 @@ public class StringAppender extends AbstractOperator implements Parameterized{
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
-        AClass strBlderCls = AClassFactory.getProductClass(StringBuilder.class);
+        AClass strBlderCls = AClassFactory.deftype(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
         for(Parameterized par : pars){

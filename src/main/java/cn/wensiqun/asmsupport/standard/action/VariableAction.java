@@ -31,7 +31,7 @@ public interface VariableAction {
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _var(name, {@link AClassFactory#getProductClass(type)}, false, para)
+     * _var(name, {@link AClassFactory#deftype(type)}, false, para)
      * </p>
      * @param name
      * @param type
@@ -43,7 +43,7 @@ public interface VariableAction {
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _var("", {@link AClassFactory#getProductClass(type)}, true, para)
+     * _var("", {@link AClassFactory#deftype(type)}, true, para)
      * </p>
      * @param type
      * @param para

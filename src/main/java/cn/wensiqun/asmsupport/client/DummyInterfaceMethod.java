@@ -50,7 +50,7 @@ public class DummyInterfaceMethod {
      * @return
      */
     public DummyInterfaceMethod return_(Class<?> ret) {
-        this.returnType = AClassFactory.getProductClass(ret);
+        this.returnType = AClassFactory.deftype(ret);
         return this;
     }
     

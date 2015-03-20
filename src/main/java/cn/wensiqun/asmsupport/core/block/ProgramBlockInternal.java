@@ -334,12 +334,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable var(String name, Class<?> type, Parameterized para) {
-        return var(name, AClassFactory.getProductClass(type), false, para);
+        return var(name, AClassFactory.deftype(type), false, para);
     }
 
     @Override
     public LocalVariable var(Class<?> type, Parameterized para) {
-        return var("", AClassFactory.getProductClass(type), true, para);
+        return var("", AClassFactory.deftype(type), true, para);
     }
 
     @Override
@@ -587,7 +587,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final CheckCast checkcast(Parameterized cc, Class<?> to){
-        return checkcast(cc, AClassFactory.getProductClass(to));
+        return checkcast(cc, AClassFactory.deftype(to));
     }
     
     //*******************************************************************************************//
@@ -905,7 +905,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final MethodInvoker new_(Class<?> owner, Parameterized... arguments){
-        return this.new_(AClassFactory.getProductClass(owner), arguments);
+        return this.new_(AClassFactory.deftype(owner), arguments);
     }
     
     //*******************************************************************************************//
@@ -1123,8 +1123,27 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public Value _null(Class<?> type) {
-        return Value.getNullValue(AClassFactory.getProductClass(type));
+        return Value.getNullValue(AClassFactory.deftype(type));
     }
-    
+
+    @Override
+    public AClass deftype(Class<?> cls) {
+        return AClassFactory.deftype(cls);
+    }
+
+    @Override
+    public ArrayClass defArrayType(Class<?> arrayCls) {
+        return AClassFactory.defArrayType(arrayCls);
+    }
+
+    @Override
+    public ArrayClass defArrayType(Class<?> cls, int dim) {
+        return AClassFactory.defArrayType(cls, dim);
+    }
+
+    @Override
+    public ArrayClass defArrayType(AClass rootComponent, int dim) {
+        return AClassFactory.defArrayType(rootComponent, dim);
+    }
     
 }

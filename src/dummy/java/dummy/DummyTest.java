@@ -279,7 +279,7 @@ public class DummyTest {
                 //LocalVariable dm = _createVariable("dm", getMethodOwner(), _new(getMethodOwner()));
                 final LocalVariable sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
                 
-                AClass ExceptedInterfaceAClass = AClassFactory.getProductClass(ExceptedInterface);
+                AClass ExceptedInterfaceAClass = AClassFactory.deftype(ExceptedInterface);
                 GlobalVariable interface_field_list = ExceptedInterfaceAClass.field("interface_field_list");
                 
                 /*_invoke(interface_field_list, "add", Value.value("hello asmsupport."));

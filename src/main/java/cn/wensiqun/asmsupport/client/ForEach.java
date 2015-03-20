@@ -46,7 +46,7 @@ public abstract class ForEach extends ProgramBlock<ForEachInternal> implements I
     }
     
     public ForEach(ExplicitVariable iteratorVar, Class<?> elementType) {
-        target = new ForEachInternal(iteratorVar, AClassFactory.getProductClass(elementType)) {
+        target = new ForEachInternal(iteratorVar, AClassFactory.deftype(elementType)) {
 
             @Override
             public void body(LocalVariable e) {

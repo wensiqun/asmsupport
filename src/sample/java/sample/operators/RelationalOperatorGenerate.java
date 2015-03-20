@@ -41,13 +41,13 @@ public class RelationalOperatorGenerate extends AbstractExample {
 		 * 
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
 				//Random rand = new Random();
-				LocalVariable rand = var("rand", AClassFactory.getProductClass(Random.class), false, new_(AClassFactory.getProductClass(Random.class)));
+				LocalVariable rand = var("rand", AClassFactory.deftype(Random.class), false, new_(AClassFactory.deftype(Random.class)));
 				
 				//int i = rand.nextInt(100);
 				LocalVariable i = var("i", AClass.INT_ACLASS, false, call(rand, "nextInt", Value.value(100)));

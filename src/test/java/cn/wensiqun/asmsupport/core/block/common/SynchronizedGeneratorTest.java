@@ -61,7 +61,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         
         creator.createField("lock", Opcodes.ACC_PRIVATE, AClass.OBJECT_ACLASS);
         
-        creator.createField("list", Opcodes.ACC_PUBLIC, AClassFactory.getProductClass(List.class));
+        creator.createField("list", Opcodes.ACC_PUBLIC, AClassFactory.deftype(List.class));
         
         creator.createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new ConstructorBodyInternal() {
 
@@ -69,7 +69,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             public void body(LocalVariable... argus) {
             	supercall(argus);
                 assign(this_().field("lock"), new_(AClass.OBJECT_ACLASS));
-                assign(this_().field("list"), new_(AClassFactory.getProductClass(ArrayList.class)));
+                assign(this_().field("list"), new_(AClassFactory.deftype(ArrayList.class)));
 				return_();
             }
             
@@ -128,10 +128,10 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         });
 
         Class<?> syncGenExamp = generate(creator, false);
-        Class<?> thisThread = createThread(AClassFactory.getProductClass(syncGenExamp), "This");
-        Class<?> lockThread = createThread(AClassFactory.getProductClass(syncGenExamp), "Lock");
-        Class<?> junitTestCls = createTestJunit(AClassFactory.getProductClass(syncGenExamp), 
-        		AClassFactory.getProductClass(thisThread), AClassFactory.getProductClass(lockThread));
+        Class<?> thisThread = createThread(AClassFactory.deftype(syncGenExamp), "This");
+        Class<?> lockThread = createThread(AClassFactory.deftype(syncGenExamp), "Lock");
+        Class<?> junitTestCls = createTestJunit(AClassFactory.deftype(syncGenExamp), 
+        		AClassFactory.deftype(thisThread), AClassFactory.deftype(lockThread));
         Object junitTestObj = junitTestCls.newInstance();
         Method testSyncThis = junitTestCls.getMethod("testSyncThis");
         Method testSyncLock = junitTestCls.getMethod("testSyncLock");
@@ -165,11 +165,11 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 					@Override
 					public void body() {
-						call(AClassFactory.getProductClass(Thread.class), "sleep", Value.value(100));
+						call(AClassFactory.deftype(Thread.class), "sleep", Value.value(100));
 					    call(this_().field("sgst"), "sync" + name);
 					}
 					
-				}).catch_(new CatchInternal(AClassFactory.getProductClass(InterruptedException.class)) {
+				}).catch_(new CatchInternal(AClassFactory.deftype(InterruptedException.class)) {
 
 					@Override
 					public void body(LocalVariable e) {
@@ -205,15 +205,15 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 
                  final LocalVariable es = var(
                         "es", 
-                        AClassFactory.getProductClass(ExecutorService.class),
+                        AClassFactory.deftype(ExecutorService.class),
                         false, 
-                        call(AClassFactory.getProductClass(Executors.class), "newFixedThreadPool", Value.value(10))
+                        call(AClassFactory.deftype(Executors.class), "newFixedThreadPool", Value.value(10))
                 );
                  final LocalVariable objs = var(
                         "objs", 
-                        AClassFactory.getProductClass(List.class),
+                        AClassFactory.deftype(List.class),
                         false, 
-                        new_(AClassFactory.getProductClass(ArrayList.class))
+                        new_(AClassFactory.deftype(ArrayList.class))
                 );
                  final LocalVariable i = var(
                         "i", 
@@ -235,7 +235,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 							
 						}
 					});
-                call(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+                call(AClassFactory.deftype(SynchronizedGeneratorTest.class), "assertEquals",
                 		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), call(sgst.field("list"), "size"));
                 
                 assign(i, Value.value(0));
@@ -243,7 +243,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 					@Override
 					public void body() {
-		                call(AClassFactory.getProductClass(SynchronizedGeneratorTest.class), "assertEquals",
+		                call(AClassFactory.deftype(SynchronizedGeneratorTest.class), "assertEquals",
 		                		i,
 		                		mod(i, Value.value(10)), 
 		                		call(checkcast(call(sgst.field("list"), "get", i), AClass.INTEGER_WRAP_ACLASS), "intValue"));

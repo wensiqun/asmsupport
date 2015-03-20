@@ -349,7 +349,7 @@ public class Value implements IValue {
 
         } else if (obj instanceof Class) {
         	
-        	return new Value(AClassFactory.getProductClass((Class<?>) obj));
+        	return new Value(AClassFactory.deftype((Class<?>) obj));
         	
         }
         throw new ASMSupportException("Cannot support type " + obj.getClass() + " for this method!");

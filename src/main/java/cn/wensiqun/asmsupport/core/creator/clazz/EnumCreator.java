@@ -238,7 +238,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
     	body.setEnumNameList(enumConstantNameList);
 		if(existEnumConstant){
 	        //create implicit global variable ENUM$VALUES for enum type
-		    createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC + Opcodes.ACC_SYNTHETIC, AClassFactory.getArrayClass(sc, 1));
+		    createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC + Opcodes.ACC_SYNTHETIC, AClassFactory.defArrayType(sc, 1));
 	       
 	    }
 		existedStaticBlock = true;
@@ -260,7 +260,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 	@Override
 	protected void beforeCreate(){
 	   
-	    final ArrayClass enumArrayType = AClassFactory.getArrayClass(sc, 1);
+	    final ArrayClass enumArrayType = AClassFactory.defArrayType(sc, 1);
 	    
 	    
 	    //create "publis static Enum[] values()" method
@@ -281,7 +281,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 Parameterized copyLen = arrayLength(copy);
                 
                 //System
-                AClass systemClass = AClassFactory.getProductClass(System.class);
+                AClass systemClass = AClassFactory.deftype(System.class);
                 
                 //zero value
                 Value zero = Value.value(0);

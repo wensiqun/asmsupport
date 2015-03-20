@@ -24,8 +24,8 @@ public class AbstractMethodChooserTest {
 
 	@Test
 	public void testIdentifyPotentiallyApplicableMethods() {
-		MethodChooser am = new MethodChooser(AClassFactory.getProductClass(this.getClass()), 
-				AClassFactory.getProductClass(Child.class), 
+		MethodChooser am = new MethodChooser(AClassFactory.deftype(this.getClass()), 
+				AClassFactory.deftype(Child.class), 
 				"work", new AClass[]{AClass.OBJECT_ACLASS}){
 
 			@Override

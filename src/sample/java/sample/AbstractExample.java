@@ -10,7 +10,7 @@ public abstract class AbstractExample {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = AClassFactory.getProductClass(System.class).field("out");
+	public static GlobalVariable systemOut = AClassFactory.deftype(System.class).field("out");
 	
 	public static Class<?> generate(IClassContext creator){
 		return generate(creator, true);

@@ -20,8 +20,8 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
     
     public static void main(String[] args)
     {
-        final AClass runtime = AClassFactory.getProductClass(RuntimeException.class);
-        final AClass nullpointer = AClassFactory.getProductClass(NullPointerException.class);
+        final AClass runtime = AClassFactory.deftype(RuntimeException.class);
+        final AClass nullpointer = AClassFactory.deftype(NullPointerException.class);
         
         final MyList testMethodNames = new MyList();
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryCatchFinallyBlockGeneratorExample", null, null);
@@ -541,7 +541,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
             }
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
            new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {

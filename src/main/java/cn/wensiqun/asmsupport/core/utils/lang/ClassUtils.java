@@ -256,7 +256,7 @@ public class ClassUtils extends cn.wensiqun.asmsupport.org.apache.commons.lang3.
 	 * @throws IOException
 	 */
 	public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String findName) throws IOException{
-		final AClass owner = AClassFactory.getProductClass(clazz);
+		final AClass owner = AClassFactory.deftype(clazz);
 		InputStream classStream = ASMClassLoader.getInstance().getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
 		ClassReader cr = new ClassReader(classStream);
 		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
@@ -278,17 +278,17 @@ public class ClassUtils extends cn.wensiqun.asmsupport.org.apache.commons.lang3.
 						AClass[] aclass = new AClass[types.length];
 						String[] args = new String[types.length];
 						for(int i=0; i<types.length; i++){
-							aclass[i] = AClassFactory.getProductClass(forName(types[i].getDescriptor()));
+							aclass[i] = AClassFactory.deftype(forName(types[i].getDescriptor()));
 							args[i] = "arg" + i;
 						}
 						
-						AClass returnType = AClassFactory.getProductClass(
+						AClass returnType = AClassFactory.deftype(
 								forName(Type.getReturnType(desc).getDescriptor()));
 						
 
 						AClass[] exceptionAclassArray = new AClass[exceptions.length];
 						for(int i=0; i<exceptions.length; i++){
-							exceptionAclassArray[i] = AClassFactory.getProductClass(forName(exceptions[i]));
+							exceptionAclassArray[i] = AClassFactory.deftype(forName(exceptions[i]));
 						}
 						
 						AMethodMeta me = new AMethodMeta(
@@ -357,9 +357,9 @@ public class ClassUtils extends cn.wensiqun.asmsupport.org.apache.commons.lang3.
      */
     public static boolean visible(Class<?> invoker, Class<?> invoked, Class<?> actuallyInvoked, int mod){
         return AClassUtils.visible(
-        		AClassFactory.getProductClass(invoker), 
-        		AClassFactory.getProductClass(invoked), 
-        		AClassFactory.getProductClass(actuallyInvoked), mod);
+        		AClassFactory.deftype(invoker), 
+        		AClassFactory.deftype(invoked), 
+        		AClassFactory.deftype(actuallyInvoked), mod);
     }
 
 }

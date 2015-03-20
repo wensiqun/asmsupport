@@ -15,7 +15,7 @@ public class TesterStatics
     
     public static final StringBuilder ACTUALLY = new StringBuilder();
     
-    public static final AClass ATesterStatics = AClassFactory.getProductClass(TesterStatics.class);
+    public static final AClass ATesterStatics = AClassFactory.deftype(TesterStatics.class);
     
     public static final GlobalVariable GV_EXPECTED = ATesterStatics.field("EXPECTED");
     

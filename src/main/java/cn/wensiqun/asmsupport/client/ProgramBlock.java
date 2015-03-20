@@ -656,4 +656,24 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements ActionSet<I
         return target._null(type);
     }
 
+    @Override
+    public AClass deftype(Class<?> cls) {
+        return target.deftype(cls);
+    }
+
+    @Override
+    public ArrayClass defArrayType(Class<?> arrayCls) {
+        return target.defArrayType(arrayCls);
+    }
+
+    @Override
+    public ArrayClass defArrayType(Class<?> cls, int dim) {
+        return target.defArrayType(cls, dim);
+    }
+
+    @Override
+    public ArrayClass defArrayType(AClass rootComponent, int dim) {
+        return target.defArrayType(rootComponent, dim);
+    }
+
 }

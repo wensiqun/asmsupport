@@ -101,15 +101,15 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 		 * 生成一个main方法
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-				"main", new AClass[]{AClassFactory.getProductClass(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				AClass A_AClass = AClassFactory.getProductClass(A);
-				AClass B_AClass = AClassFactory.getProductClass(B);
-				AClass C_AClass = AClassFactory.getProductClass(C);
-				AClass D_AClass = AClassFactory.getProductClass(D);
+				AClass A_AClass = AClassFactory.deftype(A);
+				AClass B_AClass = AClassFactory.deftype(B);
+				AClass C_AClass = AClassFactory.deftype(C);
+				AClass D_AClass = AClassFactory.deftype(D);
 				
 			    //A a = new A();
 				LocalVariable a = var("a", A_AClass, false, new_(A_AClass));
