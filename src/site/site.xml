@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
   <body>
-    <menu name="概述">
-      <item name="Summary" href="summary.html"/>
+    <menu name="Overview">
+        <item name="Summary" href="summary.html"/>
+        <item name="Getting Started" href="getstarted.html"/>
+        <item name="Get It" href="getit.html"/>
     </menu>
-
-    <menu ref="parent"/>
-    <menu ref="reports"/>
+    <menu name="Manual">
+        <item name="Introduction" href="manual/introduction.html"/>
+        <item name="Create Class" href="create-class.html"/>
+        <item name="Create Interface" href="create-interface.html"/>
+        <item name="Create Enum" href="create-enum.html"/>
+    </menu>
+    <!-- <menu ref="parent"/>
+    <menu ref="reports"/> -->
   </body>
 </project>

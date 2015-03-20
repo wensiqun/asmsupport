@@ -23,6 +23,7 @@ The asmsupport is a java class byte code operate library, it make easier to writ
       |-src/issue/java             : The fixed bug test code(as test)
       |-src/sample/java            : The old api example code(as test)
       |-src/dummy/java             : The dummy api example code(as test)
+      |-src/site                   : The project document site folder.
 
 Preceding is all of the sources folder structure and descriptions, if you want import the project to eclipse, you must be use ["src/third/java", "src/issue/java", "src/sample/java", "src/dummy/java "] as source folder. 
 
@@ -34,3 +35,6 @@ Preceding is all of the sources folder structure and descriptions, if you want i
         <version>x.x.x</version>
     </dependency>
     
+## License
+
+Asmsupport is licensed under the GNU Lesser General Public License (LGPL)

@@ -57,6 +57,12 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
             }
         }
     }
+    
+    public DummyClass(String packageName, String className) {
+        this();
+        this.packageName = packageName;
+        this.name = className;
+    }
 
     /**
      * Set to static
