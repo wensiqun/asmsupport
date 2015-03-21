@@ -178,6 +178,16 @@ public class Value implements IValue {
             return v;
         }
     }
+    
+    /**
+     * Get {@code null} value
+     * 
+     * @param type
+     * @return
+     */
+    public static Value getNullValue(Class<?> type){
+    	return getNullValue(AClassFactory.deftype(type));
+    }
 
     /**
      * Get {@code null} value

@@ -67,11 +67,6 @@ public class ArrayClass extends AClass {
         return desc;
     }
 
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        return aclass.getGlobalVariable(name);
-    }*/
-
     @Override
     public boolean isArray() {
         return true;

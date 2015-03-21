@@ -120,7 +120,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value _null(AClass type);
+    Value null_(AClass type);
 
     /**
      * Get {@code null} val
@@ -128,5 +128,5 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value _null(Class<?> type);
+    Value null_(Class<?> type);
 }

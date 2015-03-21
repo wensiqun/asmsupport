@@ -367,18 +367,40 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
     
     @Override
-    public final LocalVariable arrayVarWithDimension(final String name, final ArrayClass aClass, boolean anonymous, Parameterized... allocateDim) {
+    public final LocalVariable arrayvar2dim(final String name, final ArrayClass aClass, boolean anonymous, Parameterized... allocateDim) {
         LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
         if(allocateDim == null){
             assign(lv, aClass.getDefaultValue());
         }else{
-            assign(lv, newarray(aClass, allocateDim));
+            assign(lv, makeArray(aClass, allocateDim));
         }
         return lv;
     }
     
     @Override
-    public final LocalVariable arrayVar(final String name, final ArrayClass aClass, boolean anonymous, Parameterized value) {
+	public LocalVariable arrayvar2dim(String name, ArrayClass type,
+			Parameterized... dims) {
+		return this.arrayvar2dim(name, type, false, dims);
+	}
+
+	@Override
+	public LocalVariable arrayvar2dim(String name, Class<?> type,
+			Parameterized... dims) {
+		return this.arrayvar2dim(name, defArrayType(type), false, dims);
+	}
+
+	@Override
+	public LocalVariable arrayvar2dim(ArrayClass type, Parameterized... dims) {
+		return this.arrayvar2dim("", type, true, dims);
+	}
+
+	@Override
+	public LocalVariable arrayvar2dim(Class<?> arrayType, Parameterized... dims) {
+		return this.arrayvar2dim("", defArrayType(arrayType), true, dims);
+	}
+    
+    @Override
+    public final LocalVariable arrayvar(final String name, final ArrayClass aClass, boolean anonymous, Parameterized value) {
         LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
         if(value == null){
             assign(lv, aClass.getDefaultValue());
@@ -388,19 +410,61 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         return lv;
     }
 
+	@Override
+	public LocalVariable arrayvar(String name, ArrayClass type,
+			Parameterized value) {
+		return this.arrayvar(name, type, false, value);
+	}
+
+	@Override
+	public LocalVariable arrayvar(String name, Class<?> type,
+			Parameterized value) {
+		return this.arrayvar(name, defArrayType(type), false, value);
+	}
+
+	@Override
+	public LocalVariable arrayvar(ArrayClass type, Parameterized value) {
+		return this.arrayvar("", type, true, value);
+	}
+
+	@Override
+	public LocalVariable arrayvar(Class<?> type, Parameterized value) {
+		return this.arrayvar("", defArrayType(type), true, value);
+	}
+
+    
     @Override
-    public LocalVariable arrayVar(String name, ArrayClass aClass, boolean anonymous, Object parameterizedArray) {
+    public LocalVariable arrayvar(String name, ArrayClass aClass, boolean anonymous, Object parameterizedArray) {
         LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
         if(parameterizedArray == null){
             assign(lv, aClass.getDefaultValue());
         }else{
-            assign(lv, getExecutor().newarrayWithValue(aClass, parameterizedArray));
+            assign(lv, getExecutor().newarray(aClass, parameterizedArray));
         }
         return lv;
     }
-    
-    
-    @Override
+
+	@Override
+	public LocalVariable arrayvar(String name, ArrayClass type, Object parameterizedArray) {
+		return this.arrayvar(name, type, false, parameterizedArray);
+	}
+
+	@Override
+	public LocalVariable arrayvar(String name, Class<?> type, Object parameterizedArray) {
+		return this.arrayvar(name, defArrayType(type), false, parameterizedArray);
+	}
+
+	@Override
+	public LocalVariable arrayvar(ArrayClass type, Object parameterizedArray) {
+		return this.arrayvar("", type, true, parameterizedArray);
+	}
+
+	@Override
+	public LocalVariable arrayvar(Class<?> type, Object parameterizedArray) {
+		return this.arrayvar("", defArrayType(type), true, parameterizedArray);
+	}
+
+	@Override
     public final Assigner assign(ExplicitVariable variable, Parameterized val){
         if(variable instanceof LocalVariable){
             return OperatorFactory.newOperator(LocalVariableAssigner.class,
@@ -423,45 +487,75 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     //*******************************************************************************************//
     
     @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized... allocateDims){
+    public final ArrayValue makeArray(final ArrayClass aClass, final Parameterized... allocateDims){
         return OperatorFactory.newOperator(ArrayValue.class, 
                 new Class<?>[]{ProgramBlockInternal.class, ArrayClass.class, Parameterized[].class}, 
                 getExecutor(), aClass, allocateDims);
     }
     
     @Override
-    public final ArrayValue newarrayWithValue(final ArrayClass aClass, final Object arrayObject){
+	public ArrayValue makeArray(Class<?> arraytype, Parameterized... dimensions) {
+		return makeArray(defArrayType(arraytype), dimensions);
+	}
+    
+    @Override
+    public final ArrayValue newarray(final ArrayClass aClass, final Object arrayObject){
         return OperatorFactory.newOperator(ArrayValue.class, 
                 new Class<?>[]{ProgramBlockInternal.class, ArrayClass.class, Object.class}, 
                 getExecutor(), aClass, arrayObject);
     }
 
     @Override
-    public final ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[] values){
-        return newarrayWithValue(aClass, (Object)values);
+	public ArrayValue newarray(Class<?> type, Object arrayObject) {
+		return newarray(defArrayType(type), arrayObject);
+	}
+    
+    @Override
+    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[] values){
+        return newarray(aClass, (Object)values);
     }
 
-    @Override
-    public final ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][] values){
-        return newarrayWithValue(aClass, (Object)values);
-    }
+	@Override
+	public ArrayValue newarray(Class<?> type, Parameterized[] values) {
+		return newarray(defArrayType(type), values);
+	}
 
     @Override
-    public final ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][][] values){
-        return newarrayWithValue(aClass, (Object)values);
+    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][] values){
+        return newarray(aClass, (Object)values);
+    }
+    
+    @Override
+	public ArrayValue newarray(Class<?> type, Parameterized[][] values) {
+		return newarray(defArrayType(type), values);
+	}
+    
+    @Override
+    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][] values){
+        return newarray(aClass, (Object)values);
     }
 
+	@Override
+	public ArrayValue newarray(Class<?> type, Parameterized[][][] values) {
+		return newarray(defArrayType(type), values);
+	}
+
     @Override
-    public final ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][][][] values){
-        return newarrayWithValue(aClass, (Object)values);
+    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][][] values){
+        return newarray(aClass, (Object)values);
     }
+
+	@Override
+	public ArrayValue newarray(Class<?> type, Parameterized[][][][] values) {
+		return newarray(defArrayType(type), values);
+	}
     
     
     //*******************************************************************************************//
     //                                Array Operator                                             //
     //*******************************************************************************************//  
     
-    @Override
+	@Override
     public final ArrayLoader arrayLoad(IVariable arrayReference, Parameterized pardim, Parameterized... parDims){
         return OperatorFactory.newOperator(ArrayLoader.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, Parameterized.class, Parameterized[].class},
@@ -1061,6 +1155,9 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class}, getExecutor(), parame);
     }
 
+    
+    
+    
     @Override
     public Value val(Integer val) {
         return Value.value(val);
@@ -1117,12 +1214,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public Value _null(AClass type) {
+    public Value null_(AClass type) {
         return Value.getNullValue(type);
     }
 
     @Override
-    public Value _null(Class<?> type) {
+    public Value null_(Class<?> type) {
         return Value.getNullValue(AClassFactory.deftype(type));
     }
 

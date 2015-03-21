@@ -63,20 +63,20 @@ public class LocalVariableExample extends AbstractExample {
                          * 这段代码将创建一个String类型的二维数组的变量,对应的java代码如下
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
-                        LocalVariable localArrayVariable1 = arrayVarWithDimension("localArrayVariable1", AClassFactory.defArrayType(String[][].class), false, Value.value(2), Value.value(2));
+                        LocalVariable localArrayVariable1 = arrayvar2dim("localArrayVariable1", AClassFactory.defArrayType(String[][].class), false, Value.value(2), Value.value(2));
                         call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
-                        LocalVariable localArrayVariable2 = arrayVarWithDimension("localArrayVariable2", AClassFactory.defArrayType(String[][].class), false, Value.value(2));
+                        LocalVariable localArrayVariable2 = arrayvar2dim("localArrayVariable2", AClassFactory.defArrayType(String[][].class), false, Value.value(2));
                         call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
-                        LocalVariable localArrayVariable3 = arrayVarWithDimension("localArrayVariable3", AClassFactory.defArrayType(String[][].class), false, (Parameterized[])null);
+                        LocalVariable localArrayVariable3 = arrayvar2dim("localArrayVariable3", AClassFactory.defArrayType(String[][].class), false, (Parameterized[])null);
                         call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable3)));
                         
                         return_();

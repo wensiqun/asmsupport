@@ -104,8 +104,8 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * int[][] i1 = new int[1][2];
 				 * System.out.println("i1 = " + ArrayUtils.toString(i1));
 				 */
-				ArrayValue av = newarray(AClassFactory.defArrayType(int[][].class), Value.value(2), Value.value(2));
-				LocalVariable i1 = arrayVar("i1", AClassFactory.defArrayType(int[][].class), false, av);
+				ArrayValue av = makeArray(AClassFactory.defArrayType(int[][].class), Value.value(2), Value.value(2));
+				LocalVariable i1 = arrayvar("i1", AClassFactory.defArrayType(int[][].class), false, av);
 				call(systemOut, "println", stradd(Value.value("i1 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", i1)));
 				
 				/*
@@ -113,8 +113,8 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * int[][] i2 = new int[2][];
 		         * System.out.println("i2 = " + ArrayUtils.toString(i2));
 				 */
-				av = newarray(AClassFactory.defArrayType(int[][].class), Value.value(2));
-				LocalVariable i2 = arrayVar("i2", AClassFactory.defArrayType(int[][].class), false, av);
+				av = makeArray(AClassFactory.defArrayType(int[][].class), Value.value(2));
+				LocalVariable i2 = arrayvar("i2", AClassFactory.defArrayType(int[][].class), false, av);
 				call(systemOut, "println", stradd(Value.value("i2 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", i2)));
 				
 				/*
@@ -139,8 +139,8 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * String[] s1 = new String[]{"array \"s1\" first value", "array \"s1\" second value"};
 				 * System.out.println("s1 = " + ArrayUtils.toString(s1));
 				 */
-				av = newarrayWithValue(AClassFactory.defArrayType(String[].class), new Value[]{Value.value("array \"s1\" first value"), Value.value("array \"s1\" second value")});
-				LocalVariable s1 = arrayVar("s1", AClassFactory.defArrayType(String[].class), false, av);
+				av = newarray(AClassFactory.defArrayType(String[].class), new Value[]{Value.value("array \"s1\" first value"), Value.value("array \"s1\" second value")});
+				LocalVariable s1 = arrayvar("s1", AClassFactory.defArrayType(String[].class), false, av);
 				call(systemOut, "println", stradd(Value.value("s1 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s1)));
 
 				/*
@@ -153,9 +153,9 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				Value s210 = Value.value("s2[1][0]");
 				Value s211 = Value.value("s2[1][1]");
 				
-				av = newarrayWithValue(AClassFactory.defArrayType(String[][].class), 
+				av = newarray(AClassFactory.defArrayType(String[][].class), 
 						new Value[][]{new Value[]{s200, s201}, new Value[]{s210, s211}});
-				LocalVariable s2 = arrayVar("s2", AClassFactory.defArrayType(String[][].class), false, av);
+				LocalVariable s2 = arrayvar("s2", AClassFactory.defArrayType(String[][].class), false, av);
 				call(systemOut, "println", stradd(Value.value("s2 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s2)));
 
 				/*
@@ -188,7 +188,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * s2[1][0] = "new s2[1][0]"
 				 * System.out.println("new value of s2 is : " + ArrayUtils.toString(s2));
 				 */
-				arrayStore(s2, newarrayWithValue(AClassFactory.defArrayType(String[].class), new Parameterized[]{Value.value("new s2[0][0]"), Value.value("new s2[0][1]")}), Value.value(0));
+				arrayStore(s2, newarray(AClassFactory.defArrayType(String[].class), new Parameterized[]{Value.value("new s2[0][0]"), Value.value("new s2[0][1]")}), Value.value(0));
 				arrayStore(s2, Value.value("new s2[1][0]"), Value.value(1), Value.value(0));
 				call(systemOut, "println", stradd(Value.value("new value of s2 is : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s2)));
 				

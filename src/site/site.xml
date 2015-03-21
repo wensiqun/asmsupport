@@ -11,6 +11,9 @@
         <item name="Create Interface" href="create-interface.html"/>
         <item name="Create Enum" href="create-enum.html"/>
     </menu>
+    <menu name="Other">
+        <item name="FQA" herf="faq.html"></item>
+    </menu>
     <!-- <menu ref="parent"/>
     <menu ref="reports"/> -->
   </body>

@@ -47,19 +47,26 @@ public interface ArrayAction {
      * <p style="border:1px solid;width:550px;padding:10px;">
      * newArray(AClassFactory.getArrayClass(String[][][].class), Value.value(2), Value.value(3), Value.value(4));<br>
      * </p>
-	 * 
+	 * 空间
 	 * @param aClass 数组类型
 	 * @param allocateDims 每一维度的长度
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Object)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #newarray(ArrayClass, Object)
+	 * @see #newarray(ArrayClass, Parameterized[])
+	 * @see #newarray(ArrayClass, Parameterized[][])
+	 * @see #newarray(ArrayClass, Parameterized[][][])
+	 * @see #newarray(ArrayClass, Parameterized[][][][])
 	 */
-	public ArrayValue newarray(final ArrayClass aClass, final Parameterized... allocateDims);
+	public ArrayValue makeArray(final ArrayClass aClass, final Parameterized... allocateDims);
 	
+	/**
+	 * 
+	 * @param arraytype
+	 * @param dimensions
+	 * @return
+	 */
+	public ArrayValue makeArray(Class<?> arraytype, final Parameterized... dimensions);
 
 	/**
 	 * 
@@ -85,19 +92,28 @@ public interface ArrayAction {
 	 * @param aClass 数组类型
 	 * @param arrayObject 创建数组的初始值，这个值必须是一个Parameterized数组
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarray(ArrayClass, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #makeArray(ArrayClass, Parameterized...)
+	 * @see #newarray(ArrayClass, Parameterized[])
+	 * @see #newarray(ArrayClass, Parameterized[][])
+	 * @see #newarray(ArrayClass, Parameterized[][][])
+	 * @see #newarray(ArrayClass, Parameterized[][][][])
 	 */
-	public ArrayValue newarrayWithValue(final ArrayClass aClass, final Object arrayObject);
+	public ArrayValue newarray(final ArrayClass aClass, final Object arrayObject);
+	
+	
+	/**
+	 * 
+	 * @param type
+	 * @param arrayObject
+	 * @return
+	 */
+	public ArrayValue newarray(Class<?> type, Object arrayObject);
 	
 	
 	/**
 	 * <p>
-	 * 这个方法其实底层就是调用{@link #newarrayWithValue(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个一维数组，主要是为了便于开发，
+	 * 这个方法其实底层就是调用{@link #newarray(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个一维数组，主要是为了便于开发，
 	 * 使用方法对应于下面红色代码部分。
 	 * </p>
 	 * 
@@ -116,67 +132,103 @@ public interface ArrayAction {
 	 * @param aClass 数组类型
 	 * @param values 创建一维数组的初始值
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarray(ArrayClass, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Object)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #makeArray(ArrayClass, Parameterized...)
+	 * @see #newarray(ArrayClass, Object)
+	 * @see #newarray(ArrayClass, Parameterized[][])
+	 * @see #newarray(ArrayClass, Parameterized[][][])
+	 * @see #newarray(ArrayClass, Parameterized[][][][])
 	 */
-	public ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[] values);
+	public ArrayValue newarray(final ArrayClass aClass, Parameterized[] values);
 
+    /**
+     * newarray 
+     * 
+     * @param type
+     * @param values
+     * @return
+     */
+	public ArrayValue newarray(Class<?> type, Parameterized[] values);
+	
 	/**
 	 * <p>
-	 * 这个方法其实底层就是调用{@link #newarrayWithValue(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个二维数组，主要是为了便于开发，
+	 * 这个方法其实底层就是调用{@link #newarray(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个二维数组，主要是为了便于开发，
 	 * </p>
      *
 	 * @param aClass 数组类型
 	 * @param values 创建二维数组的初始值
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarray(ArrayClass, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Object)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #makeArray(ArrayClass, Parameterized...)
+	 * @see #newarray(ArrayClass, Object)
+	 * @see #newarray(ArrayClass, Parameterized[])
+	 * @see #newarray(ArrayClass, Parameterized[][][])
+	 * @see #newarray(ArrayClass, Parameterized[][][][])
 	 */
-	public ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][] values);
+	public ArrayValue newarray(final ArrayClass aClass, final Parameterized[][] values);
 
 	/**
+     * newarray 
+     * 
+     * @param type
+     * @param values
+     * @return
+     */
+	public ArrayValue newarray(Class<?> type, Parameterized[][] values);
+	
+	
+	/**
 	 * <p>
-	 * 这个方法其实底层就是调用{@link #newarrayWithValue(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个三维数组，主要是为了便于开发，
+	 * 这个方法其实底层就是调用{@link #newarray(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个三维数组，主要是为了便于开发，
 	 * </p>
      *
 	 * @param aClass 数组类型
 	 * @param values 创建三维数组的初始值
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarray(ArrayClass, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Object)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #makeArray(ArrayClass, Parameterized...)
+	 * @see #newarray(ArrayClass, Object)
+	 * @see #newarray(ArrayClass, Parameterized[])
+	 * @see #newarray(ArrayClass, Parameterized[][])
+	 * @see #newarray(ArrayClass, Parameterized[][][][])
 	 */
-	public ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][][] values);
+	public ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][] values);
 
+	/**
+     * newarray 
+     * 
+     * @param type
+     * @param values
+     * @return
+     */
+	public ArrayValue newarray(Class<?> type, Parameterized[][][] values);
+	
 	/**
 	 * 
 	 * <p>
-	 * 这个方法其实底层就是调用{@link #newarrayWithValue(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个四维数组，主要是为了便于开发，
+	 * 这个方法其实底层就是调用{@link #newarray(ArrayClass, Object)}实现的，只是这里显式的说明了我创建的是一个四维数组，主要是为了便于开发，
 	 * </p>
      *
 	 * @param aClass 数组类型
 	 * @param values 创建四维数组的初始值
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayVar(String, ArrayClass, Parameterized, Parameterized...)
-	 * @see #newarray(ArrayClass, Parameterized...)
-	 * @see #newarrayWithValue(ArrayClass, Object)
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][])
-	 * @see #newarrayWithValue(ArrayClass, Parameterized[][][])
+	 * @see ActionSet#arrayvar(String, ArrayClass, Parameterized, Parameterized...)
+	 * @see #makeArray(ArrayClass, Parameterized...)
+	 * @see #newarray(ArrayClass, Object)
+	 * @see #newarray(ArrayClass, Parameterized[])
+	 * @see #newarray(ArrayClass, Parameterized[][])
+	 * @see #newarray(ArrayClass, Parameterized[][][])
 	 */
-	public ArrayValue newarrayWithValue(final ArrayClass aClass, final Parameterized[][][][] values);
+	public ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][][] values);
 	
+	/**
+     * newarray 
+     * 
+     * @param type
+     * @param values
+     * @return
+     */
+	public ArrayValue newarray(Class<?> type, Parameterized[][][][] values);
     
     /**
      * 

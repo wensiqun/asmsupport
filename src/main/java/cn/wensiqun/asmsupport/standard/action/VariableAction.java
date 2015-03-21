@@ -92,37 +92,168 @@ public interface VariableAction {
 	 * <p>创建数组变量，可分配数组空间大小</p>
 	 * 
 	 * <pre>
-	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, null) --> String[][] array = null;
-	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3)) --> String[][] array = new String[3][];
-	 * arrayVarWithDimension("array", AClassFactory.getArrayClass(String[][].class), false, Value.value(3), Value.value(2)) --> String[][] array = new String[3][2];
+	 * arrayvar2dim("array", AClassFactory.deftype(String[][].class), false, null) --> String[][] array = null;
+	 * arrayvar2dim("array", AClassFactory.deftype(String[][].class), false, Value.value(3)) --> String[][] array = new String[3][];
+	 * arrayvar2dim("array", AClassFactory.deftype(String[][].class), false, Value.value(3), Value.value(2)) --> String[][] array = new String[3][2];
 	 * <pre>
 	 * 
-	 * @param name   变量名
-	 * @param aClass 数组类型
+	 * @param name variable name
+	 * @param type type
 	 * @param anonymous 是否匿名
-	 * @param allocateDim 预分配的数组空间
+	 * @param dim 预分配的数组空间
 	 * @return
+	 * @see #arrayvar2dim(ArrayClass, Parameterized...)
+	 * @see #arrayvar2dim(Class, Parameterized...)
+	 * @see #arrayvar2dim(String, ArrayClass, Parameterized...)
+	 * @see #arrayvar2dim(String, Class, Parameterized...)
 	 */
-	public LocalVariable arrayVarWithDimension(final String name, final ArrayClass aClass, boolean anonymous, Parameterized... allocateDim);
+	@Deprecated
+	public LocalVariable arrayvar2dim(final String name, final ArrayClass type, boolean anonymous, Parameterized... dim);
 
 	/**
+	 * Create an array variable with specify dimension.
+	 * 
+	 * @param name variable name.
+	 * @param type variable type.
+	 * @param dims the dimension.
+	 * @return
+	 */
+	public LocalVariable arrayvar2dim(final String name, final ArrayClass type, Parameterized... dims);
+
+	/**
+	 * Create an array variable with specify dimension.
+	 * 
+	 * @param name array name
+	 * @param type the array type, must be an array class
+	 * @param dims
+	 * @return
+	 */
+	public LocalVariable arrayvar2dim(final String name, Class<?> type, Parameterized... dims);
+	
+	/**
+	 * Create an anonymous array variable with specify dimension.
+	 * 
+	 * @param type variable type.
+	 * @param dims the dimension.
+	 * @return
+	 */
+	public LocalVariable arrayvar2dim(ArrayClass type, Parameterized... dims);
+	
+	/**
+	 * Create an anonymous array variable with specify dimension.
+	 * 
+	 * @param type variable type, must be an array class.
+	 * @param dims the dimension.
+	 * @return
+	 */
+	public LocalVariable arrayvar2dim(Class<?> arrayType, Parameterized... dims);
+
+	/**
+	 * Create an array variable with specify value reference.
+	 * 
+	 * @param name variable name. this argument available only argument anonymous is true
+	 * @param type the variable type
+	 * @param anonymous whether or not anonymous
+	 * @param value the variable value.
+	 * @return
+	 */
+	@Deprecated
+	public LocalVariable arrayvar(final String name, final ArrayClass type, boolean anonymous, final Parameterized value);
+	
+	/**
+	 * Create an array variable with specify value reference.
 	 * 
 	 * @param name
-	 * @param aClass
+	 * @param type
 	 * @param value
 	 * @return
 	 */
-	public LocalVariable arrayVar(final String name, final ArrayClass aClass, boolean anonymous, final Parameterized value);
-	
+	public LocalVariable arrayvar(String name, ArrayClass type, Parameterized value);
 	
 	/**
+	 * Create an array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(String name, Class<?> type, Parameterized value);
+
+	
+	/**
+	 * Create an anonymous array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(ArrayClass type, Parameterized value);
+	
+	/**
+	 * Create an anonymous array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(Class<?> type, Parameterized value);
+	
+	/**
+	 * 
+	 * Create an annoymous array variable with multiple value.
 	 * 
 	 * @param name
 	 * @param aClass
 	 * @param parameterizedArray
 	 * @return
 	 */
-	public LocalVariable arrayVar(final String name, final ArrayClass aClass, boolean anonymous, final Object parameterizedArray);
+	public LocalVariable arrayvar(final String name, final ArrayClass aClass, boolean anonymous, final Object parameterizedArray);
+	
+
+	
+	/**
+	 * Create an array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(String name, ArrayClass type, Object parameterizedArray);
+	
+	/**
+	 * Create an array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(String name, Class<?> type, Object parameterizedArray);
+
+	
+	/**
+	 * Create an anonymous array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(ArrayClass type, Object parameterizedArray);
+	
+	/**
+	 * Create an anonymous array variable with specify value reference.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public LocalVariable arrayvar(Class<?> type, Object parameterizedArray);
 	
 	/**
 	 * assign a value to a variable. for exampel:

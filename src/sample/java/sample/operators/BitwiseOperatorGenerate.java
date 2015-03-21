@@ -54,7 +54,7 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 			      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 			      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"
 			    };*/
-				LocalVariable binary = arrayVar("binary", AClassFactory.defArrayType(String[].class), false, newarrayWithValue(AClassFactory.defArrayType(String[].class), stringValueArray(new String[]{
+				LocalVariable binary = arrayvar("binary", AClassFactory.defArrayType(String[].class), false, newarray(AClassFactory.defArrayType(String[].class), stringValueArray(new String[]{
 					      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 					      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"})));
 			    //int a = 3; 

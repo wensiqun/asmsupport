@@ -275,7 +275,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 
                 //get length operator
                 ArrayLength al = arrayLength(values);
-                LocalVariable copy = arrayVarWithDimension("", enumArrayType, true, al);
+                LocalVariable copy = arrayvar2dim("", enumArrayType, true, al);
                 
                 //get lengt operator for tmpValues;
                 Parameterized copyLen = arrayLength(copy);
