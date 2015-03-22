@@ -7,12 +7,15 @@
         <item name="Get It" href="getit.html"/>
     </menu>
     <menu name="Manual">
-        <item name="Operators" href="operators.html"/>
-        <item name="Create Interface" href="create-interface.html"/>
-        <item name="Create Enum" href="create-enum.html"/>
+        <item name="Introduction" href="manual/introduction.html"/>
+        <item name="Operators" href="manual/operators.html"/>
+        <item name="Create Interface" href="manual/interface.html"/>
+    </menu>
+    <menu name="Bytecode">
+        <item name="What's init and clinit" href="bytecode/init_clinit.html"/>
     </menu>
     <menu name="Other">
-        <item name="FQA" herf="faq.html"></item>
+        <item name="FQA" href="faq.html"></item>
     </menu>
     <!-- <menu ref="parent"/>
     <menu ref="reports"/> -->

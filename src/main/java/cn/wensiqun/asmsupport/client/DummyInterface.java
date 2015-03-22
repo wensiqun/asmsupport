@@ -61,6 +61,11 @@ public class DummyInterface {
     public DummyInterface() {
     }
     
+    /**
+     * The interface qualified name.
+     * 
+     * @param qualifiedName
+     */
     public DummyInterface(String qualifiedName) {
         if(StringUtils.isNotBlank(qualifiedName)) {
             int lastDot = qualifiedName.lastIndexOf('.');
@@ -70,6 +75,18 @@ public class DummyInterface {
             }
         }
     }
+    
+    /**
+     * Constructor
+     * 
+     * @param pkgName package name.
+     * @param name interface name
+     */
+    public DummyInterface(String pkgName, String name) {
+    	this.packageName = pkgName;
+    	this.name = name;
+    }
+    
     
     /**
      * Set the access to private.
@@ -242,11 +259,11 @@ public class DummyInterface {
      * 
      * @return
      */
-    public DummyInterface newField(AClass type, String name) {
+    public DummyField newField(AClass type, String name) {
         DummyField field = new DummyField(); 
         fieldDummies.add(field);
         field.type(type).name(name);
-        return this;
+        return field;
     }
     
     /**
@@ -307,7 +324,7 @@ public class DummyInterface {
         }
         
         for(DummyInterfaceMethod dummy : methodDummies) {
-            ici.createMethod(dummy.getName(), dummy.getArgumentTypes(), dummy.getReturnType(), dummy.getThrows());
+            ici.createMethod(dummy.getName(), dummy.getArgTypes(), dummy.getReturnType(), dummy.getThrows());
         }
         
         if(staticBlock != null) {

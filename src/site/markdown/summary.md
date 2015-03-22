@@ -20,7 +20,7 @@ asmsupport实在asm的基础上做的一封装，使用asmsupport将最大限度
     
 ## asm
 
-    1.  ClassWriter mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", "(Ljava/lang/String;)V", null, null);
+    1.  ClassWriter mv = cw.visitMethod(Opcodes.ACCpublic_ + Opcodes.ACC_STATIC, "main", "(Ljava/lang/String;)V", null, null);
     2.  mv.visitCode();
     3.  Label l0 = new Label();
     4.  mv.visitLabel(l0);
@@ -49,14 +49,14 @@ asmsupport实在asm的基础上做的一封装，使用asmsupport将最大限度
 
 ## asmsupport
 
-    DummyClass dc = new DummyClass()._public()._name("TestCommon")._classOutPutPath(".//target//dummy-generated");
-    dc.newMethod("main")._public()._static()
-      ._argumentTypes(String.class)._argumentNames("name")
-      ._body(new MethodBody(){
+    DummyClass dc = new DummyClass().public_().name("TestCommon").setClassOutPutPath(".//target//dummy-generated");
+    dc.newMethod("main").public_().static_()
+      .argTypes(String.class).argNames_("name")
+      .body_(new MethodBody(){
         @Override
         public void body(LocalVariable... args) {
-            _invoke(AClassFactory.getProductClass(System.class).getGlobalVariable("out"), "println", _append(val("Hello : "), args[0]));
-            _return();
+            call_(defType(System.class).field("out"), "println", stradd(val("Hello : "), args[0]));
+            return_();
         }
       }
     );

@@ -110,7 +110,7 @@ public class DummyInterfaceMethod {
      * 
      * @return
      */
-    public AClass[] getArgumentTypes() {
+    public AClass[] getArgTypes() {
         if(argTypes == null) {
             return new AClass[0];
         }
