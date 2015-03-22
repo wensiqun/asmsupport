@@ -196,8 +196,8 @@ public class DummyModifiedClass {
         }
         
         for(DummyMethod dummy : methodDummies) {
-            cmi.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgumentTypes(),
-                    dummy.getArgumentNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().target);
+            cmi.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
+                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().target);
         }
         
         if(staticBlock != null) {

@@ -350,8 +350,8 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         }
         
         for(DummyMethod dummy : methodDummies) {
-            cci.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgumentTypes(),
-                    dummy.getArgumentNames(), dummy.getReturnType(), dummy.getThrows(), 
+            cci.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
+                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), 
                     dummy.getMethodBody() == null ? null : dummy.getMethodBody().target);
         }
         

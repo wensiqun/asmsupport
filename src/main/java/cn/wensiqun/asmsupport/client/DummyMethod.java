@@ -213,7 +213,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * 
      * @return
      */
-    public AClass[] getArgumentTypes() {
+    public AClass[] getArgTypes() {
         if(argTypes == null) {
             return new AClass[0];
         }
@@ -240,7 +240,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param argNames
      * @return
      */
-    public String[] getArgumentNames(){
+    public String[] getArgNames(){
         if(argNames == null) {
             return new String[0];
         }

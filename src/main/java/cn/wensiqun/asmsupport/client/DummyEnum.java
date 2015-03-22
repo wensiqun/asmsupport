@@ -72,6 +72,11 @@ public class DummyEnum {
         }
     }
     
+    public DummyEnum(String pkgName, String name) {
+        this.packageName = pkgName;
+        this.name = name;
+    }
+    
     /**
      * Set the jdk version of Class File Format
      * 
@@ -309,8 +314,8 @@ public class DummyEnum {
         }
         
         for(DummyMethod dummy : methodDummies) {
-            eci.createMethodForDummy(dummy.getName(), dummy.getArgumentTypes(),
-                    dummy.getArgumentNames(), 
+            eci.createMethodForDummy(dummy.getName(), dummy.getArgTypes(),
+                    dummy.getArgNames(), 
                     dummy.getReturnType(), 
                     dummy.getThrows(), 
                     dummy.getModifiers(), 

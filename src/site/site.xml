@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="Maven">
   <body>
-    <menu name="Overview">
-        <item name="Summary" href="summary.html"/>
-        <item name="Getting Started" href="getstarted.html"/>
-        <item name="Get It" href="getit.html"/>
+    <menu name="概述">
+        <item name="简介" href="summary.html"/>
+        <item name="获取" href="getit.html"/>
     </menu>
-    <menu name="Manual">
-        <item name="Introduction" href="manual/introduction.html"/>
-        <item name="Operators" href="manual/operators.html"/>
-        <item name="Create Interface" href="manual/interface.html"/>
+    <menu name="手册">
+        <item name="介绍" href="manual/introduction.html"/>
+        <item name="基本操作" href="manual/operators.html"/>
+        <item name="创建接口" href="manual/interface.html"/>
+        <item name="创建类" href="manual/class.html"/>
+        <item name="创建枚举" href="manual/enum.html"/>
     </menu>
-    <menu name="Bytecode">
-        <item name="What's init and clinit" href="bytecode/init_clinit.html"/>
+    <menu name="字节码相关">
+        <item name="init方法与clinit方法" href="bytecode/init_clinit.html"/>
+        <item name="变量声明" href="bytecode/declare_variable.html"/>
+        <item name="条件控制" href="bytecode/condition_block.html"/>
+        <item name="枚举类型" href="bytecode/enum.html"/>
     </menu>
     <menu name="Other">
         <item name="FQA" href="faq.html"></item>
