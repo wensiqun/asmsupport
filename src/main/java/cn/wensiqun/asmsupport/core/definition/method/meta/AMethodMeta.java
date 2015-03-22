@@ -132,7 +132,7 @@ public class AMethodMeta implements Cloneable {
         AClass[] arguments = new AClass[argCls.length];
         String[] argNames = new String[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
-            arguments[i] = AClassFactory.deftype(argCls[i]);
+            arguments[i] = AClassFactory.defType(argCls[i]);
             argNames[i] = "arg" + i;
         }
 
@@ -140,8 +140,8 @@ public class AMethodMeta implements Cloneable {
         AClass[] exceptionAclasses = AClassUtils.convertToAClass(exceptionTypes);
         
         AMethodMeta me = new AMethodMeta(m.getName(), owner,
-                AClassFactory.deftype(m.getDeclaringClass()), arguments,
-                argNames, AClassFactory.deftype(m.getReturnType()),
+                AClassFactory.defType(m.getDeclaringClass()), arguments,
+                argNames, AClassFactory.defType(m.getReturnType()),
                 exceptionAclasses, m.getModifiers());
         
         return me;

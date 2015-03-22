@@ -25,7 +25,7 @@ public interface AClassDefAction {
      * @param cls
      * @return
      */
-    AClass deftype(Class<?> cls);
+    AClass defType(Class<?> cls);
     
     /**
      * Defined an array type

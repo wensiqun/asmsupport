@@ -48,10 +48,10 @@ public interface MethodInvokeAction {
      * 
      * 上面红色部分对应的asmsupport代码
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * invoke(AClass.STRING_ACLASS, "toString");
-     * invoke(objectParameterized, "test" Value.value("hello"));
+     * call(AClass.STRING_ACLASS, "toString");
+     * call(objectParameterized, "test" Value.value("hello"));
      * //objectParameterized是上面object在ASMSupport中的表示
-     * invoke(invoke(objectParameterized, "getOther"), "test" Value.value("hello"));
+     * call(invoke(objectParameterized, "getOther"), "test" Value.value("hello"));
      * </pre>
      * 
      * <p>
@@ -70,7 +70,7 @@ public interface MethodInvokeAction {
     /**
      * Generate method invoke, this method equivalence to 
      * <pre>
-     * _invoke(_this(), methodName, arguments);
+     * call(_this(), methodName, arguments);
      * </pre>
      * 
      * @param methodName
@@ -92,8 +92,8 @@ public interface MethodInvokeAction {
      * 
      * 上面红色部分对应的asmsupport代码
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * invokeStatic(ThreadAClass, "getAllStackTraces");
-     * invokeStatic(ThreadAClass, "sleep", Value.value(1000));
+     * call(ThreadAClass, "getAllStackTraces");
+     * call(ThreadAClass, "sleep", Value.value(1000));
      * </pre>
      * 
      * 
@@ -103,6 +103,16 @@ public interface MethodInvokeAction {
      * @return {@link MethodInvoker}
      */
     public MethodInvoker call(AClass owner, String methodName, Parameterized... arguments);
+    
+    /**
+     * Invoke static method. the method is similar method {@link #call(AClass, String, Parameterized...)}
+     * 
+     * @param owner
+     * @param name
+     * @param arguments
+     * @return
+     */
+    public MethodInvoker call(Class<?> owner, String name, Parameterized... arguments);
     
     
     /**
@@ -119,8 +129,8 @@ public interface MethodInvokeAction {
      * 
      * 上面红色部分对应的asmsupport代码
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * invokeConstructor(AClass.STRING_ACLASS);
-     * invokeConstructor(AClass.STRING_ACLASS, Value.value("hello world"));
+     * new_(AClass.STRING_ACLASS);
+     * new_(AClass.STRING_ACLASS, Value.value("hello world"));
      * </pre>
      * 
      * 

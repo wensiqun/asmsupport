@@ -61,7 +61,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         
         AClass type = iteratorVar.getParamterizedType();
         if(!type.isArray() &&
-           !type.isChildOrEqual(AClassFactory.deftype(Iterable.class))){
+           !type.isChildOrEqual(AClassFactory.defType(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
         }
     }

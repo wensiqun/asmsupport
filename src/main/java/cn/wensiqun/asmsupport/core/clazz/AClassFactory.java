@@ -43,7 +43,7 @@ public abstract class AClassFactory {
      * @param cls
      * @return
      */
-    public static AClass deftype(Class<?> cls){
+    public static AClass defType(Class<?> cls){
     	return getAClass(cls);
     }
     
@@ -70,7 +70,7 @@ public abstract class AClassFactory {
         if(cls.isArray()){
             throw new ClassException("the class " + cls + " has already an array class");
         }
-        return new ArrayClass(deftype(cls), dim);
+        return new ArrayClass(defType(cls), dim);
     }
     
     /**

@@ -61,7 +61,7 @@ public class ClassModifier extends AbstractClassContext {
 	public ClassModifier(Class<?> clazz) {
 		super();
 		if(!clazz.isArray()){
-			this.productClass = (ProductClass) AClassFactory.deftype(clazz);
+			this.productClass = (ProductClass) AClassFactory.defType(clazz);
 		}else{
 			throw new ASMSupportException("cannot modify array type : " + clazz);
 		}
@@ -78,7 +78,7 @@ public class ClassModifier extends AbstractClassContext {
 		AClass[] argCls = new AClass[argClasses.length];
 		String[] defaultArgNames = new String[argClasses.length];
 		for(int i=0; i<argCls.length; i++){
-			argCls[i] = deftype(argClasses[i]);
+			argCls[i] = defType(argClasses[i]);
 			defaultArgNames[i] = "arg" + i;
 		}
 		try {
@@ -104,7 +104,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(name, 
 						argCls, 
 						defaultArgNames, 
-						deftype(method.getReturnType()), 
+						defType(method.getReturnType()), 
 						AClassUtils.convertToAClass(method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}

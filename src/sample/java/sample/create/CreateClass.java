@@ -120,7 +120,7 @@ public class CreateClass extends AbstractExample {
 		 * 3.构造参数的方法体
 		 * 4.构造方法的修饰符
 		 */
-		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.deftype(int.class)}, new String[]{"intVal"}, null, new ConstructorBodyInternal(){
+		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.defType(int.class)}, new String[]{"intVal"}, null, new ConstructorBodyInternal(){
 
 			/*
 			 * 这个方法中的内容就是我们创建的构造方法里面需要执行的内容了，他有一个变元参数 argus。
@@ -182,7 +182,7 @@ public class CreateClass extends AbstractExample {
 		 *     new CreateClassExample(1024).commonMethod();
 		 * }
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 	        @Override

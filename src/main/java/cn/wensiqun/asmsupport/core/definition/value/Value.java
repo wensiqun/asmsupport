@@ -186,7 +186,7 @@ public class Value implements IValue {
      * @return
      */
     public static Value getNullValue(Class<?> type){
-    	return getNullValue(AClassFactory.deftype(type));
+    	return getNullValue(AClassFactory.defType(type));
     }
 
     /**
@@ -359,7 +359,7 @@ public class Value implements IValue {
 
         } else if (obj instanceof Class) {
         	
-        	return new Value(AClassFactory.deftype((Class<?>) obj));
+        	return new Value(AClassFactory.defType((Class<?>) obj));
         	
         }
         throw new ASMSupportException("Cannot support type " + obj.getClass() + " for this method!");

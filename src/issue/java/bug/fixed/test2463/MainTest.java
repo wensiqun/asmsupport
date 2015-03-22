@@ -18,17 +18,17 @@ public class MainTest {
 		ClassCreator creator = 
 				new ClassCreator(Opcodes.V1_6, Opcodes.ACC_PUBLIC , "test.Test2463", AbstractClass.class, null);
         
-		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, AClassFactory.deftype(MyObject.class),
+		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, AClassFactory.defType(MyObject.class),
 				null, new MethodBodyInternal(){
 					@Override
 					public void body(LocalVariable... argus) {
-		            	return_(new_(AClassFactory.deftype(MyObject.class)));
+		            	return_(new_(AClassFactory.defType(MyObject.class)));
 					}
 			
 		});
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
                 new StaticMethodBodyInternal(){
 
             @Override

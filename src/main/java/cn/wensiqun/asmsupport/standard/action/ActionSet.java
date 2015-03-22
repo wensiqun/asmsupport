@@ -161,6 +161,16 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * @return {@link Parameterized}a boolean type Parameterized
      */
     public Parameterized instanceof_(Parameterized obj, AClass type);
+    
+    /**
+     * Generate the instanceof instruction, the method is same as {@link #instanceof_(Parameterized, AClass)}
+     * 
+     * @see #instanceof_(Parameterized, AClass)
+     * @param obj
+     * @param type
+     * @return
+     */
+    public Parameterized instanceof_(Parameterized obj, Class<?> type);
 
     
     /**

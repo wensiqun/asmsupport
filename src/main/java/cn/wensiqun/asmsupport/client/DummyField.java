@@ -240,7 +240,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
 	 * @return
 	 */
 	public DummyField type(Class<?> type) {
-        this.type = AClassFactory.deftype(type);
+        this.type = AClassFactory.defType(type);
         return this;
 	}
 

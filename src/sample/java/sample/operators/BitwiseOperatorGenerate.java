@@ -45,7 +45,7 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 		/*
 		 * 生成一个main方法，方法内容和main1内容相同
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override

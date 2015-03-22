@@ -334,12 +334,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable var(String name, Class<?> type, Parameterized para) {
-        return var(name, AClassFactory.deftype(type), false, para);
+        return var(name, AClassFactory.defType(type), false, para);
     }
 
     @Override
     public LocalVariable var(Class<?> type, Parameterized para) {
-        return var("", AClassFactory.deftype(type), true, para);
+        return var("", AClassFactory.defType(type), true, para);
     }
 
     @Override
@@ -681,7 +681,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final CheckCast checkcast(Parameterized cc, Class<?> to){
-        return checkcast(cc, AClassFactory.deftype(to));
+        return checkcast(cc, AClassFactory.defType(to));
     }
     
     //*******************************************************************************************//
@@ -952,6 +952,11 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
                 new Class<?>[]{ProgramBlockInternal.class, Parameterized.class, AClass.class}, 
                 getExecutor(), obj, type);
     }
+    
+    @Override
+    public final Parameterized instanceof_(Parameterized obj, Class<?> type){
+        return this.instanceof_(obj, defType(type));
+    }
 
     
     //*******************************************************************************************//
@@ -988,6 +993,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class, String.class, Parameterized[].class}, 
                 getExecutor(), owner, methodName, arguments);
     }
+    
+    public final MethodInvoker call(Class<?> owner, String methodName, Parameterized... arguments) {
+    	return call(defType(owner), methodName, arguments);
+    }
 
     @Override
     public final MethodInvoker new_(AClass owner, Parameterized... arguments){
@@ -999,7 +1008,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final MethodInvoker new_(Class<?> owner, Parameterized... arguments){
-        return this.new_(AClassFactory.deftype(owner), arguments);
+        return this.new_(AClassFactory.defType(owner), arguments);
     }
     
     //*******************************************************************************************//
@@ -1220,12 +1229,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public Value null_(Class<?> type) {
-        return Value.getNullValue(AClassFactory.deftype(type));
+        return Value.getNullValue(AClassFactory.defType(type));
     }
 
     @Override
-    public AClass deftype(Class<?> cls) {
-        return AClassFactory.deftype(cls);
+    public AClass defType(Class<?> cls) {
+        return AClassFactory.defType(cls);
     }
 
     @Override

@@ -44,12 +44,12 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});		
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-				new AClass[] { AClassFactory.deftype(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
+				new AClass[] { AClassFactory.defType(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
 
 					@Override
 					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
-						LocalVariable rand = var("rand", AClassFactory.deftype(Random.class), false, new_(AClassFactory.deftype(Random.class)));
+						LocalVariable rand = var("rand", AClassFactory.defType(Random.class), false, new_(AClassFactory.defType(Random.class)));
 						
 						//rand.nextInt(100) + 1
 						Addition add1 = add(call(rand, "nextInt", Value.value(100)), Value.value(1));

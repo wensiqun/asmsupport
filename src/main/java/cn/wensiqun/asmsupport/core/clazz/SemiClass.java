@@ -88,8 +88,8 @@ public class SemiClass extends NewMemberClass {
                 try {
                     Field f = fieldOwner.getDeclaredField(name);
                     found.add(new GlobalVariableMeta(this,
-                            AClassFactory.deftype(fieldOwner),
-                            AClassFactory.deftype(f.getType()), f.getModifiers(), name));
+                            AClassFactory.defType(fieldOwner),
+                            AClassFactory.defType(f.getType()), f.getModifiers(), name));
                     break;
                 } catch (NoSuchFieldException e) {
                 }
@@ -102,8 +102,8 @@ public class SemiClass extends NewMemberClass {
                 try {
                     Field f = inter.getDeclaredField(name);
                     found.add(new GlobalVariableMeta(SemiClass.this,
-                            AClassFactory.deftype(inter),
-                            AClassFactory.deftype(f.getType()), f.getModifiers(), name));
+                            AClassFactory.defType(inter),
+                            AClassFactory.defType(f.getType()), f.getModifiers(), name));
                     return true;
                 } catch (NoSuchFieldException e) {
                     return false;

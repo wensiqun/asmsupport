@@ -267,7 +267,7 @@ public class AClassUtils {
             if(intfacs != null && intfacs.length > 0){
                 a = new AClass[intfacs.length];
                 for(int i=0; i<a.length; i++){
-                    a[i] = AClassFactory.deftype(intfacs[i]);
+                    a[i] = AClassFactory.defType(intfacs[i]);
                 }
             }else{
                 a = new AClass[]{AClass.OBJECT_ACLASS};
@@ -298,10 +298,10 @@ public class AClassUtils {
             Class<?>[] intefaces = as.getInterfaces();
             
             a = new AClass[intefaces.length + 1];
-            a[0] = AClassFactory.deftype(sup);
+            a[0] = AClassFactory.defType(sup);
             
             for(int i = 1; i<a.length; i++){
-                a[i] = AClassFactory.deftype(intefaces[i - 1]);
+                a[i] = AClassFactory.defType(intefaces[i - 1]);
             }
             
         }
@@ -352,7 +352,7 @@ public class AClassUtils {
         }
         
         Class<?> actuallyMethodOwner = reallyClass;
-        AClass invoked = AClassFactory.deftype(reallyClass);
+        AClass invoked = AClassFactory.defType(reallyClass);
         //ACC_VARARGS
         List<AMethodMeta> methods = new ArrayList<AMethodMeta>();
         java.lang.reflect.Method[] mes;
@@ -549,7 +549,7 @@ public class AClassUtils {
     	
         AClass[] aclasses = new AClass[clses.length];
         for(int i=0; i<clses.length; i++){
-            aclasses[i] = AClassFactory.deftype(clses[i]);
+            aclasses[i] = AClassFactory.defType(clses[i]);
         }
         return aclasses;
     }

@@ -153,7 +153,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod return_(Class<?> ret) {
-        this.returnType = AClassFactory.deftype(ret);
+        this.returnType = AClassFactory.defType(ret);
         return this;
     }
     

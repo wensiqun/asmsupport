@@ -227,11 +227,14 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public MethodInvoker call(AClass owner, String methodName,
-			Parameterized... arguments) {
-
+	public MethodInvoker call(AClass owner, String methodName, Parameterized... arguments) {
 		return target.call(owner, methodName, arguments);
 	}
+    
+	@Override
+    public final MethodInvoker call(Class<?> owner, String methodName, Parameterized... arguments) {
+    	return target.call(owner, methodName, arguments);
+    }
 
 	@Override
 	public MethodInvoker new_(Class<?> owner, Parameterized... arguments) {
@@ -573,6 +576,11 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
+	public Parameterized instanceof_(Parameterized obj, Class<?> type) {
+		return target.instanceof_(obj, type);
+	}
+
+	@Override
 	public void break_() {
 		target.break_();
 	}
@@ -699,8 +707,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public AClass deftype(Class<?> cls) {
-		return target.deftype(cls);
+	public AClass defType(Class<?> cls) {
+		return target.defType(cls);
 	}
 
 	@Override

@@ -30,12 +30,12 @@ public class MainTest {
 		ClassCreator creator = 
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "fixed.Test2054", null, null);
         
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
                 new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
-                new_(AClassFactory.deftype(MyObject.class), Value.value("i'm direct pass argument."));
+                new_(AClassFactory.defType(MyObject.class), Value.value("i'm direct pass argument."));
             	return_();
             }
         });

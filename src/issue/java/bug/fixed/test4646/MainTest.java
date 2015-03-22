@@ -32,10 +32,10 @@ public class MainTest {
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
 						AbstractClass.class, null);
         
-		final AClass childChild = AClassFactory.deftype(ChildChild.class);
+		final AClass childChild = AClassFactory.defType(ChildChild.class);
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
-				null, null, AClassFactory.deftype(ChildChild.class),
+				null, null, AClassFactory.defType(ChildChild.class),
 				null, new MethodBodyInternal(){
 
 			@Override
@@ -46,7 +46,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceMethod", 
-				null, null, AClassFactory.deftype(ChildChild.class),
+				null, null, AClassFactory.defType(ChildChild.class),
 				null, new MethodBodyInternal(){
 
 			@Override
@@ -57,7 +57,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassMethod", 
-				null, null, AClassFactory.deftype(ChildChild.class),
+				null, null, AClassFactory.defType(ChildChild.class),
 				null, new MethodBodyInternal(){
 
 			@Override
@@ -68,7 +68,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceReturnTypeIsChild", 
-				null, null, AClassFactory.deftype(ChildChild.class),
+				null, null, AClassFactory.defType(ChildChild.class),
 				null, new MethodBodyInternal(){
 
 			@Override

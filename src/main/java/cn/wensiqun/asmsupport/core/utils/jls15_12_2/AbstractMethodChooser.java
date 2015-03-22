@@ -519,7 +519,7 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
         
         List<TypeTreeNode[]> foundMethodArguments = new ArrayList<TypeTreeNode[]>(); 
         
-        AClass invoked = AClassFactory.deftype(javaClass);
+        AClass invoked = AClassFactory.defType(javaClass);
 
         for (TypeTreeNode[] ttns : allArgTypes) {
 
@@ -554,12 +554,12 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                         exceptionAclasses = AClassUtils.convertToAClass(constructor.getExceptionTypes());
                 	}else{
                         Method method = actuallyMethodOwner.getDeclaredMethod(name, argclses);
-                        methodReturnType = AClassFactory.deftype(method.getReturnType());
+                        methodReturnType = AClassFactory.defType(method.getReturnType());
                         methodMidifiers = method.getModifiers();
                         exceptionAclasses = AClassUtils.convertToAClass(method.getExceptionTypes());
                 	}
                     
-                    if(AClassUtils.visible(invoker, invoked, AClassFactory.deftype(actuallyMethodOwner),
+                    if(AClassUtils.visible(invoker, invoked, AClassFactory.defType(actuallyMethodOwner),
                     		methodMidifiers)){
                         pcs = new AClass[ttns.length];
                         for(int i=0; i<ttns.length; i++){
@@ -568,8 +568,8 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                                 sameToPass = false;
                             }
                         }
-                        me = new AMethodMeta(name, AClassFactory.deftype(javaClass),
-                                AClassFactory.deftype(actuallyMethodOwner), pcs,
+                        me = new AMethodMeta(name, AClassFactory.defType(javaClass),
+                                AClassFactory.defType(actuallyMethodOwner), pcs,
                                 arguNames, methodReturnType, exceptionAclasses, methodMidifiers);
                         
                         mes.add(me);
@@ -701,13 +701,13 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
                     exceptionTypes = AClassUtils.convertToAClass(constructor.getExceptionTypes());
             	}else{
                     Method method = actually.getDeclaredMethod(name);
-                    methodReturnType = AClassFactory.deftype(method.getReturnType());
+                    methodReturnType = AClassFactory.defType(method.getReturnType());
                     methodMidifiers = method.getModifiers();
                     exceptionTypes = AClassUtils.convertToAClass(method.getExceptionTypes());
             	}
             	
-                AClass invoked =  AClassFactory.deftype(cls);
-                AClass actuallyInvoked = AClassFactory.deftype(actually);
+                AClass invoked =  AClassFactory.defType(cls);
+                AClass actuallyInvoked = AClassFactory.defType(actually);
                 
                 if(!AClassUtils.visible(invoker, invoked, actuallyInvoked, methodMidifiers)){
                     throw new ASMSupportException("cannot invoke method by the modifiers " + Modifier.toString(methodMidifiers));

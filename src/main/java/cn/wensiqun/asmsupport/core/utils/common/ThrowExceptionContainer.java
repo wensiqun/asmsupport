@@ -93,7 +93,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 		assert e != null;
 
 		if (e.isChildOrEqual(AClassFactory
-				.deftype(RuntimeException.class))) {
+				.defType(RuntimeException.class))) {
 			return false;
 		}
 

@@ -23,7 +23,7 @@ public class LocalVariableExample extends AbstractExample {
 	public static void main(String[] args){
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 					@Override
@@ -64,20 +64,20 @@ public class LocalVariableExample extends AbstractExample {
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
                         LocalVariable localArrayVariable1 = arrayvar2dim("localArrayVariable1", AClassFactory.defArrayType(String[][].class), false, Value.value(2), Value.value(2));
-                        call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable1)));
+                        call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
                         LocalVariable localArrayVariable2 = arrayvar2dim("localArrayVariable2", AClassFactory.defArrayType(String[][].class), false, Value.value(2));
-                        call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable2)));
+                        call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
                         LocalVariable localArrayVariable3 = arrayvar2dim("localArrayVariable3", AClassFactory.defArrayType(String[][].class), false, (Parameterized[])null);
-                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", localArrayVariable3)));
+                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable3)));
                         
                         return_();
 					}

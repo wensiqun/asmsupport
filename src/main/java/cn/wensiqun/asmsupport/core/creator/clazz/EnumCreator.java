@@ -281,7 +281,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 Parameterized copyLen = arrayLength(copy);
                 
                 //System
-                AClass systemClass = AClassFactory.deftype(System.class);
+                AClass systemClass = AClassFactory.defType(System.class);
                 
                 //zero value
                 Value zero = Value.value(0);

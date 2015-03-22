@@ -27,7 +27,7 @@ public class BasicValueGenerate extends AbstractExample {
 		
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.value.BasicValueCreateExample", null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 	        @Override
@@ -85,7 +85,7 @@ public class BasicValueGenerate extends AbstractExample {
 	        	call(systemOut, "println", stradd(Value.value("double default value is : "), Value.defaultValue(AClass.STRING_ACLASS)));
 
 	        	//测试null的Value
-	        	LocalVariable arrayListNullValue = var("arrayListNullValue", AClassFactory.deftype(List.class), false, Value.getNullValue(AClassFactory.deftype(ArrayList.class)));
+	        	LocalVariable arrayListNullValue = var("arrayListNullValue", AClassFactory.defType(List.class), false, Value.getNullValue(AClassFactory.defType(ArrayList.class)));
 	        	call(systemOut, "println", stradd(Value.value("I'm a null value and type is List: "), arrayListNullValue));
 			    return_();
 			}

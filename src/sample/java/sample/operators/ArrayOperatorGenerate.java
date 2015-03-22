@@ -59,7 +59,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 	public static void main(String[] args) {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.ArrayOperatorGenerateExample", null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.deftype(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
@@ -106,7 +106,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 */
 				ArrayValue av = makeArray(AClassFactory.defArrayType(int[][].class), Value.value(2), Value.value(2));
 				LocalVariable i1 = arrayvar("i1", AClassFactory.defArrayType(int[][].class), false, av);
-				call(systemOut, "println", stradd(Value.value("i1 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", i1)));
+				call(systemOut, "println", stradd(Value.value("i1 = "), call(AClassFactory.defType(ArrayUtils.class), "toString", i1)));
 				
 				/*
 				 * 下面一段代码将生成如下代码：
@@ -115,7 +115,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 */
 				av = makeArray(AClassFactory.defArrayType(int[][].class), Value.value(2));
 				LocalVariable i2 = arrayvar("i2", AClassFactory.defArrayType(int[][].class), false, av);
-				call(systemOut, "println", stradd(Value.value("i2 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", i2)));
+				call(systemOut, "println", stradd(Value.value("i2 = "), call(AClassFactory.defType(ArrayUtils.class), "toString", i2)));
 				
 				/*
 				 * 接下来介绍创建数组的方式。
@@ -141,7 +141,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 */
 				av = newarray(AClassFactory.defArrayType(String[].class), new Value[]{Value.value("array \"s1\" first value"), Value.value("array \"s1\" second value")});
 				LocalVariable s1 = arrayvar("s1", AClassFactory.defArrayType(String[].class), false, av);
-				call(systemOut, "println", stradd(Value.value("s1 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s1)));
+				call(systemOut, "println", stradd(Value.value("s1 = "), call(AClassFactory.defType(ArrayUtils.class), "toString", s1)));
 
 				/*
 				 * 下面一段将生成如下代码：
@@ -156,7 +156,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				av = newarray(AClassFactory.defArrayType(String[][].class), 
 						new Value[][]{new Value[]{s200, s201}, new Value[]{s210, s211}});
 				LocalVariable s2 = arrayvar("s2", AClassFactory.defArrayType(String[][].class), false, av);
-				call(systemOut, "println", stradd(Value.value("s2 = "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s2)));
+				call(systemOut, "println", stradd(Value.value("s2 = "), call(AClassFactory.defType(ArrayUtils.class), "toString", s2)));
 
 				/*
 				 * 接下来我们将获取数组的长度：
@@ -175,11 +175,11 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 */
 				//s2[0]
 				Parameterized arrayLoader = arrayLoad(s2, Value.value(0));
-				call(systemOut, "println", stradd(Value.value("value of s2[0] is "), call(AClassFactory.deftype(ArrayUtils.class), "toString", arrayLoader)));
+				call(systemOut, "println", stradd(Value.value("value of s2[0] is "), call(AClassFactory.defType(ArrayUtils.class), "toString", arrayLoader)));
 				
 				//s2[0][0]
 				arrayLoader = arrayLoad(s2, Value.value(0), Value.value(0));
-				call(systemOut, "println", stradd(Value.value("value of s2[0][0] is "), call(AClassFactory.deftype(ArrayUtils.class), "toString", arrayLoader)));
+				call(systemOut, "println", stradd(Value.value("value of s2[0][0] is "), call(AClassFactory.defType(ArrayUtils.class), "toString", arrayLoader)));
 				
 				/*
 				 * 接下来是如何实现为数组单元赋值的操作
@@ -190,7 +190,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 */
 				arrayStore(s2, newarray(AClassFactory.defArrayType(String[].class), new Parameterized[]{Value.value("new s2[0][0]"), Value.value("new s2[0][1]")}), Value.value(0));
 				arrayStore(s2, Value.value("new s2[1][0]"), Value.value(1), Value.value(0));
-				call(systemOut, "println", stradd(Value.value("new value of s2 is : "), call(AClassFactory.deftype(ArrayUtils.class), "toString", s2)));
+				call(systemOut, "println", stradd(Value.value("new value of s2 is : "), call(AClassFactory.defType(ArrayUtils.class), "toString", s2)));
 				
 				return_();
 			}

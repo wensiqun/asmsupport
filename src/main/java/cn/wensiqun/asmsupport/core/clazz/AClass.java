@@ -42,79 +42,79 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public abstract class AClass implements GetGlobalVariabled{
 
     /** java.lang.Boolean of AClass */
-    public static final AClass BOOLEAN_WRAP_ACLASS = AClassFactory.deftype(Boolean.class);
+    public static final AClass BOOLEAN_WRAP_ACLASS = AClassFactory.defType(Boolean.class);
 
     /** java.lang.Byte of AClass */
-    public static final AClass BYTE_WRAP_ACLASS = AClassFactory.deftype(Byte.class);
+    public static final AClass BYTE_WRAP_ACLASS = AClassFactory.defType(Byte.class);
 
     /** java.lang.Short of AClass */
-    public static final AClass SHORT_WRAP_ACLASS = AClassFactory.deftype(Short.class);
+    public static final AClass SHORT_WRAP_ACLASS = AClassFactory.defType(Short.class);
 
     /** java.lang.Character of AClass */
-    public static final AClass CHARACTER_WRAP_ACLASS = AClassFactory.deftype(Character.class);
+    public static final AClass CHARACTER_WRAP_ACLASS = AClassFactory.defType(Character.class);
 
     /** java.lang.Integer of AClass */
-    public static final AClass INTEGER_WRAP_ACLASS = AClassFactory.deftype(Integer.class);
+    public static final AClass INTEGER_WRAP_ACLASS = AClassFactory.defType(Integer.class);
 
     /** java.lang.Long of AClass */
-    public static final AClass LONG_WRAP_ACLASS = AClassFactory.deftype(Long.class);
+    public static final AClass LONG_WRAP_ACLASS = AClassFactory.defType(Long.class);
 
     /** java.lang.Float of AClass */
-    public static final AClass FLOAT_WRAP_ACLASS = AClassFactory.deftype(Float.class);
+    public static final AClass FLOAT_WRAP_ACLASS = AClassFactory.defType(Float.class);
 
     /** java.lang.Double of AClass */
-    public static final AClass DOUBLE_WRAP_ACLASS = AClassFactory.deftype(Double.class);
+    public static final AClass DOUBLE_WRAP_ACLASS = AClassFactory.defType(Double.class);
 
     /** boolean of AClass */
-    public static final AClass BOOLEAN_ACLASS = AClassFactory.deftype(boolean.class);
+    public static final AClass BOOLEAN_ACLASS = AClassFactory.defType(boolean.class);
 
     /** byte of AClass */
-    public static final AClass BYTE_ACLASS = AClassFactory.deftype(byte.class);
+    public static final AClass BYTE_ACLASS = AClassFactory.defType(byte.class);
 
     /** short of AClass */
-    public static final AClass SHORT_ACLASS = AClassFactory.deftype(short.class);
+    public static final AClass SHORT_ACLASS = AClassFactory.defType(short.class);
 
     /** char of AClass */
-    public static final AClass CHAR_ACLASS = AClassFactory.deftype(char.class);
+    public static final AClass CHAR_ACLASS = AClassFactory.defType(char.class);
 
     /** int of AClass */
-    public static final AClass INT_ACLASS = AClassFactory.deftype(int.class);
+    public static final AClass INT_ACLASS = AClassFactory.defType(int.class);
 
     /** long of AClass */
-    public static final AClass LONG_ACLASS = AClassFactory.deftype(long.class);
+    public static final AClass LONG_ACLASS = AClassFactory.defType(long.class);
 
     /** float of AClass */
-    public static final AClass FLOAT_ACLASS = AClassFactory.deftype(float.class);
+    public static final AClass FLOAT_ACLASS = AClassFactory.defType(float.class);
 
     /** double of AClass */
-    public static final AClass DOUBLE_ACLASS = AClassFactory.deftype(double.class);
+    public static final AClass DOUBLE_ACLASS = AClassFactory.defType(double.class);
 
     /** java.lang.Object of AClass */
-    public static final AClass OBJECT_ACLASS = AClassFactory.deftype(Object.class);
+    public static final AClass OBJECT_ACLASS = AClassFactory.defType(Object.class);
 
     /** java.lang.Cloneable of AClass */
-    public static final AClass CLONEABLE_ACLASS = AClassFactory.deftype(Cloneable.class);
+    public static final AClass CLONEABLE_ACLASS = AClassFactory.defType(Cloneable.class);
 
     /** java.lang.Serializable of AClass */
-    public static final AClass SERIALIZABLE_ACLASS = AClassFactory.deftype(Serializable.class);
+    public static final AClass SERIALIZABLE_ACLASS = AClassFactory.defType(Serializable.class);
 
     /** java.lang.String of AClass */
-    public static final AClass STRING_ACLASS = AClassFactory.deftype(String.class);
+    public static final AClass STRING_ACLASS = AClassFactory.defType(String.class);
 
     /** java.lang.Iterator of AClass */
-    public static final AClass ITERATOR_ACLASS = AClassFactory.deftype(Iterator.class);
+    public static final AClass ITERATOR_ACLASS = AClassFactory.defType(Iterator.class);
 
     /** java.lang.Exception of AClass */
-    public static final AClass EXCEPTION_ACLASS = AClassFactory.deftype(Exception.class);
+    public static final AClass EXCEPTION_ACLASS = AClassFactory.defType(Exception.class);
 
     /** java.lang.Class of AClass */
-    public static final AClass CLASS_ACLASS = AClassFactory.deftype(Class.class);
+    public static final AClass CLASS_ACLASS = AClassFactory.defType(Class.class);
 
     /** java.lang.Throwable of AClass */
-    public static final AClass THROWABLE_ACLASS = AClassFactory.deftype(Throwable.class);
+    public static final AClass THROWABLE_ACLASS = AClassFactory.defType(Throwable.class);
     
     /** java.lang.Void of AClass */
-    public static final AClass VOID_ACLASS = AClassFactory.deftype(void.class);
+    public static final AClass VOID_ACLASS = AClassFactory.defType(void.class);
     
     /**
      * Class name
@@ -256,7 +256,7 @@ public abstract class AClass implements GetGlobalVariabled{
         boolean interResult = false;
         
         if(superCls != null){
-            interResult = AClassFactory.deftype(superCls).isChildOrEqual(cls);
+            interResult = AClassFactory.defType(superCls).isChildOrEqual(cls);
             if(interResult){
                 return true;
             }
@@ -264,7 +264,7 @@ public abstract class AClass implements GetGlobalVariabled{
         
         if(interfaces != null){
             for(Class<?> c : interfaces){
-                interResult = AClassFactory.deftype(c).isChildOrEqual(cls);
+                interResult = AClassFactory.defType(c).isChildOrEqual(cls);
                 if(interResult){
                     return true;
                 }
@@ -357,7 +357,7 @@ public abstract class AClass implements GetGlobalVariabled{
      * @return
      */
     public AMethodMeta getSuperMethod(String methodName, AClass[] parameterTypes){
-        AClass superCls = AClassFactory.deftype(superClass);
+        AClass superCls = AClassFactory.defType(superClass);
         return superCls.availableMethod(null, methodName, parameterTypes);
     }
     
@@ -367,7 +367,7 @@ public abstract class AClass implements GetGlobalVariabled{
      * @return
      */
     public AMethodMeta getSuperConstructor(AClass[] parameterTypes){
-        AClass superCls = AClassFactory.deftype(superClass);
+        AClass superCls = AClassFactory.defType(superClass);
         return superCls.availableConstructor(null, parameterTypes);
     }
     
