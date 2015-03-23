@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public class VariableInvoker extends MethodInvoker {
 
 	@Deprecated
-    private static Log log = LogFactory.getLog(VariableInvoker.class);
+    private static final Log LOG = LogFactory.getLog(VariableInvoker.class);
     
     private IVariable var;
      
@@ -68,17 +68,17 @@ public class VariableInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            log.debug("call method by variable :" + var.getVariableMeta().getName());
-            log.debug("put variable reference to stack");
+            LOG.debug("call method by variable :" + var.getVariableMeta().getName());
+            LOG.debug("put variable reference to stack");
             //变量入栈
             var.loadToStack(block);
             argumentsToStack();
             if(ve.getDeclareType().isInterface()){
-                log.debug("invoke interface method : " + name);
+                LOG.debug("invoke interface method : " + name);
                 //如果是接口
                 insnHelper.invokeInterface(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
-                log.debug("invoke class method : " + name);
+                LOG.debug("invoke class method : " + name);
                 if(ve.getName().equals(ASConstant.SUPER)){
                     insnHelper.invokeSuperMethod(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                 }else {

@@ -42,7 +42,7 @@ import java.util.EmptyStackException;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class ArrayStack extends ArrayList implements Buffer {
+public class ArrayStack extends ArrayList { //implements Buffer {
 
     /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 2130079159931574599L;
@@ -138,7 +138,7 @@ public class ArrayStack extends ArrayList implements Buffer {
         return item;
     }
 
-    /**
+    /*
      * Returns the one-based position of the distance from the top that the
      * specified object exists on this stack, where the top-most element is
      * considered to be at distance <code>1</code>.  If the object is not
@@ -149,7 +149,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @param object  the object to be searched for
      * @return the 1-based depth into the stack of the object, or -1 if not found
      */
-    public int search(Object object) {
+    /*public int search(Object object) {
         int i = size() - 1;        // Current index
         int n = 1;                 // Current distance
         while (i >= 0) {
@@ -162,34 +162,34 @@ public class ArrayStack extends ArrayList implements Buffer {
             n++;
         }
         return -1;
-    }
+    }*/
 
-    /**
+    /*
      * Returns the element on the top of the stack.
      *
      * @return the element on the top of the stack
      * @throws BufferUnderflowException  if the stack is empty
      */
-    public Object get() {
+    /*public Object get() {
         int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();
         }
         return get(size - 1);
-    }
+    }*/
 
-    /**
+    /*
      * Removes the element on the top of the stack.
      *
      * @return the removed element 
      * @throws BufferUnderflowException  if the stack is empty
      */
-    public Object remove() {
+    /*public Object remove() {
         int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();
         }
         return remove(size - 1);
-    }
+    }*/
 
 }

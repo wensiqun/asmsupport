@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
  */
 public abstract class AbstractArrayOperator extends AbstractOperator {
 
-    private static Log log = LogFactory.getLog(AbstractArrayOperator.class);
+    private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
     protected Parameterized arrayReference;
     
@@ -76,8 +76,8 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 	protected void getValue(){
         InstructionHelper ih = block.getInsnHelper();
         AClass cls = arrayReference.getParamterizedType();
-        if(log.isDebugEnabled()){
-            log.debug("load the array reference to stack");
+        if(LOG.isDebugEnabled()){
+            LOG.debug("load the array reference to stack");
         }
         arrayReference.loadToStack(block);
         

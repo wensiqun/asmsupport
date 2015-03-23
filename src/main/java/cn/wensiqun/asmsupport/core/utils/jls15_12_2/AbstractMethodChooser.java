@@ -111,6 +111,11 @@ public abstract class AbstractMethodChooser implements IMethodChooser, Determine
             return false;
         }
         
+        @Override
+        public int hashCode() {
+            return type.hashCode();
+        }
+
         private Relation relationWith(TypeTreeNode node){
             if(this.equals(node)){
                 return Relation.EQUAL;

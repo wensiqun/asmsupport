@@ -228,6 +228,11 @@ public abstract class AClass implements GetGlobalVariabled{
         
         return false;
     }
+    
+    @Override
+    public int hashCode() {
+        return getDescription().hashCode();
+    }
 
     public abstract String getDescription();
     

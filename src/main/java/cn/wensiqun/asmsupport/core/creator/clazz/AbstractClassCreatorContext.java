@@ -41,7 +41,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 	
-    private static Log LOG = LogFactory.getLog(AbstractClassCreatorContext.class);
+    private static final Log LOG = LogFactory.getLog(AbstractClassCreatorContext.class);
 
     protected SemiClass sc;
 

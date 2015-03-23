@@ -48,7 +48,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
 
     protected static String METHOD_NAME_INIT = "<init>";
     
-    private static Log log = LogFactory.getLog(MethodInvoker.class);
+    private static final Log LOG = LogFactory.getLog(MethodInvoker.class);
 
     //protected AClass[] argumentClasses;
     protected String name;
@@ -83,7 +83,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
             Parameterized argu = arguments[i];
-            log.debug("push argument to stack");
+            LOG.debug("push argument to stack");
             if(argu instanceof IVariable){
                 ((IVariable) argu).availableFor(this);
             }

@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class Addition extends AbstractArithmetic {
 
-    private static Log log = LogFactory.getLog(Addition.class);
+    private static final Log LOG = LogFactory.getLog(Addition.class);
     
     protected Addition(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
@@ -40,9 +40,9 @@ public class Addition extends AbstractArithmetic {
 
     @Override
     public void doExecute() {
-        log.debug("start execute add arithmetic operator");
+        LOG.debug("start execute add arithmetic operator");
         factorToStack();
-        log.debug("execute the add instruction");
+        LOG.debug("execute the add instruction");
         insnHelper.add(targetClass.getType());
     }
 

@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 @Deprecated
 public class MethodInvokeInvoker extends MethodInvoker {
 
-    private static Log log = LogFactory.getLog(MethodInvokeInvoker.class);
+    private static final Log LOG = LogFactory.getLog(MethodInvokeInvoker.class);
     
     private MethodInvoker caller;
     
@@ -82,14 +82,14 @@ public class MethodInvokeInvoker extends MethodInvoker {
     public void doExecute() {
         caller.loadToStack(block);
         if(!Modifier.isStatic(getModifiers())){
-            log.debug("call method by method return value");
+            LOG.debug("call method by method return value");
             argumentsToStack();
             if(caller.getReturnClass().isInterface()){
-                log.debug("invoke interface method : " + name);
+                LOG.debug("invoke interface method : " + name);
                 //如果是接口
                 insnHelper.invokeInterface(this.caller.getReturnType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
-                log.debug("invoke class method : " + name);
+                LOG.debug("invoke class method : " + name);
                 insnHelper.invokeVirtual(this.caller.getReturnType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }
         }

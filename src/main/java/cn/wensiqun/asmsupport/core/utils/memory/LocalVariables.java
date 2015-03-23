@@ -50,7 +50,7 @@ public class LocalVariables implements Printable, Cloneable{
         
     }
     
-    private static Log log = LogFactory.getLog(LocalVariables.class);
+    private static final Log LOG = LogFactory.getLog(LocalVariables.class);
 
     private List<LocalHistory> histories;
     private PrintHelper printHelper;
@@ -84,7 +84,7 @@ public class LocalVariables implements Printable, Cloneable{
 
     @Override
     public void printState(){
-        log.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
+        LOG.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
     }
 
     public void setCursor(Localable cursor) {

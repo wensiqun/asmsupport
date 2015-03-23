@@ -104,37 +104,6 @@ public class ProductClass extends NewMemberClass {
         return found;
     }
     
-
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        for(GlobalVariable gv : getGlobalVariables()){
-            if(gv.getVariableMeta().getName().equals(name)){
-                return gv;
-            }
-        }
-    	
-        Class<?> fieldOwner = reallyClass;
-        Field field = null;
-        for(;fieldOwner!=null ;fieldOwner = fieldOwner.getSuperclass()){
-            try {
-                field = fieldOwner.getDeclaredField(name);
-                break;
-            } catch (NoSuchFieldException e) {
-            }
-        }
-        
-        if(field == null){
-            throw new ASMSupportException("No such field : " + name);
-        }
-        
-        if(!ModifierUtils.isStatic(field.getModifiers())){
-            throw new ASMSupportException("The field \"" + field.getName() + "\" is non-static, cannot use current method!");
-        }
-        
-        return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
-        		AClassFactory.getProductClass(field.getType()), field.getModifiers(), name);
-    }*/
-    
     @Override
     public int getCastOrder(){
         int order = 0;
@@ -160,8 +129,6 @@ public class ProductClass extends NewMemberClass {
         
         return order;
     }
-    
-    
 
     @Override
 	public boolean isChildOrEqual(AClass cls) {
@@ -222,7 +189,7 @@ public class ProductClass extends NewMemberClass {
                 }
             }
 		} catch (IOException e) {
-			e.printStackTrace();
+            throw new ASMSupportException(e);
 		}
 		
 		return exist[0];

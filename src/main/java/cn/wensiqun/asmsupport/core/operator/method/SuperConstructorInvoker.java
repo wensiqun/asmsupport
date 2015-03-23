@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
  */
 public class SuperConstructorInvoker extends MethodInvoker {
 
-    private static Log log = LogFactory.getLog(SuperConstructorInvoker.class);
+    private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, Parameterized[] arguments) {
         super(block, AClassFactory.defType(aclass.getSuperClass()), METHOD_NAME_INIT, arguments);
@@ -41,8 +41,8 @@ public class SuperConstructorInvoker extends MethodInvoker {
 
     @Override
     public void doExecute() {
-        log.debug("call method '"+ name +"' by 'this' key word");
-        log.debug("put 'this' to stack");
+        LOG.debug("call method '"+ name +"' by 'this' key word");
+        LOG.debug("put 'this' to stack");
         insnHelper.loadThis();
         argumentsToStack();
         

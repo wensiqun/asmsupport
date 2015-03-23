@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
  */
 public class DUP extends ASMDirect implements Parameterized {
 
-	private static Log log = LogFactory.getLog(DUP.class);
+	private static final Log LOG = LogFactory.getLog(DUP.class);
 	
 	private AClass type;
 	
@@ -54,8 +54,8 @@ public class DUP extends ASMDirect implements Parameterized {
 
 	@Override
 	protected void doExecute() {
-		if(log.isDebugEnabled()){
-			log.debug("duplicate the top of stack and push it to stack");
+		if(LOG.isDebugEnabled()){
+			LOG.debug("duplicate the top of stack and push it to stack");
 		}
         block.getInsnHelper().dup(type.getType());
 	}

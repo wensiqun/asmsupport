@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public class Return extends BreakStack {
 
-    private static Log log = LogFactory.getLog(Return.class);
+    private static final Log LOG = LogFactory.getLog(Return.class);
     
     private Parameterized returner;
     
@@ -69,7 +69,7 @@ public class Return extends BreakStack {
     public void breakStackExecuting() {
     	
         if(returner == null){
-            log.debug("direct return from method");
+            LOG.debug("direct return from method");
             insnHelper.returnInsn();
         }else{
             returner.loadToStack(block);

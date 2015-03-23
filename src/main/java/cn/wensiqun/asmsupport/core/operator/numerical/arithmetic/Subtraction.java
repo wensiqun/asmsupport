@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class Subtraction extends AbstractArithmetic {
 
-    private static Log log = LogFactory.getLog(Subtraction.class);
+    private static final Log LOG = LogFactory.getLog(Subtraction.class);
     
     protected Subtraction(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
@@ -40,9 +40,9 @@ public class Subtraction extends AbstractArithmetic {
 
     @Override
     public void doExecute() {
-        log.debug("start execute sub arithmetic operator");
+        LOG.debug("start execute sub arithmetic operator");
         factorToStack();
-        log.debug("execute the sub instruction");
+        LOG.debug("execute the sub instruction");
         insnHelper.sub(targetClass.getType());
     }
 

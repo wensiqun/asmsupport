@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
-
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -25,25 +24,22 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public abstract class ConditionBranchBlock extends ProgramBlockInternal {
 
+    protected ConditionBranchBlock nextBranch;
 
-	protected ConditionBranchBlock nextBranch;
-    
-    Label getSerialEnd(){
-    	if(nextBranch != null)
-    	{
-    		return nextBranch.getSerialEnd();
-    	}
-    	return getEnd();
+    Label getSerialEnd() {
+        if (nextBranch != null) {
+            return nextBranch.getSerialEnd();
+        }
+        return getEnd();
     }
-    
-    protected void initNextBranch(ConditionBranchBlock block)
-    {
-    	nextBranch = block;
-    	
-    	block.setParent(getParent());
-    	
-    	getParent().getQueue().add(block);
-    	
-    	block.prepare();
+
+    protected void initNextBranch(ConditionBranchBlock block) {
+        nextBranch = block;
+
+        block.setParent(getParent());
+
+        getParent().getQueue().add(block);
+
+        block.prepare();
     }
 }

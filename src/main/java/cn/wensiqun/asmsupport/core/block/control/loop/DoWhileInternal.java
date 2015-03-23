@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
-
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
@@ -25,19 +24,18 @@ import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
 
-
 /**
  * 
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class DoWhileInternal extends ProgramBlockInternal implements Loop, IDoWhile  {
+public abstract class DoWhileInternal extends ProgramBlockInternal implements Loop, IDoWhile {
 
     private Parameterized condition;
 
     Label conditionLbl;
     Label contentStart;
-    
+
     public DoWhileInternal(Parameterized condition) {
         this.condition = condition;
         conditionLbl = new Label();
@@ -46,24 +44,22 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
     }
 
     @Override
-    public final void generate()
-    {
+    public final void generate() {
         body();
     }
-
 
     @Override
     public void doExecute() {
         insnHelper.mark(contentStart);
-        for(Executable exe : getQueue()){
+        for (Executable exe : getQueue()) {
             exe.execute();
         }
 
         insnHelper.mark(conditionLbl);
 
-        if(condition instanceof Jumpable){
-        	((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
-        }else{
+        if (condition instanceof Jumpable) {
+            ((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
+        } else {
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());
             insnHelper.ifZCmp(InstructionHelper.NE, contentStart);
@@ -72,12 +68,13 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
 
     @Override
     protected void init() {
-        if(!condition.getParamterizedType().equals(AClass.BOOLEAN_WRAP_ACLASS) &&
-           !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS) ){
-            throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was " + condition.getParamterizedType());
+        if (!condition.getParamterizedType().equals(AClass.BOOLEAN_WRAP_ACLASS)
+                && !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS)) {
+            throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
+                    + condition.getParamterizedType());
         }
     }
-    
+
     @Override
     public Label getBreakLabel() {
         return getEnd();
@@ -88,9 +85,8 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
         return conditionLbl;
     }
 
-
-	@Override
-	public String toString() {
-		return "While Block:" + super.toString();
-	}
+    @Override
+    public String toString() {
+        return "While Block:" + super.toString();
+    }
 }

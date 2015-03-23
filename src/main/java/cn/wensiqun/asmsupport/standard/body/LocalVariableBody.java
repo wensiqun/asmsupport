@@ -16,8 +16,12 @@ package cn.wensiqun.asmsupport.standard.body;
 
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 
-public interface LocalVariableBody extends IBody
-{
-
+public interface LocalVariableBody extends IBody {
+    
+    /**
+     * Program block with a variable.
+     * 
+     * @param e
+     */
     void body(LocalVariable e);
 }

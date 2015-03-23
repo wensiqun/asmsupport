@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
  */
 public class CheckCast extends AbstractOperator implements Parameterized {
 
-    private static Log log = LogFactory.getLog(CheckCast.class);
+    private static final Log LOG = LogFactory.getLog(CheckCast.class);
     private AClass to;
     private Parameterized orginal;
     
@@ -62,7 +62,7 @@ public class CheckCast extends AbstractOperator implements Parameterized {
         }
         
         if(from.isPrimitive() && to.isPrimitive()){
-            log.debug("checkcast from " + from + " to " + to );
+            LOG.debug("checkcast from " + from + " to " + to );
             if(from.getCastOrder() > to.getCastOrder() ||
                (from.equals(AClass.CHAR_ACLASS) && to.equals(AClass.SHORT_ACLASS)) || 
                (to.equals(AClass.CHAR_ACLASS) && from.equals(AClass.SHORT_ACLASS))){
@@ -70,7 +70,7 @@ public class CheckCast extends AbstractOperator implements Parameterized {
                 return;
             }
         }
-        log.debug("checkcast from " + from + " to " + to );
+        LOG.debug("checkcast from " + from + " to " + to );
         insnHelper.checkCast(to.getType());
     }
 

@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public abstract class BinaryBitwise extends AbstractBitwise {
 
-    private static Log log = LogFactory.getLog(BinaryBitwise.class);
+    private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
     protected Parameterized factor1;
     protected Parameterized factor2;
@@ -78,22 +78,22 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected final void factorToStack() {
-        log.debug("push the first arithmetic factor to stack");
+        LOG.debug("push the first arithmetic factor to stack");
         factor1.loadToStack(block);
-        if(log.isDebugEnabled()){
+        if(LOG.isDebugEnabled()){
             if(!factor1.getParamterizedType().equals(targetClass)){
-                log.debug("cast arithmetic factor from " + factor1.getParamterizedType() + " to " + targetClass);
+                LOG.debug("cast arithmetic factor from " + factor1.getParamterizedType() + " to " + targetClass);
             }
         }
         insnHelper.unbox(factor1.getParamterizedType().getType());
         insnHelper.cast(factor1.getParamterizedType().getType(), targetClass.getType());    
         
-        log.debug("push the second arithmetic factor to stack");
+        LOG.debug("push the second arithmetic factor to stack");
         factor2.loadToStack(block);
         
-        if(log.isDebugEnabled()){
+        if(LOG.isDebugEnabled()){
             if(!factor2.getParamterizedType().equals(targetClass)){
-                log.debug("cast arithmetic factor from " + factor2.getParamterizedType() + " to " + targetClass);
+                LOG.debug("cast arithmetic factor from " + factor2.getParamterizedType() + " to " + targetClass);
             }
         }
         
@@ -110,9 +110,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     
     @Override
     public final void doExecute() {
-        log.debug("prepare operator " + operator);
+        LOG.debug("prepare operator " + operator);
         factorToStack();
-        log.debug("execute operator " + operator);
+        LOG.debug("execute operator " + operator);
         innerRunExe();
     }
 

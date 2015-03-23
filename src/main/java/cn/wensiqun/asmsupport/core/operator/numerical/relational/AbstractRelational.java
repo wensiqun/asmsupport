@@ -38,7 +38,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public abstract class AbstractRelational extends AbstractOperator implements
      Jumpable  {
 
-    private static Log log = LogFactory.getLog(AbstractRelational.class);
+    private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
     
     /**算数因子1 */
     protected Parameterized factor1;
@@ -99,8 +99,8 @@ public abstract class AbstractRelational extends AbstractOperator implements
     @Override
     public void execute() {
         if(byOtherUsed){
-            if(log.isDebugEnabled()){
-            	log.debug("run operator " + factor1.getParamterizedType() + " " + operator + " " + factor2.getParamterizedType());
+            if(LOG.isDebugEnabled()){
+            	LOG.debug("run operator " + factor1.getParamterizedType() + " " + operator + " " + factor2.getParamterizedType());
             }
             super.execute();
         }else{

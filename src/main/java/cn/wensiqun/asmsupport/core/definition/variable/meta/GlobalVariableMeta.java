@@ -21,18 +21,23 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class GlobalVariableMeta extends VariableMeta{
+public class GlobalVariableMeta extends VariableMeta {
 
     private AClass owner;
-    
+
     private AClass actuallyOwnerType;
-    
+
     /**
-     * @param owner 变量所属的Class
-     * @param actuallyOwnerType 变量实际有用者
-     * @param variableClass 变量类型
-     * @param modifiers 变量修饰符
-     * @param name 变量名
+     * @param owner
+     *            变量所属的Class
+     * @param actuallyOwnerType
+     *            变量实际有用者
+     * @param variableClass
+     *            变量类型
+     * @param modifiers
+     *            变量修饰符
+     * @param name
+     *            变量名
      */
     public GlobalVariableMeta(AClass owner, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
         super(name, modifiers, declareClass);
@@ -42,6 +47,7 @@ public class GlobalVariableMeta extends VariableMeta{
 
     /**
      * getter of owner
+     * 
      * @return
      */
     public AClass getOwner() {
@@ -52,8 +58,8 @@ public class GlobalVariableMeta extends VariableMeta{
      * 
      * @return
      */
-    public AClass getActuallyOwnerType(){
-    	return actuallyOwnerType;
+    public AClass getActuallyOwnerType() {
+        return actuallyOwnerType;
     }
 
     @Override
@@ -67,25 +73,31 @@ public class GlobalVariableMeta extends VariableMeta{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!super.equals(obj))
+        }
+        if (!super.equals(obj)) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         GlobalVariableMeta other = (GlobalVariableMeta) obj;
         if (actuallyOwnerType == null) {
-            if (other.actuallyOwnerType != null)
+            if (other.actuallyOwnerType != null) {
                 return false;
-        } else if (!actuallyOwnerType.equals(other.actuallyOwnerType))
+            }
+        } else if (!actuallyOwnerType.equals(other.actuallyOwnerType)) {
             return false;
+        }
         if (owner == null) {
-            if (other.owner != null)
+            if (other.owner != null) {
                 return false;
-        } else if (!owner.equals(other.owner))
+            }
+        } else if (!owner.equals(other.owner)) {
             return false;
+        }
         return true;
     }
-    
-    
+
 }

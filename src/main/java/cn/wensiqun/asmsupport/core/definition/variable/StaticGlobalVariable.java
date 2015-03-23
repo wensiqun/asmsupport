@@ -23,19 +23,19 @@ import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
-public class StaticGlobalVariable extends GlobalVariable  {
+public class StaticGlobalVariable extends GlobalVariable {
 
-    private static Log LOG = LogFactory.getLog(StaticGlobalVariable.class);
+    private static final Log LOG = LogFactory.getLog(StaticGlobalVariable.class);
 
-    /**如果当前全局变量是静态变量，那么staticOwner表示静态变量的所属Class */
+    /** 如果当前全局变量是静态变量，那么staticOwner表示静态变量的所属Class */
     private AClass owner;
-    
+
     /**
      * 
      * @param owner
      * @param gve
      */
-    public StaticGlobalVariable(AClass owner, GlobalVariableMeta meta){
+    public StaticGlobalVariable(AClass owner, GlobalVariableMeta meta) {
         super(meta);
         this.owner = owner;
     }
@@ -51,19 +51,17 @@ public class StaticGlobalVariable extends GlobalVariable  {
 
     @Override
     public void loadToStack(ProgramBlockInternal block) {
-        if(!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), 
-                meta.getActuallyOwnerType(), meta.getModifiers()))
-        {
-            throw new IllegalArgumentException("Cannot access field " +
-                    meta.getActuallyOwnerType() + "#" + meta.getName()
-                    + " from " + block.getMethodOwner());
+        if (!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), meta.getActuallyOwnerType(),
+                meta.getModifiers())) {
+            throw new IllegalArgumentException("Cannot access field " + meta.getActuallyOwnerType() + "#"
+                    + meta.getName() + " from " + block.getMethodOwner());
         }
-        
-        if(LOG.isDebugEnabled()){
-            LOG.debug("get field " + meta.getName() + " from class " + meta.getOwner().getName() + " and push to stack!");
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("get field " + meta.getName() + " from class " + meta.getOwner().getName()
+                    + " and push to stack!");
         }
-        block.getInsnHelper().getStatic(owner.getType(),
-                meta.getName(), meta.getDeclareType().getType());
+        block.getInsnHelper().getStatic(owner.getType(), meta.getName(), meta.getDeclareType().getType());
     }
 
     @Override

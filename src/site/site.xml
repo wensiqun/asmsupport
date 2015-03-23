@@ -18,6 +18,8 @@
         <item name="条件控制" href="bytecode/condition_block.html"/>
         <item name="枚举类型" href="bytecode/enum.html"/>
     </menu>
+    <menu name="实现原理">
+    </menu>
     <menu name="Other">
         <item name="FQA" href="faq.html"></item>
     </menu>

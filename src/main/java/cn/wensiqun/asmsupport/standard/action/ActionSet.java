@@ -21,7 +21,6 @@ import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
 import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
 
-
 /**
  * 
  * The all action.
@@ -29,21 +28,10 @@ import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
  * @author wensiqun(at)163.com
  *
  */
-public interface ActionSet<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> extends 
-ValueAction,
-AClassDefAction,
-KeywordAction, 
-VariableAction, 
-MethodInvokeAction, 
-ArrayAction, 
-ArithmeticAction, 
-BitwiseAction, 
-CrementAction,
-RelationalAction,
-LogicalAction,
-CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> 
-{
-    
+public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> extends ValueAction, AClassDefAction,
+        KeywordAction, VariableAction, MethodInvokeAction, ArrayAction, ArithmeticAction, BitwiseAction, CrementAction,
+        RelationalAction, LogicalAction, CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
+
     /**
      * check cast object type, such as following code:
      * <p style="border:1px solid;width:300px;padding:10px;">
@@ -56,12 +44,14 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * </p>
      * 
      * 
-     * @param obj original object
-     * @param to the type need to check cast.
+     * @param obj
+     *            original object
+     * @param to
+     *            the type need to check cast.
      * @return {@link CheckCast}
      */
     public CheckCast checkcast(Parameterized obj, AClass to);
-    
+
     /**
      * check cast object type, such as following code:
      * <p style="border:1px solid;width:300px;padding:10px;">
@@ -74,12 +64,14 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * </p>
      * 
      * 
-     * @param obj original object
-     * @param to the type need to check cast.
+     * @param obj
+     *            original object
+     * @param to
+     *            the type need to check cast.
      * @return
      */
     public CheckCast checkcast(Parameterized cc, Class<?> to);
-    
+
     /**
      * the negative operator. following is example.
      * <p style="border:1px solid;width:300px;padding:10px;">
@@ -92,26 +84,29 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * </p>
      * 
      * 
-     * @param factor must a number.
+     * @param factor
+     *            must a number.
      * @return {@link Negative}
      */
     public Negative neg(Parameterized factor);
-    
-    
+
     /**
      * The ternary operator in java.
      * <p style="border:1px solid;width:500px;padding:10px;">
-     * String result = <b style="color:#FF3300">booleanValue ? "YES" : "NO" ;</b>
+     * String result = <b style="color:#FF3300">booleanValue ? "YES" : "NO"
+     * ;</b>
      * </p>
      * 
      * 
      * Following code is the asmsupport code.
      * <p style="border:1px solid;width:500px;padding:10px;">
-     * ternary(booleanValueParameterized, Value.value("YES"), Value.value("NO"));
+     * ternary(booleanValueParameterized, Value.value("YES"),
+     * Value.value("NO"));
      * </p>
      * 
      * 
-     * @param exp1 the expression result must be a boolean.
+     * @param exp1
+     *            the expression result must be a boolean.
      * @param exp2
      * @param exp3
      * @return {@link TernaryOperator}
@@ -121,9 +116,10 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
     /**
      * 
      * <p>
-     * The string append operator. such as "A" + "B" + "C". if we want 
-     * append some string, can't use {@link ArithmeticAction#add(Parameterized, Parameterized)}
-     * method, that is different to write java code directly.
+     * The string append operator. such as "A" + "B" + "C". if we want append
+     * some string, can't use
+     * {@link ArithmeticAction#add(Parameterized, Parameterized)} method, that
+     * is different to write java code directly.
      * </p>
      * 
      * Following is the java sample.
@@ -139,10 +135,10 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * @param par1
      * @param pars
-     * @return 
+     * @return
      */
     public Parameterized stradd(Parameterized par1, Parameterized... pars);
-    
+
     /**
      * Generate the instanceof instruction.
      * 
@@ -161,9 +157,10 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * @return {@link Parameterized}a boolean type Parameterized
      */
     public Parameterized instanceof_(Parameterized obj, AClass type);
-    
+
     /**
-     * Generate the instanceof instruction, the method is same as {@link #instanceof_(Parameterized, AClass)}
+     * Generate the instanceof instruction, the method is same as
+     * {@link #instanceof_(Parameterized, AClass)}
      * 
      * @see #instanceof_(Parameterized, AClass)
      * @param obj
@@ -172,19 +169,18 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      */
     public Parameterized instanceof_(Parameterized obj, Class<?> type);
 
-    
     /**
      * Corresponding to break statement in loop.
      * 
      */
     public void break_();
-    
+
     /**
      * Corresponding to continue statement in loop.
      * 
      */
     public void continue_();
-    
+
     /**
      * Throw an exception.
      * 
@@ -202,18 +198,18 @@ CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized>
      */
     public void throw_(Parameterized exception);
 
-    
     /**
      * Corresponding to return statement with no return value.
      * 
      * @return {{@link Return}
      */
     public Return return_();
-    
+
     /**
      * Corresponding to return statement with return value.
      * 
-     * @param parame return value.
+     * @param parame
+     *            return value.
      * @return {{@link Return}
      * 
      */

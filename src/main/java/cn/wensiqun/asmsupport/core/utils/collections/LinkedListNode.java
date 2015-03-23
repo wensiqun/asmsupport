@@ -15,33 +15,28 @@
 package cn.wensiqun.asmsupport.core.utils.collections;
 
 
-public abstract class LinkedListNode implements Cloneable
-{
+public abstract class LinkedListNode implements Cloneable {
 
     private LinkedListNode next;
-    
+
     private LinkedListNode previous;
-    
-    //Unsupported index operation now!
-    //private int index;
-    
-    public boolean hasNext()
-    {
+
+    // Unsupported index operation now!
+    // private int index;
+
+    public boolean hasNext() {
         return next != null;
     }
 
-    public LinkedListNode next()
-    {
+    public LinkedListNode next() {
         return next;
     }
 
-    public LinkedListNode previous()
-    {
+    public LinkedListNode previous() {
         return previous;
     }
-    
-    void remove()
-    {
+
+    void remove() {
         /*
         Unsupported index operation now!
         LinkedListNode cursor = this;
@@ -50,47 +45,37 @@ public abstract class LinkedListNode implements Cloneable
             cursor = cursor.next;
             cursor.setIndex(cursor.getIndex() - 1);
         }*/
-        
-        if(previous != null)
-        {
+
+        if (previous != null) {
             previous.next = next;
         }
-        
-        if(next != null)
-        {
+
+        if (next != null) {
             next.previous = previous;
         }
-        
+
         next = previous = null;
     }
-    
-    void setNext(LinkedListNode subHead){
-        if(subHead == null)
-        {
-            if(next != null)
-            {
+
+    void setNext(LinkedListNode subHead) {
+        if (subHead == null) {
+            if (next != null) {
                 next.previous = null;
                 next = null;
             }
-        }
-        else
-        {
-            if(next == null)
-            {
+        } else {
+            if (next == null) {
                 this.next = subHead;
                 subHead.previous = this;
-            }
-            else
-            {
+            } else {
                 LinkedListNode subLast = subHead;
-                while(subLast.hasNext())
-                {
+                while (subLast.hasNext()) {
                     subLast = subLast.next();
                 }
 
                 subLast.next = next;
                 next.previous = subLast;
-                
+
                 next = subHead;
                 subHead.previous = this;
             }
@@ -131,15 +116,14 @@ public abstract class LinkedListNode implements Cloneable
         }*/
         
     }
-    
-    void replace(LinkedListNode newly)
-    {
+
+    void replace(LinkedListNode newly) {
         previous.next = newly;
         newly.previous = previous;
-        
+
         next.previous = newly;
         newly.next = next;
-        
+
         previous = next = null;
     }
 

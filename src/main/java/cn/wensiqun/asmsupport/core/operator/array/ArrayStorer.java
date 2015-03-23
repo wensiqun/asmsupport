@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 public class ArrayStorer extends AbstractArrayOperator {
 
 
-    private static Log log = LogFactory.getLog(ArrayStorer.class);
+    private static final Log LOG = LogFactory.getLog(ArrayStorer.class);
     
     private Parameterized value;
     
@@ -87,16 +87,16 @@ public class ArrayStorer extends AbstractArrayOperator {
 
 	@Override
     public void doExecute() {
-        log.debug("start get value for store array");
+        LOG.debug("start get value for store array");
         getValue();
         InstructionHelper ih = block.getInsnHelper();
-        log.debug("push the last dim index to stack");
+        LOG.debug("push the last dim index to stack");
         lastDim.loadToStack(block);
         autoCast(lastDim.getParamterizedType(), AClass.INT_ACLASS, false);
         
         value.loadToStack(block);
         autoCast(value.getParamterizedType(), storeClass, false);
-        log.debug("store value to corresponse to index of the array");
+        LOG.debug("store value to corresponse to index of the array");
         ih.arrayStore(storeClass.getType());
     }
 

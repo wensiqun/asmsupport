@@ -50,7 +50,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public class ClassModifier extends AbstractClassContext {
 	
-    private static Log LOG = LogFactory.getLog(ClassModifier.class);
+    private static final Log LOG = LogFactory.getLog(ClassModifier.class);
 	
     protected List<IMethodCreator> methodModifiers;
     

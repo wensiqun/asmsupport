@@ -37,7 +37,7 @@ import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
  */
 public class ArrayValue extends AbstractOperator implements Parameterized  {
 
-    private static Log log = LogFactory.getLog(ArrayValue.class);
+    private static final Log LOG = LogFactory.getLog(ArrayValue.class);
     
     private abstract class EachValue{
         
@@ -196,7 +196,7 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
         }
         
         if(allocateDims != null){
-            log.debug("start new a array!");
+            LOG.debug("start new a array!");
             InstructionHelper ih = block.getInsnHelper();
             if(allocateDims == null || allocateDims.length == 0){
                 ih.push(arrayCls.getType());

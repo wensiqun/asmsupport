@@ -40,39 +40,39 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractMethodBody extends ProgramBlockInternal {
 
-    private static Log log = LogFactory.getLog(AbstractMethodBody.class);
-    
+    private static final Log LOG = LogFactory.getLog(AbstractMethodBody.class);
+
     private List<TryCatchInfo> tryCatches;
 
     protected LocalVariable[] argments;
-    
+
     public AbstractMethodBody() {
-		super();
+        super();
         tryCatches = new ArrayList<TryCatchInfo>();
-	}
+    }
 
-	public LocalVariable[] getMethodArguments(){
-		return argments;
-	}
+    public LocalVariable[] getMethodArguments() {
+        return argments;
+    }
 
-	@Override
-	public final void generate() {
-		generateBody();
-	}
-	
-	/**
-	 * generate the method body
-	 */
-	public abstract void generateBody();
+    @Override
+    public final void generate() {
+        generateBody();
+    }
 
-	@Override
+    /**
+     * generate the method body
+     */
+    public abstract void generateBody();
+
+    @Override
     protected void init() {
-	    AMethod method = getMethod();
-    	AMethodMeta me = method.getMethodMeta(); 
+        AMethod method = getMethod();
+        AMethodMeta me = method.getMethodMeta();
         if (!method.isStatic()) {
-            OperatorFactory.newOperator(LocalVariableCreator.class, 
-            		new Class<?>[]{ProgramBlockInternal.class, String.class, Type.class, Type.class}, 
-            		getExecutor(), ASConstant.THIS, me.getOwner().getType(), method.getMethodMeta().getOwner().getType());
+            OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { ProgramBlockInternal.class,
+                    String.class, Type.class, Type.class }, getExecutor(), ASConstant.THIS, me.getOwner().getType(),
+                    method.getMethodMeta().getOwner().getType());
         }
 
         String[] argNames = me.getArgNames();
@@ -88,31 +88,29 @@ public abstract class AbstractMethodBody extends ProgramBlockInternal {
         }
         method.setArguments(argments);
     }
-    
+
     @Override
     public final void doExecute() {
         AMethod method = getMethod();
-        if (log.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             StringBuilder str = new StringBuilder("create method: ------------");
             str.append(method.getMethodMeta().getMethodString());
-            log.debug(str);
+            LOG.debug(str);
         }
-        
-        for(Executable exe : getQueue()){
+
+        for (Executable exe : getQueue()) {
             exe.execute();
         }
-        
-        for(TryCatchInfo tci : tryCatches){
-        	if(tci.getEnd().getOffset() - tci.getStart().getOffset() > 0)
-        	{
-        		Type type = tci.getException();
-                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHander(), type == null || type == AnyException.ANY.getType() ? null : type);
-        	}
+
+        for (TryCatchInfo tci : tryCatches) {
+            if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
+                Type type = tci.getException();
+                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHander(), type == null
+                        || type == AnyException.ANY.getType() ? null : type);
+            }
         }
-        
-        
+
     }
-    
 
     /**
      * 
@@ -143,26 +141,24 @@ public abstract class AbstractMethodBody extends ProgramBlockInternal {
             com = coms.get(i);
             if (com instanceof ScopeLogicVariable) {
                 ScopeLogicVariable slv = (ScopeLogicVariable) com;
-                if(slv.isAnonymous()){
+                if (slv.isAnonymous()) {
                     continue;
                 }
-                insnHelper.declarationVariable(slv.getName(), slv
-                        .getDeclareType().getDescriptor(), null, slv.getSpecifiedStartLabel(), parent
-                        .getEnd(), slv.getInitStartPos());
+                insnHelper.declarationVariable(slv.getName(), slv.getDeclareType().getDescriptor(), null,
+                        slv.getSpecifiedStartLabel(), parent.getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;
                 declarationVariable(lastBrotherScope);
             }
         }
     }
-    
-    public void addTryCatchInfo(Label start, Label end, Label handler, Type exception){
+
+    public void addTryCatchInfo(Label start, Label end, Label handler, Type exception) {
         addTryCatchInfo(new TryCatchInfo(start, end, handler, exception));
     }
-    
-    public void addTryCatchInfo(TryCatchInfo info)
-    {
-        tryCatches.add(info);	
+
+    public void addTryCatchInfo(TryCatchInfo info) {
+        tryCatches.add(info);
     }
-    
+
 }

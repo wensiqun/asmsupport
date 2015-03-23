@@ -37,7 +37,7 @@ public abstract class GlobalVariable extends ExplicitVariable implements Crement
         return meta;
     }
     
-   /* private static Log log = LogFactory.getLog(GlobalVariable.class);
+   /* private static final Log LOG = LogFactory.getLog(GlobalVariable.class);
     
     private GlobalVariableMeta globalVariableMeta;
     

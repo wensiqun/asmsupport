@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
  */
 public class GlobalVariableAssigner_BAK extends Assigner {
 
-    private static Log log = LogFactory.getLog(GlobalVariableAssigner_BAK.class);
+    private static final Log LOG = LogFactory.getLog(GlobalVariableAssigner_BAK.class);
     
     private GlobalVariable var;
     
@@ -44,8 +44,8 @@ public class GlobalVariableAssigner_BAK extends Assigner {
 
     @Override
     public void doExecute() {
-    	if(log.isDebugEnabled()){
-            log.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+    	if(LOG.isDebugEnabled()){
+            LOG.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
         

@@ -84,25 +84,20 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }*/
     
     @Override
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return head == null;
     }
 
     @Override
-    public boolean contains(Object o)
-    {
-        if(o instanceof LinkedListNode)
-        {
-            LinkedListNode node = (LinkedListNode)o;
-            if(node.next() != null || node.previous() != null)
-            {
+    public boolean contains(Object o) {
+        if (o instanceof LinkedListNode) {
+            LinkedListNode node = (LinkedListNode) o;
+            if (node.next() != null || node.previous() != null) {
                 return true;
             }
         }
@@ -111,8 +106,7 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Iterator<E> iterator()
-    {
+    public Iterator<E> iterator() {
         /*if(head == null){
             return (Iterator<E>) ListUtils.EMPTY_LIST;
         }*/
@@ -143,8 +137,7 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }*/
 
     @Override
-    public boolean add(E e)
-    {
+    public boolean add(E e) {
         /*LinkedListNode newLast = e;
         size++;
         while(newLast.hasNext()){
@@ -166,21 +159,17 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }
 
     @Override
-    public boolean remove(Object o)
-    {
-        if(o instanceof LinkedListNode)
-        {
-            LinkedListNode node = ((LinkedListNode)o);
-            if(node == head)
-            {
+    public boolean remove(Object o) {
+        if (o instanceof LinkedListNode) {
+            LinkedListNode node = ((LinkedListNode) o);
+            if (node == head) {
                 head = (E) node.next();
             }
-            
-            if(node == last)
-            {
+
+            if (node == last) {
                 last = (E) node.previous();
             }
-            
+
             node.remove();
             size--;
             return true;
@@ -189,18 +178,13 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }
 
     @Override
-    public boolean removeFrom(E start)
-    {
-        if(head == start)
-        {
+    public boolean removeFrom(E start) {
+        if (head == start) {
             clear();
-        }
-        else
-        {
+        } else {
             last = (E) start.previous();
             last.setNext(null);
-            while(start != null)
-            {
+            while (start != null) {
                 size--;
                 start = (E) start.next();
             }
@@ -209,79 +193,62 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }
 
     @Override
-    public void clear()
-    {
+    public void clear() {
         head = last = null;
         size = 0;
     }
 
     @Override
-    public boolean addAfter(E desc, E addNode)
-    {
+    public boolean addAfter(E desc, E addNode) {
         return commonAdd(desc, addNode);
     }
 
     @Override
-    public boolean addBefore(E desc, E addNode)
-    {
-        if(desc == null)
-        {
+    public boolean addBefore(E desc, E addNode) {
+        if (desc == null) {
             return commonAdd(desc, addNode);
-        }
-        else
-        {
+        } else {
             return commonAdd(desc.previous(), addNode);
         }
     }
 
-
     @Override
-    public boolean setHead(E head)
-    {
+    public boolean setHead(E head) {
         return commonAdd(null, head);
     }
 
     @Override
-    public boolean setLast(E last)
-    {
+    public boolean setLast(E last) {
         return commonAdd(this.last, last);
     }
-    
+
     /**
      * 
      * 
-     * @param add  null : insert to head
+     * @param add
+     *            null : insert to head
      * @param after
      * @return
      */
-    private boolean commonAdd(LinkedListNode orig, E add)
-    {
+    private boolean commonAdd(LinkedListNode orig, E add) {
         LinkedListNode cursor = add;
         size++;
-        while(cursor.hasNext()){
+        while (cursor.hasNext()) {
             cursor = cursor.next();
             size++;
         }
-        
-        if(head == null)
-        {
+
+        if (head == null) {
             head = add;
             last = (E) cursor;
-        }
-        else
-        {
-            if(orig == null)
-            {
+        } else {
+            if (orig == null) {
                 cursor.setNext(head);
                 head = add;
-            }
-            else if(orig == last)
-            {
+            } else if (orig == last) {
                 orig.setNext(add);
                 last = (E) cursor;
-            }
-            else
-            {   
+            } else {
                 orig.setNext(add);
             }
         }
@@ -289,71 +256,58 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     }
 
     @Override
-    public E getHead()
-    {
+    public E getHead() {
         return (E) head;
     }
 
     @Override
-    public E getLast()
-    {
+    public E getLast() {
         return (E) last;
     }
 
     @Override
-    public boolean replace(E old, E newly)
-    {
+    public boolean replace(E old, E newly) {
         old.replace(newly);
         return true;
     }
 
-
     @Override
-    public boolean move(E src, E desc)
-    {
+    public boolean move(E src, E desc) {
         remove(src);
         addAfter(desc, src);
         return true;
     }
 
-
     @Override
-    public boolean moveToLast(E src)
-    {
+    public boolean moveToLast(E src) {
         move(src, last);
         return true;
     }
-    
-    
-    private class Itr implements Iterator<LinkedListNode>
-    {
+
+    private class Itr implements Iterator<LinkedListNode> {
 
         private LinkedListNode cursor;
-        
-        private Itr(LinkedListNode root)
-        {
+
+        private Itr(LinkedListNode root) {
             cursor = root;
         }
-        
+
         @Override
-        public boolean hasNext()
-        {
+        public boolean hasNext() {
             return cursor != null;
         }
 
         @Override
-        public LinkedListNode next()
-        {
+        public LinkedListNode next() {
             LinkedListNode curr = cursor;
             cursor = cursor.next();
             return curr;
         }
 
         @Override
-        public void remove()
-        {
+        public void remove() {
             throw new UnsupportedOperationException();
         }
-        
+
     }
 }

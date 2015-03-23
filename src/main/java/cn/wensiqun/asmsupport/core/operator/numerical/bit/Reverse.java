@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class Reverse extends UnaryBitwise {
 
-    private static Log log = LogFactory.getLog(Reverse.class);
+    private static final Log LOG = LogFactory.getLog(Reverse.class);
     
     protected Reverse(ProgramBlockInternal block, Parameterized factor) {
         super(block, factor);
@@ -40,10 +40,10 @@ public class Reverse extends UnaryBitwise {
 
     @Override
     public void doExecute() {
-        log.debug("start inverts operaotr : " + this.operator);
-        log.debug("factor to stack");
+        LOG.debug("start inverts operaotr : " + this.operator);
+        LOG.debug("factor to stack");
         factorToStack();
-        log.debug("start invert");
+        LOG.debug("start invert");
         insnHelper.inverts(targetClass.getType());
     }
 

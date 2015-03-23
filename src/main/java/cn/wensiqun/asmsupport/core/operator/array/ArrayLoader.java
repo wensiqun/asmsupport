@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
  */
 public class ArrayLoader extends AbstractArrayOperator implements Parameterized {
 
-    private static Log log = LogFactory.getLog(ArrayLoader.class);
+    private static final Log LOG = LogFactory.getLog(ArrayLoader.class);
     
     private AClass valueClass;
     
@@ -64,7 +64,7 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
         if(parDims != null && parDims.length > cls.getDimension()){
             throw new ArrayOperatorException(toString() + " dimension not enough!");
         }
-        log.debug("start load array value");
+        LOG.debug("start load array value");
         getValue();
     }
 

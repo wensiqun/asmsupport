@@ -8,6 +8,7 @@ import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
@@ -48,7 +49,7 @@ public class MainTest {
 			main(null);
 			Assert.assertTrue(false);
 		}catch(NoSuchMethod e){
-			Assert.assertTrue(true);
+	        Assert.assertTrue(true);
 		}catch(Throwable e){
 			Assert.assertTrue(false);
 		}

@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public class StaticMethodInvoker extends MethodInvoker {
 
-    private static Log log = LogFactory.getLog(StaticMethodInvoker.class);
+    private static final Log LOG = LogFactory.getLog(StaticMethodInvoker.class);
     
     protected StaticMethodInvoker(ProgramBlockInternal block, AClass owner, String name,
             Parameterized[] arguments) {
@@ -55,7 +55,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     public void doExecute() {
         //参数入栈
         argumentsToStack();
-        log.debug("invoke static method : " + name);
+        LOG.debug("invoke static method : " + name);
         insnHelper.invokeStatic(methodOwner.getType(), name, getReturnType(), mtdEntity.getArgTypes());
         if(!isSaveReference()){
             if(!getReturnType().equals(Type.VOID_TYPE)){

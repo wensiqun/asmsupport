@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 public class ArrayLength extends AbstractArrayOperator implements Parameterized {
 
 
-    private static Log log = LogFactory.getLog(ArrayLength.class);
+    private static final Log LOG = LogFactory.getLog(ArrayLength.class);
     
     private boolean useByOther;
     
@@ -52,9 +52,9 @@ public class ArrayLength extends AbstractArrayOperator implements Parameterized 
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
         InstructionHelper ih = block.getInsnHelper();
-        if(log.isDebugEnabled()) log.debug("start get length of array");
+        if(LOG.isDebugEnabled()) LOG.debug("start get length of array");
         getValue();
-        if(log.isDebugEnabled()) log.debug("got length and push to stack");
+        if(LOG.isDebugEnabled()) LOG.debug("got length and push to stack");
         ih.arrayLength();
     }
 

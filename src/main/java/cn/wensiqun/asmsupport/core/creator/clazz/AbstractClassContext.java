@@ -37,10 +37,7 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
     protected boolean existedStaticBlock;
 	
     protected ClassWriter cw;
-    
-    /**
-     * 
-     */
+
     private   ClassLoader parentClassLoader;
     
 	protected void checkStaticBlock(){
@@ -60,7 +57,7 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         	}
         	classLoader.defineClass(name, b);
         	clazz = classLoader.findClass(name);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new ASMSupportException("Error on define class " + name, e);
         }
         return clazz;

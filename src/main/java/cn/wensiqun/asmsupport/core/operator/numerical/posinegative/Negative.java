@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class Negative extends AbstractPositiveNegative {
 
-    private static Log log = LogFactory.getLog(Negative.class);
+    private static final Log LOG = LogFactory.getLog(Negative.class);
     
     protected Negative(ProgramBlockInternal block, Parameterized factor) {
         super(block, factor);
@@ -39,7 +39,7 @@ public class Negative extends AbstractPositiveNegative {
     
     @Override
     public void doExecute() {
-        log.debug("run the negative operator");
+        LOG.debug("run the negative operator");
         factorToStack();
         insnHelper.neg(factor.getParamterizedType().getType());
     }

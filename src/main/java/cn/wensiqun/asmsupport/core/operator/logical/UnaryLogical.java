@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public abstract class UnaryLogical extends AbstractLogical {
     
-    private static Log log = LogFactory.getLog(BinaryBitwise.class);
+    private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
     protected Parameterized factor;
     
@@ -70,7 +70,7 @@ public abstract class UnaryLogical extends AbstractLogical {
 
 	@Override
     protected void factorToStack() {
-        log.debug("factors to stack");
+        LOG.debug("factors to stack");
         factor.loadToStack(block);
         insnHelper.unbox(factor.getParamterizedType().getType());
     }

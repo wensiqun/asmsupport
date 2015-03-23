@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
  */
 public abstract class NumericalAndReferenceRelational extends AbstractRelational {
     
-    private static Log log = LogFactory.getLog(NumericalRelational.class);
+    private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
     
     protected NumericalAndReferenceRelational(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
@@ -62,11 +62,11 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
         
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             
-            log.debug("push the first factor to stack");
+            LOG.debug("push the first factor to stack");
             factor1.loadToStack(block);
             
             if(!ftrCls1.isPrimitive()){
-                log.debug("unbox " + ftrCls1);
+                LOG.debug("unbox " + ftrCls1);
                 insnHelper.unbox(ftrCls1.getType());
             }
             
@@ -76,31 +76,31 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             if(isNumerical){
                 if(!ftrCls1.equals(targetClass) &&
                    targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()){
-                    log.debug("cast from " + ftrCls1 + " to " + targetClass);
+                    LOG.debug("cast from " + ftrCls1 + " to " + targetClass);
                     insnHelper.cast(ftrCls1.getType(), targetClass.getType());
                 }
             }
 
-            log.debug("push the second factor to stack");
+            LOG.debug("push the second factor to stack");
             factor2.loadToStack(block);
             
             if(!ftrCls2.isPrimitive()){
-                log.debug("unbox " + ftrCls1);
+                LOG.debug("unbox " + ftrCls1);
                 insnHelper.unbox(ftrCls2.getType());
             }
             
             if(isNumerical){
                 if(!ftrCls2.equals(targetClass) &&
                    targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()){
-                    log.debug("cast from " + ftrCls2 + " to " + targetClass);
+                    LOG.debug("cast from " + ftrCls2 + " to " + targetClass);
                     insnHelper.cast(ftrCls2.getType(), targetClass.getType());
                 }
             }
         }else{
-            log.debug("push the first factor to stack");
+            LOG.debug("push the first factor to stack");
             factor1.loadToStack(block);
             
-            log.debug("push the second factor to stack");
+            LOG.debug("push the second factor to stack");
             factor2.loadToStack(block);
         }
     }

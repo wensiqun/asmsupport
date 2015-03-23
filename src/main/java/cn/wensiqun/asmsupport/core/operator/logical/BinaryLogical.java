@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
  */
 public abstract class BinaryLogical extends AbstractLogical {
     
-    private static Log log = LogFactory.getLog(BinaryBitwise.class);
+    private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
     protected Parameterized factor1;
     protected Parameterized factor2;
@@ -70,7 +70,7 @@ public abstract class BinaryLogical extends AbstractLogical {
 
     @Override
     protected void factorToStack() {
-        log.debug("factors to stack");
+        LOG.debug("factors to stack");
         factor1.loadToStack(block);
         insnHelper.unbox(factor1.getParamterizedType().getType());
         

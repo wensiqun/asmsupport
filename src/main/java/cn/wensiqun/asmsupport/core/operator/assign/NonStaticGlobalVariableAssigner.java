@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
  */
 public class NonStaticGlobalVariableAssigner extends Assigner {
 
-    private static Log log = LogFactory.getLog(NonStaticGlobalVariableAssigner.class);
+    private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariableAssigner.class);
     
     private NonStaticGlobalVariable var;
     
@@ -42,8 +42,8 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
 
     @Override
     public void doExecute() {
-    	if(log.isDebugEnabled()){
-            log.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+    	if(LOG.isDebugEnabled()){
+            LOG.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
     	//如果当前方法是静态的抛异常

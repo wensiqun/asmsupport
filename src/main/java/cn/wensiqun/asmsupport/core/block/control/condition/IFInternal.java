@@ -23,70 +23,64 @@ import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
 
-public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal>
-{
+public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal> {
     private Parameterized condition;
-    
-    public IFInternal(Parameterized condition)
-    {
+
+    public IFInternal(Parameterized condition) {
         this.condition = condition;
         condition.asArgument();
     }
-    
+
     @Override
-    protected void init()
-    {
-        if(!condition.getParamterizedType().equals(AClass.BOOLEAN_WRAP_ACLASS) &&
-            !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS) ){
-             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was " + condition.getParamterizedType());
-         }
+    protected void init() {
+        if (!condition.getParamterizedType().equals(AClass.BOOLEAN_WRAP_ACLASS)
+                && !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS)) {
+            throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
+                    + condition.getParamterizedType());
+        }
     }
 
     @Override
-    public void generate()
-    {
+    public void generate() {
         body();
     }
 
     @Override
-    protected void doExecute()
-    {
+    protected void doExecute() {
         Label posLbl = new Label();
-        
-        if(condition instanceof Jumpable){
-            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());//.executeJump(Opcodes.JUMP_NEGATIVE, endLbl);
-        }else{
+
+        if (condition instanceof Jumpable) {
+            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());// .executeJump(Opcodes.JUMP_NEGATIVE,
+                                                                        // endLbl);
+        } else {
             condition.loadToStack(this);
             insnHelper.unbox(condition.getParamterizedType().getType());
             insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
-        
+
         insnHelper.mark(posLbl);
-        for(ByteCodeExecutor exe : getQueue()){
+        for (ByteCodeExecutor exe : getQueue()) {
             exe.execute();
         }
-        
-        if(nextBranch != null)
-        {
-        	insnHelper.goTo(getSerialEnd());
+
+        if (nextBranch != null) {
+            insnHelper.goTo(getSerialEnd());
         }
-        
+
     }
 
     @Override
-    public ElseIFInternal elseif(ElseIFInternal elsIf)
-    {
-    	initNextBranch(elsIf);
-    	return elsIf;
+    public ElseIFInternal elseif(ElseIFInternal elsIf) {
+        initNextBranch(elsIf);
+        return elsIf;
     }
-    
+
     @Override
-    public ElseInternal else_(ElseInternal els)
-    {
-    	initNextBranch(els);
-    	return els;
+    public ElseInternal else_(ElseInternal els) {
+        initNextBranch(els);
+        return els;
     }
-    
+
     @Override
     public String toString() {
         return "IF Block:" + condition.toString();

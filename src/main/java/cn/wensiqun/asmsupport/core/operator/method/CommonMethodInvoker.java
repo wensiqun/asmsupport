@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public class CommonMethodInvoker extends MethodInvoker {
 	
-	private static Log log = LogFactory.getLog(CommonMethodInvoker.class);
+	private static final Log LOG = LogFactory.getLog(CommonMethodInvoker.class);
     
 	private Parameterized callObjReference;
 	
@@ -68,16 +68,16 @@ public class CommonMethodInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            log.debug("put reference to stack");
+            LOG.debug("put reference to stack");
             //变量入栈
             callObjReference.loadToStack(block);
             argumentsToStack();
             if(callObjReference.getParamterizedType().isInterface()){
-            	log.debug("invoke interface method : " + name);
+            	LOG.debug("invoke interface method : " + name);
                 //如果是接口
                 insnHelper.invokeInterface(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
-                log.debug("invoke class method : " + name);
+                LOG.debug("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VariableMeta ve = ((IVariable)callObjReference).getVariableMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){

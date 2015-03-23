@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class Multiplication extends AbstractArithmetic {
 
-    private static Log log = LogFactory.getLog(Multiplication.class);
+    private static final Log LOG = LogFactory.getLog(Multiplication.class);
     
     protected Multiplication(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
@@ -41,9 +41,9 @@ public class Multiplication extends AbstractArithmetic {
 
     @Override
     public void doExecute() {
-        log.debug("start execute sub arithmetic operator");
+        LOG.debug("start execute sub arithmetic operator");
         factorToStack();
-        log.debug("execute the sub instruction");
+        LOG.debug("execute the sub instruction");
         insnHelper.mul(targetClass.getType());
     }
 

@@ -17,6 +17,8 @@ package cn.wensiqun.asmsupport.core.utils.lang;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+
 
 public class ClassFileUtils {
 	
@@ -41,7 +43,7 @@ public class ClassFileUtils {
                 fos.flush();
                 fos.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new ASMSupportException(e);
             }
         }
     	

@@ -29,12 +29,12 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
  */
 public abstract class NumericalRelational extends AbstractRelational {
 
-    private static Log log = LogFactory.getLog(NumericalRelational.class);
-    
+    private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
+
     protected NumericalRelational(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
         super(block, factor1, factor2);
     }
-    
+
     @Override
     protected void verifyArgument() {
         AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getParamterizedType());
@@ -56,7 +56,7 @@ public abstract class NumericalRelational extends AbstractRelational {
             switch (v.getType().getSort())
             {
                 case Type.BOOLEAN :
-                	return !((Boolean)v.getValue()).booleanValue();
+                    return !((Boolean)v.getValue()).booleanValue();
                 case Type.CHAR :
                     return ((Character)v.getValue()).charValue() == 0;
                 case Type.BYTE :
@@ -64,47 +64,46 @@ public abstract class NumericalRelational extends AbstractRelational {
                 case Type.SHORT :
                     return ((Short)v.getValue()).shortValue() == 0;
                 case Type.INT :
-                	return ((Integer)v.getValue()).intValue() == 0;
+                    return ((Integer)v.getValue()).intValue() == 0;
                 case Type.FLOAT :
-                	return ((Float)v.getValue()).floatValue() == 0;
+                    return ((Float)v.getValue()).floatValue() == 0;
                 case Type.LONG :
-                	return ((Long)v.getValue()).longValue() == 0;
+                    return ((Long)v.getValue()).longValue() == 0;
                 case Type.DOUBLE :
-                	return ((Double)v.getValue()).doubleValue() == 0;
+                    return ((Double)v.getValue()).doubleValue() == 0;
             }
         }
         return false;
     }*/
-
+    
     @Override
     protected void factorsToStack() {
         pushFactorToStack(factor1);
         pushFactorToStack(factor2);
     }
-    
-    private void pushFactorToStack(Parameterized factor){
-        
+
+    private void pushFactorToStack(Parameterized factor) {
+
         AClass factorCls = factor.getParamterizedType();
-        
-        //factor to stack
-        log.debug("push the first arithmetic factor to stack");
+
+        // factor to stack
+        LOG.debug("push the first arithmetic factor to stack");
         factor.loadToStack(block);
-        
+
         AClass factorPrimitiveAClass = factorCls;
-        //unbox if needs
-        if(!factorCls.isPrimitive()){
-            log.debug("unbox " + factorCls);
+        // unbox if needs
+        if (!factorCls.isPrimitive()) {
+            LOG.debug("unbox " + factorCls);
             insnHelper.unbox(factorCls.getType());
             factorPrimitiveAClass = AClassUtils.getPrimitiveAClass(factorCls);
         }
-        
-        //cast if needs
-        if(factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder() &&
-           targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder())
-        {
-            log.debug("cast factor from " + factorCls + " to " + targetClass);
-            insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());    
+
+        // cast if needs
+        if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
+                && targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()) {
+            LOG.debug("cast factor from " + factorCls + " to " + targetClass);
+            insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }
     }
-    
+
 }

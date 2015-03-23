@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
  */
 public class StaticGlobalVariableAssigner extends Assigner {
 
-    private static Log log = LogFactory.getLog(StaticGlobalVariableAssigner.class);
+    private static final Log LOG = LogFactory.getLog(StaticGlobalVariableAssigner.class);
     
     private StaticGlobalVariable var;
     
@@ -39,8 +39,8 @@ public class StaticGlobalVariableAssigner extends Assigner {
 
     @Override
     public void doExecute() {
-    	if(log.isDebugEnabled()){
-            log.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+    	if(LOG.isDebugEnabled()){
+            LOG.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
         

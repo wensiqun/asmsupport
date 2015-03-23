@@ -84,25 +84,16 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     
     @Override
     public final void generate() {
-        //?
-        //?new NOP(getExecutor());
         if(iteratorVar.getParamterizedType().isArray()){
             final LocalVariable i = var(null, AClass.INT_ACLASS, true, Value.value(0));
             
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), conditionLbl);
-            //new GOTO(getExecutor(), conditionLbl);
-            
-            //?new NOP(getExecutor());
-            
 
             OperatorFactory.newOperator(Marker.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), startLbl);
-            //new Marker(getExecutor(), startLbl);
-            
-            //?new NOP(getExecutor());
             
             LocalVariable obj = var(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), arrayLoad(iteratorVar, i) );
             body(obj);

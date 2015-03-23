@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
 public class NonStaticGlobalVariable extends GlobalVariable {
 
-    private static Log LOG = LogFactory.getLog(NonStaticGlobalVariable.class);
+    private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariable.class);
     
     private IVariable owner;
     
