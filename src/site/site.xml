@@ -19,6 +19,7 @@
         <item name="条件控制" href="bytecode/condition_block.html"/>
         <item name="枚举类型" href="bytecode/enum.html"/>
         <item name="字节码Label" href="bytecode/label.html"/>
+        <item name="Java栈" href="bytecode/stack_simple_desc.html"/>
     </menu>
     <menu name="实现原理">
         <item name="枚举类型" href="bytecode/enum.html"/>
