@@ -214,6 +214,12 @@
 
     dummy.setClassLoader(classloader);
 
+## 设置class文件输出目录
+
+    dummy.setClassOutPutPath("../classes/");
+    
+设置这个属性，我们生成的class将会输出到指定目录，这样我们可以通过反编译大致看下class内容是否和预期相同。
+
 ## 开始创建
 
     Class<?> clazz = dummy.build();    

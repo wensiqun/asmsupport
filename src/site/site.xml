@@ -11,14 +11,17 @@
         <item name="创建接口" href="manual/interface.html"/>
         <item name="创建类" href="manual/class.html"/>
         <item name="创建枚举" href="manual/enum.html"/>
+        <item name="修改类" href="manual/modify_class.html"/>
     </menu>
     <menu name="字节码相关">
         <item name="init方法与clinit方法" href="bytecode/init_clinit.html"/>
         <item name="变量声明" href="bytecode/declare_variable.html"/>
         <item name="条件控制" href="bytecode/condition_block.html"/>
         <item name="枚举类型" href="bytecode/enum.html"/>
+        <item name="字节码Label" href="bytecode/label.html"/>
     </menu>
     <menu name="实现原理">
+        <item name="枚举类型" href="bytecode/enum.html"/>
     </menu>
     <menu name="Other">
         <item name="FQA" href="faq.html"></item>

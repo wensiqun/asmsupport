@@ -96,7 +96,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				call(out, "println", Value.value("before"));
-				LocalVariable lv = this.var(null, getOriginalMethodReturnClass(), true, callOrig());
+				LocalVariable lv = this.var(null, getOrigReturnType(), true, callOrig());
 				call(out, "println", Value.value("after"));	
 				return_(lv);
 			}

@@ -32,8 +32,9 @@ import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 public abstract class ModifiedMethodBodyInternal extends MethodBodyInternal implements IModifiedMethodBody {
     
 	private List<VisitXInsnAdapter> superConstructorOperators;
-	
-    public AClass getOriginalMethodReturnClass(){
+
+    @Override
+    public AClass getOrigReturnType(){
     	return getMethod().getMethodMeta().getReturnClass();
     }
     

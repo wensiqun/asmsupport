@@ -33,8 +33,9 @@ public abstract class ModifiedMethodBody extends ProgramBlock<ModifiedMethodBody
 	     };
 	}
 
-	public AClass getOriginalMethodReturnClass(){
-		return target.getOriginalMethodReturnClass();
+	@Override
+	public AClass getOrigReturnType(){
+		return target.getOrigReturnType();
 	}
 
 }
