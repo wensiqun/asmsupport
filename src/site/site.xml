@@ -22,7 +22,7 @@
         <item name="Java栈" href="bytecode/stack_simple_desc.html"/>
     </menu>
     <menu name="实现原理">
-        <item name="枚举类型" href="bytecode/enum.html"/>
+        <item name="局部变量的实现" href="theory/localvariable.html"/>
     </menu>
     <menu name="Other">
         <item name="FQA" href="faq.html"></item>
