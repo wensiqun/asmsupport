@@ -256,7 +256,7 @@ public abstract class AClass implements GetGlobalVariabled{
         }
 
         Class<?> superCls = getSuperClass();
-        Class<?>[] interfaces = getInterfaces();
+        Class<?>[] tempInterfaces = getInterfaces();
 
         boolean interResult = false;
         
@@ -267,8 +267,8 @@ public abstract class AClass implements GetGlobalVariabled{
             }
         }
         
-        if(interfaces != null){
-            for(Class<?> c : interfaces){
+        if(tempInterfaces != null){
+            for(Class<?> c : tempInterfaces){
                 interResult = AClassFactory.defType(c).isChildOrEqual(cls);
                 if(interResult){
                     return true;

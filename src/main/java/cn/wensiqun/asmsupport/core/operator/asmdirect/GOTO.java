@@ -37,17 +37,17 @@ public class GOTO extends ASMDirect {
 
     @Override
     protected void verifyArgument() {
-        
+        // Do nothing
     }
 
     @Override
     protected void checkCrement() {
-        
+        // Do nothing
     }
 
     @Override
     protected void checkAsArgument() {
-        
+        // Do nothing
     }
     
     @Override

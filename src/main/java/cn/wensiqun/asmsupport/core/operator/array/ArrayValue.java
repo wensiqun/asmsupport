@@ -124,7 +124,9 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
     		//check verify
     		int dim = new EachValue(values){
 				@Override
-				void process(Parameterized para) {}
+				void process(Parameterized para) {
+				    //Nothing TO DO
+				}
     		}.process();
     		if(arrayCls.getDimension() != dim){
                 throw new IllegalArgumentException("different dimension : value dimension is " + dim + ", class(" + arrayCls + ") dimension is " + arrayCls.getDimension());

@@ -188,14 +188,8 @@ public class AClassUtils {
                 } else {
                     if (invoker.getPackage().equals(invoked.getPackage())) {
                         return true;
-                    } else {
-                        // 如果是保护类型
-                        if (Modifier.isProtected(mod)) {
-                            // 如果是子类
-                            if (invoker.isChildOrEqual(invoked)) {
-                                return true;
-                            }
-                        }
+                    } else if (Modifier.isProtected(mod) && invoker.isChildOrEqual(invoked)){
+                        return true;
                     }
                 }
             }

@@ -124,6 +124,7 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	
 	@Override
 	protected final void createDefaultConstructor() {
+        // Do nothing
 	}
 
 }

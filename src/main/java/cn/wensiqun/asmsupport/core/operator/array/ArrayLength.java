@@ -52,9 +52,13 @@ public class ArrayLength extends AbstractArrayOperator implements Parameterized 
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
         InstructionHelper ih = block.getInsnHelper();
-        if(LOG.isDebugEnabled()) LOG.debug("start get length of array");
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("start get length of array");
+        }
         getValue();
-        if(LOG.isDebugEnabled()) LOG.debug("got length and push to stack");
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("got length and push to stack");
+        }
         ih.arrayLength();
     }
 

@@ -94,7 +94,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	public Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods(){
 		
 		@SuppressWarnings("serial")
-		MultiValueMap<AClass,AMethodMeta> potentially = new LinkedMultiValueMap<AClass, AMethodMeta>(){
+		MultiValueMap<AClass,AMethodMeta> tempPotentially = new LinkedMultiValueMap<AClass, AMethodMeta>(){
 
 			@Override
 			public void add(AClass key, AMethodMeta value) {
@@ -196,22 +196,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		if(directCallClass instanceof SemiClass){
 			if(ASConstant.INIT.equals(name)){
 				for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
-					potentially.add(directCallClass, method.getMethodMeta());
+					tempPotentially.add(directCallClass, method.getMethodMeta());
 				}
 			}else{
 				for(AMethod method : ((SemiClass)directCallClass).getMethods()){
-					potentially.add(directCallClass, method.getMethodMeta());
+					tempPotentially.add(directCallClass, method.getMethodMeta());
 				}
 			}
 			reallyClass = directCallClass.getSuperClass();
 		}else if(directCallClass instanceof ProductClass){
 			if(ASConstant.INIT.equals(name)){
 				for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
-					potentially.add(directCallClass, method.getMethodMeta());
+					tempPotentially.add(directCallClass, method.getMethodMeta());
 				}
 			}else{
 				for(AMethod method : ((ProductClass)directCallClass).getMethods()){
-					potentially.add(directCallClass, method.getMethodMeta());
+					tempPotentially.add(directCallClass, method.getMethodMeta());
 				}
 			}
 			reallyClass = ((ProductClass) directCallClass).getReallyClass();
@@ -220,11 +220,11 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		}
 		
 		try {
-			fetchMatchMethod(potentially, reallyClass, name);
+			fetchMatchMethod(tempPotentially, reallyClass, name);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		return potentially;
+		return tempPotentially;
 	}
 	
 	/**

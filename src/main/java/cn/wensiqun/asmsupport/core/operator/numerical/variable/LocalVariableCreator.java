@@ -42,6 +42,8 @@ public class LocalVariableCreator extends AbstractOperator {
 	}
 	
 	@Override
-	protected void doExecute() {}
+	protected void doExecute() {
+        //Nothing TO DO
+	}
 
 }

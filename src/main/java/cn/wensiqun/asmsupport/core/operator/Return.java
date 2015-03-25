@@ -57,17 +57,16 @@ public class Return extends BreakStack {
 
     @Override
     protected void verifyArgument() {
-        
+        // Do nothing
     }
 
     @Override
     protected void checkAsArgument() {
-        
+        // Do nothing
     }
     
     @Override
     public void breakStackExecuting() {
-    	
         if(returner == null){
             LOG.debug("direct return from method");
             insnHelper.returnInsn();

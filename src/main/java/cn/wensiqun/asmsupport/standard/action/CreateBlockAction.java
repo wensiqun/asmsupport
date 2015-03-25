@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
  * @author wensiqun(at)163.com
  *
  */
-public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Synchronized> {
+public interface CreateBlockAction<TIF , TWhile, TDoWhile, TForEach, TTry, TSynchronized> {
 
     /**
      * 创建if程序块.
@@ -50,7 +50,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#else_(cn.wensiqun.asmsupport.block.control.Else)
      * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
      */
-    public _IF if_(_IF ifBlock);
+    public TIF if_(TIF ifBlock);
     
     /**
      * 
@@ -59,7 +59,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param whileLoop WhileLoop对象
      * @return {@link WhileInternal}
      */
-    public _While while_(_While whileLoop);
+    public TWhile while_(TWhile whileLoop);
     
     /**
      * 创建do...while程序块
@@ -67,7 +67,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param doWhileLoop DoWhileLoop对象
      * @return {@link DoWhileLoop}
      */
-    public _DoWhile dowhile(_DoWhile doWhile);
+    public TDoWhile dowhile(TDoWhile doWhile);
     
     /**
      * 创建for each程序块
@@ -75,7 +75,7 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param forEach ForEachLoop对象
      * @return {@link ForEachLoop}
      */
-    public _ForEach for_(final _ForEach forEach);
+    public TForEach for_(final TForEach forEach);
     
     
     /**
@@ -95,13 +95,13 @@ public interface CreateBlockAction<_IF , _While, _DoWhile, _ForEach, _Try, _Sync
      * @param tryPara
      * @return
      */
-    public _Try try_(final _Try tryPara);
+    public TTry try_(final TTry tryPara);
     
     /**
      * 创建Synchronized同步块
      * @param sync Synchronized对象
      * @return {@link SynchronizedInternal}
      */
-    public _Synchronized sync(_Synchronized sync);
+    public TSynchronized sync(TSynchronized sync);
 	
 }

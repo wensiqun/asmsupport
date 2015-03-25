@@ -428,18 +428,13 @@ public class Value implements IValue {
         if (cls.equals(type)) {
             return;
         }
-
         String valStr = value.toString();
         switch (type.getType().getSort()) {
         case Type.BOOLEAN:
             val.refactor(type, Boolean.parseBoolean(valStr));
             break;
         case Type.CHAR:
-            if (valStr.length() == 1) {
-                val.refactor(type, valStr.charAt(0));
-            } else {
-                val.refactor(type, Character.valueOf((char) Integer.parseInt(valStr)));
-            }
+            val.refactor(type, (char) Integer.parseInt(valStr));
             break;
         case Type.BYTE:
             val.refactor(type, Byte.parseByte(valStr));
@@ -567,6 +562,7 @@ public class Value implements IValue {
 
     @Override
     public void asArgument() {
+        // Do nothing
     }
 
     @Override
@@ -588,11 +584,7 @@ public class Value implements IValue {
                 return true;
             } else if (Modifier.isAbstract(curtyp.getModifiers()) && Modifier.isFinal(objtyp.getModifiers())) {
                 return false;
-            } else /*if (Modifier.isAbstract(objtyp.getModifiers()) && Modifier.isFinal(curtyp.getModifiers())) {
-                return false;
             } else {
-                return true;
-            }*/{
                 return !((Modifier.isAbstract(objtyp.getModifiers()) && Modifier.isFinal(curtyp.getModifiers())));
             }
         } else if (value == null && objval.value != null || objval.value == null && value != null) {

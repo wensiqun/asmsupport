@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
 
 public class DummyModifiedClass {
 
-    private Class<?> _original;
+    private Class<?> original;
 
     /** Specify the classloader */
     private ClassLoader classLoader;
@@ -47,7 +47,7 @@ public class DummyModifiedClass {
     
 
     public DummyModifiedClass(Class<?> original) {
-        this._original = original;
+        this.original = original;
     }
     
     /**
@@ -176,7 +176,7 @@ public class DummyModifiedClass {
      * @return
      */
     public Class<?> build() {
-        ClassModifier cmi = new ClassModifier(_original);
+        ClassModifier cmi = new ClassModifier(original);
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), dummy.getConstructorBody().target);    

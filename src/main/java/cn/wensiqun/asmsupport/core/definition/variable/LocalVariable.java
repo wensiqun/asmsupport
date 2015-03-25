@@ -106,11 +106,6 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
         }
     }
 
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(localVariableMeta.getDeclareType(), name);
-    }*/
-
     @Override
     public String toString() {
         return localVariableMeta.getName();

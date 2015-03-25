@@ -48,12 +48,41 @@ public abstract class InstructionHelper {
 
     private static final String CLDESC = "Ljava/lang/Class;";
 
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int EQ = Opcodes.IFEQ;
+
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int NE = Opcodes.IFNE;
+
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int LT = Opcodes.IFLT;
+
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int GE = Opcodes.IFGE;
+
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int GT = Opcodes.IFGT;
+
+    /**
+     * Constant for the {@link #ifCmp ifCmp} method.
+     */
+    public static final int LE = Opcodes.IFLE;
+
     /** 是否自动装箱和拆箱以及转换类型 */
     private boolean castAndbox = true;
 
     private StackLocalMethodVisitor mv;
     private AMethod method;
-    /* protected Stack stack; */
     protected LocalVariables locals;
 
     public InstructionHelper(MethodVisitor mv, AMethod method) {
@@ -80,10 +109,6 @@ public abstract class InstructionHelper {
     public void setMv(StackLocalMethodVisitor mv) {
         this.mv = mv;
     }
-
-    /*
-     * public Stack getStack() { return null; }
-     */
 
     // ------------------------------------------------------------------------
     // Instructions to push constants on the stack
@@ -268,7 +293,7 @@ public abstract class InstructionHelper {
         if (!castAndbox) {
             return;
         }
-
+        
         if (from != to) {
             if (from == Type.BOOLEAN_TYPE || to == Type.BOOLEAN_TYPE) {
                 throw new IllegalArgumentException("canot cast from boolean or to boolean type!");
@@ -301,8 +326,7 @@ public abstract class InstructionHelper {
                     mv.visitInsn(Opcodes.L2I);
                     cast(Type.INT_TYPE, to);
                 }
-            } else { // if ( from == Type.BYTE_TYPE || from == Type.SHORT_TYPE
-                     // || from == Type.CHAR_TYPE || from == Type.INT_TYPE ) {
+            } else { 
                 if (to == Type.BYTE_TYPE) {
                     mv.visitInsn(Opcodes.I2B);
                 } else if (to == Type.CHAR_TYPE) {
@@ -355,8 +379,9 @@ public abstract class InstructionHelper {
             return AClass.LONG_WRAP_ACLASS.getType();
         case Type.DOUBLE:
             return AClass.DOUBLE_WRAP_ACLASS.getType();
+        default :
+            return type;
         }
-        return type;
     }
 
     public static Type getUnBoxedType(final Type type) {
@@ -473,6 +498,7 @@ public abstract class InstructionHelper {
         case Type.BYTE:
             methodName = "byteValue";
             break;
+        default : break;
         }
         if (methodName != null) {
             invokeVirtual(type, methodName, primitiveType, new Type[0]);
@@ -982,47 +1008,20 @@ public abstract class InstructionHelper {
         mv.visitInsn(Opcodes.ARRAYLENGTH);
     }
 
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int EQ = Opcodes.IFEQ;
-
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int NE = Opcodes.IFNE;
-
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int LT = Opcodes.IFLT;
-
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int GE = Opcodes.IFGE;
-
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int GT = Opcodes.IFGT;
-
-    /**
-     * Constant for the {@link #ifCmp ifCmp} method.
-     */
-    public static final int LE = Opcodes.IFLE;
-
     public int getReverseCmp(int opcode) {
-        if (opcode == Opcodes.IFNONNULL)
+        if (opcode == Opcodes.IFNONNULL) {
             return Opcodes.IFNULL;
+        }
 
-        if (opcode == Opcodes.IFNULL)
+        if (opcode == Opcodes.IFNULL) {
             return Opcodes.IFNONNULL;
+        }
 
-        if (opcode % 2 == 0)
+        if (opcode % 2 == 0) {
             return opcode - 1;
-        else
+        } else {
             return opcode + 1;
+        }
     }
 
     /**
@@ -1057,8 +1056,9 @@ public abstract class InstructionHelper {
             case NE:
                 mv.visitJumpInsn(Opcodes.IF_ACMPNE, label);
                 return;
+            default : 
+                throw new IllegalArgumentException("Bad comparison for type " + type);
             }
-            throw new IllegalArgumentException("Bad comparison for type " + type);
         default:
             int intOp = -1;
             switch (mode) {

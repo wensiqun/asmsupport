@@ -24,7 +24,7 @@ public class BlockEndFlag extends AbstractOperator implements UnreachableCodeChe
 
 	@Override
 	protected void doExecute() {
-
+        // Do nothing
 	}
 
 }

@@ -60,6 +60,7 @@ public class Throw extends BreakStack {
 
     @Override
     protected void checkCrement() {
+        // Do nothing
     }
 
     @Override

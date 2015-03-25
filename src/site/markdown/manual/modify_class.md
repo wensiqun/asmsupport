@@ -4,7 +4,7 @@
 
 使用DummyModifiedClass修改class
 
-    1. DummyModifiedClass dummy = new DummyClass(A.class);
+    1. DummyModifiedClass dummy = new DummyModifiedClass(A.class);
 
 传入的A.class为希望修改的类
 

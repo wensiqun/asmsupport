@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 public class ClassNameRefactorAdapter extends ClassAdapter {
 	
 	private String originalName;
-	private String JVMProxyClassName;
+	private String jvmProxyClassName;
 	
 	public ClassNameRefactorAdapter(ClassVisitor cv) {
 		super(cv);
@@ -39,9 +39,9 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 	@Override
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
-		JVMProxyClassName = name + ASConstant.CLASS_PROXY_SUFFIX;
+		jvmProxyClassName = name + ASConstant.CLASS_PROXY_SUFFIX;
 		originalName = name;
-		super.visit(version, access, JVMProxyClassName, signature, superName, interfaces);
+		super.visit(version, access, jvmProxyClassName, signature, superName, interfaces);
 	}
 
 	
@@ -61,7 +61,7 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 		public void visitFieldInsn(int opcode, String owner, String name,
 				String desc) {
 			if(originalName.equals(owner)){
-				owner = JVMProxyClassName;
+				owner = jvmProxyClassName;
 			}
 			super.visitFieldInsn(opcode, owner, name, desc);
 		}
@@ -70,7 +70,7 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 		public void visitMethodInsn(int opcode, String owner, String name,
 				String desc) {
 			if(originalName.equals(owner)){
-				owner = JVMProxyClassName;
+				owner = jvmProxyClassName;
 			}
 			super.visitMethodInsn(opcode, owner, name, desc);
 		}
@@ -79,7 +79,7 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 		public void visitLocalVariable(String name, String desc,
 				String signature, Label start, Label end, int index) {
 			if(desc.equals("L" + originalName + ";")){
-				desc = "L" + JVMProxyClassName + ";";
+				desc = "L" + jvmProxyClassName + ";";
 			}
 			super.visitLocalVariable(name, desc, signature, start, end, index);
 		}
@@ -87,7 +87,7 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 	}
 	
 	public String getJVMProxyClassName() {
-		return JVMProxyClassName;
+		return jvmProxyClassName;
 	}
 	
 }

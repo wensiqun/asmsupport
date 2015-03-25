@@ -26,7 +26,7 @@ public class AnyException extends AClass {
 
     public static final AClass ANY = new AnyException();
 
-    AnyException() {
+    private AnyException() {
         try {
             Constructor<Type> con = Type.class.getDeclaredConstructor(int.class, char[].class, int.class, int.class);
             con.setAccessible(true);
@@ -104,6 +104,11 @@ public class AnyException extends AClass {
     @Override
     public boolean equals(Object obj) {
         return obj == ANY;
+    }
+
+    @Override
+    public int hashCode() {
+        return ANY.hashCode();
     }
 
     @Override

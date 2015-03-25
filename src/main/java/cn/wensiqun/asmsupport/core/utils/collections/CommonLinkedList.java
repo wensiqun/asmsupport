@@ -16,72 +16,13 @@ package cn.wensiqun.asmsupport.core.utils.collections;
 
 import java.util.Iterator;
 
-public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
-{
+public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E> {
     
     private E head;
     
     private E last;
     
     private int size = 0;
-    
-/*    
- * Unsupported index operation now!
- * private LinkedListNode[][] elementData;
-    
-    private int[]              elementDataColumnStatus;
-    
-    private int gap;
-    
-    private boolean useIndex;
-    
-    public CommonLinkedList(){
-        this(10, 2, true);
-    }
-    
-    public CommonLinkedList(int initElementDataSize, int gap, boolean useIndex)
-    {
-        
-    }
-    
-    private void ensureCapacity()
-    {
-        int ensureFirstDimSize = elementData.length;
-        for(Integer status : elementDataColumnStatus)
-        {
-            if(status == gap + 1)
-            {
-                ensureFirstDimSize += gap;
-            }
-        }
-        
-        boolean b = true;
-        if(ensureFirstDimSize == elementData.length)
-        {
-            return;
-        }
-        
-        LinkedListNode[][] temp = new LinkedListNode[ensureFirstDimSize][];
-        for(int i=0, j=0; i<elementData.length; i++)
-        {
-            LinkedListNode[] array = elementData[i];
-            if(elementDataColumnStatus[i] == gap + 1)
-            {
-                for(LinkedListNode node : array)
-                {
-                    temp[j] = new LinkedListNode[gap + 1];
-                    temp[j][0] = node;
-                    j++;
-                }
-            }
-            else
-            {
-                temp[j] = array;
-                j++;
-            }
-        }
-        elementData = temp;
-    }*/
     
     @Override
     public int size() {
@@ -107,54 +48,11 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<E> iterator() {
-        /*if(head == null){
-            return (Iterator<E>) ListUtils.EMPTY_LIST;
-        }*/
         return (Iterator<E>) new Itr(head) ;
     }
 
-    /*@Override
-    public Object[] toArray()
-    {
-        Object[] array = new Object[size];
-        LinkedListNode curr = head;
-        for(int i=0; i<size; i++, curr = head.next())
-        {
-            array[i] = curr;
-        }
-        return array;
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a)
-    {
-        LinkedListNode curr = head;
-        for(int i=0; i<size; i++, curr = head.next())
-        {
-            a[i] = (T) curr;
-        }
-        return a;
-    }*/
-
     @Override
     public boolean add(E e) {
-        /*LinkedListNode newLast = e;
-        size++;
-        while(newLast.hasNext()){
-            newLast = e.next();
-            size++;
-        }
-        if(head == null)
-        {
-            head = e;
-            last = newLast;
-        }
-        else
-        {
-            last.setNext(e);
-            last = e;
-        }
-        return true;*/
         return commonAdd(last, e);
     }
 

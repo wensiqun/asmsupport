@@ -21,25 +21,34 @@ import cn.wensiqun.asmsupport.standard.excep.ICatch;
 
 public abstract class Catch extends ProgramBlock<CatchInternal> implements ICatch<Catch, Finally> {
 
-	public Catch(AClass aclass) {
-		target = new CatchInternal(aclass) {
+    public Catch(AClass exceptionType) {
+        target = new CatchInternal(exceptionType) {
 
-			@Override
-			public void body(LocalVariable e) {
-				Catch.this.body(e);
-			}
-		};
-	}
-	
-    public Catch catch_(Catch catchBlock)
-    {
+            @Override
+            public void body(LocalVariable e) {
+                Catch.this.body(e);
+            }
+        };
+    }
+    
+    public Catch(Class<?> exceptionType) {
+        target = new CatchInternal(defType(exceptionType)) {
+
+            @Override
+            public void body(LocalVariable e) {
+                Catch.this.body(e);
+            }
+        };
+    }
+
+    public Catch catch_(Catch catchBlock) {
         target.catch_(catchBlock.target);
         return catchBlock;
     }
-    
+
     public Finally finally_(Finally finallyClient) {
-    	target.finally_(finallyClient.target);
-    	return finallyClient;
+        target.finally_(finallyClient.target);
+        return finallyClient;
     }
-	
+
 }
