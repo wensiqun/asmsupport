@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="anewarray"></a><b>anewarray</b> :
+  allocate new array for objects : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitMultiANewArrayInsn(java.lang.String,%20int)">visitMultiANewArrayInsn()</a></p><dl><dt>Description</dt><dd>anewarray allocates a new array for holding object references.
+It pops an int, <i xmlns="">size</i>, off the stack and constructs a new array capable
+of holding <i xmlns="">size</i> object references of the type indicated by &lt;type&gt;.<br></br>
+&lt;type&gt; indicates what types of object references are to be stored in the
+array (see aastore). It is the name of a class or an interface, or an array
+type descriptor. If it is java/lang/Object, for example, then any type
+of object reference can be stored in the array. &lt;type&gt; is resolved at
+runtime to a Java class, interface or array. See Chapter 7 for a discussion of
+how classes are resolved.<br></br>A reference to the new array is pushed onto the stack. Entries in the new array
+are initially set to null.</dd><dt>Exceptions</dt><dd>NegativeArraySizeException - <i xmlns="">size</i> is less than zero</dd><dt>Example</dt><dd><pre>
+; Allocate a 10-element array of for holding references to
+; Threads. This is like the Java code:
+;      Thread x[] = new Thread[10];
+bipush 10
+anewarray java/lang/Thread
+astore_1    ; store the new array in local variable 1
+; Allocate a multi-dimensional array like:
+;       new String[2][5]
+; using anewarray. First, allocate new 2-element array for holding 
+; arrays of strings and store it in local variable 1.
+iconst_2
+anewarray [Ljava/lang/String;      ; type descriptor for array-of-String
+astore_1
+; next, allocate first array of String[5] and store it in index 0
+aload_1
+iconst_0
+bipush 5
+anewarray java/lang/String
+aastore
+; finally, allocate second array of String[5] and store it in index 1
+aload_1
+iconst_1
+bipush 5
+anewarray java/lang/String
+aastore
+</pre></dd><dt>Notes</dt><dd>It is more efficient to use multianewarray to allocate
+multi-dimensional arrays.</dd><dt>See also</dt><dd><a href="ref-newarray.html">newarray</a> <a href="ref-.html"></a> <a href="ref-multianewarray.html">multianewarray</a> <a href="ref-.html"></a> <a href="ref-new.html">new</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>size</td>
+<td>arrayref</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>anewarray
+opcode = 0xBD (189)
+</td></tr>
+<tr>
+<td>
+u2 
+</td>
+<td>index</td></tr>
+</table></dd></dl></body></html>

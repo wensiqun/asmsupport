@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="athrow"></a><b>athrow</b> :
+  throw an  exception : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Removes objectref (a reference to an object) from the operand stack, and
+'throws' the exception represented by that object. objectref  is an instance of
+Throwable or one of its subclasses. <br></br>To throw an exception, the system searches for a handler for objectref's class
+in the exception table of the currently active method. <br></br>If no handler is found, the current method's frame is discarded, its invoker's
+frame is reinstated, and the exception is immediately rethrown. This process is
+repeated until a handler is found or until there are no more procedures on the
+callstack (at which point, the current thread dies, typically printing out an
+error message).<br></br>If a handler is found, the operand stack of the active method is cleared,
+<i xmlns="">objectref</i> is pushed on the operand stack of the current method, and
+execution continues at the first instruction of the handler. <br></br>See Chapter 10 for a full description of exceptions in the JVM.</dd><dt>Exceptions</dt><dd>NullPointerException - the <i xmlns="">objectref</i> on the stack is
+null.</dd><dt>Example</dt><dd><pre>
+; Throw an IOException. This is equivalent to the Java code:
+;
+;   throw new java.io.IOException();
+;
+new java/io/IOException          ; 1) create and initialize an IOException instance
+dup                                     
+invokespecial java/io/IOException/&lt;init&gt;()V 
+athrow                           ; 2) throw the IOException instance on the stack
+</pre></dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>objectref</td>
+<td>n/a</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>athrow
+opcode = 0xBF (191)
+</td></tr>
+</table></dd></dl></body></html>

@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="tableswitch"></a><b>tableswitch</b> :
+  jump according to a table : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitTableSwitchInsn(int,%20int,%20org.objectweb.asm.Label,%20org.objectweb.asm.Label[])">visitTableSwitchInsn()</a></p><dl><dt>Description</dt><dd>tableswitch is used to perform computed jump. The jump table
+used by tableswitch is given in the bytecode after the
+tableswitch opcode.<br></br>An integer, <i xmlns="">val</i>, is popped off the top of the operand stack. If this
+value is less than &lt;low&gt;, or if it is greater than &lt;high&gt;,
+execution branches to the address (<i xmlns="">pc</i> + <i xmlns="">default_offset</i>), where
+<i xmlns="">pc</i> is the address of the tableswitch opcode in the bytecode,
+and <i xmlns="">default_offset</i> is taken from the bytecode and is the relative
+address of the instruction at &lt;defaultLabel&gt;.<br></br>If val is in the range &lt;low&gt; to &lt;high&gt;, execution branches to the
+i'th entry in the table, where i is (<i xmlns="">val</i> - &lt;low&gt;) and the first
+entry in the table is <i xmlns="">index</i> 0. i.e. <i xmlns="">pc</i> becomes the address
+(<i xmlns="">pc</i> + table[<i xmlns="">val</i> - &lt;low&gt;]).<br></br>The following pseudo-code illustrates the computation performed by
+tableswitch:<br></br><pre>
+int val = pop();                // pop an int from the stack
+if (val &lt; low || val &gt; high) {  // if its less than &lt;low&gt; or greater than &lt;high&gt;,
+    pc += default;              // branch to default 
+} else {                        // otherwise
+    pc += table[val - low];     // branch to entry in table
+}
+</pre>
+Notice
+that all addresses stored in the table are relative to the address of the
+tableswitch opcode in the bytecode. If you are using Jasmin, these
+addresses are computed for you from the address of  the given labels.</dd><dt>Example</dt><dd><pre>
+    iload_1 ; push local variable 1 onto the stack
+    ; if the variable contains 0, jump to ZeroLabel
+    ; if the variable contains 1, jump to OneLabel
+    ; if the variable contains 2, jump to TwoLabel
+    ; otherwis jump to DefaultLabel
+    tableswitch 0 2
+        ZeroLabel
+        OneLabel
+        TwoLabel
+      default: DefaultLabel
+ZeroLabel:
+    ; the variable contained 0 ...
+    ldc 100
+    ireturn   ; return the result 100
+OneLabel:
+    ; the variable contained 1 ...
+    bipush 200
+    ireturn   ; return the result 200
+TwoLabel:
+    ; the variable contained 2 ...
+    bipush 300
+    ireturn   ; return the result 300
+DefaultLabel:
+    ; the variable contained something else ...
+    bipush 0
+    ireturn   ; return the result 0
+</pre></dd><dt>Notes</dt><dd>Addresses are measured in bytes from the start of the bytecode (i.e.
+address 0 is the first byte in the bytecode of the currently executing
+method).</dd><dt>See also</dt><dd><a href="ref-lookupswitch.html">lookupswitch</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>val</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>tableswitch
+opcode = 0xAA (170)
+</td></tr>
+<tr>
+<td>
+- 
+</td>
+<td>...0-3
+bytes of padding ...
+</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td><i>default_offset</i></td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>&lt;low&gt;</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>&lt;low&gt;
++ N - 1
+</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_1</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_2</td></tr>
+<tr>
+<td>
+... 
+</td>
+<td>...</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_N</td></tr>
+</table></dd></dl></body></html>

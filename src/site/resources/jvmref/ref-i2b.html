@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="i2b"></a><b>i2b</b> :
+  convert integer to byte : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Converts an integer to a signed byte.  A 32-bit int is popped off the
+stack, the top 24 bits are discarded (they are set to zero), then the resulting
+value is signed extended to an int.  The int result is pushed back onto the
+stack. <br></br>i2b is used in Java where there is a cast between an int and a byte. Notice
+that i2b can cause a change in sign. For example, in the code:<br></br><pre>
+    int x = -134;
+    byte b = (byte)x;
+</pre>
+The
+value of b is positive 122 - the sign bit of x is lost in the conversion.</dd><dt>See also</dt><dd><a href="ref-i2c.html">i2c</a> <a href="ref-.html"></a> <a href="ref-i2s.html">i2s</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value</td>
+<td>result</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>i2b
+opcode = 0x91 (145)
+</td></tr>
+</table></dd></dl></body></html>

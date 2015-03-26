@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="if_icmple"></a><b>if_icmple</b> :
+  jump if one integer is less than or equal to another : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitJumpInsn(int,%20org.objectweb.asm.Label)">visitJumpInsn()</a></p><dl><dt>Description</dt><dd>if_icmple pops the top two ints off the stack and compares
+them. If <i xmlns="">value2</i> is less than or equal to <i xmlns="">value1</i>, execution
+branches to the address (<i xmlns="">pc</i> + <i xmlns="">branchoffset</i>), where <i xmlns="">pc</i> is
+the address of the if_icmple opcode in the bytecode and
+<i xmlns="">branchoffset</i> is a 16-bit signed integer parameter following the
+if_icmple opcode in the bytecode. If <i xmlns="">value2</i> is greater than
+<i xmlns="">value1</i>, execution continues at the next instruction.<br></br>If you are using Jasmin, <i xmlns="">branchoffset</i> is computed for you from the
+address of &lt;label&gt;.</dd><dt>Example</dt><dd><pre>
+    iload_1         ; push the int value in local variable 1 onto the stack
+    bipush 2        ; push the int 2 onto the stack
+    if_icmple Label ; if the value of local variable 1 is &lt;= 2, jump to Label
+    return          ; return if local variable 1 is greater than 2
+Label:
+    ; execution continues here if local variable 1 is less than or equal to 2...
+</pre></dd><dt>Notes</dt><dd>Addresses are measured in bytes from the start of the bytecode (i.e.
+address 0 is the first byte in the bytecode of the currently executing
+method).</dd><dt>See also</dt><dd><a href="ref-if_icmpeq.html">if_icmpeq</a> <a href="ref-.html"></a> <a href="ref-if_icmpne.html">if_icmpne</a> <a href="ref-.html"></a> <a href="ref-if_icmplt.html">if_icmplt</a> <a href="ref-.html"></a> <a href="ref-if_icmpgt.html">if_icmpgt</a> <a href="ref-.html"></a> <a href="ref-if_icmpge.html">if_icmpge</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value1</td>
+<td>...</td></tr>
+<tr>
+<td>value2</td>
+<td>...</td></tr>
+<tr> <td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>if_icmple
+opcode = 0xA4 (164)
+</td></tr>
+<tr>
+<td>
+s2 
+</td>
+<td><i>branchoffset</i></td></tr>
+</table></dd></dl></body></html>

@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="iinc"></a><b>iinc</b> :
+  increment integer in local variable : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitIincInsn(int,%20int)">visitIincInsn()</a></p><dl><dt>Description</dt><dd>iinc increments the int held in the local variable
+&lt;varnum&gt; by &lt;n&gt;. The iinc instruction takes two
+parameters: &lt;varnum&gt; is an unsigned integer which indicates which local
+variable should be used. &lt;n&gt; is the integer amount to increment or
+decrement the variable by. &lt;varnum&gt; must be a valid local variable number
+in the current method's frame.</dd><dt>Example</dt><dd><pre>
+iinc 1 10       ; increment local variable 1 by 10.
+iinc 1 -1       ; decrement local variable 1 by 1.
+</pre></dd><dt>See also</dt><dd><a href="ref-wide.html">wide</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iinc
+opcode = 0x84 (132)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>&lt;varnum&gt;</td></tr>
+<tr>
+<td>
+s1 
+</td>
+<td>&lt;n&gt;</td></tr>
+</table>
+There
+is also a wide format for this instruction, which supports access to
+all local variables from 0 to 65535, and values of &lt;n&gt; between -32768 and
+32767:
+<table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>u1</td>
+<td>iinc
+opcode = 0x84 (132)
+</td></tr>
+<tr>
+<td>u2</td>
+<td>&lt;varnum&gt;</td></tr>
+<tr>
+<td>s2</td>
+<td>&lt;n&gt;</td></tr>
+</table></dd></dl></body></html>

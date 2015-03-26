@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="d2f"></a><b>d2f</b> :
+  convert double to float : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Pops a two-word double precision floating point number off of the
+operand stack, casts it into a single precision float, and pushes the resulting
+float back onto the stack. There is a loss of precision and range in the
+result.<br></br>This conversion is done in accordance with IEEE 754 specifications, with
+rounding using IEEE 754 round-to-nearest mode. <br></br>The sign of the value if preserved. A value which is too small to be
+represented as a float is converted to positive or negative zero. A value that
+is too large to be represented as a float is converted to positive infinity or
+negative infinity. If the value was NaN, the result is NaN.</dd><dt>See also</dt><dd><a href="ref-d2i.html">d2i</a> <a href="ref-.html"></a> <a href="ref-d2l.html">d2l</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>double-word1</td>
+<td>float-result</td></tr>
+<tr>
+<td>double-word2</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>d2f
+opcode = 0x90 (144)
+</td></tr>
+</table></dd></dl></body></html>

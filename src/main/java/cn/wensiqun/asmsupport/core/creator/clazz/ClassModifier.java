@@ -311,7 +311,7 @@ public class ClassModifier extends AbstractClassContext {
             loader.loadClass(productClass.getName());
             String proxyClassName = productClass.getName();
             byte[] modifiedBytes = loader.getModifiedClassBytes();
-            if(StringUtils.isNotBlank(getClassOutPutPath())){
+            if(!StringUtils.isBlank(getClassOutPutPath())){
                 ClassFileUtils.toLocal(modifiedBytes, getClassOutPutPath(), proxyClassName);
             }
             return loadClass(proxyClassName, modifiedBytes);

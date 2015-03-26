@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="ret"></a><b>ret</b> :
+  return from subroutine : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>ret is used to return from a subroutine that was invoked by
+jsr or jsr_w. It takes a single parameter,
+&lt;varnum&gt;, an unsigned integer which local variable is holding
+the returnAddress for this subroutine. Execution continues at the address
+stored in that local variable.<br></br>Return addresses are left on the stack by the jsr and jsr_w
+instructions. Methods are expected to immediately store the return address in a
+local variable, ready for use with ret.</dd><dt>Example</dt><dd><pre>
+; This example method uses a PrintMe subroutine to invoke the System.out.println() method.
+.method usingSubroutine()V
+    ldc "Message 1"
+    jsr PrintMe          ; print "Message 1"
+    ldc "Message 2"
+    jsr PrintMe          ; print "Message 2"
+    ldc "Message 3"
+    jsr PrintMe          ; print "Message 3"
+    return   ; now return from usingSubroutine
+; define the PrintMe subroutine ...
+PrintMe:       
+    astore_1            ; store return-address in local variable 1
+    ; call System.out.println()
+    getstatic java/lang/System/out Ljava/io/PrintStream;
+    invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+    ret 1               ; return to the return-address in local variable 1
+.end method
+</pre></dd><dt>Notes</dt><dd>The assymetry between jsr (which pushes a returnAddress onto
+the stack) and ret (which gets the returnAddress from a local
+variable) is intentional - the bytecode verifier relies on this structure (see
+Chapter 5) .</dd><dt>See also</dt><dd><a href="ref-jsr.html">jsr</a> <a href="ref-.html"></a> <a href="ref-jsr_w.html">jsr_w</a> <a href="ref-.html"></a> <a href="ref-goto.html">goto</a> <a href="ref-.html"></a> <a href="ref-goto_w.html">goto_w</a> <a href="ref-.html"></a> <a href="ref-wide.html">wide</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>ret
+opcode = 0xA9 (169)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>&lt;varnum&gt;</td></tr>
+</table>
+There
+is also a wide format for this instruction, which supports access to
+all local variables from 0 to 65535:
+<table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>ret
+opcode = 0xA9 (169)
+</td></tr>
+<tr>
+<td>
+u2 
+</td>
+<td>&lt;varnum&gt;</td></tr>
+</table></dd></dl></body></html>

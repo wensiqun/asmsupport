@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="i2d"></a><b>i2d</b> :
+  convert integer to double : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Pops an int off the operand stack, casts it into a double precision
+floating point number, and pushes the two-word double precision result back
+onto the stack. This conversion is exact, since doubles have enough precision
+to represent all int values.</dd><dt>See also</dt><dd><a href="ref-i2f.html">i2f</a> <a href="ref-.html"></a> <a href="ref-i2l.html">i2l</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>int</td>
+<td>double-word1</td></tr>
+<tr>
+<td>...</td>
+<td>double-word2</td></tr>
+<tr>
+<td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>i2d
+opcode = 0x87 (135)
+</td></tr>
+</table></dd></dl></body></html>

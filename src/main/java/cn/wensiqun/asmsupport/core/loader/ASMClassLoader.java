@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.CollectionUtils;
 
 /**
  * 

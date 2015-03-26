@@ -30,12 +30,12 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
+import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassFileUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -125,7 +125,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 
         byte[] code = cw.toByteArray();
         
-        if(StringUtils.isNotBlank(classOutPutPath)){
+        if(!StringUtils.isBlank(classOutPutPath)){
             ClassFileUtils.toLocal(code, classOutPutPath, sc.getName());
         }
 

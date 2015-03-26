@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="wide"></a><b>wide</b> :
+  next instruction uses 16-bit index : <a href="opcodes.html">index</a> : </p><dl><dt>Description</dt><dd>wide is placed in front of an instruction that accesses a local
+variable. You use it to extend the range of local variables available to the
+instruction from 8 bits (i.e. 0-255) to 16 bits (i.e. 0-65535). In addition,
+for iinc, it increases the increment range. wide is used in
+conjunction with one of the following opcodes: aload, dload,
+iload, fload, lload, astore,
+dstore, istore, fstore, lstore,
+iinc and ret. See the reference pages of those instructions
+for more details.</dd><dt>Notes</dt><dd>The opcode that follows wide cannot be the target of a branch.</dd><dt>See also</dt><dd><a href="ref-aload.html">aload</a> <a href="ref-.html"></a> <a href="ref-iload.html">iload</a> <a href="ref-.html"></a> <a href="ref-fload.html">fload</a> <a href="ref-.html"></a> <a href="ref-dload.html">dload</a> <a href="ref-.html"></a> <a href="ref-lload.html">lload</a> <a href="ref-.html"></a> <a href="ref-astore.html">astore</a> <a href="ref-.html"></a> <a href="ref-istore.html">istore</a> <a href="ref-.html"></a> <a href="ref-fstore.html">fstore</a> <a href="ref-.html"></a> <a href="ref-dstore.html">dstore</a> <a href="ref-.html"></a> <a href="ref-lstore.html">lstore</a> <a href="ref-.html"></a> <a href="ref-iinc.html">iinc</a> <a href="ref-.html"></a> <a href="ref-ret.html">ret</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>u1</td>
+<td>&lt;opcode&gt;</td></tr>
+<tr>
+<td>u2</td>
+<td>&lt;varnum&gt;</td></tr>
+</table>
+or,
+for iinc, use:
+<table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>u1</td>
+<td>&lt;opcode&gt;</td></tr>
+<tr>
+<td>u2</td>
+<td>&lt;varnum&gt;</td></tr>
+<tr>
+<td>u2</td>
+<td>&lt;n&gt;</td></tr>
+</table></dd></dl></body></html>

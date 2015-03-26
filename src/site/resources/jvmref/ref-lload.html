@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="lload"></a><b>lload</b> :
+  retrieve long from local variable : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitVarInsn(int,%20int)">visitVarInsn()</a></p><dl><dt>Description</dt><dd>lload retrieves a long integer held in a local variable and
+pushes it onto the operand stack.<br></br>Since long integers are 64-bits wide, and each local variable only
+holds up to 32 bits, Java uses two consecutive local variables, &lt;varnum&gt;
+and &lt;varnum&gt; + 1  to store a long. So lload &lt;varnum&gt;
+actually places the values of both &lt;varnum&gt; and &lt;varnum&gt; + 1 onto
+the operand stack. <br></br>Both &lt;varnum&gt; and &lt;varnum&gt; + 1 must be valid local variable numbers
+in the current frame, and together they must be holding a long. <br></br>Remember that attempting to treat two-word values as two independent
+single-word values will produce a verification error. So trying to retrieve
+either &lt;varnum&gt; or &lt;varnum&gt; + 1 independently (e.g. using iload
+&lt;varnum&gt;) will produce a verification error. Similarly, if you store
+a non-long value in &lt;varnum&gt;, then &lt;varnum&gt; + 1 becomes invalidated
+until a new value is stored in it.</dd><dt>Example</dt><dd><pre>
+lconst_1        ; push the long integer 1 onto the stack
+lstore 3        ; pop 1 off of the stack and store in local variables 3 and 4
+lload 3         ; push the value from local variables 3 and 4 (the long integer 1)
+                ; back onto the stack
+</pre></dd><dt>See also</dt><dd><a href="ref-fload.html">fload</a> <a href="ref-.html"></a> <a href="ref-iload.html">iload</a> <a href="ref-.html"></a> <a href="ref-dload.html">dload</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>result-word1</td></tr>
+<tr>
+<td></td>
+<td>result-word2</td></tr>
+<tr>
+<td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lload
+opcode = 0x16 (22)
+</td></tr>
+<tr>
+<td>
+u1
+</td>
+<td>&lt;varnum&gt;</td></tr>
+</table>
+There
+is also a wide format for this instruction, which supports access to
+all local variables from 0 to 65535:
+<table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lload
+opcode = 0x16 (22)
+</td></tr>
+<tr>
+<td>
+u2 
+</td>
+<td>&lt;varnum&gt;</td></tr>
+</table></dd></dl></body></html>

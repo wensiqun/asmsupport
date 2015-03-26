@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="dup_x2"></a><b>dup_x2</b> :
+  duplicate top stack word and insert beneath third word : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Duplicates the top single-word stack item inserts the duplicate three
+words down.</dd><dt>Example</dt><dd><pre>
+dconst_0
+bipush 100
+; stack now contains:
+;     0.0 | double-word1
+;     0.0 | double-word2
+;     100   integer
+dup_x2
+; stack now contains:
+;     100   integer1
+;     0.0 | double-word1
+;     0.0 | double-word2
+;     100   integer1
+</pre></dd><dt>Notes</dt><dd>This instruction cannot be used if the top item on the stack is a
+two-word item (i.e. a long or a double-precision float). Use dup2,
+dup2_x1 or dup2_x2 instead.</dd><dt>See also</dt><dd><a href="ref-dup.html">dup</a> <a href="ref-.html"></a> <a href="ref-dup2.html">dup2</a> <a href="ref-.html"></a> <a href="ref-dup_x1.html">dup_x1</a> <a href="ref-.html"></a> <a href="ref-dup2_x2.html">dup2_x2</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>word1</td>
+<td>word1</td></tr>
+<tr>
+<td>word2</td>
+<td>word2</td></tr>
+<tr>
+<td>word3</td>
+<td>word3</td></tr>
+<tr>
+<td>...</td>
+<td>word1</td></tr>
+<tr>
+<td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>dup_x2
+= 0x5B (91)
+</td></tr>
+</table></dd></dl></body></html>

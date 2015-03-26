@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.UnreachableCodeException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.UnreachableCodeCheckSkipable;
-import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 
 public abstract class OperatorFactory {
 

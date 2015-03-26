@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 
 
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.org.apache.commons.lang3.ArrayUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 

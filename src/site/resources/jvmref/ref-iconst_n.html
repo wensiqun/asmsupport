@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="iconst_n"></a><b>iconst_n</b> :
+  push the integer constant 0, 1, 2, 3, 4 or 5 : <a href="opcodes.html">index</a> : </p><dl><dt>Description</dt><dd>iconst_n represents the series of opcodes iconst_0,
+iconst_1, iconst_2, iconst_3, iconst_4 and iconst_5. These are used to push the
+constant ints 0 through 5 onto the stack. For example, to push the int zero
+onto the stack, use:<br></br><pre>
+iconst_0 ; push 0 onto the stack.
+</pre>
+Note
+that you could also use:<br></br><pre>
+bipush 0 ; push 0 onto the stack
+</pre>
+or<br></br>
+<pre>
+sipush 0 ; push 0 onto the stack
+</pre>
+or<br></br><pre>
+ldc 0 ; push 0 onto the stack
+</pre>
+although
+these instructions are typically less efficient than the equivalent
+iconst_n and also take up more bytes in the class file.</dd><dt>Example</dt><dd><pre>
+iconst_0  ; push 0 onto the stack
+iconst_1  ; push 1 onto the stack
+iconst_2  ; push 2 onto the stack
+iconst_3  ; push 3 onto the stack
+iconst_4  ; push 4 onto the stack
+iconst_5  ; push 5 onto the stack
+</pre></dd><dt>See also</dt><dd><a href="ref-bipush.html">bipush</a> <a href="ref-.html"></a> <a href="ref-sipush.html">sipush</a> <a href="ref-.html"></a> <a href="ref-ldc.html">ldc</a> <a href="ref-.html"></a> <a href="ref-ldc_w.html">ldc_w</a> <a href="ref-.html"></a> <a href="ref-ldc2_w.html">ldc2_w</a> <a href="ref-.html"></a> <a href="ref-aconst_null.html">aconst_null</a> <a href="ref-.html"></a> <a href="ref-iconst_m1.html">iconst_m1</a> <a href="ref-.html"></a> <a href="ref-lconst_l.html">lconst_l</a> <a href="ref-.html"></a> <a href="ref-fconst_f.html">fconst_f</a> <a href="ref-.html"></a> <a href="ref-dconst_d.html">dconst_d</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>&lt;n&gt;</td></tr>
+<tr>
+<td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_0
+opcode = 0x03 (3)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_1
+opcode = 0x04 (4)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_2
+opcode = 0x05 (5)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_3
+opcode = 0x06 (6)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_4
+opcode = 0x07 (7)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>iconst_5
+opcode = 0x08 (8)
+</td></tr>
+</table></dd></dl></body></html>

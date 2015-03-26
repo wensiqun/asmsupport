@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="lneg"></a><b>lneg</b> :
+  negate a long : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Removes the top long integer from the operand stack, negates it, and
+pushes the negated result back onto the stack. This is the same as multiplying
+the long integer by -1, which is the same as (~value) + 1.</dd><dt>Notes</dt><dd>Because of the two's-complement representation used for negative
+numbers, negating Long.MIN_VALUE actually produces Long.MIN_VALUE, not
+Long.MAX_VALUE as you might expect.</dd><dt>See also</dt><dd><a href="ref-ineg.html">ineg</a> <a href="ref-.html"></a> <a href="ref-fneg.html">fneg</a> <a href="ref-.html"></a> <a href="ref-dneg.html">dneg</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value-word1</td>
+<td>result-word1</td></tr>
+<tr>
+<td>value-word2</td>
+<td>result-word2</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lneg
+opcode = 0x75 (117)
+</td></tr>
+</table></dd></dl></body></html>

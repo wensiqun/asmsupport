@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="if_acmpeq"></a><b>if_acmpeq</b> :
+  jump if two object references are equal : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitJumpInsn(int,%20org.objectweb.asm.Label)">visitJumpInsn()</a></p><dl><dt>Description</dt><dd>if_acmpeq pops the top two object references off the stack and
+compares them. If the two object references are equal (i.e. if they both refer
+to the same object), execution branches to the address (<i xmlns="">pc</i> +
+<i xmlns="">branchoffset</i>), where <i xmlns="">pc</i> is the address of the if_acmpeq
+opcode in the bytecode and <i xmlns="">branchoffset</i> is a 16-bit signed integer
+parameter following the if_acmpeq opcode in the bytecode. If the
+object references refer to different objects, execution continues at the next
+instruction.<br></br>If you are using Jasmin, <i xmlns="">branchoffset</i> is computed for you from the
+address of &lt;label&gt;.</dd><dt>Example</dt><dd><pre>
+    aload_1         ; push the object reference in local variable 1 onto stack
+    aload_2         ; push the object reference in local variable 2 onto stack
+    if_acmpeq Label ; if the two references on the stack are identical, jump to Label
+    return          ; return if not equal
+Label:
+    ; execution continues here if local variables 1 and 2 refer to the same object
+</pre></dd><dt>Notes</dt><dd>Addresses are measured in bytes from the start of the bytecode (i.e.
+address 0 is the first byte in the bytecode of the currently executing
+method).</dd><dt>See also</dt><dd><a href="ref-if_acmpne.html">if_acmpne</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value1</td>
+<td>...</td></tr>
+<tr>
+<td>value2</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>if_acmpeq
+opcode = 0xA5 (165)
+</td></tr>
+<tr>
+<td>
+s2 
+</td>
+<td><i>branchoffset</i></td></tr>
+</table></dd></dl></body></html>

@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="monitorenter"></a><b>monitorenter</b> :
+  enter synchronized region of code : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>The monitorenter/monitorexit mechanism is used by the
+Java synchronized statement to coordinate access to an object among
+multiple threads. For example, when you write in Java code:<br></br><pre>
+static void Sort(int [] array) {
+    // synchronize this operation so that some other thread can't
+    // manipulate the array while we are sorting it. This assumes that other
+    // threads also synchronize their accesses to the array.
+    synchronized(array) {
+        // now sort elements in array
+    }
+}
+</pre>
+then
+JVM code like the following is generated:<br></br><pre>
+.method static Sort([I)V
+    aload_0
+    monitorenter    ; lock object in local variable 0 
+    ; now sort elements in array
+    aload_0
+    monitorexit      ; finished with object in local variable 0
+    return
+.end method
+</pre>
+monitorenter
+obtains an exclusive lock on the object referenced by <i xmlns="">objectref.</i> There
+are three possible scenarios:<br></br>If no other thread has locked the object, a new lock is established on the
+object, and execution continues at the next instruction. <br></br>If the object is currently locked by another thread, monitorenter
+blocks, waiting for the other thread to unlock the object. <br></br>If the current thread already owns a lock on the object, a counter is
+incremented - the lock will only be released when the counter returns to zero
+(see monitorexit).</dd><dt>Exceptions</dt><dd>NullPointerException - the object reference on the stack is
+null.</dd><dt>Notes</dt><dd>1. Methods which are marked as synchronized implicitly perform
+a monitorenter when invoked, and a monitorexit when they
+return.<br></br>2. Java's wait(), notify() and notifyAll() methods also interact with locks on
+objects.</dd><dt>See also</dt><dd><a href="ref-monitorexit.html">monitorexit</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>objectref</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>monitorenter
+opcode = 0xC2 (194)
+</td></tr>
+</table></dd></dl></body></html>

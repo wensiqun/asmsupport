@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.utils;
 
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public interface ASConstant {
@@ -48,8 +49,7 @@ public interface ASConstant {
     
     public final static String ACCESS_TOKEN_VOLATILE = "volatile";
     
-    
     public final static String ACCESS_TOKEN_ABSTRACT = "abstract";
     
-    
+    public final static ThreadLocal<LogFactory> LOG_FACTORY_LOCAL = new ThreadLocal<LogFactory>();
 }

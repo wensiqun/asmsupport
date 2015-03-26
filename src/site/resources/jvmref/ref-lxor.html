@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="lxor"></a><b>lxor</b> :
+  long integer bitwise exclusive or : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Pops two long integers off the stack. Computes the bitwise exclusive or
+of <i xmlns="">value1</i> and <i xmlns="">value2</i>. The long integer result replaces
+<i xmlns="">value1</i> and <i xmlns="">value2</i> on the stack.</dd><dt>Example</dt><dd><pre>
+; This is like the Java code:
+;       long x;
+;       x ^= 1;
+;
+lload_1          ; load long in local variable 1 onto stack
+lconst_1         ; push the integer 1 onto the stack
+lxor             ; compute the bitwise exclusive or
+lstore_1         ; store the long result in local variable 1
+</pre>
+<b xmlns="">
+</b></dd><dt>See also</dt><dd><a href="ref-ishl.html">ishl</a> <a href="ref-.html"></a> <a href="ref-ishr.html">ishr</a> <a href="ref-.html"></a> <a href="ref-iushr.html">iushr</a> <a href="ref-.html"></a> <a href="ref-lshl.html">lshl</a> <a href="ref-.html"></a> <a href="ref-lshr.html">lshr</a> <a href="ref-.html"></a> <a href="ref-lushr.html">lushr</a> <a href="ref-.html"></a> <a href="ref-iand.html">iand</a> <a href="ref-.html"></a> <a href="ref-land.html">land</a> <a href="ref-.html"></a> <a href="ref-ior.html">ior</a> <a href="ref-.html"></a> <a href="ref-lor.html">lor</a> <a href="ref-.html"></a> <a href="ref-ixor.html">ixor</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value1-word1</td>
+<td>result-word1</td></tr>
+<tr>
+<td>value1-word2</td>
+<td>result-word2</td></tr>
+<tr>
+<td>value2-word1</td>
+<td>...</td></tr>
+<tr>
+<td>value2-word2</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lxor
+opcode = 0x83 (131)
+</td></tr>
+</table></dd></dl></body></html>

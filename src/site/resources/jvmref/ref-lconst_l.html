@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="lconst_l"></a><b>lconst_l</b> :
+  push the long integer 0 or 1 : <a href="opcodes.html">index</a> : </p><dl><dt>Description</dt><dd>lconst_l represents the two opcodes lconst_0, lconst_1
+that are used to push the constant long integers 0 and 1 onto the stack. For
+example, to push the long integer zero onto the stack, use:<br></br><pre>
+    lconst_0 ; push long integer 0 onto the stack
+</pre>
+Note
+that you could also use:<br></br><pre>
+    ldc2_w 0    ; push the long integer 0 onto the stack
+</pre>
+although
+this instruction takes more space in the class file and is also slower.</dd><dt>Example</dt><dd><pre>
+lconst_0    ; push the long int 0 onto the stack
+lconst_1    ; push the long int 1 onto the stack
+</pre></dd><dt>See also</dt><dd><a href="ref-bipush.html">bipush</a> <a href="ref-.html"></a> <a href="ref-sipush.html">sipush</a> <a href="ref-.html"></a> <a href="ref-ldc.html">ldc</a> <a href="ref-.html"></a> <a href="ref-ldc_w.html">ldc_w</a> <a href="ref-.html"></a> <a href="ref-ldc2_w.html">ldc2_w</a> <a href="ref-.html"></a> <a href="ref-aconst_null.html">aconst_null</a> <a href="ref-.html"></a> <a href="ref-iconst_m1.html">iconst_m1</a> <a href="ref-iconst_n.html">iconst_n</a> <a href="ref-.html"></a> <a href="ref-fconst_f.html">fconst_f</a> <a href="ref-.html"></a> <a href="ref-dconst_d.html">dconst_d</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>...</td>
+<td>&lt;l&gt;-word1</td></tr>
+<tr>
+<td></td>
+<td>&lt;l&gt;-word2</td></tr>
+<tr>
+<td></td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lconst_0
+opcode = 0x09 (9)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lconst_1
+opcode = 0x0A (10)
+</td></tr>
+</table></dd></dl></body></html>

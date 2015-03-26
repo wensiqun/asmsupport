@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="lookupswitch"></a><b>lookupswitch</b> :
+  match key in table and jump : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitLookupSwitchInsn(org.objectweb.asm.Label,%20int[],%20org.objectweb.asm.Label[])">visitLookupSwitchInsn()</a></p><dl><dt>Description</dt><dd>This is used to perform an efficient compare-and-jump, as might be
+needed for a switch statement. The table used by lookupswitch is given
+after the lookupswitch opcode in bytecode.<br></br>lookupswitch works as follows. First, an int, <i xmlns="">item,</i> is taken
+from the top of the stack. Then, lookupswitch searches the table looking for an
+entry whose &lt;key&gt; field matches <i xmlns="">item</i>. If a match is found,
+execution branches to the address of the corresponding &lt;label&gt;. If no
+match is found, execution branches to &lt;labelDefault&gt;.</dd><dt>Example</dt><dd><pre>
+; this is like the Java code:
+;      switch (i) {
+;           case 1:     return(10);
+;           case 10:    return(100);
+;           default:    return(0);
+;      }
+    iload_1    ; push local variable 1 onto the stack (i.e. i)
+    ; switch based on the value on the stack
+    lookupswitch
+        1       : Label1
+        10      : Label2
+        default : Dlabel
+Label1:               ; local variable 1 holds the value 1
+    bipush 10    
+    ireturn    ; return 10
+Label2:               ; local variable 1 holds the value 10
+    bipush 100
+    ireturn    ; return 100
+Dlabel:               ; local variable 1 holds something else 
+    bipush 0
+    return    ; return 0
+</pre></dd><dt>Notes</dt><dd>1. Addresses are measured in bytes from the start of the bytecode (i.e.
+address 0 is the first byte in the bytecode of the currently executing
+method).<br></br>2. Addresses given in the table are relative - the values in the table are
+added to the current <i xmlns="">pc</i> (i.e. the address of this lookupswitch
+instruction) to obtain the new value for <i xmlns="">pc</i>. <br></br>3. Keys in the table must be sorted in increasing order, so &lt;key1&gt; is
+less than &lt;key2&gt;, and so on up to &lt;keyN&gt;. Jasmin performs this
+sorting automatically.<br></br>4. Even though offsets in the table are given as 32-bit ints, the maximum
+address in a Java method is limited by other factors to 65535.</dd><dt>See also</dt><dd><a href="ref-tableswitch.html">tableswitch</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>item</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>lookupswitch
+opcode = 0xAB (171)
+</td></tr>
+<tr>
+<td>
+- 
+</td>
+<td>...0-3
+bytes of padding ...
+</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>default_offset</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>n</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>key_1</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_1</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>key_2</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_2</td></tr>
+<tr>
+<td>
+... 
+</td>
+<td>...</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>key_n</td></tr>
+<tr>
+<td>
+s4 
+</td>
+<td>offset_n</td></tr>
+</table></dd></dl></body></html>

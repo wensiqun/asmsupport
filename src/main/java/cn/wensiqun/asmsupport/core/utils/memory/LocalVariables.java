@@ -27,6 +27,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LocalVariables implements Printable, Cloneable{
 
+    private static final Log LOG = LogFactory.getLog(LocalVariables.class);
+    
     public static class LocalHistory implements Cloneable{
         private List<ScopeLogicVariable> variables;
         private int activeIndex;
@@ -49,8 +51,6 @@ public class LocalVariables implements Printable, Cloneable{
         }
         
     }
-    
-    private static final Log LOG = LogFactory.getLog(LocalVariables.class);
 
     private List<LocalHistory> histories;
     private PrintHelper printHelper;
@@ -84,7 +84,9 @@ public class LocalVariables implements Printable, Cloneable{
 
     @Override
     public void printState(){
-        LOG.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
+        if(LOG.isDebugEnabled()) {
+            LOG.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
+        }
     }
 
     public void setCursor(Localable cursor) {

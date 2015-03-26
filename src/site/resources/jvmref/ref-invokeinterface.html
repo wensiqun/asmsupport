@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="invokeinterface"></a><b>invokeinterface</b> :
+  invoke an interface method : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitMethodInsn(int,%20java.lang.String,%20java.lang.String,%20java.lang.String)">visitMethodInsn()</a></p><dl><dt>Description</dt><dd>invokeinterface is used to invoke a method declared within a
+Java interface. For example, if you have the Java code:<br></br><pre>
+void test(Enumeration enum) {
+    boolean x = enum.hasMoreElements();
+    ...
+}
+</pre>
+invokeinterface
+will be used to call the hasMoreElements() method, since Enumeration is a Java
+interface, and hasMoreElements() is a method declared in that interface. In
+this example, the Java compiler generates code like:<br></br><pre>
+    aload_1            ; push local variable 1 (i.e. the enum object) onto the stack
+    ; call hasMoreElements()
+    invokeinterface java/util/Enumeration/hasMoreElements()Z 1  
+    istore_2           ; store the boolean result in local variable 2 (i.e. x)
+</pre>
+Which
+particular implementation of hasMoreElements() is used will depend on the type
+of object held in local variable 1 at runtime. <br></br>Before performing the method invokation, the interface and the method
+identified by &lt;method-spec&gt; are resolved. See Chapter 9 for a description
+of how methods are resolved.<br></br>To invoke an interface method, the interpreter first pops &lt;n&gt; items off
+the operand stack, where &lt;n&gt; is an 8-bit unsigned integer parameter taken
+from the bytecode. The first of these items is <i xmlns="">objectref</i>, a reference to
+the object whose method is being called. The rest of the items are the
+arguments for the method. <br></br>Then the class of the object referred to by <i xmlns="">objectref</i> is retrieved. This
+class must implement the interface named in &lt;method-spec&gt;. The method
+table for this class is searched, and the method with the given
+<i xmlns="">methodname</i> and <i xmlns="">descriptor </i>is located.<br></br>Once the method has been located, invokeinterface calls the method.
+First, if the method is marked as synchronized, the monitor associated
+with <i xmlns="">objectref</i> is entered. Next, a new stack frame is established on the
+callstack. Then the arguments for the method are placed in the local variable
+slots of the new stack frame structure. arg1 is stored in local variable 1,
+arg2 is stored in local variable 2 and so on. <i xmlns="">objectref</i> is stored in
+local variable 0, the local variable used by the special Java variable
+this. Execution continues at the first instruction in the bytecode of
+the new method. <br></br>Methods marked as native are handled slightly differently. For native
+methods, the runtime system locates the platform-specific code for the method,
+loading it and linking it into the JVM if necessary. Then the native method
+code is executed with the arguments that were popped from the operand stack.
+The exact mechanism used to invoke native methods is implementation-specific.<br></br>When the method called by invokeinterface returns, any single (or
+double) word return result is placed on the operand stack of the current
+method. If the invoked method was marked as synchronized, the monitor
+associated with <i xmlns="">objectref</i> is exited. Then execution continues at the
+instruction that follows invokeinterface in the bytecode.</dd><dt>Exceptions</dt><dd>NullPointerException - <i xmlns="">objectref</i> is null<br></br>StackOverflowError - no more space in callstack for a new stack frame</dd><dt>Notes</dt><dd>1. Of the instructions used to invoke instance methods,
+invokeinterface is the most complex to implement, and typically the
+least efficient. See Chapter 10 (Implementation) for more details on this.<br></br>
+2. invokevirtual cannot be used to invoke the special methods
+&lt;init&gt; or &lt;clinit&gt; - see
+invokespecial.<br></br>3. The &lt;n&gt; and 0 byte parameters in bytecode are present mostly for
+historical reasons.</dd><dt>See also</dt><dd><a href="ref-invokevirtual.html">invokevirtual</a> <a href="ref-.html"></a> <a href="ref-invokespecial.html">invokespecial</a> <a href="ref-.html"></a> <a href="ref-invokestatic.html">invokestatic</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>argN</td>
+<td>[result]</td></tr>
+<tr>
+<td>---</td>
+<td>...</td></tr>
+<tr>
+<td>arg2</td>
+<td>...</td></tr>
+<tr>
+<td>arg1</td>
+<td>...</td></tr>
+<tr>
+<td>objectref</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>invokeinterface
+opcode = 0xB9 (185)
+</td></tr>
+<tr>
+<td>
+u2 
+</td>
+<td><i>index</i></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>&lt;n&gt;</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>0</td></tr>
+</table></dd></dl></body></html>

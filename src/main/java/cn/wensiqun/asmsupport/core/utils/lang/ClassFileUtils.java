@@ -24,7 +24,7 @@ public class ClassFileUtils {
 	
     public static void toLocal(byte[] b, String location, String name){
         
-        if (StringUtils.isNotBlank(location)) {
+        if (!StringUtils.isBlank(location)) {
         	String fileSeparator = System.getProperty("file.separator");
         	StringBuilder path = new StringBuilder(location);
         	if(!location.endsWith(fileSeparator)){

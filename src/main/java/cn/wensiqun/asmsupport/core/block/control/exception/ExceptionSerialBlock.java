@@ -30,8 +30,8 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
+import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.common.TryCatchInfo;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 public class ExceptionSerialBlock extends SerialBlock {

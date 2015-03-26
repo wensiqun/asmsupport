@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
-import cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {

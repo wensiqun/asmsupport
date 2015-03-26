@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="fstore"></a><b>fstore</b> :
+  store float in local variable : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitVarInsn(int,%20int)">visitVarInsn()</a></p><dl><dt>Description</dt><dd>Pops a single-precision float off the stack and stores it in local
+variable &lt;varnum&gt;. The fstore instruction takes a single
+parameter, &lt;varnum&gt;, an unsigned integer which indicates which local
+variable is used. &lt;varnum&gt; must be a valid local variable number in the
+current frame.</dd><dt>Example</dt><dd><pre>
+fconst_2        ; push 2.0 onto the stack
+fstore 3        ; pop 2.0 off of the stack and store it in local variable 3
+</pre></dd><dt>See also</dt><dd><a href="ref-lstore.html">lstore</a> <a href="ref-.html"></a> <a href="ref-istore.html">istore</a> <a href="ref-.html"></a> <a href="ref-dstore.html">dstore</a> <a href="ref-.html"></a> <a href="ref-astore.html">astore</a> <a href="ref-.html"></a> <a href="ref-wide.html">wide</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>value</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>fstore
+opcode = 0x38 (56)
+</td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>&lt;varnum&gt;</td></tr>
+</table>
+There
+is also a wide format for this instruction, which supports access to
+all local variables from 0 to 65535:
+<table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>u1</td>
+<td>wide
+opcode = 0xC4 (196)
+</td></tr>
+<tr>
+<td>u1</td>
+<td>fstore
+opcode = 0x38 (56)
+</td></tr>
+<tr>
+<td>u2</td>
+<td>&lt;varnum&gt;</td></tr>
+</table></dd></dl></body></html>

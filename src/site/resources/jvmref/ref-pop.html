@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+dt {
+  font-style: italic;
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  border-bottom: 1px dotted black;
+}
+dd {
+  margin-left: 10px;
+}
+table {
+  border-collapse:collapse;
+  border: 1px solid black;
+  margin-top: 7px;
+}
+th {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+td {
+  border: 1px solid black;
+  padding: 3 7 3 7;
+}
+</style></head><body><p><a name="pop"></a><b>pop</b> :
+  discard  top word on stack : <a href="opcodes.html">index</a> : <a href="http://asm.objectweb.org/asm40/javadoc/user/org/objectweb/asm/MethodVisitor.html#visitInsn(int)">visitInsn()</a></p><dl><dt>Description</dt><dd>Pops the top single-word item off the stack and discards it.</dd><dt>Example</dt><dd><pre>
+invokevirtual Myclass/test()Z  ; call boolean Myclass.test();
+pop                            ; discard the boolean result
+</pre></dd><dt>Notes</dt><dd>1. Use pop2 to remove long integers and doubles from the stack
+(using pop when the top item on the stack is a long integer or double
+will cause a verification error).<br></br>2. Note there is no matching "push" instruction. Use bipush,
+sipush, one of the</dd><dt>See also</dt><dd><a href="ref-pop2.html">pop2</a> </dd><dt>Stack</dt><dd><table xmlns="">
+<tr>
+<td>
+<b>Before </b>
+</td>
+<td><b>After</b></td></tr>
+<tr>
+<td>item</td>
+<td>...</td></tr>
+<tr>
+<td>...</td>
+<td>...</td></tr>
+</table></dd><dt>Bytecode</dt><dd><table xmlns="">
+<tr>
+<td>
+<b> Type </b>
+</td>
+<td><b>Description</b></td></tr>
+<tr>
+<td>
+u1 
+</td>
+<td>pop
+opcode = 0x57 (87)
+</td></tr>
+</table></dd></dl></body></html>
