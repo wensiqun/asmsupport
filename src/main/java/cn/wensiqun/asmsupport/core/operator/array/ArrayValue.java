@@ -19,14 +19,13 @@ package cn.wensiqun.asmsupport.core.operator.array;
 
 import java.lang.reflect.Array;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
@@ -198,7 +197,9 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
         }
         
         if(allocateDims != null){
-            LOG.debug("start new a array!");
+            if(LOG.isPrintEnabled()) { 
+                LOG.print("start new a array!");
+            }
             InstructionHelper ih = block.getInsnHelper();
             if(allocateDims == null || allocateDims.length == 0){
                 ih.push(arrayCls.getType());

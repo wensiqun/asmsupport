@@ -17,9 +17,6 @@ package cn.wensiqun.asmsupport.core.block.method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -28,6 +25,8 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.LocalVariableMeta;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.operator.numerical.variable.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -92,10 +91,10 @@ public abstract class AbstractMethodBody extends ProgramBlockInternal {
     @Override
     public final void doExecute() {
         AMethod method = getMethod();
-        if (LOG.isDebugEnabled()) {
+        if (LOG.isPrintEnabled()) {
             StringBuilder str = new StringBuilder("create method: ------------");
             str.append(method.getMethodMeta().getMethodString());
-            LOG.debug(str);
+            LOG.print(str);
         }
 
         for (Executable exe : getQueue()) {

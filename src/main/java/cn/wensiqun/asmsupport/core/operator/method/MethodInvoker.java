@@ -17,9 +17,6 @@ package cn.wensiqun.asmsupport.core.operator.method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
@@ -30,6 +27,8 @@ import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -83,7 +82,9 @@ public abstract class MethodInvoker extends AbstractOperator implements
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
             Parameterized argu = arguments[i];
-            LOG.debug("push argument to stack");
+            if(LOG.isPrintEnabled()) {
+                LOG.print("push argument to stack");
+            }
             if(argu instanceof IVariable){
                 ((IVariable) argu).availableFor(this);
             }

@@ -18,7 +18,9 @@ import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 
 public class DummyModifiedClass {
 
@@ -29,6 +31,12 @@ public class DummyModifiedClass {
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
+    
+    /** Whether or not print log.*/
+    private boolean printLog;
+    
+    /** The log file path.*/
+    private String logFilePath;
 
     /** All constructors */
     private LinkedList<DummyConstructor> constructorDummies = new LinkedList<DummyConstructor>();
@@ -88,6 +96,30 @@ public class DummyModifiedClass {
      */
     public String getClassOutPutPath() {
         return classOutPutPath;
+    }
+    
+    /**
+     * Whether or not print log information. if set {@code true} than print it to console.
+     * Also you can print to file by method {@link DummyClass#setLogFilePath(String)}
+     * 
+     * @param print
+     * @return
+     */
+    public DummyModifiedClass setPrintLog(boolean print) {
+        printLog = print;
+        return this;
+    }
+
+    /**
+     * The log information out put path. call the method will set {@code printLog} to {@code true.}
+     * 
+     * @param logFile
+     * @return
+     */
+    public DummyModifiedClass setLogFilePath(String logFile){
+        logFilePath = logFile;
+        printLog = true;
+        return this;
     }
 
     /**
@@ -176,6 +208,12 @@ public class DummyModifiedClass {
      * @return
      */
     public Class<?> build() {
+        ASConstant.LOG_FACTORY_LOCAL.remove();
+        if(StringUtils.isNotBlank(logFilePath)) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        } else if(printLog) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        }
         ClassModifier cmi = new ClassModifier(original);
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {

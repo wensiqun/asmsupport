@@ -14,13 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
@@ -52,12 +51,12 @@ public class ArrayLength extends AbstractArrayOperator implements Parameterized 
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
         InstructionHelper ih = block.getInsnHelper();
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("start get length of array");
+        if(LOG.isPrintEnabled()) {
+            LOG.print("start get length of array");
         }
         getValue();
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("got length and push to stack");
+        if(LOG.isPrintEnabled()) {
+            LOG.print("got length and push to stack");
         }
         ih.arrayLength();
     }

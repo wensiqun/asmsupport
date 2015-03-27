@@ -17,11 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
 /**
@@ -40,10 +39,10 @@ public class Reverse extends UnaryBitwise {
 
     @Override
     public void doExecute() {
-        LOG.debug("start inverts operaotr : " + this.operator);
-        LOG.debug("factor to stack");
+        LOG.print("start inverts operaotr : " + this.operator);
+        LOG.print("factor to stack");
         factorToStack();
-        LOG.debug("start invert");
+        LOG.print("start invert");
         insnHelper.inverts(targetClass.getType());
     }
 

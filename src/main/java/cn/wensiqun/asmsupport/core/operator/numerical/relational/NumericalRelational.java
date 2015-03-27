@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
 /**
@@ -87,13 +86,13 @@ public abstract class NumericalRelational extends AbstractRelational {
         AClass factorCls = factor.getParamterizedType();
 
         // factor to stack
-        LOG.debug("push the first arithmetic factor to stack");
+        LOG.print("push the first arithmetic factor to stack");
         factor.loadToStack(block);
 
         AClass factorPrimitiveAClass = factorCls;
         // unbox if needs
         if (!factorCls.isPrimitive()) {
-            LOG.debug("unbox " + factorCls);
+            LOG.print("unbox " + factorCls);
             insnHelper.unbox(factorCls.getType());
             factorPrimitiveAClass = AClassUtils.getPrimitiveAClass(factorCls);
         }
@@ -101,7 +100,7 @@ public abstract class NumericalRelational extends AbstractRelational {
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
                 && targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()) {
-            LOG.debug("cast factor from " + factorCls + " to " + targetClass);
+            LOG.print("cast factor from " + factorCls + " to " + targetClass);
             insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }
     }

@@ -17,11 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
 /**
@@ -39,7 +38,7 @@ public class Negative extends AbstractPositiveNegative {
     
     @Override
     public void doExecute() {
-        LOG.debug("run the negative operator");
+        LOG.print("run the negative operator");
         factorToStack();
         insnHelper.neg(factor.getParamterizedType().getType());
     }

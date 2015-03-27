@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
@@ -84,8 +84,8 @@ public class LocalVariables implements Printable, Cloneable{
 
     @Override
     public void printState(){
-        if(LOG.isDebugEnabled()) {
-            LOG.debug(printHelper.getGridString(generateGridArray(), true, "local variables states"));
+        if(LOG.isPrintEnabled()) {
+            LOG.print(printHelper.getGridString(generateGridArray(), true, "local variables states"));
         }
     }
 

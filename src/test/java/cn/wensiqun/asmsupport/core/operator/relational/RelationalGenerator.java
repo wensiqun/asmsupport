@@ -20,8 +20,6 @@ public class RelationalGenerator extends AbstractExample
                @Override
                public void body(LocalVariable... argus)
                {
-                   
-                   
                    return_();
                }
         });

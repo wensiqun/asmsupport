@@ -17,14 +17,13 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
 /**
@@ -87,16 +86,20 @@ public class ArrayStorer extends AbstractArrayOperator {
 
 	@Override
     public void doExecute() {
-        LOG.debug("start get value for store array");
+	    if(LOG.isPrintEnabled()) {
+	        LOG.print("start get value for store array");
+	    }
         getValue();
         InstructionHelper ih = block.getInsnHelper();
-        LOG.debug("push the last dim index to stack");
+        LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
         autoCast(lastDim.getParamterizedType(), AClass.INT_ACLASS, false);
         
         value.loadToStack(block);
         autoCast(value.getParamterizedType(), storeClass, false);
-        LOG.debug("store value to corresponse to index of the array");
+        if(LOG.isPrintEnabled()) { 
+            LOG.print("store value to corresponse to index of the array");   
+        }
         ih.arrayStore(storeClass.getType());
     }
 

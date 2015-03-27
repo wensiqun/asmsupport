@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -55,7 +54,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     public void doExecute() {
         //参数入栈
         argumentsToStack();
-        LOG.debug("invoke static method : " + name);
+        LOG.print("invoke static method : " + name);
         insnHelper.invokeStatic(methodOwner.getType(), name, getReturnType(), mtdEntity.getArgTypes());
         if(!isSaveReference()){
             if(!getReturnType().equals(Type.VOID_TYPE)){

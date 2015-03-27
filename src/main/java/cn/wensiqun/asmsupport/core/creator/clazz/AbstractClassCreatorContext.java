@@ -18,9 +18,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.clazz.SemiClass;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
@@ -28,6 +25,8 @@ import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
@@ -78,8 +77,8 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
             interfaceStrs[i] = Type.getInternalName(sc.getInterfaces()[i]);
         }
         
-        if(LOG.isDebugEnabled()){
-        	LOG.debug("Starting create class : " + sc.getName());
+        if(LOG.isPrintEnabled()){
+        	LOG.print("Starting create class : " + sc.getName());
         }
         
         // create class
@@ -129,8 +128,8 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
             ClassFileUtils.toLocal(code, classOutPutPath, sc.getName());
         }
 
-        if(LOG.isDebugEnabled()){
-        	LOG.debug("End create class : " + sc.getName().replace('.', '/'));
+        if(LOG.isPrintEnabled()){
+        	LOG.print("End create class : " + sc.getName().replace('.', '/'));
         }
         
         return loadClass(sc.getName(), code);

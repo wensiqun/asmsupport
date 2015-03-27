@@ -17,12 +17,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.checkcast;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 
 /**
@@ -62,7 +61,9 @@ public class CheckCast extends AbstractOperator implements Parameterized {
         }
         
         if(from.isPrimitive() && to.isPrimitive()){
-            LOG.debug("checkcast from " + from + " to " + to );
+            if(LOG.isPrintEnabled()) { 
+                LOG.print("checkcast from " + from + " to " + to );
+            }
             if(from.getCastOrder() > to.getCastOrder() ||
                (from.equals(AClass.CHAR_ACLASS) && to.equals(AClass.SHORT_ACLASS)) || 
                (to.equals(AClass.CHAR_ACLASS) && from.equals(AClass.SHORT_ACLASS))){
@@ -70,7 +71,10 @@ public class CheckCast extends AbstractOperator implements Parameterized {
                 return;
             }
         }
-        LOG.debug("checkcast from " + from + " to " + to );
+
+        if(LOG.isPrintEnabled()) { 
+            LOG.print("checkcast from " + from + " to " + to );
+        }
         insnHelper.checkCast(to.getType());
     }
 

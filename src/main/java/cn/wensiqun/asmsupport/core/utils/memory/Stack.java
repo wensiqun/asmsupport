@@ -16,9 +16,8 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 
 import java.util.EmptyStackException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -166,7 +165,7 @@ public class Stack implements Printable, Cloneable {
 
     @Override
     public void printState() {
-        LOG.debug(ph.getGridString(generateGridArray(), true, "Stack states"));
+        LOG.print(ph.getGridString(generateGridArray(), true, "Stack states"));
     }
 
     @Override

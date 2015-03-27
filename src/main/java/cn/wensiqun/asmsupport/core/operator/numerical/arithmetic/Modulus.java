@@ -17,11 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
 /**
@@ -41,9 +40,9 @@ public class Modulus extends AbstractArithmetic {
 
     @Override
     public void doExecute() {
-        LOG.debug("start execute sub arithmetic operator");
+        LOG.print("start execute sub arithmetic operator");
         factorToStack();
-        LOG.debug("execute the sub instruction");
+        LOG.print("execute the sub instruction");
         insnHelper.rem(targetClass.getType());
     }
 

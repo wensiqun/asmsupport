@@ -16,13 +16,12 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -68,17 +67,17 @@ public class VariableInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            LOG.debug("call method by variable :" + var.getVariableMeta().getName());
-            LOG.debug("put variable reference to stack");
+            LOG.print("call method by variable :" + var.getVariableMeta().getName());
+            LOG.print("put variable reference to stack");
             //变量入栈
             var.loadToStack(block);
             argumentsToStack();
             if(ve.getDeclareType().isInterface()){
-                LOG.debug("invoke interface method : " + name);
+                LOG.print("invoke interface method : " + name);
                 //如果是接口
                 insnHelper.invokeInterface(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
-                LOG.debug("invoke class method : " + name);
+                LOG.print("invoke class method : " + name);
                 if(ve.getName().equals(ASConstant.SUPER)){
                     insnHelper.invokeSuperMethod(ve.getDeclareType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                 }else {

@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 构造方法调用者。
@@ -52,15 +51,15 @@ public class ConstructorInvoker extends MethodInvoker {
 
     @Override
     public void doExecute() {
-        LOG.debug("new a instance of class :" + this.methodOwner.getName());
-        LOG.debug("put class reference to stack");
+        LOG.print("new a instance of class :" + this.methodOwner.getName());
+        LOG.print("put class reference to stack");
         insnHelper.newInstance(methodOwner.getType());
         if (isSaveReference()) {
             insnHelper.dup();
         }
         //将参数入栈
         argumentsToStack();
-        LOG.debug("call the constrcutor");
+        LOG.print("call the constrcutor");
         insnHelper.invokeConstructor(methodOwner.getType(), mtdEntity.getArgTypes());
     }
 

@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 
 /**
@@ -54,8 +53,8 @@ public class DUP extends ASMDirect implements Parameterized {
 
 	@Override
 	protected void doExecute() {
-		if(LOG.isDebugEnabled()){
-			LOG.debug("duplicate the top of stack and push it to stack");
+		if(LOG.isPrintEnabled()){
+			LOG.print("duplicate the top of stack and push it to stack");
 		}
         block.getInsnHelper().dup(type.getType());
 	}

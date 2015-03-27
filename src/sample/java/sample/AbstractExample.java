@@ -4,6 +4,8 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
 
 public abstract class AbstractExample {
     
@@ -11,7 +13,9 @@ public abstract class AbstractExample {
 	 * system.out global variable
 	 */
 	public static GlobalVariable systemOut = AClassFactory.defType(System.class).field("out");
-	
+	static {
+	    ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory());
+	}
 	public static Class<?> generate(IClassContext creator){
 		return generate(creator, true);
 	}

@@ -17,11 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
@@ -68,7 +67,9 @@ public class Return extends BreakStack {
     @Override
     public void breakStackExecuting() {
         if(returner == null){
-            LOG.debug("direct return from method");
+            if(LOG.isPrintEnabled()) {
+                LOG.print("direct return from method");
+            }
             insnHelper.returnInsn();
         }else{
             returner.loadToStack(block);

@@ -17,13 +17,12 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
 /**
@@ -78,22 +77,22 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected final void factorToStack() {
-        LOG.debug("push the first arithmetic factor to stack");
+        LOG.print("push the first arithmetic factor to stack");
         factor1.loadToStack(block);
-        if(LOG.isDebugEnabled()){
+        if(LOG.isPrintEnabled()){
             if(!factor1.getParamterizedType().equals(targetClass)){
-                LOG.debug("cast arithmetic factor from " + factor1.getParamterizedType() + " to " + targetClass);
+                LOG.print("cast arithmetic factor from " + factor1.getParamterizedType() + " to " + targetClass);
             }
         }
         insnHelper.unbox(factor1.getParamterizedType().getType());
         insnHelper.cast(factor1.getParamterizedType().getType(), targetClass.getType());    
         
-        LOG.debug("push the second arithmetic factor to stack");
+        LOG.print("push the second arithmetic factor to stack");
         factor2.loadToStack(block);
         
-        if(LOG.isDebugEnabled()){
+        if(LOG.isPrintEnabled()){
             if(!factor2.getParamterizedType().equals(targetClass)){
-                LOG.debug("cast arithmetic factor from " + factor2.getParamterizedType() + " to " + targetClass);
+                LOG.print("cast arithmetic factor from " + factor2.getParamterizedType() + " to " + targetClass);
             }
         }
         
@@ -110,9 +109,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     
     @Override
     public final void doExecute() {
-        LOG.debug("prepare operator " + operator);
+        LOG.print("prepare operator " + operator);
         factorToStack();
-        LOG.debug("execute operator " + operator);
+        LOG.print("execute operator " + operator);
         innerRunExe();
     }
 

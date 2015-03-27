@@ -17,14 +17,13 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -64,7 +63,9 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
         if(parDims != null && parDims.length > cls.getDimension()){
             throw new ArrayOperatorException(toString() + " dimension not enough!");
         }
-        LOG.debug("start load array value");
+        if(LOG.isPrintEnabled()) {
+            LOG.print("start load array value");
+        }
         getValue();
     }
 

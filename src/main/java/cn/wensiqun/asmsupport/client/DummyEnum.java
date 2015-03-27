@@ -21,6 +21,8 @@ import java.util.Set;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 
@@ -58,6 +60,12 @@ public class DummyEnum {
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
+    
+    /** Whether or not print log.*/
+    private boolean printLog;
+    
+    /** The log file path.*/
+    private String logFilePath;
 
     public DummyEnum() {
     }
@@ -193,6 +201,30 @@ public class DummyEnum {
     }
     
     /**
+     * Whether or not print log information. if set {@code true} than print it to console.
+     * Also you can print to file by method {@link DummyClass#setLogFilePath(String)}
+     * 
+     * @param print
+     * @return
+     */
+    public DummyEnum setPrintLog(boolean print) {
+        printLog = print;
+        return this;
+    }
+
+    /**
+     * The log information out put path. call the method will set {@code printLog} to {@code true.}
+     * 
+     * @param logFile
+     * @return
+     */
+    public DummyEnum setLogFilePath(String logFile){
+        logFilePath = logFile;
+        printLog = true;
+        return this;
+    }
+    
+    /**
      * Get the interfaces.
      * 
      * @return
@@ -290,6 +322,12 @@ public class DummyEnum {
      * @return
      */
     public Class<?> build() {
+        ASConstant.LOG_FACTORY_LOCAL.remove();
+        if(StringUtils.isNotBlank(logFilePath)) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        } else if(printLog) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        }
         EnumCreator eci = new EnumCreator(javaVersion, packageName + "." + name, interfaces);
         for(DummyEnumConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {

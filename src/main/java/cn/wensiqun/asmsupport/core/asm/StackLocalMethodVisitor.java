@@ -14,11 +14,10 @@
  */
 package cn.wensiqun.asmsupport.core.asm;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.InstructionException;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.asm.MethodAdapter;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.core.utils.memory.Stackable;
@@ -73,149 +72,149 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
         Stackable top;
         switch (opcode) {
         case NOP:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : NOP");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : NOP");
             }
             break;
         case ACONST_NULL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ACONST_NULL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ACONST_NULL");
             }
             if (nextPushTypes == null) {
                 nextPushTypes = new Type[] { OBJECT_TYPE };
             }
             break;
         case ICONST_M1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_M1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_M1");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_0:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_0");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_0");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_1");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_2:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_2");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_2");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_3:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_3");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_3");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_4:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_4");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_4");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case ICONST_5:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ICONST_5");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ICONST_5");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case LCONST_0:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LCONST_0");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LCONST_0");
             }
             nextPushTypes = new Type[] { Type.LONG_TYPE };
             break;
         case LCONST_1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LCONST_1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LCONST_1");
             }
             nextPushTypes = new Type[] { Type.LONG_TYPE };
             break;
         case FCONST_0:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FCONST_0");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FCONST_0");
             }
             nextPushTypes = new Type[] { Type.FLOAT_TYPE };
             break;
         case FCONST_1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FCONST_1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FCONST_1");
             }
             nextPushTypes = new Type[] { Type.FLOAT_TYPE };
             break;
         case FCONST_2:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FCONST_2");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FCONST_2");
             }
             nextPushTypes = new Type[] { Type.FLOAT_TYPE };
             break;
         case DCONST_0:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DCONST_0");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DCONST_0");
             }
             nextPushTypes = new Type[] { Type.DOUBLE_TYPE };
             break;
         case DCONST_1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DCONST_1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DCONST_1");
             }
             nextPushTypes = new Type[] { Type.DOUBLE_TYPE };
             break;
         case BIPUSH:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : BIPUSH");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : BIPUSH");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case SIPUSH:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : SIPUSH");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : SIPUSH");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case LDC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LDC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LDC");
             }
             if (nextPushTypes == null) {
                 throw new InternalError("please reference a type");
             }
             break;
         case ILOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ILOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ILOAD");
             }
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case LLOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LLOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LLOAD");
             }
             nextPushTypes = new Type[] { Type.LONG_TYPE };
             break;
         case FLOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FLOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FLOAD");
             }
             nextPushTypes = new Type[] { Type.FLOAT_TYPE };
             break;
         case DLOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DLOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DLOAD");
             }
             nextPushTypes = new Type[] { Type.DOUBLE_TYPE };
             break;
         case ALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ALOAD");
             }
             if (nextPushTypes == null) {
                 nextPushTypes = new Type[] { OBJECT_TYPE };
@@ -223,8 +222,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case IALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IALOAD");
             }
             // pop index
             stack.pop();
@@ -233,8 +232,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.INT_TYPE };
             break;
         case LALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LALOAD");
             }
             // pop index
             stack.pop();
@@ -243,8 +242,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.LONG_TYPE };
             break;
         case FALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FALOAD");
             }
             // pop index
             stack.pop();
@@ -253,8 +252,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.FLOAT_TYPE };
             break;
         case DALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DALOAD");
             }
             // pop index
             stack.pop();
@@ -263,8 +262,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.DOUBLE_TYPE };
             break;
         case AALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : AALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : AALOAD");
             }
             // pop index
             stack.pop();
@@ -274,8 +273,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             this.setNextPushTypes(nextEleType);
             break;
         case BALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : BALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : BALOAD");
             }
             // pop index
             stack.pop();
@@ -284,8 +283,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.BYTE_TYPE };
             break;
         case CALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : CALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : CALOAD");
             }
             // pop index
             stack.pop();
@@ -294,8 +293,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.CHAR_TYPE };
             break;
         case SALOAD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : SALOAD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : SALOAD");
             }
             // pop index
             stack.pop();
@@ -304,38 +303,38 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             nextPushTypes = new Type[] { Type.SHORT_TYPE };
             break;
         case ISTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ISTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ISTORE");
             }
             stack.pop();
             break;
         case LSTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LSTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LSTORE");
             }
             stack.pop();
             break;
         case FSTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FSTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FSTORE");
             }
             stack.pop();
             break;
         case DSTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DSTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DSTORE");
             }
             stack.pop();
             break;
         case ASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ASTORE");
             }
             stack.pop();
             break;
         case IASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IASTORE");
             }
             // pop value
             stack.pop();
@@ -345,8 +344,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case LASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LASTORE");
             }
             // pop value
             stack.pop();
@@ -356,8 +355,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case FASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FASTORE");
             }
             // pop value
             stack.pop();
@@ -367,8 +366,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case DASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DASTORE");
             }
             // pop value
             stack.pop();
@@ -378,8 +377,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case AASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : AASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : AASTORE");
             }
             // pop value
             stack.pop();
@@ -389,8 +388,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case BASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : BASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : BASTORE");
             }
             // pop value
             stack.pop();
@@ -400,8 +399,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case CASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : CASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : CASTORE");
             }
             // pop value
             stack.pop();
@@ -411,8 +410,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case SASTORE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : SASTORE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : SASTORE");
             }
             // pop value
             stack.pop();
@@ -422,20 +421,20 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case POP:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : POP");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : POP");
             }
             stack.pop();
             break;
         case POP2:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : POP2");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : POP2");
             }
             stack.pop(2);
             break;
         case DUP:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DUP");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DUP");
             }
             top = stack.peek();
             if (top.getSize() == 1) {
@@ -445,8 +444,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case DUP_X1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DUP_X1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DUP_X1");
             }
             top = stack.peek();
             if (top.getSize() == 1) {
@@ -456,8 +455,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case DUP_X2:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DUP_X2");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DUP_X2");
             }
             top = stack.peek();
             if (top.getSize() == 1) {
@@ -467,8 +466,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case DUP2:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DUP2");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DUP2");
             }
             if (stack.peek().getSize() == 2) {
                 setNextPushTypes(stack.peek().getType());
@@ -479,8 +478,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case DUP2_X1:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DUP2_X1");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DUP2_X1");
             }
             if (stack.peek().getSize() == 2) {
                 stack.insert(2, stack.peek());
@@ -492,9 +491,9 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case DUP2_X2:
-            if (LOG.isDebugEnabled()) {
+            if (LOG.isPrintEnabled()) {
                 {
-                    LOG.debug("Instruction : DUP2_X2");
+                    LOG.print("Instruction : DUP2_X2");
                 }
             }
             if (stack.peek().getSize() == 2) {
@@ -507,9 +506,9 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             }
             break;
         case SWAP:
-            if (LOG.isDebugEnabled()) {
+            if (LOG.isPrintEnabled()) {
                 {
-                    LOG.debug("Instruction : SWAP");
+                    LOG.print("Instruction : SWAP");
                 }
             }
             top = stack.peek();
@@ -517,623 +516,623 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.insert(1, top);
             break;
         case IADD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IADD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IADD");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LADD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LADD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LADD");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FADD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FADD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FADD");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DADD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DADD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DADD");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case ISUB:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ISUB");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ISUB");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LSUB:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LSUB");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LSUB");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FSUB:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FSUB");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FSUB");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DSUB:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DSUB");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DSUB");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case IMUL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IMUL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IMUL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LMUL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LMUL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LMUL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FMUL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FMUL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FMUL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DMUL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DMUL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DMUL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case IDIV:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IDIV");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IDIV");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LDIV:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LDIV");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LDIV");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FDIV:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FDIV");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FDIV");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DDIV:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DDIV");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DDIV");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case IREM:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IREM");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IREM");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LREM:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LREM");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LREM");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FREM:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FREM");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FREM");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DREM:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DREM");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DREM");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case INEG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INEG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INEG");
             }
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LNEG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LNEG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LNEG");
             }
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case FNEG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FNEG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FNEG");
             }
             stack.pop();
             setNextPushTypes(Type.FLOAT_TYPE);
             break;
         case DNEG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DNEG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DNEG");
             }
             stack.pop();
             setNextPushTypes(Type.DOUBLE_TYPE);
             break;
         case ISHL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ISHL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ISHL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LSHL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LSHL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LSHL");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case ISHR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ISHR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ISHR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LSHR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LSHR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LSHR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case IUSHR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IUSHR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IUSHR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LUSHR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LUSHR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LUSHR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case IAND:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IAND");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IAND");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LAND:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LAND");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LAND");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case IOR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IOR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IOR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LOR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LOR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LOR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case IXOR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IXOR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IXOR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.INT_TYPE);
             break;
         case LXOR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LXOR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LXOR");
             }
             stack.pop();
             stack.pop();
             setNextPushTypes(Type.LONG_TYPE);
             break;
         case IINC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IINC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IINC");
             }
             break;
         case I2L:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2L");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2L");
             }
             stack.pop();
             stack.push(Type.LONG_TYPE);
             break;
         case I2F:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2F");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2F");
             }
             stack.pop();
             stack.push(Type.FLOAT_TYPE);
             break;
         case I2D:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2D");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2D");
             }
             stack.pop();
             stack.push(Type.DOUBLE_TYPE);
             break;
         case L2I:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : L2I");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : L2I");
             }
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case L2F:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : L2F");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : L2F");
             }
             stack.pop();
             stack.push(Type.FLOAT_TYPE);
             break;
         case L2D:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : L2D");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : L2D");
             }
             stack.pop();
             stack.push(Type.DOUBLE_TYPE);
             break;
         case F2I:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : F2I");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : F2I");
             }
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case F2L:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : F2L");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : F2L");
             }
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case F2D:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : F2D");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : F2D");
             }
             stack.pop();
             stack.push(Type.DOUBLE_TYPE);
             break;
         case D2I:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : D2I");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : D2I");
             }
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case D2L:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : D2L");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : D2L");
             }
             stack.pop();
             stack.push(Type.LONG_TYPE);
             break;
         case D2F:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : D2F");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : D2F");
             }
             stack.pop();
             stack.push(Type.FLOAT_TYPE);
             break;
         case I2B:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2B");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2B");
             }
             stack.pop();
             stack.push(Type.BYTE_TYPE);
             break;
         case I2C:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2C");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2C");
             }
             stack.pop();
             stack.push(Type.CHAR_TYPE);
             break;
         case I2S:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : I2S");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : I2S");
             }
             stack.pop();
             stack.push(Type.SHORT_TYPE);
             break;
         case LCMP:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LCMP");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LCMP");
             }
             stack.pop();
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case FCMPL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FCMPL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FCMPL");
             }
             stack.pop();
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case FCMPG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FCMPG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FCMPG");
             }
             stack.pop();
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case DCMPL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DCMPL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DCMPL");
             }
             stack.pop();
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case DCMPG:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DCMPG");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DCMPG");
             }
             stack.pop();
             stack.pop();
             stack.push(Type.INT_TYPE);
             break;
         case IFEQ:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFEQ");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFEQ");
             }
             stack.pop();
             break;
         case IFNE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFNE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFNE");
             }
             stack.pop();
             break;
         case IFLT:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFLT");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFLT");
             }
             stack.pop();
             break;
         case IFGE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFGE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFGE");
             }
             stack.pop();
             break;
         case IFGT:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFGT");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFGT");
             }
             stack.pop();
             break;
         case IFLE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFLE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFLE");
             }
             stack.pop();
             break;
         case IF_ICMPEQ:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPEQ");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPEQ");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ICMPNE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPNE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPNE");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ICMPLT:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPLT");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPLT");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ICMPGE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPGE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPGE");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ICMPGT:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPGT");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPGT");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ICMPLE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ICMPLE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ICMPLE");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ACMPEQ:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ACMPEQ");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ACMPEQ");
             }
             stack.pop();
             stack.pop();
             break;
         case IF_ACMPNE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IF_ACMPNE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IF_ACMPNE");
             }
             stack.pop();
             stack.pop();
             break;
         case GOTO:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : GOTO");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : GOTO");
             }
             break;
         case JSR:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : JSR");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : JSR");
             }
             break;
         case RET:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : RET");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : RET");
             }
             break;
         case TABLESWITCH:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : TABLESWITCH");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : TABLESWITCH");
             }
             break;
         case LOOKUPSWITCH:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LOOKUPSWITCH");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LOOKUPSWITCH");
             }
             break;
         case IRETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IRETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IRETURN");
             }
             stack.pop();
             break;
         case LRETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : LRETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : LRETURN");
             }
             stack.pop();
             break;
         case FRETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : FRETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : FRETURN");
             }
             stack.pop();
             break;
         case DRETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : DRETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : DRETURN");
             }
             stack.pop();
             break;
         case ARETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ARETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ARETURN");
             }
             stack.pop();
             break;
         case RETURN:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : RETURN");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : RETURN");
             }
             break;
         case GETSTATIC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : GETSTATIC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : GETSTATIC");
             }
             if (nextPushTypes == null) {
                 throw new InternalError("please reference a type");
             }
             break;
         case PUTSTATIC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : PUTSTATIC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : PUTSTATIC");
             }
             stack.pop();
             break;
         case GETFIELD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : GETFIELD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : GETFIELD");
             }
             if (nextPushTypes == null) {
                 throw new InternalError("please reference a type");
             }
             break;
         case PUTFIELD:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : PUTFIELD");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : PUTFIELD");
             }
             stack.pop();
             stack.pop();
             break;
         case INVOKEVIRTUAL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INVOKEVIRTUAL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INVOKEVIRTUAL");
             }
             // pop arguments
             stack.pop(popNum);
@@ -1141,8 +1140,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case INVOKESPECIAL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INVOKESPECIAL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INVOKESPECIAL");
             }
             // pop arguments
             stack.pop(popNum);
@@ -1150,15 +1149,15 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case INVOKESTATIC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INVOKESTATIC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INVOKESTATIC");
             }
             // pop arguments
             stack.pop(popNum);
             break;
         case INVOKEINTERFACE:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INVOKEINTERFACE");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INVOKEINTERFACE");
             }
             // pop arguments
             stack.pop(popNum);
@@ -1166,8 +1165,8 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case INVOKEDYNAMIC:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INVOKEDYNAMIC");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INVOKEDYNAMIC");
             }
             // pop arguments
             stack.pop(popNum);
@@ -1175,80 +1174,80 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
             stack.pop();
             break;
         case NEW:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : NEW");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : NEW");
             }
             break;
         case NEWARRAY:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : NEWARRAY");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : NEWARRAY");
             }
             // pop allocated dim number
             stack.pop();
             break;
         case ANEWARRAY:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ANEWARRAY");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ANEWARRAY");
             }
             // pop the size of array
             stack.pop();
             break;
         case ARRAYLENGTH:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ARRAYLENGTH");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ARRAYLENGTH");
             }
             setNextPushTypes(Type.INT_TYPE);
             // pop the reference of array
             stack.pop();
             break;
         case ATHROW:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : ATHROW");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : ATHROW");
             }
             // pop the exception reference
             stack.pop();
             break;
         case CHECKCAST:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : CHECKCAST");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : CHECKCAST");
             }
             // pop the raw object reference
             stack.pop();
             break;
         case INSTANCEOF:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : INSTANCEOF");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : INSTANCEOF");
             }
             // pop the object reference
             stack.pop();
             break;
         case MONITORENTER:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : MONITORENTER");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : MONITORENTER");
             }
             stack.pop();
             break;
         case MONITOREXIT:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : MONITOREXIT");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : MONITOREXIT");
             }
             stack.pop();
             break;
         case MULTIANEWARRAY:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : MULTIANEWARRAY");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : MULTIANEWARRAY");
             }
             stack.pop(popNum);
             break;
         case IFNULL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFNULL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFNULL");
             }
             stack.pop();
             break;
         case IFNONNULL:
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Instruction : IFNONNULL");
+            if (LOG.isPrintEnabled()) {
+                LOG.print("Instruction : IFNONNULL");
             }
             stack.pop();
             break;

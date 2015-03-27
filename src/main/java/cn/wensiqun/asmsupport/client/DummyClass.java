@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -45,6 +47,12 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
+    
+    /** Whether or not print log.*/
+    private boolean printLog;
+    
+    /** The log file path.*/
+    private String logFilePath;
 
     /** All constructors */
     private LinkedList<DummyConstructor> constructorDummies = new LinkedList<DummyConstructor>();
@@ -263,7 +271,31 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     public String getClassOutPutPath() {
         return classOutPutPath;
     }
+    
+    /**
+     * Whether or not print log information. if set {@code true} than print it to console.
+     * Also you can print to file by method {@link DummyClass#setLogFilePath(String)}
+     * 
+     * @param print
+     * @return
+     */
+    public DummyClass setPrintLog(boolean print) {
+        printLog = print;
+        return this;
+    }
 
+    /**
+     * The log information out put path. call the method will set {@code printLog} to {@code true.}
+     * 
+     * @param logFile
+     * @return
+     */
+    public DummyClass setLogFilePath(String logFile){
+        logFilePath = logFile;
+        printLog = true;
+        return this;
+    }
+    
     /**
      * Create a field
      * 
@@ -329,6 +361,12 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public Class<?> build() {
+        ASConstant.LOG_FACTORY_LOCAL.remove();
+        if(StringUtils.isNotBlank(logFilePath)) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        } else if(printLog) {
+            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        }
         ClassCreator cci = new ClassCreator(javaVersion, modifiers, packageName + "." + name, parent,
                 interfaces);
         for(DummyConstructor dummy : constructorDummies) {

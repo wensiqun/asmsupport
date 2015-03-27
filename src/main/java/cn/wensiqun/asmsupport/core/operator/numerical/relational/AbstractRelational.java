@@ -14,14 +14,13 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -99,8 +98,8 @@ public abstract class AbstractRelational extends AbstractOperator implements
     @Override
     public void execute() {
         if(byOtherUsed){
-            if(LOG.isDebugEnabled()){
-            	LOG.debug("run operator " + factor1.getParamterizedType() + " " + operator + " " + factor2.getParamterizedType());
+            if(LOG.isPrintEnabled()){
+            	LOG.print("run operator " + factor1.getParamterizedType() + " " + operator + " " + factor2.getParamterizedType());
             }
             super.execute();
         }else{

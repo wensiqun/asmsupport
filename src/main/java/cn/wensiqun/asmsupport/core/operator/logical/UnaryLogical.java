@@ -14,13 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -70,7 +69,7 @@ public abstract class UnaryLogical extends AbstractLogical {
 
 	@Override
     protected void factorToStack() {
-        LOG.debug("factors to stack");
+        LOG.print("factors to stack");
         factor.loadToStack(block);
         insnHelper.unbox(factor.getParamterizedType().getType());
     }

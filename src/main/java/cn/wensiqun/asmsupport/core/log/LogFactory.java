@@ -2,9 +2,9 @@ package cn.wensiqun.asmsupport.core.log;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 
@@ -17,37 +17,26 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
  */
 public class LogFactory {
 
-    private Handler handler;
-    
-    private Level level;
-    
-    private String logfile;
+    private StreamHandler handler;
     
     private final static Log EMPTY_LOG = new Log(null);
 
-    public LogFactory(String logFile, boolean print) {
-        if(print) {
-            level = Level.CONFIG;
-            try {
-                handler = new FileHandler(logfile, true);
-            } catch (Exception e) {
-                System.out.println("Error to create FileHandler cause by " + e.getMessage() + ", create ConsoleHandler replace.");
-                handler = new ConsoleHandler();
-            }
-        } else {
+    public LogFactory(String logFile) {
+        try {
+            handler = new FileHandler(logFile, true);
+        } catch (Exception e) {
+            System.out.println("Error to create FileHandler cause by " + e.getMessage() + ", create ConsoleHandler replace.");
             handler = new ConsoleHandler();
-            level = Level.OFF;
         }
     }
 
-    public LogFactory(boolean print) {
+    public LogFactory() {
         handler = new ConsoleHandler();
-        level = print ? Level.CONFIG : Level.OFF;
     }
     
     private Log getLogInternal(Class<?> type) {
         Logger log = Logger.getLogger(type.getName());
-        log.setLevel(level);
+        log.setLevel(Level.INFO);
         log.addHandler(handler);
         return new Log(log);
     }
@@ -58,29 +47,6 @@ public class LogFactory {
             return EMPTY_LOG;
         } 
         return factory.getLogInternal(type);
-    }
-    
-    public static class Log {
-
-        private Logger logger;
-        
-        public Log(Logger logger) {
-            this.logger = logger;
-        }
-
-        public boolean isDebugEnabled() {
-            if(logger == null) {
-                return false;
-            }
-            return logger.isLoggable(Level.CONFIG);
-        }
-        
-        public void debug(String msg) {
-            if(logger != null) {
-                logger.config(msg);
-            }
-        }
-        
     }
 
 }

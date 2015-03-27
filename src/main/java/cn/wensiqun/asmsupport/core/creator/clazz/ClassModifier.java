@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
@@ -39,6 +36,8 @@ import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.core.loader.ClassModifierClassLoader;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassFileUtils;
@@ -247,8 +246,8 @@ public class ClassModifier extends AbstractClassContext {
 
     public void modify(Map<String, List<VisitXInsnAdapter>> superConstructorMap){
         
-        if(LOG.isDebugEnabled()){
-            LOG.debug("Start modify class : " + productClass.getReallyClass());
+        if(LOG.isPrintEnabled()){
+            LOG.print("Start modify class : " + productClass.getReallyClass());
         }
         
         // create field
@@ -298,8 +297,8 @@ public class ClassModifier extends AbstractClassContext {
             imc.execute();
         }
 
-        if(LOG.isDebugEnabled()){
-            LOG.debug("End modify class : " + productClass.getReallyClass());
+        if(LOG.isPrintEnabled()){
+            LOG.print("End modify class : " + productClass.getReallyClass());
         }
     }
 

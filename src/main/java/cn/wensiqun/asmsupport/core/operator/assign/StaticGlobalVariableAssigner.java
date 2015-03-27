@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
@@ -39,8 +38,8 @@ public class StaticGlobalVariableAssigner extends Assigner {
 
     @Override
     public void doExecute() {
-    	if(LOG.isDebugEnabled()){
-            LOG.debug("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+    	if(LOG.isPrintEnabled()){
+            LOG.print("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
         

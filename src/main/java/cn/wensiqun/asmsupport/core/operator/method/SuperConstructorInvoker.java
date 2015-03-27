@@ -14,13 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 构造方法调用者。
@@ -41,8 +40,8 @@ public class SuperConstructorInvoker extends MethodInvoker {
 
     @Override
     public void doExecute() {
-        LOG.debug("call method '"+ name +"' by 'this' key word");
-        LOG.debug("put 'this' to stack");
+        LOG.print("call method '"+ name +"' by 'this' key word");
+        LOG.print("put 'this' to stack");
         insnHelper.loadThis();
         argumentsToStack();
         

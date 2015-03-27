@@ -17,15 +17,14 @@
  */
 package cn.wensiqun.asmsupport.core.asm;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -1160,8 +1159,8 @@ public abstract class InstructionHelper {
      * Generates the instruction to get the monitor of the top stack value.
      */
     public void monitorEnter() {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("execute monitorenter");
+        if (LOG.isPrintEnabled()) {
+            LOG.print("execute monitorenter");
         }
         mv.visitInsn(Opcodes.MONITORENTER);
     }
@@ -1170,8 +1169,8 @@ public abstract class InstructionHelper {
      * Generates the instruction to release the monitor of the top stack value.
      */
     public void monitorExit() {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("execute monitorexit");
+        if (LOG.isPrintEnabled()) {
+            LOG.print("execute monitorexit");
         }
         mv.visitInsn(Opcodes.MONITOREXIT);
     }
@@ -1201,7 +1200,7 @@ public abstract class InstructionHelper {
     }
 
     public void maxs(int stack, int locals) {
-        LOG.debug("Method : " + method.getMethodMeta().getMethodString() + " Maxs(" + "stack:" + stack + " locals:"
+        LOG.print("Method : " + method.getMethodMeta().getMethodString() + " Maxs(" + "stack:" + stack + " locals:"
                 + locals + ")");
         getMv().visitMaxs(stack, locals);
     }

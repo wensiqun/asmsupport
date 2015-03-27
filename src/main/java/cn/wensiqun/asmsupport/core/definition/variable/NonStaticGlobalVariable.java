@@ -14,12 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.log.Log;
+import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 
@@ -57,8 +56,8 @@ public class NonStaticGlobalVariable extends GlobalVariable {
                     + " from " + block.getMethodOwner());
         }
         
-        if(LOG.isDebugEnabled()){
-            LOG.debug("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
+        if(LOG.isPrintEnabled()){
+            LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
         }
         owner.loadToStack(block);
         block.getInsnHelper().getField(meta.getOwner().getType(), meta.getName(), meta.getDeclareType().getType());
