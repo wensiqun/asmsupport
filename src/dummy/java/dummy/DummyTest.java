@@ -82,18 +82,18 @@ public class DummyTest {
         
         public static String excepted() {
             
-            //ExceptedDummy dm = new ExceptedDummy();
+            ExceptedDummy dm = new ExceptedDummy();
             StringBuilder sb = new StringBuilder();
             
-            /*ExceptedInterface.interface_field_list.add("hello asmsupport.");
-            sb.append(ExceptedInterface.interface_field_string);*/
+            ExceptedInterface.interface_field_list.add("hello asmsupport.");
+            sb.append(ExceptedInterface.interface_field_string);
             for(String str : ExceptedInterface.interface_field_list) {
                 sb.append(str);
                 long len = str.length();
                 sb.append(len);
             }
             
-            /*sb.append(dm.abstract_class_field_string);
+            sb.append(dm.abstract_class_field_string);
             for(String str : ExceptedAbstractClass.abstract_class_field_list) {
                 sb.append(str);
             }
@@ -104,7 +104,7 @@ public class DummyTest {
             dm.appendString1(sb);
             dm.appendString2(sb);
         
-            sb.append(ExceptedEnum.ENUM1.getEnumName()).append("\n").append(ExceptedEnum.ENUM2);*/
+            sb.append(ExceptedEnum.ENUM1.getEnumName()).append("\n").append(ExceptedEnum.ENUM2);
             
             return sb.toString();
         }
@@ -196,7 +196,6 @@ public class DummyTest {
                  .public_()
                  .abstract_()
                  .argTypes(StringBuilder.class);
-        @SuppressWarnings("unused")
         Class<?> ExceptedAbstractClass = excAbsCls.build();
         
         //Crate enum class ExceptedEnum
@@ -276,14 +275,14 @@ public class DummyTest {
 
             @Override
             public void body(LocalVariable... args) {
-                //LocalVariable dm = _createVariable("dm", getMethodOwner(), _new(getMethodOwner()));
+                LocalVariable dm = var("dm", getMethodOwner(), new_(getMethodOwner()));
                 final LocalVariable sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
                 
                 AClass ExceptedInterfaceAClass = AClassFactory.defType(ExceptedInterface);
                 GlobalVariable interface_field_list = ExceptedInterfaceAClass.field("interface_field_list");
                 
-                /*_invoke(interface_field_list, "add", Value.value("hello asmsupport."));
-                _invoke(sb, "append", ExceptedInterfaceAClass.getGlobalVariable("interface_field_string"));*/
+                call(interface_field_list, "add", Value.value("hello asmsupport."));
+                call(sb, "append", ExceptedInterfaceAClass.field("interface_field_string"));
                 for_(new ForEach(interface_field_list, String.class) {
 
                     @Override
@@ -295,31 +294,26 @@ public class DummyTest {
                     
                 });
                 
-                /*_invoke(sb, "append", dm.getGlobalVariable("abstract_class_field_string"));
-                _for(new ForEach(dm.getGlobalVariable("abstract_class_field_list")) {
+                call(sb, "append", dm.field("abstract_class_field_string"));
+                for_(new ForEach(dm.field("abstract_class_field_list")) {
 
                     @Override
                     public void body(LocalVariable str) {
-                        _invoke(sb, "append", str);
+                        call(sb, "append", str);
                     }
                     
                 });
                 
-                _invoke(sb, "append", _invoke(dm, "method1"));
-                _invoke(sb, "append", _invoke(dm, "method2"));
+                call(sb, "append", call(dm, "method1"));
+                call(sb, "append", call(dm, "method2"));
                 
-                _invoke(dm, "appendString1", sb);
-                _invoke(dm, "appendString2", sb);
+                call(dm, "appendString1", sb);
+                call(dm, "appendString2", sb);
                 
-                AClass ExceptedEnumAClass = AClassFactory.getProductClass(ExceptedEnum);
-                _invoke(
-                    _invoke(
-                        _invoke(sb, "append", _invoke(ExceptedEnumAClass.getGlobalVariable("ENUM1"), "getEnumName")),
-                        "append", 
-                        Value.value("\n")),
-                    "append", ExceptedEnumAClass.getGlobalVariable("ENUM2")
-                );*/
-                
+                AClass ExceptedEnumAClass = defType(ExceptedEnum);
+                call(call(call(sb, "append", call(ExceptedEnumAClass.field("ENUM1"), "getEnumName")),"append", Value.value("\n")),
+                    "append", ExceptedEnumAClass.field("ENUM2")
+                );
                 return_(call(sb, "toString"));
             }
             
