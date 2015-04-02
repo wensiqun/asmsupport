@@ -37,7 +37,6 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
@@ -557,42 +556,14 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     // *******************************************************************************************//
 
     @Override
-    public final ArrayLoader arrayLoad(IVariable arrayReference, Parameterized pardim, Parameterized... parDims) {
+    public final ArrayLoader arrayLoad(Parameterized arrayReference, Parameterized pardim, Parameterized... parDims) {
         return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
                 Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference,
                 pardim, parDims);
     }
 
     @Override
-    public final ArrayLoader arrayLoad(MethodInvoker arrayReference, Parameterized pardim, Parameterized... parDims) {
-        return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference,
-                pardim, parDims);
-    }
-
-    @Override
-    public ArrayLoader arrayLoad(ArrayLoader arrayReference, Parameterized pardim, Parameterized... parDims) {
-        return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference,
-                pardim, parDims);
-    }
-
-    @Override
-    public ArrayLoader arrayLoad(ArrayValue arrayReference, Parameterized pardim, Parameterized... parDims) {
-        return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference,
-                pardim, parDims);
-    }
-
-    @Override
-    public ArrayLoader arrayLoad(Assigner arrayReference, Parameterized pardim, Parameterized... parDims) {
-        return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference,
-                pardim, parDims);
-    }
-
-    @Override
-    public final ArrayStorer arrayStore(IVariable arrayReference, Parameterized value, Parameterized dim,
+    public final ArrayStorer arrayStore(Parameterized arrayReference, Parameterized value, Parameterized dim,
             Parameterized... dims) {
         return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
                 Parameterized.class, Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(),
@@ -600,63 +571,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     @Override
-    public final ArrayStorer arrayStore(MethodInvoker arrayReference, Parameterized value, Parameterized dim,
-            Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(),
-                arrayReference, value, dim, dims);
-    }
-
-    @Override
-    public ArrayStorer arrayStore(ArrayLoader arrayReference, Parameterized value, Parameterized dim,
-            Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(),
-                arrayReference, value, dim, dims);
-    }
-
-    @Override
-    public ArrayStorer arrayStore(ArrayValue arrayReference, Parameterized value, Parameterized dim,
-            Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(),
-                arrayReference, value, dim, dims);
-    }
-
-    @Override
-    public ArrayStorer arrayStore(Assigner arrayReference, Parameterized value, Parameterized dim,
-            Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized.class, Parameterized.class, Parameterized[].class }, getExecutor(),
-                arrayReference, value, dim, dims);
-    }
-
-    @Override
-    public final ArrayLength arrayLength(IVariable arrayReference, Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference, dims);
-    }
-
-    @Override
-    public ArrayLength arrayLength(MethodInvoker arrayReference, Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference, dims);
-    }
-
-    @Override
-    public ArrayLength arrayLength(ArrayLoader arrayReference, Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference, dims);
-    }
-
-    @Override
-    public ArrayLength arrayLength(ArrayValue arrayReference, Parameterized... dims) {
-        return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
-                Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference, dims);
-    }
-
-    @Override
-    public ArrayLength arrayLength(Assigner arrayReference, Parameterized... dims) {
+    public final ArrayLength arrayLength(Parameterized arrayReference, Parameterized... dims) {
         return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
                 Parameterized.class, Parameterized[].class }, getExecutor(), arrayReference, dims);
     }

@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * @author 温斯群(Joe Wen)
  *
  */
-public class ClassUtils { //extends cn.wensiqun.asmsupport.org.apache.commons.lang3.ClassUtils {
+public class ClassUtils { 
 
     /**
      * The inner class separator character: <code>'$' == {@value}</code>.

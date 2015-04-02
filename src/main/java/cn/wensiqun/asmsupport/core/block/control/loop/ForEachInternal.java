@@ -23,7 +23,6 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -41,7 +40,7 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
  */
 public abstract class ForEachInternal extends ProgramBlockInternal implements Loop, IForEach {
     
-    private ExplicitVariable iteratorVar;
+    private Parameterized iterable;
     private Parameterized condition;
     private AClass elementType;
     
@@ -50,16 +49,15 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     private Label continueLbl = new Label();
     private Label endLbl = new Label();
     
-    public ForEachInternal(ExplicitVariable iteratorVar) {
-        this(iteratorVar, null);
+    public ForEachInternal(Parameterized iterable) {
+        this(iterable, null);
     }
     
-    public ForEachInternal(ExplicitVariable iteratorVar, AClass elementType) {
-        super();
-        this.iteratorVar = iteratorVar;
+    public ForEachInternal(Parameterized iterable, AClass elementType) {
+        this.iterable = iterable;
         this.elementType = elementType;
         
-        AClass type = iteratorVar.getParamterizedType();
+        AClass type = iterable.getParamterizedType();
         if(!type.isArray() &&
            !type.isChildOrEqual(AClassFactory.defType(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
@@ -84,7 +82,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     
     @Override
     public final void generate() {
-        if(iteratorVar.getParamterizedType().isArray()){
+        if(iterable.getParamterizedType().isArray()){
             final LocalVariable i = var(null, AClass.INT_ACLASS, true, Value.value(0));
             
             OperatorFactory.newOperator(GOTO.class, 
@@ -95,7 +93,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), startLbl);
             
-            LocalVariable obj = var(((ArrayClass)iteratorVar.getParamterizedType()).getNextDimType(), arrayLoad(iteratorVar, i) );
+            LocalVariable obj = var(((ArrayClass)iterable.getParamterizedType()).getNextDimType(), arrayLoad(iterable, i) );
             body(obj);
 
             OperatorFactory.newOperator(Marker.class, 
@@ -103,9 +101,9 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
                     getExecutor(), conditionLbl);
             postinc(i);
             
-            condition = lt(i, arrayLength(iteratorVar));
+            condition = lt(i, arrayLength(iterable));
         }else{
-        	final LocalVariable itr = var(null, AClass.ITERATOR_ACLASS, true, call(iteratorVar, "iterator"));
+        	final LocalVariable itr = var(null, AClass.ITERATOR_ACLASS, true, call(iterable, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 

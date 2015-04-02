@@ -23,7 +23,6 @@ import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
@@ -313,95 +312,23 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public ArrayLoader arrayLoad(ArrayValue arrayReference,
+	public ArrayLoader arrayLoad(Parameterized arrayReference,
 			Parameterized pardim, Parameterized... parDims) {
 		return target.arrayLoad(arrayReference, pardim, parDims);
 	}
-
+	
 	@Override
-	public ArrayLoader arrayLoad(IVariable arrayReference,
-			Parameterized pardim, Parameterized... parDims) {
-		return target.arrayLoad(arrayReference, pardim, parDims);
-	}
-
-	@Override
-	public ArrayLoader arrayLoad(MethodInvoker arrayReference,
-			Parameterized pardim, Parameterized... parDims) {
-		return target.arrayLoad(arrayReference, pardim, parDims);
-	}
-
-	@Override
-	public ArrayLoader arrayLoad(Assigner arrayReference, Parameterized pardim,
-			Parameterized... parDims) {
-		return target.arrayLoad(arrayReference, pardim, parDims);
-	}
-
-	@Override
-	public ArrayLoader arrayLoad(ArrayLoader arrayReference,
-			Parameterized pardim, Parameterized... parDims) {
-		return target.arrayLoad(arrayReference, pardim, parDims);
-	}
-
-	@Override
-	public ArrayStorer arrayStore(ArrayValue arrayReference,
+	public ArrayStorer arrayStore(Parameterized arrayReference,
 			Parameterized value, Parameterized dim, Parameterized... dims) {
 		return target.arrayStore(arrayReference, value, dim, dims);
 	}
 
 	@Override
-	public ArrayStorer arrayStore(IVariable arrayReference,
-			Parameterized value, Parameterized dim, Parameterized... dims) {
-		return target.arrayStore(arrayReference, value, dim, dims);
-	}
-
-	@Override
-	public ArrayStorer arrayStore(MethodInvoker arrayReference,
-			Parameterized value, Parameterized dim, Parameterized... dims) {
-		return target.arrayStore(arrayReference, value, dim, dims);
-	}
-
-	@Override
-	public ArrayStorer arrayStore(Assigner arrayReference, Parameterized value,
-			Parameterized dim, Parameterized... dims) {
-		return target.arrayStore(arrayReference, value, dim, dims);
-	}
-
-	@Override
-	public ArrayStorer arrayStore(ArrayLoader arrayReference,
-			Parameterized value, Parameterized dim, Parameterized... dims) {
-		return target.arrayStore(arrayReference, value, dim, dims);
-	}
-
-	@Override
-	public ArrayLength arrayLength(ArrayValue arrayReference,
+	public ArrayLength arrayLength(Parameterized arrayReference,
 			Parameterized... dims) {
 		return target.arrayLength(arrayReference, dims);
 	}
-
-	@Override
-	public ArrayLength arrayLength(IVariable arrayReference,
-			Parameterized... dims) {
-		return target.arrayLength(arrayReference, dims);
-	}
-
-	@Override
-	public ArrayLength arrayLength(MethodInvoker arrayReference,
-			Parameterized... dims) {
-		return target.arrayLength(arrayReference, dims);
-	}
-
-	@Override
-	public ArrayLength arrayLength(Assigner arrayReference,
-			Parameterized... dims) {
-		return target.arrayLength(arrayReference, dims);
-	}
-
-	@Override
-	public ArrayLength arrayLength(ArrayLoader arrayReference,
-			Parameterized... dims) {
-		return target.arrayLength(arrayReference, dims);
-	}
-
+	
 	@Override
 	public Addition add(Parameterized factor1, Parameterized factor2) {
 		return target.add(factor1, factor2);
