@@ -1,7 +1,7 @@
 package json.parser;
 
-import json.StringEncoder;
-import json.generator.JSONPool;
+import json.JSONPool;
+import json.utils.StringEncoder;
 
 public class BaseParser extends AbstractParser {
 
@@ -10,13 +10,8 @@ public class BaseParser extends AbstractParser {
     }
 
     @Override
-    public String parse(Object obj) {
-        return obj == null ? "null" : obj.toString();
-    }
-
-    @Override
-    protected void parse(StringEncoder encoder, Object obj) {
-        encoder.append(parse(obj));
+    public void parse(StringEncoder encoder, Object obj) {
+        encoder.append(obj.toString());
     }
 
 }

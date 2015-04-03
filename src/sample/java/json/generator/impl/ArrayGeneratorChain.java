@@ -1,5 +1,6 @@
-package json.generator;
+package json.generator.impl;
 
+import json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
 import cn.wensiqun.asmsupport.core.Parameterized;

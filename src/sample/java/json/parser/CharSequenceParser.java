@@ -1,7 +1,7 @@
 package json.parser;
 
-import json.StringEncoder;
-import json.generator.JSONPool;
+import json.JSONPool;
+import json.utils.StringEncoder;
 
 public class CharSequenceParser extends AbstractParser {
 
@@ -10,18 +10,8 @@ public class CharSequenceParser extends AbstractParser {
     }
 
     @Override
-    public String parse(Object obj) {
-        if(obj == null) {
-            return "";
-        }
-        StringEncoder se = new StringEncoder(obj.toString().length() + 2);
-        se.append(obj.toString());
-        return se.toString();
-    }
-
-    @Override
-    protected void parse(StringEncoder encoder, Object obj) {
-        encoder.append(obj.toString());
+    public void parse(StringEncoder encoder, Object obj) {
+        encoder.appendDirect('"').append(obj.toString()).appendDirect('"');
     }
 
 }

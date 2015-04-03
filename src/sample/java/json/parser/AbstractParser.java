@@ -1,7 +1,7 @@
 package json.parser;
 
-import json.StringEncoder;
-import json.generator.JSONPool;
+import json.JSONPool;
+import json.utils.StringEncoder;
 
 public abstract class AbstractParser {
 
@@ -11,9 +11,13 @@ public abstract class AbstractParser {
         this.jsonPool = jsonPool;
     }
 
-    public abstract String parse(Object obj);
+    public final String parse(Object obj) {
+        StringEncoder encoder = new StringEncoder();
+        parse(encoder, obj);
+        return encoder.toString();
+    }
 
-    protected abstract void parse(StringEncoder encoder, Object obj);
+    public abstract void parse(StringEncoder encoder, Object obj);
 
     protected final void appendValue(StringEncoder encoder, Object val) {
         Class<?> type = val.getClass();

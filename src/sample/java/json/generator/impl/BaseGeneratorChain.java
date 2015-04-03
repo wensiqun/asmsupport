@@ -1,6 +1,6 @@
-package json.generator;
+package json.generator.impl;
 
-import cn.wensiqun.asmsupport.client.IF;
+import json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
@@ -13,14 +13,23 @@ public class BaseGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     public boolean match(AClass type) {
-        return type.isChildOrEqual(AClassFactory.defType(CharSequence.class)) || 
+        return type.isPrimitive() ||
+               type.isChildOrEqual(AClassFactory.defType(CharSequence.class)) || 
                AClassUtils.isPrimitiveWrapAClass(type);
     }
 
     @Override
     protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
             LocalVariable encoder, AClass type, Parameterized value) {
-        block.call(encoder, "append", value); 
+        if(type.isChildOrEqual(AClassFactory.defType(CharSequence.class)) ||
+           type.equals(AClassFactory.defType(char.class)) ||
+           type.equals(AClassFactory.defType(Character.class))) {
+            block.call(encoder, "appendDirect", block.val('"'));
+            block.call(encoder, "append", value); 
+            block.call(encoder, "appendDirect", block.val('"'));
+        } else {
+            block.call(encoder, "append", value); 
+        }
         return true;
     }
 

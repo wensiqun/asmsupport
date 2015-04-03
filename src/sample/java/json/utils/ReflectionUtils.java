@@ -1,4 +1,4 @@
-package json;
+package json.utils;
 
 import static java.lang.System.arraycopy;
 

@@ -1,4 +1,4 @@
-package json;
+package json.utils;
 
 
 public class StringEncoder {
@@ -19,16 +19,14 @@ public class StringEncoder {
     
     public StringEncoder append(CharSequence csq) {
         if(csq == null) {
-            stringBuilder.ensureCapacity(stringBuilder.length() + 4);
+            stringBuilder.ensureCapacity(stringBuilder.length());
             stringBuilder.append("null");
+        } else {
+            stringBuilder.ensureCapacity(stringBuilder.length() + csq.length());
+            for(int i=0, len=csq.length(); i<len; i++) {
+                append(csq.charAt(i));
+            }
         }
-        
-        stringBuilder.ensureCapacity(stringBuilder.length() + csq.length() + 2);
-        stringBuilder.append('\"');
-        for(int i=0, len=csq.length(); i<len; i++) {
-            append(csq.charAt(i));
-        }
-        stringBuilder.append('\"');
         return this;
     }
 
@@ -40,6 +38,11 @@ public class StringEncoder {
         } else {
             stringBuilder.append(c);
         }
+        return this;
+    }
+
+    public StringEncoder appendDirect(char c) {
+        stringBuilder.append(c);
         return this;
     }
     

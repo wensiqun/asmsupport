@@ -1,6 +1,6 @@
-package json.generator;
+package json.generator.impl;
 
-import cn.wensiqun.asmsupport.client.ForEach;
+import json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
@@ -8,6 +8,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 
 public class IterableGeneratorChain extends AbstractGeneratorChain {
 
@@ -19,18 +20,9 @@ public class IterableGeneratorChain extends AbstractGeneratorChain {
     @Override
     protected boolean doGenerate(final GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
             final LocalVariable encoder, AClass type, Parameterized value) {
-        block.call(encoder, "appendDirect", block.val('['));
-        block.for_(new ForEach(value) {
-            @Override
-            public void body(LocalVariable e) {
-                LocalVariable elementType = var("elementType", Class.class, call(e, "getClass"));
-                GlobalVariable jsonPool = this_().field("jsonPool");
-                call(call(jsonPool, "getOrRegister", elementType), "parse", encoder, e);
-                call(encoder, "append", val(','));
-            }
-        });
-        block.call(encoder, "trimLastComma");
-        block.call(encoder, "appendDirect", block.val(']'));
+        GlobalVariable jsonPool = block.this_().field("jsonPool");
+        MethodInvoker getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.defType(Iterable.class)));
+        block.call(getOrRegisterCall, "parse", encoder, value);
         return true;
     }
 

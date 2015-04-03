@@ -1,31 +1,41 @@
-package json.generator;
+package json;
 
 import java.lang.reflect.Field;
-import java.util.UUID;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import json.generator.IValueGeneratorChain;
+import json.generator.IValueGeneratorChain.GeneratorContext;
+import json.generator.impl.ArrayGeneratorChain;
+import json.generator.impl.BaseGeneratorChain;
+import json.generator.impl.BeanGeneratorChain;
+import json.generator.impl.IterableGeneratorChain;
+import json.generator.impl.MapGeneratorChain;
+import json.parser.AbstractParser;
+import json.parser.BaseParser;
+import json.parser.CharSequenceParser;
+import json.parser.IterableParser;
+import json.parser.MapParser;
+import json.utils.ReflectionUtils;
+import json.utils.StringEncoder;
+import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.IF;
 import cn.wensiqun.asmsupport.client.MethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import json.ReflectionUtils;
-import json.StringEncoder;
-import json.generator.IValueGeneratorChain.GeneratorContext;
-import json.parser.AbstractParser;
-import json.parser.BaseParser;
-import json.parser.CharSequenceParser;
 
 public class JSONPool {
 
-    public ConcurrentMap<Class<?>, AbstractParser> parserMap;
+    private ConcurrentMap<Class<?>, AbstractParser> parserMap;
     
     private IValueGeneratorChain header;
     
     public JSONPool() {
         parserMap = new ConcurrentHashMap<Class<?>, AbstractParser>();
+        
         AbstractParser parser = new BaseParser(this);
         parserMap.put(boolean.class, parser);
         parserMap.put(Boolean.class, parser);
@@ -41,13 +51,23 @@ public class JSONPool {
         parserMap.put(Long.class, parser);
         parserMap.put(double.class, parser);
         parserMap.put(Double.class, parser);
+        
         parser = new CharSequenceParser(this);
         parserMap.put(char.class, parser);
         parserMap.put(Character.class, parser);
         parserMap.put(String.class, parser);
         
+        parser = new MapParser(this);
+        parserMap.put(Map.class, parser);
+
+        parser = new IterableParser(this);
+        parserMap.put(Iterable.class, parser);
+        
+        
         header = new BaseGeneratorChain();
-        header.setNext(new BeanGeneratorChain())
+        header.setNext(new ArrayGeneratorChain())
+              .setNext(new MapGeneratorChain())
+              .setNext(new IterableGeneratorChain())
               .setNext(new BeanGeneratorChain());
     }
     
@@ -63,10 +83,11 @@ public class JSONPool {
                 if(parser == null) {
                     try {
                         Class<?> target = buildClass(new GeneratorContext(this, header), type);
-                        parser = (AbstractParser) target.newInstance();
+                        parser = (AbstractParser) target.getConstructor(JSONPool.class).newInstance(this);
                         parserMap.put(type, parser);
                     } catch (Exception e) {
                         System.out.println("Error build parser class : " + type + " cause by " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }
@@ -84,86 +105,52 @@ public class JSONPool {
             return "null";
         }
         Class<?> type = val.getClass();
-        
-        if(type == char.class || type == Character.class) {
-            Character c = (Character) val;
-            if(c == '\\') {
-                return "\\\\";
-            } else if (c == '"') {
-                return "\\\"";
-            } else {
-                return c.toString();
-            }
-        }
-        
-        if(type == boolean.class || type == Boolean.class ||
-           type == byte.class || type == Byte.class || 
-           type == short.class || type == Short.class || 
-           type == int.class || type == Integer.class || 
-           type == float.class || type == Float.class || 
-           type == long.class || type == Long.class ||
-           type == double.class || type == Double.class) {
-            return val.toString();
-        } else {
-            return this.getOrRegister(type).parse(val);
-        }
+        return this.getOrRegister(type).parse(val);
     }
     
-    /*public void populateJson(StringEncoder encoder, Object val) {
-        Class<?> type = val.getClass();
-        if (type == boolean.class || type == Boolean.class) {
-            encoder.append((Boolean) val);
-        } else if (type == byte.class || type == Byte.class) {
-            encoder.append((Byte) val);
-        } else if (type == short.class || type == Short.class) {
-            encoder.append((Short) val);
-        } else if (type == char.class || type == Character.class) {
-            encoder.append((Character) val);
-        } else if (type == int.class || type == Integer.class) {
-            encoder.append((Integer) val);
-        } else if (type == float.class || type == Float.class) {
-            encoder.append((Float) val);
-        } else if (type == long.class || type == Long.class) {
-            encoder.append((Long) val);
-        } else if (type == double.class || type == Double.class) {
-            encoder.append((Double) val);
-        } else {
-            this.getOrRegister(type).parse(encoder, val);
+    public void getJson(StringEncoder encoder, Object val) {
+        if(val == null) {
+            encoder.append("null");
         }
-    }*/
+        Class<?> type = val.getClass();
+        getOrRegister(type).parse(encoder, val);
+    }
     
-    Class<?> buildClass(final GeneratorContext context, final Class<?> type) {
-        DummyClass dummy = new DummyClass("json." + type.getName() + "_" + UUID.randomUUID().toString())
-                           .public_().extends_(AbstractParser.class);
+    private Class<?> buildClass(final GeneratorContext context, final Class<?> type) {
+        DummyClass dummy = new DummyClass(type.getName() + "Parser")
+                           .public_().extends_(AbstractParser.class).setClassOutPutPath(".//target//sample//");
         
-        dummy.newMethod("parse").public_().return_(String.class).argTypes(Object.class).argNames("object").body(new MethodBody(){
+        dummy.newConstructor().public_().argTypes(JSONPool.class).body(new ConstructorBody() {
 
             @Override
             public void body(LocalVariable... args) {
-                return_(call("parse", this_().field("encoder"), args[0]));
+                supercall(args);
+                return_();
             }
             
         });
         
-
-        dummy.newMethod("parse").protected_().return_(String.class).argTypes(StringEncoder.class, Object.class).argNames("encoder", "object").body(new MethodBody(){
+        dummy.newMethod("parse").public_().argTypes(StringEncoder.class, Object.class).argNames("encoder", "object").body(new MethodBody(){
 
             @Override
             public void body(LocalVariable... args) {
+                
                 final LocalVariable encoder = args[0];
+                final LocalVariable val = var(type, checkcast(args[1], type));
+                
                 call(encoder, "append", val('{'));
                 
                 Field[] fields = type.getDeclaredFields();
                 for(Field f : fields) {
                     final String name = f.getName();
-                    final Class<?> type = f.getType();
+                    final Class<?> fieldType = f.getType();
                     
                     if(ModifierUtils.isStatic(f.getModifiers())) {
                        System.out.println("Warning : field '" + name + "' is static, pass it.");
                        continue;
                     }
                     
-                    String getterStr = getGetter(type, name);
+                    String getterStr = getGetter(fieldType, name);
                     
                     try {
                        type.getMethod(getterStr);
@@ -175,9 +162,9 @@ public class JSONPool {
                         continue;
                     }
                     
-                    final MethodInvoker getterCall = call(args[0], getterStr);
+                    final MethodInvoker getterCall = call(val, getterStr);
                     
-                    if(type.isPrimitive()) {
+                    if(fieldType.isPrimitive()) {
                         if(name.matches("^[A-Za-z][_A-Za-z0-9]*$")) {
                             call(encoder, "append", val(name + ":"));
                         } else {
@@ -201,7 +188,7 @@ public class JSONPool {
                                     call(encoder, "appendDirect", val('\"'));
                                     call(encoder, "appendDirect", val(':'));
                                 }
-                                header.generate(context, this, encoder, defType(type), getterCall);
+                                header.generate(context, this, encoder, defType(fieldType), getterCall);
                                 call(encoder, "appendDirect", val(','));
                             }
                             
@@ -210,7 +197,7 @@ public class JSONPool {
                 }
                 call(encoder, "trimLastComma");
                 call(encoder, "append", val('}'));
-                return_(call(encoder, "toString"));
+                return_();
             }
             
         });
@@ -221,9 +208,9 @@ public class JSONPool {
     private String getGetter(Class<?> type, String name) {
         if(type == boolean.class || 
            type == Boolean.class) {
-            return ReflectionUtils.getGetter(name);
-        } else {
             return ReflectionUtils.getIsGetter(name);
+        } else {
+            return ReflectionUtils.getGetter(name);
         }
     }
 }
