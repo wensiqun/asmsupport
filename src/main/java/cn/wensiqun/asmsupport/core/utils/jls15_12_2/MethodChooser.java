@@ -90,7 +90,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
         return me;
 	}
 	
-	
+	@Override
 	public Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods(){
 		
 		@SuppressWarnings("serial")
@@ -192,38 +192,42 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			
 		};
 		
-		Class<?> reallyClass = null;
-		if(directCallClass instanceof SemiClass){
-			if(ASConstant.INIT.equals(name)){
-				for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
-					tempPotentially.add(directCallClass, method.getMethodMeta());
-				}
-			}else{
-				for(AMethod method : ((SemiClass)directCallClass).getMethods()){
-					tempPotentially.add(directCallClass, method.getMethodMeta());
-				}
-			}
-			reallyClass = directCallClass.getSuperClass();
-		}else if(directCallClass instanceof ProductClass){
-			if(ASConstant.INIT.equals(name)){
-				for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
-					tempPotentially.add(directCallClass, method.getMethodMeta());
-				}
-			}else{
-				for(AMethod method : ((ProductClass)directCallClass).getMethods()){
-					tempPotentially.add(directCallClass, method.getMethodMeta());
-				}
-			}
-			reallyClass = ((ProductClass) directCallClass).getReallyClass();
-		}else{
-			reallyClass = Object.class;
+		try {
+		    if(directCallClass instanceof SemiClass){
+	            if(ASConstant.INIT.equals(name)){
+	                for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
+	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                }
+	            }else{
+	                for(AMethod method : ((SemiClass)directCallClass).getMethods()){
+	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                }
+	                fetchMatchMethod(tempPotentially, directCallClass.getSuperClass(), name);
+	            }
+	        }else if(directCallClass instanceof ProductClass){
+	            if(ASConstant.INIT.equals(name)){
+	                for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
+	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                }
+	                
+	                List<AMethodMeta> methods = ClassUtils.getAllMethod(((ProductClass) directCallClass).getReallyClass(), name);
+	                for(AMethodMeta me : methods){
+	                    tempPotentially.add(me.getActuallyOwner(), me);
+	                }
+	                
+	            }else{
+	                for(AMethod method : ((ProductClass)directCallClass).getMethods()){
+	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                }
+	                fetchMatchMethod(tempPotentially, ((ProductClass) directCallClass).getReallyClass(), name);
+	            }
+	        }else{
+	            fetchMatchMethod(tempPotentially, Object.class, name);
+	        }
+		} catch (IOException e) {
+		    throw new RuntimeException(e);
 		}
 		
-		try {
-			fetchMatchMethod(tempPotentially, reallyClass, name);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 		return tempPotentially;
 	}
 	
@@ -242,10 +246,6 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		List<AMethodMeta> methods = ClassUtils.getAllMethod(where, name);
 		for(AMethodMeta me : methods){
 			potentially.add(me.getActuallyOwner(), me);
-		}
-		
-		if(name.equals(ASConstant.INIT) || name.equals(ASConstant.CLINIT)){
-			return;
 		}
 		
 		fetchMatchMethod(potentially, where.getSuperclass(), name);
@@ -286,16 +286,6 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 						
 				if(ModifierUtils.isVarargs(entity.getModifier())){
 					return;
-				    /*if(ArrayUtils.getLength(argumentTypes) == 0){
-						return;
-					}
-					
-					AClass lastActuallyArg = argumentTypes[ArrayUtils.getLength(argumentTypes) - 1];
-					
-					if(!lastActuallyArg.isArray() || 
-						ArrayUtils.getLength(argumentTypes) != ArrayUtils.getLength(potentialMethodArgs)) {
-						return;
-					}*/
 				}
 				if(ArrayUtils.getLength(argumentTypes) != ArrayUtils.getLength(potentialMethodArgs)) {
                     return;

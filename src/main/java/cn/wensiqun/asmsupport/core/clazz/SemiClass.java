@@ -113,30 +113,6 @@ public class SemiClass extends NewMemberClass {
         
         return found;
     }
-
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        for(GlobalVariable gv : getGlobalVariables()){
-            if(gv.getVariableMeta().getName().equals(name)){
-                return gv;
-            }
-        }
-        
-        Class<?> fieldOwner = superClass;
-        Field f = null;
-        for(;!fieldOwner.equals(Object.class)  ;fieldOwner = fieldOwner.getSuperclass()){
-            try {
-                f = fieldOwner.getDeclaredField(name);
-                break;
-            } catch (NoSuchFieldException e) {
-            }
-        }
-        
-        if(f == null){
-            throw new ASMSupportException("no such field exception : " + name);
-        }
-        
-        return new GlobalVariable(this, AClassFactory.getProductClass(fieldOwner),
-                new ProductClass(f.getType()), f.getModifiers(), name);
-    }*/
+    
+    
 }

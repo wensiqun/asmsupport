@@ -311,7 +311,7 @@ public class ClassUtils {
 
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-                if ((StringUtils.isEmpty(findName) || name.equals(findName))) {
+                if (name.equals(findName)) {
 
                     if (exceptions == null) {
                         exceptions = new String[0];

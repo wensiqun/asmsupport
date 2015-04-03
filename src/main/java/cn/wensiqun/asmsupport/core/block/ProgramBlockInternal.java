@@ -361,7 +361,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     public final LocalVariable var(final String name, final AClass aClass, boolean anonymous, final Parameterized para) {
         if (aClass.isArray()) {
             throw new IllegalArgumentException(aClass
-                    + " is Array type exchange to createArrayVariable to create the array variable");
+                    + " is Array type exchange to arrayvar to create the array variable");
         }
         LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
         if (para == null) {

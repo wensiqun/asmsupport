@@ -49,7 +49,6 @@ public abstract class NewMemberClass extends AClass {
     private AMethod staticBlock;
 
     private Set<GlobalVariableMeta> globalVariableMetas;
-    //private List<GlobalVariable> globalVariables;
 
     //available only create enum class
     private int enumNum;
@@ -153,27 +152,5 @@ public abstract class NewMemberClass extends AClass {
 		}
     	return false;
 	}
-
-	
-    
-    /*@Override
-    public final GlobalVariableMeta getGlobalVariableMeta(String name) {
-        for (GlobalVariable f : getGlobalVariables()) {
-            if (f.getGlobalVariableMeta().getName().equals(name)) {
-                return f.getGlobalVariableMeta();
-            }
-        }
-        return null;
-    }*/
-
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        for(GlobalVariable gv : getGlobalVariables()){
-            if(gv.getVariableMeta().getName().equals(name)){
-                return gv;
-            }
-        }
-        return null;
-    }*/
 
 }

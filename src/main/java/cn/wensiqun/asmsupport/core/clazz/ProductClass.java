@@ -41,7 +41,6 @@ public class ProductClass extends NewMemberClass {
     private Class<?> reallyClass;
     
     protected ProductClass(){
-    	
     }
     
     ProductClass(Class<?> cls) {
