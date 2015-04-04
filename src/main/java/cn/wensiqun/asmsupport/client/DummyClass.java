@@ -341,7 +341,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         method.name(name);
         return method;
     }
-
+    
     /**
      * Create a static block.
      * 

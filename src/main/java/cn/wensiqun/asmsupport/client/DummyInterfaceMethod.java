@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public class DummyInterfaceMethod {
 
@@ -31,6 +32,8 @@ public class DummyInterfaceMethod {
     
     /** The constructor throws exception types.*/
     private AClass[] exceptionTypes;
+    
+    private boolean varargs = false;
     
     /**
      * Set the method return type.
@@ -104,6 +107,24 @@ public class DummyInterfaceMethod {
         this.argTypes = AClassUtils.convertToAClass(argus);
         return this;
     }
+
+    
+    /**
+     * Varargs
+     * 
+     * @return
+     */
+    public DummyInterfaceMethod varargs() {
+    	this.varargs = true;
+        return this;
+    }
+    
+    /**
+     * Check the method whether or not varargs
+     */
+    public boolean isVarargs() {
+        return varargs;
+    }
     
     /**
      * Get argument types.
@@ -117,6 +138,18 @@ public class DummyInterfaceMethod {
         AClass[] copy = new AClass[argTypes.length];
         System.arraycopy(argTypes, 0, copy, 0, copy.length);
         return copy;
+    }
+    
+    /**
+     * Unrecommend use it.
+     * 
+     * @return
+     */
+    public DummyInterfaceMethod setModifier(int modifiers) {
+        if((modifiers & Opcodes.ACC_VARARGS) != 0) {
+        	this.varargs = true;
+        }
+    	return this;
     }
     
     /**

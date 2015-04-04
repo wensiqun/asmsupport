@@ -3,7 +3,7 @@ package json.demo;
 import java.util.ArrayList;
 
 
-public class IPGeo {
+public class Geo {
 	
 
     private Country country = new Country();

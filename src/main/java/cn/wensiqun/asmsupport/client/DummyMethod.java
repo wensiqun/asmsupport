@@ -127,12 +127,39 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
     }
     
     /**
+     * Varargs
+     * 
+     * @return
+     */
+    public DummyMethod varargs() {
+        modifiers = (modifiers & ~Opcodes.ACC_VARARGS) + Opcodes.ACC_VARARGS;
+        return this;
+    }
+    
+    /**
+     * Check the method whether or not varargs
+     */
+    public boolean isVarargs() {
+        return (modifiers & Opcodes.ACC_VARARGS) != 0;
+    }
+    
+    /**
      * Check the method whether or not strictfp.
      * 
      * @return
      */
     public boolean isStrictfp() {
         return (modifiers & Opcodes.ACC_STRICT) != 0;
+    }
+    
+    /**
+     * Unrecommend use it.
+     * 
+     * @return
+     */
+    public DummyMethod setModifier(int modifiers) {
+    	this.modifiers = modifiers;
+    	return this;
     }
     
     /**

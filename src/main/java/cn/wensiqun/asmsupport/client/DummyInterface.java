@@ -362,7 +362,7 @@ public class DummyInterface {
         }
         
         for(DummyInterfaceMethod dummy : methodDummies) {
-            ici.createMethod(dummy.getName(), dummy.getArgTypes(), dummy.getReturnType(), dummy.getThrows());
+            ici.createMethod(dummy.getName(), dummy.getArgTypes(), dummy.getReturnType(), dummy.getThrows(), dummy.isVarargs());
         }
         
         if(staticBlock != null) {

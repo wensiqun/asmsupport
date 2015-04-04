@@ -41,6 +41,17 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	}
 	
 	/**
+	 * 
+	 * @param name
+	 * @param argClasses
+	 * @param returnClass
+	 * @param exceptions
+	 */
+	public void createMethod(String name, AClass[] argClasses, AClass returnClass, AClass[] exceptions) {
+		this.createMethod(name, argClasses, returnClass, exceptions, false);
+    }
+	
+	/**
 	 * declare an interface method
 	 * 
 	 * @param name method name
@@ -48,14 +59,14 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	 * @param returnClass method return type, if null than indicate void
 	 * @param exceptions what exception you want explicit throw.
 	 */
-	public void createMethod(String name, AClass[] argClasses, AClass returnClass, AClass[] exceptions) {
+	public void createMethod(String name, AClass[] argClasses, AClass returnClass, AClass[] exceptions, boolean isVarargs) {
 		String[] argNames = new String[argClasses.length];
 		for(int i=0; i<argNames.length; i++){
 			argNames[i] = "arg" + i;
 		}
         methodCreaters.add(
         		MethodCreator.methodCreatorForAdd(name, argClasses, argNames,
-                returnClass, exceptions, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT, null));
+                returnClass, exceptions, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + (isVarargs ? Opcodes.ACC_VARARGS : 0), null));
     }
 	
 	/**

@@ -1,11 +1,8 @@
-package json;
+package json.demo;
 
 import java.util.HashMap;
 
-import json.demo.City;
-import json.demo.Country;
-import json.demo.IPGeo;
-import json.demo.Subdivision;
+import json.JSONPool;
 
 public class Run {
 
@@ -23,7 +20,11 @@ public class Run {
         china.getInfos().put("capital", city);
         china.getInfos().put("region-count", 32);
 
-        IPGeo geo = new IPGeo();
+        System.out.println("Country infos is          : " + pool.getJson(china.getInfos()));
+
+        System.out.println("Country json is           : " + pool.getJson(china));
+
+        Geo geo = new Geo();
         geo.setCity(city);
         geo.setCountry(china);
         
@@ -35,15 +36,19 @@ public class Run {
         sub2.setIsoCode("HN");
         geo.getSubdivisions().add(sub1);
         geo.getSubdivisions().add(sub2);
+
+        System.out.println("Subdivisions json is      : " + pool.getJson(geo.getSubdivisions()));
         
         geo.setOtherSubdivisions(new Subdivision[]{sub2, sub1});
+
+        System.out.println("OtherSubdivisions json is : " + pool.getJson(geo.getOtherSubdivisions()));
         
         Country usa = new Country();
         usa.setConfidence(20);
         usa.setIsoCode("USA");
         geo.setRegisteredCountry(usa);
 
-        System.out.println(pool.getJson(geo));
+        System.out.println("Geo json is               : " + pool.getJson(geo));
         
     }
 

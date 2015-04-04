@@ -13,6 +13,7 @@ import json.generator.impl.BeanGeneratorChain;
 import json.generator.impl.IterableGeneratorChain;
 import json.generator.impl.MapGeneratorChain;
 import json.parser.AbstractParser;
+import json.parser.ArrayParser;
 import json.parser.BaseParser;
 import json.parser.CharSequenceParser;
 import json.parser.IterableParser;
@@ -30,6 +31,8 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 public class JSONPool {
 
     private ConcurrentMap<Class<?>, AbstractParser> parserMap;
+    
+    private AbstractParser arrayParser = new ArrayParser(this);
     
     private IValueGeneratorChain header;
     
@@ -105,6 +108,15 @@ public class JSONPool {
             return "null";
         }
         Class<?> type = val.getClass();
+        if(type.isArray()) {
+        	return arrayParser.parse(val);
+        }
+        if(Iterable.class.isAssignableFrom(type)) {
+        	return this.getOrRegister(Iterable.class).parse(val);
+        }
+        if(Map.class.isAssignableFrom(type)) {
+        	return this.getOrRegister(Map.class).parse(val);
+        }
         return this.getOrRegister(type).parse(val);
     }
     
