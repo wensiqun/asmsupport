@@ -19,10 +19,13 @@ The asmsupport is a java class byte code operate library, it make easier to writ
       |-src/test
         |-java                     : Maven standard test
         |-resource                 : Maven standard test resources
-      |-src/third/java             : The third-part source code(as source)
-      |-src/issue/java             : The fixed bug test code(as test)
-      |-src/sample/java            : The old api example code(as test)
-      |-src/dummy/java             : The dummy api example code(as test)
+      |-src/third/java             : The third-part source code(as source folder)
+      |-src/issue/java             : The fixed bug test code(as test folder)
+      |-src/sample/java            : The some simple exampe.(as test folder)
+          |-oldApi                 : The old api example.
+          |-dummy                  : The dummy api example
+          |-json                   : The simple json serialization tool use asmsupport
+          |-proxy                  : The simple dynamic proxy framework use asmsupport
       |-src/site                   : The project document site folder.
 
 Preceding is all of the sources folder structure and descriptions, if you want import the project to eclipse, you must be use ["src/third/java", "src/issue/java", "src/sample/java", "src/dummy/java "] as source folder. 
@@ -34,6 +37,8 @@ Preceding is all of the sources folder structure and descriptions, if you want i
         <artifactId>asmsupport</artifactId>
         <version>x.x.x</version>
     </dependency>
+    
+The last stable version is 0.4
     
 ## License
 

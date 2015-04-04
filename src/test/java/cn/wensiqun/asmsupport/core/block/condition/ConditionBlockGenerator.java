@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.core.block.condition;
 
 import java.util.List;
 
-import sample.AbstractExample;
+import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.condition.ElseIFInternal;
 import cn.wensiqun.asmsupport.core.block.control.condition.ElseInternal;
 import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;

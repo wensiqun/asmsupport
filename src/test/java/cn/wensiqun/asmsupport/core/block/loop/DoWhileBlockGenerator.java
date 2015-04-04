@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.core.block.loop;
 
-import sample.AbstractExample;
+import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.loop.DoWhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;

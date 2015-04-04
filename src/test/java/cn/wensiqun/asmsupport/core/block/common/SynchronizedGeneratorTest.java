@@ -11,7 +11,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import sample.AbstractExample;
+import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
