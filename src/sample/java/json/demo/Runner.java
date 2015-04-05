@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import json.JSONPool;
 
-public class Run {
+public class Runner {
 
     public static void main(String[] args) {
         JSONPool pool = new JSONPool();

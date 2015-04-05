@@ -3,7 +3,7 @@ package proxy.demo;
 import proxy.IProxyPool;
 import proxy.ProxyGenerator;
 
-public class Run {
+public class Runner {
 
 	public static void main(String... a) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException {
 		ProxyGenerator proxyGenerator = new ProxyGenerator();

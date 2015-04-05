@@ -28,7 +28,7 @@ The asmsupport is a java class byte code operate library, it make easier to writ
           |-proxy                  : The simple dynamic proxy framework use asmsupport
       |-src/site                   : The project document site folder.
 
-Preceding is all of the sources folder structure and descriptions, if you want import the project to eclipse, you must be use ["src/third/java", "src/issue/java", "src/sample/java", "src/dummy/java "] as source folder. 
+Preceding is all of the sources folder structure and descriptions, if you want import the project to eclipse, you must be manual use ["src/third/java", "src/issue/java", "src/sample/java"] as source folder. 
 
 ## Maven Dependency
     
@@ -43,3 +43,38 @@ The last stable version is 0.4
 ## License
 
 Asmsupport is licensed under the GNU Lesser General Public License (LGPL)
+
+## First Case
+
+The following code will generate.
+
+
+    public class FirstCase {
+        
+        public static void main(String[] args) {
+            System.out.println("Hello ASMSupport.");
+        }
+        
+    }
+
+The following is code to generate preceding case.
+
+    DummyClass dummy = new DummyClass("FirstCase").public_()
+           .newMethod("main").public_().static_().argTypes(String[].class)
+           .body(new MethodBody(){
+					public void body(LocalVariable... args) {
+						call(defType(System.class).field("out"), "println", val("Hello ASMSupport."))
+						return_();
+					}
+           });
+    Class<?> FirstCaseClass = dummy.build();
+    //The following code will use reflection to call main method.
+    Method mainMethod = FirstCaseClass.getMethod("main", String[].class);
+    mainMethod.invoke(FirstCaseClass, mainMethod);
+    
+## Sample : JSON & Proxy 
+
+The JSON sample under the folder "src/sample/java/json", run the json.demo.Runner main method, and you can get the generated class in folder "target/sample/json".
+
+
+The Proxy sample under the folder "src/sample/java/proxy", run the json.demo.Runner main method, and you can get the generated class in folder "target/sample/proxy".
