@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 public abstract class ModifiedMethodBody extends ProgramBlock<ModifiedMethodBodyInternal> implements
     IModifiedMethodBody {
 
-	private ModifiedMethodBody() {
+	public ModifiedMethodBody() {
 	     target = new ModifiedMethodBodyInternal() {
 
 			@Override
