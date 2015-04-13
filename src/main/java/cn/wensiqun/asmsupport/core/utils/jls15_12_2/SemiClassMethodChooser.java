@@ -45,13 +45,6 @@ public class SemiClassMethodChooser extends AbstractMethodChooser {
 
     @Override
     public AMethodMeta firstPhase() {
-/*        TypeTreeNode[] argTypeNodes = new TypeTreeNode[argumentTypes.length];
-        for(int i = 0; i<argTypeNodes.length; i++){
-            argTypeNodes[i] = translateToTypeTreeRoot(argumentTypes[i]);
-        }
-        //所有可能的参数
-        //List<TypeTreeNode[]> allArgTypes = allPossibleArguments(argTypeNodes);
-        allPossibleArguments(argTypeNodes);*/
         AMethodMeta foundMe = null;
         //******************************phase 1*************************************
         

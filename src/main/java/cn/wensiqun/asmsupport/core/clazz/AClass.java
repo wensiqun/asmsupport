@@ -25,8 +25,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.jls15_12_2.IMethodChooser;
-import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -334,8 +332,7 @@ public abstract class AClass implements GetGlobalVariabled{
      */
     public final AMethodMeta availableConstructor(AClass aclass,
             AClass[] parameterTypes){
-        IMethodChooser chooser = new MethodChooser(aclass, this, ASConstant.INIT, parameterTypes);
-        return chooser.chooseMethod();
+    	return availableMethod(aclass, ASConstant.INIT, parameterTypes);
     }
 
     /**
@@ -345,11 +342,8 @@ public abstract class AClass implements GetGlobalVariabled{
      * @param parameterTypes 方法的参数类型
      * @return
      */
-    public final AMethodMeta availableMethod(AClass where, String name,
-            AClass[] parameterTypes){
-    	IMethodChooser chooser = new MethodChooser(where, this, name, parameterTypes);
-        return chooser.chooseMethod();
-    }
+    public abstract AMethodMeta availableMethod(AClass where, String name,
+            AClass[] parameterTypes);
 
     /*-****************************************
      *               选择方法                                              *
