@@ -75,24 +75,24 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 	public static void main(String[] args) {
         //create class A
 		ClassCreator ACreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
-		ACreator.createField("i", 0, AClass.INT_ACLASS);
-		ACreator.createField("j", 0, AClass.INT_ACLASS);
+		ACreator.createField("i", 0, AClassFactory.defType(int.class));
+		ACreator.createField("j", 0, AClassFactory.defType(int.class));
 		final Class A = ACreator.startup();
 		
         //create class B
 		ClassCreator BCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
-		BCreator.createField("i", 0, AClass.INT_ACLASS);
-		BCreator.createField("j", 0, AClass.INT_ACLASS);
+		BCreator.createField("i", 0, AClassFactory.defType(int.class));
+		BCreator.createField("j", 0, AClassFactory.defType(int.class));
 		final Class B = BCreator.startup();
 		
 		//create class C
 		ClassCreator CCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
-		CCreator.createField("k", 0, AClass.INT_ACLASS);
+		CCreator.createField("k", 0, AClassFactory.defType(int.class));
 		final Class C = CCreator.startup();
 
 		//create class D
 		ClassCreator DCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
-		DCreator.createField("k", 0, AClass.INT_ACLASS);
+		DCreator.createField("k", 0, AClassFactory.defType(int.class));
 		final Class D = DCreator.startup();
 		
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
@@ -224,7 +224,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				/*     if (a instanceof Object)
 				 *     	   System.out.println("a may be cast to Object");
 				
-				ifthan(new If(instanceOf(a, AClass.OBJECT_ACLASS)){
+				ifthan(new If(instanceOf(a, AClassFactory.defType(Object.class))){
 					@Override
 					public void body() {
 						invoke(systemOut, "println", Value.value("a may be cast to Object"));
@@ -235,7 +235,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				/*     if (b instanceof Object)
 				 *     	   System.out.println("b may be cast to Object");
 				 
-				ifthan(new If(instanceOf(b, AClass.OBJECT_ACLASS)){
+				ifthan(new If(instanceOf(b, AClassFactory.defType(Object.class))){
 					@Override
 					public void body() {
 						invoke(systemOut, "println", Value.value("b may be cast to Object"));
@@ -246,7 +246,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				/*     if (c instanceof Object)
 				 *     	   System.out.println("c may be cast to Object");
 				
-				ifthan(new If(instanceOf(c, AClass.OBJECT_ACLASS)){
+				ifthan(new If(instanceOf(c, AClassFactory.defType(Object.class))){
 					@Override
 					public void body() {
 						invoke(systemOut, "println", Value.value("c may be cast to Object"));
@@ -257,7 +257,7 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 				/*     if (d instanceof Object)
 				 *     	   System.out.println("d may be cast to Object");
 				 
-				ifthan(new If(instanceOf(d, AClass.OBJECT_ACLASS)){
+				ifthan(new If(instanceOf(d, AClassFactory.defType(Object.class))){
 					@Override
 					public void body() {
 						invoke(systemOut, "println", Value.value("d may be cast to Object"));

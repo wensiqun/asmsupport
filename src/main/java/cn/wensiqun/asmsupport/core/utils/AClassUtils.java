@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.utils;
 
+import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,43 +62,43 @@ public class AClassUtils {
     }
 
     public static AClass getPrimitiveAClass(AClass aclass) {
-        if (aclass.equals(AClass.BOOLEAN_WRAP_ACLASS)) {
-            return AClass.BOOLEAN_ACLASS;
-        } else if (aclass.equals(AClass.BYTE_WRAP_ACLASS)) {
-            return AClass.BYTE_ACLASS;
-        } else if (aclass.equals(AClass.SHORT_WRAP_ACLASS)) {
-            return AClass.SHORT_ACLASS;
-        } else if (aclass.equals(AClass.CHARACTER_WRAP_ACLASS)) {
-            return AClass.CHAR_ACLASS;
-        } else if (aclass.equals(AClass.INTEGER_WRAP_ACLASS)) {
-            return AClass.INT_ACLASS;
-        } else if (aclass.equals(AClass.LONG_WRAP_ACLASS)) {
-            return AClass.LONG_ACLASS;
-        } else if (aclass.equals(AClass.FLOAT_WRAP_ACLASS)) {
-            return AClass.FLOAT_ACLASS;
-        } else if (aclass.equals(AClass.DOUBLE_WRAP_ACLASS)) {
-            return AClass.DOUBLE_ACLASS;
+        if (aclass.equals(AClassFactory.defType(Boolean.class))) {
+            return AClassFactory.defType(boolean.class);
+        } else if (aclass.equals(AClassFactory.defType(Byte.class))) {
+            return AClassFactory.defType(byte.class);
+        } else if (aclass.equals(AClassFactory.defType(Short.class))) {
+            return AClassFactory.defType(short.class);
+        } else if (aclass.equals(AClassFactory.defType(Character.class))) {
+            return AClassFactory.defType(char.class);
+        } else if (aclass.equals(AClassFactory.defType(Integer.class))) {
+            return AClassFactory.defType(int.class);
+        } else if (aclass.equals(AClassFactory.defType(Long.class))) {
+            return AClassFactory.defType(long.class);
+        } else if (aclass.equals(AClassFactory.defType(Float.class))) {
+            return AClassFactory.defType(float.class);
+        } else if (aclass.equals(AClassFactory.defType(Double.class))) {
+            return AClassFactory.defType(double.class);
         }
         return aclass;
     }
 
     public static AClass getPrimitiveWrapAClass(AClass aclass) {
-        if (aclass.equals(AClass.BOOLEAN_ACLASS)) {
-            return AClass.BOOLEAN_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.BYTE_ACLASS)) {
-            return AClass.BYTE_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.SHORT_ACLASS)) {
-            return AClass.SHORT_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.CHAR_ACLASS)) {
-            return AClass.CHARACTER_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.INT_ACLASS)) {
-            return AClass.INTEGER_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.LONG_ACLASS)) {
-            return AClass.LONG_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.FLOAT_ACLASS)) {
-            return AClass.FLOAT_WRAP_ACLASS;
-        } else if (aclass.equals(AClass.DOUBLE_ACLASS)) {
-            return AClass.DOUBLE_WRAP_ACLASS;
+        if (aclass.equals(AClassFactory.defType(boolean.class))) {
+            return AClassFactory.defType(Boolean.class);
+        } else if (aclass.equals(AClassFactory.defType(byte.class))) {
+            return AClassFactory.defType(Byte.class);
+        } else if (aclass.equals(AClassFactory.defType(short.class))) {
+            return AClassFactory.defType(Short.class);
+        } else if (aclass.equals(AClassFactory.defType(char.class))) {
+            return AClassFactory.defType(Character.class);
+        } else if (aclass.equals(AClassFactory.defType(int.class))) {
+            return AClassFactory.defType(Integer.class);
+        } else if (aclass.equals(AClassFactory.defType(long.class))) {
+            return AClassFactory.defType(Long.class);
+        } else if (aclass.equals(AClassFactory.defType(float.class))) {
+            return AClassFactory.defType(Float.class);
+        } else if (aclass.equals(AClassFactory.defType(double.class))) {
+            return AClassFactory.defType(Double.class);
         }
         return aclass;
     }
@@ -117,7 +118,7 @@ public class AClassUtils {
                 int typeSort = type.getType().getSort();
                 if (resultType == null || typeSort > resultType.getType().getSort()) {
                     if (typeSort <= Type.INT) {
-                        resultType = AClass.INT_ACLASS;
+                        resultType = AClassFactory.defType(int.class);
                     } else {
                         resultType = type;
                     }
@@ -225,26 +226,26 @@ public class AClassUtils {
         AClass[] a = null;
 
         if (as.isPrimitive()) {
-            if (as.equals(AClass.BYTE_ACLASS)) {
-                a = new AClass[] { AClass.SHORT_ACLASS, AClass.OBJECT_ACLASS };
+            if (as.equals(AClassFactory.defType(byte.class))) {
+                a = new AClass[] { AClassFactory.defType(short.class), AClassFactory.defType(Object.class) };
 
-            } else if (as.equals(AClass.SHORT_ACLASS)) {
-                a = new AClass[] { AClass.INT_ACLASS, AClass.OBJECT_ACLASS };
+            } else if (as.equals(AClassFactory.defType(short.class))) {
+                a = new AClass[] { AClassFactory.defType(int.class), AClassFactory.defType(Object.class) };
 
-            } else if (as.equals(AClass.CHAR_ACLASS)) {
-                a = new AClass[] { AClass.INT_ACLASS, AClass.OBJECT_ACLASS };
+            } else if (as.equals(AClassFactory.defType(char.class))) {
+                a = new AClass[] { AClassFactory.defType(int.class), AClassFactory.defType(Object.class) };
 
-            } else if (as.equals(AClass.INT_ACLASS)) {
-                a = new AClass[] { AClass.LONG_ACLASS, AClass.OBJECT_ACLASS };
+            } else if (as.equals(AClassFactory.defType(int.class))) {
+                a = new AClass[] { AClassFactory.defType(long.class), AClassFactory.defType(Object.class) };
 
-            } else if (as.equals(AClass.LONG_ACLASS)) {
-                a = new AClass[] { AClass.FLOAT_ACLASS, AClass.OBJECT_ACLASS };
+            } else if (as.equals(AClassFactory.defType(long.class))) {
+                a = new AClass[] { AClassFactory.defType(float.class), AClassFactory.defType(Object.class) };
 
-            } else if (as.equals(AClass.FLOAT_ACLASS)) {
-                a = new AClass[] { AClass.DOUBLE_ACLASS, AClass.OBJECT_ACLASS };
+            } else if (as.equals(AClassFactory.defType(float.class))) {
+                a = new AClass[] { AClassFactory.defType(double.class), AClassFactory.defType(Object.class) };
             }
 
-        } else if (as.equals(AClass.OBJECT_ACLASS)) {
+        } else if (as.equals(AClassFactory.defType(Object.class))) {
 
         } else if (as.isInterface()) {
             Class<?>[] intfacs = as.getInterfaces();
@@ -254,7 +255,7 @@ public class AClassUtils {
                     a[i] = AClassFactory.defType(intfacs[i]);
                 }
             } else {
-                a = new AClass[] { AClass.OBJECT_ACLASS };
+                a = new AClass[] { AClassFactory.defType(Object.class) };
             }
         } else if (as.isArray()) {
             ArrayClass ac = (ArrayClass) as;
@@ -262,8 +263,8 @@ public class AClassUtils {
 
             if (rootType.isPrimitive()) {
                 a = new AClass[2];
-                a[0] = AClass.CLONEABLE_ACLASS;
-                a[1] = AClass.SERIALIZABLE_ACLASS;
+                a[0] = AClassFactory.defType(Cloneable.class);
+                a[1] = AClassFactory.defType(Serializable.class);
             } else {
                 AClass[] rootSupers = getDirectSuperType(rootType);
                 if (rootSupers != null) {
@@ -273,8 +274,8 @@ public class AClassUtils {
                     }
                 } else {
                     a = new AClass[2];
-                    a[0] = AClass.CLONEABLE_ACLASS;
-                    a[1] = AClass.SERIALIZABLE_ACLASS;
+                    a[0] = AClassFactory.defType(Cloneable.class);
+                    a[1] = AClassFactory.defType(Serializable.class);
                 }
             }
         } else {
@@ -461,7 +462,7 @@ public class AClassUtils {
 
         if (from.isChildOrEqual(to)) {
             return true;
-        } else if (from.isPrimitive() && to.equals(AClass.OBJECT_ACLASS)) {
+        } else if (from.isPrimitive() && to.equals(AClassFactory.defType(Object.class))) {
             return true;
         } else {
             AClass fromPrim = getPrimitiveAClass(from);

@@ -17,9 +17,7 @@ package cn.wensiqun.asmsupport.core.clazz;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
-import cn.wensiqun.asmsupport.core.utils.jls15_12_2.ArrayClassMethodChooser;
 
 /**
  * 数组类型
@@ -139,12 +137,6 @@ public class ArrayClass extends AClass {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public AMethodMeta availableMethod(AClass where, String name,
-			AClass[] parameterTypes) {
-		return new ArrayClassMethodChooser(where, this, name, parameterTypes).chooseMethod();
 	}
     
 }

@@ -41,10 +41,10 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 public void body()
                                 {
                                     call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Try"));
-                                    throw_(new_(AClass.EXCEPTION_ACLASS));
+                                    throw_(new_(AClassFactory.defType(Exception.class)));
                                 }
                                 
-                            }).catch_(new CatchInternal(AClass.EXCEPTION_ACLASS){
+                            }).catch_(new CatchInternal(AClassFactory.defType(Exception.class)){
 
                                 @Override
                                 public void body(LocalVariable e)
@@ -55,7 +55,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 
                             });
                         }
-                    }).catch_(new CatchInternal(AClass.EXCEPTION_ACLASS){
+                    }).catch_(new CatchInternal(AClassFactory.defType(Exception.class)){
 
                         @Override
                         public void body(LocalVariable e)
@@ -87,7 +87,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                     public void body()
                                     {
                                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Try"));
-                                        throw_(new_(AClass.EXCEPTION_ACLASS));
+                                        throw_(new_(AClassFactory.defType(Exception.class)));
                                     }
                                     
                                 }).catch_(new CatchInternal(runtime){
@@ -98,7 +98,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Catch(RuntimeException)"));
                                     }
                                     
-                                }).catch_(new CatchInternal(AClass.EXCEPTION_ACLASS){
+                                }).catch_(new CatchInternal(AClassFactory.defType(Exception.class)){
 
 									@Override
 									public void body(LocalVariable e) {
@@ -119,10 +119,10 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
 									@Override
 									public void body() {
 										call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Try"));
-                                        throw_(new_(AClass.EXCEPTION_ACLASS));
+                                        throw_(new_(AClassFactory.defType(Exception.class)));
 									}
                                 	
-                                }).catch_(new CatchInternal(AClass.EXCEPTION_ACLASS){
+                                }).catch_(new CatchInternal(AClassFactory.defType(Exception.class)){
 
 									@Override
 									public void body(LocalVariable e) {
@@ -132,7 +132,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 });
                             }
                             
-                        }).catch_(new CatchInternal(AClass.EXCEPTION_ACLASS){
+                        }).catch_(new CatchInternal(AClassFactory.defType(Exception.class)){
 
                             @Override
                             public void body(LocalVariable e)
@@ -177,7 +177,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                 call(getMethodOwner(), methodName);
             }
             
-        }).catch_(new CatchInternal(AClass.THROWABLE_ACLASS){
+        }).catch_(new CatchInternal(AClassFactory.defType(Throwable.class)){
 
             @Override
             public void body(LocalVariable e)

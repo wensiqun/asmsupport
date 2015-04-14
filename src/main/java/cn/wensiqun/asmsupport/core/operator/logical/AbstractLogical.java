@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 
 /**
@@ -41,7 +42,7 @@ public abstract class AbstractLogical extends AbstractOperator implements Parame
 
     @Override
     public AClass getParamterizedType() {
-        return AClass.BOOLEAN_ACLASS;
+        return AClassFactory.defType(boolean.class);
     }
 
     @Override

@@ -80,6 +80,8 @@ public class DummyInterface {
             if(lastDot > 0) {
                 packageName = qualifiedName.substring(0, lastDot);
                 name = qualifiedName.substring(lastDot + 1);
+            } else {
+            	name = qualifiedName;
             }
         }
     }
@@ -349,7 +351,8 @@ public class DummyInterface {
         } else if(printLog) {
             ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        InterfaceCreator ici = new InterfaceCreator(javaVersion, packageName + "." + name, interfaces);
+        InterfaceCreator ici = new InterfaceCreator(javaVersion, 
+        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
         
         for(DummyField dummy : fieldDummies) {
             if(dummy.getType() == null) {

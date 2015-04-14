@@ -40,7 +40,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * Following code is the asmsupport code.
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * checkcast(cc_para, AClass.STRING_ACLASS);
+     * checkcast(cc_para, AClassFactory.defType(String.class));
      * </p>
      * 
      * 
@@ -60,7 +60,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * Following code is the asmsupport code.
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * checkcast(cc_para, AClass.STRING_ACLASS);
+     * checkcast(cc_para, AClassFactory.defType(String.class));
      * </p>
      * 
      * 
@@ -148,7 +148,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * Following code is the asmsupport code.
      * <p style="border:1px solid;width:500px;padding:10px;">
-     * instanceOf(object, AClass.STRING_AClass);
+     * instanceOf(object, AClassFactory.defType(String.class));
      * </p>
      * 
      * 

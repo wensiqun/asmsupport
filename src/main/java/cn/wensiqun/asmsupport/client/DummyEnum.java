@@ -76,6 +76,8 @@ public class DummyEnum {
             if(lastDot > 0) {
                 packageName = qualifiedName.substring(0, lastDot);
                 name = qualifiedName.substring(lastDot + 1);
+            } else {
+            	name = qualifiedName;
             }
         }
     }
@@ -328,7 +330,8 @@ public class DummyEnum {
         } else if(printLog) {
             ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        EnumCreator eci = new EnumCreator(javaVersion, packageName + "." + name, interfaces);
+        EnumCreator eci = new EnumCreator(javaVersion, 
+        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
         for(DummyEnumConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getConstructorBody().target);    

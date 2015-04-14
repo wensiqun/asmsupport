@@ -18,7 +18,7 @@ public class Main extends AbstractFix {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
 				ParentClass.class, null);
 		
-		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClass.INT_ACLASS);
+		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClassFactory.defType(int.class));
 		
 		creator.createStaticBlock(new StaticBlockBodyInternal(){
 

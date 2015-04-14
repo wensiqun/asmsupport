@@ -485,7 +485,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
                 call(getMethodOwner(), methodName);
             }
             
-        }).catch_(new CatchInternal(AClass.THROWABLE_ACLASS){
+        }).catch_(new CatchInternal(AClassFactory.defType(Throwable.class)){
 
             @Override
             public void body(LocalVariable e)

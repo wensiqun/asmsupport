@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -64,8 +65,8 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
 			for(Parameterized par : parDims){
-				if(!AClassUtils.checkAssignable(par.getParamterizedType(), AClass.INT_ACLASS)) {
-					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getParamterizedType() + " to " + AClass.INT_ACLASS + "");
+				if(!AClassUtils.checkAssignable(par.getParamterizedType(), AClassFactory.defType(int.class))) {
+					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getParamterizedType() + " to " + AClassFactory.defType(int.class) + "");
 				}
 			}
 		}
@@ -83,7 +84,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
         for(int i=0; i<parDims.length; i++){
             cls = ((ArrayClass) cls).getNextDimType();
             parDims[i].loadToStack(block);
-            autoCast(parDims[i].getParamterizedType(), AClass.INT_ACLASS, false);
+            autoCast(parDims[i].getParamterizedType(), AClassFactory.defType(int.class), false);
             ih.arrayLoad(cls.getType());
         }
         

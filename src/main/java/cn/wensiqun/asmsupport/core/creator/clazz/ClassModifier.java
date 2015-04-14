@@ -84,7 +84,7 @@ public class ClassModifier extends AbstractClassContext {
 			
 			MethodCreator methodCreator;
 			if(name.equals(ASConstant.CLINIT)){
-				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClass.VOID_ACLASS, null, Opcodes.ACC_STATIC, mb);
+				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClassFactory.defType(void.class), null, Opcodes.ACC_STATIC, mb);
 			}else if(name.equals(ASConstant.INIT)){
 				if(modifyConstructorBodies == null){
 					modifyConstructorBodies = new ArrayList<ModifiedMethodBodyInternal>();
@@ -95,7 +95,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(ASConstant.INIT, 
 						argCls, 
 						defaultArgNames, 
-						AClass.VOID_ACLASS, 
+						AClassFactory.defType(void.class), 
 						AClassUtils.convertToAClass(constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{

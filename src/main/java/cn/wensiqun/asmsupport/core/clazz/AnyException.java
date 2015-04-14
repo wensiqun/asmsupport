@@ -136,10 +136,4 @@ public class AnyException extends AClass {
         return "Any Exception";
     }
 
-	@Override
-	public AMethodMeta availableMethod(AClass where, String name,
-			AClass[] parameterTypes) {
-        throw new UnsupportedOperationException();
-	}
-
 }

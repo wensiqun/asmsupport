@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -39,8 +40,8 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
         AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getParamterizedType());
         AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getParamterizedType());
         
-        if(ftrCls1.equals(AClass.BOOLEAN_ACLASS)&&
-           ftrCls2.equals(AClass.BOOLEAN_ACLASS)){
+        if(ftrCls1.equals(AClassFactory.defType(boolean.class))&&
+           ftrCls2.equals(AClassFactory.defType(boolean.class))){
         
         } else if(ftrCls1.isPrimitive() && ftrCls2.isPrimitive()){
             checkFactorForNumerical(ftrCls1);
@@ -69,12 +70,12 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
                 insnHelper.unbox(ftrCls1.getType());
             }
             
-            boolean isNumerical = (targetClass.getCastOrder() >= AClass.BYTE_ACLASS.getCastOrder() &&
-                       targetClass.getCastOrder() <= AClass.DOUBLE_ACLASS.getCastOrder());
+            boolean isNumerical = (targetClass.getCastOrder() >= AClassFactory.defType(byte.class).getCastOrder() &&
+                       targetClass.getCastOrder() <= AClassFactory.defType(double.class).getCastOrder());
             
             if(isNumerical){
                 if(!ftrCls1.equals(targetClass) &&
-                   targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()){
+                   targetClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder()){
                     LOG.print("cast from " + ftrCls1 + " to " + targetClass);
                     insnHelper.cast(ftrCls1.getType(), targetClass.getType());
                 }
@@ -90,7 +91,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             
             if(isNumerical){
                 if(!ftrCls2.equals(targetClass) &&
-                   targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()){
+                   targetClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder()){
                     LOG.print("cast from " + ftrCls2 + " to " + targetClass);
                     insnHelper.cast(ftrCls2.getType(), targetClass.getType());
                 }

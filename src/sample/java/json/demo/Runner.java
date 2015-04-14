@@ -1,12 +1,19 @@
 package json.demo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import json.JSONPool;
 
 public class Runner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        printPrompt(in);
+        
         JSONPool pool = new JSONPool();
         
         City city = new City();
@@ -21,9 +28,9 @@ public class Runner {
         china.getInfos().put("region-count", 32);
 
         System.out.println("Country infos is          : " + pool.getJson(china.getInfos()));
-
         System.out.println("Country json is           : " + pool.getJson(china));
-
+        printPrompt(in);
+        
         Geo geo = new Geo();
         geo.setCity(city);
         geo.setCountry(china);
@@ -42,6 +49,8 @@ public class Runner {
         geo.setOtherSubdivisions(new Subdivision[]{sub2, sub1});
 
         System.out.println("OtherSubdivisions json is : " + pool.getJson(geo.getOtherSubdivisions()));
+        System.out.println("Success generate json.demo.Subdivision.class Json Generator.");
+        printPrompt(in);
         
         Country usa = new Country();
         usa.setConfidence(20);
@@ -49,7 +58,20 @@ public class Runner {
         geo.setRegisteredCountry(usa);
 
         System.out.println("Geo json is               : " + pool.getJson(geo));
+        System.out.println("Success generate json.demo.Geo.class Json Generator.");
+        printPrompt(in);
         
+    }
+    
+    public static void printPrompt(BufferedReader in) throws IOException {
+        System.out.println("##################################################");
+        System.out.println("# 1. Entry 'gc' to do System.gc and continue...  #");
+        System.out.println("# 2. Entry other just continue do next generate  #");
+        System.out.println("##################################################");
+        String command = in.readLine();
+        if("gc".equals(command)) {
+        	System.gc();
+        }
     }
 
 }

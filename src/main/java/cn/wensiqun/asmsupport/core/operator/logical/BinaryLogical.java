@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -45,8 +46,8 @@ public abstract class BinaryLogical extends AbstractLogical {
 		AClass ftrCls1 = factor1.getParamterizedType();
         AClass ftrCls2 = factor2.getParamterizedType();
         
-        if(!((ftrCls1.equals(AClass.BOOLEAN_ACLASS) || ftrCls1.equals(AClass.BOOLEAN_WRAP_ACLASS)) &&
-           (ftrCls2.equals(AClass.BOOLEAN_ACLASS) || ftrCls2.equals(AClass.BOOLEAN_WRAP_ACLASS)))){
+        if(!((ftrCls1.equals(AClassFactory.defType(boolean.class)) || ftrCls1.equals(AClassFactory.defType(Boolean.class))) &&
+           (ftrCls2.equals(AClassFactory.defType(boolean.class)) || ftrCls2.equals(AClassFactory.defType(Boolean.class))))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

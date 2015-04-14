@@ -59,7 +59,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.SynchronizedGeneratorExample", null, null);
         
-        creator.createField("lock", Opcodes.ACC_PRIVATE, AClass.OBJECT_ACLASS);
+        creator.createField("lock", Opcodes.ACC_PRIVATE, AClassFactory.defType(Object.class));
         
         creator.createField("list", Opcodes.ACC_PUBLIC, AClassFactory.defType(List.class));
         
@@ -68,7 +68,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             @Override
             public void body(LocalVariable... argus) {
             	supercall(argus);
-                assign(this_().field("lock"), new_(AClass.OBJECT_ACLASS));
+                assign(this_().field("lock"), new_(AClassFactory.defType(Object.class)));
                 assign(this_().field("list"), new_(AClassFactory.defType(ArrayList.class)));
 				return_();
             }
@@ -83,7 +83,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new SynchronizedInternal(this_()){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = var("i", AClass.INT_ACLASS, false, Value.value(0));
+                        final LocalVariable i = var("i", AClassFactory.defType(int.class), false, Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
@@ -109,7 +109,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new SynchronizedInternal(this_().field("lock")){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = var("i", AClass.INT_ACLASS, false, Value.value(0));
+                        final LocalVariable i = var("i", AClassFactory.defType(int.class), false, Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
@@ -217,7 +217,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 );
                  final LocalVariable i = var(
                         "i", 
-                        AClass.INT_ACLASS,
+                        AClassFactory.defType(int.class),
                         false, 
                         Value.value(0)
                );
@@ -246,7 +246,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 		                call(AClassFactory.defType(SynchronizedGeneratorTest.class), "assertEquals",
 		                		i,
 		                		mod(i, Value.value(10)), 
-		                		call(checkcast(call(sgst.field("list"), "get", i), AClass.INTEGER_WRAP_ACLASS), "intValue"));
+		                		call(checkcast(call(sgst.field("list"), "get", i), AClassFactory.defType(Integer.class)), "intValue"));
 						postinc(i);
 					}
                 	

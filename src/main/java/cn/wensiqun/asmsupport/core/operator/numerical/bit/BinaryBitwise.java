@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -101,7 +102,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(operator.equals(Operators.LEFT_SHIFT) ||
            operator.equals(Operators.RIGHT_SHIFT) ||
            operator.equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
-            insnHelper.cast(factor2.getParamterizedType().getType(), AClass.INT_ACLASS.getType());
+            insnHelper.cast(factor2.getParamterizedType().getType(), AClassFactory.defType(int.class).getType());
         }else{
             insnHelper.cast(factor2.getParamterizedType().getType(), targetClass.getType());
         }

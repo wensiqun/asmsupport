@@ -18,9 +18,7 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
-import cn.wensiqun.asmsupport.core.utils.jls15_12_2.SemiClassMethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -115,13 +113,5 @@ public class SemiClass extends NewMemberClass {
         
         return found;
     }
-
-
-	@Override
-	public AMethodMeta availableMethod(AClass where, String name,
-			AClass[] parameterTypes) {
-		return new SemiClassMethodChooser(where, this, name, parameterTypes).chooseMethod();
-	}
-    
     
 }

@@ -14,8 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.clazz;
 
-import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
@@ -25,6 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -38,82 +37,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  *
  */
 public abstract class AClass implements GetGlobalVariabled{
-
-    /** java.lang.Boolean of AClass */
-    public static final AClass BOOLEAN_WRAP_ACLASS = AClassFactory.defType(Boolean.class);
-
-    /** java.lang.Byte of AClass */
-    public static final AClass BYTE_WRAP_ACLASS = AClassFactory.defType(Byte.class);
-
-    /** java.lang.Short of AClass */
-    public static final AClass SHORT_WRAP_ACLASS = AClassFactory.defType(Short.class);
-
-    /** java.lang.Character of AClass */
-    public static final AClass CHARACTER_WRAP_ACLASS = AClassFactory.defType(Character.class);
-
-    /** java.lang.Integer of AClass */
-    public static final AClass INTEGER_WRAP_ACLASS = AClassFactory.defType(Integer.class);
-
-    /** java.lang.Long of AClass */
-    public static final AClass LONG_WRAP_ACLASS = AClassFactory.defType(Long.class);
-
-    /** java.lang.Float of AClass */
-    public static final AClass FLOAT_WRAP_ACLASS = AClassFactory.defType(Float.class);
-
-    /** java.lang.Double of AClass */
-    public static final AClass DOUBLE_WRAP_ACLASS = AClassFactory.defType(Double.class);
-
-    /** boolean of AClass */
-    public static final AClass BOOLEAN_ACLASS = AClassFactory.defType(boolean.class);
-
-    /** byte of AClass */
-    public static final AClass BYTE_ACLASS = AClassFactory.defType(byte.class);
-
-    /** short of AClass */
-    public static final AClass SHORT_ACLASS = AClassFactory.defType(short.class);
-
-    /** char of AClass */
-    public static final AClass CHAR_ACLASS = AClassFactory.defType(char.class);
-
-    /** int of AClass */
-    public static final AClass INT_ACLASS = AClassFactory.defType(int.class);
-
-    /** long of AClass */
-    public static final AClass LONG_ACLASS = AClassFactory.defType(long.class);
-
-    /** float of AClass */
-    public static final AClass FLOAT_ACLASS = AClassFactory.defType(float.class);
-
-    /** double of AClass */
-    public static final AClass DOUBLE_ACLASS = AClassFactory.defType(double.class);
-
-    /** java.lang.Object of AClass */
-    public static final AClass OBJECT_ACLASS = AClassFactory.defType(Object.class);
-
-    /** java.lang.Cloneable of AClass */
-    public static final AClass CLONEABLE_ACLASS = AClassFactory.defType(Cloneable.class);
-
-    /** java.lang.Serializable of AClass */
-    public static final AClass SERIALIZABLE_ACLASS = AClassFactory.defType(Serializable.class);
-
-    /** java.lang.String of AClass */
-    public static final AClass STRING_ACLASS = AClassFactory.defType(String.class);
-
-    /** java.lang.Iterator of AClass */
-    public static final AClass ITERATOR_ACLASS = AClassFactory.defType(Iterator.class);
-
-    /** java.lang.Exception of AClass */
-    public static final AClass EXCEPTION_ACLASS = AClassFactory.defType(Exception.class);
-
-    /** java.lang.Class of AClass */
-    public static final AClass CLASS_ACLASS = AClassFactory.defType(Class.class);
-
-    /** java.lang.Throwable of AClass */
-    public static final AClass THROWABLE_ACLASS = AClassFactory.defType(Throwable.class);
-    
-    /** java.lang.Void of AClass */
-    public static final AClass VOID_ACLASS = AClassFactory.defType(void.class);
-    
+	
     /**
      * Class name
      */
@@ -342,8 +266,9 @@ public abstract class AClass implements GetGlobalVariabled{
      * @param parameterTypes 方法的参数类型
      * @return
      */
-    public abstract AMethodMeta availableMethod(AClass where, String name,
-            AClass[] parameterTypes);
+    public final AMethodMeta availableMethod(AClass where, String name, AClass[] parameterTypes) {
+		return new MethodChooser(where, this, name, parameterTypes).chooseMethod();
+    }
 
     /*-****************************************
      *               选择方法                                              *

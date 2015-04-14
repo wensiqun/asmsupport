@@ -72,7 +72,7 @@ public class IFBlockGenerator extends AbstractExample{
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, 
 				"ifelse", 
-				new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, 
+				new AClass[]{AClassFactory.defType(String.class), AClassFactory.defType(int.class)}, 
 				new String[]{"str", "i"}, null, null,
 		        
 				new StaticMethodBodyInternal(){

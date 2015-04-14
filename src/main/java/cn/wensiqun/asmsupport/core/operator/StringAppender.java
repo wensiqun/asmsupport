@@ -90,7 +90,7 @@ public class StringAppender extends AbstractOperator implements Parameterized{
 
     @Override
     public AClass getParamterizedType() {
-        return AClass.STRING_ACLASS;
+        return AClassFactory.defType(String.class);
     }
 
     @Override

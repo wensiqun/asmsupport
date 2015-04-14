@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 
@@ -52,7 +53,7 @@ public class Throw extends BreakStack {
     @Override
     protected void verifyArgument() {
         AClass type = exception.getParamterizedType();
-        if (AnyException.ANY != type && !type.isChildOrEqual(AClass.THROWABLE_ACLASS)) {
+        if (AnyException.ANY != type && !type.isChildOrEqual(AClassFactory.defType(Throwable.class))) {
             throw new ASMSupportException("No exception of type " + type
                     + " can be thrown; an exception type must be a subclass of Throwable");
         }

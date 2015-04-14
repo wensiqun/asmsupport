@@ -48,7 +48,7 @@ public interface MethodInvokeAction {
      * 
      * 上面红色部分对应的asmsupport代码
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * call(AClass.STRING_ACLASS, "toString");
+     * call(AClassFactory.defType(String.class), "toString");
      * call(objectParameterized, "test" Value.value("hello"));
      * //objectParameterized是上面object在ASMSupport中的表示
      * call(invoke(objectParameterized, "getOther"), "test" Value.value("hello"));
@@ -129,8 +129,8 @@ public interface MethodInvokeAction {
      * 
      * 上面红色部分对应的asmsupport代码
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * new_(AClass.STRING_ACLASS);
-     * new_(AClass.STRING_ACLASS, Value.value("hello world"));
+     * new_(AClassFactory.defType(String.class));
+     * new_(AClassFactory.defType(String.class), Value.value("hello world"));
      * </pre>
      * 
      * 

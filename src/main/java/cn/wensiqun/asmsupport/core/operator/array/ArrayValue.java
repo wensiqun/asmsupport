@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -139,8 +140,8 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
     	if(allocateDims != null){
             for(Parameterized dim : allocateDims){
                 int order = AClassUtils.getPrimitiveAClass(dim.getParamterizedType()).getCastOrder();
-                if(order > AClass.INT_ACLASS.getCastOrder() ||
-                   order <= AClass.BOOLEAN_ACLASS.getCastOrder()){
+                if(order > AClassFactory.defType(int.class).getCastOrder() ||
+                   order <= AClassFactory.defType(boolean.class).getCastOrder()){
                     throw new RuntimeException("the allcate dim number must be byte, char, short or int type!");
                 }
             }

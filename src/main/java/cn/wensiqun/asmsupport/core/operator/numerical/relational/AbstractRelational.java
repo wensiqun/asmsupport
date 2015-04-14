@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -85,7 +86,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
     
     protected final void checkFactorForNumerical(AClass ftrCls){
         if(!ftrCls.isPrimitive() || 
-           ftrCls.equals(AClass.BOOLEAN_ACLASS)){
+           ftrCls.equals(AClassFactory.defType(boolean.class))){
             throw new ASMSupportException("this operator " + operator + " cannot support for type " + ftrCls );
         }
     }
@@ -110,7 +111,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
 
     @Override
     public AClass getParamterizedType() {
-        return AClass.BOOLEAN_ACLASS;
+        return AClassFactory.defType(boolean.class);
     }
 
     @Override

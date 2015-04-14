@@ -42,7 +42,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		final GlobalVariable out = systemOut;
 		
 		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
-		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClass.INT_ACLASS);
+		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClassFactory.defType(int.class));
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new MethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {

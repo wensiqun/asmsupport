@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.checkcast;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
@@ -65,8 +66,8 @@ public class CheckCast extends AbstractOperator implements Parameterized {
                 LOG.print("checkcast from " + from + " to " + to );
             }
             if(from.getCastOrder() > to.getCastOrder() ||
-               (from.equals(AClass.CHAR_ACLASS) && to.equals(AClass.SHORT_ACLASS)) || 
-               (to.equals(AClass.CHAR_ACLASS) && from.equals(AClass.SHORT_ACLASS))){
+               (from.equals(AClassFactory.defType(char.class)) && to.equals(AClassFactory.defType(short.class))) || 
+               (to.equals(AClassFactory.defType(char.class)) && from.equals(AClassFactory.defType(short.class)))){
                 insnHelper.cast(from.getType(), to.getType());
                 return;
             }

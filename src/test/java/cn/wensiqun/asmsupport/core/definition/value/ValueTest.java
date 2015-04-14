@@ -4,8 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public class ValueTest
@@ -14,7 +13,7 @@ public class ValueTest
     @Test
     public void testGetConvert(){
         Value value = Value.value(1);
-        Value newValue = value.getConvert(AClass.DOUBLE_ACLASS);
+        Value newValue = value.getConvert(AClassFactory.defType(double.class));
         Assert.assertEquals(Type.DOUBLE_TYPE, newValue.getType());
         Assert.assertTrue(newValue.getValue() instanceof Double);
     }

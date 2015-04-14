@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
@@ -212,7 +213,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();
         }else{
-            return AClass.VOID_ACLASS;
+            return AClassFactory.defType(void.class);
         }
     }
     

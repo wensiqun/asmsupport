@@ -43,7 +43,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Boolean value) {
-        this.cls = AClass.BOOLEAN_ACLASS;
+        this.cls = AClassFactory.defType(boolean.class);
         setProperites(value);
     }
 
@@ -53,7 +53,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Byte value) {
-        this.cls = AClass.BYTE_ACLASS;
+        this.cls = AClassFactory.defType(byte.class);
         setProperites(value);
     }
 
@@ -63,7 +63,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Short value) {
-        this.cls = AClass.SHORT_ACLASS;
+        this.cls = AClassFactory.defType(short.class);
         setProperites(value);
     }
 
@@ -73,7 +73,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Character value) {
-        this.cls = AClass.CHAR_ACLASS;
+        this.cls = AClassFactory.defType(char.class);
         setProperites(value);
     }
 
@@ -83,7 +83,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Integer value) {
-        this.cls = AClass.INT_ACLASS;
+        this.cls = AClassFactory.defType(int.class);
         setProperites(value);
     }
 
@@ -93,7 +93,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Long value) {
-        this.cls = AClass.LONG_ACLASS;
+        this.cls = AClassFactory.defType(long.class);
         setProperites(value);
     }
 
@@ -103,7 +103,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Float value) {
-        this.cls = AClass.FLOAT_ACLASS;
+        this.cls = AClassFactory.defType(float.class);
         setProperites(value);
     }
 
@@ -113,7 +113,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Double value) {
-        this.cls = AClass.DOUBLE_ACLASS;
+        this.cls = AClassFactory.defType(double.class);
         setProperites(value);
     }
 
@@ -123,7 +123,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(String value) {
-        this.cls = AClass.STRING_ACLASS;
+        this.cls = AClassFactory.defType(String.class);
         setProperites(value);
     }
 
@@ -131,7 +131,7 @@ public class Value implements IValue {
     }
 
     private Value(AClass aclass) {
-        this.cls = AClass.CLASS_ACLASS;
+        this.cls = AClassFactory.defType(Class.class);
         setProperites(aclass);
     }
 
@@ -371,7 +371,7 @@ public class Value implements IValue {
      * 
      * for examples:
      * 
-     * number(AClass.DOUBLE_ACLASS, 1) will return a Value object that value is
+     * number(AClassFactory.defType(double.class), 1) will return a Value object that value is
      * 1D, and type is Double
      * 
      * @param type

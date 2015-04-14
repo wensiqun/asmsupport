@@ -22,6 +22,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -57,7 +58,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
         AClass expCls2 = exp2.getParamterizedType();
         AClass expCls3 = exp3.getParamterizedType();
         
-        if(!expCls1.equals(AClass.BOOLEAN_ACLASS) && !expCls1.equals(AClass.BOOLEAN_WRAP_ACLASS)){
+        if(!expCls1.equals(AClassFactory.defType(boolean.class)) && !expCls1.equals(AClassFactory.defType(Boolean.class))){
             throw new ASMSupportException("the first expression type of ternary operator must by boolean or Boolean!");
         }
         
@@ -81,7 +82,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
             resultClass = expPrimCls1;
             return true;
         }else if(expPrimCls1.isPrimitive() && expPrimCls2.isPrimitive()){
-            if(expPrimCls1.equals(AClass.BOOLEAN_ACLASS) || expPrimCls2.equals(AClass.BOOLEAN_ACLASS)){
+            if(expPrimCls1.equals(AClassFactory.defType(boolean.class)) || expPrimCls2.equals(AClassFactory.defType(boolean.class))){
                 return false;
             }else{
                 if(expPrimCls1.getCastOrder() > expPrimCls2.getCastOrder()){

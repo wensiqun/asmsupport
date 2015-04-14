@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
 /**
@@ -36,7 +36,7 @@ public class LogicalXor extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitXor(AClass.BOOLEAN_ACLASS.getType());
+        insnHelper.bitXor(AClassFactory.defType(boolean.class).getType());
     }
 
 }

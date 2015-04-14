@@ -58,25 +58,25 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 					      "0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111",
 					      "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"})));
 			    //int a = 3; 
-				LocalVariable a = var("a", AClass.INT_ACLASS, false, Value.value(3));
+				LocalVariable a = var("a", AClassFactory.defType(int.class), false, Value.value(3));
 			    
 			    //int b = 6; 
-				LocalVariable b = var("b", AClass.INT_ACLASS, false, Value.value(6));
+				LocalVariable b = var("b", AClassFactory.defType(int.class), false, Value.value(6));
 				
 			    //int c = a | b;
-				LocalVariable c = var("c", AClass.INT_ACLASS, false, this.bor(a, b));
+				LocalVariable c = var("c", AClassFactory.defType(int.class), false, this.bor(a, b));
 				
 			    //int d = a & b;
-				LocalVariable d = var("d", AClass.INT_ACLASS, false, this.band(a, b));
+				LocalVariable d = var("d", AClassFactory.defType(int.class), false, this.band(a, b));
 				
 			    //int e = a ^ b;
-				LocalVariable e = var("e", AClass.INT_ACLASS, false, this.bxor(a, b));
+				LocalVariable e = var("e", AClassFactory.defType(int.class), false, this.bxor(a, b));
 				
 			    //int f = (~a & b) | (a & ~b);
-				LocalVariable f = var("f", AClass.INT_ACLASS, false, bor(band(reverse(a), b), band(a, reverse(b))));
+				LocalVariable f = var("f", AClassFactory.defType(int.class), false, bor(band(reverse(a), b), band(a, reverse(b))));
 				
 			    //int g = ~a & 0x0f;
-				LocalVariable g = var("g", AClass.INT_ACLASS, false, this.band(reverse(a), Value.value(0x0f)));
+				LocalVariable g = var("g", AClassFactory.defType(int.class), false, this.band(reverse(a), Value.value(0x0f)));
 				
 			    //System.out.println("        a = " + binary[a]);
 				call(systemOut, "println", stradd(Value.value("        a = "), arrayLoad(binary, a)));

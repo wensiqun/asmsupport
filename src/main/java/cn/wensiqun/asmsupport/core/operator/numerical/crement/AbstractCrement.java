@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -120,7 +121,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
                 insnHelper.sub(primitiveType);
 
             // box and cast
-            autoCast(primitiveType.getSort() <= Type.INT ? AClass.INT_ACLASS : primitiveClass, targetClass, true);
+            autoCast(primitiveType.getSort() <= Type.INT ? AClassFactory.defType(int.class) : primitiveClass, targetClass, true);
 
             if (asArgument && !post)
                 insnHelper.dup(type);
@@ -133,11 +134,11 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
     private Value getIncreaseValue() {
         AClass type = factor.getParamterizedType();
-        if (type.equals(AClass.DOUBLE_ACLASS) || type.equals(AClass.DOUBLE_WRAP_ACLASS)) {
+        if (type.equals(AClassFactory.defType(double.class)) || type.equals(AClassFactory.defType(Double.class))) {
             return Value.value(1d);
-        } else if (type.equals(AClass.FLOAT_ACLASS) || type.equals(AClass.FLOAT_WRAP_ACLASS)) {
+        } else if (type.equals(AClassFactory.defType(float.class)) || type.equals(AClassFactory.defType(Float.class))) {
             return Value.value(1f);
-        } else if (type.equals(AClass.LONG_ACLASS) || type.equals(AClass.LONG_WRAP_ACLASS)) {
+        } else if (type.equals(AClassFactory.defType(long.class)) || type.equals(AClassFactory.defType(Long.class))) {
             return Value.value(1L);
         } else {
             return Value.value(1);

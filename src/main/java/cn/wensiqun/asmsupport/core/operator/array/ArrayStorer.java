@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -79,8 +80,8 @@ public class ArrayStorer extends AbstractArrayOperator {
 		if(!AClassUtils.checkAssignable(value.getParamterizedType(), storeClass)) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getParamterizedType() + " to " + storeClass + "");
 		}
-		if(!AClassUtils.checkAssignable(lastDim.getParamterizedType(), AClass.INT_ACLASS)) {
-			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getParamterizedType() + " to " + AClass.INT_ACLASS + "");
+		if(!AClassUtils.checkAssignable(lastDim.getParamterizedType(), AClassFactory.defType(int.class))) {
+			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getParamterizedType() + " to " + AClassFactory.defType(int.class) + "");
 		}
 	}
 
@@ -93,7 +94,7 @@ public class ArrayStorer extends AbstractArrayOperator {
         InstructionHelper ih = block.getInsnHelper();
         LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
-        autoCast(lastDim.getParamterizedType(), AClass.INT_ACLASS, false);
+        autoCast(lastDim.getParamterizedType(), AClassFactory.defType(int.class), false);
         
         value.loadToStack(block);
         autoCast(value.getParamterizedType(), storeClass, false);

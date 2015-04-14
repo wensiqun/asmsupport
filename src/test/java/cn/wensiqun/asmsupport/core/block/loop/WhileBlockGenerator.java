@@ -23,74 +23,74 @@ public class WhileBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    final LocalVariable intVar1  = var("intVar1", AClass.INT_ACLASS, false, Value.value(10));
+                    final LocalVariable intVar1  = var("intVar1", AClassFactory.defType(int.class), false, Value.value(10));
                     
                     while_(new WhileInternal(gt(postdec(intVar1), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", intVar1));
+                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", intVar1));
                         }
                         
                     });
                     
-                    final LocalVariable intVar2  = var("intVar2", AClass.INT_ACLASS, false, Value.value(10));
+                    final LocalVariable intVar2  = var("intVar2", AClassFactory.defType(int.class), false, Value.value(10));
                     
                     while_(new WhileInternal(gt(predec(intVar2), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", intVar2));
+                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", intVar2));
                         }
                         
                     });
 	                
-                    final LocalVariable byteVar  = var("byteVar", AClass.BYTE_ACLASS, false, Value.value((byte)10));
+                    final LocalVariable byteVar  = var("byteVar", AClassFactory.defType(byte.class), false, Value.value((byte)10));
                     
 	            	while_(new WhileInternal(gt(postdec(byteVar), Value.value(0))){
 
 						@Override
 						public void body() {
 							call(TesterStatics.ATesterStatics, 
-		                    		"actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", byteVar));
+		                    		"actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", byteVar));
 						}
 	            		
 	            	});
 	            	
-	            	final LocalVariable doubleVar  = var("doubleVar", AClass.DOUBLE_ACLASS, false, Value.value(10D));
+	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.defType(double.class), false, Value.value(10D));
                     
                     while_(new WhileInternal(gt(predec(doubleVar), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", doubleVar));
+                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", doubleVar));
                         }
                         
                     });
                     
-                    final LocalVariable shortObj  = var("shortObj", AClass.SHORT_WRAP_ACLASS, false, Value.value((short)10));
+                    final LocalVariable shortObj  = var("shortObj", AClassFactory.defType(Short.class), false, Value.value((short)10));
                     
                     while_(new WhileInternal(gt(postdec(shortObj), Value.value((short)0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", shortObj));
+                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", shortObj));
                         }
                         
                     });
                     
-                    final LocalVariable longObj  = var("longObj", AClass.LONG_WRAP_ACLASS, false, Value.value(10L));
+                    final LocalVariable longObj  = var("longObj", AClassFactory.defType(Long.class), false, Value.value(10L));
                     
                     while_(new WhileInternal(gt(predec(longObj), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClass.STRING_ACLASS, "valueOf", longObj));
+                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", longObj));
                         }
                         
                     });

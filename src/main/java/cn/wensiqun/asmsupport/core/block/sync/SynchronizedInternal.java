@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.DUP;
@@ -105,7 +106,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 		insnHelper.mark(excetpionStart);
 		dupSynArgument.loadToStack(this);
 		insnHelper.monitorExit();
-		insnHelper.getMv().getStack().push(AClass.THROWABLE_ACLASS.getType());
+		insnHelper.getMv().getStack().push(AClassFactory.defType(Throwable.class).getType());
 		insnHelper.mark(excetpionEnd);
 		insnHelper.throwException();
 		

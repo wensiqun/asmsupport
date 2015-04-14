@@ -77,7 +77,7 @@ public class CreateClass extends AbstractExample {
 		 * private static String staticGlobalVariable;
 		 *
 		 */
-		creator.createField("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, AClass.STRING_ACLASS);
+		creator.createField("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, AClassFactory.defType(String.class));
 		/*
 		 * 对应java代码：
 		 * static{
@@ -104,7 +104,7 @@ public class CreateClass extends AbstractExample {
 		 * public int globalVariable;
 		 * 
 		 */
-		creator.createField("globalVariable", Opcodes.ACC_PUBLIC, AClass.INT_ACLASS);
+		creator.createField("globalVariable", Opcodes.ACC_PUBLIC, AClassFactory.defType(int.class));
 		
 		/* 
 		 * 创建一个构造方法。对于ClassCreator来说。如果没有创建任何构造方法，将会自动创建一个无参的默认构造函数

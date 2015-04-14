@@ -50,10 +50,10 @@ public class RelationalOperatorGenerate extends AbstractExample {
 				LocalVariable rand = var("rand", AClassFactory.defType(Random.class), false, new_(AClassFactory.defType(Random.class)));
 				
 				//int i = rand.nextInt(100);
-				LocalVariable i = var("i", AClass.INT_ACLASS, false, call(rand, "nextInt", Value.value(100)));
+				LocalVariable i = var("i", AClassFactory.defType(int.class), false, call(rand, "nextInt", Value.value(100)));
 				
 			    //int j = rand.nextInt(100);
-				LocalVariable j = var("j", AClass.INT_ACLASS, false, call(rand, "nextInt", Value.value(100)));
+				LocalVariable j = var("j", AClassFactory.defType(int.class), false, call(rand, "nextInt", Value.value(100)));
 				
 			    //System.out.println("i = " + i);
 				call(systemOut, "println", stradd(Value.value("i = "), i));

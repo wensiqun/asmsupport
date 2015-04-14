@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -44,7 +45,7 @@ public class CreateInterface extends AbstractExample {
 		 * 通过createMethod声明方法
 		 * 
 		 */
-		interfaceCreator.createMethod("test", new AClass[]{AClass.STRING_ACLASS, AClass.INT_ACLASS}, AClass.BOOLEAN_ACLASS, null);
+		interfaceCreator.createMethod("test", new AClass[]{AClassFactory.defType(String.class), AClassFactory.defType(int.class)}, AClassFactory.defType(boolean.class), null);
 		
 		/*
 		 * 通过createGlobalVariable创建局部变量，当然这个变量的修饰符是public static final的
@@ -60,7 +61,7 @@ public class CreateInterface extends AbstractExample {
 		 * public static final String globalValue;
 		 * 
 		 */
-		interfaceCreator.createField("globalValue", AClass.STRING_ACLASS);
+		interfaceCreator.createField("globalValue", AClassFactory.defType(String.class));
 		
 		/*
 		 * 通过createStaticBlock创建static块。

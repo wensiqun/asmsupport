@@ -15,6 +15,8 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 
+import java.util.Iterator;
+
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
@@ -83,8 +85,8 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     @Override
     public final void generate() {
         if(iterable.getParamterizedType().isArray()){
-            final LocalVariable i = var(AClass.INT_ACLASS, Value.value(0));
-            final LocalVariable len = var(AClass.INT_ACLASS, arrayLength(iterable));
+            final LocalVariable i = var(AClassFactory.defType(int.class), Value.value(0));
+            final LocalVariable len = var(AClassFactory.defType(int.class), arrayLength(iterable));
             if(!(iterable instanceof LocalVariable)) {
                 iterable = arrayvar((ArrayClass) iterable.getParamterizedType(), iterable);
             }
@@ -108,7 +110,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             condition = lt(i, len);
         }else{
-        	final LocalVariable itr = var(null, AClass.ITERATOR_ACLASS, true, call(iterable, "iterator"));
+        	final LocalVariable itr = var(null, AClassFactory.defType(Iterator.class), true, call(iterable, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -119,7 +121,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                var(AClass.OBJECT_ACLASS, call(itr, "next")) :
+                                var(AClassFactory.defType(Object.class), call(itr, "next")) :
                                 var(elementType, checkcast(call(itr, "next"), elementType));
             body(obj);
 

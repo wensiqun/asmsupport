@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -47,7 +48,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     @Override
 	protected void verifyArgument() {
     	AClass ftrCls = factor.getParamterizedType();
-        if(!(ftrCls.equals(AClass.BOOLEAN_ACLASS) && !ftrCls.equals(AClass.BOOLEAN_WRAP_ACLASS))){
+        if(!(ftrCls.equals(AClassFactory.defType(boolean.class)) && !ftrCls.equals(AClassFactory.defType(Boolean.class)))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

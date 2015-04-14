@@ -96,7 +96,7 @@ public class AMethodMeta implements Cloneable {
 
         if (returnClass == null) {
             this.returnType = Type.VOID_TYPE;
-            this.returnClass = AClass.VOID_ACLASS;
+            this.returnClass = AClassFactory.defType(void.class);
         } else {
             this.returnType = returnClass.getType();
             this.returnClass = returnClass;

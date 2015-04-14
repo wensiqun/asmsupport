@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.asm;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -224,7 +225,7 @@ public abstract class InstructionHelper {
      */
     public void push(final String value) {
         if (value == null) {
-            push(AClass.STRING_ACLASS.getType());
+            push(AClassFactory.defType(String.class).getType());
         } else {
             getMv().visitLdcInsn(value);
         }
@@ -351,7 +352,7 @@ public abstract class InstructionHelper {
      *            a class or interface type.
      */
     public void checkCast(final Type type) {
-        if (!type.equals(AClass.OBJECT_ACLASS.getType())) {
+        if (!type.equals(AClassFactory.defType(Object.class).getType())) {
             typeInsn(Opcodes.CHECKCAST, type);
         }
     }
@@ -363,42 +364,42 @@ public abstract class InstructionHelper {
     public static Type getBoxedType(final Type type) {
         switch (type.getSort()) {
         case Type.BYTE:
-            return AClass.BYTE_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Byte.class).getType();
         case Type.BOOLEAN:
-            return AClass.BOOLEAN_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Boolean.class).getType();
         case Type.SHORT:
-            return AClass.SHORT_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Short.class).getType();
         case Type.CHAR:
-            return AClass.CHARACTER_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Character.class).getType();
         case Type.INT:
-            return AClass.INTEGER_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Integer.class).getType();
         case Type.FLOAT:
-            return AClass.FLOAT_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Float.class).getType();
         case Type.LONG:
-            return AClass.LONG_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Long.class).getType();
         case Type.DOUBLE:
-            return AClass.DOUBLE_WRAP_ACLASS.getType();
+            return AClassFactory.defType(Double.class).getType();
         default :
             return type;
         }
     }
 
     public static Type getUnBoxedType(final Type type) {
-        if (type.equals(AClass.BYTE_WRAP_ACLASS.getType())) {
+        if (type.equals(AClassFactory.defType(Byte.class).getType())) {
             return Type.BYTE_TYPE;
-        } else if (type.equals(AClass.BOOLEAN_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Boolean.class).getType())) {
             return Type.BOOLEAN_TYPE;
-        } else if (type.equals(AClass.SHORT_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Short.class).getType())) {
             return Type.SHORT_TYPE;
-        } else if (type.equals(AClass.CHARACTER_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Character.class).getType())) {
             return Type.CHAR_TYPE;
-        } else if (type.equals(AClass.INTEGER_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Integer.class).getType())) {
             return Type.INT_TYPE;
-        } else if (type.equals(AClass.FLOAT_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Float.class).getType())) {
             return Type.FLOAT_TYPE;
-        } else if (type.equals(AClass.LONG_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Long.class).getType())) {
             return Type.LONG_TYPE;
-        } else if (type.equals(AClass.DOUBLE_WRAP_ACLASS.getType())) {
+        } else if (type.equals(AClassFactory.defType(Double.class).getType())) {
             return Type.DOUBLE_TYPE;
         }
         return type;
@@ -895,7 +896,7 @@ public abstract class InstructionHelper {
      * @param type
      */
     public void inverts(final Type type) {
-        if (type.equals(AClass.LONG_ACLASS)) {
+        if (type.equals(AClassFactory.defType(long.class))) {
             push(-1L);
         } else {
             push(-1);

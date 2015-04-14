@@ -105,7 +105,7 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
         }
         
         if(!ftrCls1.equals(resultClass) &&
-            resultClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder() ){
+            resultClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder() ){
             log.debug("cast arithmetic factor from " + ftrCls1 + " to " + resultClass);
             insnHelper.cast(ftrCls1.getType(), resultClass.getType());    
         }
@@ -119,7 +119,7 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
         }
         
         if(!ftrCls2.equals(resultClass) &&
-            resultClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder() ){
+            resultClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder() ){
             log.debug("cast arithmetic factor from " + ftrCls2 + " to " + resultClass);
             insnHelper.cast(ftrCls2.getType(), resultClass.getType());    
         }*/

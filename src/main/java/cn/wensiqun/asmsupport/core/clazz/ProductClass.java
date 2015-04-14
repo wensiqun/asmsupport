@@ -20,12 +20,10 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.LinkedList;
 
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
-import cn.wensiqun.asmsupport.core.utils.jls15_12_2.ProductClassMethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
@@ -196,11 +194,4 @@ public class ProductClass extends NewMemberClass {
 		return exist[0];
 	}
 
-
-	@Override
-	public AMethodMeta availableMethod(AClass where, String name,
-			AClass[] parameterTypes) {
-		return new ProductClassMethodChooser(where, this, name, parameterTypes).chooseMethod();
-	}
-    
 }

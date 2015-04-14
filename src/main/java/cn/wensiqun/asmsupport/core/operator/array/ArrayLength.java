@@ -18,6 +18,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
@@ -68,7 +69,7 @@ public class ArrayLength extends AbstractArrayOperator implements Parameterized 
 
     @Override
     public AClass getParamterizedType() {
-        return AClass.INT_ACLASS;
+        return AClassFactory.defType(int.class);
     }
 
     @Override

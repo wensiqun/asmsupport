@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
@@ -70,7 +71,7 @@ public abstract class AbstractNumerical extends AbstractOperator implements Para
 
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
-                && targetClass.getCastOrder() > AClass.INT_ACLASS.getCastOrder()) {
+                && targetClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder()) {
             LOG.print("cast factor from " + factorCls + " to " + targetClass);
             insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }

@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -187,20 +188,21 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 insnHelper.cast(originalPrimitiveType, target.getType());
 
                 return;
-            } else if (original.isPrimitive() && target.equals(AClass.OBJECT_ACLASS)) {
+            } else if (original.isPrimitive() && target.equals(AClassFactory.defType(Object.class))) {
                 insnHelper.box(original.getType());
                 return;
             }
         } else {
             if (original.isPrimitive() && target.isPrimitive()) {
-                if (!original.equals(AClass.BOOLEAN_ACLASS) && !target.equals(AClass.BOOLEAN_ACLASS)
-                        && original.getCastOrder() <= target.getCastOrder()) {
+                if (!original.equals(AClassFactory.defType(Boolean.class)) && 
+                	!target.equals(AClassFactory.defType(Boolean.class)) && 
+                	original.getCastOrder() <= target.getCastOrder()) {
                     insnHelper.cast(original.getType(), target.getType());
                     return;
                 }
             } else if (original.isPrimitive()
                     && (AClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
-                            .equals(AClass.OBJECT_ACLASS))) {
+                            .equals(AClassFactory.defType(Object.class)))) {
                 insnHelper.box(original.getType());
                 return;
             } else if (AClassUtils.isPrimitiveWrapAClass(original)

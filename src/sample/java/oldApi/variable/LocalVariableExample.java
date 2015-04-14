@@ -42,7 +42,7 @@ public class LocalVariableExample extends AbstractExample {
 						 * 第四个参数：初始值，可以为null，null则表示
 						 * 这里的第三个参数是个boolean类型。如果设置成true，则所设置的变量名将不起作用。
 						 */
-						LocalVariable localVariable1 = var("localVariable1", AClass.STRING_ACLASS, false, Value.value("This is a Local Variable"));
+						LocalVariable localVariable1 = var("localVariable1", AClassFactory.defType(String.class), false, Value.value("This is a Local Variable"));
                         call(systemOut, "println", localVariable1);
                         
 						/* ***************************************************************

@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.operator;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 
 /**
@@ -47,8 +48,7 @@ public class InstanceofOperator extends AbstractOperator implements Parameterize
 
     @Override
     protected void checkCrement() {
-        // TODO Auto-generated method stub
-        
+        //Do nothing here
     }
 
     @Override
@@ -78,7 +78,7 @@ public class InstanceofOperator extends AbstractOperator implements Parameterize
 
     @Override
     public AClass getParamterizedType() {
-        return AClass.BOOLEAN_ACLASS;
+        return AClassFactory.defType(boolean.class);
     }
 
     @Override

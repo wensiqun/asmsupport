@@ -218,8 +218,8 @@ public class EnumCreator extends AbstractClassCreatorContext {
         System.arraycopy(argNames, 0, enumArgNames, 2, argNames.length);
 
         AClass[] enumArgClasses = new AClass[argClasses.length + 2];
-        enumArgClasses[0] = AClass.STRING_ACLASS;
-        enumArgClasses[1] = AClass.INT_ACLASS;
+        enumArgClasses[0] = AClassFactory.defType(String.class);
+        enumArgClasses[1] = AClassFactory.defType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
         methodCreaters.add(MethodCreator.methodCreatorForAdd(ASConstant.INIT, enumArgClasses, enumArgNames, null, null,
@@ -293,7 +293,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 });
 
         // create "public static Enum valueOf(java.lang.String)" method
-        this.createStaticMethod("valueOf", new AClass[] { AClass.STRING_ACLASS }, new String[] { "name" }, sc, null,
+        this.createStaticMethod("valueOf", new AClass[] { AClassFactory.defType(String.class) }, new String[] { "name" }, sc, null,
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBodyInternal() {
 
                     @Override

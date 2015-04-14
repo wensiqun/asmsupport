@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -20,10 +21,10 @@ public class TestSerializableWithASMSupport {
     	ClassCreator creator = 
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
-    	creator.createField("name", Opcodes.ACC_PRIVATE, AClass.STRING_ACLASS);
+    	creator.createField("name", Opcodes.ACC_PRIVATE, AClassFactory.defType(String.class));
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
-    			new AClass[]{AClass.STRING_ACLASS}, new String[]{"name"}, 
+    			new AClass[]{AClassFactory.defType(String.class)}, new String[]{"name"}, 
     			null, null, new MethodBodyInternal(){
 
 					@Override
@@ -37,7 +38,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClass.STRING_ACLASS, null,new MethodBodyInternal(){
+    			AClassFactory.defType(String.class), null,new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -49,7 +50,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClass.STRING_ACLASS, null, new MethodBodyInternal(){
+    			AClassFactory.defType(String.class), null, new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {

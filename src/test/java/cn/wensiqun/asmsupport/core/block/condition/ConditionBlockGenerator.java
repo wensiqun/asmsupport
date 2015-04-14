@@ -25,7 +25,7 @@ public class ConditionBlockGenerator extends AbstractExample
         final MyList testMethodNames = new MyList();
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ConditionBlockGeneratorExample", null, null);
         
-        creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"), new AClass[]{AClass.STRING_ACLASS}, new String[]{"str"}, null, null, new StaticMethodBodyInternal(){
+        creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"), new AClass[]{AClassFactory.defType(String.class)}, new String[]{"str"}, null, null, new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus)

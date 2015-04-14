@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.block.control.condition;
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -33,8 +33,8 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
 
     @Override
     protected void init() {
-        if (!condition.getParamterizedType().equals(AClass.BOOLEAN_WRAP_ACLASS)
-                && !condition.getParamterizedType().equals(AClass.BOOLEAN_ACLASS)) {
+        if (!condition.getParamterizedType().equals(AClassFactory.defType(Boolean.class))
+                && !condition.getParamterizedType().equals(AClassFactory.defType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getParamterizedType());
         }
