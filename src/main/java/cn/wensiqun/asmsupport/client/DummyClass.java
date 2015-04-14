@@ -76,6 +76,8 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
             if(lastDot > 0) {
                 packageName = qualifiedName.substring(0, lastDot);
                 name = qualifiedName.substring(lastDot + 1);
+            } else {
+            	name = qualifiedName;
             }
         }
     }
@@ -367,8 +369,9 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         } else if(printLog) {
             ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        ClassCreator cci = new ClassCreator(javaVersion, modifiers, packageName + "." + name, parent,
-                interfaces);
+        ClassCreator cci = new ClassCreator(javaVersion, modifiers, 
+        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
+        				parent, interfaces);
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cci.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), dummy.getConstructorBody().target);    
