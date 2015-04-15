@@ -324,7 +324,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
 					AClass actuallyArg = argumentTypes[i];
 					AClass potentialArg = potentialMethodArgs[i];
-					if(!checkMethodInvocationConversion(actuallyArg, potentialArg))
+					if(!ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
 						return;
 				}
 				list.add(entity);
@@ -356,7 +356,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				for(int i=0; i < potenMtdArgLen - 1 ; i++){
 					AClass actuallyArg = argumentTypes[i];
 					AClass potentialArg = potentialMethodArgs[i];
-					if(!AClassUtils.isSubOrEqualType(actuallyArg, potentialArg) && !checkMethodInvocationConversion(actuallyArg, potentialArg))
+					if(!AClassUtils.isSubOrEqualType(actuallyArg, potentialArg) && 
+					   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
 						return;
 				}
 				
@@ -365,7 +366,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					AClass varargType = ((ArrayClass)potentialMethodArgs[potenMtdArgLen - 1]).getRootComponentClass();
 					for(int i = potenMtdArgLen - 1; i<actMtdArgLen ; i++){
 						AClass actuallyArg = argumentTypes[i];
-						if(!AClassUtils.isSubOrEqualType(actuallyArg, varargType) && !checkMethodInvocationConversion(actuallyArg, varargType))
+						if(!AClassUtils.isSubOrEqualType(actuallyArg, varargType) && 
+						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, varargType))
 							return;
 					}
 				}
@@ -378,25 +380,6 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		return choosingTheMostSpecificMethod(list);
 	}
 
-	
-	/**
-	 * check if argument "from" can be converted by method invocation conversion (The Java™ Language Specification Third Edition 5.3) to argument "to".
-	 * ConversionPromotionsUtils
-	 * @param from
-	 * @param to
-	 * @return
-	 */
-	private boolean checkMethodInvocationConversion(AClass from, AClass to){
-		if(from.isPrimitive() && !to.isPrimitive()){
-            AClassUtils.getPrimitiveWrapAClass(from);
-            return true;
-        }else if(!from.isPrimitive() && to.isPrimitive()){
-            AClassUtils.getPrimitiveAClass(from);
-            return true;
-        }
-        return false;
-	}
-	
 	@Override
 	public AMethodMeta choosingTheMostSpecificMethod(List<AMethodMeta> entities) {
 		Set<AMethodMeta> most = null;

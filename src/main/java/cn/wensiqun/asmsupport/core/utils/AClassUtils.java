@@ -295,6 +295,9 @@ public class AClassUtils {
     }
 
     public static boolean isSubOrEqualType(AClass subtype, AClass exceptSupertype) {
+    	if(exceptSupertype.getType().getSort() == Type.OBJECT) {
+    		return true;
+    	}
         if (subtype.equals(exceptSupertype)) {
             return true;
         }
