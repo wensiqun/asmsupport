@@ -33,6 +33,7 @@ import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.collections.LinkedMultiValueMap;
 import cn.wensiqun.asmsupport.core.utils.collections.MapLooper;
 import cn.wensiqun.asmsupport.core.utils.collections.MultiValueMap;
+import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -294,7 +295,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
 					AClass actuallyArg = argumentTypes[i];
 					AClass potentialArg = potentialMethodArgs[i];
-					if(!AClassUtils.isSubOrEqualType(actuallyArg, potentialArg))
+					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg))
 						return;
 				}
 				list.add(entity);
@@ -356,7 +357,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				for(int i=0; i < potenMtdArgLen - 1 ; i++){
 					AClass actuallyArg = argumentTypes[i];
 					AClass potentialArg = potentialMethodArgs[i];
-					if(!AClassUtils.isSubOrEqualType(actuallyArg, potentialArg) && 
+					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg) && 
 					   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
 						return;
 				}
@@ -366,7 +367,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					AClass varargType = ((ArrayClass)potentialMethodArgs[potenMtdArgLen - 1]).getRootComponentClass();
 					for(int i = potenMtdArgLen - 1; i<actMtdArgLen ; i++){
 						AClass actuallyArg = argumentTypes[i];
-						if(!AClassUtils.isSubOrEqualType(actuallyArg, varargType) && 
+						if(!TypeUtils.isSubtyping(actuallyArg, varargType) && 
 						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, varargType))
 							return;
 					}
@@ -456,7 +457,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		int n = ArrayUtils.getLength(t);
 		if(n > 0){
 			for(int j=0; j<n; j++){
-				if(!AClassUtils.isSubOrEqualType(t[j], u[j])){
+				if(!TypeUtils.isSubtyping(t[j], u[j])){
 					return false;
 				}
 			}
@@ -489,7 +490,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		}
 		
 		for(int j = 0, l = k - 1; j < l ; j++){
-			if(!AClassUtils.isSubOrEqualType(t[j], u[j])){
+			if(!TypeUtils.isSubtyping(t[j], u[j])){
 				return false;
 			}
 		}
@@ -497,13 +498,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		
 		if(ArrayUtils.getLength(t) >= ArrayUtils.getLength(u)){
 			for(int j = k - 1; j < n; j++){
-				if(!AClassUtils.isSubOrEqualType(t[j], u[k - 1])){
+				if(!TypeUtils.isSubtyping(t[j], u[k - 1])){
 					return false;
 				}
 			}
 		}else{
 			for(int j = k - 1; j < n; j++){
-				if(!AClassUtils.isSubOrEqualType(t[k - 1], u[j])){
+				if(!TypeUtils.isSubtyping(t[k - 1], u[j])){
 					return false;
 				}
 			}

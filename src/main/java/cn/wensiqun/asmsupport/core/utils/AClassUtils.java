@@ -17,21 +17,18 @@
  */
 package cn.wensiqun.asmsupport.core.utils;
 
-import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.core.clazz.SemiClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -217,106 +214,6 @@ public class AClassUtils {
     }
 
     /**
-     * get direct super type
-     * 
-     * @param as
-     * @return
-     */
-    public static AClass[] getDirectSuperType(AClass as) {
-        AClass[] a = null;
-
-        if (as.isPrimitive()) {
-            if (as.equals(AClassFactory.defType(byte.class))) {
-                a = new AClass[] { AClassFactory.defType(short.class), AClassFactory.defType(Object.class) };
-
-            } else if (as.equals(AClassFactory.defType(short.class))) {
-                a = new AClass[] { AClassFactory.defType(int.class), AClassFactory.defType(Object.class) };
-
-            } else if (as.equals(AClassFactory.defType(char.class))) {
-                a = new AClass[] { AClassFactory.defType(int.class), AClassFactory.defType(Object.class) };
-
-            } else if (as.equals(AClassFactory.defType(int.class))) {
-                a = new AClass[] { AClassFactory.defType(long.class), AClassFactory.defType(Object.class) };
-
-            } else if (as.equals(AClassFactory.defType(long.class))) {
-                a = new AClass[] { AClassFactory.defType(float.class), AClassFactory.defType(Object.class) };
-
-            } else if (as.equals(AClassFactory.defType(float.class))) {
-                a = new AClass[] { AClassFactory.defType(double.class), AClassFactory.defType(Object.class) };
-            }
-
-        } else if (as.equals(AClassFactory.defType(Object.class))) {
-
-        } else if (as.isInterface()) {
-            Class<?>[] intfacs = as.getInterfaces();
-            if (intfacs != null && intfacs.length > 0) {
-                a = new AClass[intfacs.length];
-                for (int i = 0; i < a.length; i++) {
-                    a[i] = AClassFactory.defType(intfacs[i]);
-                }
-            } else {
-                a = new AClass[] { AClassFactory.defType(Object.class) };
-            }
-        } else if (as.isArray()) {
-            ArrayClass ac = (ArrayClass) as;
-            AClass rootType = ac.getRootComponentClass();
-
-            if (rootType.isPrimitive()) {
-                a = new AClass[2];
-                a[0] = AClassFactory.defType(Cloneable.class);
-                a[1] = AClassFactory.defType(Serializable.class);
-            } else {
-                AClass[] rootSupers = getDirectSuperType(rootType);
-                if (rootSupers != null) {
-                    a = new AClass[rootSupers.length];
-                    for (int i = 0; i < a.length; i++) {
-                        a[i] = AClassFactory.defArrayType(rootSupers[i], ac.getDimension());
-                    }
-                } else {
-                    a = new AClass[2];
-                    a[0] = AClassFactory.defType(Cloneable.class);
-                    a[1] = AClassFactory.defType(Serializable.class);
-                }
-            }
-        } else {
-            Class<?> sup = as.getSuperClass();
-            Class<?>[] intefaces = as.getInterfaces();
-
-            a = new AClass[intefaces.length + 1];
-            a[0] = AClassFactory.defType(sup);
-
-            for (int i = 1; i < a.length; i++) {
-                a[i] = AClassFactory.defType(intefaces[i - 1]);
-            }
-
-        }
-
-        return a;
-    }
-
-    public static boolean isSubOrEqualType(AClass subtype, AClass exceptSupertype) {
-    	if(exceptSupertype.getType().getSort() == Type.OBJECT) {
-    		return true;
-    	}
-        if (subtype.equals(exceptSupertype)) {
-            return true;
-        }
-        AClass[] actuallySupertypes = getDirectSuperType(subtype);
-        if (ArrayUtils.isNotEmpty(actuallySupertypes)) {
-            for (AClass actual : actuallySupertypes) {
-                if (actual.equals(exceptSupertype)) {
-                    return true;
-                } else {
-                    if (isSubOrEqualType(actual, exceptSupertype)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * 
      * @param invoker
      * @param owner
@@ -462,10 +359,7 @@ public class AClassUtils {
      * @return
      */
     public static boolean checkAssignable(AClass from, AClass to) {
-
         if (from.isChildOrEqual(to)) {
-            return true;
-        } else if (from.isPrimitive() && to.equals(AClassFactory.defType(Object.class))) {
             return true;
         } else {
             AClass fromPrim = getPrimitiveAClass(from);

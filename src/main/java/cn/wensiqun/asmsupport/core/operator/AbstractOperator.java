@@ -163,10 +163,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * @param enforce
      */
     protected void autoCast(AClass original, AClass target, boolean enforce) {
-        if (original.isChildOrEqual(target)) {
-            return;
-        }
-
         if (enforce) {
             if (original.isPrimitive() && target.isPrimitive()) {
                 insnHelper.cast(original.getType(), target.getType());
@@ -213,10 +209,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 return;
             }
         }
-
-        throw new ASMSupportException("cannot auto cast from " + original + " to " + target
-                + " also you can use CheckCast to try again!");
-
     }
 
     public final int getCompileOrder() {

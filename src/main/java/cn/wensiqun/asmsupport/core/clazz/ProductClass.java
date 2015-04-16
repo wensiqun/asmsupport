@@ -129,14 +129,6 @@ public class ProductClass extends NewMemberClass {
         return order;
     }
 
-    @Override
-	public boolean isChildOrEqual(AClass cls) {
-    	if(cls instanceof ProductClass){
-    		return ((ProductClass)cls).getReallyClass().isAssignableFrom(reallyClass);
-    	}
-		return super.isChildOrEqual(cls);
-	}
-
 	@Override
     public boolean isPrimitive() {
         return reallyClass.isPrimitive();

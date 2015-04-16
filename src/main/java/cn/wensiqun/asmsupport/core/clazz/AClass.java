@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -163,42 +164,8 @@ public abstract class AClass implements GetGlobalVariabled{
      * @param cls
      * @return true表示相等或者是其子类, 否则为false
      */
-    public boolean isChildOrEqual(AClass cls) {
-        String clsName = cls.getName();
-        if (getName().equals(clsName)) {
-            return true;
-        }
-        
-        if(cls instanceof ArrayClass){
-            return false;
-        }
-        
-        if(this.isInterface() && clsName.equals(Object.class.getName())){
-        	return true;
-        }
-
-        Class<?> superCls = getSuperClass();
-        Class<?>[] tempInterfaces = getInterfaces();
-
-        boolean interResult = false;
-        
-        if(superCls != null){
-            interResult = AClassFactory.defType(superCls).isChildOrEqual(cls);
-            if(interResult){
-                return true;
-            }
-        }
-        
-        if(tempInterfaces != null){
-            for(Class<?> c : tempInterfaces){
-                interResult = AClassFactory.defType(c).isChildOrEqual(cls);
-                if(interResult){
-                    return true;
-                }
-            }
-        }
-        
-        return false;
+    public boolean isChildOrEqual(AClass otherType) {
+        return TypeUtils.isSubtyping(this, otherType);
     }
 
     /**

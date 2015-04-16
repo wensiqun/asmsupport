@@ -121,22 +121,5 @@ public class ArrayClass extends AClass {
         }
         return sb.toString();
     }
-
-	@Override
-	public boolean isChildOrEqual(AClass cls) {
-		if(cls instanceof ArrayClass){
-			String clsName = cls.getName();
-	        if (getName().equals(clsName)) {
-	            return true;
-	        }
-		}
-		
-		if(cls instanceof ProductClass){
-			if(((ProductClass)cls).getReallyClass().equals(Object.class)){
-				return true;
-			}
-		}
-		return false;
-	}
     
 }

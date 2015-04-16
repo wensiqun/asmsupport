@@ -3,7 +3,6 @@ package json.demo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import json.JSONPool;
@@ -11,7 +10,7 @@ import json.JSONPool;
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "UTF_8"));
         printPrompt(in);
         
         JSONPool pool = new JSONPool();
