@@ -106,7 +106,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * System.out.println("i1 = " + ArrayUtils.toString(i1));
 				 */
 				ArrayValue av = makeArray(AClassFactory.getType(int[][].class), Value.value(2), Value.value(2));
-				LocalVariable i1 = arrayvar("i1", (ArrayClass) AClassFactory.getType(int[][].class), false, av);
+				LocalVariable i1 = var("i1", AClassFactory.getType(int[][].class), av);
 				call(systemOut, "println", stradd(Value.value("i1 = "), call(AClassFactory.getType(ArrayUtils.class), "toString", i1)));
 				
 				/*
@@ -115,7 +115,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 		         * System.out.println("i2 = " + ArrayUtils.toString(i2));
 				 */
 				av = makeArray(AClassFactory.getType(int[][].class), Value.value(2));
-				LocalVariable i2 = arrayvar("i2", (ArrayClass) AClassFactory.getType(int[][].class), false, av);
+				LocalVariable i2 = var("i2", AClassFactory.getType(int[][].class), av);
 				call(systemOut, "println", stradd(Value.value("i2 = "), call(AClassFactory.getType(ArrayUtils.class), "toString", i2)));
 				
 				/*
@@ -141,7 +141,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * System.out.println("s1 = " + ArrayUtils.toString(s1));
 				 */
 				av = newarray(AClassFactory.getType(String[].class), new Value[]{Value.value("array \"s1\" first value"), Value.value("array \"s1\" second value")});
-				LocalVariable s1 = arrayvar("s1", (ArrayClass) AClassFactory.getType(String[].class), false, av);
+				LocalVariable s1 = var("s1", AClassFactory.getType(String[].class), av);
 				call(systemOut, "println", stradd(Value.value("s1 = "), call(AClassFactory.getType(ArrayUtils.class), "toString", s1)));
 
 				/*
@@ -156,7 +156,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				
 				av = newarray(AClassFactory.getType(String[][].class), 
 						new Value[][]{new Value[]{s200, s201}, new Value[]{s210, s211}});
-				LocalVariable s2 = arrayvar("s2", (ArrayClass) AClassFactory.getType(String[][].class), false, av);
+				LocalVariable s2 = var("s2", AClassFactory.getType(String[][].class), av);
 				call(systemOut, "println", stradd(Value.value("s2 = "), call(AClassFactory.getType(ArrayUtils.class), "toString", s2)));
 
 				/*

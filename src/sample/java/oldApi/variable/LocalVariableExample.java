@@ -2,11 +2,9 @@ package oldApi.variable;
 
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -53,7 +51,7 @@ public class LocalVariableExample extends AbstractExample {
                            2.通过createArrayVariableWithAllocateDimension方法 
                          ***************************************************************  */
                         
-                        
+                        AClass stringArrayType = AClassFactory.getType(String[][].class);
                         /*
                          * 创建一个数组局部变量
                          * 同样也有四个变量
@@ -64,21 +62,14 @@ public class LocalVariableExample extends AbstractExample {
                          * 这段代码将创建一个String类型的二维数组的变量,对应的java代码如下
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
-                        LocalVariable localArrayVariable1 = arrayvar2dim("localArrayVariable1", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2), Value.value(2));
+                        LocalVariable localArrayVariable1 = var(stringArrayType, makeArray(stringArrayType, Value.value(2), Value.value(2)));//arrayvar2dim("localArrayVariable1", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2), Value.value(2));
                         call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
-                        LocalVariable localArrayVariable2 = arrayvar2dim("localArrayVariable2", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2));
+                        LocalVariable localArrayVariable2 = var(stringArrayType, makeArray(stringArrayType, Value.value(2)));//arrayvar2dim("localArrayVariable2", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2));
                         call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable2)));
-                        
-                        /*
-                         * 也可以直接设置为null 
-                         * 
-                         */
-                        LocalVariable localArrayVariable3 = arrayvar2dim("localArrayVariable3", (ArrayClass) AClassFactory.getType(String[][].class), false, (Parameterized[])null);
-                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable3)));
                         
                         return_();
 					}

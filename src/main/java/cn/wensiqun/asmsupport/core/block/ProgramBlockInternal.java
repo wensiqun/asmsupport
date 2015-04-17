@@ -427,59 +427,17 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     /**
      * the basic create variable method.
      */
-    private final LocalVariable var(String name, AClass type, boolean anonymous, Parameterized para) {
-        if (type.isArray()) {
-            throw new IllegalArgumentException(type
-                    + " is Array type exchange to arrayvar to create the array variable");
-        }
+    private final LocalVariable var(String name, AClass type, boolean anonymous, Parameterized value) {
         LocalVariable lv = createOnlyVariable(type, name, anonymous);
-        if (para == null) {
+        if (value == null) {
             assign(lv, type.getDefaultValue());
         } else {
-            assign(lv, para);
+            assign(lv, value);
         }
         return lv;
     }
 
-    @Override
-    public final LocalVariable arrayvar2dim(final String name, final ArrayClass aClass, boolean anonymous,
-            Parameterized... allocateDim) {
-        LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
-        if (allocateDim == null) {
-            assign(lv, aClass.getDefaultValue());
-        } else {
-            assign(lv, makeArray(aClass, allocateDim));
-        }
-        return lv;
-    }
-
-    @Override
-    public LocalVariable arrayvar2dim(String name, ArrayClass type, Parameterized... dims) {
-        return this.arrayvar2dim(name, type, false, dims);
-    }
-
-    @Override
-    public LocalVariable arrayvar2dim(String name, Class<?> type, Parameterized... dims) {
-    	if(!type.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
-    	}
-        return this.arrayvar2dim(name, (ArrayClass) getType(type), false, dims);
-    }
-
-    @Override
-    public LocalVariable arrayvar2dim(ArrayClass type, Parameterized... dims) {
-        return this.arrayvar2dim("", type, true, dims);
-    }
-
-    @Override
-    public LocalVariable arrayvar2dim(Class<?> arrayType, Parameterized... dims) {
-    	if(!arrayType.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
-    	}
-        return this.arrayvar2dim("", (ArrayClass) getType(arrayType), true, dims);
-    }
-
-    @Override
+    /*@Override
     public final LocalVariable arrayvar(String name, final ArrayClass type, boolean anonymous, Parameterized value) {
         LocalVariable lv = createOnlyVariable(type, name, anonymous);
         if (value == null) {
@@ -551,7 +509,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
     	}
         return this.arrayvar("", (ArrayClass) getType(type), true, parameterizedArray);
-    }
+    }*/
 
     @Override
     public final Assigner assign(ExplicitVariable variable, Parameterized val) {
