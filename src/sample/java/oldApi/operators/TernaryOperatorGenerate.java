@@ -41,11 +41,11 @@ public class TernaryOperatorGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//int i = 10;
-				LocalVariable i = var("i", AClassFactory.getType(int.class), false, Value.value(10));
+				LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(10));
 				
 				//ternary方法将生成三元操作
 				//int k = i < 0 ? -i : i;
-				LocalVariable k = var("k", AClassFactory.getType(int.class), false, ternary(lt(i, Value.value(0)), neg(i), i));
+				LocalVariable k = var("k", AClassFactory.getType(int.class), ternary(lt(i, Value.value(0)), neg(i), i));
 				
 				//System.out.print("Absolute value of ");
 				call(systemOut, "print", Value.value("Absolute value of "));

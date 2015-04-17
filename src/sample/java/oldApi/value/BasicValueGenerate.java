@@ -85,7 +85,7 @@ public class BasicValueGenerate extends AbstractExample {
 	        	call(systemOut, "println", stradd(Value.value("double default value is : "), Value.defaultValue(AClassFactory.getType(String.class))));
 
 	        	//测试null的Value
-	        	LocalVariable arrayListNullValue = var("arrayListNullValue", AClassFactory.getType(List.class), false, Value.getNullValue(AClassFactory.getType(ArrayList.class)));
+	        	LocalVariable arrayListNullValue = var("arrayListNullValue", AClassFactory.getType(List.class), Value.getNullValue(AClassFactory.getType(ArrayList.class)));
 	        	call(systemOut, "println", stradd(Value.value("I'm a null value and type is List: "), arrayListNullValue));
 			    return_();
 			}

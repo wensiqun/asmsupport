@@ -32,7 +32,7 @@ public class AssignmentGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//创建个String变量默认赋值为null
-				LocalVariable string = var("string", AClassFactory.getType(String.class), false, null);
+				LocalVariable string = var("string", AClassFactory.getType(String.class), null);
 				
 				assign(string, call(getMethodOwner(), "commonMethod"));
 				call(systemOut, "println", stradd(Value.value("first asign :"), string));

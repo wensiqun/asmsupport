@@ -110,7 +110,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             condition = lt(i, len);
         }else{
-        	final LocalVariable itr = var(null, AClassFactory.getType(Iterator.class), true, call(iterable, "iterator"));
+        	final LocalVariable itr = var(AClassFactory.getType(Iterator.class), call(iterable, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 

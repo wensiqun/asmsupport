@@ -29,9 +29,31 @@ import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
 public interface VariableAction {
 
     /**
-     * create a local variable, this method equivalent to following code :
+     * Create a local variable with anonymous, this method equivalent to following code :
      * <p>
-     * _var(name, {@link AClassFactory#getType(type)}, false, para)
+     * var("", {@link AClassFactory#getType(type)}, true, para)
+     * </p>
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable var(Class<?> type, Parameterized para);
+
+    /**
+     * Create a local variable with anonymous, this method equivalent to following code :
+     * <p>
+     * var("", type, true, para)
+     * </p>
+     * @param type
+     * @param para
+     * @return
+     */
+    public LocalVariable var(AClass type, Parameterized para);
+
+    /**
+     * Create a local variable, this method equivalent to following code :
+     * <p>
+     * var(name, {@link AClassFactory#getType(type)}, false, para)
      * </p>
      * @param name
      * @param type
@@ -39,24 +61,13 @@ public interface VariableAction {
      * @return
      */
     public LocalVariable var(String name, Class<?> type, Parameterized para);
-
-    /**
-     * create a local variable, this method equivalent to following code :
-     * <p>
-     * _var("", {@link AClassFactory#getType(type)}, true, para)
-     * </p>
-     * @param type
-     * @param para
-     * @return
-     */
-    public LocalVariable var(Class<?> type, Parameterized para);
     
 
 
     /**
-     * create a local variable, this method equivalent to following code :
+     * Create a local variable, this method equivalent to following code :
      * <p>
-     * _var(name, type, false, para)
+     * var(name, type, false, para)
      * </p>
      * @param name
      * @param type
@@ -64,19 +75,8 @@ public interface VariableAction {
      * @return
      */
     public LocalVariable var(String name, AClass type, Parameterized para);
-
-    /**
-     * create a local variable, this method equivalent to following code :
-     * <p>
-     * _var("", type, true, para)
-     * </p>
-     * @param type
-     * @param para
-     * @return
-     */
-    public LocalVariable var(AClass type, Parameterized para);
     
-    /**
+    /*
 	 * create a local variable
 	 * 
 	 * @param name variable name.
@@ -85,7 +85,7 @@ public interface VariableAction {
 	 * @param para this variable initial value, set to null if you want the initial is null.
 	 * @return the LocalVariable
 	 */
-	public LocalVariable var(String name, AClass aClass, boolean anonymous, Parameterized para);
+	//public LocalVariable var(String name, AClass aClass, boolean anonymous, Parameterized para);
 	
 	/**
 	 * 

@@ -120,12 +120,6 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public LocalVariable var(String name, AClass aClass, boolean anonymous,
-			Parameterized para) {
-		return target.var(name, aClass, anonymous, para);
-	}
-
-	@Override
 	public LocalVariable arrayvar2dim(String name, ArrayClass aClass,
 			boolean anonymous, Parameterized... allocateDim) {
 		return target.arrayvar2dim(name, aClass, anonymous, allocateDim);

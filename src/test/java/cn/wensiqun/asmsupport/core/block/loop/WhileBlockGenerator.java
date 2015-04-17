@@ -23,7 +23,7 @@ public class WhileBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    final LocalVariable intVar1  = var("intVar1", AClassFactory.getType(int.class), false, Value.value(10));
+                    final LocalVariable intVar1  = var("intVar1", AClassFactory.getType(int.class), Value.value(10));
                     
                     while_(new WhileInternal(gt(postdec(intVar1), Value.value(0))){
 
@@ -35,7 +35,7 @@ public class WhileBlockGenerator extends AbstractExample {
                         
                     });
                     
-                    final LocalVariable intVar2  = var("intVar2", AClassFactory.getType(int.class), false, Value.value(10));
+                    final LocalVariable intVar2  = var("intVar2", AClassFactory.getType(int.class), Value.value(10));
                     
                     while_(new WhileInternal(gt(predec(intVar2), Value.value(0))){
 
@@ -47,7 +47,7 @@ public class WhileBlockGenerator extends AbstractExample {
                         
                     });
 	                
-                    final LocalVariable byteVar  = var("byteVar", AClassFactory.getType(byte.class), false, Value.value((byte)10));
+                    final LocalVariable byteVar  = var("byteVar", AClassFactory.getType(byte.class), Value.value((byte)10));
                     
 	            	while_(new WhileInternal(gt(postdec(byteVar), Value.value(0))){
 
@@ -59,7 +59,7 @@ public class WhileBlockGenerator extends AbstractExample {
 	            		
 	            	});
 	            	
-	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.getType(double.class), false, Value.value(10D));
+	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.getType(double.class), Value.value(10D));
                     
                     while_(new WhileInternal(gt(predec(doubleVar), Value.value(0))){
 
@@ -71,7 +71,7 @@ public class WhileBlockGenerator extends AbstractExample {
                         
                     });
                     
-                    final LocalVariable shortObj  = var("shortObj", AClassFactory.getType(Short.class), false, Value.value((short)10));
+                    final LocalVariable shortObj  = var("shortObj", AClassFactory.getType(Short.class), Value.value((short)10));
                     
                     while_(new WhileInternal(gt(postdec(shortObj), Value.value((short)0))){
 
@@ -83,7 +83,7 @@ public class WhileBlockGenerator extends AbstractExample {
                         
                     });
                     
-                    final LocalVariable longObj  = var("longObj", AClassFactory.getType(Long.class), false, Value.value(10L));
+                    final LocalVariable longObj  = var("longObj", AClassFactory.getType(Long.class), Value.value(10L));
                     
                     while_(new WhileInternal(gt(predec(longObj), Value.value(0))){
 

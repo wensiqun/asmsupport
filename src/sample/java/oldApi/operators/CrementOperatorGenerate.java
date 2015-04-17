@@ -43,13 +43,13 @@ public class CrementOperatorGenerate extends AbstractExample {
 				call(systemOut, "println", Value.value("******************************demonstrate***************************"));
 				
 				//int a = 1;
-			    LocalVariable a = var("a", AClassFactory.getType(int.class), false, Value.value(1));
+			    LocalVariable a = var("a", AClassFactory.getType(int.class), Value.value(1));
 			    //int b = 2;
-			    LocalVariable b = var("b", AClassFactory.getType(int.class), false, Value.value(2));
+			    LocalVariable b = var("b", AClassFactory.getType(int.class), Value.value(2));
 			    //int c = ++b;
-			    LocalVariable c = var("c", AClassFactory.getType(int.class), false, preinc(b));
+			    LocalVariable c = var("c", AClassFactory.getType(int.class), preinc(b));
 			    //d = a++;
-			    LocalVariable d = var("d", AClassFactory.getType(int.class), false, postinc(a));
+			    LocalVariable d = var("d", AClassFactory.getType(int.class), postinc(a));
 			    //c++;
 			    postinc(c);
 			    
@@ -77,7 +77,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 		    public void body(LocalVariable... argus) {
 				call(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
 				//int count = 10;
-				LocalVariable count = var("count", AClassFactory.getType(int.class), false, Value.value(10));
+				LocalVariable count = var("count", AClassFactory.getType(int.class), Value.value(10));
 				// ++count
 				preinc(count); 
 				// --count;
@@ -94,7 +94,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				LocalVariable currentObj = var("currentObj", getMethodOwner(), false, new_(getMethodOwner()));
+				LocalVariable currentObj = var("currentObj", getMethodOwner(), new_(getMethodOwner()));
 				call(currentObj, "demonstrate");
 				call(currentObj, "incrementAndDecrement");
 				return_();

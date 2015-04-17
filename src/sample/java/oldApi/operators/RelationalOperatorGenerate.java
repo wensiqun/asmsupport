@@ -47,13 +47,13 @@ public class RelationalOperatorGenerate extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				//Random rand = new Random();
-				LocalVariable rand = var("rand", AClassFactory.getType(Random.class), false, new_(AClassFactory.getType(Random.class)));
+				LocalVariable rand = var("rand", AClassFactory.getType(Random.class), new_(AClassFactory.getType(Random.class)));
 				
 				//int i = rand.nextInt(100);
-				LocalVariable i = var("i", AClassFactory.getType(int.class), false, call(rand, "nextInt", Value.value(100)));
+				LocalVariable i = var("i", AClassFactory.getType(int.class), call(rand, "nextInt", Value.value(100)));
 				
 			    //int j = rand.nextInt(100);
-				LocalVariable j = var("j", AClassFactory.getType(int.class), false, call(rand, "nextInt", Value.value(100)));
+				LocalVariable j = var("j", AClassFactory.getType(int.class), call(rand, "nextInt", Value.value(100)));
 				
 			    //System.out.println("i = " + i);
 				call(systemOut, "println", stradd(Value.value("i = "), i));

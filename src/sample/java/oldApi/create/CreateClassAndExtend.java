@@ -18,27 +18,12 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
-public class CreateClassAndThanExtend extends AbstractExample {
+public class CreateClassAndExtend extends AbstractExample {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassCreator superCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExampleSuper", null, null);
-		
-		superCreator.createMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, null, null, new MethodBodyInternal(){
-
-			@Override
-			public void body(LocalVariable... argus) {
-				call(systemOut, "println", Value.value("say hello!"));
-				return_();
-			}
-		});
-		
-
-		superCreator.setClassOutPutPath(".//");
-		Class superClass = superCreator.startup();
-		
 		final GlobalVariable out = systemOut;
 		
 		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
@@ -71,7 +56,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 				call(out, "println", Value.value("before"));
 				
 				AClass randomClass = AClassFactory.getType(Random.class);
-				LocalVariable random = this.var("random", randomClass, false, this.new_(randomClass, Value.value(1L)));
+				LocalVariable random = this.var("random", randomClass, this.new_(randomClass, Value.value(1L)));
 				if_(new IFInternal(call(random, "nextBoolean")){
 					@Override
 					public void body() {
@@ -96,7 +81,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			@Override
 			public void body(LocalVariable... argus) {
 				call(out, "println", Value.value("before"));
-				LocalVariable lv = this.var(null, getOrigReturnType(), true, callOrig());
+				LocalVariable lv = this.var(getOrigReturnType(), callOrig());
 				call(out, "println", Value.value("after"));	
 				return_(lv);
 			}
@@ -105,18 +90,8 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		byModifyModifer.setClassOutPutPath("./generated");
 		Class<?> ByModify = byModifyModifer.startup();
 		
-        ClassCreator childCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndThanExtendExample", ByModify, null);
+        ClassCreator childCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", ByModify, null);
 		
-		/*childCreator.createMethod("commonMethod", null, null, null, null, Opcodes.ACC_PUBLIC, new CommonMethodBody(){
-
-			@Override
-			public void body(LocalVariable... argus) {
-				invoke(systemOut, "println", Value.value("say hello!"));
-				runReturn();
-			}
-		});*/
-		
-
 		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 

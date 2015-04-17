@@ -83,7 +83,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new SynchronizedInternal(this_()){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = var("i", AClassFactory.getType(int.class), false, Value.value(0));
+                        final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
@@ -109,7 +109,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new SynchronizedInternal(this_().field("lock")){
                     @Override
                     public void body(Parameterized e) {
-                        final LocalVariable i = var("i", AClassFactory.getType(int.class), false, Value.value(0));
+                        final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
                             @Override
@@ -201,24 +201,21 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
             @Override
             public void body(LocalVariable... argus) {
-                 final LocalVariable sgst = var("sgst", syncCls, false, new_(syncCls));
+                 final LocalVariable sgst = var("sgst", syncCls, new_(syncCls));
                 
                  final LocalVariable es = var(
                         "es", 
                         AClassFactory.getType(ExecutorService.class),
-                        false, 
                         call(AClassFactory.getType(Executors.class), "newFixedThreadPool", Value.value(10))
                 );
                  final LocalVariable objs = var(
                         "objs", 
                         AClassFactory.getType(List.class),
-                        false, 
                         new_(AClassFactory.getType(ArrayList.class))
                 );
                  final LocalVariable i = var(
                         "i", 
                         AClassFactory.getType(int.class),
-                        false, 
                         Value.value(0)
                );
                 this.while_(new WhileInternal(lt(i, Value.value(10))){
