@@ -18,6 +18,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
 
@@ -61,8 +62,6 @@ public interface VariableAction {
      */
     public LocalVariable var(String name, Class<?> type, Parameterized para);
     
-
-
     /**
      * Create a local variable, this method equivalent to following code :
      * <p>
@@ -74,7 +73,20 @@ public interface VariableAction {
      * @return
      */
     public LocalVariable var(String name, AClass type, Parameterized para);
+    
 
+    /**
+     * Get field from current object. the method is same to call following :
+     * 
+     * <pre>
+     * this_().field(name);
+     * </pre>
+     * 
+     * @param name
+     * @return
+     */
+    public GlobalVariable field(String name);
+    
 	/**
 	 * assign a value to a variable. for exampel:
 	 * java code:<br/>

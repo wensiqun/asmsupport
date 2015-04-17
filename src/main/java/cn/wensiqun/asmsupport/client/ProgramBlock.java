@@ -120,6 +120,11 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
+	public GlobalVariable field(String name) {
+		return target.field(name);
+	}
+
+	@Override
 	public Assigner assign(ExplicitVariable variable, Parameterized val) {
 		return target.assign(variable, val);
 	}

@@ -404,6 +404,19 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         return createOnlyVariable(aClass, name, false);
     }
 
+    /**
+     * the basic create variable method.
+     */
+    private final LocalVariable var(String name, AClass type, boolean anonymous, Parameterized value) {
+        LocalVariable lv = createOnlyVariable(type, name, anonymous);
+        if (value == null) {
+            assign(lv, type.getDefaultValue());
+        } else {
+            assign(lv, value);
+        }
+        return lv;
+    }
+
     @Override
     public LocalVariable var(String name, Class<?> type, Parameterized para) {
         return var(name, AClassFactory.getType(type), false, para);
@@ -424,94 +437,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         return var("", type, true, para);
     }
 
-    /**
-     * the basic create variable method.
-     */
-    private final LocalVariable var(String name, AClass type, boolean anonymous, Parameterized value) {
-        LocalVariable lv = createOnlyVariable(type, name, anonymous);
-        if (value == null) {
-            assign(lv, type.getDefaultValue());
-        } else {
-            assign(lv, value);
-        }
-        return lv;
-    }
-
-    /*@Override
-    public final LocalVariable arrayvar(String name, final ArrayClass type, boolean anonymous, Parameterized value) {
-        LocalVariable lv = createOnlyVariable(type, name, anonymous);
-        if (value == null) {
-            assign(lv, type.getDefaultValue());
-        } else {
-            assign(lv, value);
-        }
-        return lv;
-    }
-
     @Override
-    public LocalVariable arrayvar(String name, ArrayClass type, Parameterized value) {
-        return this.arrayvar(name, type, false, value);
-    }
+	public GlobalVariable field(String name) {
+		return this_().field(name);
+	}
 
-    @Override
-    public LocalVariable arrayvar(String name, Class<?> type, Parameterized value) {
-    	if(!type.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
-    	}
-        return this.arrayvar(name, (ArrayClass) getType(type), false, value);
-    }
-
-    @Override
-    public LocalVariable arrayvar(ArrayClass type, Parameterized value) {
-        return this.arrayvar("", type, true, value);
-    }
-
-    @Override
-    public LocalVariable arrayvar(Class<?> type, Parameterized value) {
-    	if(!type.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
-    	}
-        return this.arrayvar("", (ArrayClass) getType(type), true, value);
-    }
-
-    @Override
-    public LocalVariable arrayvar(String name, ArrayClass aClass, boolean anonymous, Object parameterizedArray) {
-        LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
-        if (parameterizedArray == null) {
-            assign(lv, aClass.getDefaultValue());
-        } else {
-            assign(lv, getExecutor().newarray(aClass, parameterizedArray));
-        }
-        return lv;
-    }
-
-    @Override
-    public LocalVariable arrayvar(String name, ArrayClass type, Object parameterizedArray) {
-        return this.arrayvar(name, type, false, parameterizedArray);
-    }
-
-    @Override
-    public LocalVariable arrayvar(String name, Class<?> type, Object parameterizedArray) {
-    	if(!type.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
-    	}
-        return this.arrayvar(name, (ArrayClass) getType(type), false, parameterizedArray);
-    }
-
-    @Override
-    public LocalVariable arrayvar(ArrayClass type, Object parameterizedArray) {
-        return this.arrayvar("", type, true, parameterizedArray);
-    }
-
-    @Override
-    public LocalVariable arrayvar(Class<?> type, Object parameterizedArray) {
-    	if(!type.isArray()) {
-    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
-    	}
-        return this.arrayvar("", (ArrayClass) getType(type), true, parameterizedArray);
-    }*/
-
-    @Override
+	@Override
     public final Assigner assign(ExplicitVariable variable, Parameterized val) {
         if (variable instanceof LocalVariable) {
             return OperatorFactory.newOperator(LocalVariableAssigner.class, new Class<?>[] {
