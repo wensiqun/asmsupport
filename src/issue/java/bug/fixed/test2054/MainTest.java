@@ -19,13 +19,13 @@ public class MainTest {
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "fixed.Test2054", null, null);
 		creator.setClassOutPutPath(".//target//issue");
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
                 new StaticMethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
-            	call(defType(System.class).field("out"), "println", val("Prepare to build MainObject."));
-                new_(AClassFactory.defType(MyObject.class), Value.value("i'm direct pass argument."));
+            	call(getType(System.class).field("out"), "println", val("Prepare to build MainObject."));
+                new_(AClassFactory.getType(MyObject.class), Value.value("i'm direct pass argument."));
             	return_();
             }
         });

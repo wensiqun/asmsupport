@@ -68,8 +68,8 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
 
     @Override
     protected void init() {
-        if (!condition.getParamterizedType().equals(AClassFactory.defType(Boolean.class))
-                && !condition.getParamterizedType().equals(AClassFactory.defType(boolean.class))) {
+        if (!condition.getParamterizedType().equals(AClassFactory.getType(Boolean.class))
+                && !condition.getParamterizedType().equals(AClassFactory.getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getParamterizedType());
         }

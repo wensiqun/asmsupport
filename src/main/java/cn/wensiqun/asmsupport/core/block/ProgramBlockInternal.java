@@ -117,7 +117,7 @@ import cn.wensiqun.asmsupport.standard.action.ActionSet;
 public abstract class ProgramBlockInternal extends AbstractBlockInternal implements
         ActionSet<IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
 
-    /** 执行Block, 通过当前Block所创建的操作，实际是executeBlock的代理 */
+	/** the actually executor.*/
     private ProgramBlockInternal executor = this;
 
     private ProgramBlockInternal parent;
@@ -127,53 +127,73 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     protected InstructionHelper insnHelper;
 
     private ThrowExceptionContainer throwExceptions;
+    
+    private boolean finish;
 
-    /** 当前block是否已经返回 或者已经抛出异常了 */
-    private boolean finish = false;
-
-    /* <<<<<<<<<<<<<<<<<<< Getter Setter <<<<<<<<<<<<<<<<<<<<<<<< */
-
+    /**
+     * Set executor
+     * 
+     * @param exeBlock
+     */
     public void setExecutor(ProgramBlockInternal exeBlock) {
         executor = exeBlock;
     }
 
+    /**
+     * Get the actually executor.
+     * 
+     * @return
+     */
     protected ProgramBlockInternal getExecutor() {
         return executor;
     }
 
+    /**
+     * Check the block has already finish generated.
+     * 
+     * @return
+     */
+    public boolean isFinish() {
+		return finish;
+	}
+
+    /**
+     * Set the block has already finish generated.
+     * 
+     * @param finish
+     */
+	public void setFinish(boolean finish) {
+		this.finish = finish;
+	}
+
+	/**
+     * The all throw exception container.
+     * 
+     * @return
+     */
     public ThrowExceptionContainer getThrowExceptions() {
         return throwExceptions;
     }
 
-    public boolean isFinish() {
-        return finish;
-    }
-
-    public void setFinish(boolean finish) {
-        this.finish = finish;
-    }
-
-    /* >>>>>>>>>>>>>>>>>> Getter Setter >>>>>>>>>>>>>>>>>>>>>>> */
-
-    public ProgramBlockInternal getParent() {
-        return parent;
-    }
-
     /**
-     * 添加抛出的异常到方法签名中
-     * 
-     * @param exception
+     * Add exception it's throw in current method body.
+     * @param exceptionType the exception type.
      */
-    public void addException(AClass exception) {
+    public void addException(AClass exceptionType) {
         if (throwExceptions == null) {
             throwExceptions = new ThrowExceptionContainer();
         }
-        throwExceptions.add(exception);
+        throwExceptions.add(exceptionType);
     }
-
-    public void removeException(AClass exception) {
+    
+    /**
+     * Remove exception type from current exception container.
+     * 
+     * @param exception
+     */
+    public void removeException(AClass exceptionType) {
         if (throwExceptions != null) {
-            throwExceptions.remove(exception);
+            throwExceptions.remove(exceptionType);
         }
     }
 
@@ -195,81 +215,57 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     /**
-     * 获取当前程序块的克隆拷贝
+     * Set scope
      * 
-     * @return
+     * @param scope
      */
-    public ProgramBlockInternal getCopy() {
-        try {
-            return (ProgramBlockInternal) clone();
-        } catch (CloneNotSupportedException e) {
-            throw new ASMSupportException(e);
-        }
-    }
-
-    /**
-     * 克隆当前的程序块的执行队列到给定程序块执行队列中
-     * 
-     * @param targetBlock
-     *            克隆至此
-     */
-    public void generateTo(ProgramBlockInternal targetBlock) {
-        ProgramBlockInternal clone = getCopy();
-        clone.setExecutor(targetBlock);
-        clone.generate();
-        // just trigger if the last is SerialBlock in the queue of cloneTo
-        OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { ProgramBlockInternal.class }, targetBlock);
-    }
-
-    protected void init() {
-    };
-
-    /**
-     * override this method if want create a new block 生成操作到执行队列中去。
-     */
-    public abstract void generate();
-
-    @Override
-    public void prepare() {
-        init();
-        scope.getStart().setName(this.getClass().toString() + " start");
-        scope.getEnd().setName(this.getClass().toString() + " end");
-
-        generate();
-
-        // just trigger if the last is SerialBlock in the queue
-        OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { ProgramBlockInternal.class }, getExecutor());
-    }
-
-    @Override
-    public final void execute() {
-        getInsnHelper().mark(scope.getStart());
-        // getInsnHelper().nop();
-        doExecute();
-        getInsnHelper().mark(scope.getEnd());
-        // getInsnHelper().nop();
-    }
-
-    protected abstract void doExecute();
-
     public void setScope(Scope scope) {
         this.scope = scope;
     }
 
+    /**
+     * Get scope
+     * 
+     * @return
+     */
     public Scope getScope() {
         return this.scope;
     }
 
+    /**
+     * Get block start label
+     * 
+     * @return
+     */
     public Label getStart() {
         return scope.getStart();
     }
 
+    /**
+     * Get block end label
+     * 
+     * @return
+     */
     public Label getEnd() {
         return scope.getEnd();
     }
 
+    /**
+     * Set {@link InstructionHelper}
+     * 
+     * @param insnHelper
+     */
     public void setInsnHelper(InstructionHelper insnHelper) {
         this.insnHelper = insnHelper;
+    }
+
+    /**
+     * Get the parent of current block
+     * 
+     * @return
+     */
+    public ProgramBlockInternal getParent() {
+        return parent;
     }
 
     public void setParent(ProgramBlockInternal block) {
@@ -278,20 +274,36 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
         setScope(new Scope(getMethod().getLocals(), block.getScope()));
     }
 
+    /**
+     * Geth the method of current block bellow.
+     * 
+     * @return
+     */
     public AMethod getMethod() {
         return insnHelper.getMethod();
     }
 
+    /**
+     * Get the method argument that's corresponding to current block.
+     * 
+     * @return
+     */
     public LocalVariable[] getMethodArguments() {
         return getMethod().getArguments();
     }
 
+    /**
+     * Get the MethodBody that's corresponding to current block.
+     * 
+     * @return
+     */
     protected AbstractMethodBody getMethodBody() {
         return getMethod().getMethodBody();
     }
 
     /**
-     * get current method owner.
+     * Get current method owner, generally is the SemiClass it's
+     * a class which you want geneate.
      * 
      * @return
      */
@@ -307,6 +319,61 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     public InstructionHelper getInsnHelper() {
         return insnHelper;
     }
+    
+    /**
+     * Generate current body instruction to other program block.
+     * 
+     * @param targetBlock the target block it you want clone to.
+     */
+    public void generateTo(ProgramBlockInternal targetBlock) {
+		try {
+			ProgramBlockInternal clone = (ProgramBlockInternal) clone();
+	        clone.setExecutor(targetBlock);
+	        clone.generate();
+	        // just trigger if the last is SerialBlock in the queue of cloneTo
+	        OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { ProgramBlockInternal.class }, targetBlock);
+		} catch (CloneNotSupportedException e) {
+			throw new ASMSupportException(e);
+		}
+    }
+
+    /**
+     * Do init here, the method is empty, specify code will be override by sub class.
+     */
+    protected void init() {
+    	//Do nothing here, override in subclass.
+    }
+
+    /**
+     * The specify the program block code you want to generate here.
+     * In this method we just build a execute queue, but generate 
+     * java bytecode instruction in method {@link #execute()}
+     * 
+     */
+    public abstract void generate();
+
+    @Override
+    public void prepare() {
+        init();
+        scope.getStart().setName(this.getClass().toString() + " start");
+        scope.getEnd().setName(this.getClass().toString() + " end");
+        generate();
+        // just trigger if the last is SerialBlock in the queue
+        OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { ProgramBlockInternal.class }, getExecutor());
+    }
+
+    @Override
+    public final void execute() {
+        getInsnHelper().mark(scope.getStart());
+        doExecute();
+        getInsnHelper().mark(scope.getEnd());
+    }
+
+    /**
+     * Override this method in subclass, defined the generate instruction rule for
+     * each block.
+     */
+    protected abstract void doExecute();
 
     // *******************************************************************************************//
     // Variable Operator //
@@ -339,12 +406,12 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable var(String name, Class<?> type, Parameterized para) {
-        return var(name, AClassFactory.defType(type), false, para);
+        return var(name, AClassFactory.getType(type), false, para);
     }
 
     @Override
     public LocalVariable var(Class<?> type, Parameterized para) {
-        return var("", AClassFactory.defType(type), true, para);
+        return var("", AClassFactory.getType(type), true, para);
     }
 
     @Override
@@ -391,7 +458,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar2dim(String name, Class<?> type, Parameterized... dims) {
-        return this.arrayvar2dim(name, defArrayType(type), false, dims);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return this.arrayvar2dim(name, (ArrayClass) getType(type), false, dims);
     }
 
     @Override
@@ -401,15 +471,17 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar2dim(Class<?> arrayType, Parameterized... dims) {
-        return this.arrayvar2dim("", defArrayType(arrayType), true, dims);
+    	if(!arrayType.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
+    	}
+        return this.arrayvar2dim("", (ArrayClass) getType(arrayType), true, dims);
     }
 
     @Override
-    public final LocalVariable arrayvar(final String name, final ArrayClass aClass, boolean anonymous,
-            Parameterized value) {
-        LocalVariable lv = createOnlyVariable(aClass, name, anonymous);
+    public final LocalVariable arrayvar(String name, final ArrayClass type, boolean anonymous, Parameterized value) {
+        LocalVariable lv = createOnlyVariable(type, name, anonymous);
         if (value == null) {
-            assign(lv, aClass.getDefaultValue());
+            assign(lv, type.getDefaultValue());
         } else {
             assign(lv, value);
         }
@@ -423,7 +495,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar(String name, Class<?> type, Parameterized value) {
-        return this.arrayvar(name, defArrayType(type), false, value);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return this.arrayvar(name, (ArrayClass) getType(type), false, value);
     }
 
     @Override
@@ -433,7 +508,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar(Class<?> type, Parameterized value) {
-        return this.arrayvar("", defArrayType(type), true, value);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return this.arrayvar("", (ArrayClass) getType(type), true, value);
     }
 
     @Override
@@ -454,7 +532,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar(String name, Class<?> type, Object parameterizedArray) {
-        return this.arrayvar(name, defArrayType(type), false, parameterizedArray);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return this.arrayvar(name, (ArrayClass) getType(type), false, parameterizedArray);
     }
 
     @Override
@@ -464,7 +545,10 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public LocalVariable arrayvar(Class<?> type, Object parameterizedArray) {
-        return this.arrayvar("", defArrayType(type), true, parameterizedArray);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return this.arrayvar("", (ArrayClass) getType(type), true, parameterizedArray);
     }
 
     @Override
@@ -490,65 +574,37 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     // *******************************************************************************************//
 
     @Override
-    public final ArrayValue makeArray(final ArrayClass aClass, final Parameterized... allocateDims) {
+    public final ArrayValue makeArray(AClass arrayType, final Parameterized... allocateDims) {
+    	if(!arrayType.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
+    	}
         return OperatorFactory.newOperator(ArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
-                ArrayClass.class, Parameterized[].class }, getExecutor(), aClass, allocateDims);
+                ArrayClass.class, Parameterized[].class }, getExecutor(), arrayType, allocateDims);
     }
 
     @Override
     public ArrayValue makeArray(Class<?> arraytype, Parameterized... dimensions) {
-        return makeArray(defArrayType(arraytype), dimensions);
+    	if(!arraytype.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arraytype);
+    	}
+        return makeArray((ArrayClass) getType(arraytype), dimensions);
     }
 
     @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Object arrayObject) {
+    public final ArrayValue newarray(AClass arrayType, final Object arrayObject) {
+    	if(!arrayType.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
+    	}
         return OperatorFactory.newOperator(ArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
-                ArrayClass.class, Object.class }, getExecutor(), aClass, arrayObject);
+                ArrayClass.class, Object.class }, getExecutor(), arrayType, arrayObject);
     }
 
     @Override
     public ArrayValue newarray(Class<?> type, Object arrayObject) {
-        return newarray(defArrayType(type), arrayObject);
-    }
-
-    @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[] values) {
-        return newarray(aClass, (Object) values);
-    }
-
-    @Override
-    public ArrayValue newarray(Class<?> type, Parameterized[] values) {
-        return newarray(defArrayType(type), values);
-    }
-
-    @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][] values) {
-        return newarray(aClass, (Object) values);
-    }
-
-    @Override
-    public ArrayValue newarray(Class<?> type, Parameterized[][] values) {
-        return newarray(defArrayType(type), values);
-    }
-
-    @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][] values) {
-        return newarray(aClass, (Object) values);
-    }
-
-    @Override
-    public ArrayValue newarray(Class<?> type, Parameterized[][][] values) {
-        return newarray(defArrayType(type), values);
-    }
-
-    @Override
-    public final ArrayValue newarray(final ArrayClass aClass, final Parameterized[][][][] values) {
-        return newarray(aClass, (Object) values);
-    }
-
-    @Override
-    public ArrayValue newarray(Class<?> type, Parameterized[][][][] values) {
-        return newarray(defArrayType(type), values);
+    	if(!type.isArray()) {
+    		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
+    	}
+        return newarray((ArrayClass) getType(type), arrayObject);
     }
 
     // *******************************************************************************************//
@@ -591,7 +647,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final CheckCast checkcast(Parameterized cc, Class<?> to) {
-        return checkcast(cc, AClassFactory.defType(to));
+        return checkcast(cc, AClassFactory.getType(to));
     }
 
     // *******************************************************************************************//
@@ -831,7 +887,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final Parameterized instanceof_(Parameterized obj, Class<?> type) {
-        return this.instanceof_(obj, defType(type));
+        return this.instanceof_(obj, getType(type));
     }
 
     // *******************************************************************************************//
@@ -870,7 +926,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
     }
 
     public final MethodInvoker call(Class<?> owner, String methodName, Parameterized... arguments) {
-        return call(defType(owner), methodName, arguments);
+        return call(getType(owner), methodName, arguments);
     }
 
     @Override
@@ -882,7 +938,7 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public final MethodInvoker new_(Class<?> owner, Parameterized... arguments) {
-        return this.new_(AClassFactory.defType(owner), arguments);
+        return this.new_(AClassFactory.getType(owner), arguments);
     }
 
     // *******************************************************************************************//
@@ -1100,27 +1156,22 @@ public abstract class ProgramBlockInternal extends AbstractBlockInternal impleme
 
     @Override
     public Value null_(Class<?> type) {
-        return Value.getNullValue(AClassFactory.defType(type));
+        return Value.getNullValue(AClassFactory.getType(type));
     }
 
     @Override
-    public AClass defType(Class<?> cls) {
-        return AClassFactory.defType(cls);
+    public AClass getType(Class<?> cls) {
+        return AClassFactory.getType(cls);
     }
 
     @Override
-    public ArrayClass defArrayType(Class<?> arrayCls) {
-        return AClassFactory.defArrayType(arrayCls);
+    public ArrayClass getArrayType(Class<?> cls, int dim) {
+        return AClassFactory.getArrayType(cls, dim);
     }
 
     @Override
-    public ArrayClass defArrayType(Class<?> cls, int dim) {
-        return AClassFactory.defArrayType(cls, dim);
-    }
-
-    @Override
-    public ArrayClass defArrayType(AClass rootComponent, int dim) {
-        return AClassFactory.defArrayType(rootComponent, dim);
+    public ArrayClass getArrayType(AClass rootComponent, int dim) {
+        return AClassFactory.getArrayType(rootComponent, dim);
     }
 
 }

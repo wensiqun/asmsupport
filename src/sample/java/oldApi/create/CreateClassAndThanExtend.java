@@ -42,7 +42,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		final GlobalVariable out = systemOut;
 		
 		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
-		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClassFactory.defType(int.class));
+		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClassFactory.getType(int.class));
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new MethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
@@ -70,7 +70,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 			public void body(LocalVariable... argus) {
 				call(out, "println", Value.value("before"));
 				
-				AClass randomClass = AClassFactory.defType(Random.class);
+				AClass randomClass = AClassFactory.getType(Random.class);
 				LocalVariable random = this.var("random", randomClass, false, this.new_(randomClass, Value.value(1L)));
 				if_(new IFInternal(call(random, "nextBoolean")){
 					@Override
@@ -117,7 +117,7 @@ public class CreateClassAndThanExtend extends AbstractExample {
 		});*/
 		
 
-		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 	        @Override

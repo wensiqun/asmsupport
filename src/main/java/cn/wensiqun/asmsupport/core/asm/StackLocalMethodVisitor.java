@@ -1361,7 +1361,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
     public void visitLdcInsn(final Object cst) {
         Class<?> ctsCls = cst.getClass();
         if (ctsCls.equals(Type.class)) {
-            setNextPushTypes(AClassFactory.defType(Class.class).getType());
+            setNextPushTypes(AClassFactory.getType(Class.class).getType());
         } else if (ctsCls.equals(Integer.class)) {
             setNextPushTypes(Type.INT_TYPE);
         } else if (ctsCls.equals(Float.class)) {
@@ -1371,7 +1371,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
         } else if (ctsCls.equals(Double.class)) {
             setNextPushTypes(Type.DOUBLE_TYPE);
         } else if (ctsCls.equals(String.class)) {
-            setNextPushTypes(AClassFactory.defType(String.class).getType());
+            setNextPushTypes(AClassFactory.getType(String.class).getType());
         }
         stackLocalOperator(LDC);
         mv.visitLdcInsn(cst);

@@ -34,8 +34,8 @@ public abstract class ElseIFInternal extends ConditionBranchBlock implements IEl
 
     @Override
     protected void init() {
-        if (!condition.getParamterizedType().equals(AClassFactory.defType(Boolean.class))
-                && !condition.getParamterizedType().equals(AClassFactory.defType(boolean.class))) {
+        if (!condition.getParamterizedType().equals(AClassFactory.getType(Boolean.class))
+                && !condition.getParamterizedType().equals(AClassFactory.getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getParamterizedType());
         }

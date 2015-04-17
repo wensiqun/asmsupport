@@ -19,7 +19,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
 {
     public static void main(String[] args)
     {
-        final AClass runtime = AClassFactory.defType(RuntimeException.class);
+        final AClass runtime = AClassFactory.getType(RuntimeException.class);
         
         final MyList testMethodNames = new MyList();
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryFinallyBlockGeneratorExample", null, null);
@@ -457,7 +457,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
              new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {
@@ -485,7 +485,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
                 call(getMethodOwner(), methodName);
             }
             
-        }).catch_(new CatchInternal(AClassFactory.defType(Throwable.class)){
+        }).catch_(new CatchInternal(AClassFactory.getType(Throwable.class)){
 
             @Override
             public void body(LocalVariable e)

@@ -36,7 +36,7 @@ public class LogicalXor extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitXor(AClassFactory.defType(boolean.class).getType());
+        insnHelper.bitXor(AClassFactory.getType(boolean.class).getType());
     }
 
 }

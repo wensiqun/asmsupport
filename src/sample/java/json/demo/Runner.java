@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import org.junit.Test;
+
 import json.JSONPool;
 
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "UTF_8"));
-        printPrompt(in);
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+        if(args.length == 0) {
+            printPrompt(in);
+        }
         
         JSONPool pool = new JSONPool();
         
@@ -28,7 +32,9 @@ public class Runner {
 
         System.out.println("Country infos is          : " + pool.getJson(china.getInfos()));
         System.out.println("Country json is           : " + pool.getJson(china));
-        printPrompt(in);
+        if(args.length == 0) {
+            printPrompt(in);
+        }
         
         Geo geo = new Geo();
         geo.setCity(city);
@@ -49,7 +55,9 @@ public class Runner {
 
         System.out.println("OtherSubdivisions json is : " + pool.getJson(geo.getOtherSubdivisions()));
         System.out.println("Success generate json.demo.Subdivision.class Json Generator.");
-        printPrompt(in);
+        if(args.length == 0) {
+            printPrompt(in);
+        }
         
         Country usa = new Country();
         usa.setConfidence(20);
@@ -58,7 +66,9 @@ public class Runner {
 
         System.out.println("Geo json is               : " + pool.getJson(geo));
         System.out.println("Success generate json.demo.Geo.class Json Generator.");
-        printPrompt(in);
+        if(args.length == 0) {
+            printPrompt(in);
+        }
         
     }
     
@@ -73,4 +83,8 @@ public class Runner {
         }
     }
 
+    @Test
+    public void test() throws IOException {
+    	main(new String[]{null});
+    }
 }

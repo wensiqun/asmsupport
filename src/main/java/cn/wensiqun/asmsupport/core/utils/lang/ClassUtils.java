@@ -301,7 +301,7 @@ public class ClassUtils {
      * @throws IOException
      */
     public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String findName) throws IOException {
-        final AClass owner = AClassFactory.defType(clazz);
+        final AClass owner = AClassFactory.getType(clazz);
         InputStream classStream = ASMClassLoader.getInstance().getResourceAsStream(
                 clazz.getName().replace('.', '/') + ".class");
         ClassReader cr = new ClassReader(classStream);
@@ -323,15 +323,15 @@ public class ClassUtils {
                         AClass[] aclass = new AClass[types.length];
                         String[] args = new String[types.length];
                         for (int i = 0; i < types.length; i++) {
-                            aclass[i] = AClassFactory.defType(forName(types[i].getDescriptor()));
+                            aclass[i] = AClassFactory.getType(forName(types[i].getDescriptor()));
                             args[i] = "arg" + i;
                         }
 
-                        AClass returnType = AClassFactory.defType(forName(Type.getReturnType(desc).getDescriptor()));
+                        AClass returnType = AClassFactory.getType(forName(Type.getReturnType(desc).getDescriptor()));
 
                         AClass[] exceptionAclassArray = new AClass[exceptions.length];
                         for (int i = 0; i < exceptions.length; i++) {
-                            exceptionAclassArray[i] = AClassFactory.defType(forName(exceptions[i]));
+                            exceptionAclassArray[i] = AClassFactory.getType(forName(exceptions[i]));
                         }
 
                         AMethodMeta me = new AMethodMeta(name, owner, owner, aclass, args, returnType,
@@ -400,8 +400,8 @@ public class ClassUtils {
      * @return
      */
     public static boolean visible(Class<?> invoker, Class<?> invoked, Class<?> actuallyInvoked, int mod) {
-        return AClassUtils.visible(AClassFactory.defType(invoker), AClassFactory.defType(invoked),
-                AClassFactory.defType(actuallyInvoked), mod);
+        return AClassUtils.visible(AClassFactory.getType(invoker), AClassFactory.getType(invoked),
+                AClassFactory.getType(actuallyInvoked), mod);
     }
     
 

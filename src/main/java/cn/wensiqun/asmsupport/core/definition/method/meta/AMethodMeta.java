@@ -96,7 +96,7 @@ public class AMethodMeta implements Cloneable {
 
         if (returnClass == null) {
             this.returnType = Type.VOID_TYPE;
-            this.returnClass = AClassFactory.defType(void.class);
+            this.returnClass = AClassFactory.getType(void.class);
         } else {
             this.returnType = returnClass.getType();
             this.returnClass = returnClass;
@@ -132,7 +132,7 @@ public class AMethodMeta implements Cloneable {
         AClass[] arguments = new AClass[argCls.length];
         String[] argNames = new String[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
-            arguments[i] = AClassFactory.defType(argCls[i]);
+            arguments[i] = AClassFactory.getType(argCls[i]);
             argNames[i] = "arg" + i;
         }
 
@@ -140,8 +140,8 @@ public class AMethodMeta implements Cloneable {
         AClass[] exceptionAclasses = AClassUtils.convertToAClass(exceptionTypes);
         
         AMethodMeta me = new AMethodMeta(m.getName(), owner,
-                AClassFactory.defType(m.getDeclaringClass()), arguments,
-                argNames, AClassFactory.defType(m.getReturnType()),
+                AClassFactory.getType(m.getDeclaringClass()), arguments,
+                argNames, AClassFactory.getType(m.getReturnType()),
                 exceptionAclasses, m.getModifiers());
         
         return me;

@@ -100,7 +100,7 @@ public abstract class NumericalRelational extends AbstractRelational {
 
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
-                && targetClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder()) {
+                && targetClass.getCastOrder() > AClassFactory.getType(int.class).getCastOrder()) {
             LOG.print("cast factor from " + factorCls + " to " + targetClass);
             insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }

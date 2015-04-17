@@ -75,24 +75,24 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 	public static void main(String[] args) {
         //create class A
 		ClassCreator ACreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
-		ACreator.createField("i", 0, AClassFactory.defType(int.class));
-		ACreator.createField("j", 0, AClassFactory.defType(int.class));
+		ACreator.createField("i", 0, AClassFactory.getType(int.class));
+		ACreator.createField("j", 0, AClassFactory.getType(int.class));
 		final Class A = ACreator.startup();
 		
         //create class B
 		ClassCreator BCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
-		BCreator.createField("i", 0, AClassFactory.defType(int.class));
-		BCreator.createField("j", 0, AClassFactory.defType(int.class));
+		BCreator.createField("i", 0, AClassFactory.getType(int.class));
+		BCreator.createField("j", 0, AClassFactory.getType(int.class));
 		final Class B = BCreator.startup();
 		
 		//create class C
 		ClassCreator CCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
-		CCreator.createField("k", 0, AClassFactory.defType(int.class));
+		CCreator.createField("k", 0, AClassFactory.getType(int.class));
 		final Class C = CCreator.startup();
 
 		//create class D
 		ClassCreator DCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
-		DCreator.createField("k", 0, AClassFactory.defType(int.class));
+		DCreator.createField("k", 0, AClassFactory.getType(int.class));
 		final Class D = DCreator.startup();
 		
         ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
@@ -101,15 +101,15 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 		 * 生成一个main方法
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				AClass A_AClass = AClassFactory.defType(A);
-				AClass B_AClass = AClassFactory.defType(B);
-				AClass C_AClass = AClassFactory.defType(C);
-				AClass D_AClass = AClassFactory.defType(D);
+				AClass A_AClass = AClassFactory.getType(A);
+				AClass B_AClass = AClassFactory.getType(B);
+				AClass C_AClass = AClassFactory.getType(C);
+				AClass D_AClass = AClassFactory.getType(D);
 				
 			    //A a = new A();
 				LocalVariable a = var("a", A_AClass, false, new_(A_AClass));

@@ -36,7 +36,7 @@ public class LogicalAnd extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitAnd(AClassFactory.defType(boolean.class).getType());    
+        insnHelper.bitAnd(AClassFactory.getType(boolean.class).getType());    
     }
 
 }

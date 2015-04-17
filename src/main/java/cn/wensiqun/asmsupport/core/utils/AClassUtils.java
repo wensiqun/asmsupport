@@ -59,43 +59,43 @@ public class AClassUtils {
     }
 
     public static AClass getPrimitiveAClass(AClass aclass) {
-        if (aclass.equals(AClassFactory.defType(Boolean.class))) {
-            return AClassFactory.defType(boolean.class);
-        } else if (aclass.equals(AClassFactory.defType(Byte.class))) {
-            return AClassFactory.defType(byte.class);
-        } else if (aclass.equals(AClassFactory.defType(Short.class))) {
-            return AClassFactory.defType(short.class);
-        } else if (aclass.equals(AClassFactory.defType(Character.class))) {
-            return AClassFactory.defType(char.class);
-        } else if (aclass.equals(AClassFactory.defType(Integer.class))) {
-            return AClassFactory.defType(int.class);
-        } else if (aclass.equals(AClassFactory.defType(Long.class))) {
-            return AClassFactory.defType(long.class);
-        } else if (aclass.equals(AClassFactory.defType(Float.class))) {
-            return AClassFactory.defType(float.class);
-        } else if (aclass.equals(AClassFactory.defType(Double.class))) {
-            return AClassFactory.defType(double.class);
+        if (aclass.equals(AClassFactory.getType(Boolean.class))) {
+            return AClassFactory.getType(boolean.class);
+        } else if (aclass.equals(AClassFactory.getType(Byte.class))) {
+            return AClassFactory.getType(byte.class);
+        } else if (aclass.equals(AClassFactory.getType(Short.class))) {
+            return AClassFactory.getType(short.class);
+        } else if (aclass.equals(AClassFactory.getType(Character.class))) {
+            return AClassFactory.getType(char.class);
+        } else if (aclass.equals(AClassFactory.getType(Integer.class))) {
+            return AClassFactory.getType(int.class);
+        } else if (aclass.equals(AClassFactory.getType(Long.class))) {
+            return AClassFactory.getType(long.class);
+        } else if (aclass.equals(AClassFactory.getType(Float.class))) {
+            return AClassFactory.getType(float.class);
+        } else if (aclass.equals(AClassFactory.getType(Double.class))) {
+            return AClassFactory.getType(double.class);
         }
         return aclass;
     }
 
     public static AClass getPrimitiveWrapAClass(AClass aclass) {
-        if (aclass.equals(AClassFactory.defType(boolean.class))) {
-            return AClassFactory.defType(Boolean.class);
-        } else if (aclass.equals(AClassFactory.defType(byte.class))) {
-            return AClassFactory.defType(Byte.class);
-        } else if (aclass.equals(AClassFactory.defType(short.class))) {
-            return AClassFactory.defType(Short.class);
-        } else if (aclass.equals(AClassFactory.defType(char.class))) {
-            return AClassFactory.defType(Character.class);
-        } else if (aclass.equals(AClassFactory.defType(int.class))) {
-            return AClassFactory.defType(Integer.class);
-        } else if (aclass.equals(AClassFactory.defType(long.class))) {
-            return AClassFactory.defType(Long.class);
-        } else if (aclass.equals(AClassFactory.defType(float.class))) {
-            return AClassFactory.defType(Float.class);
-        } else if (aclass.equals(AClassFactory.defType(double.class))) {
-            return AClassFactory.defType(Double.class);
+        if (aclass.equals(AClassFactory.getType(boolean.class))) {
+            return AClassFactory.getType(Boolean.class);
+        } else if (aclass.equals(AClassFactory.getType(byte.class))) {
+            return AClassFactory.getType(Byte.class);
+        } else if (aclass.equals(AClassFactory.getType(short.class))) {
+            return AClassFactory.getType(Short.class);
+        } else if (aclass.equals(AClassFactory.getType(char.class))) {
+            return AClassFactory.getType(Character.class);
+        } else if (aclass.equals(AClassFactory.getType(int.class))) {
+            return AClassFactory.getType(Integer.class);
+        } else if (aclass.equals(AClassFactory.getType(long.class))) {
+            return AClassFactory.getType(Long.class);
+        } else if (aclass.equals(AClassFactory.getType(float.class))) {
+            return AClassFactory.getType(Float.class);
+        } else if (aclass.equals(AClassFactory.getType(double.class))) {
+            return AClassFactory.getType(Double.class);
         }
         return aclass;
     }
@@ -115,7 +115,7 @@ public class AClassUtils {
                 int typeSort = type.getType().getSort();
                 if (resultType == null || typeSort > resultType.getType().getSort()) {
                     if (typeSort <= Type.INT) {
-                        resultType = AClassFactory.defType(int.class);
+                        resultType = AClassFactory.getType(int.class);
                     } else {
                         resultType = type;
                     }
@@ -238,7 +238,7 @@ public class AClassUtils {
         }
 
         Class<?> actuallyMethodOwner = reallyClass;
-        AClass invoked = AClassFactory.defType(reallyClass);
+        AClass invoked = AClassFactory.getType(reallyClass);
         // ACC_VARARGS
         List<AMethodMeta> methods = new ArrayList<AMethodMeta>();
         java.lang.reflect.Method[] mes;
@@ -416,7 +416,7 @@ public class AClassUtils {
 
         AClass[] aclasses = new AClass[clses.length];
         for (int i = 0; i < clses.length; i++) {
-            aclasses[i] = AClassFactory.defType(clses[i]);
+            aclasses[i] = AClassFactory.getType(clses[i]);
         }
         return aclasses;
     }

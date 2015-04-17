@@ -35,17 +35,17 @@ public class TernaryOperatorGenerate extends AbstractExample {
 		 * 生成一个main方法，方法内容和willGenerate内容相同
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
 				//int i = 10;
-				LocalVariable i = var("i", AClassFactory.defType(int.class), false, Value.value(10));
+				LocalVariable i = var("i", AClassFactory.getType(int.class), false, Value.value(10));
 				
 				//ternary方法将生成三元操作
 				//int k = i < 0 ? -i : i;
-				LocalVariable k = var("k", AClassFactory.defType(int.class), false, ternary(lt(i, Value.value(0)), neg(i), i));
+				LocalVariable k = var("k", AClassFactory.getType(int.class), false, ternary(lt(i, Value.value(0)), neg(i), i));
 				
 				//System.out.print("Absolute value of ");
 				call(systemOut, "print", Value.value("Absolute value of "));

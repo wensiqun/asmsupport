@@ -78,8 +78,8 @@ public class ProductClass extends NewMemberClass {
                 try {
                     Field f = fieldOwner.getDeclaredField(name);
                     found.add(new GlobalVariableMeta(this,
-                            AClassFactory.defType(fieldOwner),
-                            AClassFactory.defType(f.getType()), f.getModifiers(), name));
+                            AClassFactory.getType(fieldOwner),
+                            AClassFactory.getType(f.getType()), f.getModifiers(), name));
                     break;
                 } catch (NoSuchFieldException e) {
                 }
@@ -92,8 +92,8 @@ public class ProductClass extends NewMemberClass {
                 try {
                     Field f = inter.getDeclaredField(name);
                     found.add(new GlobalVariableMeta(ProductClass.this,
-                            AClassFactory.defType(inter),
-                            AClassFactory.defType(f.getType()), f.getModifiers(), name));
+                            AClassFactory.getType(inter),
+                            AClassFactory.getType(f.getType()), f.getModifiers(), name));
                     return true;
                 } catch (NoSuchFieldException e) {
                     return false;

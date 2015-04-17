@@ -248,7 +248,7 @@ public abstract class AClass implements GetGlobalVariabled{
      * @return
      */
     public AMethodMeta getSuperMethod(String methodName, AClass[] parameterTypes){
-        AClass superCls = AClassFactory.defType(superClass);
+        AClass superCls = AClassFactory.getType(superClass);
         return superCls.availableMethod(null, methodName, parameterTypes);
     }
     
@@ -258,7 +258,7 @@ public abstract class AClass implements GetGlobalVariabled{
      * @return
      */
     public AMethodMeta getSuperConstructor(AClass[] parameterTypes){
-        AClass superCls = AClassFactory.defType(superClass);
+        AClass superCls = AClassFactory.getType(superClass);
         return superCls.availableConstructor(null, parameterTypes);
     }
     

@@ -59,7 +59,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 这里我们将看到如何生产调用父类方法
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClassFactory.defType(String.class), null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClassFactory.getType(String.class), null, new MethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -78,7 +78,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClassFactory.defType(String.class), null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClassFactory.getType(String.class), null, new MethodBodyInternal(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -98,7 +98,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     return obj.description();
          * }
          */
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClassFactory.defType(String.class), null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClassFactory.getType(String.class), null,
                 new StaticMethodBodyInternal(){
 
             @Override
@@ -119,7 +119,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-        		"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+        		"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
                 new StaticMethodBodyInternal(){
 
             @Override

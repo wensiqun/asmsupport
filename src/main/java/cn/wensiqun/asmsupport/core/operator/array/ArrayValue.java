@@ -140,8 +140,8 @@ public class ArrayValue extends AbstractOperator implements Parameterized  {
     	if(allocateDims != null){
             for(Parameterized dim : allocateDims){
                 int order = AClassUtils.getPrimitiveAClass(dim.getParamterizedType()).getCastOrder();
-                if(order > AClassFactory.defType(int.class).getCastOrder() ||
-                   order <= AClassFactory.defType(boolean.class).getCastOrder()){
+                if(order > AClassFactory.getType(int.class).getCastOrder() ||
+                   order <= AClassFactory.getType(boolean.class).getCastOrder()){
                     throw new RuntimeException("the allcate dim number must be byte, char, short or int type!");
                 }
             }

@@ -16,14 +16,14 @@ public class MapGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     public boolean match(AClass type) {
-        return type.isChildOrEqual(AClassFactory.defType(Map.class));
+        return type.isChildOrEqual(AClassFactory.getType(Map.class));
     }
 
     @Override
     protected boolean doGenerate(final GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
             final LocalVariable encoder, AClass type, Parameterized value) {
         GlobalVariable jsonPool = block.this_().field("jsonPool");
-        MethodInvoker getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.defType(Map.class)));
+        MethodInvoker getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.getType(Map.class)));
         block.call(getOrRegisterCall, "parse", encoder, value);
         return true;
     }

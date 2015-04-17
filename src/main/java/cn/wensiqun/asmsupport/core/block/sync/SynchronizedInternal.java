@@ -106,7 +106,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 		insnHelper.mark(excetpionStart);
 		dupSynArgument.loadToStack(this);
 		insnHelper.monitorExit();
-		insnHelper.getMv().getStack().push(AClassFactory.defType(Throwable.class).getType());
+		insnHelper.getMv().getStack().push(AClassFactory.getType(Throwable.class).getType());
 		insnHelper.mark(excetpionEnd);
 		insnHelper.throwException();
 		

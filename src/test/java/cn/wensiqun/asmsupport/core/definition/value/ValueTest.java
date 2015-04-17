@@ -13,7 +13,7 @@ public class ValueTest
     @Test
     public void testGetConvert(){
         Value value = Value.value(1);
-        Value newValue = value.getConvert(AClassFactory.defType(double.class));
+        Value newValue = value.getConvert(AClassFactory.getType(double.class));
         Assert.assertEquals(Type.DOUBLE_TYPE, newValue.getType());
         Assert.assertTrue(newValue.getValue() instanceof Double);
     }

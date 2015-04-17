@@ -78,7 +78,7 @@ public class InstanceofOperator extends AbstractOperator implements Parameterize
 
     @Override
     public AClass getParamterizedType() {
-        return AClassFactory.defType(boolean.class);
+        return AClassFactory.getType(boolean.class);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class StringAppender extends AbstractOperator implements Parameterized{
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
-        AClass strBlderCls = AClassFactory.defType(StringBuilder.class);
+        AClass strBlderCls = AClassFactory.getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
         for(Parameterized par : pars){
@@ -90,7 +90,7 @@ public class StringAppender extends AbstractOperator implements Parameterized{
 
     @Override
     public AClass getParamterizedType() {
-        return AClassFactory.defType(String.class);
+        return AClassFactory.getType(String.class);
     }
 
     @Override

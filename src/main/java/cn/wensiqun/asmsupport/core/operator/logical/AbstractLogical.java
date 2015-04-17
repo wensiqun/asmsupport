@@ -42,7 +42,7 @@ public abstract class AbstractLogical extends AbstractOperator implements Parame
 
     @Override
     public AClass getParamterizedType() {
-        return AClassFactory.defType(boolean.class);
+        return AClassFactory.getType(boolean.class);
     }
 
     @Override

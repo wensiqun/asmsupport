@@ -66,8 +66,8 @@ public class CheckCast extends AbstractOperator implements Parameterized {
                 LOG.print("checkcast from " + from + " to " + to );
             }
             if(from.getCastOrder() > to.getCastOrder() ||
-               (from.equals(AClassFactory.defType(char.class)) && to.equals(AClassFactory.defType(short.class))) || 
-               (to.equals(AClassFactory.defType(char.class)) && from.equals(AClassFactory.defType(short.class)))){
+               (from.equals(AClassFactory.getType(char.class)) && to.equals(AClassFactory.getType(short.class))) || 
+               (to.equals(AClassFactory.getType(char.class)) && from.equals(AClassFactory.getType(short.class)))){
                 insnHelper.cast(from.getType(), to.getType());
                 return;
             }

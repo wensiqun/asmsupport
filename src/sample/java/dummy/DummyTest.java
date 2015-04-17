@@ -278,7 +278,7 @@ public class DummyTest {
                 LocalVariable dm = var("dm", getMethodOwner(), new_(getMethodOwner()));
                 final LocalVariable sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
                 
-                AClass ExceptedInterfaceAClass = AClassFactory.defType(ExceptedInterface);
+                AClass ExceptedInterfaceAClass = AClassFactory.getType(ExceptedInterface);
                 GlobalVariable interface_field_list = ExceptedInterfaceAClass.field("interface_field_list");
                 
                 call(interface_field_list, "add", Value.value("hello asmsupport."));
@@ -310,7 +310,7 @@ public class DummyTest {
                 call(dm, "appendString1", sb);
                 call(dm, "appendString2", sb);
                 
-                AClass ExceptedEnumAClass = defType(ExceptedEnum);
+                AClass ExceptedEnumAClass = getType(ExceptedEnum);
                 call(call(call(sb, "append", call(ExceptedEnumAClass.field("ENUM1"), "getEnumName")),"append", Value.value("\n")),
                     "append", ExceptedEnumAClass.field("ENUM2")
                 );

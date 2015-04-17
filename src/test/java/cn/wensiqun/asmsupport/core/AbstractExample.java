@@ -12,7 +12,7 @@ public abstract class AbstractExample {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = AClassFactory.defType(System.class).field("out");
+	public static GlobalVariable systemOut = AClassFactory.getType(System.class).field("out");
 	static {
 	    ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}

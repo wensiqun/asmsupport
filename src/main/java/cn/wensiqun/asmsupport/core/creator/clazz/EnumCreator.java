@@ -218,8 +218,8 @@ public class EnumCreator extends AbstractClassCreatorContext {
         System.arraycopy(argNames, 0, enumArgNames, 2, argNames.length);
 
         AClass[] enumArgClasses = new AClass[argClasses.length + 2];
-        enumArgClasses[0] = AClassFactory.defType(String.class);
-        enumArgClasses[1] = AClassFactory.defType(int.class);
+        enumArgClasses[0] = AClassFactory.getType(String.class);
+        enumArgClasses[1] = AClassFactory.getType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
         methodCreaters.add(MethodCreator.methodCreatorForAdd(ASConstant.INIT, enumArgClasses, enumArgNames, null, null,
@@ -237,7 +237,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
         if (existEnumConstant) {
             // create implicit global variable ENUM$VALUES for enum type
             createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
-                    + Opcodes.ACC_SYNTHETIC, AClassFactory.defArrayType(sc, 1));
+                    + Opcodes.ACC_SYNTHETIC, AClassFactory.getArrayType(sc, 1));
 
         }
         existedStaticBlock = true;
@@ -259,7 +259,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
     @Override
     protected void beforeCreate() {
 
-        final ArrayClass enumArrayType = AClassFactory.defArrayType(sc, 1);
+        final ArrayClass enumArrayType = AClassFactory.getArrayType(sc, 1);
 
         // create "publis static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
@@ -279,7 +279,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                         Parameterized copyLen = arrayLength(copy);
 
                         // System
-                        AClass systemClass = AClassFactory.defType(System.class);
+                        AClass systemClass = AClassFactory.getType(System.class);
 
                         // zero value
                         Value zero = Value.value(0);
@@ -293,7 +293,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                 });
 
         // create "public static Enum valueOf(java.lang.String)" method
-        this.createStaticMethod("valueOf", new AClass[] { AClassFactory.defType(String.class) }, new String[] { "name" }, sc, null,
+        this.createStaticMethod("valueOf", new AClass[] { AClassFactory.getType(String.class) }, new String[] { "name" }, sc, null,
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBodyInternal() {
 
                     @Override

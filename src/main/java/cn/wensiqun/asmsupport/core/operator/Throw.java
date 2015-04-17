@@ -53,7 +53,7 @@ public class Throw extends BreakStack {
     @Override
     protected void verifyArgument() {
         AClass type = exception.getParamterizedType();
-        if (AnyException.ANY != type && !type.isChildOrEqual(AClassFactory.defType(Throwable.class))) {
+        if (AnyException.ANY != type && !type.isChildOrEqual(AClassFactory.getType(Throwable.class))) {
             throw new ASMSupportException("No exception of type " + type
                     + " can be thrown; an exception type must be a subclass of Throwable");
         }

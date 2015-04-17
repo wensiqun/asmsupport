@@ -46,8 +46,8 @@ public abstract class BinaryLogical extends AbstractLogical {
 		AClass ftrCls1 = factor1.getParamterizedType();
         AClass ftrCls2 = factor2.getParamterizedType();
         
-        if(!((ftrCls1.equals(AClassFactory.defType(boolean.class)) || ftrCls1.equals(AClassFactory.defType(Boolean.class))) &&
-           (ftrCls2.equals(AClassFactory.defType(boolean.class)) || ftrCls2.equals(AClassFactory.defType(Boolean.class))))){
+        if(!((ftrCls1.equals(AClassFactory.getType(boolean.class)) || ftrCls1.equals(AClassFactory.getType(Boolean.class))) &&
+           (ftrCls2.equals(AClassFactory.getType(boolean.class)) || ftrCls2.equals(AClassFactory.getType(Boolean.class))))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

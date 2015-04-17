@@ -6,6 +6,7 @@ import cn.wensiqun.asmsupport.core.Parameterized;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -23,7 +24,7 @@ public class LocalVariableExample extends AbstractExample {
 	public static void main(String[] args){
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 					@Override
@@ -42,7 +43,7 @@ public class LocalVariableExample extends AbstractExample {
 						 * 第四个参数：初始值，可以为null，null则表示
 						 * 这里的第三个参数是个boolean类型。如果设置成true，则所设置的变量名将不起作用。
 						 */
-						LocalVariable localVariable1 = var("localVariable1", AClassFactory.defType(String.class), false, Value.value("This is a Local Variable"));
+						LocalVariable localVariable1 = var("localVariable1", AClassFactory.getType(String.class), false, Value.value("This is a Local Variable"));
                         call(systemOut, "println", localVariable1);
                         
 						/* ***************************************************************
@@ -63,21 +64,21 @@ public class LocalVariableExample extends AbstractExample {
                          * 这段代码将创建一个String类型的二维数组的变量,对应的java代码如下
                          * String[][] localArrayVariable1 = new String[2][2];
                          */
-                        LocalVariable localArrayVariable1 = arrayvar2dim("localArrayVariable1", AClassFactory.defArrayType(String[][].class), false, Value.value(2), Value.value(2));
-                        call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable1)));
+                        LocalVariable localArrayVariable1 = arrayvar2dim("localArrayVariable1", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2), Value.value(2));
+                        call(systemOut, "println", stradd(Value.value("example 1 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable1)));
 
                         /*
                          * 为数组分配部分空间 
                          */
-                        LocalVariable localArrayVariable2 = arrayvar2dim("localArrayVariable2", AClassFactory.defArrayType(String[][].class), false, Value.value(2));
-                        call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable2)));
+                        LocalVariable localArrayVariable2 = arrayvar2dim("localArrayVariable2", (ArrayClass)AClassFactory.getType(String[][].class), false, Value.value(2));
+                        call(systemOut, "println", stradd(Value.value("example 2 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable2)));
                         
                         /*
                          * 也可以直接设置为null 
                          * 
                          */
-                        LocalVariable localArrayVariable3 = arrayvar2dim("localArrayVariable3", AClassFactory.defArrayType(String[][].class), false, (Parameterized[])null);
-                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.defType(ArrayUtils.class), "toString", localArrayVariable3)));
+                        LocalVariable localArrayVariable3 = arrayvar2dim("localArrayVariable3", (ArrayClass) AClassFactory.getType(String[][].class), false, (Parameterized[])null);
+                        call(systemOut, "println", stradd(Value.value("example 3 : "), call(AClassFactory.getType(ArrayUtils.class), "toString", localArrayVariable3)));
                         
                         return_();
 					}

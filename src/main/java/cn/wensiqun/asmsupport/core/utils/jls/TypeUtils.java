@@ -81,12 +81,12 @@ public abstract class TypeUtils {
 	 */
 	public static AClass directSuperAmongPrimitiveType(AClass subType) {
         switch(subType.getType().getSort()) {
-        case Type.CHAR  : return AClassFactory.defType(int.class);
-        case Type.BYTE  : return AClassFactory.defType(short.class);
-        case Type.SHORT : return AClassFactory.defType(int.class);
-        case Type.INT   : return AClassFactory.defType(long.class);
-        case Type.FLOAT : return AClassFactory.defType(double.class);
-        case Type.LONG  : return AClassFactory.defType(float.class);
+        case Type.CHAR  : return AClassFactory.getType(int.class);
+        case Type.BYTE  : return AClassFactory.getType(short.class);
+        case Type.SHORT : return AClassFactory.getType(int.class);
+        case Type.INT   : return AClassFactory.getType(long.class);
+        case Type.FLOAT : return AClassFactory.getType(double.class);
+        case Type.LONG  : return AClassFactory.getType(float.class);
         default : return null;
         }
 	}
@@ -130,10 +130,10 @@ public abstract class TypeUtils {
             if (interfaces != null && interfaces.length > 0) {
                 superTypes = new AClass[interfaces.length];
                 for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = AClassFactory.defType(interfaces[i]);
+                    superTypes[i] = AClassFactory.getType(interfaces[i]);
                 }
             } else {
-                superTypes = new AClass[] { AClassFactory.defType(Object.class) };
+                superTypes = new AClass[] { AClassFactory.getType(Object.class) };
             }
             return superTypes;
 		} else {
@@ -142,18 +142,18 @@ public abstract class TypeUtils {
             if(superType == null && intefaces.length == 0) {
             	return null;
             } else if (superType != null && intefaces.length == 0) {
-            	return new AClass[]{AClassFactory.defType(superType)};
+            	return new AClass[]{AClassFactory.getType(superType)};
             } else if (superType == null && intefaces.length > 0) {
             	AClass[] superTypes = new AClass[intefaces.length];
             	for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = AClassFactory.defType(intefaces[i]);
+                    superTypes[i] = AClassFactory.getType(intefaces[i]);
                 }
             	return superTypes;
             } else {
             	AClass[] superTypes = new AClass[intefaces.length + 1];
-                superTypes[0] = AClassFactory.defType(superType);
+                superTypes[0] = AClassFactory.getType(superType);
                 for (int i = 1; i < superTypes.length; i++) {
-                    superTypes[i] = AClassFactory.defType(intefaces[i - 1]);
+                    superTypes[i] = AClassFactory.getType(intefaces[i - 1]);
                 }
                 return superTypes;
             }
@@ -187,19 +187,19 @@ public abstract class TypeUtils {
         AClass[] superTypes;
         if (basicElementType.isPrimitive()) {
             superTypes = new AClass[2];
-            superTypes[0] = AClassFactory.defType(Cloneable.class);
-            superTypes[1] = AClassFactory.defType(Serializable.class);
+            superTypes[0] = AClassFactory.getType(Cloneable.class);
+            superTypes[1] = AClassFactory.getType(Serializable.class);
         } else {
             AClass[] basicElementSuperTypes = directSuperType(basicElementType);
             if (basicElementSuperTypes != null) {
                 superTypes = new AClass[basicElementSuperTypes.length];
                 for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = AClassFactory.defArrayType(basicElementSuperTypes[i], arrayType.getDimension());
+                    superTypes[i] = AClassFactory.getArrayType(basicElementSuperTypes[i], arrayType.getDimension());
                 }
             } else {
                 superTypes = new AClass[2];
-                superTypes[0] = AClassFactory.defType(Cloneable.class);
-                superTypes[1] = AClassFactory.defType(Serializable.class);
+                superTypes[0] = AClassFactory.getType(Cloneable.class);
+                superTypes[1] = AClassFactory.getType(Serializable.class);
             }
         }
         return superTypes;

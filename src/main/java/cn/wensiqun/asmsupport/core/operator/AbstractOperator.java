@@ -184,21 +184,21 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 insnHelper.cast(originalPrimitiveType, target.getType());
 
                 return;
-            } else if (original.isPrimitive() && target.equals(AClassFactory.defType(Object.class))) {
+            } else if (original.isPrimitive() && target.equals(AClassFactory.getType(Object.class))) {
                 insnHelper.box(original.getType());
                 return;
             }
         } else {
             if (original.isPrimitive() && target.isPrimitive()) {
-                if (!original.equals(AClassFactory.defType(Boolean.class)) && 
-                	!target.equals(AClassFactory.defType(Boolean.class)) && 
+                if (!original.equals(AClassFactory.getType(Boolean.class)) && 
+                	!target.equals(AClassFactory.getType(Boolean.class)) && 
                 	original.getCastOrder() <= target.getCastOrder()) {
                     insnHelper.cast(original.getType(), target.getType());
                     return;
                 }
             } else if (original.isPrimitive()
                     && (AClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
-                            .equals(AClassFactory.defType(Object.class)))) {
+                            .equals(AClassFactory.getType(Object.class)))) {
                 insnHelper.box(original.getType());
                 return;
             } else if (AClassUtils.isPrimitiveWrapAClass(original)

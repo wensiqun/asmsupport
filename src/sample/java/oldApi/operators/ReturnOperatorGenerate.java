@@ -26,7 +26,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 		/* 
 		 * 有返回类型的方法
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, AClassFactory.defType(String.class), null, new StaticMethodBodyInternal(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, AClassFactory.getType(String.class), null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -38,7 +38,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 		 * 无返回类型的方法
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new StaticMethodBodyInternal(){
 
 			@Override

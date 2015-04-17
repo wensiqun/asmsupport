@@ -14,16 +14,16 @@ public class BaseGeneratorChain extends AbstractGeneratorChain {
     @Override
     public boolean match(AClass type) {
         return type.isPrimitive() ||
-               type.isChildOrEqual(AClassFactory.defType(CharSequence.class)) || 
+               type.isChildOrEqual(AClassFactory.getType(CharSequence.class)) || 
                AClassUtils.isPrimitiveWrapAClass(type);
     }
 
     @Override
     protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
             LocalVariable encoder, AClass type, Parameterized value) {
-        if(type.isChildOrEqual(AClassFactory.defType(CharSequence.class)) ||
-           type.equals(AClassFactory.defType(char.class)) ||
-           type.equals(AClassFactory.defType(Character.class))) {
+        if(type.isChildOrEqual(AClassFactory.getType(CharSequence.class)) ||
+           type.equals(AClassFactory.getType(char.class)) ||
+           type.equals(AClassFactory.getType(Character.class))) {
             block.call(encoder, "appendDirect", block.val('"'));
             block.call(encoder, "append", value); 
             block.call(encoder, "appendDirect", block.val('"'));

@@ -213,7 +213,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();
         }else{
-            return AClassFactory.defType(void.class);
+            return AClassFactory.getType(void.class);
         }
     }
     

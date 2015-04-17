@@ -45,7 +45,7 @@ public class CreateInterface extends AbstractExample {
 		 * 通过createMethod声明方法
 		 * 
 		 */
-		interfaceCreator.createMethod("test", new AClass[]{AClassFactory.defType(String.class), AClassFactory.defType(int.class)}, AClassFactory.defType(boolean.class), null);
+		interfaceCreator.createMethod("test", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, AClassFactory.getType(boolean.class), null);
 		
 		/*
 		 * 通过createGlobalVariable创建局部变量，当然这个变量的修饰符是public static final的
@@ -61,7 +61,7 @@ public class CreateInterface extends AbstractExample {
 		 * public static final String globalValue;
 		 * 
 		 */
-		interfaceCreator.createField("globalValue", AClassFactory.defType(String.class));
+		interfaceCreator.createField("globalValue", AClassFactory.getType(String.class));
 		
 		/*
 		 * 通过createStaticBlock创建static块。

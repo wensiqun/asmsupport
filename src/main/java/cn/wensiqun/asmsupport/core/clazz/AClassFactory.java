@@ -20,68 +20,53 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 
 /**
- * 
- * @author 温斯群(Joe Wen)
+ * AClass Factory.
  *
  */
 public abstract class AClassFactory {
 	
-	
-	private static AClass getAClass(Class<?> cls){
-		AClass aclass;
-		if(cls.isArray()){
-			aclass = defArrayType(ClassUtils.getRootComponentType(cls), Type.getType(cls).getDimensions());
+    /**
+     * Get a asmsupport class type. if parameter is non-array type than 
+     * get a {@link cn.wensiqun.asmsupport.core.clazz.ProductClass.ProductClass}, 
+     * if parameter is array type than get a {@link cn.wensiqun.asmsupport.core.clazz.ProductClass.ArrayClass}
+     * 
+     * @param type
+     * @return
+     */
+    public static AClass getType(Class<?> type){
+    	AClass aclass;
+		if(type.isArray()){
+			aclass = getArrayType(ClassUtils.getRootComponentType(type), Type.getType(type).getDimensions());
 		}else{
-			aclass = new ProductClass(cls);
+			aclass = new ProductClass(type);
 		}
 		return aclass;
-	}
-	
-	
-    /**
-     * 通过一个已经存在的Class获取一个AClass
-     * @param cls
-     * @return
-     */
-    public static AClass defType(Class<?> cls){
-    	return getAClass(cls);
     }
     
-    
     /**
+     * Get array type.
      * 
-     * @param arrayCls
+     * @param rootEleType
+     * @param dim
      * @return
      */
-    public static ArrayClass defArrayType(Class<?> arrayCls){
-        if(!arrayCls.isArray()){
-            throw new ClassException("the class" + arrayCls + " is not an array class");
+    public static ArrayClass getArrayType(Class<?> rootEleType, int dim){
+        if(rootEleType.isArray()){
+            throw new ClassException("the class " + rootEleType + " has already an array class");
         }
-        return (ArrayClass) getAClass(arrayCls);
+        return new ArrayClass(getType(rootEleType), dim);
     }
     
     /**
-     * 获取数组class
+     * Get array type.
+     * 
      * @param cls
      * @param dim
      * @return
      */
-    public static ArrayClass defArrayType(Class<?> cls, int dim){
-        if(cls.isArray()){
-            throw new ClassException("the class " + cls + " has already an array class");
-        }
-        return new ArrayClass(defType(cls), dim);
-    }
-    
-    /**
-     * 获取数组class
-     * @param cls
-     * @param dim
-     * @return
-     */
-    public static ArrayClass defArrayType(AClass rootComponent, int dim){
-    	if(rootComponent.isArray()){
-            throw new ClassException("the class " + rootComponent + " has already an array class");
+    public static ArrayClass getArrayType(AClass rootEleType, int dim){
+    	if(rootEleType.isArray()){
+            throw new ClassException("the class " + rootEleType + " has already an array class");
         }
 		
         StringBuilder arrayClassDesc = new StringBuilder();
@@ -89,12 +74,13 @@ public abstract class AClassFactory {
         while(tmpDim-- > 0){
         	arrayClassDesc.append("[");
         }
-        arrayClassDesc.append(rootComponent.getDescription());
-        return new ArrayClass(rootComponent, dim);
+        arrayClassDesc.append(rootEleType.getDescription());
+        return new ArrayClass(rootEleType, dim);
     }
     
     /**
-     * 创建一个新的Class
+     * Use it internal, this method will get a class it's we want to create.
+     * 
      * @param version
      * @param access
      * @param name

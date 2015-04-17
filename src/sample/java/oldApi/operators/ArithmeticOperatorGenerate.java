@@ -22,7 +22,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
 
 		//printIn方法
-		creator.createStaticMethod(0, "printInt", new AClass[]{AClassFactory.defType(String.class), AClassFactory.defType(int.class)}, new String[]{"s", "i"}, null, null, new StaticMethodBodyInternal(){
+		creator.createStaticMethod(0, "printInt", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, new String[]{"s", "i"}, null, null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -33,7 +33,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});
 		
 		//printIn方法
-		creator.createStaticMethod(0, "printFloat", new AClass[]{AClassFactory.defType(String.class), AClassFactory.defType(float.class)}, new String[]{"s", "f"}, null, null, new StaticMethodBodyInternal(){
+		creator.createStaticMethod(0, "printFloat", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(float.class)}, new String[]{"s", "f"}, null, null, new StaticMethodBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -44,21 +44,21 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});		
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-				new AClass[] { AClassFactory.defType(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
+				new AClass[] { AClassFactory.getType(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
 
 					@Override
 					public void body(LocalVariable... argus) {
                         //Random rand = new Random();
-						LocalVariable rand = var("rand", AClassFactory.defType(Random.class), false, new_(AClassFactory.defType(Random.class)));
+						LocalVariable rand = var("rand", AClassFactory.getType(Random.class), false, new_(AClassFactory.getType(Random.class)));
 						
 						//rand.nextInt(100) + 1
 						Addition add1 = add(call(rand, "nextInt", Value.value(100)), Value.value(1));
 						
 						//int j = rand.nextInt(100) + 1;
-						LocalVariable j = var("j", AClassFactory.defType(int.class), false, add1);
+						LocalVariable j = var("j", AClassFactory.getType(int.class), false, add1);
 						
 						//int k = rand.nextInt(100) + 1;
-						LocalVariable k = var("k", AClassFactory.defType(int.class), false, add1);
+						LocalVariable k = var("k", AClassFactory.getType(int.class), false, add1);
 						
 						//printInt("j", j);
 						call(getMethodOwner(), "printInt", Value.value("j"), j);
@@ -69,7 +69,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						//j + k
 						Addition add2 = add(j, k);
 						//int i = j + k;
-						LocalVariable i = var("i", AClassFactory.defType(int.class), false, add2);
+						LocalVariable i = var("i", AClassFactory.getType(int.class), false, add2);
 						
 						//printInt("j + k", i);
 						call(getMethodOwner(), "printInt", Value.value("j + k"), i);
@@ -109,10 +109,10 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						MethodInvoker nextFloat = call(rand, "nextFloat");
 						
 						//v = rand.nextFloat();
-						LocalVariable v = var("v", AClassFactory.defType(float.class), false, nextFloat);
+						LocalVariable v = var("v", AClassFactory.getType(float.class), false, nextFloat);
 						
 						//w = rand.nextFloat();
-						LocalVariable w = var("w", AClassFactory.defType(float.class), false, nextFloat);
+						LocalVariable w = var("w", AClassFactory.getType(float.class), false, nextFloat);
 						
 						//printFloat("v", v);
 						call(getMethodOwner(), "printFloat", Value.value("v"), v);
@@ -121,7 +121,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						call(getMethodOwner(), "printFloat", Value.value("w"), w);
 						
 						//u = v + w;
-						LocalVariable u = var("u", AClassFactory.defType(float.class), false, add(v,w));
+						LocalVariable u = var("u", AClassFactory.getType(float.class), false, add(v,w));
 						
 						//printFloat("v + w", u);
 						call(getMethodOwner(), "printFloat", Value.value("v + w"), u);

@@ -23,74 +23,74 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    final LocalVariable intVar1  = var("intVar1", AClassFactory.defType(int.class), false, Value.value(10));
+                    final LocalVariable intVar1  = var("intVar1", AClassFactory.getType(int.class), false, Value.value(10));
                     
                     dowhile(new DoWhileInternal(gt(postdec(intVar1), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", intVar1));
+                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", intVar1));
                         }
                         
                     });
                     
-                    final LocalVariable intVar2  = var("intVar2", AClassFactory.defType(int.class), false, Value.value(10));
+                    final LocalVariable intVar2  = var("intVar2", AClassFactory.getType(int.class), false, Value.value(10));
                     
                     dowhile(new DoWhileInternal(gt(predec(intVar2), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", intVar2));
+                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", intVar2));
                         }
                         
                     });
 	                
-                    final LocalVariable byteVar  = var("byteVar", AClassFactory.defType(byte.class), false, Value.value((byte)10));
+                    final LocalVariable byteVar  = var("byteVar", AClassFactory.getType(byte.class), false, Value.value((byte)10));
                     
 	            	dowhile(new DoWhileInternal(gt(postdec(byteVar), Value.value(0))){
 
 						@Override
 						public void body() {
 							call(TesterStatics.ATesterStatics, 
-		                    		"actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", byteVar));
+		                    		"actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", byteVar));
 						}
 	            		
 	            	});
 	            	
-	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.defType(double.class), false, Value.value(10D));
+	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.getType(double.class), false, Value.value(10D));
                     
                     dowhile(new DoWhileInternal(gt(predec(doubleVar), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", doubleVar));
+                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", doubleVar));
                         }
                         
                     });
                     
-                    final LocalVariable shortObj  = var("shortObj", AClassFactory.defType(Short.class), false, Value.value((short)10));
+                    final LocalVariable shortObj  = var("shortObj", AClassFactory.getType(Short.class), false, Value.value((short)10));
                     
                     dowhile(new DoWhileInternal(gt(postdec(shortObj), Value.value((short)0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", shortObj));
+                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", shortObj));
                         }
                         
                     });
                     
-                    final LocalVariable longObj  = var("longObj", AClassFactory.defType(Long.class), false, Value.value(10L));
+                    final LocalVariable longObj  = var("longObj", AClassFactory.getType(Long.class), false, Value.value(10L));
                     
                     dowhile(new DoWhileInternal(gt(predec(longObj), Value.value(0))){
 
                         @Override
                         public void body() {
                             call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.defType(String.class), "valueOf", longObj));
+                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", longObj));
                         }
                         
                     });
@@ -100,7 +100,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	            }
 		 });
 	        
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.defType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
             new StaticMethodBodyInternal(){
                 @Override
                 public void body(LocalVariable... argus) {

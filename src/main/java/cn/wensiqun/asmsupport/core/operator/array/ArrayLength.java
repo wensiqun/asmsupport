@@ -69,7 +69,7 @@ public class ArrayLength extends AbstractArrayOperator implements Parameterized 
 
     @Override
     public AClass getParamterizedType() {
-        return AClassFactory.defType(int.class);
+        return AClassFactory.getType(int.class);
     }
 
     @Override

@@ -251,8 +251,7 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public ArrayValue makeArray(ArrayClass aClass,
-			Parameterized... allocateDims) {
+	public ArrayValue makeArray(AClass aClass, Parameterized... allocateDims) {
 		return target.makeArray(aClass, allocateDims);
 	}
 
@@ -262,53 +261,13 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public ArrayValue newarray(ArrayClass aClass, Object arrayObject) {
+	public ArrayValue newarray(AClass aClass, Object arrayObject) {
 		return target.newarray(aClass, arrayObject);
 	}
 
 	@Override
 	public ArrayValue newarray(Class<?> type, Object arrayObject) {
 		return target.newarray(type, arrayObject);
-	}
-
-	@Override
-	public ArrayValue newarray(ArrayClass aClass, Parameterized[] values) {
-		return target.newarray(aClass, values);
-	}
-
-	@Override
-	public ArrayValue newarray(Class<?> type, Parameterized[] values) {
-		return target.newarray(type, values);
-	}
-
-	@Override
-	public ArrayValue newarray(ArrayClass aClass, Parameterized[][] values) {
-		return target.newarray(aClass, values);
-	}
-
-	@Override
-	public ArrayValue newarray(Class<?> type, Parameterized[][] values) {
-		return target.newarray(type, values);
-	}
-
-	@Override
-	public ArrayValue newarray(ArrayClass aClass, Parameterized[][][] values) {
-		return target.newarray(aClass, values);
-	}
-
-	@Override
-	public ArrayValue newarray(Class<?> type, Parameterized[][][] values) {
-		return target.newarray(type, values);
-	}
-
-	@Override
-	public ArrayValue newarray(ArrayClass aClass, Parameterized[][][][] values) {
-		return target.newarray(aClass, values);
-	}
-
-	@Override
-	public ArrayValue newarray(Class<?> type, Parameterized[][][][] values) {
-		return target.newarray(type, values);
 	}
 
 	@Override
@@ -634,23 +593,18 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public AClass defType(Class<?> cls) {
-		return target.defType(cls);
+	public AClass getType(Class<?> cls) {
+		return target.getType(cls);
 	}
 
 	@Override
-	public ArrayClass defArrayType(Class<?> arrayCls) {
-		return target.defArrayType(arrayCls);
+	public ArrayClass getArrayType(Class<?> cls, int dim) {
+		return target.getArrayType(cls, dim);
 	}
 
 	@Override
-	public ArrayClass defArrayType(Class<?> cls, int dim) {
-		return target.defArrayType(cls, dim);
-	}
-
-	@Override
-	public ArrayClass defArrayType(AClass rootComponent, int dim) {
-		return target.defArrayType(rootComponent, dim);
+	public ArrayClass getArrayType(AClass rootComponent, int dim) {
+		return target.getArrayType(rootComponent, dim);
 	}
 
 }

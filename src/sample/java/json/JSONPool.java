@@ -200,7 +200,7 @@ public class JSONPool {
                                     call(encoder, "appendDirect", val('\"'));
                                     call(encoder, "appendDirect", val(':'));
                                 }
-                                header.generate(context, this, encoder, defType(fieldType), getterCall);
+                                header.generate(context, this, encoder, getType(fieldType), getterCall);
                                 call(encoder, "appendDirect", val(','));
                             }
                             

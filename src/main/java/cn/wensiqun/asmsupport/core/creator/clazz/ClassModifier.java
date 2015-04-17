@@ -60,7 +60,7 @@ public class ClassModifier extends AbstractClassContext {
 	public ClassModifier(Class<?> clazz) {
 		super();
 		if(!clazz.isArray()){
-			this.productClass = (ProductClass) AClassFactory.defType(clazz);
+			this.productClass = (ProductClass) AClassFactory.getType(clazz);
 		}else{
 			throw new ASMSupportException("cannot modify array type : " + clazz);
 		}
@@ -77,14 +77,14 @@ public class ClassModifier extends AbstractClassContext {
 		AClass[] argCls = new AClass[argClasses.length];
 		String[] defaultArgNames = new String[argClasses.length];
 		for(int i=0; i<argCls.length; i++){
-			argCls[i] = defType(argClasses[i]);
+			argCls[i] = getType(argClasses[i]);
 			defaultArgNames[i] = "arg" + i;
 		}
 		try {
 			
 			MethodCreator methodCreator;
 			if(name.equals(ASConstant.CLINIT)){
-				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClassFactory.defType(void.class), null, Opcodes.ACC_STATIC, mb);
+				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClassFactory.getType(void.class), null, Opcodes.ACC_STATIC, mb);
 			}else if(name.equals(ASConstant.INIT)){
 				if(modifyConstructorBodies == null){
 					modifyConstructorBodies = new ArrayList<ModifiedMethodBodyInternal>();
@@ -95,7 +95,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(ASConstant.INIT, 
 						argCls, 
 						defaultArgNames, 
-						AClassFactory.defType(void.class), 
+						AClassFactory.getType(void.class), 
 						AClassUtils.convertToAClass(constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{
@@ -103,7 +103,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(name, 
 						argCls, 
 						defaultArgNames, 
-						defType(method.getReturnType()), 
+						getType(method.getReturnType()), 
 						AClassUtils.convertToAClass(method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}

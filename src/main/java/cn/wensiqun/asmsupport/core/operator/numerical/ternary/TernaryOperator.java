@@ -58,7 +58,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
         AClass expCls2 = exp2.getParamterizedType();
         AClass expCls3 = exp3.getParamterizedType();
         
-        if(!expCls1.equals(AClassFactory.defType(boolean.class)) && !expCls1.equals(AClassFactory.defType(Boolean.class))){
+        if(!expCls1.equals(AClassFactory.getType(boolean.class)) && !expCls1.equals(AClassFactory.getType(Boolean.class))){
             throw new ASMSupportException("the first expression type of ternary operator must by boolean or Boolean!");
         }
         
@@ -82,7 +82,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
             resultClass = expPrimCls1;
             return true;
         }else if(expPrimCls1.isPrimitive() && expPrimCls2.isPrimitive()){
-            if(expPrimCls1.equals(AClassFactory.defType(boolean.class)) || expPrimCls2.equals(AClassFactory.defType(boolean.class))){
+            if(expPrimCls1.equals(AClassFactory.getType(boolean.class)) || expPrimCls2.equals(AClassFactory.getType(boolean.class))){
                 return false;
             }else{
                 if(expPrimCls1.getCastOrder() > expPrimCls2.getCastOrder()){

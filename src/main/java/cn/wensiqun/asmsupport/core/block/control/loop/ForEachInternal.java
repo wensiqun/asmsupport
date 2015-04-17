@@ -61,7 +61,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         
         AClass type = iterable.getParamterizedType();
         if(!type.isArray() &&
-           !type.isChildOrEqual(AClassFactory.defType(Iterable.class))){
+           !type.isChildOrEqual(AClassFactory.getType(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
         }
     }
@@ -85,8 +85,8 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     @Override
     public final void generate() {
         if(iterable.getParamterizedType().isArray()){
-            final LocalVariable i = var(AClassFactory.defType(int.class), Value.value(0));
-            final LocalVariable len = var(AClassFactory.defType(int.class), arrayLength(iterable));
+            final LocalVariable i = var(AClassFactory.getType(int.class), Value.value(0));
+            final LocalVariable len = var(AClassFactory.getType(int.class), arrayLength(iterable));
             if(!(iterable instanceof LocalVariable)) {
                 iterable = arrayvar((ArrayClass) iterable.getParamterizedType(), iterable);
             }
@@ -110,7 +110,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             
             condition = lt(i, len);
         }else{
-        	final LocalVariable itr = var(null, AClassFactory.defType(Iterator.class), true, call(iterable, "iterator"));
+        	final LocalVariable itr = var(null, AClassFactory.getType(Iterator.class), true, call(iterable, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
@@ -121,7 +121,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                var(AClassFactory.defType(Object.class), call(itr, "next")) :
+                                var(AClassFactory.getType(Object.class), call(itr, "next")) :
                                 var(elementType, checkcast(call(itr, "next"), elementType));
             body(obj);
 

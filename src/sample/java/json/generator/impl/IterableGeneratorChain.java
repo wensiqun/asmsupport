@@ -14,14 +14,14 @@ public class IterableGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     public boolean match(AClass type) {
-        return type.isChildOrEqual(AClassFactory.defType(Iterable.class));
+        return type.isChildOrEqual(AClassFactory.getType(Iterable.class));
     }
 
     @Override
     protected boolean doGenerate(final GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
             final LocalVariable encoder, AClass type, Parameterized value) {
         GlobalVariable jsonPool = block.this_().field("jsonPool");
-        MethodInvoker getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.defType(Iterable.class)));
+        MethodInvoker getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.getType(Iterable.class)));
         block.call(getOrRegisterCall, "parse", encoder, value);
         return true;
     }

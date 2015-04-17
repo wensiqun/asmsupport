@@ -21,10 +21,10 @@ public class TestSerializableWithASMSupport {
     	ClassCreator creator = 
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
-    	creator.createField("name", Opcodes.ACC_PRIVATE, AClassFactory.defType(String.class));
+    	creator.createField("name", Opcodes.ACC_PRIVATE, AClassFactory.getType(String.class));
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
-    			new AClass[]{AClassFactory.defType(String.class)}, new String[]{"name"}, 
+    			new AClass[]{AClassFactory.getType(String.class)}, new String[]{"name"}, 
     			null, null, new MethodBodyInternal(){
 
 					@Override
@@ -38,7 +38,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClassFactory.defType(String.class), null,new MethodBodyInternal(){
+    			AClassFactory.getType(String.class), null,new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -50,7 +50,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClassFactory.defType(String.class), null, new MethodBodyInternal(){
+    			AClassFactory.getType(String.class), null, new MethodBodyInternal(){
 
 					@Override
 					public void body(LocalVariable... argus) {

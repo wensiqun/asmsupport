@@ -32,7 +32,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, Parameterized[] arguments) {
-        super(block, AClassFactory.defType(aclass.getSuperClass()), METHOD_NAME_INIT, arguments);
+        super(block, AClassFactory.getType(aclass.getSuperClass()), METHOD_NAME_INIT, arguments);
         //this.methodType = MethodType.THIS;
         //默认不保存引用
         //setSaveReference(false);

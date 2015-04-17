@@ -48,7 +48,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     @Override
 	protected void verifyArgument() {
     	AClass ftrCls = factor.getParamterizedType();
-        if(!(ftrCls.equals(AClassFactory.defType(boolean.class)) && !ftrCls.equals(AClassFactory.defType(Boolean.class)))){
+        if(!(ftrCls.equals(AClassFactory.getType(boolean.class)) && !ftrCls.equals(AClassFactory.getType(Boolean.class)))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

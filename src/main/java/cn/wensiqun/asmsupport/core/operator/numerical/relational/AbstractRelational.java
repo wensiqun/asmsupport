@@ -86,7 +86,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
     
     protected final void checkFactorForNumerical(AClass ftrCls){
         if(!ftrCls.isPrimitive() || 
-           ftrCls.equals(AClassFactory.defType(boolean.class))){
+           ftrCls.equals(AClassFactory.getType(boolean.class))){
             throw new ASMSupportException("this operator " + operator + " cannot support for type " + ftrCls );
         }
     }
@@ -111,7 +111,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
 
     @Override
     public AClass getParamterizedType() {
-        return AClassFactory.defType(boolean.class);
+        return AClassFactory.getType(boolean.class);
     }
 
     @Override

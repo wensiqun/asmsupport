@@ -102,7 +102,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(operator.equals(Operators.LEFT_SHIFT) ||
            operator.equals(Operators.RIGHT_SHIFT) ||
            operator.equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
-            insnHelper.cast(factor2.getParamterizedType().getType(), AClassFactory.defType(int.class).getType());
+            insnHelper.cast(factor2.getParamterizedType().getType(), AClassFactory.getType(int.class).getType());
         }else{
             insnHelper.cast(factor2.getParamterizedType().getType(), targetClass.getType());
         }

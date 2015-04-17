@@ -65,8 +65,8 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
 			for(Parameterized par : parDims){
-				if(!AClassUtils.checkAssignable(par.getParamterizedType(), AClassFactory.defType(int.class))) {
-					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getParamterizedType() + " to " + AClassFactory.defType(int.class) + "");
+				if(!AClassUtils.checkAssignable(par.getParamterizedType(), AClassFactory.getType(int.class))) {
+					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getParamterizedType() + " to " + AClassFactory.getType(int.class) + "");
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
         for(int i=0; i<parDims.length; i++){
             cls = ((ArrayClass) cls).getNextDimType();
             parDims[i].loadToStack(block);
-            autoCast(parDims[i].getParamterizedType(), AClassFactory.defType(int.class), false);
+            autoCast(parDims[i].getParamterizedType(), AClassFactory.getType(int.class), false);
             ih.arrayLoad(cls.getType());
         }
         

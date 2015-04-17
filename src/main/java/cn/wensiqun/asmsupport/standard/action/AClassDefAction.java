@@ -25,15 +25,7 @@ public interface AClassDefAction {
      * @param cls
      * @return
      */
-    AClass defType(Class<?> cls);
-    
-    /**
-     * Defined an array type
-     * 
-     * @param arrayCls the array class such as : {@code int[].class}
-     * @return
-     */
-    ArrayClass defArrayType(Class<?> arrayCls);
+    AClass getType(Class<?> cls);
     
     /**
      * Defined an array type according component and dimension
@@ -46,14 +38,14 @@ public interface AClassDefAction {
      * @param dim
      * @return
      */
-    ArrayClass defArrayType(Class<?> cls, int dim);
+    ArrayClass getArrayType(Class<?> cls, int dim);
     
     /**
-     * Similar to {@link #defArrayType(Class, int)}
+     * Similar to {@link #getArrayType(Class, int)}
      * 
      * @param rootComponent
      * @param dim
      * @return
      */
-    ArrayClass defArrayType(AClass rootComponent, int dim);
+    ArrayClass getArrayType(AClass rootComponent, int dim);
 }

@@ -24,9 +24,9 @@ public class MethodChooserTest {
 
 	@Test
 	public void testIdentifyPotentiallyApplicableMethods() {
-		MethodChooser am = new MethodChooser(AClassFactory.defType(this.getClass()), 
-				AClassFactory.defType(Child.class), 
-				"work", new AClass[]{AClassFactory.defType(Object.class)}){
+		MethodChooser am = new MethodChooser(AClassFactory.getType(this.getClass()), 
+				AClassFactory.getType(Child.class), 
+				"work", new AClass[]{AClassFactory.getType(Object.class)}){
 
 			@Override
 			public AMethodMeta firstPhase() {

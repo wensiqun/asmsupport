@@ -43,7 +43,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Boolean value) {
-        this.cls = AClassFactory.defType(boolean.class);
+        this.cls = AClassFactory.getType(boolean.class);
         setProperites(value);
     }
 
@@ -53,7 +53,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Byte value) {
-        this.cls = AClassFactory.defType(byte.class);
+        this.cls = AClassFactory.getType(byte.class);
         setProperites(value);
     }
 
@@ -63,7 +63,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Short value) {
-        this.cls = AClassFactory.defType(short.class);
+        this.cls = AClassFactory.getType(short.class);
         setProperites(value);
     }
 
@@ -73,7 +73,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Character value) {
-        this.cls = AClassFactory.defType(char.class);
+        this.cls = AClassFactory.getType(char.class);
         setProperites(value);
     }
 
@@ -83,7 +83,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Integer value) {
-        this.cls = AClassFactory.defType(int.class);
+        this.cls = AClassFactory.getType(int.class);
         setProperites(value);
     }
 
@@ -93,7 +93,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Long value) {
-        this.cls = AClassFactory.defType(long.class);
+        this.cls = AClassFactory.getType(long.class);
         setProperites(value);
     }
 
@@ -103,7 +103,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Float value) {
-        this.cls = AClassFactory.defType(float.class);
+        this.cls = AClassFactory.getType(float.class);
         setProperites(value);
     }
 
@@ -113,7 +113,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(Double value) {
-        this.cls = AClassFactory.defType(double.class);
+        this.cls = AClassFactory.getType(double.class);
         setProperites(value);
     }
 
@@ -123,7 +123,7 @@ public class Value implements IValue {
      * @param value
      */
     private Value(String value) {
-        this.cls = AClassFactory.defType(String.class);
+        this.cls = AClassFactory.getType(String.class);
         setProperites(value);
     }
 
@@ -131,7 +131,7 @@ public class Value implements IValue {
     }
 
     private Value(AClass aclass) {
-        this.cls = AClassFactory.defType(Class.class);
+        this.cls = AClassFactory.getType(Class.class);
         setProperites(aclass);
     }
 
@@ -187,7 +187,7 @@ public class Value implements IValue {
      * @return
      */
     public static Value getNullValue(Class<?> type) {
-        return getNullValue(AClassFactory.defType(type));
+        return getNullValue(AClassFactory.getType(type));
     }
 
     /**
@@ -360,7 +360,7 @@ public class Value implements IValue {
 
         } else if (obj instanceof Class) {
 
-            return new Value(AClassFactory.defType((Class<?>) obj));
+            return new Value(AClassFactory.getType((Class<?>) obj));
 
         }
         throw new ASMSupportException("Cannot support type " + obj.getClass() + " for this method!");

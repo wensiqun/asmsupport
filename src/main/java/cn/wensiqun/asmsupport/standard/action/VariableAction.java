@@ -31,25 +31,25 @@ public interface VariableAction {
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _var(name, {@link AClassFactory#defType(type)}, false, para)
+     * _var(name, {@link AClassFactory#getType(type)}, false, para)
      * </p>
      * @param name
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable var(final String name, final Class<?> type, final Parameterized para);
+    public LocalVariable var(String name, Class<?> type, Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
      * <p>
-     * _var("", {@link AClassFactory#defType(type)}, true, para)
+     * _var("", {@link AClassFactory#getType(type)}, true, para)
      * </p>
      * @param type
      * @param para
      * @return
      */
-    public LocalVariable var(final Class<?> type, final Parameterized para);
+    public LocalVariable var(Class<?> type, Parameterized para);
     
 
 
@@ -63,7 +63,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(final String name, final AClass type, final Parameterized para);
+    public LocalVariable var(String name, AClass type, Parameterized para);
 
     /**
      * create a local variable, this method equivalent to following code :
@@ -74,7 +74,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(final AClass type, final Parameterized para);
+    public LocalVariable var(AClass type, Parameterized para);
     
     /**
 	 * create a local variable
@@ -85,7 +85,7 @@ public interface VariableAction {
 	 * @param para this variable initial value, set to null if you want the initial is null.
 	 * @return the LocalVariable
 	 */
-	public LocalVariable var(final String name, final AClass aClass, boolean anonymous, final Parameterized para);
+	public LocalVariable var(String name, AClass aClass, boolean anonymous, Parameterized para);
 	
 	/**
 	 * 
@@ -108,7 +108,7 @@ public interface VariableAction {
 	 * @see #arrayvar2dim(String, Class, Parameterized...)
 	 */
 	@Deprecated
-	public LocalVariable arrayvar2dim(final String name, final ArrayClass type, boolean anonymous, Parameterized... dim);
+	public LocalVariable arrayvar2dim(String name, ArrayClass type, boolean anonymous, Parameterized... dim);
 
 	/**
 	 * Create an array variable with specify dimension.
@@ -118,7 +118,7 @@ public interface VariableAction {
 	 * @param dims the dimension.
 	 * @return
 	 */
-	public LocalVariable arrayvar2dim(final String name, final ArrayClass type, Parameterized... dims);
+	public LocalVariable arrayvar2dim(String name, ArrayClass type, Parameterized... dims);
 
 	/**
 	 * Create an array variable with specify dimension.
@@ -128,7 +128,7 @@ public interface VariableAction {
 	 * @param dims
 	 * @return
 	 */
-	public LocalVariable arrayvar2dim(final String name, Class<?> type, Parameterized... dims);
+	public LocalVariable arrayvar2dim(String name, Class<?> type, Parameterized... dims);
 	
 	/**
 	 * Create an anonymous array variable with specify dimension.
@@ -158,7 +158,7 @@ public interface VariableAction {
 	 * @return
 	 */
 	@Deprecated
-	public LocalVariable arrayvar(final String name, final ArrayClass type, boolean anonymous, final Parameterized value);
+	public LocalVariable arrayvar(String name, ArrayClass type, boolean anonymous, Parameterized value);
 	
 	/**
 	 * Create an array variable with specify value reference.
@@ -210,7 +210,7 @@ public interface VariableAction {
 	 * @param parameterizedArray
 	 * @return
 	 */
-	public LocalVariable arrayvar(final String name, final ArrayClass aClass, boolean anonymous, final Object parameterizedArray);
+	public LocalVariable arrayvar(String name, ArrayClass aClass, boolean anonymous, Object parameterizedArray);
 	
 
 	

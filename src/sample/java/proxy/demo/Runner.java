@@ -1,5 +1,7 @@
 package proxy.demo;
 
+import org.junit.Test;
+
 import proxy.IProxyPool;
 import proxy.ProxyGenerator;
 
@@ -14,6 +16,11 @@ public class Runner {
 		service.sendMessage("Hello ASMSupport");
 		System.out.println(service.getProducer("cn.wensiqun", "asmsupport"));
 		service.getConsumer();
+	}
+	
+	@Test
+	public void test() throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException {
+		main();
 	}
 	
 }

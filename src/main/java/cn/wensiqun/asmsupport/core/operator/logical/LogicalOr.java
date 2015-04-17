@@ -36,7 +36,7 @@ public class LogicalOr extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitOr(AClassFactory.defType(boolean.class).getType());
+        insnHelper.bitOr(AClassFactory.getType(boolean.class).getType());
     }
 
 }

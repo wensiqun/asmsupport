@@ -10,7 +10,7 @@ public abstract class AbstractFix {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = AClassFactory.defType(System.class).field("out");
+	public static GlobalVariable systemOut = AClassFactory.getType(System.class).field("out");
 	
 	public static Class<?> generate(IClassContext creator){
 		//_这是Class的输出路径。主要为了调试作用。我们通过asmsupport生成的class将获输出到这个路径
