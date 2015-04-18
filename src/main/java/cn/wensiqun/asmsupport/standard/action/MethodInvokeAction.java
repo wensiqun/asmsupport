@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 
@@ -56,7 +56,7 @@ public interface MethodInvokeAction {
      * 
      * <p>
      * 这个方法同样也可以调用静态方法，如果传入的方法名在对象中是一个静态方法，那么ASMSuppport底层就自动生成调用今天方法的指令。当然我们也可以直接通过
-     * 调用{@link #call(AClass, String, Parameterized...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
+     * 调用{@link #call(AClass, String, InternalParameterized...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
      * 一样的，当我们调用某一个变量的方法时候，如果这个方法是静态方法，我们可以采用"变量名.方法名()"和"类名.方法名()"这两种方式。
      * </p>
      * 
@@ -65,7 +65,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker call(Parameterized objRef, String methodName, Parameterized... arguments);
+    public MethodInvoker call(InternalParameterized objRef, String methodName, InternalParameterized... arguments);
 
     /**
      * Generate method invoke, this method equivalence to 
@@ -77,7 +77,7 @@ public interface MethodInvokeAction {
      * @param args
      * @return
      */
-    public MethodInvoker call(String methodName, Parameterized... args);
+    public MethodInvoker call(String methodName, InternalParameterized... args);
     
     /**
      * 
@@ -102,17 +102,17 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker call(AClass owner, String methodName, Parameterized... arguments);
+    public MethodInvoker call(AClass owner, String methodName, InternalParameterized... arguments);
     
     /**
-     * Invoke static method. the method is similar method {@link #call(AClass, String, Parameterized...)}
+     * Invoke static method. the method is similar method {@link #call(AClass, String, InternalParameterized...)}
      * 
      * @param owner
      * @param name
      * @param arguments
      * @return
      */
-    public MethodInvoker call(Class<?> owner, String name, Parameterized... arguments);
+    public MethodInvoker call(Class<?> owner, String name, InternalParameterized... arguments);
     
     
     /**
@@ -138,15 +138,15 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker new_(AClass owner, Parameterized... arguments);
+    public MethodInvoker new_(AClass owner, InternalParameterized... arguments);
     
     /**
      * @param owner
      * @param arguments
      * @return
-     * @see #new_(AClass, Parameterized...)
+     * @see #new_(AClass, InternalParameterized...)
      */
-    public MethodInvoker new_(Class<?> owner, Parameterized... arguments);
+    public MethodInvoker new_(Class<?> owner, InternalParameterized... arguments);
     
     
     /**

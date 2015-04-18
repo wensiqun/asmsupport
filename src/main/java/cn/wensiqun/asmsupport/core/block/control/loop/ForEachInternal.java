@@ -18,7 +18,7 @@ package cn.wensiqun.asmsupport.core.block.control.loop;
 import java.util.Iterator;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -42,8 +42,8 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
  */
 public abstract class ForEachInternal extends ProgramBlockInternal implements Loop, IForEach {
     
-    private Parameterized elements;
-    private Parameterized condition;
+    private InternalParameterized elements;
+    private InternalParameterized condition;
     private AClass elementType;
     
     private Label startLbl = new Label();
@@ -51,15 +51,15 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     private Label continueLbl = new Label();
     private Label endLbl = new Label();
     
-    public ForEachInternal(Parameterized elements) {
+    public ForEachInternal(InternalParameterized elements) {
         this(elements, null);
     }
     
-    public ForEachInternal(Parameterized elements, AClass elementType) {
+    public ForEachInternal(InternalParameterized elements, AClass elementType) {
         this.elements = elements;
         this.elementType = elementType;
         
-        AClass type = elements.getParamterizedType();
+        AClass type = elements.getResultType();
         if(!type.isArray() &&
            !type.isChildOrEqual(AClassFactory.getType(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
@@ -76,7 +76,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
         	((Jumpable) condition).jumpPositive(null, startLbl, getEnd());
         }else{
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getParamterizedType().getType());
+            insnHelper.unbox(condition.getResultType().getType());
             insnHelper.ifZCmp(InstructionHelper.NE, startLbl);
         }
         insnHelper.mark(endLbl);
@@ -84,11 +84,11 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     
     @Override
     public final void generate() {
-        if(elements.getParamterizedType().isArray()){
+        if(elements.getResultType().isArray()){
             final LocalVariable i = var(AClassFactory.getType(int.class), Value.value(0));
             final LocalVariable len = var(AClassFactory.getType(int.class), arrayLength(elements));
             if(!(elements instanceof LocalVariable)) {
-                elements = var(elements.getParamterizedType(), elements);
+                elements = var(elements.getResultType(), elements);
             }
             
             OperatorFactory.newOperator(GOTO.class, 
@@ -99,7 +99,7 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
             		new Class[]{ProgramBlockInternal.class, Label.class}, 
             		getExecutor(), startLbl);
             
-            LocalVariable obj = var(((ArrayClass)elements.getParamterizedType()).getNextDimType(), arrayLoad(elements, i) );
+            LocalVariable obj = var(((ArrayClass)elements.getResultType()).getNextDimType(), arrayLoad(elements, i) );
             body(obj);
 
             postinc(i);

@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public class Not extends UnaryLogical {
 
-    protected Not(ProgramBlockInternal block, Parameterized factor) {
+    protected Not(ProgramBlockInternal block, InternalParameterized factor) {
         super(block, factor);
         this.operator = Operators.NOT;
     }

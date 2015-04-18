@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -31,7 +31,7 @@ public class Negative extends AbstractPositiveNegative {
 
     private static final Log LOG = LogFactory.getLog(Negative.class);
     
-    protected Negative(ProgramBlockInternal block, Parameterized factor) {
+    protected Negative(ProgramBlockInternal block, InternalParameterized factor) {
         super(block, factor);
         operator = Operators.NEG;
     }
@@ -40,7 +40,7 @@ public class Negative extends AbstractPositiveNegative {
     public void doExecute() {
         LOG.print("run the negative operator");
         factorToStack();
-        insnHelper.neg(factor.getParamterizedType().getType());
+        insnHelper.neg(factor.getResultType().getType());
     }
 
 }

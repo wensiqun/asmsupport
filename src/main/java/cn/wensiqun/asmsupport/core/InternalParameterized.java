@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.Parameterized;
 
 
 /**
@@ -26,13 +26,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
  * @author 温斯群(Joe Wen)
  * 
  */
-public interface Parameterized extends PushStackable {
-    
-    /**
-     * 获取当前参数化类型的返回参数
-     * @return
-     */
-    public AClass getParamterizedType();
+public interface InternalParameterized extends Parameterized, PushStackable {
     
     /**
      * 

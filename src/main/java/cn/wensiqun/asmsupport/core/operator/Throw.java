@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -30,29 +30,29 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
  */
 public class Throw extends BreakStack {
 
-    private Parameterized exception;
+    private InternalParameterized exception;
 
-    protected Throw(ProgramBlockInternal block, Parameterized exception) {
+    protected Throw(ProgramBlockInternal block, InternalParameterized exception) {
         super(block, false);
         this.exception = exception;
     }
 
-    protected Throw(ProgramBlockInternal block, Parameterized exception, boolean autoCreate) {
+    protected Throw(ProgramBlockInternal block, InternalParameterized exception, boolean autoCreate) {
         super(block, true);
         this.exception = exception;
     }
 
     @Override
     protected void startingPrepare() {
-        if (!AnyException.ANY.equals(exception.getParamterizedType())) {
-            block.addException(exception.getParamterizedType());
+        if (!AnyException.ANY.equals(exception.getResultType())) {
+            block.addException(exception.getResultType());
         }
         super.startingPrepare();
     }
 
     @Override
     protected void verifyArgument() {
-        AClass type = exception.getParamterizedType();
+        AClass type = exception.getResultType();
         if (AnyException.ANY != type && !type.isChildOrEqual(AClassFactory.getType(Throwable.class))) {
             throw new ASMSupportException("No exception of type " + type
                     + " can be thrown; an exception type must be a subclass of Throwable");
@@ -81,6 +81,6 @@ public class Throw extends BreakStack {
     }
 
     public AClass getThrowExceptionType() {
-        return exception.getParamterizedType();
+        return exception.getResultType();
     }
 }

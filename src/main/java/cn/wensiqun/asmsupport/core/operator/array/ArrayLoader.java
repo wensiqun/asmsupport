@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
  * @author 温斯群(Joe Wen)
  *
  */
-public class ArrayLoader extends AbstractArrayOperator implements Parameterized {
+public class ArrayLoader extends AbstractArrayOperator implements InternalParameterized {
 
     private static final Log LOG = LogFactory.getLog(ArrayLoader.class);
     
@@ -37,18 +37,18 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
     
     private boolean useByOther;
 
-    private void init(Parameterized pardim, Parameterized... parDims){
-    	this.parDims = new Parameterized[1 + parDims.length];
+    private void init(InternalParameterized pardim, InternalParameterized... parDims){
+    	this.parDims = new InternalParameterized[1 + parDims.length];
         this.parDims[0] = pardim;
         System.arraycopy(parDims, 0, this.parDims, 1, parDims.length);
         
-        valueClass = arrayReference.getParamterizedType();
+        valueClass = arrayReference.getResultType();
         for(int i=0; i<this.parDims.length; i++){
             valueClass = ((ArrayClass) valueClass).getNextDimType();
         }
     }
     
-    protected ArrayLoader(ProgramBlockInternal block, Parameterized arrayReference, Parameterized pardim, Parameterized... parDims) {
+    protected ArrayLoader(ProgramBlockInternal block, InternalParameterized arrayReference, InternalParameterized pardim, InternalParameterized... parDims) {
         super(block, arrayReference);
         init(pardim, parDims);
     }
@@ -59,7 +59,7 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
-        ArrayClass cls = (ArrayClass) arrayReference.getParamterizedType();
+        ArrayClass cls = (ArrayClass) arrayReference.getResultType();
         if(parDims != null && parDims.length > cls.getDimension()){
             throw new ArrayOperatorException(toString() + " dimension not enough!");
         }
@@ -75,7 +75,7 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return valueClass;
     }
 
@@ -88,7 +88,7 @@ public class ArrayLoader extends AbstractArrayOperator implements Parameterized 
 	@Override
 	public String toString() {
 		StringBuilder toString = new StringBuilder(arrayReference.toString());
-		for(Parameterized p : parDims){
+		for(InternalParameterized p : parDims){
 			toString.append("[").append(p).append("]");
 		}
 		return toString.toString();

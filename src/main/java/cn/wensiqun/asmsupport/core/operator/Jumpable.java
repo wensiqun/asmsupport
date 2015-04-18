@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  * What's the jump in jvm instruction. such as : {@code  if_xxx, ifxx } instruction.
  * </p>
  */
-public interface Jumpable extends Parameterized {
+public interface Jumpable extends InternalParameterized {
 
     /**
      * <p>
@@ -39,7 +39,7 @@ public interface Jumpable extends Parameterized {
      * @param posLbl
      * @param negLbl
      */
-    void jumpPositive(Parameterized from, Label posLbl, Label negLbl);
+    void jumpPositive(InternalParameterized from, Label posLbl, Label negLbl);
     
     
     /**
@@ -55,6 +55,6 @@ public interface Jumpable extends Parameterized {
      * @param posLbl
      * @param negLbl
      */
-    void jumpNegative(Parameterized from, Label posLbl, Label negLbl);
+    void jumpNegative(InternalParameterized from, Label posLbl, Label negLbl);
     
 }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -41,10 +41,10 @@ public abstract class AbstractRelational extends AbstractOperator implements
     private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
     
     /**算数因子1 */
-    protected Parameterized factor1;
+    protected InternalParameterized factor1;
 
     /**算数因子2 */
-    protected Parameterized factor2;
+    protected InternalParameterized factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
@@ -56,7 +56,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected AbstractRelational(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected AbstractRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -68,8 +68,8 @@ public abstract class AbstractRelational extends AbstractOperator implements
     protected void initAdditionalProperties() {
         //replace Value object
         
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getParamterizedType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getParamterizedType());
+        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getResultType());
+        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getResultType());
         
         if(ftrCls1.getCastOrder() > ftrCls2.getCastOrder()){
             targetClass = ftrCls1;
@@ -100,17 +100,17 @@ public abstract class AbstractRelational extends AbstractOperator implements
     public void execute() {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
-            	LOG.print("run operator " + factor1.getParamterizedType() + " " + operator + " " + factor2.getParamterizedType());
+            	LOG.print("run operator " + factor1.getResultType() + " " + operator + " " + factor2.getResultType());
             }
             super.execute();
         }else{
-            throw new ASMSupportException("the operator " + factor1.getParamterizedType() + " " + operator + " " + 
-                                          factor2.getParamterizedType() + " has not been used by other operator.");
+            throw new ASMSupportException("the operator " + factor1.getResultType() + " " + operator + " " + 
+                                          factor2.getResultType() + " has not been used by other operator.");
         }
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return AClassFactory.getType(boolean.class);
     }
 
@@ -174,13 +174,13 @@ public abstract class AbstractRelational extends AbstractOperator implements
 	}*/
 	
     @Override
-    public void jumpPositive(Parameterized from, Label posLbl, Label negLbl) {
+    public void jumpPositive(InternalParameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         positiveCmp(posLbl);
     }
 
     @Override
-    public void jumpNegative(Parameterized from, Label posLbl, Label negLbl) {
+    public void jumpNegative(InternalParameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         negativeCmp(negLbl);
     }

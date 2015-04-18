@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -35,7 +35,7 @@ public class MethodInvokeInvoker extends MethodInvoker {
     private MethodInvoker caller;
     
     @Deprecated
-    protected MethodInvokeInvoker(ProgramBlockInternal block, MethodInvoker caller, String name, Parameterized[] arguments) {
+    protected MethodInvokeInvoker(ProgramBlockInternal block, MethodInvoker caller, String name, InternalParameterized[] arguments) {
         super(block, caller.getReturnClass(), name, arguments);
         this.caller = caller;
         //this.methodType = MethodType.METHOD;

@@ -12,7 +12,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
@@ -82,7 +82,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new SynchronizedInternal(this_()){
                     @Override
-                    public void body(Parameterized e) {
+                    public void body(InternalParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
@@ -108,7 +108,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new SynchronizedInternal(this_().field("lock")){
                     @Override
-                    public void body(Parameterized e) {
+                    public void body(InternalParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 

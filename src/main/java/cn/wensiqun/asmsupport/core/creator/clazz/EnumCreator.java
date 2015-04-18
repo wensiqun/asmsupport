@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
@@ -276,7 +276,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                         LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
 
                         // get lengt operator for tmpValues;
-                        Parameterized copyLen = arrayLength(copy);
+                        InternalParameterized copyLen = arrayLength(copy);
 
                         // System
                         AClass systemClass = AClassFactory.getType(System.class);

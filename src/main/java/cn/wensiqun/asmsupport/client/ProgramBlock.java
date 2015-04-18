@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.core.Crementable;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
@@ -100,22 +100,22 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public LocalVariable var(String name, Class<?> type, Parameterized para) {
+	public LocalVariable var(String name, Class<?> type, InternalParameterized para) {
 		return target.var(name, type, para);
 	}
 
 	@Override
-	public LocalVariable var(Class<?> type, Parameterized para) {
+	public LocalVariable var(Class<?> type, InternalParameterized para) {
 		return target.var(type, para);
 	}
 
 	@Override
-	public LocalVariable var(String name, AClass type, Parameterized para) {
+	public LocalVariable var(String name, AClass type, InternalParameterized para) {
 		return target.var(name, type, para);
 	}
 
 	@Override
-	public LocalVariable var(AClass type, Parameterized para) {
+	public LocalVariable var(AClass type, InternalParameterized para) {
 		return target.var(type, para);
 	}
 
@@ -125,38 +125,38 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public Assigner assign(ExplicitVariable variable, Parameterized val) {
+	public Assigner assign(ExplicitVariable variable, InternalParameterized val) {
 		return target.assign(variable, val);
 	}
 
 	@Override
-	public MethodInvoker call(Parameterized objRef, String methodName,
-			Parameterized... arguments) {
+	public MethodInvoker call(InternalParameterized objRef, String methodName,
+			InternalParameterized... arguments) {
 		return target.call(objRef, methodName, arguments);
 	}
 
 	@Override
-	public MethodInvoker call(String methodName, Parameterized... args) {
+	public MethodInvoker call(String methodName, InternalParameterized... args) {
 		return target.call(methodName, args);
 	}
 
 	@Override
-	public MethodInvoker call(AClass owner, String methodName, Parameterized... arguments) {
+	public MethodInvoker call(AClass owner, String methodName, InternalParameterized... arguments) {
 		return target.call(owner, methodName, arguments);
 	}
     
 	@Override
-    public final MethodInvoker call(Class<?> owner, String methodName, Parameterized... arguments) {
+    public final MethodInvoker call(Class<?> owner, String methodName, InternalParameterized... arguments) {
     	return target.call(owner, methodName, arguments);
     }
 
 	@Override
-	public MethodInvoker new_(Class<?> owner, Parameterized... arguments) {
+	public MethodInvoker new_(Class<?> owner, InternalParameterized... arguments) {
 		return target.new_(owner, arguments);
 	}
 
 	@Override
-	public MethodInvoker new_(AClass owner, Parameterized... arguments) {
+	public MethodInvoker new_(AClass owner, InternalParameterized... arguments) {
 		return target.new_(owner, arguments);
 	}
 
@@ -166,12 +166,12 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public ArrayValue makeArray(AClass aClass, Parameterized... allocateDims) {
+	public ArrayValue makeArray(AClass aClass, InternalParameterized... allocateDims) {
 		return target.makeArray(aClass, allocateDims);
 	}
 
 	@Override
-	public ArrayValue makeArray(Class<?> arraytype, Parameterized... dimensions) {
+	public ArrayValue makeArray(Class<?> arraytype, InternalParameterized... dimensions) {
 		return target.makeArray(arraytype, dimensions);
 	}
 
@@ -186,80 +186,80 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public ArrayLoader arrayLoad(Parameterized arrayReference,
-			Parameterized pardim, Parameterized... parDims) {
+	public ArrayLoader arrayLoad(InternalParameterized arrayReference,
+			InternalParameterized pardim, InternalParameterized... parDims) {
 		return target.arrayLoad(arrayReference, pardim, parDims);
 	}
 	
 	@Override
-	public ArrayStorer arrayStore(Parameterized arrayReference,
-			Parameterized value, Parameterized dim, Parameterized... dims) {
+	public ArrayStorer arrayStore(InternalParameterized arrayReference,
+			InternalParameterized value, InternalParameterized dim, InternalParameterized... dims) {
 		return target.arrayStore(arrayReference, value, dim, dims);
 	}
 
 	@Override
-	public ArrayLength arrayLength(Parameterized arrayReference,
-			Parameterized... dims) {
+	public ArrayLength arrayLength(InternalParameterized arrayReference,
+			InternalParameterized... dims) {
 		return target.arrayLength(arrayReference, dims);
 	}
 	
 	@Override
-	public Addition add(Parameterized factor1, Parameterized factor2) {
+	public Addition add(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.add(factor1, factor2);
 	}
 
 	@Override
-	public Subtraction sub(Parameterized factor1, Parameterized factor2) {
+	public Subtraction sub(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.sub(factor1, factor2);
 	}
 
 	@Override
-	public Multiplication mul(Parameterized factor1, Parameterized factor2) {
+	public Multiplication mul(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.mul(factor1, factor2);
 	}
 
 	@Override
-	public Division div(Parameterized factor1, Parameterized factor2) {
+	public Division div(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.div(factor1, factor2);
 	}
 
 	@Override
-	public Modulus mod(Parameterized factor1, Parameterized factor2) {
+	public Modulus mod(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.mod(factor1, factor2);
 	}
 
 	@Override
-	public Reverse reverse(Parameterized factor) {
+	public Reverse reverse(InternalParameterized factor) {
 		return target.reverse(factor);
 	}
 
 	@Override
-	public BitAnd band(Parameterized factor1, Parameterized factor2) {
+	public BitAnd band(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.band(factor1, factor2);
 	}
 
 	@Override
-	public BitOr bor(Parameterized factor1, Parameterized factor2) {
+	public BitOr bor(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.bor(factor1, factor2);
 	}
 
 	@Override
-	public BitXor bxor(Parameterized factor1, Parameterized factor2) {
+	public BitXor bxor(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.bxor(factor1, factor2);
 	}
 
 	@Override
-	public ShiftLeft shl(Parameterized factor1, Parameterized factor2) {
+	public ShiftLeft shl(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.shl(factor1, factor2);
 	}
 
 	@Override
-	public ShiftRight shr(Parameterized factor1, Parameterized factor2) {
+	public ShiftRight shr(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.shr(factor1, factor2);
 	}
 
 	@Override
-	public UnsignedShiftRight ushr(Parameterized factor1, Parameterized factor2) {
+	public UnsignedShiftRight ushr(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.ushr(factor1, factor2);
 	}
 
@@ -284,100 +284,100 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public GreaterThan gt(Parameterized factor1, Parameterized factor2) {
+	public GreaterThan gt(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.gt(factor1, factor2);
 	}
 
 	@Override
-	public GreaterEqual ge(Parameterized factor1, Parameterized factor2) {
+	public GreaterEqual ge(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.ge(factor1, factor2);
 	}
 
 	@Override
-	public LessThan lt(Parameterized factor1, Parameterized factor2) {
+	public LessThan lt(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.lt(factor1, factor2);
 	}
 
 	@Override
-	public LessEqual le(Parameterized factor1, Parameterized factor2) {
+	public LessEqual le(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.le(factor1, factor2);
 	}
 
 	@Override
-	public Equal eq(Parameterized factor1, Parameterized factor2) {
+	public Equal eq(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.eq(factor1, factor2);
 	}
 
 	@Override
-	public NotEqual ne(Parameterized factor1, Parameterized factor2) {
+	public NotEqual ne(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.ne(factor1, factor2);
 	}
 
 	@Override
-	public LogicalAnd logicalAnd(Parameterized factor1, Parameterized factor2) {
+	public LogicalAnd logicalAnd(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.logicalAnd(factor1, factor2);
 	}
 
 	@Override
-	public LogicalOr logicalOr(Parameterized factor1, Parameterized factor2) {
+	public LogicalOr logicalOr(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.logicalOr(factor1, factor2);
 	}
 
 	@Override
-	public LogicalXor logicalXor(Parameterized factor1, Parameterized factor2) {
+	public LogicalXor logicalXor(InternalParameterized factor1, InternalParameterized factor2) {
 		return target.logicalXor(factor1, factor2);
 	}
 
 	@Override
-	public ShortCircuitAnd and(Parameterized factor1, Parameterized factor2,
-			Parameterized... otherFactor) {
+	public ShortCircuitAnd and(InternalParameterized factor1, InternalParameterized factor2,
+			InternalParameterized... otherFactor) {
 		return target.and(factor1, factor2, otherFactor);
 	}
 
 	@Override
-	public ShortCircuitOr or(Parameterized factor1, Parameterized factor2,
-			Parameterized... otherFactor) {
+	public ShortCircuitOr or(InternalParameterized factor1, InternalParameterized factor2,
+			InternalParameterized... otherFactor) {
 		return target.or(factor1, factor2, otherFactor);
 	}
 
 	@Override
-	public Not no(Parameterized factor) {
+	public Not no(InternalParameterized factor) {
 		return target.no(factor);
 	}
 
 	@Override
-	public CheckCast checkcast(Parameterized cc, AClass to) {
+	public CheckCast checkcast(InternalParameterized cc, AClass to) {
 		return target.checkcast(cc, to);
 	}
 
 	@Override
-	public CheckCast checkcast(Parameterized cc, Class<?> to) {
+	public CheckCast checkcast(InternalParameterized cc, Class<?> to) {
 		return target.checkcast(cc, to);
 	}
 
 	@Override
-	public Negative neg(Parameterized factor) {
+	public Negative neg(InternalParameterized factor) {
 		return target.neg(factor);
 	}
 
 	@Override
-	public TernaryOperator ternary(Parameterized exp1, Parameterized exp2,
-			Parameterized exp3) {
+	public TernaryOperator ternary(InternalParameterized exp1, InternalParameterized exp2,
+			InternalParameterized exp3) {
 		return target.ternary(exp1, exp2, exp3);
 	}
 
 	@Override
-	public Parameterized stradd(Parameterized par1, Parameterized... pars) {
+	public InternalParameterized stradd(InternalParameterized par1, InternalParameterized... pars) {
 		return target.stradd(par1, pars);
 	}
 
 	@Override
-	public Parameterized instanceof_(Parameterized obj, AClass type) {
+	public InternalParameterized instanceof_(InternalParameterized obj, AClass type) {
 		return target.instanceof_(obj, type);
 	}
 
 	@Override
-	public Parameterized instanceof_(Parameterized obj, Class<?> type) {
+	public InternalParameterized instanceof_(InternalParameterized obj, Class<?> type) {
 		return target.instanceof_(obj, type);
 	}
 
@@ -392,7 +392,7 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public void throw_(Parameterized exception) {
+	public void throw_(InternalParameterized exception) {
 		target.throw_(exception);
 	}
 
@@ -402,7 +402,7 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public Return return_(Parameterized parame) {
+	public Return return_(InternalParameterized parame) {
 		return target.return_(parame);
 	}
 

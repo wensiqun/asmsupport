@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
@@ -41,7 +41,7 @@ public interface BitwiseAction {
      * @param factor
      * @return {@link Reverse}
      */
-    public Reverse reverse(Parameterized factor);
+    public Reverse reverse(InternalParameterized factor);
     
     /**
      * The bit and operator.
@@ -54,7 +54,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitAnd}
      */
-    public BitAnd band(Parameterized factor1, Parameterized factor2);
+    public BitAnd band(InternalParameterized factor1, InternalParameterized factor2);
 	
     /**
      * 
@@ -68,7 +68,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitOr}
      */
-    public BitOr bor(Parameterized factor1, Parameterized factor2);
+    public BitOr bor(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 
@@ -83,7 +83,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link BitXor}
      */
-    public BitXor bxor(Parameterized factor1, Parameterized factor2);
+    public BitXor bxor(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 
@@ -97,7 +97,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link ShiftLeft}
      */
-    public ShiftLeft shl(Parameterized factor1, Parameterized factor2);
+    public ShiftLeft shl(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * The bitwise shift right operator.
@@ -110,7 +110,7 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link ShiftRight}
      */
-    public ShiftRight shr(Parameterized factor1, Parameterized factor2);
+    public ShiftRight shr(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * The unsigned shift right operator.
@@ -123,6 +123,6 @@ public interface BitwiseAction {
      * @param factor2
      * @return {@link UnsignedShiftRight}
      */
-    public UnsignedShiftRight ushr(Parameterized factor1, Parameterized factor2);
+    public UnsignedShiftRight ushr(InternalParameterized factor1, InternalParameterized factor2);
     
 }

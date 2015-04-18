@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.loop.ForEachInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
 public abstract class ForEach extends ProgramBlock<ForEachInternal> implements IForEach {
 
-	public ForEach(Parameterized iteratorVar) {
+	public ForEach(InternalParameterized iteratorVar) {
 		target = new ForEachInternal(iteratorVar) {
 
 			@Override
@@ -34,7 +34,7 @@ public abstract class ForEach extends ProgramBlock<ForEachInternal> implements I
 		};
 	}
 	
-    public ForEach(Parameterized iteratorVar, AClass elementType) {
+    public ForEach(InternalParameterized iteratorVar, AClass elementType) {
         target = new ForEachInternal(iteratorVar, elementType) {
 
             @Override
@@ -45,7 +45,7 @@ public abstract class ForEach extends ProgramBlock<ForEachInternal> implements I
         };
     }
     
-    public ForEach(Parameterized iteratorVar, Class<?> elementType) {
+    public ForEach(InternalParameterized iteratorVar, Class<?> elementType) {
         target = new ForEachInternal(iteratorVar, AClassFactory.getType(elementType)) {
 
             @Override

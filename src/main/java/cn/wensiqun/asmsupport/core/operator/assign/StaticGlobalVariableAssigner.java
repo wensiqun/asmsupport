@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -31,7 +31,7 @@ public class StaticGlobalVariableAssigner extends Assigner {
     
     private StaticGlobalVariable var;
     
-    protected StaticGlobalVariableAssigner(ProgramBlockInternal block, final StaticGlobalVariable var, Parameterized value) {
+    protected StaticGlobalVariableAssigner(ProgramBlockInternal block, final StaticGlobalVariable var, InternalParameterized value) {
         super(block, var, value);
         this.var = var;
     }

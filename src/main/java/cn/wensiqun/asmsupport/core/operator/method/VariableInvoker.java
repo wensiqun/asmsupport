@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
@@ -40,7 +40,7 @@ public class VariableInvoker extends MethodInvoker {
     private IVariable var;
      
     @Deprecated
-    protected VariableInvoker(ProgramBlockInternal block, IVariable var, String name, Parameterized[] arguments) {
+    protected VariableInvoker(ProgramBlockInternal block, IVariable var, String name, InternalParameterized[] arguments) {
         super(block, var.getVariableMeta().getDeclareType(), name, arguments);
         if(var.getVariableMeta().getDeclareType().isPrimitive()){
             throw new IllegalArgumentException("primitive variable \"" + var.getVariableMeta().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");

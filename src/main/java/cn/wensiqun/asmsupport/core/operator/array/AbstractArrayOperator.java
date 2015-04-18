@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -38,11 +38,11 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
-    protected Parameterized arrayReference;
+    protected InternalParameterized arrayReference;
     
-    protected Parameterized[] parDims;
+    protected InternalParameterized[] parDims;
     
-    protected AbstractArrayOperator(ProgramBlockInternal block, Parameterized arrayVar) {
+    protected AbstractArrayOperator(ProgramBlockInternal block, InternalParameterized arrayVar) {
         super(block);
         this.arrayReference = arrayVar;
     }
@@ -51,7 +51,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 	protected void checkAsArgument() {
         arrayReference.asArgument();
         if(parDims != null){
-            for(Parameterized par : parDims){
+            for(InternalParameterized par : parDims){
                 par.asArgument();
             }
         }
@@ -59,14 +59,14 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
     
 	@Override
 	protected void verifyArgument() {
-		if(!(arrayReference.getParamterizedType() instanceof ArrayClass)){
+		if(!(arrayReference.getResultType() instanceof ArrayClass)){
         	throw new ClassException(toString() + " : the declare class of " + arrayReference.toString() + " is not a array type");
         }
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
-			for(Parameterized par : parDims){
-				if(!AClassUtils.checkAssignable(par.getParamterizedType(), AClassFactory.getType(int.class))) {
-					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getParamterizedType() + " to " + AClassFactory.getType(int.class) + "");
+			for(InternalParameterized par : parDims){
+				if(!AClassUtils.checkAssignable(par.getResultType(), AClassFactory.getType(int.class))) {
+					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + AClassFactory.getType(int.class) + "");
 				}
 			}
 		}
@@ -75,7 +75,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 
 	protected void getValue(){
         InstructionHelper ih = block.getInsnHelper();
-        AClass cls = arrayReference.getParamterizedType();
+        AClass cls = arrayReference.getResultType();
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");
         }
@@ -84,7 +84,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
         for(int i=0; i<parDims.length; i++){
             cls = ((ArrayClass) cls).getNextDimType();
             parDims[i].loadToStack(block);
-            autoCast(parDims[i].getParamterizedType(), AClassFactory.getType(int.class), false);
+            autoCast(parDims[i].getResultType(), AClassFactory.getType(int.class), false);
             ih.arrayLoad(cls.getType());
         }
         

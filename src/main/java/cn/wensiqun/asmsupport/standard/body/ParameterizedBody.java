@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.body;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 
 public interface ParameterizedBody extends IBody {
-    void body(Parameterized e);
+    void body(InternalParameterized e);
 }

@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -28,23 +28,23 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
  * @author 温斯群(Joe Wen)
  *
  */
-public class StringAppender extends AbstractOperator implements Parameterized{
+public class StringAppender extends AbstractOperator implements InternalParameterized{
     
-    private Parameterized[] paras;
+    private InternalParameterized[] paras;
 
     private boolean byOtherUsed;
     private MethodInvoker invoker;
     
-    protected StringAppender(ProgramBlockInternal block, Parameterized par1, Parameterized... pars) {
+    protected StringAppender(ProgramBlockInternal block, InternalParameterized par1, InternalParameterized... pars) {
         super(block);
-        this.paras = new Parameterized[pars.length + 1];
+        this.paras = new InternalParameterized[pars.length + 1];
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
         AClass strBlderCls = AClassFactory.getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
-        for(Parameterized par : pars){
+        for(InternalParameterized par : pars){
             mi = block.call(mi, "append", par);
         }
         invoker = block.call(mi, "toString");
@@ -89,7 +89,7 @@ public class StringAppender extends AbstractOperator implements Parameterized{
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return AClassFactory.getType(String.class);
     }
 

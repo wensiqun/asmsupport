@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -32,10 +32,10 @@ public abstract class BinaryLogical extends AbstractLogical {
     
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected Parameterized factor1;
-    protected Parameterized factor2;
+    protected InternalParameterized factor1;
+    protected InternalParameterized factor2;
     
-    protected BinaryLogical(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected BinaryLogical(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -43,8 +43,8 @@ public abstract class BinaryLogical extends AbstractLogical {
 
 	@Override
 	protected void verifyArgument() {
-		AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
+		AClass ftrCls1 = factor1.getResultType();
+        AClass ftrCls2 = factor2.getResultType();
         
         if(!((ftrCls1.equals(AClassFactory.getType(boolean.class)) || ftrCls1.equals(AClassFactory.getType(Boolean.class))) &&
            (ftrCls2.equals(AClassFactory.getType(boolean.class)) || ftrCls2.equals(AClassFactory.getType(Boolean.class))))){
@@ -63,8 +63,8 @@ public abstract class BinaryLogical extends AbstractLogical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the logical operator " + factor1.getParamterizedType() + " " + operator + " " + 
-                                          factor2.getParamterizedType() + " has not been used by other operator.");
+            throw new ArithmeticException("the logical operator " + factor1.getResultType() + " " + operator + " " + 
+                                          factor2.getResultType() + " has not been used by other operator.");
         }
     }
 
@@ -72,10 +72,10 @@ public abstract class BinaryLogical extends AbstractLogical {
     protected void factorToStack() {
         LOG.print("factors to stack");
         factor1.loadToStack(block);
-        insnHelper.unbox(factor1.getParamterizedType().getType());
+        insnHelper.unbox(factor1.getResultType().getType());
         
         factor2.loadToStack(block);
-        insnHelper.unbox(factor2.getParamterizedType().getType());
+        insnHelper.unbox(factor2.getResultType().getType());
     }
 
 }

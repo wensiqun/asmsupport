@@ -68,12 +68,12 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
     @Override
     protected void initAdditionalProperties() {
-        targetClass = factor.getParamterizedType();
+        targetClass = factor.getResultType();
     }
 
     @Override
     protected void verifyArgument() {
-        AClass fatCls = factor.getParamterizedType();
+        AClass fatCls = factor.getResultType();
         if (!AClassUtils.isArithmetical(fatCls)) {
             throw new ArithmeticException("cannot execute arithmetic operator whit " + fatCls);
         }
@@ -133,7 +133,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
     }
 
     private Value getIncreaseValue() {
-        AClass type = factor.getParamterizedType();
+        AClass type = factor.getResultType();
         if (type.equals(AClassFactory.getType(double.class)) || type.equals(AClassFactory.getType(Double.class))) {
             return Value.value(1d);
         } else if (type.equals(AClassFactory.getType(float.class)) || type.equals(AClassFactory.getType(Float.class))) {

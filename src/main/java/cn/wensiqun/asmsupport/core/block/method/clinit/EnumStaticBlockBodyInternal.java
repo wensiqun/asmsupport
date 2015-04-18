@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.block.method.clinit;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -50,9 +50,9 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	
 	private class EnumConstructorInfo{
 		String name;
-		Parameterized[] argus;
+		InternalParameterized[] argus;
 		  
-		private EnumConstructorInfo(String name, Parameterized[] argus) {
+		private EnumConstructorInfo(String name, InternalParameterized[] argus) {
 			super();
 			this.name = name;
 			this.argus = argus;
@@ -60,7 +60,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	}
 
 	@Override
-	public void constructEnumConst(String name, Parameterized... argus) {
+	public void constructEnumConst(String name, InternalParameterized... argus) {
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
@@ -82,7 +82,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 			throw new ASMSupportException("exist unassign enum constant!");
 		}
 		
-		Parameterized[] values = new Parameterized[getMethodOwner().getEnumNum()];
+		InternalParameterized[] values = new InternalParameterized[getMethodOwner().getEnumNum()];
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
@@ -90,8 +90,8 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
-			Parameterized[] otherArgus = enumArgu.argus;
-	        Parameterized[] enumArgus = new Parameterized[otherArgus.length + 2];
+			InternalParameterized[] otherArgus = enumArgu.argus;
+	        InternalParameterized[] enumArgus = new InternalParameterized[otherArgus.length + 2];
 	        enumArgus[0] = Value.value(enumName);
 	        enumArgus[1] = Value.value(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);

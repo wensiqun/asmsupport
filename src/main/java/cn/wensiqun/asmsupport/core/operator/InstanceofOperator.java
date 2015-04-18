@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -27,13 +27,13 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
  * @author 温斯群(Joe Wen)
  *
  */
-public class InstanceofOperator extends AbstractOperator implements Parameterized{
+public class InstanceofOperator extends AbstractOperator implements InternalParameterized{
 
     private AClass type; 
-    private Parameterized obj;
+    private InternalParameterized obj;
     private boolean byOtherUsed;
     
-    protected InstanceofOperator(ProgramBlockInternal block, Parameterized obj, AClass type) {
+    protected InstanceofOperator(ProgramBlockInternal block, InternalParameterized obj, AClass type) {
         super(block);
         this.obj = obj;
         this.type = type;
@@ -41,8 +41,8 @@ public class InstanceofOperator extends AbstractOperator implements Parameterize
 
     @Override
     protected void verifyArgument() {
-        if(obj.getParamterizedType().isPrimitive()){
-            throw new ASMSupportException("Incompatible conditional operand types " + obj.getParamterizedType() + " int and " + type);
+        if(obj.getResultType().isPrimitive()){
+            throw new ASMSupportException("Incompatible conditional operand types " + obj.getResultType() + " int and " + type);
         }
     }
 
@@ -77,7 +77,7 @@ public class InstanceofOperator extends AbstractOperator implements Parameterize
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return AClassFactory.getType(boolean.class);
     }
 

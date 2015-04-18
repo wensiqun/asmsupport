@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class LogicalXor extends BinaryLogical {
     
-    protected LogicalXor(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected LogicalXor(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block, factor1, factor2);
         operator = Operators.XOR;
     }

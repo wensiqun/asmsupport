@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -31,12 +31,12 @@ import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
  */
 public abstract class DoWhileInternal extends ProgramBlockInternal implements Loop, IDoWhile {
 
-    private Parameterized condition;
+    private InternalParameterized condition;
 
     Label conditionLbl;
     Label contentStart;
 
-    public DoWhileInternal(Parameterized condition) {
+    public DoWhileInternal(InternalParameterized condition) {
         this.condition = condition;
         conditionLbl = new Label();
         contentStart = new Label();
@@ -61,17 +61,17 @@ public abstract class DoWhileInternal extends ProgramBlockInternal implements Lo
             ((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
         } else {
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getParamterizedType().getType());
+            insnHelper.unbox(condition.getResultType().getType());
             insnHelper.ifZCmp(InstructionHelper.NE, contentStart);
         }
     }
 
     @Override
     protected void init() {
-        if (!condition.getParamterizedType().equals(AClassFactory.getType(Boolean.class))
-                && !condition.getParamterizedType().equals(AClassFactory.getType(boolean.class))) {
+        if (!condition.getResultType().equals(AClassFactory.getType(Boolean.class))
+                && !condition.getResultType().equals(AClassFactory.getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
-                    + condition.getParamterizedType());
+                    + condition.getResultType());
         }
     }
 

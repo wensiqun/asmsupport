@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.method.init;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -38,8 +38,8 @@ public abstract class EnumConstructorBodyInternal extends AbstractMethodBody imp
     @Override
     public final void generateBody() {
         OperatorFactory.newOperator(SuperConstructorInvoker.class, 
-        		new Class<?>[]{ProgramBlockInternal.class, AClass.class, Parameterized[].class}, 
-        		getExecutor(), getMethodOwner(), new Parameterized[]{argments[0], argments[1]});
+        		new Class<?>[]{ProgramBlockInternal.class, AClass.class, InternalParameterized[].class}, 
+        		getExecutor(), getMethodOwner(), new InternalParameterized[]{argments[0], argments[1]});
         body((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
     }
     

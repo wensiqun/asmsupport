@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Division;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Modulus;
@@ -40,7 +40,7 @@ public interface ArithmeticAction {
      * @param factor2
      * @return {@link Addition}
      */
-    public Addition add(Parameterized factor1, Parameterized factor2);
+    public Addition add(InternalParameterized factor1, InternalParameterized factor2);
 
     /**
      * 生成减法操作指令例如：factor1 - factor2,对应下面的红色java代码
@@ -53,7 +53,7 @@ public interface ArithmeticAction {
      * @param factor2
      * @return {@link Subtraction}
      */
-    public Subtraction sub(Parameterized factor1, Parameterized factor2);
+    public Subtraction sub(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 生成乘法操作指令例如：factor1 * factor2,对应下面的红色java代码
@@ -66,7 +66,7 @@ public interface ArithmeticAction {
      * @param factor2
      * @return {@link Multiplication}
      */
-    public Multiplication mul(Parameterized factor1, Parameterized factor2);
+    public Multiplication mul(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * generate division instruction : factor1 / factor2
@@ -79,7 +79,7 @@ public interface ArithmeticAction {
      * @param factor2
      * @return {@link Division}
      */
-    public Division div(Parameterized factor1, Parameterized factor2);
+    public Division div(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 
@@ -94,6 +94,6 @@ public interface ArithmeticAction {
      * @param factor2
      * @return {@link Modulus}
      */
-    public Modulus mod(Parameterized factor1, Parameterized factor2);
+    public Modulus mod(InternalParameterized factor1, InternalParameterized factor2);
     
 }

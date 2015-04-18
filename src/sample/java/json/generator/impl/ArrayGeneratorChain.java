@@ -3,7 +3,7 @@ package json.generator.impl;
 import json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
@@ -18,7 +18,7 @@ public class ArrayGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     protected boolean doGenerate(final GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
-            final LocalVariable encoder, final AClass type, Parameterized value) {
+            final LocalVariable encoder, final AClass type, InternalParameterized value) {
         block.call(encoder, "appendDirect", block.val('['));
         block.for_(new ForEach(value) {
             @Override

@@ -11,7 +11,7 @@ import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.IF;
 import cn.wensiqun.asmsupport.client.MethodBody;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -136,7 +136,7 @@ public class ProxyGenerator {
 			@Override
 			public void body(LocalVariable... args) {
 				Class<?>[] types = method.getParameterTypes();
-				Parameterized[] arguments = new Parameterized[types.length];
+				InternalParameterized[] arguments = new InternalParameterized[types.length];
 				for(int i=0; i<arguments.length; i++) {
 					arguments[i] = checkcast(arrayLoad(args[0], val(i)), types[i]);
 				}
@@ -188,7 +188,7 @@ public class ProxyGenerator {
 		     .body(new MethodBody() {
 				@Override
 				public void body(LocalVariable... args) {
-					Parameterized[] arguments = new Parameterized[args.length + 2];
+					InternalParameterized[] arguments = new InternalParameterized[args.length + 2];
 					arguments[0] = val(targetClass);
 					arguments[1] = val(method.getName());
 					System.arraycopy(args, 0, arguments, 2, args.length);

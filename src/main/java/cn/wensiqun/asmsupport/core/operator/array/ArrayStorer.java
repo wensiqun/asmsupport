@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -36,15 +36,15 @@ public class ArrayStorer extends AbstractArrayOperator {
 
     private static final Log LOG = LogFactory.getLog(ArrayStorer.class);
     
-    private Parameterized value;
+    private InternalParameterized value;
     
     private AClass storeClass;
     
-    private Parameterized lastDim;
+    private InternalParameterized lastDim;
 
-    private void init(Parameterized value, Parameterized pardim, Parameterized... parDims){
+    private void init(InternalParameterized value, InternalParameterized pardim, InternalParameterized... parDims){
     	this.value = value;
-        this.parDims = new Parameterized[parDims.length];
+        this.parDims = new InternalParameterized[parDims.length];
         
         if(parDims.length != 0){
             this.parDims[0] = pardim;
@@ -54,13 +54,13 @@ public class ArrayStorer extends AbstractArrayOperator {
             lastDim = pardim;
         }
         
-        storeClass = arrayReference.getParamterizedType();
+        storeClass = arrayReference.getResultType();
         for(int i=0, length = this.parDims.length + 1; i<length; i++){
             storeClass = ((ArrayClass) storeClass).getNextDimType();
         }
     }
 
-    protected ArrayStorer(ProgramBlockInternal block, Parameterized arrayReference, Parameterized value, Parameterized pardim, Parameterized... parDims) {
+    protected ArrayStorer(ProgramBlockInternal block, InternalParameterized arrayReference, InternalParameterized value, InternalParameterized pardim, InternalParameterized... parDims) {
         super(block, arrayReference);
         init(value, pardim, parDims);
     }
@@ -77,11 +77,11 @@ public class ArrayStorer extends AbstractArrayOperator {
     @Override
 	protected void verifyArgument() {
 		super.verifyArgument();
-		if(!AClassUtils.checkAssignable(value.getParamterizedType(), storeClass)) {
-			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getParamterizedType() + " to " + storeClass + "");
+		if(!AClassUtils.checkAssignable(value.getResultType(), storeClass)) {
+			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + storeClass + "");
 		}
-		if(!AClassUtils.checkAssignable(lastDim.getParamterizedType(), AClassFactory.getType(int.class))) {
-			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getParamterizedType() + " to " + AClassFactory.getType(int.class) + "");
+		if(!AClassUtils.checkAssignable(lastDim.getResultType(), AClassFactory.getType(int.class))) {
+			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getResultType() + " to " + AClassFactory.getType(int.class) + "");
 		}
 	}
 
@@ -94,10 +94,10 @@ public class ArrayStorer extends AbstractArrayOperator {
         InstructionHelper ih = block.getInsnHelper();
         LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
-        autoCast(lastDim.getParamterizedType(), AClassFactory.getType(int.class), false);
+        autoCast(lastDim.getResultType(), AClassFactory.getType(int.class), false);
         
         value.loadToStack(block);
-        autoCast(value.getParamterizedType(), storeClass, false);
+        autoCast(value.getResultType(), storeClass, false);
         if(LOG.isPrintEnabled()) { 
             LOG.print("store value to corresponse to index of the array");   
         }

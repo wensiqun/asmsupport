@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -26,16 +26,16 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
  */
 public abstract class UnaryBitwise extends AbstractBitwise {
 
-    protected Parameterized factor;
+    protected InternalParameterized factor;
     
-    protected UnaryBitwise(ProgramBlockInternal block, Parameterized factor) {
+    protected UnaryBitwise(ProgramBlockInternal block, InternalParameterized factor) {
         super(block);
         this.factor = factor;
     }
     
     @Override
     protected void verifyArgument() {
-        AClass ftrCls = factor.getParamterizedType();
+        AClass ftrCls = factor.getResultType();
         checkFactor(ftrCls);
     }
 
@@ -46,7 +46,7 @@ public abstract class UnaryBitwise extends AbstractBitwise {
 
     @Override
     protected void initAdditionalProperties() {
-        AClass ftrCls = factor.getParamterizedType();
+        AClass ftrCls = factor.getResultType();
         targetClass = AClassUtils.getPrimitiveAClass(ftrCls);
     }
     

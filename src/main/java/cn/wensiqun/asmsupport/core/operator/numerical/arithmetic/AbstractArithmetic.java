@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -29,18 +29,18 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
  *
  */
 public abstract class AbstractArithmetic extends AbstractNumerical implements
-        Parameterized {
+        InternalParameterized {
 
     /**算数因子1 */
-    protected Parameterized factor1;
+    protected InternalParameterized factor1;
 
     /**算数因子2 */
-    protected Parameterized factor2;
+    protected InternalParameterized factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
 
-    protected AbstractArithmetic(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected AbstractArithmetic(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -53,8 +53,8 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
     
     @Override
     protected void verifyArgument() {
-        AClass f1cls = factor1.getParamterizedType();
-        AClass f2cls = factor2.getParamterizedType();
+        AClass f1cls = factor1.getResultType();
+        AClass f2cls = factor2.getResultType();
         if(!AClassUtils.isArithmetical(f1cls) || !AClassUtils.isArithmetical(f2cls)){
             throw new ArithmeticException("cannot execute arithmetic operator whit " + f1cls + " and " + f2cls);
         }
@@ -69,7 +69,7 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
     @Override
     protected void initAdditionalProperties() {
         
-        targetClass = AClassUtils.getArithmeticalResultType(factor1.getParamterizedType(), factor2.getParamterizedType());
+        targetClass = AClassUtils.getArithmeticalResultType(factor1.getResultType(), factor2.getResultType());
         
         if(factor1 instanceof Value)
             ((Value)factor1).convert(targetClass);
@@ -83,8 +83,8 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the arithmetic operator " + factor1.getParamterizedType() + " " + operator + " " + 
-                                          factor2.getParamterizedType() + " has not been used by other operator.");
+            throw new ArithmeticException("the arithmetic operator " + factor1.getResultType() + " " + operator + " " + 
+                                          factor2.getResultType() + " has not been used by other operator.");
         }
     }
 

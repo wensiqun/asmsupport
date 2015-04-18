@@ -43,7 +43,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
     }
     
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return meta.getDeclareType();
     }
 

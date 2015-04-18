@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,7 +32,7 @@ public class Reverse extends UnaryBitwise {
 
     private static final Log LOG = LogFactory.getLog(Reverse.class);
     
-    protected Reverse(ProgramBlockInternal block, Parameterized factor) {
+    protected Reverse(ProgramBlockInternal block, InternalParameterized factor) {
         super(block, factor);
         this.operator = Operators.REVERSE;
     }

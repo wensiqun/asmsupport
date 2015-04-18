@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -34,7 +34,7 @@ public abstract class ConstructorBody extends ProgramBlock<ConstructorBodyIntern
 	}
 
 	@Override
-	public MethodInvoker supercall(Parameterized... arguments) {
+	public MethodInvoker supercall(InternalParameterized... arguments) {
     	return target.supercall(arguments);
 	}
 }

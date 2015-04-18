@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.checkcast;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -30,13 +30,13 @@ import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
  * @author 温斯群(Joe Wen)
  *
  */
-public class CheckCast extends AbstractOperator implements Parameterized {
+public class CheckCast extends AbstractOperator implements InternalParameterized {
 
     private static final Log LOG = LogFactory.getLog(CheckCast.class);
     private AClass to;
-    private Parameterized orginal;
+    private InternalParameterized orginal;
     
-    protected CheckCast(ProgramBlockInternal block, Parameterized orgi, AClass to) {
+    protected CheckCast(ProgramBlockInternal block, InternalParameterized orgi, AClass to) {
         super(block);
         this.orginal = orgi;
         this.to = to;
@@ -56,7 +56,7 @@ public class CheckCast extends AbstractOperator implements Parameterized {
     @Override
     public void doExecute() {
         orginal.loadToStack(block);
-        AClass from = orginal.getParamterizedType();
+        AClass from = orginal.getResultType();
         if(to.equals(from)){
             return;
         }
@@ -85,7 +85,7 @@ public class CheckCast extends AbstractOperator implements Parameterized {
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return to;
     }
 

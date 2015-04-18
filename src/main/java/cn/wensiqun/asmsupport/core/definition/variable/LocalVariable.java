@@ -78,7 +78,7 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return localVariableMeta.getDeclareType();
     }
 

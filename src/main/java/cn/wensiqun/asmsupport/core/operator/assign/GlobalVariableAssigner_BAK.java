@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
@@ -36,7 +36,7 @@ public class GlobalVariableAssigner_BAK extends Assigner {
     
     private GlobalVariable var;
     
-    protected GlobalVariableAssigner_BAK(ProgramBlockInternal block, final GlobalVariable var, Parameterized value) {
+    protected GlobalVariableAssigner_BAK(ProgramBlockInternal block, final GlobalVariable var, InternalParameterized value) {
         super(block, var, value);
         this.var = var;
     }

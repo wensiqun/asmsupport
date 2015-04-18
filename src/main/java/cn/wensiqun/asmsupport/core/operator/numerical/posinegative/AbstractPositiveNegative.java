@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
@@ -27,13 +27,13 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
  */
 public abstract class AbstractPositiveNegative extends AbstractNumerical {
     
-    protected Parameterized factor;
+    protected InternalParameterized factor;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
     
 
-    protected AbstractPositiveNegative(ProgramBlockInternal block, Parameterized factor) {
+    protected AbstractPositiveNegative(ProgramBlockInternal block, InternalParameterized factor) {
         super(block);
         this.factor = factor;
     }
@@ -56,13 +56,13 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 
     @Override
     protected void initAdditionalProperties() {
-        AClass fatCls = factor.getParamterizedType();
+        AClass fatCls = factor.getResultType();
         targetClass = AClassUtils.getPrimitiveAClass(fatCls);
     }
     
     @Override
     protected void verifyArgument() {
-        AClass fatCls = factor.getParamterizedType();
+        AClass fatCls = factor.getResultType();
         if(!AClassUtils.isArithmetical(fatCls)){
             throw new ArithmeticException("cannot execute arithmetic operator whit " + fatCls);
         }
@@ -84,7 +84,7 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
     @Override
     protected void factorToStack() {
         factor.loadToStack(block);
-        insnHelper.unbox(factor.getParamterizedType().getType());
+        insnHelper.unbox(factor.getResultType().getType());
     }
 
 

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -31,7 +31,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
 
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
-    protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, Parameterized[] arguments) {
+    protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, InternalParameterized[] arguments) {
         super(block, AClassFactory.getType(aclass.getSuperClass()), METHOD_NAME_INIT, arguments);
         //this.methodType = MethodType.THIS;
         //默认不保存引用
@@ -47,7 +47,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
         
         AClass[] argTypes = new AClass[arguments.length];
         for(int i=0; i<argTypes.length; i++){
-            argTypes[i] = arguments[i].getParamterizedType();
+            argTypes[i] = arguments[i].getResultType();
         }
         insnHelper.invokeConstructor(getActuallyOwner().getType(), mtdEntity.getArgTypes());
     }

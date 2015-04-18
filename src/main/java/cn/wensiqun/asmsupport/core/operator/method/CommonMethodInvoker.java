@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
@@ -29,13 +29,13 @@ public class CommonMethodInvoker extends MethodInvoker {
 	
 	private static final Log LOG = LogFactory.getLog(CommonMethodInvoker.class);
     
-	private Parameterized callObjReference;
+	private InternalParameterized callObjReference;
 	
-	protected CommonMethodInvoker(ProgramBlockInternal block, Parameterized objRef, String name, Parameterized[] arguments) {
-		super(block, objRef.getParamterizedType(), name, arguments);
+	protected CommonMethodInvoker(ProgramBlockInternal block, InternalParameterized objRef, String name, InternalParameterized[] arguments) {
+		super(block, objRef.getResultType(), name, arguments);
 		this.callObjReference = objRef;
-		if(callObjReference.getParamterizedType().isPrimitive()){
-			throw new IllegalArgumentException("cannot invoke method at primitive type \"" + callObjReference.getParamterizedType() +  "\" : must be a non-primitive variable");
+		if(callObjReference.getResultType().isPrimitive()){
+			throw new IllegalArgumentException("cannot invoke method at primitive type \"" + callObjReference.getResultType() +  "\" : must be a non-primitive variable");
 		}
         //默认不保存引用
         setSaveReference(false);
@@ -71,21 +71,21 @@ public class CommonMethodInvoker extends MethodInvoker {
             //变量入栈
             callObjReference.loadToStack(block);
             argumentsToStack();
-            if(callObjReference.getParamterizedType().isInterface()){
+            if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
                 //如果是接口
-                insnHelper.invokeInterface(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
             }else{
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VariableMeta ve = ((IVariable)callObjReference).getVariableMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){
-                         insnHelper.invokeSuperMethod(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                         insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }else {
-                         insnHelper.invokeVirtual(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                         insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }
                 }else{
-                	insnHelper.invokeVirtual(callObjReference.getParamterizedType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                	insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                 }
             }
             if(!isSaveReference()){

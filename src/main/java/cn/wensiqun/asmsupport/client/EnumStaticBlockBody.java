@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
@@ -37,7 +37,7 @@ public abstract class EnumStaticBlockBody extends ProgramBlock<EnumStaticBlockBo
 	}
 	
 	@Override
-	public void constructEnumConst(String name, Parameterized... argus) {
+	public void constructEnumConst(String name, InternalParameterized... argus) {
 		target.constructEnumConst(name, argus);
 	}
 	

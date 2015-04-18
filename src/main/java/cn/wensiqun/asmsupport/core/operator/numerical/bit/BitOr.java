@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.Operators;
 
@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
  */
 public class BitOr extends BinaryBitwise {
 
-    protected BitOr(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected BitOr(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block, factor1, factor2);
         this.operator = Operators.BIT_OR;
     }

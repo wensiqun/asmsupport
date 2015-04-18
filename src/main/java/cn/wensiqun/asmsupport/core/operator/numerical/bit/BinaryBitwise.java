@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -34,10 +34,10 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected Parameterized factor1;
-    protected Parameterized factor2;
+    protected InternalParameterized factor1;
+    protected InternalParameterized factor2;
     
-    protected BinaryBitwise(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected BinaryBitwise(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -45,8 +45,8 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
+        AClass ftrCls1 = factor1.getResultType();
+        AClass ftrCls2 = factor2.getResultType();
         
         checkFactor(ftrCls1);
         checkFactor(ftrCls2);
@@ -60,8 +60,8 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected void initAdditionalProperties() {
-        AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
+        AClass ftrCls1 = factor1.getResultType();
+        AClass ftrCls2 = factor2.getResultType();
         
         if(ftrCls2.getCastOrder() < ftrCls1.getCastOrder()){
             targetClass = ftrCls1;
@@ -81,30 +81,30 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         LOG.print("push the first arithmetic factor to stack");
         factor1.loadToStack(block);
         if(LOG.isPrintEnabled()){
-            if(!factor1.getParamterizedType().equals(targetClass)){
-                LOG.print("cast arithmetic factor from " + factor1.getParamterizedType() + " to " + targetClass);
+            if(!factor1.getResultType().equals(targetClass)){
+                LOG.print("cast arithmetic factor from " + factor1.getResultType() + " to " + targetClass);
             }
         }
-        insnHelper.unbox(factor1.getParamterizedType().getType());
-        insnHelper.cast(factor1.getParamterizedType().getType(), targetClass.getType());    
+        insnHelper.unbox(factor1.getResultType().getType());
+        insnHelper.cast(factor1.getResultType().getType(), targetClass.getType());    
         
         LOG.print("push the second arithmetic factor to stack");
         factor2.loadToStack(block);
         
         if(LOG.isPrintEnabled()){
-            if(!factor2.getParamterizedType().equals(targetClass)){
-                LOG.print("cast arithmetic factor from " + factor2.getParamterizedType() + " to " + targetClass);
+            if(!factor2.getResultType().equals(targetClass)){
+                LOG.print("cast arithmetic factor from " + factor2.getResultType() + " to " + targetClass);
             }
         }
         
-        insnHelper.unbox(factor2.getParamterizedType().getType());
+        insnHelper.unbox(factor2.getResultType().getType());
         
         if(operator.equals(Operators.LEFT_SHIFT) ||
            operator.equals(Operators.RIGHT_SHIFT) ||
            operator.equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
-            insnHelper.cast(factor2.getParamterizedType().getType(), AClassFactory.getType(int.class).getType());
+            insnHelper.cast(factor2.getResultType().getType(), AClassFactory.getType(int.class).getType());
         }else{
-            insnHelper.cast(factor2.getParamterizedType().getType(), targetClass.getType());
+            insnHelper.cast(factor2.getResultType().getType(), targetClass.getType());
         }
     }
     

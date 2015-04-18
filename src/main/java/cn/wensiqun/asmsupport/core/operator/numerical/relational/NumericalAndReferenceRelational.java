@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -31,14 +31,14 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     
     private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
     
-    protected NumericalAndReferenceRelational(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected NumericalAndReferenceRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block, factor1, factor2);
     }
     
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getParamterizedType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getParamterizedType());
+        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getResultType());
+        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getResultType());
         
         if(ftrCls1.equals(AClassFactory.getType(boolean.class))&&
            ftrCls2.equals(AClassFactory.getType(boolean.class))){
@@ -57,8 +57,8 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
 
     @Override
     protected void factorsToStack() {
-        AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
+        AClass ftrCls1 = factor1.getResultType();
+        AClass ftrCls2 = factor2.getResultType();
         
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             

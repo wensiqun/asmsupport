@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayLoader;
@@ -51,23 +51,23 @@ public interface ArrayAction {
 	 * @param allocateDims length of each dimensions
 	 * @return {@link ArrayValue}
 	 */
-	public ArrayValue makeArray(final AClass arraytype, final Parameterized... allocateDims);
+	public ArrayValue makeArray(final AClass arraytype, final InternalParameterized... allocateDims);
 	
 	/**
-	 * Same to {@link #makeArray(AClass, Parameterized...)}
+	 * Same to {@link #makeArray(AClass, InternalParameterized...)}
 	 * 
 	 * 
 	 * @param arraytype
 	 * @param dimensions
 	 * @return
 	 */
-	public ArrayValue makeArray(Class<?> arraytype, final Parameterized... dimensions);
+	public ArrayValue makeArray(Class<?> arraytype, final InternalParameterized... dimensions);
 
 	/**
 	 * 
      * <p>
      * Make an array value according an array type and an array value that element type is 
-     * {@link cn.wensiqun.asmsupport.core.Parameterized}, call this method is seem like to 
+     * {@link cn.wensiqun.asmsupport.core.InternalParameterized}, call this method is seem like to 
      * following java code :
      * </p>
      * 
@@ -87,8 +87,8 @@ public interface ArrayAction {
 	 * @param arraytype array type you want to make. must be {@link ArrayClass}
 	 * @param arrayobject the array value that you want to assign.
 	 * @return {@link ArrayValue}
-	 * @see ActionSet#arrayvar(String, AClass, Parameterized, Parameterized...)
-	 * @see #makeArray(AClass, Parameterized...)
+	 * @see ActionSet#arrayvar(String, AClass, InternalParameterized, InternalParameterized...)
+	 * @see #makeArray(AClass, InternalParameterized...)
 	 */
 	public ArrayValue newarray(AClass arraytype, final Object arrayobject);
 	
@@ -122,7 +122,7 @@ public interface ArrayAction {
      * @param parDims other dimensions index array.
      * @return {@link ArrayLoader}
      */
-    public ArrayLoader arrayLoad(Parameterized arrayReference, Parameterized pardim, Parameterized... parDims);
+    public ArrayLoader arrayLoad(InternalParameterized arrayReference, InternalParameterized pardim, InternalParameterized... parDims);
     
 
     /**
@@ -147,7 +147,7 @@ public interface ArrayAction {
      * @param dims the other dimensions indexs
      * @return {@link ArrayStorer}
      */
-    public ArrayStorer arrayStore(Parameterized arrayReference, Parameterized value, Parameterized dim, Parameterized... dims);
+    public ArrayStorer arrayStore(InternalParameterized arrayReference, InternalParameterized value, InternalParameterized dim, InternalParameterized... dims);
     
     
     /**
@@ -168,7 +168,7 @@ public interface ArrayAction {
      * @param dims the dimensions index array that corresponding to each dimension
      * @return {@link ArrayLength}
      */
-    public ArrayLength arrayLength(Parameterized arrayReference, Parameterized... dims);
+    public ArrayLength arrayLength(InternalParameterized arrayReference, InternalParameterized... dims);
     
 
 }

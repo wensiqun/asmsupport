@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
@@ -33,12 +33,12 @@ public abstract class UnaryLogical extends AbstractLogical {
     
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected Parameterized factor;
+    protected InternalParameterized factor;
     
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected UnaryLogical(ProgramBlockInternal block, Parameterized factor) {
+    protected UnaryLogical(ProgramBlockInternal block, InternalParameterized factor) {
         super(block);
         this.factor = factor;
         falseLbl = new Label();
@@ -47,7 +47,7 @@ public abstract class UnaryLogical extends AbstractLogical {
 
     @Override
 	protected void verifyArgument() {
-    	AClass ftrCls = factor.getParamterizedType();
+    	AClass ftrCls = factor.getResultType();
         if(!(ftrCls.equals(AClassFactory.getType(boolean.class)) && !ftrCls.equals(AClassFactory.getType(Boolean.class)))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
@@ -64,7 +64,7 @@ public abstract class UnaryLogical extends AbstractLogical {
             super.execute();
         }else{
             throw new ASMSupportException("the logical operator " + operator + " " + 
-                    factor.getParamterizedType() + " has not been used by other operator.");
+                    factor.getResultType() + " has not been used by other operator.");
         }
     }
 
@@ -72,7 +72,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     protected void factorToStack() {
         LOG.print("factors to stack");
         factor.loadToStack(block);
-        insnHelper.unbox(factor.getParamterizedType().getType());
+        insnHelper.unbox(factor.getResultType().getType());
     }
 
 }

@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.block.sync;
 
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -40,7 +40,7 @@ import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
  */
 public abstract class SynchronizedInternal extends ProgramBlockInternal implements ISynchronized {
 
-	private Parameterized lock;
+	private InternalParameterized lock;
 	private LocalVariable dupSynArgument;
 	
 	private Label monitorenter;
@@ -51,7 +51,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 	
 	private Marker flag1;
 
-	public SynchronizedInternal(Parameterized lock) {
+	public SynchronizedInternal(InternalParameterized lock) {
 		super();
 		this.lock = lock;
 		monitorenter = new Label();
@@ -63,9 +63,9 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 	
 	@Override
 	protected void init() {
-		if (lock.getParamterizedType() == null ||
-		    lock.getParamterizedType().isPrimitive() || 
-		    lock.getParamterizedType().getType().equals(Type.VOID_TYPE)) {
+		if (lock.getResultType() == null ||
+		    lock.getResultType().isPrimitive() || 
+		    lock.getResultType().getType().equals(Type.VOID_TYPE)) {
 			throw new IllegalArgumentException(
 					lock
 							+ " is not a valid type's argument for the synchronized statement");
@@ -121,9 +121,9 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 
         DUP dup = OperatorFactory.newOperator(DUP.class, 
                 new Class<?>[]{ProgramBlockInternal.class, AClass.class}, 
-                this, lock.getParamterizedType());
+                this, lock.getResultType());
         
-		dupSynArgument = var(lock.getParamterizedType(), dup);
+		dupSynArgument = var(lock.getResultType(), dup);
 		
 		flag1 = OperatorFactory.newOperator(Marker.class, 
                 new Class<?>[]{ProgramBlockInternal.class, Label.class}, 

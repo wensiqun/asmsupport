@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractNullCompareRelational extends NumericalAndReferenceRelational {
 
-	protected AbstractNullCompareRelational(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+	protected AbstractNullCompareRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
 		super(block, factor1, factor2);
 	}
 	
@@ -94,7 +94,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		}
 	}
 
-	protected boolean isNullValue(Parameterized val){
+	protected boolean isNullValue(InternalParameterized val){
     	if(val != null && val instanceof Value && ((Value) val).getValue() == null){
     		return true;
     	}

@@ -14,13 +14,13 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
 
 public abstract class IF extends ProgramBlock<IFInternal> implements IIF<ElseIF, Else> {
 
-	public IF(Parameterized condition) {
+	public IF(InternalParameterized condition) {
 		target = new IFInternal(condition) {
 			@Override
 			public void body() {

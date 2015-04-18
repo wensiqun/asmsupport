@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -32,7 +32,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(StaticMethodInvoker.class);
     
     protected StaticMethodInvoker(ProgramBlockInternal block, AClass owner, String name,
-            Parameterized[] arguments) {
+            InternalParameterized[] arguments) {
         super(block, owner, name, arguments);
         if (owner.isPrimitive()) {
             throw new IllegalArgumentException("Cannot call static method from primitive");

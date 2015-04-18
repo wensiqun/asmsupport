@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
 
@@ -28,6 +28,6 @@ public interface IContructorBody extends LocalVariablesBody {
      * @param arguments
      * @return
      */
-	MethodInvoker supercall(Parameterized... arguments);
+	MethodInvoker supercall(InternalParameterized... arguments);
 
 }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
 
 public interface IEnumStaticBlockBody extends LocalVariablesBody {
@@ -24,7 +24,7 @@ public interface IEnumStaticBlockBody extends LocalVariablesBody {
      * @param name
      * @param argus
      */
-	void constructEnumConst(String name, Parameterized... argus);
+	void constructEnumConst(String name, InternalParameterized... argus);
 	
 	/**
 	 * <p>

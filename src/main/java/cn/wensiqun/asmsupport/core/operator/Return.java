@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,11 +32,11 @@ public class Return extends BreakStack {
 
     private static final Log LOG = LogFactory.getLog(Return.class);
     
-    private Parameterized returner;
+    private InternalParameterized returner;
     
     private Type returnType;
     
-    protected Return(ProgramBlockInternal block, Parameterized returner) {
+    protected Return(ProgramBlockInternal block, InternalParameterized returner) {
         super(block, false);
         this.returner = returner;
         if(returner != null){
@@ -44,7 +44,7 @@ public class Return extends BreakStack {
         }
     }
     
-    protected Return(ProgramBlockInternal block, Parameterized returner, boolean autoCreate) {
+    protected Return(ProgramBlockInternal block, InternalParameterized returner, boolean autoCreate) {
         super(block, autoCreate);
         this.returner = returner;
         if(returner != null){
@@ -73,7 +73,7 @@ public class Return extends BreakStack {
             insnHelper.returnInsn();
         }else{
             returner.loadToStack(block);
-            returnType = returner.getParamterizedType().getType();
+            returnType = returner.getResultType().getType();
             if(returnType == null){
                 throw new NullPointerException("return type must be non-null!");
             }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.Equal;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterThan;
@@ -45,7 +45,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterThan gt(Parameterized factor1, Parameterized factor2);
+    public GreaterThan gt(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 
@@ -59,7 +59,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterEqual ge(Parameterized factor1, Parameterized factor2);
+    public GreaterEqual ge(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * The less than equals.
@@ -72,7 +72,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessThan lt(Parameterized factor1, Parameterized factor2);
+    public LessThan lt(InternalParameterized factor1, InternalParameterized factor2);
 
     /**
      * 
@@ -86,7 +86,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessEqual le(Parameterized factor1, Parameterized factor2);
+    public LessEqual le(InternalParameterized factor1, InternalParameterized factor2);
     
     /**
      * 
@@ -100,7 +100,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public Equal eq(Parameterized factor1, Parameterized factor2);
+    public Equal eq(InternalParameterized factor1, InternalParameterized factor2);
 
     /**
      * 
@@ -114,5 +114,5 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public NotEqual ne(Parameterized factor1, Parameterized factor2);
+    public NotEqual ne(InternalParameterized factor1, InternalParameterized factor2);
 }

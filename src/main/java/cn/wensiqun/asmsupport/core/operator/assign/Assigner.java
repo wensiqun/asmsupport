@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -27,16 +27,16 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 /**
  * @author 温斯群(Joe Wen)
  */
-public abstract class Assigner extends AbstractOperator implements Parameterized {
+public abstract class Assigner extends AbstractOperator implements InternalParameterized {
 
-    protected Parameterized value;
+    protected InternalParameterized value;
     
     private IVariable var;
     
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected Assigner(ProgramBlockInternal block, IVariable var, Parameterized value) {
+    protected Assigner(ProgramBlockInternal block, IVariable var, InternalParameterized value) {
         super(block);
         this.value = value;
         this.var = var;
@@ -49,8 +49,8 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
 
 	@Override
 	protected void verifyArgument() {
-		if(!AClassUtils.checkAssignable(value.getParamterizedType(), var.getParamterizedType())) {
-			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getParamterizedType() + " to " + var.getParamterizedType() + "");
+		if(!AClassUtils.checkAssignable(value.getResultType(), var.getResultType())) {
+			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + var.getResultType() + "");
 		}
 	}
 
@@ -63,7 +63,7 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
      * auto cast
      */
     protected void autoCast(){
-        autoCast(value.getParamterizedType(), var.getParamterizedType(), false);
+        autoCast(value.getResultType(), var.getResultType(), false);
     }
     
     
@@ -74,8 +74,8 @@ public abstract class Assigner extends AbstractOperator implements Parameterized
 	}
 
 	@Override
-	public AClass getParamterizedType() {
-		return var.getParamterizedType();
+	public AClass getResultType() {
+		return var.getResultType();
 	}
 
 	@Override

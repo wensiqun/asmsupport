@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.standard.loop.IWhile;
 
 /**
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.loop.IWhile;
  */
 public abstract class WhileInternal extends DoWhileInternal implements IWhile  {
 
-    public WhileInternal(Parameterized condition) {
+    public WhileInternal(InternalParameterized condition) {
         super(condition);
     }
 

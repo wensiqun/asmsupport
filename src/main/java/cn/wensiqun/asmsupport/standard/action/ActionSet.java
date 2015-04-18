@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
@@ -50,7 +50,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      *            the type need to check cast.
      * @return {@link CheckCast}
      */
-    public CheckCast checkcast(Parameterized obj, AClass to);
+    public CheckCast checkcast(InternalParameterized obj, AClass to);
 
     /**
      * check cast object type, such as following code:
@@ -70,7 +70,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      *            the type need to check cast.
      * @return
      */
-    public CheckCast checkcast(Parameterized cc, Class<?> to);
+    public CheckCast checkcast(InternalParameterized cc, Class<?> to);
 
     /**
      * the negative operator. following is example.
@@ -88,7 +88,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      *            must a number.
      * @return {@link Negative}
      */
-    public Negative neg(Parameterized factor);
+    public Negative neg(InternalParameterized factor);
 
     /**
      * The ternary operator in java.
@@ -111,14 +111,14 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * @param exp3
      * @return {@link TernaryOperator}
      */
-    public TernaryOperator ternary(Parameterized exp1, Parameterized exp2, Parameterized exp3);
+    public TernaryOperator ternary(InternalParameterized exp1, InternalParameterized exp2, InternalParameterized exp3);
 
     /**
      * 
      * <p>
      * The string append operator. such as "A" + "B" + "C". if we want append
      * some string, can't use
-     * {@link ArithmeticAction#add(Parameterized, Parameterized)} method, that
+     * {@link ArithmeticAction#add(InternalParameterized, InternalParameterized)} method, that
      * is different to write java code directly.
      * </p>
      * 
@@ -137,7 +137,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * @param pars
      * @return
      */
-    public Parameterized stradd(Parameterized par1, Parameterized... pars);
+    public InternalParameterized stradd(InternalParameterized par1, InternalParameterized... pars);
 
     /**
      * Generate the instanceof instruction.
@@ -154,20 +154,20 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * @param obj
      * @param type
-     * @return {@link Parameterized}a boolean type Parameterized
+     * @return {@link InternalParameterized}a boolean type Parameterized
      */
-    public Parameterized instanceof_(Parameterized obj, AClass type);
+    public InternalParameterized instanceof_(InternalParameterized obj, AClass type);
 
     /**
      * Generate the instanceof instruction, the method is same as
-     * {@link #instanceof_(Parameterized, AClass)}
+     * {@link #instanceof_(InternalParameterized, AClass)}
      * 
-     * @see #instanceof_(Parameterized, AClass)
+     * @see #instanceof_(InternalParameterized, AClass)
      * @param obj
      * @param type
      * @return
      */
-    public Parameterized instanceof_(Parameterized obj, Class<?> type);
+    public InternalParameterized instanceof_(InternalParameterized obj, Class<?> type);
 
     /**
      * Corresponding to break statement in loop.
@@ -196,7 +196,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * 
      * @param exception
      */
-    public void throw_(Parameterized exception);
+    public void throw_(InternalParameterized exception);
 
     /**
      * Corresponding to return statement with no return value.
@@ -213,5 +213,5 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      * @return {{@link Return}
      * 
      */
-    public Return return_(Parameterized parame);
+    public Return return_(InternalParameterized parame);
 }

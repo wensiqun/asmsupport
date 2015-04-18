@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,7 +32,7 @@ public class Division extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(Division.class);
     
-    protected Division(ProgramBlockInternal block, Parameterized factor1, Parameterized factor2) {
+    protected Division(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
         super(block, factor1, factor2);
         operator = Operators.DIV;
     }

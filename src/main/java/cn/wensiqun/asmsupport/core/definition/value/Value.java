@@ -576,8 +576,8 @@ public class Value implements IValue {
         }
 
         Value objval = (Value) obj;
-        AClass curtyp = getParamterizedType();
-        AClass objtyp = objval.getParamterizedType();
+        AClass curtyp = getResultType();
+        AClass objtyp = objval.getResultType();
 
         if (value == null && objval.value == null) {
             if (curtyp.isChildOrEqual(objtyp) || objtyp.isChildOrEqual(curtyp)) {
@@ -608,7 +608,7 @@ public class Value implements IValue {
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return cls;
     }
 

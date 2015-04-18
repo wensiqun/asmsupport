@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
@@ -37,7 +37,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(Class<?> type, Parameterized para);
+    public LocalVariable var(Class<?> type, InternalParameterized para);
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :
@@ -48,7 +48,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(AClass type, Parameterized para);
+    public LocalVariable var(AClass type, InternalParameterized para);
 
     /**
      * Create a local variable, this method equivalent to following code :
@@ -60,7 +60,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(String name, Class<?> type, Parameterized para);
+    public LocalVariable var(String name, Class<?> type, InternalParameterized para);
     
     /**
      * Create a local variable, this method equivalent to following code :
@@ -72,7 +72,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(String name, AClass type, Parameterized para);
+    public LocalVariable var(String name, AClass type, InternalParameterized para);
     
 
     /**
@@ -101,5 +101,5 @@ public interface VariableAction {
 	 * @param val
 	 * @return
 	 */
-	public Assigner assign(ExplicitVariable variable, Parameterized val);
+	public Assigner assign(ExplicitVariable variable, InternalParameterized val);
 }

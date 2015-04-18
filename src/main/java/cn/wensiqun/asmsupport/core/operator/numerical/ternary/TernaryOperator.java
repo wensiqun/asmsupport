@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.ternary;
 
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
@@ -34,18 +34,18 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  * @author 温斯群(Joe Wen)
  *
  */
-public class TernaryOperator extends AbstractOperator implements Parameterized{
+public class TernaryOperator extends AbstractOperator implements InternalParameterized{
     
-    private Parameterized exp1;
-    private Parameterized exp2;
-    private Parameterized exp3;
+    private InternalParameterized exp1;
+    private InternalParameterized exp2;
+    private InternalParameterized exp3;
     
     private boolean byOtherUsed;
     
     private AClass resultClass;
     
-    protected TernaryOperator(ProgramBlockInternal block, Parameterized expression1,
-            Parameterized expression2, Parameterized expression3) {
+    protected TernaryOperator(ProgramBlockInternal block, InternalParameterized expression1,
+            InternalParameterized expression2, InternalParameterized expression3) {
         super(block);
         this.exp1 = expression1;
         this.exp2 = expression2;
@@ -54,9 +54,9 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
 
     @Override
     protected void verifyArgument() {
-        AClass expCls1 = exp1.getParamterizedType();
-        AClass expCls2 = exp2.getParamterizedType();
-        AClass expCls3 = exp3.getParamterizedType();
+        AClass expCls1 = exp1.getResultType();
+        AClass expCls2 = exp2.getResultType();
+        AClass expCls3 = exp3.getResultType();
         
         if(!expCls1.equals(AClassFactory.getType(boolean.class)) && !expCls1.equals(AClassFactory.getType(Boolean.class))){
             throw new ASMSupportException("the first expression type of ternary operator must by boolean or Boolean!");
@@ -112,7 +112,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
         	jmp.jumpNegative(this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
         	exp1.loadToStack(block);
-            insnHelper.unbox(exp1.getParamterizedType().getType());
+            insnHelper.unbox(exp1.getResultType().getType());
             insnHelper.ifZCmp(InstructionHelper.EQ, l1);
         }
 
@@ -141,7 +141,7 @@ public class TernaryOperator extends AbstractOperator implements Parameterized{
     }
 
     @Override
-    public AClass getParamterizedType() {
+    public AClass getResultType() {
         return resultClass;
     }
 

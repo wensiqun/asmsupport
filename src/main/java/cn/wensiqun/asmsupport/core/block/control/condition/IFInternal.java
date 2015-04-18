@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
@@ -24,19 +24,19 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
 
 public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal> {
-    private Parameterized condition;
+    private InternalParameterized condition;
 
-    public IFInternal(Parameterized condition) {
+    public IFInternal(InternalParameterized condition) {
         this.condition = condition;
         condition.asArgument();
     }
 
     @Override
     protected void init() {
-        if (!condition.getParamterizedType().equals(AClassFactory.getType(Boolean.class))
-                && !condition.getParamterizedType().equals(AClassFactory.getType(boolean.class))) {
+        if (!condition.getResultType().equals(AClassFactory.getType(Boolean.class))
+                && !condition.getResultType().equals(AClassFactory.getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
-                    + condition.getParamterizedType());
+                    + condition.getResultType());
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class IFInternal extends ConditionBranchBlock implements IIF<Els
                                                                         // endLbl);
         } else {
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getParamterizedType().getType());
+            insnHelper.unbox(condition.getResultType().getType());
             insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
 

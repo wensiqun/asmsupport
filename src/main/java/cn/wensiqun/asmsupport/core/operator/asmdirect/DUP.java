@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.Parameterized;
+import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
  * integrated DUP DUP2 instruction according to type of the top element.
  *
  */
-public class DUP extends ASMDirect implements Parameterized {
+public class DUP extends ASMDirect implements InternalParameterized {
 
 	private static final Log LOG = LogFactory.getLog(DUP.class);
 	
@@ -42,7 +42,7 @@ public class DUP extends ASMDirect implements Parameterized {
 	}
 
 	@Override
-	public AClass getParamterizedType() {
+	public AClass getResultType() {
 		return type;
 	}
 
