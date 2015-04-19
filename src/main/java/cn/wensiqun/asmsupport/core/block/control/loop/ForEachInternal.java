@@ -21,7 +21,6 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -32,6 +31,7 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
 

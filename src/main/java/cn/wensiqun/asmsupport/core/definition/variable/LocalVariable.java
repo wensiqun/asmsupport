@@ -19,72 +19,34 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.LocalVariableMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.var.Var;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
  * 
  * @author 温斯群(Joe Wen)
  */
-public class LocalVariable extends ExplicitVariable implements Crementable{
+public class LocalVariable extends ExplicitVariable implements Crementable, Var {
 
-    private LocalVariableMeta localVariableMeta;
+	private String name;
+	
+	private AClass formerType;
 
     protected ScopeLogicVariable scopeLogicVar;
 
     private boolean isFirstAssign = true;
     
-    public LocalVariable(LocalVariableMeta lve) {
-        this.localVariableMeta = lve;
-    }
-
-    public boolean availableFor(AbstractOperator operator) {
-        Scope operScope = operator.getBlock().getScope();
-        // 如果此变量是operator的直系变量
-        if (this.scopeLogicVar.isSubOf(operScope)) {
-            if(scopeLogicVar.getCompileOrder() > operator.getCompileOrder()){
-                throw new VariableOperatorException();
-            }
-        } else {
-            if (!this.scopeLogicVar
-                    .availableFor(operator.getBlock().getScope())) {
-                throw new VariableOperatorException();
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void loadToStack(ProgramBlockInternal block) {
-        block.getMethod().getInsnHelper().loadInsn(localVariableMeta.getDeclareType().getType(), scopeLogicVar.getInitStartPos());
-    }
-
-    public LocalVariableMeta getLocalVariableMeta() {
-        return localVariableMeta;
-    }
-
-    private class VariableOperatorException extends RuntimeException {
-
-        private static final long serialVersionUID = 1L;
-
-        private VariableOperatorException() {
-            super("the scope cannot use the variable \"" + localVariableMeta.getName() + "\"");
-        }
-    }
-
-    @Override
-    public AClass getResultType() {
-        return localVariableMeta.getDeclareType();
-    }
-
-    @Override
-    public VariableMeta getVariableMeta() {
-        return localVariableMeta;
+    private int modifiers;
+    
+    public LocalVariable(AClass formerType, int modifiers, String name) {
+        this.name = name;
+        this.modifiers = modifiers;
+        this.formerType = formerType;
     }
 
     public void setScopeLogicVar(ScopeLogicVariable scopeLogicVar) {
@@ -94,6 +56,32 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
     public ScopeLogicVariable getScopeLogicVar() {
         return scopeLogicVar;
     }
+
+    @Override
+    public boolean availableFor(AbstractOperator operator) {
+        Scope operScope = operator.getBlock().getScope();
+        // 如果此变量是operator的直系变量
+        if (this.scopeLogicVar.isSubOf(operScope)) {
+            if(scopeLogicVar.getCompileOrder() > operator.getCompileOrder()){
+                throw new ASMSupportException("The scope cannot use the variable \"" + name + "\"");
+            }
+        } else {
+            if (!this.scopeLogicVar.availableFor(operator.getBlock().getScope())) {
+                throw new ASMSupportException("The scope cannot use the variable \"" + name + "\"");
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void loadToStack(ProgramBlockInternal block) {
+        block.getMethod().getInsnHelper().loadInsn(formerType.getType(), scopeLogicVar.getInitStartPos());
+    }
+
+	@Override
+	public int getModifiers() {
+		return modifiers;
+	}
     
     /**
      * 设置逻辑变量编译顺序
@@ -106,9 +94,14 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
         }
     }
 
-    @Override
-    public String toString() {
-        return localVariableMeta.getName();
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public AClass getFormerType() {
+		return formerType;
+	}
 
 }

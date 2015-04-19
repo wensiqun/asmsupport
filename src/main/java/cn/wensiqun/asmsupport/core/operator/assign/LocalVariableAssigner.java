@@ -43,7 +43,7 @@ public class LocalVariableAssigner extends Assigner {
         var.availableFor(this);
 
         if(LOG.isPrintEnabled()) { 
-            LOG.print("start execute assign value to variable '" + var.getLocalVariableMeta().getName() + "' from " + value.getResultType());
+            LOG.print("start execute assign value to variable '" + var.getMeta().getName() + "' from " + value.getResultType());
             /*start--执行赋值操作--start*/
             //加载值到栈
             LOG.print("load value to stack");

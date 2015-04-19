@@ -15,18 +15,19 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
+import cn.wensiqun.asmsupport.standard.Parameterized;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 变量操作
  *
  */
-public interface VariableAction {
+public interface VariableAction<_P extends Parameterized> {
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :
@@ -37,7 +38,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(Class<?> type, InternalParameterized para);
+    public LocalVariable var(Class<?> type, _P para);
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :

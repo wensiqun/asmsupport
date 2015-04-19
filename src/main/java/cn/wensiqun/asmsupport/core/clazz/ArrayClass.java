@@ -17,7 +17,8 @@ package cn.wensiqun.asmsupport.core.clazz;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.var.Field;
 
 /**
  * 数组类型
@@ -39,8 +40,8 @@ public class ArrayClass extends AClass {
      * @param dim
      */
     ArrayClass(AClass cls, int dim) {
-    	version = cls.version;
-        mod = cls.mod;
+    	version = cls.getVersion();
+        mod = cls.getModifiers();
         superClass = Object.class;
         interfaces = new Class[]{Cloneable.class, Serializable.class};
         
@@ -78,8 +79,7 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public List<GlobalVariableMeta> getGlobalVariableMeta(String name) {
-        //return aclass.getGlobalVariableMeta(name);
+    public List<Field> getGlobalVariableMeta(String name) {
         throw new UnsupportedOperationException();
     }
 

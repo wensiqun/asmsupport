@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable.meta;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 

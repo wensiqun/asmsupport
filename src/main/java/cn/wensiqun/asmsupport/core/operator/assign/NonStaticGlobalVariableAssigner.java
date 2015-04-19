@@ -60,9 +60,9 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
         autoCast();
         
         //将栈内的值存储到全局变量中
-        insnHelper.putField(var.getOwner().getVariableMeta().getDeclareType().getType(), 
+        insnHelper.putField(var.getOwner().getVariableMeta().getFormerType().getType(), 
                 var.getVariableMeta().getName(),
-                var.getVariableMeta().getDeclareType().getType());
+                var.getVariableMeta().getFormerType().getType());
         /*end--执行赋值操作--end*/
     }
 

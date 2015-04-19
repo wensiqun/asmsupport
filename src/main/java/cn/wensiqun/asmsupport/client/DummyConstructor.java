@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 

@@ -15,12 +15,10 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class NonStaticGlobalVariable extends GlobalVariable {
 
@@ -33,8 +31,9 @@ public class NonStaticGlobalVariable extends GlobalVariable {
      * @param var
      * @param gve
      */
-    public NonStaticGlobalVariable(IVariable owner, GlobalVariableMeta meta){
-        super(meta);
+    public NonStaticGlobalVariable(IVariable owner, AClass declaringClass, 
+    		AClass actuallyOwnerType, AClass formerType, int modifiers, String name){
+    	super(declaringClass, actuallyOwnerType, formerType, modifiers, name);
         this.owner = owner;
     }
     
@@ -43,34 +42,20 @@ public class NonStaticGlobalVariable extends GlobalVariable {
     }
     
     @Override
-    public AClass getResultType() {
-        return meta.getDeclareType();
-    }
-
-    @Override
     public void loadToStack(ProgramBlockInternal block) {
-        if(!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), 
-                meta.getActuallyOwnerType(), meta.getModifiers())){
-            throw new IllegalArgumentException("cannot access field " +
-                    meta.getActuallyOwnerType() + "#" + meta.getName()
+        if(!AClassUtils.visible(block.getMethodOwner(), getDeclaringClass(), 
+                getActuallyOwnerType(), getModifiers())){
+            throw new IllegalArgumentException("Cannot access field " +
+                    getActuallyOwnerType() + "#" + getName()
                     + " from " + block.getMethodOwner());
         }
         
         if(LOG.isPrintEnabled()){
-            LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
+            LOG.print("Get field " + getName() + " from variable " + block.getMethodOwner()
+            		+ " and push to stack!");
         }
         owner.loadToStack(block);
-        block.getInsnHelper().getField(meta.getOwner().getType(), meta.getName(), meta.getDeclareType().getType());
-    }
-
-    @Override
-    public boolean availableFor(AbstractOperator operator) {
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return meta.getName();
+        block.getInsnHelper().getField(getDeclaringClass().getType(), getName(), getFormerType().getType());
     }
 
 }

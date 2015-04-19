@@ -14,10 +14,10 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.operators.numerical.ClientNegative;
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -56,7 +56,6 @@ import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.Equal;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterThan;
@@ -65,9 +64,10 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class ProgramBlock<B extends ProgramBlockInternal> implements
-		ActionSet<IF, While, DoWhile, ForEach, Try, Synchronized> {
+		ActionSet<ClientParameterized<? extends InternalParameterized>, IF, While, DoWhile, ForEach, Try, Synchronized> {
 
 	B target;
 
@@ -105,8 +105,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public LocalVariable var(Class<?> type, InternalParameterized para) {
-		return target.var(type, para);
+	public LocalVariable var(Class<?> type, ClientParameterized<? extends InternalParameterized> para) {
+		return target.var(type, para.getTarget());
 	}
 
 	@Override
@@ -356,8 +356,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public Negative neg(InternalParameterized factor) {
-		return target.neg(factor);
+	public ClientNegative neg(ClientParameterized<? extends InternalParameterized> factor) {
+		return new ClientNegative(target.neg(factor.getTarget()));
 	}
 
 	@Override
@@ -443,8 +443,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public Value val(Integer val) {
-		return target.val(val);
+	public ClientParameterized<Value> val(Integer val) {
+		return new ClientParameterized<Value>(target.val(val));
 	}
 
 	@Override

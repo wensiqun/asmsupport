@@ -20,12 +20,10 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
@@ -33,11 +31,10 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
  */
 public class ThisVariable extends ImplicitVariable {
 
-    private GlobalVariableMeta globalVariableMeta;
+	private AClass location;
     
-    
-    public ThisVariable(AClass aclass) {
-        this.globalVariableMeta = new GlobalVariableMeta(aclass, aclass, aclass, Opcodes.ACC_FINAL, ASConstant.THIS);
+    public ThisVariable(AClass location) {
+        this.location = location;
     }
     
     @Override
@@ -50,23 +47,18 @@ public class ThisVariable extends ImplicitVariable {
         return true;
     }
 
-    @Override
-    public AClass getResultType() {
-        return globalVariableMeta.getDeclareType();
-    }
+	@Override
+	public String getName() {
+		return ASConstant.THIS;
+	}
 
-    @Override
-    public VariableMeta getVariableMeta() {
-        return globalVariableMeta;
-    }
+	@Override
+	public AClass getFormerType() {
+		return location;
+	}
 
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(globalVariableMeta.getDeclareType(), name);
-    }*/
-
-    @Override
-    public String toString() {
-        return ASConstant.THIS;
-    }
+	@Override
+	public int getModifiers() {
+		return Opcodes.ACC_FINAL;
+	}
 }

@@ -22,8 +22,9 @@ import java.util.Set;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.var.Field;
 
 
 public abstract class NewMemberClass extends AClass {
@@ -48,7 +49,7 @@ public abstract class NewMemberClass extends AClass {
     
     private AMethod staticBlock;
 
-    private Set<GlobalVariableMeta> globalVariableMetas;
+    private Set<Field> globalVariableMetas;
 
     //available only create enum class
     private int enumNum;
@@ -127,9 +128,9 @@ public abstract class NewMemberClass extends AClass {
 		return constructors;
 	}
     
-    protected Set<GlobalVariableMeta> getGlobalVariableMetas() {
+    protected Set<Field> getGlobalVariableMetas() {
     	if(globalVariableMetas == null){
-    	    globalVariableMetas = new HashSet<GlobalVariableMeta>();
+    	    globalVariableMetas = new HashSet<Field>();
     	}
 		return globalVariableMetas;
 	}
@@ -139,7 +140,7 @@ public abstract class NewMemberClass extends AClass {
      * add
      * @param field
      */
-    public void addGlobalVariableMeta(GlobalVariableMeta e) {
+    public void addGlobalVariableMeta(Field e) {
         getGlobalVariableMetas().add(e);
     }
     

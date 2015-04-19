@@ -15,11 +15,11 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayLoader;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayStorer;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
+import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**
