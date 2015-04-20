@@ -5,9 +5,9 @@ import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class ArrayGeneratorChain extends AbstractGeneratorChain {
 

@@ -17,10 +17,10 @@ package cn.wensiqun.asmsupport.core.clazz;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
+import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.var.Field;
 
 public class AnyException extends AClass {
 
@@ -52,7 +52,7 @@ public class AnyException extends AClass {
     }
 
     @Override
-    public List<Field> getGlobalVariableMeta(String name) {
+    public List<GlobalVariableMeta> getGlobalVariableMeta(String name) {
         throw new UnsupportedOperationException();
     }
 
@@ -119,6 +119,16 @@ public class AnyException extends AClass {
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public AMethodMeta getSuperMethod(String methodName, AClass[] parameterTypes) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public AMethodMeta getSuperConstructor(AClass[] parameterTypes) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

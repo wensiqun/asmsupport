@@ -19,27 +19,33 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
- * 
  * @author 温斯群(Joe Wen)
  */
 public class SuperVariable extends ImplicitVariable{
 
-    private AClass location;
-	
+    private GlobalVariableMeta globalVariableMeta;
+    
     /**
      * 通过Class获取的全局变量
      * @param insnHelper
      */
-    public SuperVariable(AClass location) {
-    	this.location = location;
+    public SuperVariable(AClass aclass) {
+        this.globalVariableMeta = new GlobalVariableMeta(
+                AClassFactory.getType(aclass.getSuperClass()), 
+                AClassFactory.getType(aclass.getSuperClass()), 
+                AClassFactory.getType(aclass.getSuperClass()), 
+                Opcodes.ACC_FINAL, ASConstant.SUPER);
     }
 
     @Override
@@ -52,19 +58,25 @@ public class SuperVariable extends ImplicitVariable{
         return true;
     }
 
-	@Override
-	public String getName() {
-		return ASConstant.SUPER;
-	}
 
-	@Override
-	public int getModifiers() {
-		return Opcodes.ACC_FINAL;
-	}
+    @Override
+    public AClass getResultType() {
+        return globalVariableMeta.getDeclareType();
+    }
 
-	@Override
-	public AClass getFormerType() {
-		return location;
-	}
+    @Override
+    public VariableMeta getVariableMeta() {
+        return globalVariableMeta;
+    }
+
+    /*@Override
+    public GlobalVariable getGlobalVariable(String name) {
+        return getGlobalVariable(globalVariableMeta.getDeclareType(), name);
+    }*/
+
+    @Override
+    public String toString() {
+        return ASConstant.SUPER;
+    }
    
 }

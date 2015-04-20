@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
@@ -29,7 +30,6 @@ import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 

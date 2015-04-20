@@ -17,13 +17,12 @@ import cn.wensiqun.asmsupport.client.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.MethodBody;
 import cn.wensiqun.asmsupport.client.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class DummyTest {
     
@@ -231,8 +230,7 @@ public class DummyTest {
         });
         
         excEnum.newMethod("getEnumName").return_(String.class).public_().body(new MethodBody(){
-            
-        	@Override
+            @Override
             public void body(LocalVariable... args) {
                 return_(stradd(call("name"), Value.value(" - "), this_().field("field")));
             }
@@ -316,7 +314,6 @@ public class DummyTest {
                 call(call(call(sb, "append", call(ExceptedEnumAClass.field("ENUM1"), "getEnumName")),"append", Value.value("\n")),
                     "append", ExceptedEnumAClass.field("ENUM2")
                 );
-                LocalVariable testLoc = var(int.class, neg(neg(val(1))));
                 return_(call(sb, "toString"));
             }
             

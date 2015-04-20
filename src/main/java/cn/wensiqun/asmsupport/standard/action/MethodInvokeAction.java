@@ -15,8 +15,8 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**

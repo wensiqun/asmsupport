@@ -29,6 +29,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
@@ -105,7 +106,6 @@ import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 
@@ -115,7 +115,7 @@ import cn.wensiqun.asmsupport.standard.clazz.AClass;
  * 
  */
 public abstract class ProgramBlockInternal extends AbstractBlockInternal implements
-        ActionSet<InternalParameterized, IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
+        ActionSet<IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
 
 	/** the actually executor.*/
     private ProgramBlockInternal executor = this;

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable.meta;
 
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 
 /**
  * 
@@ -25,12 +25,13 @@ public class VariableMeta {
 
     private String name;
     private int modifiers;
-    private AClass formerType;
+    private AClass declareType;
 
-    public VariableMeta(String name, int modifiers, AClass formerType) {
+    public VariableMeta(String name, int modifiers, AClass declareType) {
+        super();
         this.name = name;
         this.modifiers = modifiers;
-        this.formerType = formerType;
+        this.declareType = declareType;
     }
 
     public String getName() {
@@ -41,15 +42,15 @@ public class VariableMeta {
         return modifiers;
     }
 
-    public AClass getFormerType() {
-        return formerType;
+    public AClass getDeclareType() {
+        return declareType;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((formerType == null) ? 0 : formerType.hashCode());
+        result = prime * result + ((declareType == null) ? 0 : declareType.hashCode());
         result = prime * result + modifiers;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
@@ -67,11 +68,11 @@ public class VariableMeta {
             return false;
         }
         VariableMeta other = (VariableMeta) obj;
-        if (formerType == null) {
-            if (other.formerType != null) {
+        if (declareType == null) {
+            if (other.declareType != null) {
                 return false;
             }
-        } else if (!formerType.equals(other.formerType))
+        } else if (!declareType.equals(other.declareType))
             return false;
         if (modifiers != other.modifiers)
             return false;

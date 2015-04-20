@@ -17,7 +17,6 @@ package cn.wensiqun.asmsupport.core.clazz;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**

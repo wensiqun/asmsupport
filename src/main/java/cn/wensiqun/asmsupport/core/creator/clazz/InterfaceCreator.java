@@ -19,12 +19,12 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 public class InterfaceCreator extends AbstractClassCreatorContext {

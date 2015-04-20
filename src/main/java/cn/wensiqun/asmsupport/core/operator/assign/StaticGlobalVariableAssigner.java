@@ -54,7 +54,7 @@ public class StaticGlobalVariableAssigner extends Assigner {
         //判读如果是静态变量
         insnHelper.putStatic(var.getOwner().getType(), 
                 var.getVariableMeta().getName(),
-                var.getVariableMeta().getFormerType().getType());
+                var.getVariableMeta().getDeclareType().getType());
         /*end--执行赋值操作--end*/
     }
 

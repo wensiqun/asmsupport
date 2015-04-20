@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.creator;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 

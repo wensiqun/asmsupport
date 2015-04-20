@@ -22,6 +22,7 @@ import cn.wensiqun.asmsupport.core.block.AbstractBlockInternal;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
@@ -37,7 +38,6 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 方法的抽象。
@@ -53,6 +53,7 @@ public class AMethod {
     /** 该方法对应的栈 */
     private Stack stack;
 
+    // 0 : indicate add, 1 : indicate modify
     /** 表示当前的Method是添加到Class中还是修改Method */
     private int mode = ASConstant.METHOD_CREATE_MODE_ADD;
 

@@ -14,11 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.creator;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 
@@ -86,7 +86,7 @@ public class FieldCreator implements IFieldCreator {
         if(value != null && value instanceof Boolean) {
             value = (Boolean) value ? 1 : 0;
         }
-        context.getClassVisitor().visitField(fe.getModifiers(), name, fe.getFormerType().getDescription(), null, value).visitEnd();
+        context.getClassVisitor().visitField(fe.getModifiers(), name, fe.getDeclareType().getDescription(), null, value).visitEnd();
     }
 
 }

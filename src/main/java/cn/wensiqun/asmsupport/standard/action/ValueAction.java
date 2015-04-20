@@ -14,9 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.standard.Parameterized;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**
@@ -33,7 +32,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Parameterized val(Integer val);
+    Value val(Integer val);
 
     /**
      * Get {@code short} val

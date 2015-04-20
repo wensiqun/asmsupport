@@ -14,9 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.action.KeywordAction;
 import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public interface IModifiedMethodBody extends KeywordAction, LocalVariablesBody {
 

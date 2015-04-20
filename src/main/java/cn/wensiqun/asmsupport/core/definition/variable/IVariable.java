@@ -17,10 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.FieldGetter;
+import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
-import cn.wensiqun.asmsupport.standard.var.Var;
 
 
 /**
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.standard.var.Var;
  * @author 温斯群(Joe Wen)
  *
  */
-public interface IVariable extends InternalParameterized, FieldGetter, Var{
+public interface IVariable extends InternalParameterized, GetGlobalVariabled{
     
     /**
      * 当前变量对于传入的操作是否可用
@@ -37,4 +37,10 @@ public interface IVariable extends InternalParameterized, FieldGetter, Var{
      */
     boolean availableFor(AbstractOperator operator);
     
+    /**
+     * 获取当前变量的VariableEntity
+     * @return
+     */
+    VariableMeta getVariableMeta();
+
 }

@@ -20,9 +20,9 @@ package cn.wensiqun.asmsupport.core.block.method.common;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 
 /**

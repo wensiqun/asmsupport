@@ -4,12 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * Create a "example.generated.HelloWorld" class and contain a main method.

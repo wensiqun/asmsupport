@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -24,12 +25,10 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.var.Field;
 
 
 /**
@@ -65,9 +64,9 @@ public class ProductClass extends NewMemberClass {
     @Override
     public LinkedList<GlobalVariableMeta> getGlobalVariableMeta(final String name) {
         
-        final LinkedList<Field> found = new LinkedList<Field>();
+        final LinkedList<GlobalVariableMeta> found = new LinkedList<GlobalVariableMeta>();
         
-        for(Field gv : getGlobalVariableMetas()){
+        for(GlobalVariableMeta gv : getGlobalVariableMetas()){
             if(gv.getName().equals(name)){
                 found.add(gv);
             }
@@ -77,12 +76,7 @@ public class ProductClass extends NewMemberClass {
             Class<?> fieldOwner = reallyClass;
             for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
                 try {
-                	java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
-                	if(ModifierUtils.isStatic(f.getModifiers())) {
-                		found.add(new StaticGlobalVariable());
-                	} else {
-                		
-                	}
+                    Field f = fieldOwner.getDeclaredField(name);
                     found.add(new GlobalVariableMeta(this,
                             AClassFactory.getType(fieldOwner),
                             AClassFactory.getType(f.getType()), f.getModifiers(), name));

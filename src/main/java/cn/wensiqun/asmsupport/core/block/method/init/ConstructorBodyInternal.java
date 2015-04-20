@@ -20,12 +20,12 @@ package cn.wensiqun.asmsupport.core.block.method.init;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.method.IContructorBody;
 
 /**

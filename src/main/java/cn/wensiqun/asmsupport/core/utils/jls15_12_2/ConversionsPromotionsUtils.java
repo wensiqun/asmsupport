@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**

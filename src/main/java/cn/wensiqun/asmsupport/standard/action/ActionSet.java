@@ -15,12 +15,11 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
 import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
-import cn.wensiqun.asmsupport.standard.Parameterized;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * 
@@ -29,8 +28,8 @@ import cn.wensiqun.asmsupport.standard.clazz.AClass;
  * @author wensiqun(at)163.com
  *
  */
-public interface ActionSet<_P extends Parameterized, _IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> extends ValueAction, AClassDefAction,
-        KeywordAction, VariableAction<_P>, MethodInvokeAction, ArrayAction, ArithmeticAction, BitwiseAction, CrementAction,
+public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> extends ValueAction, AClassDefAction,
+        KeywordAction, VariableAction, MethodInvokeAction, ArrayAction, ArithmeticAction, BitwiseAction, CrementAction,
         RelationalAction, LogicalAction, CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
 
     /**
@@ -89,7 +88,7 @@ public interface ActionSet<_P extends Parameterized, _IF, _While, _DoWhile, _For
      *            must a number.
      * @return {@link Negative}
      */
-    public Parameterized neg(_P factor);
+    public Negative neg(InternalParameterized factor);
 
     /**
      * The ternary operator in java.

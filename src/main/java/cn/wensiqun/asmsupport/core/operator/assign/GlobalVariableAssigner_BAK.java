@@ -18,7 +18,9 @@ import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -28,13 +30,13 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
  * @author 温斯群(Joe Wen)
  *
  */
-public class NonStaticGlobalVariableAssigner extends Assigner {
+public class GlobalVariableAssigner_BAK extends Assigner {
 
-    private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariableAssigner.class);
+    private static final Log LOG = LogFactory.getLog(GlobalVariableAssigner_BAK.class);
     
-    private NonStaticGlobalVariable var;
+    private GlobalVariable var;
     
-    protected NonStaticGlobalVariableAssigner(ProgramBlockInternal block, final NonStaticGlobalVariable var, InternalParameterized value) {
+    protected GlobalVariableAssigner_BAK(ProgramBlockInternal block, final GlobalVariable var, InternalParameterized value) {
         super(block, var, value);
         this.var = var;
     }
@@ -45,11 +47,16 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
             LOG.print("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
-    	//如果当前方法是静态的抛异常
-        if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
-            throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getVariableMeta().getName() );
+        
+        
+        //如果不是静态类则加载当前变量的引用入栈
+        if(!Modifier.isStatic(var.getVariableMeta().getModifiers())){
+            //如果当前方法是静态的抛异常
+            if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
+            	throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getVariableMeta().getName() );
+            }
+            ((NonStaticGlobalVariable)var).getOwner().loadToStack(block);
         }
-        var.getOwner().loadToStack(block);
         
         
         //加载值到栈
@@ -60,9 +67,16 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
         autoCast();
         
         //将栈内的值存储到全局变量中
-        insnHelper.putField(var.getOwner().getVariableMeta().getDeclareType().getType(), 
-                var.getVariableMeta().getName(),
-                var.getVariableMeta().getDeclareType().getType());
+        //判读如果是静态变量
+        if(((StaticGlobalVariable)var).getOwner() != null){
+            insnHelper.putStatic(((StaticGlobalVariable)var).getOwner().getType(), 
+                    var.getVariableMeta().getName(),
+                    var.getVariableMeta().getDeclareType().getType());
+        }else if(((NonStaticGlobalVariable)var).getOwner() != null){
+            insnHelper.putField(((NonStaticGlobalVariable)var).getOwner().getVariableMeta().getDeclareType().getType(), 
+                    var.getVariableMeta().getName(),
+                    var.getVariableMeta().getDeclareType().getType());
+        }
         /*end--执行赋值操作--end*/
     }
 

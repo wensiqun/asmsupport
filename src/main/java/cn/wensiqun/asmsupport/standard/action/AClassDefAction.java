@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public interface AClassDefAction {
     

@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.asm;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
@@ -30,7 +31,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 /**
  * <p>
@@ -558,7 +558,7 @@ public abstract class InstructionHelper {
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
         locals.printState();
-        getMv().visitVarInsn(var.getVariableMeta().getFormerType().getType().getOpcode(Opcodes.ISTORE),
+        getMv().visitVarInsn(var.getVariableMeta().getDeclareType().getType().getOpcode(Opcodes.ISTORE),
                 var.getScopeLogicVar().getInitStartPos());
     }
 
@@ -799,12 +799,12 @@ public abstract class InstructionHelper {
             storeInsn((LocalVariable) var);
         } else if (var instanceof NonStaticGlobalVariable) {
             NonStaticGlobalVariable gv = (NonStaticGlobalVariable) var;
-            putField(gv.getOwner().getVariableMeta().getFormerType().getType(), gv.getVariableMeta().getName(), gv
-                    .getVariableMeta().getFormerType().getType());
+            putField(gv.getOwner().getVariableMeta().getDeclareType().getType(), gv.getVariableMeta().getName(), gv
+                    .getVariableMeta().getDeclareType().getType());
 
         } else if (var instanceof StaticGlobalVariable) {
             StaticGlobalVariable gv = (StaticGlobalVariable) var;
-            putStatic(gv.getOwner().getType(), gv.getVariableMeta().getName(), gv.getVariableMeta().getFormerType()
+            putStatic(gv.getOwner().getType(), gv.getVariableMeta().getName(), gv.getVariableMeta().getDeclareType()
                     .getType());
         }
 

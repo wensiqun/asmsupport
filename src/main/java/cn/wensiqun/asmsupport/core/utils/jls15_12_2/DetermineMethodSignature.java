@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 import java.util.List;
 import java.util.Map;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public interface DetermineMethodSignature {
     

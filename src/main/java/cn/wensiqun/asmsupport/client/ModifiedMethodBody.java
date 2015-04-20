@@ -15,8 +15,8 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.core.block.method.common.ModifiedMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 
 public abstract class ModifiedMethodBody extends ProgramBlock<ModifiedMethodBodyInternal> implements

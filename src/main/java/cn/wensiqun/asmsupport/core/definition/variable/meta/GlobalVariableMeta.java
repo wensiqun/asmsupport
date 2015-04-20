@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable.meta;
 
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 
 /**
  * 
@@ -23,12 +23,12 @@ import cn.wensiqun.asmsupport.standard.clazz.AClass;
  */
 public class GlobalVariableMeta extends VariableMeta {
 
-    private AClass declaringClass;
+    private AClass owner;
 
     private AClass actuallyOwnerType;
 
     /**
-     * @param declaringClass
+     * @param owner
      *            变量所属的Class
      * @param actuallyOwnerType
      *            变量实际有用者
@@ -39,9 +39,9 @@ public class GlobalVariableMeta extends VariableMeta {
      * @param name
      *            变量名
      */
-    public GlobalVariableMeta(AClass declaringClass, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
+    public GlobalVariableMeta(AClass owner, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
         super(name, modifiers, declareClass);
-        this.declaringClass = declaringClass;
+        this.owner = owner;
         this.actuallyOwnerType = actuallyOwnerType;
     }
 
@@ -50,8 +50,8 @@ public class GlobalVariableMeta extends VariableMeta {
      * 
      * @return
      */
-    public AClass getDeclaringClass() {
-        return declaringClass;
+    public AClass getOwner() {
+        return owner;
     }
 
     /**
@@ -67,7 +67,7 @@ public class GlobalVariableMeta extends VariableMeta {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((actuallyOwnerType == null) ? 0 : actuallyOwnerType.hashCode());
-        result = prime * result + ((declaringClass == null) ? 0 : declaringClass.hashCode());
+        result = prime * result + ((owner == null) ? 0 : owner.hashCode());
         return result;
     }
 
@@ -90,11 +90,11 @@ public class GlobalVariableMeta extends VariableMeta {
         } else if (!actuallyOwnerType.equals(other.actuallyOwnerType)) {
             return false;
         }
-        if (declaringClass == null) {
-            if (other.declaringClass != null) {
+        if (owner == null) {
+            if (other.owner != null) {
                 return false;
             }
-        } else if (!declaringClass.equals(other.declaringClass)) {
+        } else if (!owner.equals(other.owner)) {
             return false;
         }
         return true;

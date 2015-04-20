@@ -18,13 +18,13 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreator;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 public class DummyEnum {
 

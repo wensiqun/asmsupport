@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.standard;
 
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 
 public interface Parameterized {
     

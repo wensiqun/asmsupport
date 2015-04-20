@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
@@ -26,7 +27,6 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.clazz.AClass;
 
 
 /**
