@@ -269,7 +269,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                     public void body(LocalVariable... argus) {
                         AClass owner = getMethodOwner();
                         // get ENUM$VALUES
-                        GlobalVariable values = owner.field("ENUM$VALUES");
+                        GlobalVariable values = (GlobalVariable) owner.field("ENUM$VALUES");
 
                         // get length operator
                         ArrayLength al = arrayLength(values);

@@ -20,11 +20,11 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.LocalVariableMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
@@ -33,14 +33,14 @@ import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
  */
 public class LocalVariable extends ExplicitVariable implements Crementable{
 
-    private LocalVariableMeta localVariableMeta;
+    private LocalVariableMeta meta;
 
     protected ScopeLogicVariable scopeLogicVar;
 
     private boolean isFirstAssign = true;
     
     public LocalVariable(LocalVariableMeta lve) {
-        this.localVariableMeta = lve;
+        this.meta = lve;
     }
 
     public boolean availableFor(AbstractOperator operator) {
@@ -61,11 +61,7 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
 
     @Override
     public void loadToStack(ProgramBlockInternal block) {
-        block.getMethod().getInsnHelper().loadInsn(localVariableMeta.getDeclareType().getType(), scopeLogicVar.getInitStartPos());
-    }
-
-    public LocalVariableMeta getLocalVariableMeta() {
-        return localVariableMeta;
+        block.getMethod().getInsnHelper().loadInsn(meta.getDeclareType().getType(), scopeLogicVar.getInitStartPos());
     }
 
     private class VariableOperatorException extends RuntimeException {
@@ -73,18 +69,18 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
         private static final long serialVersionUID = 1L;
 
         private VariableOperatorException() {
-            super("the scope cannot use the variable \"" + localVariableMeta.getName() + "\"");
+            super("the scope cannot use the variable \"" + meta.getName() + "\"");
         }
     }
 
     @Override
     public AClass getResultType() {
-        return localVariableMeta.getDeclareType();
+        return meta.getDeclareType();
     }
 
     @Override
-    public VariableMeta getVariableMeta() {
-        return localVariableMeta;
+    public VariableMeta getMeta() {
+        return meta;
     }
 
     public void setScopeLogicVar(ScopeLogicVariable scopeLogicVar) {
@@ -104,11 +100,6 @@ public class LocalVariable extends ExplicitVariable implements Crementable{
             scopeLogicVar.setCompileOrder(complieOrder);
             isFirstAssign = false;
         }
-    }
-
-    @Override
-    public String toString() {
-        return localVariableMeta.getName();
     }
 
 }

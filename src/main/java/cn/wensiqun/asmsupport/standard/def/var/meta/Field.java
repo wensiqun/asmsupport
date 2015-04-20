@@ -12,7 +12,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.definition.variable.meta;
+package cn.wensiqun.asmsupport.standard.def.var.meta;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 
@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class GlobalVariableMeta extends VariableMeta {
+public class Field extends VariableMeta {
 
     private AClass owner;
 
@@ -39,7 +39,7 @@ public class GlobalVariableMeta extends VariableMeta {
      * @param name
      *            变量名
      */
-    public GlobalVariableMeta(AClass owner, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
+    public Field(AClass owner, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
         super(name, modifiers, declareClass);
         this.owner = owner;
         this.actuallyOwnerType = actuallyOwnerType;
@@ -82,7 +82,7 @@ public class GlobalVariableMeta extends VariableMeta {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        GlobalVariableMeta other = (GlobalVariableMeta) obj;
+        Field other = (Field) obj;
         if (actuallyOwnerType == null) {
             if (other.actuallyOwnerType != null) {
                 return false;

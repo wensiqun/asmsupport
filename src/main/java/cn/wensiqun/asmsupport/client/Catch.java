@@ -32,7 +32,7 @@ public abstract class Catch extends ProgramBlock<CatchInternal> implements ICatc
     }
     
     public Catch(Class<?> exceptionType) {
-        target = new CatchInternal(getType(exceptionType)) {
+        target = new CatchInternal(getType(exceptionType).getTarget()) {
 
             @Override
             public void body(LocalVariable e) {

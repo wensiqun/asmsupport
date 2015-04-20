@@ -17,6 +17,7 @@ import cn.wensiqun.asmsupport.client.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.MethodBody;
 import cn.wensiqun.asmsupport.client.StaticBlockBody;
+import cn.wensiqun.asmsupport.client.def.clazz.ClientClass;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -310,7 +311,7 @@ public class DummyTest {
                 call(dm, "appendString1", sb);
                 call(dm, "appendString2", sb);
                 
-                AClass ExceptedEnumAClass = getType(ExceptedEnum);
+                ClientClass ExceptedEnumAClass = getType(ExceptedEnum);
                 call(call(call(sb, "append", call(ExceptedEnumAClass.field("ENUM1"), "getEnumName")),"append", Value.value("\n")),
                     "append", ExceptedEnumAClass.field("ENUM2")
                 );

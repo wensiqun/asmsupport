@@ -17,10 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.GetGlobalVariabled;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.standard.def.var.IVar;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
 
 /**
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
  * @author 温斯群(Joe Wen)
  *
  */
-public interface IVariable extends InternalParameterized, GetGlobalVariabled{
+public interface IVariable extends InternalParameterized, IVar {
     
     /**
      * 当前变量对于传入的操作是否可用
@@ -41,6 +41,6 @@ public interface IVariable extends InternalParameterized, GetGlobalVariabled{
      * 获取当前变量的VariableEntity
      * @return
      */
-    VariableMeta getVariableMeta();
+    VariableMeta getMeta();
 
 }

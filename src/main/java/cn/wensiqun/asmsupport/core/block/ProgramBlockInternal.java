@@ -42,7 +42,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.LocalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.MethodInvokeException;
 import cn.wensiqun.asmsupport.core.exception.VerifyErrorException;
@@ -106,6 +105,7 @@ import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
+import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
 
 /**
  * 
@@ -114,8 +114,9 @@ import cn.wensiqun.asmsupport.standard.action.ActionSet;
  * @author wensiqun(at)163.com
  * 
  */
-public abstract class ProgramBlockInternal extends AbstractBlockInternal implements
-        ActionSet<IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
+public abstract class ProgramBlockInternal extends AbstractBlockInternal implements ActionSet<
+InternalParameterized, LocalVariable, GlobalVariable, AClass, 
+IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
 
 	/** the actually executor.*/
     private ProgramBlockInternal executor = this;

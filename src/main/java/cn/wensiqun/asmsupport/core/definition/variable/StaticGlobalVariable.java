@@ -16,11 +16,11 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 public class StaticGlobalVariable extends GlobalVariable {
 
@@ -34,7 +34,7 @@ public class StaticGlobalVariable extends GlobalVariable {
      * @param owner
      * @param gve
      */
-    public StaticGlobalVariable(AClass owner, GlobalVariableMeta meta) {
+    public StaticGlobalVariable(AClass owner, Field meta) {
         super(meta);
         this.owner = owner;
     }

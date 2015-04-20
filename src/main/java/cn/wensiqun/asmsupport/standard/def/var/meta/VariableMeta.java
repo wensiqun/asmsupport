@@ -12,7 +12,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.definition.variable.meta;
+package cn.wensiqun.asmsupport.standard.def.var.meta;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 

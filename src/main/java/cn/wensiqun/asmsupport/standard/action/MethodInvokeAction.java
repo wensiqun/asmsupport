@@ -15,8 +15,10 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
+import cn.wensiqun.asmsupport.standard.Parameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 
 /**
@@ -26,7 +28,7 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
  * @author wensiqun(at)163.com
  *
  */
-public interface MethodInvokeAction {
+public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field extends IFieldVar, _Class extends IClass<_Field>> {
     
     /**
      * <p>
@@ -65,7 +67,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker call(InternalParameterized objRef, String methodName, InternalParameterized... arguments);
+    public MethodInvoker call(_Parameterized objRef, String methodName, InternalParameterized... arguments);
 
     /**
      * Generate method invoke, this method equivalence to 
@@ -77,7 +79,7 @@ public interface MethodInvokeAction {
      * @param args
      * @return
      */
-    public MethodInvoker call(String methodName, InternalParameterized... args);
+    public MethodInvoker call(String methodName, _Parameterized... args);
     
     /**
      * 
@@ -102,7 +104,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker call(AClass owner, String methodName, InternalParameterized... arguments);
+    public MethodInvoker call(_Class owner, String methodName, InternalParameterized... arguments);
     
     /**
      * Invoke static method. the method is similar method {@link #call(AClass, String, InternalParameterized...)}
@@ -138,7 +140,7 @@ public interface MethodInvokeAction {
      * @param arguments
      * @return {@link MethodInvoker}
      */
-    public MethodInvoker new_(AClass owner, InternalParameterized... arguments);
+    public MethodInvoker new_(_Class owner, InternalParameterized... arguments);
     
     /**
      * @param owner

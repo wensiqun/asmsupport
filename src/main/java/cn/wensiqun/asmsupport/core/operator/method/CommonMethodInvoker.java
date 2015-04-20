@@ -19,11 +19,11 @@ import java.lang.reflect.Modifier;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
 public class CommonMethodInvoker extends MethodInvoker {
 	
@@ -78,7 +78,7 @@ public class CommonMethodInvoker extends MethodInvoker {
             }else{
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
-                	 VariableMeta ve = ((IVariable)callObjReference).getVariableMeta();
+                	 VariableMeta ve = ((IVariable)callObjReference).getMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){
                          insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }else {

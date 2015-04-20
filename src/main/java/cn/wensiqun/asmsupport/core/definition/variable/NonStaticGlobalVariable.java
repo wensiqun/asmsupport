@@ -16,11 +16,11 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 public class NonStaticGlobalVariable extends GlobalVariable {
 
@@ -33,7 +33,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
      * @param var
      * @param gve
      */
-    public NonStaticGlobalVariable(IVariable owner, GlobalVariableMeta meta){
+    public NonStaticGlobalVariable(IVariable owner, Field meta){
         super(meta);
         this.owner = owner;
     }
@@ -68,9 +68,5 @@ public class NonStaticGlobalVariable extends GlobalVariable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return meta.getName();
-    }
 
 }

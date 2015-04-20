@@ -14,14 +14,16 @@
  */
 package cn.wensiqun.asmsupport.core.clazz;
 
-import java.lang.reflect.Field;
 import java.util.LinkedList;
-import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 
 /**
@@ -72,11 +74,11 @@ public class SemiClass extends NewMemberClass {
     }
 
     @Override
-    public List<GlobalVariableMeta> getGlobalVariableMeta(final String name) {
+    public Field getField(final String name) {
         
-        final LinkedList<GlobalVariableMeta> found = new LinkedList<GlobalVariableMeta>();
+        final LinkedList<Field> found = new LinkedList<Field>();
         
-        for(GlobalVariableMeta gv : getGlobalVariableMetas()){
+        for(Field gv : getFields()){
             if(gv.getName().equals(name)){
                 found.add(gv);
             }
@@ -86,8 +88,8 @@ public class SemiClass extends NewMemberClass {
             Class<?> fieldOwner = getSuperClass();
             for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
                 try {
-                    Field f = fieldOwner.getDeclaredField(name);
-                    found.add(new GlobalVariableMeta(this,
+                    java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
+                    found.add(new Field(this,
                             AClassFactory.getType(fieldOwner),
                             AClassFactory.getType(f.getType()), f.getModifiers(), name));
                     break;
@@ -100,8 +102,8 @@ public class SemiClass extends NewMemberClass {
             @Override
             protected boolean process(Class<?> inter) {
                 try {
-                    Field f = inter.getDeclaredField(name);
-                    found.add(new GlobalVariableMeta(SemiClass.this,
+                    java.lang.reflect.Field f = inter.getDeclaredField(name);
+                    found.add(new Field(SemiClass.this,
                             AClassFactory.getType(inter),
                             AClassFactory.getType(f.getType()), f.getModifiers(), name));
                     return true;
@@ -111,7 +113,31 @@ public class SemiClass extends NewMemberClass {
             }
         }.loop(getInterfaces());
         
-        return found;
+        if(found.size() == 0) {
+            throw new ASMSupportException("Not found field " + name);
+        } else if(found.size() == 1) {
+            return found.getFirst();
+        } 
+
+        StringBuilder errorSuffix = new StringBuilder();
+        for(Field field : found) {
+            errorSuffix.append(field.getActuallyOwnerType()).append(',');
+        }
+        throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
+    }
+    
+    @Override
+    public final GlobalVariable field(String name) {
+        Field field = getField(name);
+        if(ModifierUtils.isStatic(field.getModifiers())) {
+            return new StaticGlobalVariable(this, getField(name));
+        } else {
+            throw new ASMSupportException("No such field " + name);
+        }
+    }
+
+    public final Value getDefaultValue(){
+        return Value.defaultValue(this);
     }
     
 }

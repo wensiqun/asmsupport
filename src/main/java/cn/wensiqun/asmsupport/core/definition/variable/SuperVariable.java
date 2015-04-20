@@ -21,27 +21,27 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
  * @author 温斯群(Joe Wen)
  */
-public class SuperVariable extends ImplicitVariable{
+public class SuperVariable extends AbstractVariable{
 
-    private GlobalVariableMeta globalVariableMeta;
+    private Field globalVariableMeta;
     
     /**
      * 通过Class获取的全局变量
      * @param insnHelper
      */
     public SuperVariable(AClass aclass) {
-        this.globalVariableMeta = new GlobalVariableMeta(
+        this.globalVariableMeta = new Field(
                 AClassFactory.getType(aclass.getSuperClass()), 
                 AClassFactory.getType(aclass.getSuperClass()), 
                 AClassFactory.getType(aclass.getSuperClass()), 
@@ -65,18 +65,8 @@ public class SuperVariable extends ImplicitVariable{
     }
 
     @Override
-    public VariableMeta getVariableMeta() {
+    public VariableMeta getMeta() {
         return globalVariableMeta;
-    }
-
-    /*@Override
-    public GlobalVariable getGlobalVariable(String name) {
-        return getGlobalVariable(globalVariableMeta.getDeclareType(), name);
-    }*/
-
-    @Override
-    public String toString() {
-        return ASConstant.SUPER;
     }
    
 }

@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.asm;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
@@ -558,7 +557,7 @@ public abstract class InstructionHelper {
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
         locals.printState();
-        getMv().visitVarInsn(var.getVariableMeta().getDeclareType().getType().getOpcode(Opcodes.ISTORE),
+        getMv().visitVarInsn(var.getMeta().getDeclareType().getType().getOpcode(Opcodes.ISTORE),
                 var.getScopeLogicVar().getInitStartPos());
     }
 
@@ -799,12 +798,12 @@ public abstract class InstructionHelper {
             storeInsn((LocalVariable) var);
         } else if (var instanceof NonStaticGlobalVariable) {
             NonStaticGlobalVariable gv = (NonStaticGlobalVariable) var;
-            putField(gv.getOwner().getVariableMeta().getDeclareType().getType(), gv.getVariableMeta().getName(), gv
-                    .getVariableMeta().getDeclareType().getType());
+            putField(gv.getOwner().getMeta().getDeclareType().getType(), gv.getMeta().getName(), gv
+                    .getMeta().getDeclareType().getType());
 
         } else if (var instanceof StaticGlobalVariable) {
             StaticGlobalVariable gv = (StaticGlobalVariable) var;
-            putStatic(gv.getOwner().getType(), gv.getVariableMeta().getName(), gv.getVariableMeta().getDeclareType()
+            putStatic(gv.getOwner().getType(), gv.getMeta().getName(), gv.getMeta().getDeclareType()
                     .getType());
         }
 

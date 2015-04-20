@@ -26,7 +26,6 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.loader.ASMClassLoader;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
-import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -230,68 +229,6 @@ public class ClassUtils {
             return void.class;
         }
         return null;
-    }
-
-    /**
-     * 
-     * @param sourceClass
-     * @return
-     */
-    public static List<List<Class<?>>> getClassUpwardsRoute(Class<?> sourceClass) {
-        return getClassUpwardsRoute(sourceClass, null);
-    }
-
-    /**
-     * 
-     * @param sourceClass
-     * @param destionClass
-     * @return
-     */
-    public static List<List<Class<?>>> getClassUpwardsRoute(Class<?> sourceClass, Class<?> destionClass) {
-        List<List<Class<?>>> list = new ArrayList<List<Class<?>>>();
-        getClassUpwardsRoute(list, null, sourceClass, destionClass);
-
-        List<List<Class<?>>> allRoute = new ArrayList<List<Class<?>>>();
-        for (int i = 0; i < list.size(); i++) {
-            List<Class<?>> route = list.get(i);
-            if (destionClass == null || route.get(route.size() - 1).equals(destionClass)) {
-                allRoute.add(route);
-            }
-        }
-
-        return allRoute;
-    }
-
-    private static void getClassUpwardsRoute(List<List<Class<?>>> allRoutes, List<Class<?>> currentRoute,
-            Class<?> currentClass, Class<?> destionClass) {
-        if (currentClass == null) {
-            return;
-        }
-
-        if (currentRoute == null) {
-            currentRoute = new ArrayList<Class<?>>();
-            allRoutes.add(currentRoute);
-        }
-
-        currentRoute.add(currentClass);
-
-        if (currentClass.equals(destionClass)) {
-            return;
-        }
-
-        Class<?>[] interfaces = currentClass.getInterfaces();
-
-        if (ArrayUtils.isNotEmpty(interfaces)) {
-            for (Class<?> inter : interfaces) {
-                List<Class<?>> newRoute = new ArrayList<Class<?>>();
-                CollectionUtils.addAll(newRoute, currentRoute.iterator());
-                allRoutes.add(newRoute);
-                getClassUpwardsRoute(allRoutes, newRoute, inter, destionClass);
-            }
-        }
-
-        getClassUpwardsRoute(allRoutes, currentRoute, currentClass.getSuperclass(), destionClass);
-
     }
 
     /**

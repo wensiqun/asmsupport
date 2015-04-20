@@ -87,7 +87,7 @@ public class CreateClassAndExtend extends AbstractExample {
 			}
 			
 		});
-		byModifyModifer.setClassOutPutPath("./generated");
+		byModifyModifer.setClassOutPutPath("./target");
 		Class<?> ByModify = byModifyModifer.startup();
 		
         ClassCreator childCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", ByModify, null);

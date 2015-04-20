@@ -19,11 +19,11 @@ import java.lang.reflect.Modifier;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.VariableMeta;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
 /**
  * 构造方法调用者。
@@ -41,9 +41,9 @@ public class VariableInvoker extends MethodInvoker {
      
     @Deprecated
     protected VariableInvoker(ProgramBlockInternal block, IVariable var, String name, InternalParameterized[] arguments) {
-        super(block, var.getVariableMeta().getDeclareType(), name, arguments);
-        if(var.getVariableMeta().getDeclareType().isPrimitive()){
-            throw new IllegalArgumentException("primitive variable \"" + var.getVariableMeta().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");
+        super(block, var.getMeta().getDeclareType(), name, arguments);
+        if(var.getMeta().getDeclareType().isPrimitive()){
+            throw new IllegalArgumentException("primitive variable \"" + var.getMeta().getName() +  "\"  cannot invoke method : variable must be a non-primitive variable");
         }
         this.var = var;
         //默认不保存引用
@@ -63,11 +63,11 @@ public class VariableInvoker extends MethodInvoker {
 
     @Override
     public void doExecute() {
-        VariableMeta ve = var.getVariableMeta();
+        VariableMeta ve = var.getMeta();
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            LOG.print("call method by variable :" + var.getVariableMeta().getName());
+            LOG.print("call method by variable :" + var.getMeta().getName());
             LOG.print("put variable reference to stack");
             //变量入栈
             var.loadToStack(block);

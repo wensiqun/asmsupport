@@ -16,9 +16,9 @@ package cn.wensiqun.asmsupport.core.creator;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 /**
  * 
@@ -31,7 +31,7 @@ public class FieldCreator implements IFieldCreator {
     private int modifiers;
     private AClass type;
 
-    private GlobalVariableMeta fe;
+    private Field fe;
     private IClassContext context;
     private Object value;
     
@@ -68,8 +68,7 @@ public class FieldCreator implements IFieldCreator {
     public void create(IClassContext cv) {
     	this.context = cv;
     	NewMemberClass owner = cv.getCurrentClass();
-        fe = new GlobalVariableMeta(owner, owner, type, modifiers, name);
-        owner.addGlobalVariableMeta(fe);
+        owner.addField(fe = new Field(owner, owner, type, modifiers, name));
     }
     
     @Override
@@ -86,7 +85,9 @@ public class FieldCreator implements IFieldCreator {
         if(value != null && value instanceof Boolean) {
             value = (Boolean) value ? 1 : 0;
         }
-        context.getClassVisitor().visitField(fe.getModifiers(), name, fe.getDeclareType().getDescription(), null, value).visitEnd();
+        context.getClassVisitor().visitField(
+                fe.getModifiers(), name, 
+                fe.getDeclareType().getDescription(), null, value).visitEnd();
     }
 
 }

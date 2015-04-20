@@ -15,9 +15,10 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
-public interface AClassDefAction {
+public interface AClassDefAction<_Field extends IFieldVar, _Class extends IClass<_Field>> {
     
     /**
      * Defined a class object to AClass
@@ -25,7 +26,7 @@ public interface AClassDefAction {
      * @param cls
      * @return
      */
-    AClass getType(Class<?> cls);
+    _Class getType(Class<?> cls);
     
     /**
      * Defined an array type according component and dimension
@@ -38,7 +39,7 @@ public interface AClassDefAction {
      * @param dim
      * @return
      */
-    ArrayClass getArrayType(Class<?> cls, int dim);
+    _Class getArrayType(Class<?> cls, int dim);
     
     /**
      * Similar to {@link #getArrayType(Class, int)}
@@ -47,5 +48,5 @@ public interface AClassDefAction {
      * @param dim
      * @return
      */
-    ArrayClass getArrayType(AClass rootComponent, int dim);
+    _Class getArrayType(AClass rootComponent, int dim);
 }

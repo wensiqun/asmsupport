@@ -14,12 +14,15 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import java.lang.reflect.Array;
+
+import cn.wensiqun.asmsupport.client.def.clazz.ClientClass;
+import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -66,8 +69,9 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 
-public class ProgramBlock<B extends ProgramBlockInternal> implements
-		ActionSet<IF, While, DoWhile, ForEach, Try, Synchronized> {
+public class ProgramBlock<B extends ProgramBlockInternal> implements ActionSet<
+ClientParameterized<? extends InternalParameterized>, Var, FieldVar, ClientClass, 
+IF, While, DoWhile, ForEach, Try, Synchronized> {
 
 	B target;
 
@@ -80,8 +84,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	 * 
 	 * @return
 	 */
-	public NewMemberClass getMethodOwner() {
-		return target.getMethodOwner();
+	public ClientClass getMethodOwner() {
+		return new ClientClass(target.getMethodOwner());
 	}
 
 	@Override
@@ -100,49 +104,49 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public LocalVariable var(String name, Class<?> type, InternalParameterized para) {
-		return target.var(name, type, para);
+	public Var var(String name, Class<?> type, ClientParameterized<? extends InternalParameterized> para) {
+		return new Var(target.var(name, type, para.target));
 	}
 
 	@Override
-	public LocalVariable var(Class<?> type, InternalParameterized para) {
-		return target.var(type, para);
+	public Var var(Class<?> type, ClientParameterized<? extends InternalParameterized> para) {
+		return new Var(target.var(type, para.target));
 	}
 
 	@Override
-	public LocalVariable var(String name, AClass type, InternalParameterized para) {
-		return target.var(name, type, para);
+	public Var var(String name, AClass type, ClientParameterized<? extends InternalParameterized> para) {
+		return new Var(target.var(name, type, para.target));
 	}
 
 	@Override
-	public LocalVariable var(AClass type, InternalParameterized para) {
-		return target.var(type, para);
+	public Var var(AClass type, ClientParameterized<? extends InternalParameterized> para) {
+		return new Var(target.var(type, para.target));
 	}
 
 	@Override
-	public GlobalVariable field(String name) {
-		return target.field(name);
+	public FieldVar field(String name) {
+		return new FieldVar(target.field(name));
 	}
 
 	@Override
-	public Assigner assign(ExplicitVariable variable, InternalParameterized val) {
-		return target.assign(variable, val);
+	public Assigner assign(ExplicitVariable variable, ClientParameterized<? extends InternalParameterized> val) {
+		return target.assign(variable, val.target);
 	}
 
 	@Override
-	public MethodInvoker call(InternalParameterized objRef, String methodName,
+	public MethodInvoker call(ClientParameterized<? extends InternalParameterized> objRef, String methodName,
 			InternalParameterized... arguments) {
-		return target.call(objRef, methodName, arguments);
+		return target.call(objRef.target, methodName, arguments);
 	}
 
 	@Override
-	public MethodInvoker call(String methodName, InternalParameterized... args) {
-		return target.call(methodName, args);
+	public MethodInvoker call(String methodName, ClientParameterized<? extends InternalParameterized>... args) {
+		return target.call(methodName, client2Internal(args));
 	}
 
 	@Override
-	public MethodInvoker call(AClass owner, String methodName, InternalParameterized... arguments) {
-		return target.call(owner, methodName, arguments);
+	public MethodInvoker call(ClientClass owner, String methodName, InternalParameterized... arguments) {
+		return target.call(owner.getTarget(), methodName, arguments);
 	}
     
 	@Override
@@ -156,8 +160,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public MethodInvoker new_(AClass owner, InternalParameterized... arguments) {
-		return target.new_(owner, arguments);
+	public MethodInvoker new_(ClientClass owner, InternalParameterized... arguments) {
+		return target.new_(owner.getTarget(), arguments);
 	}
 
 	@Override
@@ -346,8 +350,8 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public CheckCast checkcast(InternalParameterized cc, AClass to) {
-		return target.checkcast(cc, to);
+	public CheckCast checkcast(InternalParameterized cc, ClientClass to) {
+		return target.checkcast(cc, to.getTarget());
 	}
 
 	@Override
@@ -508,18 +512,57 @@ public class ProgramBlock<B extends ProgramBlockInternal> implements
 	}
 
 	@Override
-	public AClass getType(Class<?> cls) {
-		return target.getType(cls);
+	public ClientClass getType(Class<?> cls) {
+		return new ClientClass(target.getType(cls));
 	}
 
 	@Override
-	public ArrayClass getArrayType(Class<?> cls, int dim) {
-		return target.getArrayType(cls, dim);
+	public ClientClass getArrayType(Class<?> cls, int dim) {
+		return new ClientClass(target.getArrayType(cls, dim));
 	}
 
 	@Override
-	public ArrayClass getArrayType(AClass rootComponent, int dim) {
-		return target.getArrayType(rootComponent, dim);
+	public ClientClass getArrayType(AClass rootComponent, int dim) {
+		return new ClientClass(target.getArrayType(rootComponent, dim));
 	}
-
+	
+	/**
+     * Convert ClientParameterized to InternalParameterized
+     * 
+     * @param pars
+     * @return
+     */
+    InternalParameterized[] client2Internal(ClientParameterized<? extends InternalParameterized>... pars) {
+        if(pars == null) {
+            return null;
+        }
+        InternalParameterized[] paras = new InternalParameterized[pars.length];
+        for(int i=0; i<pars.length; i++) {
+            paras[i] = pars[i].target;
+        }
+        return paras;
+    }
+    
+    /**
+     * Convert multiple dimension ClientParameterized array to  InternalParameterized array.
+     * 
+     * @param clientArray
+     * @return
+     */
+    Object client2Internal(Object clientArray) {
+        if(clientArray == null) {
+            throw new NullPointerException("Client is null.");
+        }
+        if(clientArray.getClass().isArray()) {
+            int len = Array.getLength(clientArray);
+            Object[] internalArray = new Object[len];
+            for(int i=0; i<len; i++) {
+                internalArray[i] = client2Internal(Array.get(clientArray, i));
+            }
+            return internalArray;
+        } else if (clientArray instanceof ClientParameterized){
+            return ((ClientParameterized<? extends InternalParameterized>)clientArray).target;
+        }
+        throw new IllegalArgumentException();
+    }
 }

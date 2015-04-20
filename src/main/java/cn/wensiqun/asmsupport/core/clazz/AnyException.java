@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.clazz;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
 
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.definition.variable.meta.GlobalVariableMeta;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 public class AnyException extends AClass {
 
@@ -52,7 +52,7 @@ public class AnyException extends AClass {
     }
 
     @Override
-    public List<GlobalVariableMeta> getGlobalVariableMeta(String name) {
+    public Field getField(String name) {
         throw new UnsupportedOperationException();
     }
 
@@ -112,28 +112,23 @@ public class AnyException extends AClass {
     }
 
     @Override
-    public boolean isChildOrEqual(AClass cls) {
-        return cls == ANY;
-    }
-
-    @Override
     public Type getType() {
         return type;
     }
 
-    @Override
-    public AMethodMeta getSuperMethod(String methodName, AClass[] parameterTypes) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public AMethodMeta getSuperConstructor(AClass[] parameterTypes) {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public String toString() {
         return "Any Exception";
+    }
+    
+    @Override
+    public final GlobalVariable field(String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    public final Value getDefaultValue(){
+        throw new UnsupportedOperationException();
     }
 
 }

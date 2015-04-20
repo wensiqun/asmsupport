@@ -20,6 +20,10 @@ import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
 import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
 import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
+import cn.wensiqun.asmsupport.standard.Parameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
+import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
  * 
@@ -28,9 +32,25 @@ import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
  * @author wensiqun(at)163.com
  *
  */
-public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> extends ValueAction, AClassDefAction,
-        KeywordAction, VariableAction, MethodInvokeAction, ArrayAction, ArithmeticAction, BitwiseAction, CrementAction,
-        RelationalAction, LogicalAction, CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
+public interface ActionSet<
+_Parameterized extends Parameterized,
+_Var extends IVar,
+_Field extends IFieldVar, 
+_Class extends IClass<_Field>, 
+_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> 
+extends 
+ValueAction, 
+AClassDefAction<_Field, _Class>,
+KeywordAction, 
+VariableAction<_Parameterized, _Var, _Field>, 
+MethodInvokeAction<_Parameterized, _Field, _Class>, 
+ArrayAction, 
+ArithmeticAction, 
+BitwiseAction, 
+CrementAction,
+RelationalAction, 
+LogicalAction, 
+CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
 
     /**
      * check cast object type, such as following code:
@@ -50,7 +70,7 @@ public interface ActionSet<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized>
      *            the type need to check cast.
      * @return {@link CheckCast}
      */
-    public CheckCast checkcast(InternalParameterized obj, AClass to);
+    public CheckCast checkcast(InternalParameterized obj, _Class to);
 
     /**
      * check cast object type, such as following code:

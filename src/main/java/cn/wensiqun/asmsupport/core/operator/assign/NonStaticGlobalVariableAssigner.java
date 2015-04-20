@@ -42,12 +42,12 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
     @Override
     public void doExecute() {
     	if(LOG.isPrintEnabled()){
-            LOG.print("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+            LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
     	//如果当前方法是静态的抛异常
         if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
-            throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getVariableMeta().getName() );
+            throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
         }
         var.getOwner().loadToStack(block);
         
@@ -60,9 +60,9 @@ public class NonStaticGlobalVariableAssigner extends Assigner {
         autoCast();
         
         //将栈内的值存储到全局变量中
-        insnHelper.putField(var.getOwner().getVariableMeta().getDeclareType().getType(), 
-                var.getVariableMeta().getName(),
-                var.getVariableMeta().getDeclareType().getType());
+        insnHelper.putField(var.getOwner().getMeta().getDeclareType().getType(), 
+                var.getMeta().getName(),
+                var.getMeta().getDeclareType().getType());
         /*end--执行赋值操作--end*/
     }
 

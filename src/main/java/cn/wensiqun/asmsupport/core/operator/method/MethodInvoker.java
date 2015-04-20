@@ -34,6 +34,7 @@ import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -46,8 +47,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public abstract class MethodInvoker extends AbstractOperator implements
     InternalParameterized {
 
-    protected static String METHOD_NAME_INIT = "<init>";
-    
     private static final Log LOG = LogFactory.getLog(MethodInvoker.class);
 
     //protected AClass[] argumentClasses;
@@ -121,16 +120,9 @@ public abstract class MethodInvoker extends AbstractOperator implements
             mtdEntity.setName(name);
         }else{
             // 如果是构造方法则返回类型为自己本身
-            if (name.equals(METHOD_NAME_INIT)) {
-                mtdEntity = methodOwner.availableConstructor(block.getMethodOwner(), argumentClasses);
-                if(mtdEntity == null){
-                    throw new NoSuchMethod(methodOwner, name, argumentClasses);
-                }
-            }else{
-                mtdEntity = methodOwner.availableMethod(block.getMethodOwner(), name, argumentClasses);
-                if(mtdEntity == null){
-                    throw new NoSuchMethod(methodOwner, name, argumentClasses);
-                }
+            mtdEntity = new MethodChooser(block.getMethodOwner(), methodOwner, name, argumentClasses).chooseMethod();
+            if(mtdEntity == null){
+                throw new NoSuchMethod(methodOwner, name, argumentClasses);
             }
         }
         
@@ -194,10 +186,6 @@ public abstract class MethodInvoker extends AbstractOperator implements
         this.execute();
         setSaveReference(saveRef);
     }
-    
-    /*public MethodInvoker invoke(String methodName, Parameterized... arguments) {
-        return new MethodInvokeInvoker(block, this, methodName, arguments);
-    }*/
 
     public void setSaveReference(boolean saveReturn) {
         this.saveReturn = saveReturn;
@@ -208,7 +196,7 @@ public abstract class MethodInvoker extends AbstractOperator implements
     }
 
     public final AClass getReturnClass() {
-        if(name.equals(METHOD_NAME_INIT)){
+        if(name.equals(ASConstant.INIT)){
             return methodOwner;
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();

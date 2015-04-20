@@ -8,6 +8,6 @@ public interface Parameterized {
      * 获取当前参数化类型的返回参数
      * @return
      */
-    public AClass getResultType();
+    AClass getResultType();
 
 }

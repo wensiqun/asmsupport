@@ -14,19 +14,19 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
+import cn.wensiqun.asmsupport.standard.Parameterized;
+import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
+import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
  * 变量操作
  *
  */
-public interface VariableAction {
+public interface VariableAction<_Parameterized extends Parameterized, _Var extends IVar, _FieldVar extends IFieldVar> {
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :
@@ -37,7 +37,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(Class<?> type, InternalParameterized para);
+    public _Var var(Class<?> type, _Parameterized para);
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :
@@ -48,7 +48,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(AClass type, InternalParameterized para);
+    public _Var var(AClass type, _Parameterized para);
 
     /**
      * Create a local variable, this method equivalent to following code :
@@ -60,7 +60,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(String name, Class<?> type, InternalParameterized para);
+    public _Var var(String name, Class<?> type, _Parameterized para);
     
     /**
      * Create a local variable, this method equivalent to following code :
@@ -72,7 +72,7 @@ public interface VariableAction {
      * @param para
      * @return
      */
-    public LocalVariable var(String name, AClass type, InternalParameterized para);
+    public _Var var(String name, AClass type, _Parameterized para);
     
 
     /**
@@ -85,7 +85,7 @@ public interface VariableAction {
      * @param name
      * @return
      */
-    public GlobalVariable field(String name);
+    public _FieldVar field(String name);
     
 	/**
 	 * assign a value to a variable. for exampel:
@@ -101,5 +101,5 @@ public interface VariableAction {
 	 * @param val
 	 * @return
 	 */
-	public Assigner assign(ExplicitVariable variable, InternalParameterized val);
+	public Assigner assign(ExplicitVariable variable, _Parameterized val);
 }

@@ -39,7 +39,7 @@ public class StaticGlobalVariableAssigner extends Assigner {
     @Override
     public void doExecute() {
     	if(LOG.isPrintEnabled()){
-            LOG.print("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+            LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
         
@@ -53,8 +53,8 @@ public class StaticGlobalVariableAssigner extends Assigner {
         //将栈内的值存储到全局变量中
         //判读如果是静态变量
         insnHelper.putStatic(var.getOwner().getType(), 
-                var.getVariableMeta().getName(),
-                var.getVariableMeta().getDeclareType().getType());
+                var.getMeta().getName(),
+                var.getMeta().getDeclareType().getType());
         /*end--执行赋值操作--end*/
     }
 

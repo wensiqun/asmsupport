@@ -23,12 +23,12 @@ public abstract class TypeUtils {
 	 * @param sup
 	 * @return
 	 */
-	public static boolean isSubtyping(AClass subType, AClass superType) {
+    public static boolean isSubtyping(AClass subType, AClass superType) {
 		if (superType.getName().equals(Object.class.getName()) || 
 			subType.equals(superType)) {
             return true;
         }
-        AClass[] directSuperTypes = TypeUtils.directSuperType(subType);
+		AClass[] directSuperTypes = TypeUtils.directSuperType(subType);
         if (directSuperTypes == null) {
             return false;
         }
@@ -50,7 +50,7 @@ public abstract class TypeUtils {
 	 */
 	public static AClass[] directSuperType(AClass subType) {
 		if(subType.isPrimitive()) {
-			AClass type = directSuperAmongPrimitiveType(subType);
+		    AClass type = directSuperAmongPrimitiveType(subType);
 			if(type == null) {
 				return null;
 			} else {
@@ -125,7 +125,7 @@ public abstract class TypeUtils {
 	 */
 	public static AClass[] directSuperAmongClassAndInterfaceType(AClass subType) {
 		if (subType.isInterface()) {
-			AClass[] superTypes;
+		    AClass[] superTypes;
             Class<?>[] interfaces = subType.getInterfaces();
             if (interfaces != null && interfaces.length > 0) {
                 superTypes = new AClass[interfaces.length];
@@ -144,13 +144,13 @@ public abstract class TypeUtils {
             } else if (superType != null && intefaces.length == 0) {
             	return new AClass[]{AClassFactory.getType(superType)};
             } else if (superType == null && intefaces.length > 0) {
-            	AClass[] superTypes = new AClass[intefaces.length];
+                AClass[] superTypes = new AClass[intefaces.length];
             	for (int i = 0; i < superTypes.length; i++) {
                     superTypes[i] = AClassFactory.getType(intefaces[i]);
                 }
             	return superTypes;
             } else {
-            	AClass[] superTypes = new AClass[intefaces.length + 1];
+                AClass[] superTypes = new AClass[intefaces.length + 1];
                 superTypes[0] = AClassFactory.getType(superType);
                 for (int i = 1; i < superTypes.length; i++) {
                     superTypes[i] = AClassFactory.getType(intefaces[i - 1]);
@@ -183,7 +183,7 @@ public abstract class TypeUtils {
 	 */
 	public static AClass[] directSuperAmongArrayType(AClass subType) {
 		ArrayClass arrayType = (ArrayClass) subType;
-        AClass basicElementType = arrayType.getRootComponentClass();
+		AClass basicElementType = arrayType.getRootComponentClass();
         AClass[] superTypes;
         if (basicElementType.isPrimitive()) {
             superTypes = new AClass[2];

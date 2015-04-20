@@ -44,16 +44,16 @@ public class GlobalVariableAssigner_BAK extends Assigner {
     @Override
     public void doExecute() {
     	if(LOG.isPrintEnabled()){
-            LOG.print("assign value to global variable '" + var.getVariableMeta().getName() + "' from " + value  );
+            LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
         /*start--执行赋值操作--start*/
         
         
         //如果不是静态类则加载当前变量的引用入栈
-        if(!Modifier.isStatic(var.getVariableMeta().getModifiers())){
+        if(!Modifier.isStatic(var.getMeta().getModifiers())){
             //如果当前方法是静态的抛异常
             if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
-            	throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getVariableMeta().getName() );
+            	throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
             }
             ((NonStaticGlobalVariable)var).getOwner().loadToStack(block);
         }
@@ -70,12 +70,12 @@ public class GlobalVariableAssigner_BAK extends Assigner {
         //判读如果是静态变量
         if(((StaticGlobalVariable)var).getOwner() != null){
             insnHelper.putStatic(((StaticGlobalVariable)var).getOwner().getType(), 
-                    var.getVariableMeta().getName(),
-                    var.getVariableMeta().getDeclareType().getType());
+                    var.getMeta().getName(),
+                    var.getMeta().getDeclareType().getType());
         }else if(((NonStaticGlobalVariable)var).getOwner() != null){
-            insnHelper.putField(((NonStaticGlobalVariable)var).getOwner().getVariableMeta().getDeclareType().getType(), 
-                    var.getVariableMeta().getName(),
-                    var.getVariableMeta().getDeclareType().getType());
+            insnHelper.putField(((NonStaticGlobalVariable)var).getOwner().getMeta().getDeclareType().getType(), 
+                    var.getMeta().getName(),
+                    var.getMeta().getDeclareType().getType());
         }
         /*end--执行赋值操作--end*/
     }

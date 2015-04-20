@@ -26,6 +26,7 @@ import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 
 /**
@@ -64,8 +65,8 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
-        GlobalVariable constant = getMethodOwner().field(name);
-        if(!ModifierUtils.isEnum(constant.getVariableMeta().getModifiers())){
+        IFieldVar constant = getMethodOwner().field(name);
+        if(!ModifierUtils.isEnum(constant.getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
         enumArgumentsList.add(new EnumConstructorInfo(name, argus));
@@ -86,7 +87,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
-			enumConstant = getMethodOwner().field(enumArgu.name);
+			enumConstant = (GlobalVariable) getMethodOwner().field(enumArgu.name);
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
@@ -101,7 +102,7 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	        i++;
 		}
 		
-		GlobalVariable gv = getMethodOwner().field("ENUM$VALUES");
+		GlobalVariable gv = (GlobalVariable) getMethodOwner().field("ENUM$VALUES");
 		
 		ArrayValue av = newarray(AClassFactory.getArrayType(getMethodOwner(), 1), values);
 		assign(gv, av);

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import cn.wensiqun.asmsupport.client.DummyModifiedClass;
 import cn.wensiqun.asmsupport.client.ModifiedMethodBody;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import dummy.modify.ModifyEntity;
 
@@ -17,7 +18,7 @@ public class DummyModifyTest {
 
             @Override
             public void body(LocalVariable... args) {
-                LocalVariable str = var("str", StringBuilder.class, new_(StringBuilder.class, val("Append at before{")));
+                Var str = var("str", StringBuilder.class, new_(StringBuilder.class, val("Append at before{")));
                 call(str, "append", callOrig());
                 call(str, "append", val("}append at after"));
                 return_(call(str, "toString"));

@@ -20,6 +20,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.ASConstant;
 
 /**
  * 构造方法调用者。
@@ -32,10 +33,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, InternalParameterized[] arguments) {
-        super(block, AClassFactory.getType(aclass.getSuperClass()), METHOD_NAME_INIT, arguments);
-        //this.methodType = MethodType.THIS;
-        //默认不保存引用
-        //setSaveReference(false);
+        super(block, AClassFactory.getType(aclass.getSuperClass()), ASConstant.INIT, arguments);
     }
 
     @Override
@@ -51,10 +49,6 @@ public class SuperConstructorInvoker extends MethodInvoker {
         }
         insnHelper.invokeConstructor(getActuallyOwner().getType(), mtdEntity.getArgTypes());
     }
-
-/*    @Override
-    public void preExecuteProcess() {
-    }*/
 
     @Override
     public String toString() {
