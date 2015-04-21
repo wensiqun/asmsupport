@@ -17,15 +17,15 @@
  */
 package cn.wensiqun.asmsupport.core.block.method.init;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
-import cn.wensiqun.asmsupport.standard.method.IEnumContructorBody;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.method.IEnumConstructorBody;
 
 
 /**
@@ -33,13 +33,13 @@ import cn.wensiqun.asmsupport.standard.method.IEnumContructorBody;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class EnumConstructorBodyInternal extends AbstractMethodBody implements IEnumContructorBody {
+public abstract class EnumConstructorBodyInternal extends AbstractMethodBody implements IEnumConstructorBody<LocalVariable> {
     
     @Override
     public final void generateBody() {
         OperatorFactory.newOperator(SuperConstructorInvoker.class, 
-        		new Class<?>[]{ProgramBlockInternal.class, AClass.class, InternalParameterized[].class}, 
-        		getExecutor(), getMethodOwner(), new InternalParameterized[]{argments[0], argments[1]});
+        		new Class<?>[]{ProgramBlockInternal.class, AClass.class, KernelParameterized[].class}, 
+        		getExecutor(), getMethodOwner(), new KernelParameterized[]{argments[0], argments[1]});
         body((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
     }
     

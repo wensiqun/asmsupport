@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.creator;
 
 
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 
 
@@ -42,7 +42,7 @@ public interface IClassContext {
      * 
      * @return
      */
-    NewMemberClass getCurrentClass();
+    MutableClass getCurrentClass();
     
     /**
      * 

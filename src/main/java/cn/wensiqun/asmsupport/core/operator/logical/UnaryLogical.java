@@ -14,15 +14,16 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
@@ -33,13 +34,13 @@ public abstract class UnaryLogical extends AbstractLogical {
     
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected InternalParameterized factor;
+    protected KernelParameterized factor;
     
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected UnaryLogical(ProgramBlockInternal block, InternalParameterized factor) {
-        super(block);
+    protected UnaryLogical(ProgramBlockInternal block, KernelParameterized factor, Operators operator) {
+        super(block, operator);
         this.factor = factor;
         falseLbl = new Label();
         trueLbl = new Label();
@@ -63,7 +64,7 @@ public abstract class UnaryLogical extends AbstractLogical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ASMSupportException("the logical operator " + operator + " " + 
+            throw new ASMSupportException("the logical operator " + getOperatorSymbol() + " " + 
                     factor.getResultType() + " has not been used by other operator.");
         }
     }

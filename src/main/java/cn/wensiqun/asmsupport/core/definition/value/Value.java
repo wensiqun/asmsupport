@@ -20,10 +20,14 @@ package cn.wensiqun.asmsupport.core.definition.value;
 import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 通常一些基本类型的常量值，String类型的值，null，Class类型，这些在编写java代码的时候都是直接可以获取的到，
@@ -615,5 +619,18 @@ public class Value implements IValue {
     @Override
     public String toString() {
         return value + " [type:" + cls + "]";
+    }
+
+    @Override
+    public GlobalVariable field(String name) {
+        if(value != null && value instanceof AClass) {
+            Field field = ((AClass)value).getField(name);
+            if(ModifierUtils.isStatic(field.getModifiers())) {
+                return new StaticGlobalVariable((AClass)value, field);
+            } else {
+                throw new ASMSupportException("No such field " + name);
+            }
+        }
+        return null;
     }
 }

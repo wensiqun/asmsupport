@@ -12,20 +12,20 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class SynchronizedGeneratorTest extends AbstractExample {
 
@@ -82,7 +82,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new SynchronizedInternal(this_()){
                     @Override
-                    public void body(InternalParameterized e) {
+                    public void body(KernelParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 
@@ -108,7 +108,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new SynchronizedInternal(this_().field("lock")){
                     @Override
-                    public void body(InternalParameterized e) {
+                    public void body(KernelParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new WhileInternal(lt(i, Value.value(10))){
 

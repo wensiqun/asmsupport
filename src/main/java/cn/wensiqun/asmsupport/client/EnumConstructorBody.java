@@ -14,18 +14,19 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.init.EnumConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IEnumContructorBody;
+import cn.wensiqun.asmsupport.standard.method.IEnumConstructorBody;
 
-public abstract class EnumConstructorBody extends ProgramBlock<EnumConstructorBodyInternal> implements IEnumContructorBody {
+public abstract class EnumConstructorBody extends ProgramBlock<EnumConstructorBodyInternal> implements IEnumConstructorBody<LocVar> {
 
 	public EnumConstructorBody() {
 		target = new EnumConstructorBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... args) {
-				EnumConstructorBody.this.body(args);
+				EnumConstructorBody.this.body(internalVar2ClientVar(args));
 			}
 			
 		};

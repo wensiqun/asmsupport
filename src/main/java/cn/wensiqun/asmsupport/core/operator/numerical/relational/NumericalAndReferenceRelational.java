@@ -14,13 +14,14 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
@@ -31,8 +32,8 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     
     private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
     
-    protected NumericalAndReferenceRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block, factor1, factor2);
+    protected NumericalAndReferenceRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, factor1, factor2, operator);
     }
     
     @Override

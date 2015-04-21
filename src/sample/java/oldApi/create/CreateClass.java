@@ -7,12 +7,12 @@ import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**
@@ -88,7 +88,7 @@ public class CreateClass extends AbstractExample {
 		creator.createStaticBlock(new StaticBlockBodyInternal(){
 			@Override
 			public void body() {
-				assign(getMethodOwner().field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
+				assign(val(getMethodOwner()).field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
 				return_();
 			}
 		});
@@ -166,7 +166,7 @@ public class CreateClass extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), getMethodOwner().field("staticGlobalVariable")));
+				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), val(getMethodOwner()).field("staticGlobalVariable")));
 				call(systemOut, "println", stradd(Value.value("globalVariable : "), this_().field("globalVariable")));
 				return_();
 			}
@@ -189,9 +189,9 @@ public class CreateClass extends AbstractExample {
 			public void body(LocalVariable... argus) {
 	        	call(new_(getMethodOwner(), Value.value(1024)), "commonMethod");
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), getMethodOwner().field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodOwner()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), getMethodOwner().field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodOwner()).field("COMMON_POST")));
 				
 	        	//invoke(systemOut, "println", append(Value.value("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
 				

@@ -1,29 +1,44 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.ClientParameterized;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.client.Param;
+import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
-public class Var extends ClientParameterized<LocalVariable> implements IVar {
+/**
+ * The variable.
+ * 
+ * @author sqwen
+ *
+ */
+public abstract class Var extends Param implements IVar {
 
-    public Var(LocalVariable target) {
+    public Var(IVariable target) {
         super(target);
     }
 
-    @Override
-    public String getName() {
-        return getTarget().getName();
-    }
-
-    @Override
-    public AClass getFormerType() {
-        return getTarget().getFormerType();
-    }
-
-    @Override
-    public int getModifiers() {
-        return getTarget().getModifiers();
+    private IVariable getPreciseTarget() {
+        return (IVariable) target;
     }
     
+    @Override
+    public FieldVar field(String name) {
+        return new FieldVar(target.field(name));
+    }
+    
+    @Override
+    public final String getName() {
+        return getPreciseTarget().getName();
+    }
+
+    @Override
+    public final AClass getFormerType() {
+        return getPreciseTarget().getFormerType();
+    }
+
+    @Override
+    public final int getModifiers() {
+        return getPreciseTarget().getModifiers();
+    }
+
 }

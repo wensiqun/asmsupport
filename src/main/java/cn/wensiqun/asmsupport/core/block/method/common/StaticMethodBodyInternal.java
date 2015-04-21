@@ -15,9 +15,10 @@
 package cn.wensiqun.asmsupport.core.block.method.common;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
 
-public abstract class StaticMethodBodyInternal extends AbstractMethodBody implements IStaticMethodBody {
+public abstract class StaticMethodBodyInternal extends AbstractMethodBody implements IStaticMethodBody<LocalVariable> {
     
 	@Override
     public final void generateBody() {

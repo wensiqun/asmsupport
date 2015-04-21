@@ -14,25 +14,23 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractLogical extends AbstractOperator implements InternalParameterized {
+public abstract class AbstractLogical extends AbstractParameterizedOperator {
 
     protected boolean byOtherUsed;
     
-    protected String operator;
-
-    protected AbstractLogical(ProgramBlockInternal block) {
-        super(block);
+    protected AbstractLogical(ProgramBlockInternal block, Operators operator) {
+        super(block, operator);
     }
     
     @Override

@@ -14,13 +14,13 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 构造方法调用者。
@@ -32,7 +32,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
 
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
-    protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, InternalParameterized[] arguments) {
+    protected SuperConstructorInvoker(ProgramBlockInternal block, AClass aclass, KernelParameterized[] arguments) {
         super(block, AClassFactory.getType(aclass.getSuperClass()), ASConstant.INIT, arguments);
     }
 

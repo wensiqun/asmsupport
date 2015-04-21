@@ -16,8 +16,7 @@ package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.Serializable;
 
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 /**
@@ -120,15 +119,6 @@ public class ArrayClass extends AClass {
             sb.append("[]");
         }
         return sb.toString();
-    }
-    
-    @Override
-    public final GlobalVariable field(String name) {
-        throw new UnsupportedOperationException();
-    }
-
-    public final Value getDefaultValue(){
-        return Value.defaultValue(this);
     }
     
 }

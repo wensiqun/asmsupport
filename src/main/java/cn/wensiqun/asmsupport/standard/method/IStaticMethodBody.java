@@ -14,8 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
-import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
+import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IStaticMethodBody extends LocalVariablesBody{
+public interface IStaticMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
 
 }

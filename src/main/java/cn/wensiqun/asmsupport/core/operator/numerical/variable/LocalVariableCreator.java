@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.variable;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -28,7 +29,7 @@ public class LocalVariableCreator extends AbstractOperator {
 	
 	protected LocalVariableCreator(ProgramBlockInternal block, String name, Type declareClass,
             Type actuallyClass){
-	    super(block);	
+	    super(block, Operators.COMMON);	
 		block.removeExe(this);
 		if(StringUtils.isBlank(name)){
 	        this.slv = new ScopeLogicVariable(block.getScope(), declareClass, actuallyClass, true);

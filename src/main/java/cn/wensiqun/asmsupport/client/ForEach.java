@@ -14,43 +14,43 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.loop.ForEachInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
-public abstract class ForEach extends ProgramBlock<ForEachInternal> implements IForEach {
+public abstract class ForEach extends ProgramBlock<ForEachInternal> implements IForEach<LocVar> {
 
-	public ForEach(InternalParameterized iteratorVar) {
-		target = new ForEachInternal(iteratorVar) {
+	public ForEach(Param iteratorVar) {
+		target = new ForEachInternal(iteratorVar.target) {
 
 			@Override
 			public void body(LocalVariable e) {
-				ForEach.this.body(e);
+				ForEach.this.body(new LocVar(e));
 			}
 			
 		};
 	}
 	
-    public ForEach(InternalParameterized iteratorVar, AClass elementType) {
-        target = new ForEachInternal(iteratorVar, elementType) {
+    public ForEach(Param iteratorVar, AClass elementType) {
+        target = new ForEachInternal(iteratorVar.target, elementType) {
 
             @Override
             public void body(LocalVariable e) {
-                ForEach.this.body(e);
+                ForEach.this.body(new LocVar(e));
             }
             
         };
     }
     
-    public ForEach(InternalParameterized iteratorVar, Class<?> elementType) {
-        target = new ForEachInternal(iteratorVar, AClassFactory.getType(elementType)) {
+    public ForEach(Param iteratorVar, Class<?> elementType) {
+        target = new ForEachInternal(iteratorVar.target, AClassFactory.getType(elementType)) {
 
             @Override
             public void body(LocalVariable e) {
-                ForEach.this.body(e);
+                ForEach.this.body(new LocVar(e));
             }
             
         };

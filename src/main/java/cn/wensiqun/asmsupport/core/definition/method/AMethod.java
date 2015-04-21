@@ -22,12 +22,10 @@ import cn.wensiqun.asmsupport.core.block.AbstractBlockInternal;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
@@ -38,6 +36,8 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 方法的抽象。
@@ -249,7 +249,7 @@ public class AMethod {
         return me.getMethodString();
     }
 
-    public NewMemberClass getMethodOwner() {
+    public MutableClass getMethodOwner() {
         return context.getCurrentClass();
     }
 

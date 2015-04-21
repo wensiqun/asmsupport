@@ -14,8 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.loop;
 
-import cn.wensiqun.asmsupport.standard.body.LocalVariableBody;
+import cn.wensiqun.asmsupport.standard.body.ILocVarBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IForEach extends LocalVariableBody {
+public interface IForEach<_Var extends ILocVar> extends ILocVarBody<_Var> {
 
 }

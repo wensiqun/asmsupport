@@ -14,18 +14,19 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**
  * integrated DUP DUP2 instruction according to type of the top element.
  *
  */
-public class DUP extends ASMDirect implements InternalParameterized {
+public class DUP extends ASMDirect implements KernelParameterized {
 
 	private static final Log LOG = LogFactory.getLog(DUP.class);
 	
@@ -58,5 +59,10 @@ public class DUP extends ASMDirect implements InternalParameterized {
 		}
         block.getInsnHelper().dup(type.getType());
 	}
+
+    @Override
+    public GlobalVariable field(String name) {
+        throw new UnsupportedOperationException("Un imple");
+    }
 
 }

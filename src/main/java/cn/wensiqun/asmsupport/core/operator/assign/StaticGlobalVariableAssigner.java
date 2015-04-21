@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -25,13 +25,13 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
  * @author 温斯群(Joe Wen)
  *
  */
-public class StaticGlobalVariableAssigner extends Assigner {
+public class StaticGlobalVariableAssigner extends KernelAssign {
 
     private static final Log LOG = LogFactory.getLog(StaticGlobalVariableAssigner.class);
     
     private StaticGlobalVariable var;
     
-    protected StaticGlobalVariableAssigner(ProgramBlockInternal block, final StaticGlobalVariable var, InternalParameterized value) {
+    protected StaticGlobalVariableAssigner(ProgramBlockInternal block, final StaticGlobalVariable var, KernelParameterized value) {
         super(block, var, value);
         this.var = var;
     }

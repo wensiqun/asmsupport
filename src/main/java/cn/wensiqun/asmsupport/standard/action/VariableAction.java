@@ -14,30 +14,56 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
-import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
-import cn.wensiqun.asmsupport.standard.Parameterized;
-import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
- * 变量操作
+ * 
+ * All variable operations. such as assign, create new variable.
+ * 
+ * @author sqwen
  *
+ * @param <_P> The parameterized generic type.
+ * @param <_V>      The Local Variable generic type
  */
-public interface VariableAction<_Parameterized extends Parameterized, _Var extends IVar, _FieldVar extends IFieldVar> {
+public interface VariableAction<_P extends IParameterized, _V extends IVar> {
 
     /**
-     * Create a local variable with anonymous, this method equivalent to following code :
-     * <p>
-     * var("", {@link AClassFactory#getType(type)}, true, para)
-     * </p>
+     * 
+     * 在程序块中获取this关键字. 需要注意的是，和java代码一样，这个变量只能够在非静态方法或者程序块中调用，否则会抛异常。
+     * 
+     * @return {@link _LocVar}
+     * @see #super_()
+     */
+    public _V this_();
+    
+    /**
+     * Get global variable of current class according the passed name. 
+     * this method is equivalence to : 
+     * <pre>
+     *     _this().getGlobalVariable(name);
+     * <pre>
+     * @param name
+     * @return {@link _LocVar}
+     */
+    public _V this_(String name);
+    
+    /**
+     * 获取父类super关键字。 需要注意的是，和java代码一样，这个变量只能够在非静态方法或者程序块中调用，否则会抛异常。
+     * 
+     * @return {@link _LocVar}
+     * @see #this_()
+     */
+    public _V super_();
+    
+    /**
+     * Create a local variable with anonymous
      * @param type
      * @param para
      * @return
      */
-    public _Var var(Class<?> type, _Parameterized para);
+    public _V var(Class<?> type, _P para);
 
     /**
      * Create a local variable with anonymous, this method equivalent to following code :
@@ -48,19 +74,16 @@ public interface VariableAction<_Parameterized extends Parameterized, _Var exten
      * @param para
      * @return
      */
-    public _Var var(AClass type, _Parameterized para);
+    public _V var(AClass type, _P para);
 
     /**
-     * Create a local variable, this method equivalent to following code :
-     * <p>
-     * var(name, {@link AClassFactory#getType(type)}, false, para)
-     * </p>
+     * Create a local variable
      * @param name
      * @param type
      * @param para
      * @return
      */
-    public _Var var(String name, Class<?> type, _Parameterized para);
+    public _V var(String name, Class<?> type, _P para);
     
     /**
      * Create a local variable, this method equivalent to following code :
@@ -72,7 +95,7 @@ public interface VariableAction<_Parameterized extends Parameterized, _Var exten
      * @param para
      * @return
      */
-    public _Var var(String name, AClass type, _Parameterized para);
+    public _V var(String name, AClass type, _P para);
     
 
     /**
@@ -85,7 +108,7 @@ public interface VariableAction<_Parameterized extends Parameterized, _Var exten
      * @param name
      * @return
      */
-    public _FieldVar field(String name);
+    public _V field(String name);
     
 	/**
 	 * assign a value to a variable. for exampel:
@@ -101,5 +124,6 @@ public interface VariableAction<_Parameterized extends Parameterized, _Var exten
 	 * @param val
 	 * @return
 	 */
-	public Assigner assign(ExplicitVariable variable, _Parameterized val);
+	_P assign(_V variable, _P val);
+	
 }

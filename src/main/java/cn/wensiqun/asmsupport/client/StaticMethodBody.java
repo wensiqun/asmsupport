@@ -14,18 +14,19 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
 
-public abstract class StaticMethodBody extends ProgramBlock<StaticMethodBodyInternal> implements IStaticMethodBody {
+public abstract class StaticMethodBody extends ProgramBlock<StaticMethodBodyInternal> implements IStaticMethodBody<LocVar> {
 
 	public StaticMethodBody() {
 	     target = new StaticMethodBodyInternal() {
 
 			@Override
 			public void body(LocalVariable... args) {
-				StaticMethodBody.this.body(args);
+				StaticMethodBody.this.body(internalVar2ClientVar(args));
 			}
 	    	 
 	     };

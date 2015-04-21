@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.standard.def.var;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.Parameterized;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
-public interface IVar extends Parameterized {
+public interface IVar extends IParameterized {
 
     /**
      * Get variable name
@@ -25,4 +25,5 @@ public interface IVar extends Parameterized {
      * @return
      */
     int getModifiers();
+
 }

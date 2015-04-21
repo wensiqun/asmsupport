@@ -14,10 +14,6 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
-import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
-import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
-import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
 
 
 /**
@@ -27,80 +23,36 @@ import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
  * @author wensiqun(at)163.com
  *
  */
-public interface CreateBlockAction<TIF , TWhile, TDoWhile, TForEach, TTry, TSynchronized> {
+public interface CreateBlockAction<TIF, TWhile, TDoWhile, TForEach, TTry, TSynchronized> {
 
     /**
-     * 创建if程序块.
-     * <ul>
-     * <li>通过{@link IFInternal#else_(cn.wensiqun.asmsupport.block.control.Else)}或者
-     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#else_(cn.wensiqun.asmsupport.block.control.Else)}
-     * 创建else程序块
-     * </li>
-     * <li>
-     * 通过{@link If#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}或者
-     * {@link cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)}
-     * 创建else if程序块
-     *</li>
-     * </ul>
-     * 
-     * @param ifs IF对象
-     * @return {@link If}
-     * @see IFInternal#else_(cn.wensiqun.asmsupport.block.control.Else)
-     * @see IFInternal#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
-     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#else_(cn.wensiqun.asmsupport.block.control.Else)
-     * @see cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf#elseif(cn.wensiqun.asmsupport.block.classes.control.condition.ElseIf)
+     * Create an if program block
      */
     public TIF if_(TIF ifBlock);
     
     /**
-     * 
-     * 创建while循环程序块
-     * 
-     * @param whileLoop WhileLoop对象
-     * @return {@link WhileInternal}
+     * Create a while program block
      */
     public TWhile while_(TWhile whileLoop);
     
     /**
-     * 创建do...while程序块
-     * 
-     * @param doWhileLoop DoWhileLoop对象
-     * @return {@link DoWhileLoop}
+     * Create a do...while program block
      */
     public TDoWhile dowhile(TDoWhile doWhile);
     
     /**
-     * 创建for each程序块
-     * 
-     * @param forEach ForEachLoop对象
-     * @return {@link ForEachLoop}
+     * Create a for each program block
      */
     public TForEach for_(final TForEach forEach);
     
     
     /**
-     * 创建try程序块.
-     * 
-     * <ul>
-     * <li>通过{@link TryInternal#catch_(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}或者
-     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#catch_(cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal)}创建
-     * catch程序块
-     * </li>
-     * <li>通过{@link TryInternal#finally_(cn.wensiqun.asmsupport.block.control.Finally)}或者
-     * {@link cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal#finally_(cn.wensiqun.asmsupport.block.control.Finally)}创建
-     * finally程序块
-     * </li>
-     * </ul>
-     * 
-     * @param tryPara
-     * @return
+     * Create a try program block
      */
     public TTry try_(final TTry tryPara);
     
     /**
-     * 创建Synchronized同步块
-     * @param sync Synchronized对象
-     * @return {@link SynchronizedInternal}
+     * Create synchronized block.
      */
     public TSynchronized sync(TSynchronized sync);
 	

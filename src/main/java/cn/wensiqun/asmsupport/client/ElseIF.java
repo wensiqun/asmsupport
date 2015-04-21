@@ -14,14 +14,13 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.condition.ElseIFInternal;
 import cn.wensiqun.asmsupport.standard.branch.IElseIF;
 
 public abstract class ElseIF extends ProgramBlock<ElseIFInternal> implements IElseIF<ElseIF, Else> {
 	
-	public ElseIF(InternalParameterized condition) {
-		target = new ElseIFInternal(condition) {
+	public ElseIF(Param condition) {
+		target = new ElseIFInternal(condition.target) {
 			@Override
 			public void body() {
 				ElseIF.this.body();

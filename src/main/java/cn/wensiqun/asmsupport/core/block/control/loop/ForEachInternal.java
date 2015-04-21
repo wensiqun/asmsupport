@@ -18,20 +18,20 @@ package cn.wensiqun.asmsupport.core.block.control.loop;
 import java.util.Iterator;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
 
@@ -40,10 +40,10 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class ForEachInternal extends ProgramBlockInternal implements Loop, IForEach {
+public abstract class ForEachInternal extends ProgramBlockInternal implements Loop, IForEach<LocalVariable> {
     
-    private InternalParameterized elements;
-    private InternalParameterized condition;
+    private KernelParameterized elements;
+    private KernelParameterized condition;
     private AClass elementType;
     
     private Label startLbl = new Label();
@@ -51,11 +51,11 @@ public abstract class ForEachInternal extends ProgramBlockInternal implements Lo
     private Label continueLbl = new Label();
     private Label endLbl = new Label();
     
-    public ForEachInternal(InternalParameterized elements) {
+    public ForEachInternal(KernelParameterized elements) {
         this(elements, null);
     }
     
-    public ForEachInternal(InternalParameterized elements, AClass elementType) {
+    public ForEachInternal(KernelParameterized elements, AClass elementType) {
         this.elements = elements;
         this.elementType = elementType;
         

@@ -14,29 +14,30 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.excep.ICatch;
 
-public abstract class Catch extends ProgramBlock<CatchInternal> implements ICatch<Catch, Finally> {
+public abstract class Catch extends ProgramBlock<CatchInternal> implements ICatch<LocVar, Catch, Finally> {
 
     public Catch(AClass exceptionType) {
         target = new CatchInternal(exceptionType) {
 
             @Override
             public void body(LocalVariable e) {
-                Catch.this.body(e);
+                Catch.this.body(new LocVar(e));
             }
         };
     }
     
     public Catch(Class<?> exceptionType) {
-        target = new CatchInternal(getType(exceptionType).getTarget()) {
+        target = new CatchInternal(getType(exceptionType)) {
 
             @Override
             public void body(LocalVariable e) {
-                Catch.this.body(e);
+                Catch.this.body(new LocVar(e));
             }
         };
     }

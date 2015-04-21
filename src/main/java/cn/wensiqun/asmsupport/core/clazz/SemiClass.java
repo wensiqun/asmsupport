@@ -16,14 +16,13 @@ package cn.wensiqun.asmsupport.core.clazz;
 
 import java.util.LinkedList;
 
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 
 /**
@@ -31,7 +30,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
  * @author 温斯群(Joe Wen)
  *
  */
-public class SemiClass extends NewMemberClass {
+public class SemiClass extends MutableClass {
 
 	SemiClass(int version, int access, String name, Class<?> superCls,
             Class<?>[] interfaces) {
@@ -125,19 +124,15 @@ public class SemiClass extends NewMemberClass {
         }
         throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
     }
-    
+
     @Override
-    public final GlobalVariable field(String name) {
-        Field field = getField(name);
-        if(ModifierUtils.isStatic(field.getModifiers())) {
-            return new StaticGlobalVariable(this, getField(name));
-        } else {
-            throw new ASMSupportException("No such field " + name);
-        }
+    public AClass getNextDimType() {
+        throw new UnsupportedOperationException();
     }
 
-    public final Value getDefaultValue(){
-        return Value.defaultValue(this);
+    @Override
+    public IClass getRootComponentClass() {
+        throw new UnsupportedOperationException();
     }
     
 }

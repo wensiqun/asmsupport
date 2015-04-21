@@ -14,9 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
-import cn.wensiqun.asmsupport.standard.action.KeywordAction;
-import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
+import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IMethodBody extends KeywordAction, LocalVariablesBody{
+public interface IMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
 
 }

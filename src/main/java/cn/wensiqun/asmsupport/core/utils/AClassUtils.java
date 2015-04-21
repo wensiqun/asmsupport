@@ -21,18 +21,18 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.core.clazz.SemiClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 

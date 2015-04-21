@@ -17,27 +17,27 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.init.EnumConstructorBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
@@ -269,14 +269,14 @@ public class EnumCreator extends AbstractClassCreatorContext {
                     public void body(LocalVariable... argus) {
                         AClass owner = getMethodOwner();
                         // get ENUM$VALUES
-                        GlobalVariable values = (GlobalVariable) owner.field("ENUM$VALUES");
+                        GlobalVariable values = val(owner).field("ENUM$VALUES");
 
                         // get length operator
-                        ArrayLength al = arrayLength(values);
+                        KernelArrayLength al = arrayLength(values);
                         LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
 
                         // get lengt operator for tmpValues;
-                        InternalParameterized copyLen = arrayLength(copy);
+                        KernelParameterized copyLen = arrayLength(copy);
 
                         // System
                         AClass systemClass = AClassFactory.getType(System.class);

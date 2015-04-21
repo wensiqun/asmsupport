@@ -10,11 +10,11 @@ import bug.fixed.test4646.entity.Super;
 import bug.fixed.test4646.parent.AbstractClass;
 import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 public class MainTest {

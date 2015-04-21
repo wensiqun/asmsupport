@@ -21,9 +21,6 @@ public abstract class LinkedListNode implements Cloneable {
 
     private LinkedListNode previous;
 
-    // Unsupported index operation now!
-    // private int index;
-
     public boolean hasNext() {
         return next != null;
     }
@@ -37,15 +34,6 @@ public abstract class LinkedListNode implements Cloneable {
     }
 
     void remove() {
-        /*
-        Unsupported index operation now!
-        LinkedListNode cursor = this;
-        while(cursor.hasNext())
-        {
-            cursor = cursor.next;
-            cursor.setIndex(cursor.getIndex() - 1);
-        }*/
-
         if (previous != null) {
             previous.next = next;
         }
@@ -81,40 +69,6 @@ public abstract class LinkedListNode implements Cloneable {
             }
         }
         
-        
-        /**
-         * For index operator. Unsupported index operation now!
-        LinkedListNode oldNext = next;
-        
-        next = subHead;
-        subHead.previous = this;
-        
-        LinkedListNode cursor = next;
-        while(true)
-        {
-            cursor.index = cursor.previous.index + 1;
-            if(cursor.hasNext())
-            {
-                cursor = cursor.next;
-            }
-            else
-            {
-                break;
-            }
-        }
-        
-        if(oldNext != null)
-        {
-            cursor.next = oldNext;
-            oldNext.previous = cursor;
-            
-            while(cursor.hasNext())
-            {
-                cursor = cursor.next;
-                cursor.index = cursor.previous.index + 1;
-            }
-        }*/
-        
     }
 
     void replace(LinkedListNode newly) {
@@ -126,15 +80,4 @@ public abstract class LinkedListNode implements Cloneable {
 
         previous = next = null;
     }
-
-    /*
-    Unsupported index operation now!
-    int getIndex()
-    {
-        return index;
-    }
-    
-    void setIndex(int idx){
-        index = idx;
-    }*/
 }

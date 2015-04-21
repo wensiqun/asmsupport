@@ -14,11 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.Crementable;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
 
 
 /**
@@ -27,15 +23,15 @@ import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
  * @author wensiqun(at)163.com
  *
  */
-public interface CrementAction {
+public interface CrementAction<_P extends IParameterized> {
     
     /**
      * 生成类似--i操作指令
      * 
      * @param crement
-     * @return {@link PreposeDecrment}
+     * @return {@link _P}
      */
-    public PreposeDecrment predec(Crementable crement);
+    _P predec(_P crement);
     
     /**
      * 生成类似i--操作指令
@@ -43,7 +39,7 @@ public interface CrementAction {
      * @param crement
      * @return {@link PreposeIncrement}
      */
-    public PostposeDecrment postdec(Crementable crement);
+    _P postdec(_P crement);
     
     /**
      * 生成类似++i操作指令
@@ -51,7 +47,7 @@ public interface CrementAction {
      * @param crement
      * @return {@link PreposeIncrement}
      */
-    public PreposeIncrment preinc(Crementable crement);
+    _P preinc(_P crement);
     
     /**
      * 生成类似i++操作指令
@@ -59,7 +55,7 @@ public interface CrementAction {
      * @param crement
      * @return {@link PostposeIncrement}
      */
-    public PostposeIncrment postinc(Crementable crement);
+    _P postinc(_P crement);
     
 }
 

@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -29,9 +29,9 @@ public class CommonMethodInvoker extends MethodInvoker {
 	
 	private static final Log LOG = LogFactory.getLog(CommonMethodInvoker.class);
     
-	private InternalParameterized callObjReference;
+	private KernelParameterized callObjReference;
 	
-	protected CommonMethodInvoker(ProgramBlockInternal block, InternalParameterized objRef, String name, InternalParameterized[] arguments) {
+	protected CommonMethodInvoker(ProgramBlockInternal block, KernelParameterized objRef, String name, KernelParameterized[] arguments) {
 		super(block, objRef.getResultType(), name, arguments);
 		this.callObjReference = objRef;
 		if(callObjReference.getResultType().isPrimitive()){

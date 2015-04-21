@@ -15,18 +15,18 @@
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.branch.IIF;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public abstract class IFInternal extends ConditionBranchBlock implements IIF<ElseIFInternal, ElseInternal> {
-    private InternalParameterized condition;
+    private KernelParameterized condition;
 
-    public IFInternal(InternalParameterized condition) {
+    public IFInternal(KernelParameterized condition) {
         this.condition = condition;
         condition.asArgument();
     }

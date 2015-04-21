@@ -17,33 +17,34 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractArrayOperator extends AbstractOperator {
+public abstract class AbstractArrayOperator extends AbstractParameterizedOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
-    protected InternalParameterized arrayReference;
+    protected KernelParameterized arrayReference;
     
-    protected InternalParameterized[] parDims;
+    protected KernelParameterized[] parDims;
     
-    protected AbstractArrayOperator(ProgramBlockInternal block, InternalParameterized arrayVar) {
-        super(block);
+    protected AbstractArrayOperator(ProgramBlockInternal block, KernelParameterized arrayVar) {
+        super(block, Operators.COMMON);
         this.arrayReference = arrayVar;
     }
 
@@ -51,7 +52,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
 	protected void checkAsArgument() {
         arrayReference.asArgument();
         if(parDims != null){
-            for(InternalParameterized par : parDims){
+            for(KernelParameterized par : parDims){
                 par.asArgument();
             }
         }
@@ -64,7 +65,7 @@ public abstract class AbstractArrayOperator extends AbstractOperator {
         }
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
-			for(InternalParameterized par : parDims){
+			for(KernelParameterized par : parDims){
 				if(!AClassUtils.checkAssignable(par.getResultType(), AClassFactory.getType(int.class))) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + AClassFactory.getType(int.class) + "");
 				}

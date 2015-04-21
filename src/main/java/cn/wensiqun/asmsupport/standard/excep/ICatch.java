@@ -15,10 +15,11 @@
 package cn.wensiqun.asmsupport.standard.excep;
 
 import cn.wensiqun.asmsupport.standard.body.IBody;
-import cn.wensiqun.asmsupport.standard.body.LocalVariableBody;
+import cn.wensiqun.asmsupport.standard.body.ILocVarBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
 
-public interface ICatch<_Catch extends IBody, _Finally extends IBody> extends LocalVariableBody {
+public interface ICatch<_Var extends ILocVar, _Catch extends IBody, _Finally extends IBody> extends ILocVarBody<_Var> {
 
 	public _Catch catch_(_Catch catchBlock);
     

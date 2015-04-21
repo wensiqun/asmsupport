@@ -18,11 +18,12 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -33,8 +34,8 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected AbstractBitwise(ProgramBlockInternal block) {
-        super(block);
+    protected AbstractBitwise(ProgramBlockInternal block, Operators operator) {
+        super(block, operator);
     }
     
     protected final void checkFactor(AClass ftrCls){
@@ -46,7 +47,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
               ftrCls.equals(AClassFactory.getType(Boolean.class)) ||
               ftrCls.equals(AClassFactory.getType(Float.class)) ||
               ftrCls.equals(AClassFactory.getType(Double.class))){
-               throw new ASMSupportException("this operator " + operator + " cannot support for type " + ftrCls );
+               throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
            }
         }
     }
@@ -67,7 +68,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ASMSupportException("the operator " + operator + " has not been used by other operator.");
+            throw new ASMSupportException("the operator " + getOperatorSymbol().getSymbol() + " has not been used by other operator.");
         }
     }
     

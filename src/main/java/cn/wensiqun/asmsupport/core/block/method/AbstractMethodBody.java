@@ -19,7 +19,6 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
@@ -35,6 +34,7 @@ import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
 
 public abstract class AbstractMethodBody extends ProgramBlockInternal {

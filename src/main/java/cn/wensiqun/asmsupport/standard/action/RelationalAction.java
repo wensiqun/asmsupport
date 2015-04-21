@@ -14,13 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.Equal;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
 
 
 /**
@@ -29,7 +23,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
  * @author wensiqun(at)163.com
  *
  */
-public interface RelationalAction {
+public interface RelationalAction<_P extends IParameterized> {
     
     
     /**
@@ -45,7 +39,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterThan gt(InternalParameterized factor1, InternalParameterized factor2);
+    _P gt(_P factor1, _P factor2);
     
     /**
      * 
@@ -59,7 +53,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public GreaterEqual ge(InternalParameterized factor1, InternalParameterized factor2);
+    _P ge(_P factor1, _P factor2);
     
     /**
      * The less than equals.
@@ -72,7 +66,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessThan lt(InternalParameterized factor1, InternalParameterized factor2);
+    _P lt(_P factor1, _P factor2);
 
     /**
      * 
@@ -86,7 +80,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public LessEqual le(InternalParameterized factor1, InternalParameterized factor2);
+    _P le(_P factor1, _P factor2);
     
     /**
      * 
@@ -100,7 +94,7 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public Equal eq(InternalParameterized factor1, InternalParameterized factor2);
+    _P eq(_P factor1, _P factor2);
 
     /**
      * 
@@ -114,5 +108,5 @@ public interface RelationalAction {
      * @param factor2
      * @return
      */
-    public NotEqual ne(InternalParameterized factor1, InternalParameterized factor2);
+    _P ne(_P factor1, _P factor2);
 }

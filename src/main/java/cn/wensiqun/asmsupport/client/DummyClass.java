@@ -16,14 +16,14 @@ package cn.wensiqun.asmsupport.client;
 
 import java.util.LinkedList;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {
 

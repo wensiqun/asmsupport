@@ -14,19 +14,20 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 
-public abstract class EnumStaticBlockBody extends ProgramBlock<EnumStaticBlockBodyInternal> implements IEnumStaticBlockBody {
+public abstract class EnumStaticBlockBody extends ProgramBlock<EnumStaticBlockBodyInternal> implements IEnumStaticBlockBody<Param, LocVar> {
 
 	public EnumStaticBlockBody() {
 		target = new EnumStaticBlockBodyInternal() {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				EnumStaticBlockBody.this.body(argus);
+				EnumStaticBlockBody.this.body(internalVar2ClientVar(argus));
 			}
 
 			@Override
@@ -37,8 +38,8 @@ public abstract class EnumStaticBlockBody extends ProgramBlock<EnumStaticBlockBo
 	}
 	
 	@Override
-	public void constructEnumConst(String name, InternalParameterized... argus) {
-		target.constructEnumConst(name, argus);
+	public void constructEnumConst(String name, Param... argus) {
+		target.constructEnumConst(name, client2Internal(argus));
 	}
 	
 }

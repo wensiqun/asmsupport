@@ -14,50 +14,48 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractRelational extends AbstractOperator implements
-     Jumpable  {
+public abstract class AbstractRelational extends AbstractParameterizedOperator implements Jumpable  {
 
     private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
     
     /**算数因子1 */
-    protected InternalParameterized factor1;
+    protected KernelParameterized factor1;
 
     /**算数因子2 */
-    protected InternalParameterized factor2;
+    protected KernelParameterized factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
-    
-    protected String operator;
     
     protected AClass targetClass;
     
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected AbstractRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block);
+    protected AbstractRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
         falseLbl = new Label();
@@ -87,7 +85,7 @@ public abstract class AbstractRelational extends AbstractOperator implements
     protected final void checkFactorForNumerical(AClass ftrCls){
         if(!ftrCls.isPrimitive() || 
            ftrCls.equals(AClassFactory.getType(boolean.class))){
-            throw new ASMSupportException("this operator " + operator + " cannot support for type " + ftrCls );
+            throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
         }
     }
     
@@ -100,11 +98,11 @@ public abstract class AbstractRelational extends AbstractOperator implements
     public void execute() {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
-            	LOG.print("run operator " + factor1.getResultType() + " " + operator + " " + factor2.getResultType());
+            	LOG.print("run operator " + factor1.getResultType() + getOperatorSymbol().getSymbol() + factor2.getResultType());
             }
             super.execute();
         }else{
-            throw new ASMSupportException("the operator " + factor1.getResultType() + " " + operator + " " + 
+            throw new ASMSupportException("the operator " + factor1.getResultType() + getOperatorSymbol().getSymbol() +
                                           factor2.getResultType() + " has not been used by other operator.");
         }
     }
@@ -174,13 +172,13 @@ public abstract class AbstractRelational extends AbstractOperator implements
 	}*/
 	
     @Override
-    public void jumpPositive(InternalParameterized from, Label posLbl, Label negLbl) {
+    public void jumpPositive(KernelParameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         positiveCmp(posLbl);
     }
 
     @Override
-    public void jumpNegative(InternalParameterized from, Label posLbl, Label negLbl) {
+    public void jumpNegative(KernelParameterized from, Label posLbl, Label negLbl) {
         factorsToStack();
         negativeCmp(negLbl);
     }

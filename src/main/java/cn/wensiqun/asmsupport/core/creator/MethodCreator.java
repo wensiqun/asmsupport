@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.creator;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
@@ -83,7 +83,7 @@ public class MethodCreator implements IMethodCreator {
 
 	@Override
 	public void create(IClassContext context){
-		NewMemberClass owner = context.getCurrentClass();
+		MutableClass owner = context.getCurrentClass();
 		me = new AMethodMeta(name, owner, owner, arguments, argNames, returnClass, exceptions, access);
 		method = new AMethod(me, context, methodBody, mtdCrtMode);
 		if(method.getMethodMeta().getName().equals(ASConstant.INIT)){

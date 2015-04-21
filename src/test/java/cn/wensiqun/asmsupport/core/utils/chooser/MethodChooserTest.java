@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class MethodChooserTest {
 

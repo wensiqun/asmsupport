@@ -16,11 +16,12 @@ package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 
 public abstract class ASMDirect extends AbstractOperator {
 
 	protected ASMDirect(ProgramBlockInternal block) {
-		super(block);
+		super(block, Operators.COMMON);
 	}
 
 }

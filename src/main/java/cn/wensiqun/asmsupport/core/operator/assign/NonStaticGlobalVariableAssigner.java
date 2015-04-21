@@ -16,25 +16,25 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
  * @author 温斯群(Joe Wen)
  *
  */
-public class NonStaticGlobalVariableAssigner extends Assigner {
+public class NonStaticGlobalVariableAssigner extends KernelAssign {
 
     private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariableAssigner.class);
     
     private NonStaticGlobalVariable var;
     
-    protected NonStaticGlobalVariableAssigner(ProgramBlockInternal block, final NonStaticGlobalVariable var, InternalParameterized value) {
+    protected NonStaticGlobalVariableAssigner(ProgramBlockInternal block, final NonStaticGlobalVariable var, KernelParameterized value) {
         super(block, var, value);
         this.var = var;
     }

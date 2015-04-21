@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**
@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.value.Value;
  *
  * @author wensiqun(at)163.com
  */
-public interface ValueAction {
+public interface ValueAction<_P extends IParameterized> {
     
 
     /**
@@ -32,7 +32,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Integer val);
+    _P val(Integer val);
 
     /**
      * Get {@code short} val
@@ -40,7 +40,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Short val);
+    _P val(Short val);
 
     /**
      * Get {@code byte} val
@@ -48,7 +48,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Byte val);
+    _P val(Byte val);
 
     /**
      * Get {@code boolean} val
@@ -56,7 +56,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Boolean val);
+    _P val(Boolean val);
 
     /**
      * Get {@code long} val
@@ -64,7 +64,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Long val);
+    _P val(Long val);
 
     /**
      * Get {@code double} val
@@ -72,7 +72,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Double val);
+    _P val(Double val);
 
     /**
      * Get {@code char} val
@@ -80,7 +80,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Character val);
+    _P val(Character val);
 
     /**
      * Get {@code float} val
@@ -88,7 +88,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Float val);
+    _P val(Float val);
 
     /**
      * Get {@code class} val
@@ -96,7 +96,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(AClass val);
+    _P val(AClass val);
 
     /**
      * Get {@code class} val
@@ -104,7 +104,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(Class<?> val);
+    _P val(Class<?> val);
 
     /**
      * Get {@code String} val
@@ -112,7 +112,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value val(String val);
+    _P val(String val);
 
     /**
      * Get {@code null} val
@@ -120,7 +120,7 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value null_(AClass type);
+    _P null_(AClass type);
 
     /**
      * Get {@code null} val
@@ -128,5 +128,5 @@ public interface ValueAction {
      * @param val
      * @return
      */
-    Value null_(Class<?> type);
+    _P null_(Class<?> type);
 }

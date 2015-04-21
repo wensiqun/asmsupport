@@ -17,23 +17,24 @@ package cn.wensiqun.asmsupport.core.block.method.clinit;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 
 /**
  * 
  *
  */
-public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody implements IEnumStaticBlockBody {
+public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody implements IEnumStaticBlockBody<KernelParameterized, LocalVariable> {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	
@@ -51,9 +52,9 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	
 	private class EnumConstructorInfo{
 		String name;
-		InternalParameterized[] argus;
+		KernelParameterized[] argus;
 		  
-		private EnumConstructorInfo(String name, InternalParameterized[] argus) {
+		private EnumConstructorInfo(String name, KernelParameterized[] argus) {
 			super();
 			this.name = name;
 			this.argus = argus;
@@ -61,11 +62,11 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	}
 
 	@Override
-	public void constructEnumConst(String name, InternalParameterized... argus) {
+	public void constructEnumConst(String name, KernelParameterized... argus) {
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
-        IFieldVar constant = getMethodOwner().field(name);
+        IFieldVar constant = val(getMethodOwner()).field(name);
         if(!ModifierUtils.isEnum(constant.getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
@@ -83,16 +84,16 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 			throw new ASMSupportException("exist unassign enum constant!");
 		}
 		
-		InternalParameterized[] values = new InternalParameterized[getMethodOwner().getEnumNum()];
+		KernelParameterized[] values = new KernelParameterized[getMethodOwner().getEnumNum()];
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
-			enumConstant = (GlobalVariable) getMethodOwner().field(enumArgu.name);
+			enumConstant = val(getMethodOwner()).field(enumArgu.name);
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
-			InternalParameterized[] otherArgus = enumArgu.argus;
-	        InternalParameterized[] enumArgus = new InternalParameterized[otherArgus.length + 2];
+			KernelParameterized[] otherArgus = enumArgu.argus;
+	        KernelParameterized[] enumArgus = new KernelParameterized[otherArgus.length + 2];
 	        enumArgus[0] = Value.value(enumName);
 	        enumArgus[1] = Value.value(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
@@ -102,9 +103,9 @@ public abstract class EnumStaticBlockBodyInternal extends AbstractMethodBody imp
 	        i++;
 		}
 		
-		GlobalVariable gv = (GlobalVariable) getMethodOwner().field("ENUM$VALUES");
+		GlobalVariable gv = val(getMethodOwner()).field("ENUM$VALUES");
 		
-		ArrayValue av = newarray(AClassFactory.getArrayType(getMethodOwner(), 1), values);
+		KernelArrayValue av = newarray(AClassFactory.getArrayType(getMethodOwner(), 1), values);
 		assign(gv, av);
 	}
 	

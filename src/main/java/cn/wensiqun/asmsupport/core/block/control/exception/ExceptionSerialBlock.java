@@ -21,18 +21,18 @@ import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.block.AbstractBlockInternal;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
+import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.common.TryCatchInfo;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public class ExceptionSerialBlock extends SerialBlock {
     private TryInternal tryBlock;
@@ -220,9 +220,9 @@ public class ExceptionSerialBlock extends SerialBlock {
      * @param block
      */
     private void insertFinallyBeforeReturn(AbstractBlockInternal block) {
-        List<Return> returns = fetchAllBreakStack(block, null);
+        List<KernelReturn> returns = fetchAllBreakStack(block, null);
 
-        for (Return ret : returns) {
+        for (KernelReturn ret : returns) {
             ProgramBlockInternal breakBlock = ret.getBlock();
 
             Label startLbl = new Label("implicit finally before break stack start");
@@ -262,13 +262,13 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
     }
 
-    private List<Return> fetchAllBreakStack(AbstractBlockInternal block, List<Return> container) {
+    private List<KernelReturn> fetchAllBreakStack(AbstractBlockInternal block, List<KernelReturn> container) {
         if (container == null) {
-            container = new ArrayList<Return>();
+            container = new ArrayList<KernelReturn>();
         }
         for (ByteCodeExecutor executor : block.getQueue()) {
-            if (executor instanceof Return) {
-                container.add((Return) executor);
+            if (executor instanceof KernelReturn) {
+                container.add((KernelReturn) executor);
             } else if (executor instanceof AbstractBlockInternal && !(executor instanceof ImplicitCatch)) {
                 fetchAllBreakStack((AbstractBlockInternal) executor, container);
             }

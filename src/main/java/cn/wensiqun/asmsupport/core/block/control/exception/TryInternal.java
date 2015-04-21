@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.core.block.control.exception;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.excep.ITry;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public abstract class TryInternal extends EpisodeBlock<ExceptionSerialBlock> implements
         ITry<CatchInternal, FinallyInternal> {

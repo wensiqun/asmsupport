@@ -2,10 +2,10 @@ package cn.wensiqun.asmsupport.core.utils.jls;
 
 import java.io.Serializable;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**

@@ -19,18 +19,18 @@ package cn.wensiqun.asmsupport.core.block.sync;
 
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.operator.Return;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.DUP;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
+import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
 
 
@@ -38,9 +38,9 @@ import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
  * @author 温斯群(Joe Wen)
  * 
  */
-public abstract class SynchronizedInternal extends ProgramBlockInternal implements ISynchronized {
+public abstract class SynchronizedInternal extends ProgramBlockInternal implements ISynchronized<KernelParameterized> {
 
-	private InternalParameterized lock;
+	private KernelParameterized lock;
 	private LocalVariable dupSynArgument;
 	
 	private Label monitorenter;
@@ -51,7 +51,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 	
 	private Marker flag1;
 
-	public SynchronizedInternal(InternalParameterized lock) {
+	public SynchronizedInternal(KernelParameterized lock) {
 		super();
 		this.lock = lock;
 		monitorenter = new Label();
@@ -88,7 +88,7 @@ public abstract class SynchronizedInternal extends ProgramBlockInternal implemen
 				insnHelper.monitorEnter();
 				insnHelper.mark(monitorenter);
 				continue;
-			}else if(e instanceof Return){
+			}else if(e instanceof KernelReturn){
 				returnInsn = e;
 				break;
 			}

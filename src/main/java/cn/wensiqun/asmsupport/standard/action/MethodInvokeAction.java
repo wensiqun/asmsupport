@@ -14,10 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.standard.Parameterized;
-import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 
@@ -28,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
  * @author wensiqun(at)163.com
  *
  */
-public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field extends IFieldVar, _Class extends IClass<_Field>> {
+public interface MethodInvokeAction<_P extends IParameterized, _Field extends IFieldVar> {
     
     /**
      * <p>
@@ -58,16 +56,16 @@ public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field
      * 
      * <p>
      * 这个方法同样也可以调用静态方法，如果传入的方法名在对象中是一个静态方法，那么ASMSuppport底层就自动生成调用今天方法的指令。当然我们也可以直接通过
-     * 调用{@link #call(AClass, String, InternalParameterized...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
+     * 调用{@link #call(AClass, String, _P...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
      * 一样的，当我们调用某一个变量的方法时候，如果这个方法是静态方法，我们可以采用"变量名.方法名()"和"类名.方法名()"这两种方式。
      * </p>
      * 
      * @param objRef
      * @param methodName
      * @param arguments
-     * @return {@link MethodInvoker}
+     * @return {@link _P}
      */
-    public MethodInvoker call(_Parameterized objRef, String methodName, InternalParameterized... arguments);
+    _P call(_P objRef, String methodName, _P... arguments);
 
     /**
      * Generate method invoke, this method equivalence to 
@@ -79,7 +77,7 @@ public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field
      * @param args
      * @return
      */
-    public MethodInvoker call(String methodName, _Parameterized... args);
+    _P call(String methodName, _P... args);
     
     /**
      * 
@@ -102,19 +100,19 @@ public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field
      * @param owner
      * @param methodName
      * @param arguments
-     * @return {@link MethodInvoker}
+     * @return {@link _P}
      */
-    public MethodInvoker call(_Class owner, String methodName, InternalParameterized... arguments);
+    _P call(AClass owner, String methodName, _P... arguments);
     
     /**
-     * Invoke static method. the method is similar method {@link #call(AClass, String, InternalParameterized...)}
+     * Invoke static method. the method is similar method {@link #call(AClass, String, _P...)}
      * 
      * @param owner
      * @param name
      * @param arguments
      * @return
      */
-    public MethodInvoker call(Class<?> owner, String name, InternalParameterized... arguments);
+    _P call(Class<?> owner, String name, _P... arguments);
     
     
     /**
@@ -138,17 +136,17 @@ public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field
      * 
      * @param owner
      * @param arguments
-     * @return {@link MethodInvoker}
+     * @return {@link _P}
      */
-    public MethodInvoker new_(_Class owner, InternalParameterized... arguments);
+    _P new_(AClass owner, _P... arguments);
     
     /**
      * @param owner
      * @param arguments
      * @return
-     * @see #new_(AClass, InternalParameterized...)
+     * @see #new_(AClass, _P...)
      */
-    public MethodInvoker new_(Class<?> owner, InternalParameterized... arguments);
+    _P new_(Class<?> owner, _P... arguments);
     
     
     /**
@@ -177,8 +175,8 @@ public interface MethodInvokeAction<_Parameterized extends Parameterized, _Field
      * </pre>
      * 
      * 在上面的代码中"test@original()"这个方法调用指令就是asmsupport调用了invokeOriginalMethod方法生成的。
-     * @return {@link MethodInvoker}
+     * @return {@link _P}
      */
-    public MethodInvoker callOrig();
+    _P callOrig();
     
 }

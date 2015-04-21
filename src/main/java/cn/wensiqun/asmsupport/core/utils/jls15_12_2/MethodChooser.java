@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.core.clazz.SemiClass;
@@ -37,6 +36,7 @@ import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 public class MethodChooser implements IMethodChooser, DetermineMethodSignature {

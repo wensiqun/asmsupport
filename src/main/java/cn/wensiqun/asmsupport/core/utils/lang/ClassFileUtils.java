@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.utils.lang;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 
 public class ClassFileUtils {

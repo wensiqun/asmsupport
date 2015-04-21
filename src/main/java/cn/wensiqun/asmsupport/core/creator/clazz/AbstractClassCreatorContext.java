@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.clazz.SemiClass;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
@@ -61,7 +61,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     }
 
     @Override
-	public NewMemberClass getCurrentClass() {
+	public MutableClass getCurrentClass() {
 		return sc;
 	}
 

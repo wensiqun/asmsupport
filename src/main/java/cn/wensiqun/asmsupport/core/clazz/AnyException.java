@@ -16,11 +16,10 @@ package cn.wensiqun.asmsupport.core.clazz;
 
 import java.lang.reflect.Constructor;
 
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public class AnyException extends AClass {
 
@@ -121,13 +120,14 @@ public class AnyException extends AClass {
     public String toString() {
         return "Any Exception";
     }
-    
+
     @Override
-    public final GlobalVariable field(String name) {
+    public AClass getNextDimType() {
         throw new UnsupportedOperationException();
     }
 
-    public final Value getDefaultValue(){
+    @Override
+    public AClass getRootComponentClass() {
         throw new UnsupportedOperationException();
     }
 

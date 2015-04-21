@@ -17,14 +17,14 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -34,11 +34,11 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected InternalParameterized factor1;
-    protected InternalParameterized factor2;
+    protected KernelParameterized factor1;
+    protected KernelParameterized factor2;
     
-    protected BinaryBitwise(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block);
+    protected BinaryBitwise(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
     }
@@ -99,9 +99,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         
         insnHelper.unbox(factor2.getResultType().getType());
         
-        if(operator.equals(Operators.LEFT_SHIFT) ||
-           operator.equals(Operators.RIGHT_SHIFT) ||
-           operator.equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
+        if(getOperatorSymbol().equals(Operators.LEFT_SHIFT) ||
+           getOperatorSymbol().equals(Operators.RIGHT_SHIFT) ||
+           getOperatorSymbol().equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
             insnHelper.cast(factor2.getResultType().getType(), AClassFactory.getType(int.class).getType());
         }else{
             insnHelper.cast(factor2.getResultType().getType(), targetClass.getType());
@@ -110,9 +110,13 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     
     @Override
     public final void doExecute() {
-        LOG.print("prepare operator " + operator);
+        if(LOG.isPrintEnabled()) {
+            LOG.print("prepare operator " + getOperatorSymbol());
+        }
         factorToStack();
-        LOG.print("execute operator " + operator);
+        if(LOG.isPrintEnabled()) {
+            LOG.print("execute operator " + getOperatorSymbol());
+        }
         innerRunExe();
     }
 

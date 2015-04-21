@@ -4,13 +4,13 @@ package oldApi.operators;
 import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 这个例子我们将实现方法调用的操作，方法调用主要包括了

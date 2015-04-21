@@ -14,11 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.creator;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
@@ -67,7 +67,7 @@ public class FieldCreator implements IFieldCreator {
     @Override
     public void create(IClassContext cv) {
     	this.context = cv;
-    	NewMemberClass owner = cv.getCurrentClass();
+    	MutableClass owner = cv.getCurrentClass();
         owner.addField(fe = new Field(owner, owner, type, modifiers, name));
     }
     

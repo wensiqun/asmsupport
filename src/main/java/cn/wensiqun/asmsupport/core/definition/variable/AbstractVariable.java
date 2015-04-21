@@ -17,11 +17,11 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -34,6 +34,7 @@ public abstract class AbstractVariable implements IVariable {
         //don't do anything if this class don't extends AbstractExecuteable
     }
 
+    @Override
     public final GlobalVariable field(String name) {
         if(this.getResultType() instanceof ArrayClass){
             throw new ASMSupportException("Cannot get global variable from array type variable : " + this);

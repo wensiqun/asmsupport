@@ -1,13 +1,13 @@
 package json.generator.impl;
 
 import json.generator.AbstractGeneratorChain;
+import cn.wensiqun.asmsupport.client.Param;
 import cn.wensiqun.asmsupport.client.ProgramBlock;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class BaseGeneratorChain extends AbstractGeneratorChain {
 
@@ -20,7 +20,7 @@ public class BaseGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
-            LocalVariable encoder, AClass type, InternalParameterized value) {
+            LocVar encoder, AClass type, Param value) {
         if(type.isChildOrEqual(AClassFactory.getType(CharSequence.class)) ||
            type.equals(AClassFactory.getType(char.class)) ||
            type.equals(AClassFactory.getType(Character.class))) {

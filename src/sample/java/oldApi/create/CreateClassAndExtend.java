@@ -8,7 +8,6 @@ import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.ModifiedMethodBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
@@ -17,6 +16,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class CreateClassAndExtend extends AbstractExample {
 
@@ -39,10 +39,10 @@ public class CreateClassAndExtend extends AbstractExample {
 		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new ModifiedMethodBodyInternal(){
 			@Override
 			public void body(LocalVariable... argus) {
-				GlobalVariable age = getMethodOwner().field("age");
-				assign(age, Value.value(20));
+				GlobalVariable age = val(getMethodOwner()).field("age");
+				assign(age, val(20));
 				this.callOrig();
-				GlobalVariable name = getMethodOwner().field("name");
+				GlobalVariable name = val(getMethodOwner()).field("name");
 				assign(name, Value.value("wensiqun"));
 				call(out, "println", name);
 				return_();

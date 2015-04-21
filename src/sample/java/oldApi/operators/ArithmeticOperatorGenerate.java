@@ -4,14 +4,14 @@ import java.util.Random;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class ArithmeticOperatorGenerate extends AbstractExample {
 
@@ -52,7 +52,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						LocalVariable rand = var("rand", AClassFactory.getType(Random.class), new_(AClassFactory.getType(Random.class)));
 						
 						//rand.nextInt(100) + 1
-						Addition add1 = add(call(rand, "nextInt", Value.value(100)), Value.value(1));
+						KernelAdd add1 = add(call(rand, "nextInt", Value.value(100)), Value.value(1));
 						
 						//int j = rand.nextInt(100) + 1;
 						LocalVariable j = var("j", AClassFactory.getType(int.class), add1);
@@ -67,7 +67,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						call(getMethodOwner(), "printInt", Value.value("k"), k);
 						
 						//j + k
-						Addition add2 = add(j, k);
+						KernelAdd add2 = add(j, k);
 						//int i = j + k;
 						LocalVariable i = var("i", AClassFactory.getType(int.class), add2);
 						

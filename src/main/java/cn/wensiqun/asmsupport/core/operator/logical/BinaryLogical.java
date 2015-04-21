@@ -14,14 +14,15 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
@@ -32,11 +33,11 @@ public abstract class BinaryLogical extends AbstractLogical {
     
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected InternalParameterized factor1;
-    protected InternalParameterized factor2;
+    protected KernelParameterized factor1;
+    protected KernelParameterized factor2;
     
-    protected BinaryLogical(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block);
+    protected BinaryLogical(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
     }
@@ -63,14 +64,16 @@ public abstract class BinaryLogical extends AbstractLogical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the logical operator " + factor1.getResultType() + " " + operator + " " + 
+            throw new ArithmeticException("the logical operator " + factor1.getResultType() + " " + getOperatorSymbol() + " " + 
                                           factor2.getResultType() + " has not been used by other operator.");
         }
     }
 
     @Override
     protected void factorToStack() {
-        LOG.print("factors to stack");
+        if(LOG.isPrintEnabled()) {
+            LOG.print("Factors to stack");
+        }
         factor1.loadToStack(block);
         insnHelper.unbox(factor1.getResultType().getType());
         

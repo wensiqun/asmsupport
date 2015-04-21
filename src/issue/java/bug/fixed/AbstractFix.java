@@ -1,8 +1,8 @@
 package bug.fixed;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 
 public abstract class AbstractFix {
@@ -10,7 +10,7 @@ public abstract class AbstractFix {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = AClassFactory.getType(System.class).field("out");
+	public static GlobalVariable systemOut = Value.value(System.class).field("out");
 	
 	public static Class<?> generate(IClassContext creator){
 		//_这是Class的输出路径。主要为了调试作用。我们通过asmsupport生成的class将获输出到这个路径

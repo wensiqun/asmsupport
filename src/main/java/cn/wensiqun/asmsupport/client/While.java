@@ -14,13 +14,13 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.standard.loop.IWhile;
 
 public abstract class While extends ProgramBlock<WhileInternal> implements IWhile {
     
-	public While(InternalParameterized condition) {
+	public While(KernelParameterized condition) {
 		target = new WhileInternal(condition) {
 			@Override
 			public void body() {

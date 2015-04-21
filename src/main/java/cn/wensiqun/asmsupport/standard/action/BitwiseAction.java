@@ -14,14 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
 
 
 /**
@@ -30,7 +23,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
  * 
  * @author wensiqun(at)163.com
  */
-public interface BitwiseAction {
+public interface BitwiseAction<_P extends IParameterized> {
 	
     /**
      * 
@@ -39,9 +32,9 @@ public interface BitwiseAction {
      * </p>
      * 
      * @param factor
-     * @return {@link Reverse}
+     * @return {@link _P}
      */
-    public Reverse reverse(InternalParameterized factor);
+    _P reverse(_P factor);
     
     /**
      * The bit and operator.
@@ -52,9 +45,9 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link BitAnd}
+     * @return {@link _P}
      */
-    public BitAnd band(InternalParameterized factor1, InternalParameterized factor2);
+    _P band(_P factor1, _P factor2);
 	
     /**
      * 
@@ -66,9 +59,9 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link BitOr}
+     * @return {@link _P}
      */
-    public BitOr bor(InternalParameterized factor1, InternalParameterized factor2);
+    _P bor(_P factor1, _P factor2);
     
     /**
      * 
@@ -81,9 +74,9 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link BitXor}
+     * @return {@link _P}
      */
-    public BitXor bxor(InternalParameterized factor1, InternalParameterized factor2);
+    _P bxor(_P factor1, _P factor2);
     
     /**
      * 
@@ -95,9 +88,9 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link ShiftLeft}
+     * @return {@link _P}
      */
-    public ShiftLeft shl(InternalParameterized factor1, InternalParameterized factor2);
+    _P shl(_P factor1, _P factor2);
     
     /**
      * The bitwise shift right operator.
@@ -108,9 +101,9 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link ShiftRight}
+     * @return {@link _P}
      */
-    public ShiftRight shr(InternalParameterized factor1, InternalParameterized factor2);
+    _P shr(_P factor1, _P factor2);
     
     /**
      * The unsigned shift right operator.
@@ -121,8 +114,8 @@ public interface BitwiseAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link UnsignedShiftRight}
+     * @return {@link _P}
      */
-    public UnsignedShiftRight ushr(InternalParameterized factor1, InternalParameterized factor2);
+    _P ushr(_P factor1, _P factor2);
     
 }

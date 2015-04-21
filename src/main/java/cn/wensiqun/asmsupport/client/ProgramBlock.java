@@ -16,62 +16,58 @@ package cn.wensiqun.asmsupport.client;
 
 import java.lang.reflect.Array;
 
-import cn.wensiqun.asmsupport.client.def.clazz.ClientClass;
+import cn.wensiqun.asmsupport.client.def.value.ClientValue;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
+import cn.wensiqun.asmsupport.client.def.var.Super;
+import cn.wensiqun.asmsupport.client.def.var.This;
 import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.core.Crementable;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.client.operations.Add;
+import cn.wensiqun.asmsupport.client.operations.ArrayLength;
+import cn.wensiqun.asmsupport.client.operations.ArrayLoad;
+import cn.wensiqun.asmsupport.client.operations.ArrayStore;
+import cn.wensiqun.asmsupport.client.operations.ArrayValue;
+import cn.wensiqun.asmsupport.client.operations.Assign;
+import cn.wensiqun.asmsupport.client.operations.Band;
+import cn.wensiqun.asmsupport.client.operations.Bor;
+import cn.wensiqun.asmsupport.client.operations.Bxor;
+import cn.wensiqun.asmsupport.client.operations.Cast;
+import cn.wensiqun.asmsupport.client.operations.Crement;
+import cn.wensiqun.asmsupport.client.operations.Div;
+import cn.wensiqun.asmsupport.client.operations.Equal;
+import cn.wensiqun.asmsupport.client.operations.GreaterEqual;
+import cn.wensiqun.asmsupport.client.operations.GreaterThan;
+import cn.wensiqun.asmsupport.client.operations.Instanceof;
+import cn.wensiqun.asmsupport.client.operations.LessEqual;
+import cn.wensiqun.asmsupport.client.operations.LessThan;
+import cn.wensiqun.asmsupport.client.operations.LogiclAnd;
+import cn.wensiqun.asmsupport.client.operations.LogicOr;
+import cn.wensiqun.asmsupport.client.operations.LogicXor;
+import cn.wensiqun.asmsupport.client.operations.Call;
+import cn.wensiqun.asmsupport.client.operations.Mod;
+import cn.wensiqun.asmsupport.client.operations.Mul;
+import cn.wensiqun.asmsupport.client.operations.Neg;
+import cn.wensiqun.asmsupport.client.operations.Not;
+import cn.wensiqun.asmsupport.client.operations.NotEqual;
+import cn.wensiqun.asmsupport.client.operations.Reverse;
+import cn.wensiqun.asmsupport.client.operations.ShiftLeft;
+import cn.wensiqun.asmsupport.client.operations.ShiftRight;
+import cn.wensiqun.asmsupport.client.operations.And;
+import cn.wensiqun.asmsupport.client.operations.Or;
+import cn.wensiqun.asmsupport.client.operations.StrAdd;
+import cn.wensiqun.asmsupport.client.operations.Sub;
+import cn.wensiqun.asmsupport.client.operations.Ternary;
+import cn.wensiqun.asmsupport.client.operations.UnShiftRight;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.core.operator.Return;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayLoader;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayStorer;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
-import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
-import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalOr;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalXor;
-import cn.wensiqun.asmsupport.core.operator.logical.Not;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
-import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Division;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Modulus;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Multiplication;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.Equal;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class ProgramBlock<B extends ProgramBlockInternal> implements ActionSet<
-ClientParameterized<? extends InternalParameterized>, Var, FieldVar, ClientClass, 
-IF, While, DoWhile, ForEach, Try, Synchronized> {
+Param, Var, FieldVar,
+IF, While, DoWhile, ForEach, Try, Sync> {
 
 	B target;
 
@@ -84,43 +80,43 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
 	 * 
 	 * @return
 	 */
-	public ClientClass getMethodOwner() {
-		return new ClientClass(target.getMethodOwner());
+	public AClass getMethodOwner() {
+		return target.getMethodOwner();
 	}
 
 	@Override
-	public ThisVariable this_() {
-		return target.this_();
+	public This this_() {
+		return new This(target.this_());
 	}
 
 	@Override
-	public GlobalVariable this_(String name) {
-		return target.this_(name);
+	public FieldVar this_(String name) {
+		return new FieldVar(target.this_(name));
 	}
 
 	@Override
-	public SuperVariable super_() {
-		return target.super_();
+	public Super super_() {
+		return new Super(target.super_());
 	}
 
 	@Override
-	public Var var(String name, Class<?> type, ClientParameterized<? extends InternalParameterized> para) {
-		return new Var(target.var(name, type, para.target));
+	public LocVar var(String name, Class<?> type, Param para) {
+		return new LocVar(target.var(name, type, para.target));
 	}
 
 	@Override
-	public Var var(Class<?> type, ClientParameterized<? extends InternalParameterized> para) {
-		return new Var(target.var(type, para.target));
+	public LocVar var(Class<?> type, Param para) {
+		return new LocVar(target.var(type, para.target));
 	}
 
 	@Override
-	public Var var(String name, AClass type, ClientParameterized<? extends InternalParameterized> para) {
-		return new Var(target.var(name, type, para.target));
+	public LocVar var(String name, AClass type, Param para) {
+		return new LocVar(target.var(name, type, para.target));
 	}
 
 	@Override
-	public Var var(AClass type, ClientParameterized<? extends InternalParameterized> para) {
-		return new Var(target.var(type, para.target));
+	public LocVar var(AClass type, Param para) {
+		return new LocVar(target.var(type, para.target));
 	}
 
 	@Override
@@ -129,260 +125,259 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
 	}
 
 	@Override
-	public Assigner assign(ExplicitVariable variable, ClientParameterized<? extends InternalParameterized> val) {
-		return target.assign(variable, val.target);
+	public Assign assign(Var variable, Param val) {
+		return new Assign(target.assign((IVariable) variable.getTarget(), val.target));
 	}
 
 	@Override
-	public MethodInvoker call(ClientParameterized<? extends InternalParameterized> objRef, String methodName,
-			InternalParameterized... arguments) {
-		return target.call(objRef.target, methodName, arguments);
+	public Call call(Param objRef, String methodName, Param... arguments) {
+		return new Call(target.call(objRef.target, methodName, client2Internal(arguments)));
 	}
 
 	@Override
-	public MethodInvoker call(String methodName, ClientParameterized<? extends InternalParameterized>... args) {
-		return target.call(methodName, client2Internal(args));
+	public Call call(String methodName, Param... args) {
+		return new Call(target.call(methodName, client2Internal(args)));
 	}
 
 	@Override
-	public MethodInvoker call(ClientClass owner, String methodName, InternalParameterized... arguments) {
-		return target.call(owner.getTarget(), methodName, arguments);
+	public Call call(AClass owner, String methodName, Param... arguments) {
+		return new Call(target.call(owner, methodName, client2Internal(arguments)));
 	}
     
 	@Override
-    public final MethodInvoker call(Class<?> owner, String methodName, InternalParameterized... arguments) {
-    	return target.call(owner, methodName, arguments);
+    public Call call(Class<?> owner, String methodName, Param... arguments) {
+    	return new Call(target.call(owner, methodName, client2Internal(arguments)));
     }
 
 	@Override
-	public MethodInvoker new_(Class<?> owner, InternalParameterized... arguments) {
-		return target.new_(owner, arguments);
+	public Call new_(Class<?> owner, Param... arguments) {
+		return new Call(target.new_(owner, client2Internal(arguments)));
 	}
 
 	@Override
-	public MethodInvoker new_(ClientClass owner, InternalParameterized... arguments) {
-		return target.new_(owner.getTarget(), arguments);
+	public Call new_(AClass owner, Param... arguments) {
+		return new Call(target.new_(owner, client2Internal(arguments)));
 	}
 
 	@Override
-	public MethodInvoker callOrig() {
-		return target.callOrig();
+	public Call callOrig() {
+		return new Call(target.callOrig());
 	}
 
 	@Override
-	public ArrayValue makeArray(AClass aClass, InternalParameterized... allocateDims) {
-		return target.makeArray(aClass, allocateDims);
+	public ArrayValue makeArray(AClass aClass, Param... allocateDims) {
+		return new ArrayValue(target.makeArray(aClass, client2Internal(allocateDims)));
 	}
 
 	@Override
-	public ArrayValue makeArray(Class<?> arraytype, InternalParameterized... dimensions) {
-		return target.makeArray(arraytype, dimensions);
+	public ArrayValue makeArray(Class<?> arraytype, Param... dimensions) {
+		return new ArrayValue(target.makeArray(arraytype, client2Internal(dimensions)));
 	}
 
 	@Override
 	public ArrayValue newarray(AClass aClass, Object arrayObject) {
-		return target.newarray(aClass, arrayObject);
+		return new ArrayValue(target.newarray(aClass, client2Internal(arrayObject)));
 	}
 
 	@Override
 	public ArrayValue newarray(Class<?> type, Object arrayObject) {
-		return target.newarray(type, arrayObject);
+		return new ArrayValue(target.newarray(type, client2Internal(arrayObject)));
 	}
 
 	@Override
-	public ArrayLoader arrayLoad(InternalParameterized arrayReference,
-			InternalParameterized pardim, InternalParameterized... parDims) {
-		return target.arrayLoad(arrayReference, pardim, parDims);
+	public ArrayLoad arrayLoad(Param arrayReference,
+	        Param pardim, Param... parDims) {
+		return new ArrayLoad(target.arrayLoad(arrayReference.target, pardim.target, client2Internal(parDims)));
 	}
 	
 	@Override
-	public ArrayStorer arrayStore(InternalParameterized arrayReference,
-			InternalParameterized value, InternalParameterized dim, InternalParameterized... dims) {
-		return target.arrayStore(arrayReference, value, dim, dims);
+	public ArrayStore arrayStore(Param arrayReference,
+	        Param value, Param dim, Param... dims) {
+		return new ArrayStore(target.arrayStore(arrayReference.target, value.target, dim.target, client2Internal(dims)));
 	}
 
 	@Override
-	public ArrayLength arrayLength(InternalParameterized arrayReference,
-			InternalParameterized... dims) {
-		return target.arrayLength(arrayReference, dims);
+	public ArrayLength arrayLength(Param arrayReference,
+	        Param... dims) {
+		return new ArrayLength(target.arrayLength(arrayReference.target, client2Internal(dims)));
 	}
 	
 	@Override
-	public Addition add(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.add(factor1, factor2);
+	public Add add(Param factor1, Param factor2) {
+		return new Add(target.add(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Subtraction sub(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.sub(factor1, factor2);
+	public Sub sub(Param factor1, Param factor2) {
+		return new Sub(target.sub(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Multiplication mul(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.mul(factor1, factor2);
+	public Mul mul(Param factor1, Param factor2) {
+		return new Mul(target.mul(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Division div(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.div(factor1, factor2);
+	public Div div(Param factor1, Param factor2) {
+		return new Div(target.div(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Modulus mod(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.mod(factor1, factor2);
+	public Mod mod(Param factor1, Param factor2) {
+		return new Mod(target.mod(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Reverse reverse(InternalParameterized factor) {
-		return target.reverse(factor);
+	public Reverse reverse(Param factor) {
+		return new Reverse(target.reverse(factor.target));
 	}
 
 	@Override
-	public BitAnd band(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.band(factor1, factor2);
+	public Band band(Param factor1, Param factor2) {
+		return new Band(target.band(factor1.target, factor2.target));
 	}
 
 	@Override
-	public BitOr bor(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.bor(factor1, factor2);
+	public Bor bor(Param factor1, Param factor2) {
+		return new Bor(target.bor(factor1.target, factor2.target));
 	}
 
 	@Override
-	public BitXor bxor(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.bxor(factor1, factor2);
+	public Bxor bxor(Param factor1, Param factor2) {
+		return new Bxor(target.bxor(factor1.target, factor2.target));
 	}
 
 	@Override
-	public ShiftLeft shl(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.shl(factor1, factor2);
+	public ShiftLeft shl(Param factor1, Param factor2) {
+		return new ShiftLeft(target.shl(factor1.target, factor2.target));
 	}
 
 	@Override
-	public ShiftRight shr(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.shr(factor1, factor2);
+	public ShiftRight shr(Param factor1, Param factor2) {
+		return new ShiftRight(target.shr(factor1.target, factor2.target));
 	}
 
 	@Override
-	public UnsignedShiftRight ushr(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.ushr(factor1, factor2);
+	public UnShiftRight ushr(Param factor1, Param factor2) {
+		return new UnShiftRight(target.ushr(factor1.target, factor2.target));
 	}
 
 	@Override
-	public PreposeDecrment predec(Crementable crement) {
-		return target.predec(crement);
+	public Crement predec(Param crement) {
+		return new Crement(target.predec(crement.target));
 	}
 
 	@Override
-	public PostposeDecrment postdec(Crementable crement) {
-		return target.postdec(crement);
+	public Crement postdec(Param crement) {
+		return new Crement(target.postdec(crement.target));
 	}
 
 	@Override
-	public PreposeIncrment preinc(Crementable crement) {
-		return target.preinc(crement);
+	public Crement preinc(Param crement) {
+		return new Crement(target.preinc(crement.target));
 	}
 
 	@Override
-	public PostposeIncrment postinc(Crementable crement) {
-		return target.postinc(crement);
+	public Crement postinc(Param crement) {
+		return new Crement(target.postinc(crement.target));
 	}
 
 	@Override
-	public GreaterThan gt(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.gt(factor1, factor2);
+	public GreaterThan gt(Param factor1, Param factor2) {
+		return new GreaterThan(target.gt(factor1.target, factor2.target));
 	}
 
 	@Override
-	public GreaterEqual ge(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.ge(factor1, factor2);
+	public GreaterEqual ge(Param factor1, Param factor2) {
+		return new GreaterEqual(target.ge(factor1.target, factor2.target));
 	}
 
 	@Override
-	public LessThan lt(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.lt(factor1, factor2);
+	public LessThan lt(Param factor1, Param factor2) {
+		return new LessThan(target.lt(factor1.target, factor2.target));
 	}
 
 	@Override
-	public LessEqual le(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.le(factor1, factor2);
+	public LessEqual le(Param factor1, Param factor2) {
+		return new LessEqual(target.le(factor1.target, factor2.target));
 	}
 
 	@Override
-	public Equal eq(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.eq(factor1, factor2);
+	public Equal eq(Param factor1, Param factor2) {
+		return new Equal(target.eq(factor1.target, factor2.target));
 	}
 
 	@Override
-	public NotEqual ne(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.ne(factor1, factor2);
+	public NotEqual ne(Param factor1, Param factor2) {
+		return new NotEqual(target.ne(factor1.target, factor2.target));
 	}
 
 	@Override
-	public LogicalAnd logicalAnd(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.logicalAnd(factor1, factor2);
+	public LogiclAnd logicalAnd(Param factor1, Param factor2) {
+		return new LogiclAnd(target.logicalAnd(factor1.target, factor2.target));
 	}
 
 	@Override
-	public LogicalOr logicalOr(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.logicalOr(factor1, factor2);
+	public LogicOr logicalOr(Param factor1, Param factor2) {
+		return new LogicOr(target.logicalOr(factor1.target, factor2.target));
 	}
 
 	@Override
-	public LogicalXor logicalXor(InternalParameterized factor1, InternalParameterized factor2) {
-		return target.logicalXor(factor1, factor2);
+	public LogicXor logicalXor(Param factor1, Param factor2) {
+		return new LogicXor(target.logicalXor(factor1.target, factor2.target));
 	}
 
 	@Override
-	public ShortCircuitAnd and(InternalParameterized factor1, InternalParameterized factor2,
-			InternalParameterized... otherFactor) {
-		return target.and(factor1, factor2, otherFactor);
+	public And and(Param factor1, Param factor2,
+	        Param... otherFactor) {
+		return new And(target.and(factor1.target, factor2.target, client2Internal(otherFactor)));
 	}
 
 	@Override
-	public ShortCircuitOr or(InternalParameterized factor1, InternalParameterized factor2,
-			InternalParameterized... otherFactor) {
-		return target.or(factor1, factor2, otherFactor);
+	public Or or(Param factor1, Param factor2,
+	        Param... otherFactor) {
+		return new Or(target.or(factor1.target, factor2.target, client2Internal(otherFactor)));
 	}
 
 	@Override
-	public Not no(InternalParameterized factor) {
-		return target.no(factor);
+	public Not no(Param factor) {
+		return new Not(target.no(factor.target));
 	}
 
 	@Override
-	public CheckCast checkcast(InternalParameterized cc, ClientClass to) {
-		return target.checkcast(cc, to.getTarget());
+	public Cast checkcast(Param cc, AClass to) {
+		return new Cast(target.checkcast(cc.target, to));
 	}
 
 	@Override
-	public CheckCast checkcast(InternalParameterized cc, Class<?> to) {
-		return target.checkcast(cc, to);
+	public Cast checkcast(Param cc, Class<?> to) {
+		return new Cast(target.checkcast(cc.target, to));
 	}
 
 	@Override
-	public Negative neg(InternalParameterized factor) {
-		return target.neg(factor);
+	public Neg neg(Param factor) {
+		return new Neg(target.neg(factor.target));
 	}
 
 	@Override
-	public TernaryOperator ternary(InternalParameterized exp1, InternalParameterized exp2,
-			InternalParameterized exp3) {
-		return target.ternary(exp1, exp2, exp3);
+	public Ternary ternary(Param exp1, Param exp2,
+	        Param exp3) {
+		return new Ternary(target.ternary(exp1.target, exp2.target, exp3.target));
 	}
 
 	@Override
-	public InternalParameterized stradd(InternalParameterized par1, InternalParameterized... pars) {
-		return target.stradd(par1, pars);
+	public StrAdd stradd(Param par1, Param... pars) {
+		return new StrAdd(target.stradd(par1.target, client2Internal(pars)));
 	}
 
 	@Override
-	public InternalParameterized instanceof_(InternalParameterized obj, AClass type) {
-		return target.instanceof_(obj, type);
+	public Instanceof instanceof_(Param obj, AClass type) {
+		return new Instanceof(target.instanceof_(obj.target, type));
 	}
 
 	@Override
-	public InternalParameterized instanceof_(InternalParameterized obj, Class<?> type) {
-		return target.instanceof_(obj, type);
+	public Instanceof instanceof_(Param obj, Class<?> type) {
+		return new Instanceof(target.instanceof_(obj.target, type));
 	}
 
 	@Override
@@ -396,18 +391,18 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
 	}
 
 	@Override
-	public void throw_(InternalParameterized exception) {
-		target.throw_(exception);
+	public void throw_(Param exception) {
+		target.throw_(exception.target);
 	}
 
 	@Override
-	public Return return_() {
-		return target.return_();
+	public void return_() {
+		target.return_();
 	}
 
 	@Override
-	public Return return_(InternalParameterized parame) {
-		return target.return_(parame);
+	public void return_(Param parame) {
+		target.return_(parame.target);
 	}
 
 	@Override
@@ -441,89 +436,89 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
 	}
 
 	@Override
-	public Synchronized sync(Synchronized sync) {
+	public Sync sync(Sync sync) {
 		target.sync(sync.target);
 		return sync;
 	}
 
 	@Override
-	public Value val(Integer val) {
-		return target.val(val);
+	public ClientValue val(Integer val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Short val) {
-		return target.val(val);
+	public ClientValue val(Short val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Byte val) {
-		return target.val(val);
+	public ClientValue val(Byte val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Boolean val) {
-		return target.val(val);
+	public ClientValue val(Boolean val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Long val) {
-		return target.val(val);
+	public ClientValue val(Long val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Double val) {
-		return target.val(val);
+	public ClientValue val(Double val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Character val) {
-		return target.val(val);
+	public ClientValue val(Character val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Float val) {
-		return target.val(val);
+	public ClientValue val(Float val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(AClass val) {
-		return target.val(val);
+	public ClientValue val(AClass val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(Class<?> val) {
-		return target.val(val);
+	public ClientValue val(Class<?> val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value val(String val) {
-		return target.val(val);
+	public ClientValue val(String val) {
+		return new ClientValue(target.val(val));
 	}
 
 	@Override
-	public Value null_(AClass type) {
-		return target.null_(type);
+	public ClientValue null_(AClass type) {
+		return new ClientValue(target.null_(type));
 	}
 
 	@Override
-	public Value null_(Class<?> type) {
-		return target.null_(type);
+	public ClientValue null_(Class<?> type) {
+		return new ClientValue(target.null_(type));
 	}
 
 	@Override
-	public ClientClass getType(Class<?> cls) {
-		return new ClientClass(target.getType(cls));
+	public AClass getType(Class<?> cls) {
+		return target.getType(cls);
 	}
 
 	@Override
-	public ClientClass getArrayType(Class<?> cls, int dim) {
-		return new ClientClass(target.getArrayType(cls, dim));
+	public AClass getArrayType(Class<?> cls, int dim) {
+		return target.getArrayType(cls, dim);
 	}
 
 	@Override
-	public ClientClass getArrayType(AClass rootComponent, int dim) {
-		return new ClientClass(target.getArrayType(rootComponent, dim));
+	public AClass getArrayType(AClass rootComponent, int dim) {
+		return target.getArrayType(rootComponent, dim);
 	}
 	
 	/**
@@ -532,13 +527,25 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
      * @param pars
      * @return
      */
-    InternalParameterized[] client2Internal(ClientParameterized<? extends InternalParameterized>... pars) {
+    KernelParameterized[] client2Internal(Param... pars) {
         if(pars == null) {
             return null;
         }
-        InternalParameterized[] paras = new InternalParameterized[pars.length];
+        KernelParameterized[] paras = new KernelParameterized[pars.length];
         for(int i=0; i<pars.length; i++) {
             paras[i] = pars[i].target;
+        }
+        return paras;
+    }
+    
+
+    LocVar[] internalVar2ClientVar(LocalVariable... pars) {
+        if(pars == null) {
+            return null;
+        }
+        LocVar[] paras = new LocVar[pars.length];
+        for(int i=0; i<pars.length; i++) {
+            paras[i] = new LocVar(pars[i]);
         }
         return paras;
     }
@@ -560,8 +567,8 @@ IF, While, DoWhile, ForEach, Try, Synchronized> {
                 internalArray[i] = client2Internal(Array.get(clientArray, i));
             }
             return internalArray;
-        } else if (clientArray instanceof ClientParameterized){
-            return ((ClientParameterized<? extends InternalParameterized>)clientArray).target;
+        } else if (clientArray instanceof Param){
+            return ((Param)clientArray).target;
         }
         throw new IllegalArgumentException();
     }

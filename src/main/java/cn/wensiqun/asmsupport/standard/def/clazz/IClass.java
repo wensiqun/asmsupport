@@ -1,10 +1,7 @@
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.FieldVarGetter;
-import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 
@@ -14,7 +11,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
  * @author 温斯群(Joe Wen)
  *
  */
-public interface IClass<F extends IFieldVar> extends FieldVarGetter<F>{
+public interface IClass { 
 	
     /**
      * 判断当前Class是否是数组
@@ -101,12 +98,20 @@ public interface IClass<F extends IFieldVar> extends FieldVarGetter<F>{
      */
     int getCastOrder();
     
+    boolean existStaticInitBlock();
+    
+    
     /**
-     * 获取默认值
+     * if the class is array type, get the next dim type.
+     * 
      * @return
      */
-    Value getDefaultValue();
+    public IClass getNextDimType();
     
-    boolean existStaticInitBlock();
+    /**
+     * 获取数组的最基本类型
+     * @return
+     */
+    public IClass getRootComponentClass();
     
 }

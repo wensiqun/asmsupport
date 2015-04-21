@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -12,7 +12,7 @@ public abstract class AbstractExample {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = AClassFactory.getType(System.class).field("out");
+	public static GlobalVariable systemOut = Value.value(System.class).field("out");
 	static {
 	    ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}

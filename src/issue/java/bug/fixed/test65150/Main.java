@@ -4,12 +4,12 @@ import bug.fixed.AbstractFix;
 import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class Main extends AbstractFix {
 
@@ -27,7 +27,7 @@ public class Main extends AbstractFix {
 				
 				call(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
 				
-				assign(this.getMethodOwner().field("DEFAULT_VALUE"), Value.value(100));
+				assign(val(getMethodOwner()).field("DEFAULT_VALUE"), Value.value(100));
 				
 			    return_();
 			}
@@ -42,9 +42,9 @@ public class Main extends AbstractFix {
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), getMethodOwner().field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodOwner()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), getMethodOwner().field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodOwner()).field("COMMON_POST")));
 	        	
 			    return_();
 			}
@@ -72,7 +72,7 @@ public class Main extends AbstractFix {
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	call(systemOut, "println", stradd(Value.value("DEFAULT_VALUE : "), Test65150AClass.field("DEFAULT_VALUE")));
+	        	call(systemOut, "println", stradd(Value.value("DEFAULT_VALUE : "), val(Test65150AClass).field("DEFAULT_VALUE")));
 	        	
 			    return_();
 			}

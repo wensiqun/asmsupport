@@ -17,12 +17,12 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
 
@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
  * 
  * @author 温斯群(Joe Wen)
  */
-public class LocalVariable extends ExplicitVariable implements Crementable{
+public class LocalVariable extends ExplicitVariable implements ILocVar{
 
     private LocalVariableMeta meta;
 

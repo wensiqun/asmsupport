@@ -14,11 +14,11 @@
  */
 package cn.wensiqun.asmsupport.standard.method;
 
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.action.KeywordAction;
-import cn.wensiqun.asmsupport.standard.body.LocalVariablesBody;
+import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IModifiedMethodBody extends KeywordAction, LocalVariablesBody {
+public interface IModifiedMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var> {
 
     /**
      * Get original return type.

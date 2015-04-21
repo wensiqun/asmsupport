@@ -17,10 +17,9 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
-import cn.wensiqun.asmsupport.core.Crementable;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -28,6 +27,9 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.Crementable;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -35,20 +37,21 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public abstract class AbstractCrement extends AbstractNumerical {
 
-    private Crementable factor;
+    private KernelParameterized factor;
 
-    /**
+    /*
      * indicate the operators position,
      * 
      * true : like i++ false : like ++i;
      */
-    private boolean post;
+    //private boolean post;
 
-    protected AbstractCrement(ProgramBlockInternal block, Crementable factor, String operator, boolean post) {
-        super(block);
+    protected AbstractCrement(ProgramBlockInternal block, KernelParameterized factor, Operators operator) {
+        super(block, operator);
+        if(factor instanceof Crementable) {
+            throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);
+        }
         this.factor = factor;
-        this.operator = operator;
-        this.post = post;
     }
 
     @Override
@@ -88,16 +91,18 @@ public abstract class AbstractCrement extends AbstractNumerical {
     protected void doExecute() {
         Type type = targetClass.getType();
         boolean asArgument = !block.getQueue().contains(this);
-
+        boolean isPos = Operators.POS_DEC.equals(getOperatorSymbol()) || Operators.POS_INC.equals(getOperatorSymbol());
+        boolean isInc = Operators.PRE_INC.equals(getOperatorSymbol()) || Operators.POS_INC.equals(getOperatorSymbol());
         if (factor instanceof LocalVariable && Type.INT_TYPE.equals(targetClass.getType())) {
-            if (asArgument && post)
+            if (asArgument && isPos) {
                 factor.loadToStack(block);
+            }
+            
+            insnHelper.iinc(((LocalVariable) factor).getScopeLogicVar().getInitStartPos(), isInc ? 1 : -1);
 
-            insnHelper.iinc(((LocalVariable) factor).getScopeLogicVar().getInitStartPos(),
-                    Operators.INCREMENT.equals(operator) ? 1 : -1);
-
-            if (asArgument && !post)
+            if (asArgument && !isPos) {
                 factor.loadToStack(block);
+            }
         } else {
             AClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
             Type primitiveType = primitiveClass.getType();
@@ -105,7 +110,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
             // factor load to stack
             factor.loadToStack(block);
 
-            if (asArgument && post)
+            if (asArgument && isPos)
                 insnHelper.dup(type);
 
             // unbox
@@ -115,15 +120,16 @@ public abstract class AbstractCrement extends AbstractNumerical {
             getIncreaseValue().loadToStack(block);
 
             // generate xadd/xsub for decrement
-            if (Operators.INCREMENT.equals(operator))
+            if (isInc) {
                 insnHelper.add(primitiveType);
-            else
+            } else {
                 insnHelper.sub(primitiveType);
+            }
 
             // box and cast
             autoCast(primitiveType.getSort() <= Type.INT ? AClassFactory.getType(int.class) : primitiveClass, targetClass, true);
 
-            if (asArgument && !post)
+            if (asArgument && !isPos)
                 insnHelper.dup(type);
 
             // 将栈内的值存储到全局变量中

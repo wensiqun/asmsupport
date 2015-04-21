@@ -17,8 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.block;
 
-import cn.wensiqun.asmsupport.core.Crementable;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
@@ -29,72 +27,71 @@ import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.clazz.NewMemberClass;
+import cn.wensiqun.asmsupport.core.clazz.MutableClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.exception.MethodInvokeException;
 import cn.wensiqun.asmsupport.core.exception.VerifyErrorException;
 import cn.wensiqun.asmsupport.core.operator.BlockEndFlag;
-import cn.wensiqun.asmsupport.core.operator.InstanceofOperator;
-import cn.wensiqun.asmsupport.core.operator.Return;
-import cn.wensiqun.asmsupport.core.operator.StringAppender;
-import cn.wensiqun.asmsupport.core.operator.Throw;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayLength;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayLoader;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayStorer;
-import cn.wensiqun.asmsupport.core.operator.array.ArrayValue;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLoad;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayStore;
+import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
-import cn.wensiqun.asmsupport.core.operator.assign.Assigner;
+import cn.wensiqun.asmsupport.core.operator.assign.KernelAssign;
 import cn.wensiqun.asmsupport.core.operator.assign.LocalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.assign.NonStaticGlobalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.assign.StaticGlobalVariableAssigner;
-import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalOr;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalXor;
-import cn.wensiqun.asmsupport.core.operator.logical.Not;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
+import cn.wensiqun.asmsupport.core.operator.common.KernelCast;
+import cn.wensiqun.asmsupport.core.operator.common.KernelInstanceof;
+import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
+import cn.wensiqun.asmsupport.core.operator.common.KernelStrAdd;
+import cn.wensiqun.asmsupport.core.operator.common.KernelThrow;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalAnd;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalOr;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalXor;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelNot;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitAnd;
+import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitOr;
 import cn.wensiqun.asmsupport.core.operator.method.CommonMethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.ConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.StaticMethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Addition;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Division;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Modulus;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Multiplication;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.Subtraction;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitAnd;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitOr;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.BitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.Reverse;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftLeft;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.ShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.UnsignedShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PostposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeDecrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.crement.PreposeIncrment;
-import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.Equal;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.GreaterThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.LessThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.NotEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelDiv;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelMod;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelMul;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelSub;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitAnd;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitOr;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitXor;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelReverse;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelShiftLeft;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelUnsignedShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPostDecrment;
+import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPostIncrment;
+import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreDecrment;
+import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreIncrment;
+import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.KernelNeg;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelEqual;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelGreaterEqual;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelGreaterThan;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessEqual;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessThan;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelNotEqual;
+import cn.wensiqun.asmsupport.core.operator.numerical.ternary.KernelTernary;
 import cn.wensiqun.asmsupport.core.operator.numerical.variable.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
@@ -105,7 +102,9 @@ import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 /**
  * 
@@ -114,8 +113,8 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
  * @author wensiqun(at)163.com
  * 
  */
-public abstract class ProgramBlockInternal extends AbstractBlockInternal implements ActionSet<
-InternalParameterized, LocalVariable, GlobalVariable, AClass, 
+public abstract class ProgramBlockInternal extends AbstractBlockInternal implements 
+ActionSet<KernelParameterized, IVariable, GlobalVariable,
 IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, SynchronizedInternal> {
 
 	/** the actually executor.*/
@@ -308,7 +307,7 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
      * 
      * @return
      */
-    public NewMemberClass getMethodOwner() {
+    public MutableClass getMethodOwner() {
         return getMethod().getMethodOwner();
     }
 
@@ -408,10 +407,10 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     /**
      * the basic create variable method.
      */
-    private final LocalVariable var(String name, AClass type, boolean anonymous, InternalParameterized value) {
+    private final LocalVariable var(String name, AClass type, boolean anonymous, KernelParameterized value) {
         LocalVariable lv = createOnlyVariable(type, name, anonymous);
         if (value == null) {
-            assign(lv, type.getDefaultValue());
+            assign(lv, Value.defaultValue(type));
         } else {
             assign(lv, value);
         }
@@ -419,22 +418,22 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     }
 
     @Override
-    public LocalVariable var(String name, Class<?> type, InternalParameterized para) {
+    public LocalVariable var(String name, Class<?> type, KernelParameterized para) {
         return var(name, AClassFactory.getType(type), false, para);
     }
 
     @Override
-    public LocalVariable var(Class<?> type, InternalParameterized para) {
+    public LocalVariable var(Class<?> type, KernelParameterized para) {
         return var("", AClassFactory.getType(type), true, para);
     }
 
     @Override
-    public LocalVariable var(String name, AClass type, InternalParameterized para) {
+    public LocalVariable var(String name, AClass type, KernelParameterized para) {
         return var(name, type, false, para);
     }
 
     @Override
-    public LocalVariable var(AClass type, InternalParameterized para) {
+    public LocalVariable var(AClass type, KernelParameterized para) {
         return var("", type, true, para);
     }
 
@@ -444,21 +443,22 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
 	}
 
 	@Override
-    public final Assigner assign(ExplicitVariable variable, InternalParameterized val) {
+    public final KernelAssign assign(IVariable variable, KernelParameterized val) {
         if (variable instanceof LocalVariable) {
             return OperatorFactory.newOperator(LocalVariableAssigner.class, new Class<?>[] {
-                    ProgramBlockInternal.class, LocalVariable.class, InternalParameterized.class }, getExecutor(), variable,
+                    ProgramBlockInternal.class, LocalVariable.class, KernelParameterized.class }, getExecutor(), variable,
                     val);
         } else if (variable instanceof StaticGlobalVariable) {
             return OperatorFactory.newOperator(StaticGlobalVariableAssigner.class, new Class<?>[] {
-                    ProgramBlockInternal.class, StaticGlobalVariable.class, InternalParameterized.class }, getExecutor(),
+                    ProgramBlockInternal.class, StaticGlobalVariable.class, KernelParameterized.class }, getExecutor(),
                     variable, val);
         } else if (variable instanceof NonStaticGlobalVariable) {
             return OperatorFactory.newOperator(NonStaticGlobalVariableAssigner.class, new Class<?>[] {
-                    ProgramBlockInternal.class, NonStaticGlobalVariable.class, InternalParameterized.class }, getExecutor(),
+                    ProgramBlockInternal.class, NonStaticGlobalVariable.class, KernelParameterized.class }, getExecutor(),
                     variable, val);
+        } else {
+            throw new IllegalArgumentException("Can't assign value to variable : " + variable.getName());
         }
-        return null;
     }
 
     // *******************************************************************************************//
@@ -466,16 +466,16 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final ArrayValue makeArray(AClass arrayType, final InternalParameterized... allocateDims) {
+    public final KernelArrayValue makeArray(AClass arrayType, final KernelParameterized... allocateDims) {
     	if(!arrayType.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
     	}
-        return OperatorFactory.newOperator(ArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
-                ArrayClass.class, InternalParameterized[].class }, getExecutor(), arrayType, allocateDims);
+        return OperatorFactory.newOperator(KernelArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
+                ArrayClass.class, KernelParameterized[].class }, getExecutor(), arrayType, allocateDims);
     }
 
     @Override
-    public ArrayValue makeArray(Class<?> arraytype, InternalParameterized... dimensions) {
+    public KernelArrayValue makeArray(Class<?> arraytype, KernelParameterized... dimensions) {
     	if(!arraytype.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arraytype);
     	}
@@ -483,16 +483,16 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     }
 
     @Override
-    public final ArrayValue newarray(AClass arrayType, final Object arrayObject) {
+    public final KernelArrayValue newarray(AClass arrayType, final Object arrayObject) {
     	if(!arrayType.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
     	}
-        return OperatorFactory.newOperator(ArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
+        return OperatorFactory.newOperator(KernelArrayValue.class, new Class<?>[] { ProgramBlockInternal.class,
                 ArrayClass.class, Object.class }, getExecutor(), arrayType, arrayObject);
     }
 
     @Override
-    public ArrayValue newarray(Class<?> type, Object arrayObject) {
+    public KernelArrayValue newarray(Class<?> type, Object arrayObject) {
     	if(!type.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
     	}
@@ -504,24 +504,24 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final ArrayLoader arrayLoad(InternalParameterized arrayReference, InternalParameterized pardim, InternalParameterized... parDims) {
-        return OperatorFactory.newOperator(ArrayLoader.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class, InternalParameterized[].class }, getExecutor(), arrayReference,
+    public final KernelArrayLoad arrayLoad(KernelParameterized arrayReference, KernelParameterized pardim, KernelParameterized... parDims) {
+        return OperatorFactory.newOperator(KernelArrayLoad.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class, KernelParameterized[].class }, getExecutor(), arrayReference,
                 pardim, parDims);
     }
 
     @Override
-    public final ArrayStorer arrayStore(InternalParameterized arrayReference, InternalParameterized value, InternalParameterized dim,
-            InternalParameterized... dims) {
-        return OperatorFactory.newOperator(ArrayStorer.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class, InternalParameterized.class, InternalParameterized[].class }, getExecutor(),
+    public final KernelArrayStore arrayStore(KernelParameterized arrayReference, KernelParameterized value, KernelParameterized dim,
+            KernelParameterized... dims) {
+        return OperatorFactory.newOperator(KernelArrayStore.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class, KernelParameterized.class, KernelParameterized[].class }, getExecutor(),
                 arrayReference, value, dim, dims);
     }
 
     @Override
-    public final ArrayLength arrayLength(InternalParameterized arrayReference, InternalParameterized... dims) {
-        return OperatorFactory.newOperator(ArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized[].class }, getExecutor(), arrayReference, dims);
+    public final KernelArrayLength arrayLength(KernelParameterized arrayReference, KernelParameterized... dims) {
+        return OperatorFactory.newOperator(KernelArrayLength.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized[].class }, getExecutor(), arrayReference, dims);
     }
 
     // *******************************************************************************************//
@@ -529,16 +529,16 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final CheckCast checkcast(InternalParameterized cc, AClass to) {
+    public final KernelCast checkcast(KernelParameterized cc, AClass to) {
         if (to.isPrimitive()) {
             throw new IllegalArgumentException("Cannot check cast to type " + to + " from " + cc.getResultType());
         }
-        return OperatorFactory.newOperator(CheckCast.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, AClass.class }, getExecutor(), cc, to);
+        return OperatorFactory.newOperator(KernelCast.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, AClass.class }, getExecutor(), cc, to);
     }
 
     @Override
-    public final CheckCast checkcast(InternalParameterized cc, Class<?> to) {
+    public final KernelCast checkcast(KernelParameterized cc, Class<?> to) {
         return checkcast(cc, AClassFactory.getType(to));
     }
 
@@ -547,39 +547,39 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final Addition add(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Addition.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelAdd add(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelAdd.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Subtraction sub(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Subtraction.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelSub sub(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelSub.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Multiplication mul(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Multiplication.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelMul mul(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelMul.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Division div(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Division.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelDiv div(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelDiv.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Modulus mod(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Modulus.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelMod mod(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelMod.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Negative neg(InternalParameterized factor) {
-        return OperatorFactory.newOperator(Negative.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class }, getExecutor(), factor);
+    public final KernelNeg neg(KernelParameterized factor) {
+        return OperatorFactory.newOperator(KernelNeg.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class }, getExecutor(), factor);
     }
 
     // *******************************************************************************************//
@@ -587,44 +587,44 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final Reverse reverse(InternalParameterized factor) {
-        return OperatorFactory.newOperator(Reverse.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class }, getExecutor(), factor);
+    public final KernelReverse reverse(KernelParameterized factor) {
+        return OperatorFactory.newOperator(KernelReverse.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class }, getExecutor(), factor);
     }
 
     @Override
-    public final BitAnd band(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(BitAnd.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelBitAnd band(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelBitAnd.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final BitOr bor(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(BitOr.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelBitOr bor(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelBitOr.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final BitXor bxor(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(BitXor.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelBitXor bxor(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelBitXor.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final ShiftLeft shl(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(ShiftLeft.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelShiftLeft shl(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelShiftLeft.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
-    public final ShiftRight shr(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(ShiftRight.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelShiftRight shr(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelShiftRight.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final UnsignedShiftRight ushr(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(UnsignedShiftRight.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelUnsignedShiftRight ushr(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelUnsignedShiftRight.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     // *******************************************************************************************//
@@ -632,27 +632,27 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final PreposeDecrment predec(Crementable crement) {
-        return OperatorFactory.newOperator(PreposeDecrment.class, new Class<?>[] { ProgramBlockInternal.class,
-                Crementable.class }, getExecutor(), crement);
+    public final KernelPreDecrment predec(KernelParameterized crement) {
+        return OperatorFactory.newOperator(KernelPreDecrment.class, new Class<?>[] { ProgramBlockInternal.class,
+            KernelParameterized.class }, getExecutor(), crement);
     }
 
     @Override
-    public final PostposeDecrment postdec(Crementable crement) {
-        return OperatorFactory.newOperator(PostposeDecrment.class, new Class<?>[] { ProgramBlockInternal.class,
-                Crementable.class }, getExecutor(), crement);
+    public final KernelPostDecrment postdec(KernelParameterized crement) {
+        return OperatorFactory.newOperator(KernelPostDecrment.class, new Class<?>[] { ProgramBlockInternal.class,
+            KernelParameterized.class }, getExecutor(), crement);
     }
 
     @Override
-    public final PreposeIncrment preinc(Crementable crement) {
-        return OperatorFactory.newOperator(PreposeIncrment.class, new Class<?>[] { ProgramBlockInternal.class,
-                Crementable.class }, getExecutor(), crement);
+    public final KernelPreIncrment preinc(KernelParameterized crement) {
+        return OperatorFactory.newOperator(KernelPreIncrment.class, new Class<?>[] { ProgramBlockInternal.class,
+            KernelParameterized.class }, getExecutor(), crement);
     }
 
     @Override
-    public final PostposeIncrment postinc(Crementable crement) {
-        return OperatorFactory.newOperator(PostposeIncrment.class, new Class<?>[] { ProgramBlockInternal.class,
-                Crementable.class }, getExecutor(), crement);
+    public final KernelPostIncrment postinc(KernelParameterized crement) {
+        return OperatorFactory.newOperator(KernelPostIncrment.class, new Class<?>[] { ProgramBlockInternal.class,
+            KernelParameterized.class }, getExecutor(), crement);
     }
 
     // *******************************************************************************************//
@@ -660,39 +660,39 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final GreaterThan gt(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(GreaterThan.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelGreaterThan gt(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelGreaterThan.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final GreaterEqual ge(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(GreaterEqual.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelGreaterEqual ge(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelGreaterEqual.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LessThan lt(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(LessThan.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelLessThan lt(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelLessThan.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LessEqual le(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(LessEqual.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelLessEqual le(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelLessEqual.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final Equal eq(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(Equal.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelEqual eq(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelEqual.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final NotEqual ne(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(NotEqual.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelNotEqual ne(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelNotEqual.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     // *******************************************************************************************//
@@ -700,61 +700,61 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final LogicalAnd logicalAnd(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(LogicalAnd.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelLogicalAnd logicalAnd(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelLogicalAnd.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LogicalOr logicalOr(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(LogicalOr.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelLogicalOr logicalOr(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelLogicalOr.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final LogicalXor logicalXor(InternalParameterized factor1, InternalParameterized factor2) {
-        return OperatorFactory.newOperator(LogicalXor.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelLogicalXor logicalXor(KernelParameterized factor1, KernelParameterized factor2) {
+        return OperatorFactory.newOperator(KernelLogicalXor.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final ShortCircuitAnd and(InternalParameterized factor1, InternalParameterized factor2, InternalParameterized... otherFactors) {
-        ShortCircuitAnd sca = OperatorFactory
-                .newOperator(ShortCircuitAnd.class, new Class<?>[] { ProgramBlockInternal.class, InternalParameterized.class,
-                        InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelShortCircuitAnd and(KernelParameterized factor1, KernelParameterized factor2, KernelParameterized... otherFactors) {
+        KernelShortCircuitAnd sca = OperatorFactory
+                .newOperator(KernelShortCircuitAnd.class, new Class<?>[] { ProgramBlockInternal.class, KernelParameterized.class,
+                        KernelParameterized.class }, getExecutor(), factor1, factor2);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
-            for (InternalParameterized factor : otherFactors) {
-                sca = OperatorFactory.newOperator(ShortCircuitAnd.class, new Class<?>[] { ProgramBlockInternal.class,
-                        InternalParameterized.class, InternalParameterized.class }, getExecutor(), sca, factor);
+            for (KernelParameterized factor : otherFactors) {
+                sca = OperatorFactory.newOperator(KernelShortCircuitAnd.class, new Class<?>[] { ProgramBlockInternal.class,
+                        KernelParameterized.class, KernelParameterized.class }, getExecutor(), sca, factor);
             }
         }
         return sca;
     }
 
     @Override
-    public final ShortCircuitOr or(InternalParameterized factor1, InternalParameterized factor2, InternalParameterized... otherFactors) {
-        ShortCircuitOr sco = OperatorFactory
-                .newOperator(ShortCircuitOr.class, new Class<?>[] { ProgramBlockInternal.class, InternalParameterized.class,
-                        InternalParameterized.class }, getExecutor(), factor1, factor2);
+    public final KernelShortCircuitOr or(KernelParameterized factor1, KernelParameterized factor2, KernelParameterized... otherFactors) {
+        KernelShortCircuitOr sco = OperatorFactory
+                .newOperator(KernelShortCircuitOr.class, new Class<?>[] { ProgramBlockInternal.class, KernelParameterized.class,
+                        KernelParameterized.class }, getExecutor(), factor1, factor2);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
-            for (InternalParameterized factor : otherFactors) {
-                sco = OperatorFactory.newOperator(ShortCircuitOr.class, new Class<?>[] { ProgramBlockInternal.class,
-                        InternalParameterized.class, InternalParameterized.class }, getExecutor(), sco, factor);
+            for (KernelParameterized factor : otherFactors) {
+                sco = OperatorFactory.newOperator(KernelShortCircuitOr.class, new Class<?>[] { ProgramBlockInternal.class,
+                        KernelParameterized.class, KernelParameterized.class }, getExecutor(), sco, factor);
             }
         }
         return sco;
     }
 
     @Override
-    public final Not no(InternalParameterized factor) {
-        return OperatorFactory.newOperator(Not.class,
-                new Class<?>[] { ProgramBlockInternal.class, InternalParameterized.class }, getExecutor(), factor);
+    public final KernelNot no(KernelParameterized factor) {
+        return OperatorFactory.newOperator(KernelNot.class,
+                new Class<?>[] { ProgramBlockInternal.class, KernelParameterized.class }, getExecutor(), factor);
     }
 
     @Override
-    public final TernaryOperator ternary(InternalParameterized exp1, InternalParameterized exp2, InternalParameterized exp3) {
-        return OperatorFactory.newOperator(TernaryOperator.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized.class, InternalParameterized.class }, getExecutor(), exp1, exp2, exp3);
+    public final KernelTernary ternary(KernelParameterized exp1, KernelParameterized exp2, KernelParameterized exp3) {
+        return OperatorFactory.newOperator(KernelTernary.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized.class, KernelParameterized.class }, getExecutor(), exp1, exp2, exp3);
     }
 
     // *******************************************************************************************//
@@ -762,9 +762,9 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final InternalParameterized stradd(InternalParameterized par1, InternalParameterized... pars) {
-        return OperatorFactory.newOperator(StringAppender.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, InternalParameterized[].class }, getExecutor(), par1, pars);
+    public final KernelStrAdd stradd(KernelParameterized par1, KernelParameterized... pars) {
+        return OperatorFactory.newOperator(KernelStrAdd.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, KernelParameterized[].class }, getExecutor(), par1, pars);
     }
 
     // *******************************************************************************************//
@@ -772,14 +772,14 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final InternalParameterized instanceof_(InternalParameterized obj, AClass type) {
-        return OperatorFactory.newOperator(InstanceofOperator.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, AClass.class }, getExecutor(), obj, type);
+    public final KernelInstanceof instanceof_(KernelParameterized obj, AClass type) {
+        return OperatorFactory.newOperator(KernelInstanceof.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class, AClass.class }, getExecutor(), obj, type);
     }
 
     @Override
-    public final InternalParameterized instanceof_(InternalParameterized obj, Class<?> type) {
-        return this.instanceof_(obj, getType(type));
+    public final KernelInstanceof instanceof_(KernelParameterized obj, Class<?> type) {
+        return instanceof_(obj, getType(type));
     }
 
     // *******************************************************************************************//
@@ -787,14 +787,14 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     // *******************************************************************************************//
 
     @Override
-    public final MethodInvoker call(InternalParameterized caller, String methodName, InternalParameterized... arguments) {
+    public final MethodInvoker call(KernelParameterized caller, String methodName, KernelParameterized... arguments) {
         return OperatorFactory.newOperator(CommonMethodInvoker.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class, String.class, InternalParameterized[].class }, getExecutor(), caller, methodName,
+                KernelParameterized.class, String.class, KernelParameterized[].class }, getExecutor(), caller, methodName,
                 arguments);
     }
 
     @Override
-    public MethodInvoker call(String methodName, InternalParameterized... args) {
+    public MethodInvoker call(String methodName, KernelParameterized... args) {
         return call(this_(), methodName, args);
     }
 
@@ -811,25 +811,25 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     }
 
     @Override
-    public final MethodInvoker call(AClass owner, String methodName, InternalParameterized... arguments) {
+    public final MethodInvoker call(AClass owner, String methodName, KernelParameterized... arguments) {
         invokeVerify(owner);
         return OperatorFactory.newOperator(StaticMethodInvoker.class, new Class<?>[] { ProgramBlockInternal.class,
-                AClass.class, String.class, InternalParameterized[].class }, getExecutor(), owner, methodName, arguments);
+                AClass.class, String.class, KernelParameterized[].class }, getExecutor(), owner, methodName, arguments);
     }
 
-    public final MethodInvoker call(Class<?> owner, String methodName, InternalParameterized... arguments) {
+    public final MethodInvoker call(Class<?> owner, String methodName, KernelParameterized... arguments) {
         return call(getType(owner), methodName, arguments);
     }
 
     @Override
-    public final MethodInvoker new_(AClass owner, InternalParameterized... arguments) {
+    public final MethodInvoker new_(AClass owner, KernelParameterized... arguments) {
         invokeVerify(owner);
         return OperatorFactory.newOperator(ConstructorInvoker.class, new Class<?>[] { ProgramBlockInternal.class,
-                AClass.class, InternalParameterized[].class }, getExecutor(), owner, arguments);
+                AClass.class, KernelParameterized[].class }, getExecutor(), owner, arguments);
     }
 
     @Override
-    public final MethodInvoker new_(Class<?> owner, InternalParameterized... arguments) {
+    public final MethodInvoker new_(Class<?> owner, KernelParameterized... arguments) {
         return this.new_(AClassFactory.getType(owner), arguments);
     }
 
@@ -900,8 +900,8 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
     }
 
     @Override
-    public final void throw_(InternalParameterized exception) {
-        OperatorFactory.newOperator(Throw.class, new Class<?>[] { ProgramBlockInternal.class, InternalParameterized.class },
+    public final void throw_(KernelParameterized exception) {
+        OperatorFactory.newOperator(KernelThrow.class, new Class<?>[] { ProgramBlockInternal.class, KernelParameterized.class },
                 getExecutor(), exception);
     }
 
@@ -966,12 +966,12 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
      * @return
      */
     @Override
-    public final Return return_() {
+    public final void return_() {
         if (!getMethod().getMethodMeta().getReturnType().equals(Type.VOID_TYPE)) {
             throw new VerifyErrorException("Do not specify a return type! ");
         }
-        return OperatorFactory.newOperator(Return.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class }, getExecutor(), null);
+        OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class }, getExecutor(), null);
     }
 
     /**
@@ -981,9 +981,9 @@ IFInternal, WhileInternal, DoWhileInternal, ForEachInternal, TryInternal, Synchr
      *            return value
      */
     @Override
-    public final Return return_(InternalParameterized parame) {
-        return OperatorFactory.newOperator(Return.class, new Class<?>[] { ProgramBlockInternal.class,
-                InternalParameterized.class }, getExecutor(), parame);
+    public final void return_(KernelParameterized parame) {
+        OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { ProgramBlockInternal.class,
+                KernelParameterized.class }, getExecutor(), parame);
     }
 
     @Override

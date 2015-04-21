@@ -4,13 +4,13 @@ import java.lang.reflect.Method;
 
 import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class MainTest {
 
@@ -24,7 +24,7 @@ public class MainTest {
 
             @Override
             public void body(LocalVariable... argus) {
-            	call(getType(System.class).field("out"), "println", val("Prepare to build MainObject."));
+            	call(val(System.class).field("out"), "println", val("Prepare to build MainObject."));
                 new_(AClassFactory.getType(MyObject.class), Value.value("i'm direct pass argument."));
             	return_();
             }

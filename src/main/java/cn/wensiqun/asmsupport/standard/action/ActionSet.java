@@ -14,14 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.operator.Return;
-import cn.wensiqun.asmsupport.core.operator.checkcast.CheckCast;
-import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.Negative;
-import cn.wensiqun.asmsupport.core.operator.numerical.ternary.TernaryOperator;
-import cn.wensiqun.asmsupport.standard.Parameterized;
-import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
@@ -33,24 +27,22 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  *
  */
 public interface ActionSet<
-_Parameterized extends Parameterized,
-_Var extends IVar,
-_Field extends IFieldVar, 
-_Class extends IClass<_Field>, 
-_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> 
+_P extends IParameterized,
+_V extends IVar,
+_F extends IFieldVar, 
+_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> 
 extends 
-ValueAction, 
-AClassDefAction<_Field, _Class>,
-KeywordAction, 
-VariableAction<_Parameterized, _Var, _Field>, 
-MethodInvokeAction<_Parameterized, _Field, _Class>, 
-ArrayAction, 
-ArithmeticAction, 
-BitwiseAction, 
-CrementAction,
-RelationalAction, 
-LogicalAction, 
-CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
+ValueAction<_P>, 
+AClassDefAction,
+VariableAction<_P, _V>, 
+MethodInvokeAction<_P, _F>, 
+ArrayAction<_P>, 
+ArithmeticAction<_P>, 
+BitwiseAction<_P>, 
+CrementAction<_P>,
+RelationalAction<_P>, 
+LogicalAction<_P>, 
+CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
 
     /**
      * check cast object type, such as following code:
@@ -68,9 +60,9 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      *            original object
      * @param to
      *            the type need to check cast.
-     * @return {@link CheckCast}
+     * @return {@link _P}
      */
-    public CheckCast checkcast(InternalParameterized obj, _Class to);
+    _P checkcast(_P obj, AClass to);
 
     /**
      * check cast object type, such as following code:
@@ -90,7 +82,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      *            the type need to check cast.
      * @return
      */
-    public CheckCast checkcast(InternalParameterized cc, Class<?> to);
+    _P checkcast(_P cc, Class<?> to);
 
     /**
      * the negative operator. following is example.
@@ -106,9 +98,9 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      * 
      * @param factor
      *            must a number.
-     * @return {@link Negative}
+     * @return {@link _P}
      */
-    public Negative neg(InternalParameterized factor);
+    _P neg(_P factor);
 
     /**
      * The ternary operator in java.
@@ -129,16 +121,16 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      *            the expression result must be a boolean.
      * @param exp2
      * @param exp3
-     * @return {@link TernaryOperator}
+     * @return {@link _P}
      */
-    public TernaryOperator ternary(InternalParameterized exp1, InternalParameterized exp2, InternalParameterized exp3);
+    _P ternary(_P exp1, _P exp2, _P exp3);
 
     /**
      * 
      * <p>
      * The string append operator. such as "A" + "B" + "C". if we want append
      * some string, can't use
-     * {@link ArithmeticAction#add(InternalParameterized, InternalParameterized)} method, that
+     * {@link ArithmeticAction#add(_P, _P)} method, that
      * is different to write java code directly.
      * </p>
      * 
@@ -157,7 +149,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      * @param pars
      * @return
      */
-    public InternalParameterized stradd(InternalParameterized par1, InternalParameterized... pars);
+    _P stradd(_P par1, _P... pars);
 
     /**
      * Generate the instanceof instruction.
@@ -174,20 +166,20 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      * 
      * @param obj
      * @param type
-     * @return {@link InternalParameterized}a boolean type Parameterized
+     * @return {@link _P}a boolean type Parameterized
      */
-    public InternalParameterized instanceof_(InternalParameterized obj, AClass type);
+    _P instanceof_(_P obj, AClass type);
 
     /**
      * Generate the instanceof instruction, the method is same as
-     * {@link #instanceof_(InternalParameterized, AClass)}
+     * {@link #instanceof_(_P, AClass)}
      * 
-     * @see #instanceof_(InternalParameterized, AClass)
+     * @see #instanceof_(_P, AClass)
      * @param obj
      * @param type
      * @return
      */
-    public InternalParameterized instanceof_(InternalParameterized obj, Class<?> type);
+    _P instanceof_(_P obj, Class<?> type);
 
     /**
      * Corresponding to break statement in loop.
@@ -216,22 +208,20 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _Try, _Synchronized> {
      * 
      * @param exception
      */
-    public void throw_(InternalParameterized exception);
+    public void throw_(_P exception);
 
     /**
      * Corresponding to return statement with no return value.
      * 
-     * @return {{@link Return}
      */
-    public Return return_();
+    public void return_();
 
     /**
      * Corresponding to return statement with return value.
      * 
      * @param parame
      *            return value.
-     * @return {{@link Return}
      * 
      */
-    public Return return_(InternalParameterized parame);
+    public void return_(_P parame);
 }

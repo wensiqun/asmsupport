@@ -5,11 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 这里类中我们主要内容如下:
@@ -110,7 +110,7 @@ public class CreateInterface extends AbstractExample {
 				 * 具体如何使用全局变量在以后的例子中有详细的解释。
 				 * 
 				 */
-				assign(getMethodOwner().field("globalValue"), Value.value("I'm a global variable at Interface"));
+				assign(val(getMethodOwner()).field("globalValue"), Value.value("I'm a global variable at Interface"));
 				/*
 				 * 这段代码是调用println方法 
 				 * 

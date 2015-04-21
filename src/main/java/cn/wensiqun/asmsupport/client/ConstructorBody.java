@@ -14,27 +14,27 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
+import cn.wensiqun.asmsupport.client.operations.Call;
 import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.standard.method.IContructorBody;
+import cn.wensiqun.asmsupport.standard.method.IConstructorBody;
 
-public abstract class ConstructorBody extends ProgramBlock<ConstructorBodyInternal> implements IContructorBody {
+public abstract class ConstructorBody extends ProgramBlock<ConstructorBodyInternal> implements IConstructorBody<Param, LocVar> {
 
 	public ConstructorBody() {
 		target = new ConstructorBodyInternal(){
 
 			@Override
 			public void body(LocalVariable... args) {
-				ConstructorBody.this.body(args);
+				ConstructorBody.this.body(internalVar2ClientVar(args));
 			}
 			
 		};
 	}
 
 	@Override
-	public MethodInvoker supercall(InternalParameterized... arguments) {
-    	return target.supercall(arguments);
+	public Call supercall(Param... arguments) {
+    	return new Call(target.supercall(client2Internal(arguments)));
 	}
 }

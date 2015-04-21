@@ -24,8 +24,8 @@ import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.IF;
 import cn.wensiqun.asmsupport.client.MethodBody;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
+import cn.wensiqun.asmsupport.client.operations.Call;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 
 public class JSONPool {
@@ -135,7 +135,7 @@ public class JSONPool {
         dummy.newConstructor().public_().argTypes(JSONPool.class).body(new ConstructorBody() {
 
             @Override
-            public void body(LocalVariable... args) {
+            public void body(LocVar... args) {
                 supercall(args);
                 return_();
             }
@@ -145,10 +145,10 @@ public class JSONPool {
         dummy.newMethod("parse").public_().argTypes(StringEncoder.class, Object.class).argNames("encoder", "object").body(new MethodBody(){
 
             @Override
-            public void body(LocalVariable... args) {
+            public void body(LocVar... args) {
                 
-                final LocalVariable encoder = args[0];
-                final LocalVariable val = var(type, checkcast(args[1], type));
+                final LocVar encoder = args[0];
+                final LocVar val = var(type, checkcast(args[1], type));
                 
                 call(encoder, "append", val('{'));
                 
@@ -174,7 +174,7 @@ public class JSONPool {
                         continue;
                     }
                     
-                    final MethodInvoker getterCall = call(val, getterStr);
+                    final Call getterCall = call(val, getterStr);
                     
                     if(fieldType.isPrimitive()) {
                         if(name.matches("^[A-Za-z][_A-Za-z0-9]*$")) {

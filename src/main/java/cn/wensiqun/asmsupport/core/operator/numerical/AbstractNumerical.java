@@ -17,31 +17,30 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.AbstractArithmetic;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractNumerical extends AbstractOperator implements InternalParameterized {
+public abstract class AbstractNumerical extends AbstractParameterizedOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArithmetic.class);
 
     /** 执行的结果类型 */
     protected AClass targetClass;
 
-    protected String operator;
-
-    protected AbstractNumerical(ProgramBlockInternal block) {
-        super(block);
+    protected AbstractNumerical(ProgramBlockInternal block, Operators operatorSymbol) {
+        super(block, operatorSymbol);
     }
 
     /**
@@ -53,7 +52,7 @@ public abstract class AbstractNumerical extends AbstractOperator implements Inte
      * 
      * @param factor
      */
-    protected void pushFactorToStack(InternalParameterized factor) {
+    protected void pushFactorToStack(KernelParameterized factor) {
 
         AClass factorCls = factor.getResultType();
 

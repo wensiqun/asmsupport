@@ -17,10 +17,10 @@ package cn.wensiqun.asmsupport.client;
 import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
-import cn.wensiqun.asmsupport.core.exception.ASMSupportException;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public class DummyModifiedClass {
 

@@ -17,13 +17,11 @@ import cn.wensiqun.asmsupport.client.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.client.ForEach;
 import cn.wensiqun.asmsupport.client.MethodBody;
 import cn.wensiqun.asmsupport.client.StaticBlockBody;
-import cn.wensiqun.asmsupport.client.def.clazz.ClientClass;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class DummyTest {
     
@@ -143,7 +141,7 @@ public class DummyTest {
         excIter.newStaticBlock(new StaticBlockBody(){
             @Override
             public void body() {
-                GlobalVariable interface_field_list = getMethodOwner().field("interface_field_list");
+                Var interface_field_list = val(getMethodOwner()).field("interface_field_list");
                 assign(interface_field_list, this.new_(ArrayList.class));
                 return_();
             }
@@ -163,10 +161,10 @@ public class DummyTest {
 
             @Override
             public void body() {
-                GlobalVariable gv = getMethodOwner().field("abstract_class_field_list");
+                Var gv = val(getMethodOwner()).field("abstract_class_field_list");
                 assign(gv, new_(ArrayList.class));
-                call(gv, "add", Value.value("Hello "));
-                call(gv, "add", Value.value("ASMSupport\n"));
+                call(gv, "add", val("Hello "));
+                call(gv, "add", val("ASMSupport\n"));
                 return_();
             }
             
@@ -176,9 +174,9 @@ public class DummyTest {
         excAbsCls.newConstructor().public_().body(new ConstructorBody() {
 
             @Override
-            public void body(LocalVariable... args) {
+            public void body(LocVar... args) {
                 supercall();
-                assign(this_("abstract_class_field_string"), Value.value("ExceptedAbstractClass\n"));
+                assign(this_("abstract_class_field_string"), val("ExceptedAbstractClass\n"));
                 return_();
             }
             
@@ -187,8 +185,8 @@ public class DummyTest {
         excAbsCls.newMethod("appendString1").protected_().argTypes(StringBuilder.class).body(new MethodBody() {
 
             @Override
-            public void body(LocalVariable... args) {
-                call(args[0], "append", Value.value("ExceptedAbstractClass#appendString\n"));
+            public void body(LocVar... args) {
+                call(args[0], "append", val("ExceptedAbstractClass#appendString\n"));
                 return_();
             }
             
@@ -206,8 +204,8 @@ public class DummyTest {
         excEnum.newConstructor().argTypes(String.class).body(new EnumConstructorBody(){
 
             @Override
-            public void body(LocalVariable... args) {
-                GlobalVariable field = this_().field("field");
+            public void body(LocVar... args) {
+                Var field = this_().field("field");
                 assign(field, args[0]);
                 return_();
             }
@@ -217,23 +215,23 @@ public class DummyTest {
         excEnum.newStaticBlock(new EnumStaticBlockBody() {
 
             @Override
-            public void body(LocalVariable... args) {
+            public void body(LocVar... args) {
                 return_();
             }
 
             @Override
             public void constructEnumConsts() {
                 //init enum constant
-                constructEnumConst("ENUM1", Value.value("field1"));
-                constructEnumConst("ENUM2", Value.value("field2"));
+                constructEnumConst("ENUM1", val("field1"));
+                constructEnumConst("ENUM2", val("field2"));
             }
             
         });
         
         excEnum.newMethod("getEnumName").return_(String.class).public_().body(new MethodBody(){
             @Override
-            public void body(LocalVariable... args) {
-                return_(stradd(call("name"), Value.value(" - "), this_().field("field")));
+            public void body(LocVar... args) {
+                return_(stradd(call("name"), val(" - "), this_().field("field")));
             }
         });
         
@@ -245,8 +243,8 @@ public class DummyTest {
                 .body(new MethodBody() {
 
                     @Override
-                    public void body(LocalVariable... args) {
-                        return_(Value.value("method1\n"));
+                    public void body(LocVar... args) {
+                        return_(val("method1\n"));
                     }
                     
                 });
@@ -255,8 +253,8 @@ public class DummyTest {
         .body(new MethodBody() {
 
             @Override
-            public void body(LocalVariable... args) {
-                return_(Value.value("method2\n"));
+            public void body(LocVar... args) {
+                return_(val("method2\n"));
             }
             
         });
@@ -265,8 +263,8 @@ public class DummyTest {
         excDummy.newMethod("appendString2").public_().argTypes(StringBuilder.class).body(new MethodBody() {
 
             @Override
-            public void body(LocalVariable... args) {
-                call(args[0], "append", Value.value("DummyMain#appendString2\n"));
+            public void body(LocVar... args) {
+                call(args[0], "append", val("DummyMain#appendString2\n"));
                 return_();
             }
             
@@ -275,21 +273,21 @@ public class DummyTest {
         excDummy.newMethod("excepted").public_().static_().return_(String.class).body(new MethodBody() {
 
             @Override
-            public void body(LocalVariable... args) {
-                LocalVariable dm = var("dm", getMethodOwner(), new_(getMethodOwner()));
-                final LocalVariable sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
+            public void body(LocVar... args) {
+                LocVar dm = var("dm", getMethodOwner(), new_(getMethodOwner()));
+                final LocVar sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
                 
-                AClass ExceptedInterfaceAClass = AClassFactory.getType(ExceptedInterface);
-                GlobalVariable interface_field_list = ExceptedInterfaceAClass.field("interface_field_list");
+                AClass ExceptedInterfaceAClass = getType(ExceptedInterface);
+                FieldVar interface_field_list = val(ExceptedInterfaceAClass).field("interface_field_list");
                 
-                call(interface_field_list, "add", Value.value("hello asmsupport."));
-                call(sb, "append", ExceptedInterfaceAClass.field("interface_field_string"));
+                call(interface_field_list, "add", val("hello asmsupport."));
+                call(sb, "append", val(ExceptedInterfaceAClass).field("interface_field_string"));
                 for_(new ForEach(interface_field_list, String.class) {
 
                     @Override
-                    public void body(LocalVariable str) {
+                    public void body(LocVar str) {
                         call(sb, "append", str);
-                        LocalVariable len = var("len", long.class, call(str, "length"));
+                        LocVar len = var("len", long.class, call(str, "length"));
                         call(sb, "append", len);
                     }
                     
@@ -299,7 +297,7 @@ public class DummyTest {
                 for_(new ForEach(dm.field("abstract_class_field_list")) {
 
                     @Override
-                    public void body(LocalVariable str) {
+                    public void body(LocVar str) {
                         call(sb, "append", str);
                     }
                     
@@ -311,9 +309,9 @@ public class DummyTest {
                 call(dm, "appendString1", sb);
                 call(dm, "appendString2", sb);
                 
-                ClientClass ExceptedEnumAClass = getType(ExceptedEnum);
-                call(call(call(sb, "append", call(ExceptedEnumAClass.field("ENUM1"), "getEnumName")),"append", Value.value("\n")),
-                    "append", ExceptedEnumAClass.field("ENUM2")
+                AClass ExceptedEnumAClass = getType(ExceptedEnum);
+                call(call(call(sb, "append", call(val(ExceptedEnumAClass).field("ENUM1"), "getEnumName")),"append", val("\n")),
+                    "append", val(ExceptedEnumAClass).field("ENUM2")
                 );
                 return_(call(sb, "toString"));
             }

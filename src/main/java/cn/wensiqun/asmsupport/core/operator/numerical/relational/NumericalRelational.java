@@ -14,13 +14,14 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
@@ -31,8 +32,8 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
 
-    protected NumericalRelational(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block, factor1, factor2);
+    protected NumericalRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, factor1, factor2, operator);
     }
 
     @Override
@@ -48,33 +49,6 @@ public abstract class NumericalRelational extends AbstractRelational {
         factor1.asArgument();
         factor2.asArgument();
     }
-
-    /*private boolean isZeorValue(Parameterized val)
-    {
-        if(val != null && val instanceof Value){
-            Value v = (Value) val;
-            switch (v.getType().getSort())
-            {
-                case Type.BOOLEAN :
-                    return !((Boolean)v.getValue()).booleanValue();
-                case Type.CHAR :
-                    return ((Character)v.getValue()).charValue() == 0;
-                case Type.BYTE :
-                    return ((Byte)v.getValue()).byteValue() == 0;
-                case Type.SHORT :
-                    return ((Short)v.getValue()).shortValue() == 0;
-                case Type.INT :
-                    return ((Integer)v.getValue()).intValue() == 0;
-                case Type.FLOAT :
-                    return ((Float)v.getValue()).floatValue() == 0;
-                case Type.LONG :
-                    return ((Long)v.getValue()).longValue() == 0;
-                case Type.DOUBLE :
-                    return ((Double)v.getValue()).doubleValue() == 0;
-            }
-        }
-        return false;
-    }*/
     
     @Override
     protected void factorsToStack() {
@@ -82,7 +56,7 @@ public abstract class NumericalRelational extends AbstractRelational {
         pushFactorToStack(factor2);
     }
 
-    private void pushFactorToStack(InternalParameterized factor) {
+    private void pushFactorToStack(KernelParameterized factor) {
 
         AClass factorCls = factor.getResultType();
 

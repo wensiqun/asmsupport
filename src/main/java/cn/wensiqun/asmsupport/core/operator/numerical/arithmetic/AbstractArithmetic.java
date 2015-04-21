@@ -17,31 +17,32 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.clazz.AClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
+import cn.wensiqun.asmsupport.core.operator.Operators;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * @author 温斯群(Joe Wen)
  *
  */
 public abstract class AbstractArithmetic extends AbstractNumerical implements
-        InternalParameterized {
+        KernelParameterized {
 
     /**算数因子1 */
-    protected InternalParameterized factor1;
+    protected KernelParameterized factor1;
 
     /**算数因子2 */
-    protected InternalParameterized factor2;
+    protected KernelParameterized factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
 
-    protected AbstractArithmetic(ProgramBlockInternal block, InternalParameterized factor1, InternalParameterized factor2) {
-        super(block);
+    protected AbstractArithmetic(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+        super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
     }
@@ -83,7 +84,7 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the arithmetic operator " + factor1.getResultType() + " " + operator + " " + 
+            throw new ArithmeticException("the arithmetic operator " + factor1.getResultType() + " " + getOperatorSymbol() + " " + 
                                           factor2.getResultType() + " has not been used by other operator.");
         }
     }
@@ -92,37 +93,6 @@ public abstract class AbstractArithmetic extends AbstractNumerical implements
     protected void factorToStack() {
         pushFactorToStack(factor1);
         pushFactorToStack(factor2);
-        
-        /*AClass ftrCls1 = factor1.getParamterizedType();
-        AClass ftrCls2 = factor2.getParamterizedType();
-        
-        log.debug("push the first arithmetic factor to stack");
-        factor1.loadToStack(block);
-        
-        if(!ftrCls1.isPrimitive()){
-            log.debug("unbox " + ftrCls1);
-            insnHelper.unbox(ftrCls1.getType());
-        }
-        
-        if(!ftrCls1.equals(resultClass) &&
-            resultClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder() ){
-            log.debug("cast arithmetic factor from " + ftrCls1 + " to " + resultClass);
-            insnHelper.cast(ftrCls1.getType(), resultClass.getType());    
-        }
-
-        log.debug("push the second arithmetic factor to stack");
-        factor2.loadToStack(block);
-        
-        if(!ftrCls2.isPrimitive()){
-            log.debug("unbox " + ftrCls2);
-            insnHelper.unbox(ftrCls2.getType());
-        }
-        
-        if(!ftrCls2.equals(resultClass) &&
-            resultClass.getCastOrder() > AClassFactory.defType(int.class).getCastOrder() ){
-            log.debug("cast arithmetic factor from " + ftrCls2 + " to " + resultClass);
-            insnHelper.cast(ftrCls2.getType(), resultClass.getType());    
-        }*/
     }
     
     @Override

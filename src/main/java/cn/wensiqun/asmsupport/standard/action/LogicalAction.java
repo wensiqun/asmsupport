@@ -14,13 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalOr;
-import cn.wensiqun.asmsupport.core.operator.logical.LogicalXor;
-import cn.wensiqun.asmsupport.core.operator.logical.Not;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
+import cn.wensiqun.asmsupport.standard.def.IParameterized;
 
 
 /**
@@ -29,7 +23,8 @@ import cn.wensiqun.asmsupport.core.operator.logical.ShortCircuitOr;
  * @author wensiqun(at)163.com
  *
  */
-public interface LogicalAction {
+public interface LogicalAction<_P extends IParameterized> {
+    
     /**
      * 生成逻辑与操作指令,对应下面的红色java代码
      * 
@@ -39,9 +34,9 @@ public interface LogicalAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link LogicalAnd}
+     * @return {@link _P}
      */
-    public LogicalAnd logicalAnd(InternalParameterized factor1, InternalParameterized factor2);
+    _P logicalAnd(_P factor1, _P factor2);
     
     /**
      * 生成逻辑或操作指令,对应下面的红色java代码
@@ -53,9 +48,9 @@ public interface LogicalAction {
      *  
      * @param factor1
      * @param factor2
-     * @return {@link LogicalOr}
+     * @return {@link _P}
      */
-    public LogicalOr logicalOr(InternalParameterized factor1, InternalParameterized factor2);
+    _P logicalOr(_P factor1, _P factor2);
 
     /**
      * 
@@ -67,9 +62,9 @@ public interface LogicalAction {
      *  
      * @param factor1
      * @param factor2
-     * @return {@link LogicalXor}
+     * @return {@link _P}
      */
-    public LogicalXor logicalXor(InternalParameterized factor1, InternalParameterized factor2);
+    _P logicalXor(_P factor1, _P factor2);
     
     /**
      * 
@@ -82,9 +77,9 @@ public interface LogicalAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link ShortCircuitAnd}
+     * @return {@link _P}
      */
-    public ShortCircuitAnd and(InternalParameterized factor1, InternalParameterized factor2, InternalParameterized... otherFactors);
+    _P and(_P factor1, _P factor2, _P... otherFactors);
     
     /**
      * 
@@ -96,9 +91,9 @@ public interface LogicalAction {
      * 
      * @param factor1
      * @param factor2
-     * @return {@link ShortCircuitOr}
+     * @return {@link }
      */
-    public ShortCircuitOr or(InternalParameterized factor1, InternalParameterized factor2, InternalParameterized... otherFactors);
+    _P or(_P factor1, _P factor2, _P... otherFactors);
     
     /**
      * 生成条件非操作指令,对应下面的红色java代码
@@ -109,7 +104,7 @@ public interface LogicalAction {
      * 
      * 
      * @param factor
-     * @return {@link Not}
+     * @return {@link _P}
      */
-    public Not no(InternalParameterized factor);
+    _P no(_P factor);
 }

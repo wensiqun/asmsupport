@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cn.wensiqun.asmsupport.client.Param;
 import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.IF;
 import cn.wensiqun.asmsupport.client.MethodBody;
-import cn.wensiqun.asmsupport.core.InternalParameterized;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -47,7 +47,7 @@ public class ProxyGenerator {
 		proxyPool.newMethod("getProxy").public_().return_(Object.class).argTypes(Object.class).argNames("target").body(new MethodBody() {
 
 			@Override
-			public void body(final LocalVariable... args) {
+			public void body(final LocVar... args) {
 
 				for(Entry<Class<?>, List<Method>> entry : map.entrySet()) {
 					final Class<?> targetType = entry.getKey();
@@ -64,7 +64,7 @@ public class ProxyGenerator {
 					proxy.newMethod("setTarget").public_().argTypes(targetType).body(new MethodBody() {
 
 						@Override
-						public void body(LocalVariable... args) {
+						public void body(LocVar... args) {
 							assign(this_().field("target"), args[0]);
 							return_();
 						}
@@ -87,7 +87,7 @@ public class ProxyGenerator {
 
 						@Override
 						public void body() {
-							LocalVariable proxy = var("proxy", targetProxyClass, new_(targetProxyClass));
+							LocVar proxy = var("proxy", targetProxyClass, new_(targetProxyClass));
 							call(proxy, "setTarget", checkcast(args[0], targetType));
 							return_(proxy);
 						}
@@ -122,7 +122,7 @@ public class ProxyGenerator {
 		dummy.newConstructor().public_().argTypes(type).body(new ConstructorBody() {
 
 			@Override
-			public void body(LocalVariable... args) {
+			public void body(LocVar... args) {
 				supercall();
 				assign(this_().field("target"), args[0]);
 				return_();
@@ -134,9 +134,9 @@ public class ProxyGenerator {
 		     .body(new MethodBody() {
 
 			@Override
-			public void body(LocalVariable... args) {
+			public void body(LocVar... args) {
 				Class<?>[] types = method.getParameterTypes();
-				InternalParameterized[] arguments = new InternalParameterized[types.length];
+				Param[] arguments = new Param[types.length];
 				for(int i=0; i<arguments.length; i++) {
 					arguments[i] = checkcast(arrayLoad(args[0], val(i)), types[i]);
 				}
@@ -168,7 +168,7 @@ public class ProxyGenerator {
 		     .body(new MethodBody() {
 
 				@Override
-				public void body(LocalVariable... args) {
+				public void body(LocVar... args) {
 					if(void.class == method.getReturnType()) {
 						call(this_().field("target"), method.getName(), args);
 						return_();
@@ -187,8 +187,8 @@ public class ProxyGenerator {
 		     .argTypes(method.getParameterTypes())
 		     .body(new MethodBody() {
 				@Override
-				public void body(LocalVariable... args) {
-					InternalParameterized[] arguments = new InternalParameterized[args.length + 2];
+				public void body(LocVar... args) {
+				    Param[] arguments = new Param[args.length + 2];
 					arguments[0] = val(targetClass);
 					arguments[1] = val(method.getName());
 					System.arraycopy(args, 0, arguments, 2, args.length);
