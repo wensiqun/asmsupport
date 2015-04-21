@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
 public abstract class ForEach extends ProgramBlock<ForEachInternal> implements IForEach<LocVar> {
 
 	public ForEach(Param iteratorVar) {
-		target = new ForEachInternal(iteratorVar.target) {
+		target = new ForEachInternal(iteratorVar.getTarget()) {
 
 			@Override
 			public void body(LocalVariable e) {
@@ -35,7 +35,7 @@ public abstract class ForEach extends ProgramBlock<ForEachInternal> implements I
 	}
 	
     public ForEach(Param iteratorVar, AClass elementType) {
-        target = new ForEachInternal(iteratorVar.target, elementType) {
+        target = new ForEachInternal(iteratorVar.getTarget(), elementType) {
 
             @Override
             public void body(LocalVariable e) {
@@ -46,7 +46,7 @@ public abstract class ForEach extends ProgramBlock<ForEachInternal> implements I
     }
     
     public ForEach(Param iteratorVar, Class<?> elementType) {
-        target = new ForEachInternal(iteratorVar.target, AClassFactory.getType(elementType)) {
+        target = new ForEachInternal(iteratorVar.getTarget(), AClassFactory.getType(elementType)) {
 
             @Override
             public void body(LocalVariable e) {

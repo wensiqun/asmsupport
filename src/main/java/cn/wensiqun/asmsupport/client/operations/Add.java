@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client.operations;
 
-import cn.wensiqun.asmsupport.client.Param;
+import cn.wensiqun.asmsupport.client.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
 
 
@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
  * @author sqwen
  *
  */
-public class Add extends Param {
+public class Add extends DummyParam {
 
     public Add(KernelAdd target) {
         super(target);

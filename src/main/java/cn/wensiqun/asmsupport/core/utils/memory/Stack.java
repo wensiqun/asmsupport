@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public class Stack implements Printable, Cloneable {
 
     private static final Log LOG = LogFactory.getLog(Stack.class);
-    private ArrayStack stack;
+    private ArrayStack<Stackable> stack;
     /** 栈的大小 */
     private int size;
     /** 栈的最大空间 */
@@ -48,7 +48,7 @@ public class Stack implements Printable, Cloneable {
     }
 
     public Stack() {
-        stack = new ArrayStack();
+        stack = new ArrayStack<Stackable>();
         ph = new PrintHelper();
     }
 
@@ -115,7 +115,6 @@ public class Stack implements Printable, Cloneable {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void insert(int pos, Stackable item) {
         valueNumber++;
         stack.add(getReallyPosition(pos), item);
@@ -128,14 +127,6 @@ public class Stack implements Printable, Cloneable {
     public void insert(int i, Type item) {
         insert(stack.size() - i, new StackableType(item));
     }
-
-    /*
-     * private void swap(){ Stackable top1 = this.peek(); pop();
-     * 
-     * Stackable top2 = this.peek(); pop();
-     * 
-     * push(top1); push(top2); }
-     */
 
     private int getReallyPosition(int stackPosition) {
         // ++后 表示占了多少个栈空间

@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.standard.branch.IIF;
 public abstract class IF extends ProgramBlock<IFInternal> implements IIF<ElseIF, Else> {
 
 	public IF(Param condition) {
-		target = new IFInternal(condition.target) {
+		target = new IFInternal(condition.getTarget()) {
 			@Override
 			public void body() {
 				IF.this.body();

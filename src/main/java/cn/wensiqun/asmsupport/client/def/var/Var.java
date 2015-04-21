@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.Param;
+import cn.wensiqun.asmsupport.client.DummyParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
@@ -11,7 +11,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  * @author sqwen
  *
  */
-public abstract class Var extends Param implements IVar {
+public abstract class Var extends DummyParam implements IVar {
 
     public Var(IVariable target) {
         super(target);

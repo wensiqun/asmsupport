@@ -21,11 +21,11 @@ import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
 public abstract class Sync extends ProgramBlock<SynchronizedInternal> implements ISynchronized<Param> {
 
 	public Sync(Param lock) {
-		target = new SynchronizedInternal(lock.target) {
+		target = new SynchronizedInternal(lock.getTarget()) {
 
 			@Override
 			public void body(KernelParameterized e) {
-				Sync.this.body(new Param(e));
+				Sync.this.body(new DummyParam(e));
 			}
 			
 		};

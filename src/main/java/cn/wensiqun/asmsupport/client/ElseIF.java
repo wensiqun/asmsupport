@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.standard.branch.IElseIF;
 public abstract class ElseIF extends ProgramBlock<ElseIFInternal> implements IElseIF<ElseIF, Else> {
 	
 	public ElseIF(Param condition) {
-		target = new ElseIFInternal(condition.target) {
+		target = new ElseIFInternal(condition.getTarget()) {
 			@Override
 			public void body() {
 				ElseIF.this.body();

@@ -42,7 +42,7 @@ import java.util.EmptyStackException;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class ArrayStack extends ArrayList { //implements Buffer {
+public class ArrayStack<T> extends ArrayList<T> { //implements Buffer {
 
     /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 2130079159931574599L;
@@ -84,7 +84,7 @@ public class ArrayStack extends ArrayList { //implements Buffer {
      * @return the top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
-    public Object peek() throws EmptyStackException {
+    public T peek() throws EmptyStackException {
         int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
@@ -102,7 +102,7 @@ public class ArrayStack extends ArrayList { //implements Buffer {
      * @throws EmptyStackException  if there are not enough items on the
      *  stack to satisfy this request
      */
-    public Object peek(int n) throws EmptyStackException {
+    public T peek(int n) throws EmptyStackException {
         int m = (size() - n) - 1;
         if (m < 0) {
             throw new EmptyStackException();
@@ -117,7 +117,7 @@ public class ArrayStack extends ArrayList { //implements Buffer {
      * @return the top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
-    public Object pop() throws EmptyStackException {
+    public T pop() throws EmptyStackException {
         int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
@@ -133,63 +133,9 @@ public class ArrayStack extends ArrayList { //implements Buffer {
      * @param item  the item to be added
      * @return the item just pushed
      */
-    public Object push(Object item) {
+    public T push(T item) {
         add(item);
         return item;
     }
-
-    /*
-     * Returns the one-based position of the distance from the top that the
-     * specified object exists on this stack, where the top-most element is
-     * considered to be at distance <code>1</code>.  If the object is not
-     * present on the stack, return <code>-1</code> instead.  The
-     * <code>equals()</code> method is used to compare to the items
-     * in this stack.
-     *
-     * @param object  the object to be searched for
-     * @return the 1-based depth into the stack of the object, or -1 if not found
-     */
-    /*public int search(Object object) {
-        int i = size() - 1;        // Current index
-        int n = 1;                 // Current distance
-        while (i >= 0) {
-            Object current = get(i);
-            if ((object == null && current == null) ||
-                (object != null && object.equals(current))) {
-                return n;
-            }
-            i--;
-            n++;
-        }
-        return -1;
-    }*/
-
-    /*
-     * Returns the element on the top of the stack.
-     *
-     * @return the element on the top of the stack
-     * @throws BufferUnderflowException  if the stack is empty
-     */
-    /*public Object get() {
-        int size = size();
-        if (size == 0) {
-            throw new BufferUnderflowException();
-        }
-        return get(size - 1);
-    }*/
-
-    /*
-     * Removes the element on the top of the stack.
-     *
-     * @return the removed element 
-     * @throws BufferUnderflowException  if the stack is empty
-     */
-    /*public Object remove() {
-        int size = size();
-        if (size == 0) {
-            throw new BufferUnderflowException();
-        }
-        return remove(size - 1);
-    }*/
 
 }

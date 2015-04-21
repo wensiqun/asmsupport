@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.client.operations;
 
-import cn.wensiqun.asmsupport.client.Param;
+import cn.wensiqun.asmsupport.client.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitAnd;
 
 /**
@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitAnd;
  * @author sqwen
  *
  */
-public class And extends Param {
+public class And extends DummyParam {
 
     public And(KernelShortCircuitAnd target) {
         super(target);
