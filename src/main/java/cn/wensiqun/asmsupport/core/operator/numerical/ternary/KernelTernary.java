@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -47,7 +47,7 @@ public class KernelTernary extends AbstractParameterizedOperator {
     
     protected KernelTernary(ProgramBlockInternal block, KernelParameterized expression1,
             KernelParameterized expression2, KernelParameterized expression3) {
-        super(block, Operators.TERNARY);
+        super(block, Operator.TERNARY);
         this.exp1 = expression1;
         this.exp2 = expression2;
         this.exp3 = expression3;

@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -34,7 +34,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected AbstractBitwise(ProgramBlockInternal block, Operators operator) {
+    protected AbstractBitwise(ProgramBlockInternal block, Operator operator) {
         super(block, operator);
     }
     

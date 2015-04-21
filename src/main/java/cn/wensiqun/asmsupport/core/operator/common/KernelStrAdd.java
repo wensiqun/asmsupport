@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
@@ -38,7 +38,7 @@ public class KernelStrAdd extends AbstractParameterizedOperator {
     private MethodInvoker invoker;
     
     protected KernelStrAdd(ProgramBlockInternal block, KernelParameterized par1, KernelParameterized... pars) {
-        super(block, Operators.COMMON);
+        super(block, Operator.COMMON);
         this.paras = new KernelParameterized[pars.length + 1];
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);

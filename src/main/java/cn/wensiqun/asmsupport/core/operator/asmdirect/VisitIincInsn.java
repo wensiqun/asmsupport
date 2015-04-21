@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class VisitIincInsn extends AbstractOperator {
 
@@ -24,7 +24,7 @@ public class VisitIincInsn extends AbstractOperator {
 	private int increment;
 	
 	protected VisitIincInsn(ProgramBlockInternal block, int var, int increment) {
-		super(block, Operators.COMMON);
+		super(block, Operator.COMMON);
 		this.var = var;
 		this.increment = increment;
 	}

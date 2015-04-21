@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -32,7 +32,7 @@ public class KernelNeg extends AbstractPositiveNegative {
     private static final Log LOG = LogFactory.getLog(KernelNeg.class);
     
     protected KernelNeg(ProgramBlockInternal block, KernelParameterized factor) {
-        super(block, factor, Operators.NEG);
+        super(block, factor, Operator.NEG);
     }
     
     @Override

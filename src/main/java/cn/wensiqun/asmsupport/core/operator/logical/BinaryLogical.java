@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
@@ -36,7 +36,7 @@ public abstract class BinaryLogical extends AbstractLogical {
     protected KernelParameterized factor1;
     protected KernelParameterized factor2;
     
-    protected BinaryLogical(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+    protected BinaryLogical(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
         super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;

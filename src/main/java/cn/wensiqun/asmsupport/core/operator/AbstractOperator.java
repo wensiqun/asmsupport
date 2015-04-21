@@ -39,9 +39,9 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
 
     private int compileOrder;
     
-    private Operators operatorSymbol;
+    private Operator operatorSymbol;
 
-    protected AbstractOperator(ProgramBlockInternal block, Operators operatorSymbol) {
+    protected AbstractOperator(ProgramBlockInternal block, Operator operatorSymbol) {
         this.insnHelper = block.getInsnHelper();
         this.block = block;
         this.operatorSymbol = operatorSymbol;
@@ -218,7 +218,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
         return compileOrder;
     }
 
-    public Operators getOperatorSymbol() {
+    public Operator getOperatorSymbol() {
         return operatorSymbol;
     }
     

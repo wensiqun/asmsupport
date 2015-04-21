@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class VisitFieldInsn extends AbstractOperator {
 
@@ -26,7 +26,7 @@ public class VisitFieldInsn extends AbstractOperator {
 	private String desc;
 
 	protected VisitFieldInsn(ProgramBlockInternal block, int opcode, String owner, String name, String desc) {
-		super(block, Operators.COMMON);
+		super(block, Operator.COMMON);
 		this.opcode = opcode;
 		this.owner = owner;
 		this.name = name;

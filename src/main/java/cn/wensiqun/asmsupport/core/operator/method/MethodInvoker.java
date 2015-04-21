@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -68,7 +68,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
      * @param block
      */
     protected MethodInvoker(ProgramBlockInternal block, AClass owner, String name, KernelParameterized[] arguments) {
-        super(block, Operators.COMMON);
+        super(block, Operator.COMMON);
         this.methodOwner = owner;
         this.name = name;
         this.arguments = arguments;

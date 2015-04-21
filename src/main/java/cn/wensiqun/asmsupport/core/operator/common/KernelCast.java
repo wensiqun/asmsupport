@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
@@ -38,7 +38,7 @@ public class KernelCast extends AbstractParameterizedOperator {
     private KernelParameterized orginal;
     
     protected KernelCast(ProgramBlockInternal block, KernelParameterized orgi, AClass to) {
-        super(block, Operators.COMMON);
+        super(block, Operator.COMMON);
         this.orginal = orgi;
         this.to = to;
     }

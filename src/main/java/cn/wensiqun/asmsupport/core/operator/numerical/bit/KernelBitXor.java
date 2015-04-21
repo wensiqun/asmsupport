@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * @author 温斯群(Joe Wen)
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
 public class KernelBitXor extends BinaryBitwise {
 
     protected KernelBitXor(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operators.XOR);
+        super(block, factor1, factor2, Operator.XOR);
     }
 
     @Override

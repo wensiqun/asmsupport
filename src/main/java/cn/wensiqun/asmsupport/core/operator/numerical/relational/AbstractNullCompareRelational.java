@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractNullCompareRelational extends NumericalAndReferenceRelational {
 
-	protected AbstractNullCompareRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+	protected AbstractNullCompareRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
 		super(block, factor1, factor2, operator);
 	}
 	
@@ -40,12 +40,12 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		//direct push true or false
 		MethodVisitor mv = insnHelper.getMv();
 		if(isNullValue(factor1) && isNullValue(factor2)){
-			if(Operators.EQUAL_TO.equals(getOperatorSymbol())){
+			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
 				//push true to stack
 		        mv.visitInsn(Opcodes.ICONST_0 + 1);
 		        block.getMethod().getStack().push(Type.INT_TYPE);
 		        return;
-			}else if(Operators.NOT_EQUAL_TO.equals(getOperatorSymbol())){
+			}else if(Operator.NOT_EQUAL_TO.equals(getOperatorSymbol())){
 				//push false to stack
 		        mv.visitInsn(Opcodes.ICONST_0);
 		        block.getMethod().getStack().push(Type.INT_TYPE);

@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * division operator
@@ -33,7 +33,7 @@ public class KernelDiv extends AbstractArithmetic {
     private static final Log LOG = LogFactory.getLog(KernelDiv.class);
     
     protected KernelDiv(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operators.DIV);
+        super(block, factor1, factor2, Operator.DIV);
     }
 
 

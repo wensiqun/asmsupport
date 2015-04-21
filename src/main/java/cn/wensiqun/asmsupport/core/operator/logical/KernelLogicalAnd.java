@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * 
@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.operator.Operators;
 public class KernelLogicalAnd extends BinaryLogical {
     
     protected KernelLogicalAnd(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operators.BIT_AND);
+        super(block, factor1, factor2, Operator.BIT_AND);
     }
 
     @Override

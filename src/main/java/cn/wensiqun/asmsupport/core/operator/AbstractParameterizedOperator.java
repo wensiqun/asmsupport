@@ -6,7 +6,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 
 public abstract class AbstractParameterizedOperator extends AbstractOperator implements KernelParameterized{
 
-    protected AbstractParameterizedOperator(ProgramBlockInternal block, Operators operatorSymbol) {
+    protected AbstractParameterizedOperator(ProgramBlockInternal block, Operator operatorSymbol) {
         super(block, operatorSymbol);
     }
 

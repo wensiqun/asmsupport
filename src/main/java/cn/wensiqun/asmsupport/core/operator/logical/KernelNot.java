@@ -21,7 +21,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public class KernelNot extends UnaryLogical {
 
     protected KernelNot(ProgramBlockInternal block, KernelParameterized factor) {
-        super(block, factor, Operators.NOT);
+        super(block, factor, Operator.NOT);
     }
 
     @Override

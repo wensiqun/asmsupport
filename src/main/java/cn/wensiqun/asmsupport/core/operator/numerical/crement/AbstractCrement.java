@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -46,7 +46,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
      */
     //private boolean post;
 
-    protected AbstractCrement(ProgramBlockInternal block, KernelParameterized factor, Operators operator) {
+    protected AbstractCrement(ProgramBlockInternal block, KernelParameterized factor, Operator operator) {
         super(block, operator);
         if(factor instanceof Crementable) {
             throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);
@@ -91,8 +91,8 @@ public abstract class AbstractCrement extends AbstractNumerical {
     protected void doExecute() {
         Type type = targetClass.getType();
         boolean asArgument = !block.getQueue().contains(this);
-        boolean isPos = Operators.POS_DEC.equals(getOperatorSymbol()) || Operators.POS_INC.equals(getOperatorSymbol());
-        boolean isInc = Operators.PRE_INC.equals(getOperatorSymbol()) || Operators.POS_INC.equals(getOperatorSymbol());
+        boolean isPos = Operator.POS_DEC.equals(getOperatorSymbol()) || Operator.POS_INC.equals(getOperatorSymbol());
+        boolean isInc = Operator.PRE_INC.equals(getOperatorSymbol()) || Operator.POS_INC.equals(getOperatorSymbol());
         if (factor instanceof LocalVariable && Type.INT_TYPE.equals(targetClass.getType())) {
             if (asArgument && isPos) {
                 factor.loadToStack(block);

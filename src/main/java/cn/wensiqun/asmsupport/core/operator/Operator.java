@@ -21,7 +21,7 @@ package cn.wensiqun.asmsupport.core.operator;
  * @author 温斯群(Joe Wen)
  *
  */
-public enum Operators {
+public enum Operator {
 
     COMMON("", 0),
     POS_DEC("--", 0),
@@ -72,7 +72,7 @@ public enum Operators {
     
     private int priority;
     
-    private Operators(String symbol, int priority) {
+    private Operator(String symbol, int priority) {
         this.symbol = symbol;
         this.priority = priority;
     }
@@ -83,6 +83,16 @@ public enum Operators {
 
     public int getPriority() {
         return priority;
+    }
+    
+    /**
+     * 
+     * 
+     * @param operator
+     * @return
+     */
+    public int compare(Operator operator) {
+    	return operator.getPriority() - getPriority();
     }
     
 }

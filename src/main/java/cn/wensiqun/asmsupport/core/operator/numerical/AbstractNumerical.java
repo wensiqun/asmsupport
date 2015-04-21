@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.AbstractArithmetic;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -39,7 +39,7 @@ public abstract class AbstractNumerical extends AbstractParameterizedOperator {
     /** 执行的结果类型 */
     protected AClass targetClass;
 
-    protected AbstractNumerical(ProgramBlockInternal block, Operators operatorSymbol) {
+    protected AbstractNumerical(ProgramBlockInternal block, Operator operatorSymbol) {
         super(block, operatorSymbol);
     }
 

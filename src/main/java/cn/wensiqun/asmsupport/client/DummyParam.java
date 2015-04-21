@@ -1,7 +1,10 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class DummyParam implements Param {
@@ -27,4 +30,22 @@ public class DummyParam implements Param {
         return new FieldVar(target.field(name));
     }
     
+    public static abstract class OperatorAction {
+    	
+    	protected ProgramBlock<ProgramBlockInternal> block;
+    	
+    	private Operator operator;
+    	
+    	public OperatorAction(ProgramBlock<ProgramBlockInternal> block, Operator operator) {
+			this.block = block;
+			this.operator = operator;
+		}
+    	
+		public Operator getOperator() {
+			return operator;
+		}
+
+		public abstract Param doAction(ArrayStack<Param> operands);
+    	
+    }
 }

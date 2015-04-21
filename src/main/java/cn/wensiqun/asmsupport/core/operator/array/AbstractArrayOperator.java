@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -44,7 +44,7 @@ public abstract class AbstractArrayOperator extends AbstractParameterizedOperato
     protected KernelParameterized[] parDims;
     
     protected AbstractArrayOperator(ProgramBlockInternal block, KernelParameterized arrayVar) {
-        super(block, Operators.COMMON);
+        super(block, Operator.COMMON);
         this.arrayReference = arrayVar;
     }
 

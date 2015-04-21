@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class KernelReverse extends KernelUnaryBitwise {
     private static final Log LOG = LogFactory.getLog(KernelReverse.class);
     
     protected KernelReverse(ProgramBlockInternal block, KernelParameterized factor) {
-        super(block, factor, Operators.REVERSE);
+        super(block, factor, Operator.REVERSE);
     }
 
     @Override

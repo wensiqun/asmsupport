@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
@@ -29,7 +29,7 @@ public abstract class AbstractLogical extends AbstractParameterizedOperator {
 
     protected boolean byOtherUsed;
     
-    protected AbstractLogical(ProgramBlockInternal block, Operators operator) {
+    protected AbstractLogical(ProgramBlockInternal block, Operator operator) {
         super(block, operator);
     }
     

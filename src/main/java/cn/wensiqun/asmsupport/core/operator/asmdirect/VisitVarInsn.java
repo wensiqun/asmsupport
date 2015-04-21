@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class VisitVarInsn extends AbstractOperator {
 
@@ -24,7 +24,7 @@ public class VisitVarInsn extends AbstractOperator {
 	private int var;
 	
 	protected VisitVarInsn(ProgramBlockInternal block, int opcode, int var) {
-		super(block, Operators.COMMON);
+		super(block, Operator.COMMON);
 		this.opcode = opcode;
 		this.var = var;
 	}

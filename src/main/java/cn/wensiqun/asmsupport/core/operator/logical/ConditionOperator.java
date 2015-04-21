@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 
@@ -31,7 +31,7 @@ public abstract class ConditionOperator extends BinaryLogical {
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected ConditionOperator(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+    protected ConditionOperator(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
         super(block, factor1, factor2, operator);
         falseLbl = new Label();
         trueLbl = new Label();

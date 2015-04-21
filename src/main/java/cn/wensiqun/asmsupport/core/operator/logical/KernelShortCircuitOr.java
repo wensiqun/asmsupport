@@ -21,7 +21,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -37,7 +37,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 public class KernelShortCircuitOr extends ConditionOperator implements Jumpable {
     
     protected KernelShortCircuitOr(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operators.CONDITION_OR);
+        super(block, factor1, factor2, Operator.CONDITION_OR);
     }
     
     @Override

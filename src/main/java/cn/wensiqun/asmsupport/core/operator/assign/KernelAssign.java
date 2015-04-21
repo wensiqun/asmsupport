@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
@@ -38,7 +38,7 @@ public abstract class KernelAssign extends AbstractParameterizedOperator {
     protected boolean byOtherUsed;
     
     protected KernelAssign(ProgramBlockInternal block, IVariable var, KernelParameterized value) {
-        super(block, Operators.ASSIGN);
+        super(block, Operator.ASSIGN);
         this.value = value;
         this.var = var;
     }

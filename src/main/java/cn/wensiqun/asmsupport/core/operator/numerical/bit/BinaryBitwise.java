@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
@@ -37,7 +37,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     protected KernelParameterized factor1;
     protected KernelParameterized factor2;
     
-    protected BinaryBitwise(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operators operator) {
+    protected BinaryBitwise(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
         super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -99,9 +99,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         
         insnHelper.unbox(factor2.getResultType().getType());
         
-        if(getOperatorSymbol().equals(Operators.LEFT_SHIFT) ||
-           getOperatorSymbol().equals(Operators.RIGHT_SHIFT) ||
-           getOperatorSymbol().equals(Operators.UNSIGNED_RIGHT_SHIFT) ){
+        if(getOperatorSymbol().equals(Operator.LEFT_SHIFT) ||
+           getOperatorSymbol().equals(Operator.RIGHT_SHIFT) ||
+           getOperatorSymbol().equals(Operator.UNSIGNED_RIGHT_SHIFT) ){
             insnHelper.cast(factor2.getResultType().getType(), AClassFactory.getType(int.class).getType());
         }else{
             insnHelper.cast(factor2.getResultType().getType(), targetClass.getType());

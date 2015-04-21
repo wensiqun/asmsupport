@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.operator.Operators;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
@@ -29,7 +29,7 @@ public abstract class KernelUnaryBitwise extends AbstractBitwise {
 
     protected KernelParameterized factor;
     
-    protected KernelUnaryBitwise(ProgramBlockInternal block, KernelParameterized factor, Operators operator) {
+    protected KernelUnaryBitwise(ProgramBlockInternal block, KernelParameterized factor, Operator operator) {
         super(block, operator);
         this.factor = factor;
     }

@@ -25,7 +25,7 @@ public abstract class BreakStack extends AbstractOperator {
 	private boolean autoCreate;
 
 	protected BreakStack(ProgramBlockInternal block, boolean autoCreate) {
-		super(block, Operators.COMMON);
+		super(block, Operator.COMMON);
 		this.autoCreate = autoCreate;
 	}
 
