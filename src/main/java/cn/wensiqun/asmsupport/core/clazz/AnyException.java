@@ -131,4 +131,9 @@ public class AnyException extends AClass {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean isChildOrEqual(AClass otherType) {
+        throw new UnsupportedOperationException();
+    }
+
 }

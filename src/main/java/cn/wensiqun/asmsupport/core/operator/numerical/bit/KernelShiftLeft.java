@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 public class KernelShiftLeft extends BinaryBitwise {
 
     protected KernelShiftLeft(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operator.LEFT_SHIFT);
+        super(block, factor1, factor2, Operator.SHIFT_LEFT);
     }
 
     @Override

@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
@@ -154,4 +155,9 @@ public abstract class MutableClass extends AClass {
     	return false;
 	}
 
+    @Override
+    public boolean isChildOrEqual(AClass otherType) {
+        return TypeUtils.isSubtyping(this, otherType);
+    }
+    
 }

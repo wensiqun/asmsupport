@@ -14,8 +14,6 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
@@ -54,7 +52,7 @@ public abstract class AClass implements IClass {
     @Override
     public String getPackage() {
         if(pkg == null){
-            pkg = ClassUtils.getPackageName(name);
+            pkg = getPackageName(name);
         }
         return pkg;
     }
@@ -132,11 +130,44 @@ public abstract class AClass implements IClass {
         return getName();
     }
 
-    public boolean isChildOrEqual(AClass otherType) {
-        return TypeUtils.isSubtyping(this, otherType);
-    }
+    /**
+     * Check current class is child or equal other type.
+     * 
+     * @param otherType
+     * @return boolean
+     */
+    public abstract boolean isChildOrEqual(AClass otherType);
 
     @Override
     public abstract AClass getNextDimType();
-    
+
+    /**
+     * <p>Gets the package name from a {@code String}.</p>
+     *
+     * <p>The string passed in is assumed to be a class name - it is not checked.</p>
+     * <p>If the class is unpackaged, return an empty string.</p>
+     *
+     * @param className  the className to get the package name for, may be {@code null}
+     * @return the package name or an empty string
+     */
+    public static String getPackageName(String className) {
+        if (className == null || className.length() == 0) {
+            return "";
+        }
+
+        // Strip array encoding
+        while (className.charAt(0) == '[') {
+            className = className.substring(1);
+        }
+        // Strip Object type encoding
+        if (className.charAt(0) == 'L' && className.charAt(className.length() - 1) == ';') {
+            className = className.substring(1);
+        }
+
+        final int i = className.lastIndexOf('.');
+        if (i == -1) {
+            return "";
+        }
+        return className.substring(0, i);
+    }
 }

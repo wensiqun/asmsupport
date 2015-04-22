@@ -22,7 +22,7 @@ import java.util.List;
  * @author 温斯群(Joe Wen)
  *
  */
-public class StringUtils {//extends cn.wensiqun.asmsupport.org.apache.commons.lang3.StringUtils {
+public class StringUtils {
 
 
     /**

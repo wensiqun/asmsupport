@@ -14,52 +14,51 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import java.lang.reflect.Array;
-
+import cn.wensiqun.asmsupport.client.action.AddAction;
+import cn.wensiqun.asmsupport.client.action.AndAction;
+import cn.wensiqun.asmsupport.client.action.ArrayLengthAction;
+import cn.wensiqun.asmsupport.client.action.BandAction;
+import cn.wensiqun.asmsupport.client.action.BorAction;
+import cn.wensiqun.asmsupport.client.action.BxorAction;
+import cn.wensiqun.asmsupport.client.action.DivAction;
+import cn.wensiqun.asmsupport.client.action.EqualAction;
+import cn.wensiqun.asmsupport.client.action.GreaterEqualAction;
+import cn.wensiqun.asmsupport.client.action.GreaterThanAction;
+import cn.wensiqun.asmsupport.client.action.LessEqualAction;
+import cn.wensiqun.asmsupport.client.action.LessThanAction;
+import cn.wensiqun.asmsupport.client.action.LogicAndAction;
+import cn.wensiqun.asmsupport.client.action.LogicOrAction;
+import cn.wensiqun.asmsupport.client.action.LogicXorAction;
+import cn.wensiqun.asmsupport.client.action.ModAction;
+import cn.wensiqun.asmsupport.client.action.MulAction;
+import cn.wensiqun.asmsupport.client.action.NotEqualAction;
+import cn.wensiqun.asmsupport.client.action.OrAction;
+import cn.wensiqun.asmsupport.client.action.ShiftLeftAction;
+import cn.wensiqun.asmsupport.client.action.ShiftRightAction;
+import cn.wensiqun.asmsupport.client.action.SubAction;
+import cn.wensiqun.asmsupport.client.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.value.ClientValue;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Super;
 import cn.wensiqun.asmsupport.client.def.var.This;
 import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.client.operations.Add;
-import cn.wensiqun.asmsupport.client.operations.And;
-import cn.wensiqun.asmsupport.client.operations.ArrayLength;
 import cn.wensiqun.asmsupport.client.operations.ArrayLoad;
 import cn.wensiqun.asmsupport.client.operations.ArrayStore;
 import cn.wensiqun.asmsupport.client.operations.ArrayValue;
 import cn.wensiqun.asmsupport.client.operations.Assign;
-import cn.wensiqun.asmsupport.client.operations.Band;
-import cn.wensiqun.asmsupport.client.operations.Bor;
-import cn.wensiqun.asmsupport.client.operations.Bxor;
 import cn.wensiqun.asmsupport.client.operations.Call;
 import cn.wensiqun.asmsupport.client.operations.Cast;
 import cn.wensiqun.asmsupport.client.operations.Crement;
-import cn.wensiqun.asmsupport.client.operations.Div;
-import cn.wensiqun.asmsupport.client.operations.Equal;
-import cn.wensiqun.asmsupport.client.operations.GreaterEqual;
-import cn.wensiqun.asmsupport.client.operations.GreaterThan;
 import cn.wensiqun.asmsupport.client.operations.Instanceof;
-import cn.wensiqun.asmsupport.client.operations.LessEqual;
-import cn.wensiqun.asmsupport.client.operations.LessThan;
-import cn.wensiqun.asmsupport.client.operations.LogicOr;
-import cn.wensiqun.asmsupport.client.operations.LogicXor;
-import cn.wensiqun.asmsupport.client.operations.LogiclAnd;
-import cn.wensiqun.asmsupport.client.operations.Mod;
-import cn.wensiqun.asmsupport.client.operations.Mul;
 import cn.wensiqun.asmsupport.client.operations.Neg;
 import cn.wensiqun.asmsupport.client.operations.Not;
-import cn.wensiqun.asmsupport.client.operations.NotEqual;
-import cn.wensiqun.asmsupport.client.operations.Or;
 import cn.wensiqun.asmsupport.client.operations.Reverse;
-import cn.wensiqun.asmsupport.client.operations.ShiftLeft;
-import cn.wensiqun.asmsupport.client.operations.ShiftRight;
 import cn.wensiqun.asmsupport.client.operations.StrAdd;
-import cn.wensiqun.asmsupport.client.operations.Sub;
 import cn.wensiqun.asmsupport.client.operations.Ternary;
-import cn.wensiqun.asmsupport.client.operations.UnShiftRight;
+import cn.wensiqun.asmsupport.client.param.BoolParam;
+import cn.wensiqun.asmsupport.client.param.NumParam;
 import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
@@ -126,37 +125,37 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public Assign assign(Var variable, Param val) {
-		return new Assign(target.assign((IVariable) variable.getTarget(), val.getTarget()));
+		return new Assign(target.assign((IVariable) ((Param)variable).getTarget(), val.getTarget()));
 	}
 
 	@Override
 	public Call call(Param objRef, String methodName, Param... arguments) {
-		return new Call(target.call(objRef.getTarget(), methodName, client2Internal(arguments)));
+		return new Call(target.call(objRef.getTarget(), methodName, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public Call call(String methodName, Param... args) {
-		return new Call(target.call(methodName, client2Internal(args)));
+		return new Call(target.call(methodName, ParamPostern.getTarget(args)));
 	}
 
 	@Override
 	public Call call(AClass owner, String methodName, Param... arguments) {
-		return new Call(target.call(owner, methodName, client2Internal(arguments)));
+		return new Call(target.call(owner, methodName, ParamPostern.getTarget(arguments)));
 	}
     
 	@Override
     public Call call(Class<?> owner, String methodName, Param... arguments) {
-    	return new Call(target.call(owner, methodName, client2Internal(arguments)));
+    	return new Call(target.call(owner, methodName, ParamPostern.getTarget(arguments)));
     }
 
 	@Override
 	public Call new_(Class<?> owner, Param... arguments) {
-		return new Call(target.new_(owner, client2Internal(arguments)));
+		return new Call(target.new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public Call new_(AClass owner, Param... arguments) {
-		return new Call(target.new_(owner, client2Internal(arguments)));
+		return new Call(target.new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
@@ -166,65 +165,65 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public ArrayValue makeArray(AClass aClass, Param... allocateDims) {
-		return new ArrayValue(target.makeArray(aClass, client2Internal(allocateDims)));
+		return new ArrayValue(target.makeArray(aClass, ParamPostern.getTarget(allocateDims)));
 	}
 
 	@Override
 	public ArrayValue makeArray(Class<?> arraytype, Param... dimensions) {
-		return new ArrayValue(target.makeArray(arraytype, client2Internal(dimensions)));
+		return new ArrayValue(target.makeArray(arraytype, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
 	public ArrayValue newarray(AClass aClass, Object arrayObject) {
-		return new ArrayValue(target.newarray(aClass, client2Internal(arrayObject)));
+		return new ArrayValue(target.newarray(aClass, ParamPostern.getTarget(arrayObject)));
 	}
 
 	@Override
 	public ArrayValue newarray(Class<?> type, Object arrayObject) {
-		return new ArrayValue(target.newarray(type, client2Internal(arrayObject)));
+		return new ArrayValue(target.newarray(type, ParamPostern.getTarget(arrayObject)));
 	}
 
 	@Override
 	public ArrayLoad arrayLoad(Param arrayReference,
 	        Param pardim, Param... parDims) {
-		return new ArrayLoad(target.arrayLoad(arrayReference.getTarget(), pardim.getTarget(), client2Internal(parDims)));
+		return new ArrayLoad(target.arrayLoad(arrayReference.getTarget(), pardim.getTarget(), ParamPostern.getTarget(parDims)));
 	}
 	
 	@Override
 	public ArrayStore arrayStore(Param arrayReference,
 	        Param value, Param dim, Param... dims) {
-		return new ArrayStore(target.arrayStore(arrayReference.getTarget(), value.getTarget(), dim.getTarget(), client2Internal(dims)));
+		return new ArrayStore(target.arrayStore(arrayReference.getTarget(), value.getTarget(), dim.getTarget(), ParamPostern.getTarget(dims)));
 	}
 
 	@Override
-	public ArrayLength arrayLength(Param arrayReference,
-	        Param... dims) {
-		return new ArrayLength(target.arrayLength(arrayReference.getTarget(), client2Internal(dims)));
+	public NumParam arrayLength(Param arrayReference, Param... dims) {
+	    Param[] operands = unionParam(arrayReference, dims);
+		return new NumParam(target, new ArrayLengthAction(target, operands.length), operands);
 	}
 	
 	@Override
-	public Add add(Param factor1, Param factor2) {
-		return new Add(target.add(factor1.getTarget(), factor2.getTarget()));
+	public NumParam add(Param factor1, Param factor2) {
+	    return new NumParam(target, new AddAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Sub sub(Param factor1, Param factor2) {
-		return new Sub(target.sub(factor1.getTarget(), factor2.getTarget()));
+	public NumParam sub(Param factor1, Param factor2) {
+        return new NumParam(target, new SubAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Mul mul(Param factor1, Param factor2) {
-		return new Mul(target.mul(factor1.getTarget(), factor2.getTarget()));
+	public NumParam mul(Param factor1, Param factor2) {
+        return new NumParam(target, new MulAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Div div(Param factor1, Param factor2) {
-		return new Div(target.div(factor1.getTarget(), factor2.getTarget()));
+	public NumParam div(Param factor1, Param factor2) {
+        return new NumParam(target, new DivAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Mod mod(Param factor1, Param factor2) {
-		return new Mod(target.mod(factor1.getTarget(), factor2.getTarget()));
+	public NumParam mod(Param factor1, Param factor2) {
+        return new NumParam(target, new ModAction(target), factor1, factor2);
 	}
 
 	@Override
@@ -233,33 +232,33 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public Band band(Param factor1, Param factor2) {
-		return new Band(target.band(factor1.getTarget(), factor2.getTarget()));
+	public NumParam band(Param factor1, Param factor2) {
+		return new NumParam(target, new BandAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Bor bor(Param factor1, Param factor2) {
-		return new Bor(target.bor(factor1.getTarget(), factor2.getTarget()));
+	public NumParam bor(Param factor1, Param factor2) {
+        return new NumParam(target, new BorAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Bxor bxor(Param factor1, Param factor2) {
-		return new Bxor(target.bxor(factor1.getTarget(), factor2.getTarget()));
+	public NumParam bxor(Param factor1, Param factor2) {
+        return new NumParam(target, new BxorAction(target), factor1, factor2);
 	}
 
 	@Override
-	public ShiftLeft shl(Param factor1, Param factor2) {
-		return new ShiftLeft(target.shl(factor1.getTarget(), factor2.getTarget()));
+	public NumParam shl(Param factor1, Param factor2) {
+		return new NumParam(target, new ShiftLeftAction(target), factor1, factor2);
 	}
 
 	@Override
-	public ShiftRight shr(Param factor1, Param factor2) {
-		return new ShiftRight(target.shr(factor1.getTarget(), factor2.getTarget()));
+	public NumParam shr(Param factor1, Param factor2) {
+        return new NumParam(target, new ShiftRightAction(target), factor1, factor2);
 	}
 
 	@Override
-	public UnShiftRight ushr(Param factor1, Param factor2) {
-		return new UnShiftRight(target.ushr(factor1.getTarget(), factor2.getTarget()));
+	public NumParam ushr(Param factor1, Param factor2) {
+        return new NumParam(target, new UnsignedShiftRightAction(target), factor1, factor2);
 	}
 
 	@Override
@@ -283,60 +282,58 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public GreaterThan gt(Param factor1, Param factor2) {
-		return new GreaterThan(target.gt(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam gt(Param factor1, Param factor2) {
+		return new BoolParam(target, new GreaterThanAction(target), factor1, factor2);
 	}
 
 	@Override
-	public GreaterEqual ge(Param factor1, Param factor2) {
-		return new GreaterEqual(target.ge(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam ge(Param factor1, Param factor2) {
+        return new BoolParam(target, new GreaterEqualAction(target), factor1, factor2);
 	}
 
 	@Override
-	public LessThan lt(Param factor1, Param factor2) {
-		return new LessThan(target.lt(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam lt(Param factor1, Param factor2) {
+        return new BoolParam(target, new LessThanAction(target), factor1, factor2);
 	}
 
 	@Override
-	public LessEqual le(Param factor1, Param factor2) {
-		return new LessEqual(target.le(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam le(Param factor1, Param factor2) {
+        return new BoolParam(target, new LessEqualAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Equal eq(Param factor1, Param factor2) {
-		return new Equal(target.eq(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam eq(Param factor1, Param factor2) {
+        return new BoolParam(target, new EqualAction(target), factor1, factor2);
 	}
 
 	@Override
-	public NotEqual ne(Param factor1, Param factor2) {
-		return new NotEqual(target.ne(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam ne(Param factor1, Param factor2) {
+        return new BoolParam(target, new NotEqualAction(target), factor1, factor2);
 	}
 
 	@Override
-	public LogiclAnd logicalAnd(Param factor1, Param factor2) {
-		return new LogiclAnd(target.logicalAnd(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam logicalAnd(Param factor1, Param factor2) {
+		return new BoolParam(target, new LogicAndAction(target), factor1, factor2);
 	}
 
 	@Override
-	public LogicOr logicalOr(Param factor1, Param factor2) {
-		return new LogicOr(target.logicalOr(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam logicalOr(Param factor1, Param factor2) {
+        return new BoolParam(target, new LogicOrAction(target), factor1, factor2);
 	}
 
 	@Override
-	public LogicXor logicalXor(Param factor1, Param factor2) {
-		return new LogicXor(target.logicalXor(factor1.getTarget(), factor2.getTarget()));
+	public BoolParam logicalXor(Param factor1, Param factor2) {
+        return new BoolParam(target, new LogicXorAction(target), factor1, factor2);
 	}
 
 	@Override
-	public And and(Param factor1, Param factor2,
-	        Param... otherFactor) {
-		return new And(target.and(factor1.getTarget(), factor2.getTarget(), client2Internal(otherFactor)));
+	public BoolParam and(Param factor1, Param factor2, Param... otherFactor) {
+        return new BoolParam(target, new AndAction(target), factor1, factor2);
 	}
 
 	@Override
-	public Or or(Param factor1, Param factor2,
-	        Param... otherFactor) {
-		return new Or(target.or(factor1.getTarget(), factor2.getTarget(), client2Internal(otherFactor)));
+	public BoolParam or(Param factor1, Param factor2, Param... otherFactor) {
+        return new BoolParam(target, new OrAction(target), factor1, factor2);
 	}
 
 	@Override
@@ -367,7 +364,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public StrAdd stradd(Param par1, Param... pars) {
-		return new StrAdd(target.stradd(par1.getTarget(), client2Internal(pars)));
+		return new StrAdd(target.stradd(par1.getTarget(), ParamPostern.getTarget(pars)));
 	}
 
 	@Override
@@ -521,24 +518,6 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 		return target.getArrayType(rootComponent, dim);
 	}
 	
-	/**
-     * Convert ClientParameterized to InternalParameterized
-     * 
-     * @param pars
-     * @return
-     */
-    KernelParameterized[] client2Internal(Param... pars) {
-        if(pars == null) {
-            return null;
-        }
-        KernelParameterized[] paras = new KernelParameterized[pars.length];
-        for(int i=0; i<pars.length; i++) {
-            paras[i] = pars[i].getTarget();
-        }
-        return paras;
-    }
-    
-
     LocVar[] internalVar2ClientVar(LocalVariable... pars) {
         if(pars == null) {
             return null;
@@ -550,26 +529,15 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         return paras;
     }
     
-    /**
-     * Convert multiple dimension ClientParameterized array to  InternalParameterized array.
-     * 
-     * @param clientArray
-     * @return
-     */
-    Object client2Internal(Object clientArray) {
-        if(clientArray == null) {
-            throw new NullPointerException("Client is null.");
+    Param[] unionParam(Param p, Param... ps) {
+        if(ps == null || ps.length == 0) {
+            return new Param[]{p};
+        } else {
+            Param[] operands = new Param[1 + ps.length];
+            operands[0] = p;
+            System.arraycopy(ps, 0, operands, 1, ps.length);
+            return operands;
         }
-        if(clientArray.getClass().isArray()) {
-            int len = Array.getLength(clientArray);
-            Object[] internalArray = new Object[len];
-            for(int i=0; i<len; i++) {
-                internalArray[i] = client2Internal(Array.get(clientArray, i));
-            }
-            return internalArray;
-        } else if (clientArray instanceof Param){
-            return ((Param)clientArray).getTarget();
-        }
-        throw new IllegalArgumentException();
-    }
+    } 
+    
 }

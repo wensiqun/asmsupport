@@ -39,13 +39,6 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
     private KernelParameterized factor;
 
-    /*
-     * indicate the operators position,
-     * 
-     * true : like i++ false : like ++i;
-     */
-    //private boolean post;
-
     protected AbstractCrement(ProgramBlockInternal block, KernelParameterized factor, Operator operator) {
         super(block, operator);
         if(factor instanceof Crementable) {

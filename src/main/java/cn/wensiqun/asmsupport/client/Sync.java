@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.def.DummyParam;
 import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.standard.sync.ISynchronized;

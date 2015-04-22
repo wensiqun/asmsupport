@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.clazz;
 
 import java.io.Serializable;
 
+import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
@@ -119,6 +120,11 @@ public class ArrayClass extends AClass {
             sb.append("[]");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean isChildOrEqual(AClass otherType)  {
+        return TypeUtils.isSubtyping(this, otherType);
     }
     
 }

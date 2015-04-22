@@ -41,9 +41,9 @@ public enum Operator {
     ADD("+", 3),
     SUB("-", 3),
     
-    LEFT_SHIFT("<<", 4),
-    RIGHT_SHIFT(">>", 4),
-    UNSIGNED_RIGHT_SHIFT(">>>", 4),
+    SHIFT_LEFT("<<", 4),
+    SHIFT_RIGHT(">>", 4),
+    UNSIGNED_SHIFT_RIGHT(">>>", 4),
 
     LESS_THAN("<", 5),
     GREATER_THAN(">", 5),

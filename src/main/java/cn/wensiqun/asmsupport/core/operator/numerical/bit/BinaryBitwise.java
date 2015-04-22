@@ -99,9 +99,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         
         insnHelper.unbox(factor2.getResultType().getType());
         
-        if(getOperatorSymbol().equals(Operator.LEFT_SHIFT) ||
-           getOperatorSymbol().equals(Operator.RIGHT_SHIFT) ||
-           getOperatorSymbol().equals(Operator.UNSIGNED_RIGHT_SHIFT) ){
+        if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
+           getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
+           getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
             insnHelper.cast(factor2.getResultType().getType(), AClassFactory.getType(int.class).getType());
         }else{
             insnHelper.cast(factor2.getResultType().getType(), targetClass.getType());

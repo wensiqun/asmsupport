@@ -41,11 +41,6 @@ public class ClassUtils {
      * The inner class separator character: <code>'$' == {@value}</code>.
      */
     public static final char INNER_CLASS_SEPARATOR_CHAR = '$';
-
-    /**
-     * The package separator character: <code>'&#x2e;' == {@value}</code>.
-     */
-    public static final char PACKAGE_SEPARATOR_CHAR = '.';
     
     /**
      * 
@@ -339,64 +334,6 @@ public class ClassUtils {
     public static boolean visible(Class<?> invoker, Class<?> invoked, Class<?> actuallyInvoked, int mod) {
         return AClassUtils.visible(AClassFactory.getType(invoker), AClassFactory.getType(invoked),
                 AClassFactory.getType(actuallyInvoked), mod);
-    }
-    
-
-    /**
-     * <p>Gets the package name of an {@code Object}.</p>
-     *
-     * @param object  the class to get the package name for, may be null
-     * @param valueIfNull  the value to return if null
-     * @return the package name of the object, or the null value
-     */
-    public static String getPackageName(final Object object, final String valueIfNull) {
-        if (object == null) {
-            return valueIfNull;
-        }
-        return getPackageName(object.getClass());
-    }
-
-    /**
-     * <p>Gets the package name of a {@code Class}.</p>
-     *
-     * @param cls  the class to get the package name for, may be {@code null}.
-     * @return the package name or an empty string
-     */
-    public static String getPackageName(final Class<?> cls) {
-        if (cls == null) {
-            return StringUtils.EMPTY;
-        }
-        return getPackageName(cls.getName());
-    }
-
-    /**
-     * <p>Gets the package name from a {@code String}.</p>
-     *
-     * <p>The string passed in is assumed to be a class name - it is not checked.</p>
-     * <p>If the class is unpackaged, return an empty string.</p>
-     *
-     * @param className  the className to get the package name for, may be {@code null}
-     * @return the package name or an empty string
-     */
-    public static String getPackageName(String className) {
-        if (StringUtils.isEmpty(className)) {
-            return StringUtils.EMPTY;
-        }
-
-        // Strip array encoding
-        while (className.charAt(0) == '[') {
-            className = className.substring(1);
-        }
-        // Strip Object type encoding
-        if (className.charAt(0) == 'L' && className.charAt(className.length() - 1) == ';') {
-            className = className.substring(1);
-        }
-
-        final int i = className.lastIndexOf(PACKAGE_SEPARATOR_CHAR);
-        if (i == -1) {
-            return StringUtils.EMPTY;
-        }
-        return className.substring(0, i);
     }
 
 }

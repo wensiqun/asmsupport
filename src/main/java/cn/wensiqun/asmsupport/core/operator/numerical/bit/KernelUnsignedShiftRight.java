@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 public class KernelUnsignedShiftRight extends BinaryBitwise {
 
     protected KernelUnsignedShiftRight(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
-        super(block, factor1, factor2, Operator.UNSIGNED_RIGHT_SHIFT);
+        super(block, factor1, factor2, Operator.UNSIGNED_SHIFT_RIGHT);
     }
 
     @Override
