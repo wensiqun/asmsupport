@@ -3,7 +3,7 @@
 	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
 	<version>0.4.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>asmsupport</name>
 	<description>
         This project is will help developer to dynamic create/modify
@@ -106,41 +106,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<!-- Source folder plugin -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.9.1</version>
-				<executions>
-					<execution>
-						<id>add-additional-main-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/third/java</source>
-							</sources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>add-additional-test-sources</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/issue/java</source>
-								<source>src/sample/java</source>
-								<source>src/dummy/java</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Source site plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -183,4 +148,12 @@
 
 	</dependencies>
 
+	<modules>
+		<module>asmsupport-third</module>
+		<module>asmsupport-standard</module>
+		<module>asmsupport-core</module>
+		<module>asmsupport-client</module>
+		<module>asmsupport-issues</module>
+		<module>asmsupport-sample</module>
+	</modules>
 </project>
