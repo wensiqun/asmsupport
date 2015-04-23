@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.definition.value;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
@@ -515,7 +515,7 @@ public class Value implements IValue {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         if (value == null) {
             block.getInsnHelper().push(this.getType());
             return;

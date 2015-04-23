@@ -20,12 +20,12 @@ import json.parser.IterableParser;
 import json.parser.MapParser;
 import json.utils.ReflectionUtils;
 import json.utils.StringEncoder;
-import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
-import cn.wensiqun.asmsupport.client.IF;
-import cn.wensiqun.asmsupport.client.MethodBody;
+import cn.wensiqun.asmsupport.client.block.ConstructorBody;
+import cn.wensiqun.asmsupport.client.block.IF;
+import cn.wensiqun.asmsupport.client.block.MethodBody;
+import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.client.operations.Call;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 
 public class JSONPool {
@@ -174,7 +174,7 @@ public class JSONPool {
                         continue;
                     }
                     
-                    final Call getterCall = call(val, getterStr);
+                    final UncertainParam getterCall = call(val, getterStr);
                     
                     if(fieldType.isPrimitive()) {
                         if(name.matches("^[A-Za-z][_A-Za-z0-9]*$")) {

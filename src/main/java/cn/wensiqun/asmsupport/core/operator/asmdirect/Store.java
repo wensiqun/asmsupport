@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 
 /**
@@ -26,7 +26,7 @@ public class Store extends ASMDirect {
 
     private LocalVariable var;
     
-    protected Store(ProgramBlockInternal block, LocalVariable var) {
+    protected Store(KernelProgramBlock block, LocalVariable var) {
         super(block);
         this.var = var;
     }

@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import cn.wensiqun.asmsupport.client.DummyModifiedClass;
-import cn.wensiqun.asmsupport.client.ModifiedMethodBody;
+import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import dummy.modify.ModifyEntity;

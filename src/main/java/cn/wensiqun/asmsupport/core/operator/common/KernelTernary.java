@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
@@ -45,7 +45,7 @@ public class KernelTernary extends AbstractParameterizedOperator {
     
     private AClass resultClass;
     
-    protected KernelTernary(ProgramBlockInternal block, KernelParameterized expression1,
+    protected KernelTernary(KernelProgramBlock block, KernelParameterized expression1,
             KernelParameterized expression2, KernelParameterized expression3) {
         super(block, Operator.TERNARY);
         this.exp1 = expression1;
@@ -137,7 +137,7 @@ public class KernelTernary extends AbstractParameterizedOperator {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

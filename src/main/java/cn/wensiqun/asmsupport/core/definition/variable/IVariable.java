@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
-import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 
 /**
@@ -41,7 +41,7 @@ public interface IVariable extends KernelParameterized, IVar {
      * 获取当前变量的VariableEntity
      * @return
      */
-    VariableMeta getMeta();
+    VarMeta getMeta();
     
     /**
      * Get field value from current variable.

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -29,12 +29,12 @@ public abstract class AbstractLogical extends AbstractParameterizedOperator {
 
     protected boolean byOtherUsed;
     
-    protected AbstractLogical(ProgramBlockInternal block, Operator operator) {
+    protected AbstractLogical(KernelProgramBlock block, Operator operator) {
         super(block, operator);
     }
     
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class Field extends VariableMeta {
+public class Field extends VarMeta {
 
     private AClass owner;
 

@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.array;
 import java.lang.reflect.Array;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
@@ -100,7 +100,7 @@ public class KernelArrayValue extends AbstractParameterizedOperator  {
         }.process();
     }
     
-    protected KernelArrayValue(ProgramBlockInternal block, ArrayClass arrayCls, KernelParameterized... allocateDims) {
+    protected KernelArrayValue(KernelProgramBlock block, ArrayClass arrayCls, KernelParameterized... allocateDims) {
         super(block, Operator.COMMON);
         if(arrayCls.getDimension() < allocateDims.length){
             throw new IllegalArgumentException("dimension not enough: array type is " + arrayCls + " and allocate dims is " + ArrayUtils.toString(allocateDims));
@@ -115,7 +115,7 @@ public class KernelArrayValue extends AbstractParameterizedOperator  {
      * @param arrayCls
      * @param values Parameterized array
      */
-    protected KernelArrayValue(ProgramBlockInternal block, ArrayClass arrayCls, Object values) {
+    protected KernelArrayValue(KernelProgramBlock block, ArrayClass arrayCls, Object values) {
         super(block, Operator.COMMON);
         this.arrayCls = arrayCls;
         this.values = values;
@@ -226,7 +226,7 @@ public class KernelArrayValue extends AbstractParameterizedOperator  {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

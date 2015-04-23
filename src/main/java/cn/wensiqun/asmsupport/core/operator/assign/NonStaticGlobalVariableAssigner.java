@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -34,7 +34,7 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     
     private NonStaticGlobalVariable var;
     
-    protected NonStaticGlobalVariableAssigner(ProgramBlockInternal block, final NonStaticGlobalVariable var, KernelParameterized value) {
+    protected NonStaticGlobalVariableAssigner(KernelProgramBlock block, final NonStaticGlobalVariable var, KernelParameterized value) {
         super(block, var, value);
         this.var = var;
     }

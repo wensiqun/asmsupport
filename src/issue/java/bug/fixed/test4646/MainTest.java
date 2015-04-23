@@ -9,7 +9,7 @@ import bug.fixed.test4646.entity.ChildChild;
 import bug.fixed.test4646.entity.Super;
 import bug.fixed.test4646.parent.AbstractClass;
 import junit.framework.Assert;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -36,7 +36,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
 				null, null, AClassFactory.getType(ChildChild.class),
-				null, new MethodBodyInternal(){
+				null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -47,7 +47,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceMethod", 
 				null, null, AClassFactory.getType(ChildChild.class),
-				null, new MethodBodyInternal(){
+				null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -58,7 +58,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassMethod", 
 				null, null, AClassFactory.getType(ChildChild.class),
-				null, new MethodBodyInternal(){
+				null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -69,7 +69,7 @@ public class MainTest {
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceReturnTypeIsChild", 
 				null, null, AClassFactory.getType(ChildChild.class),
-				null, new MethodBodyInternal(){
+				null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {

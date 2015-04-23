@@ -3,10 +3,10 @@ package oldApi.block;
 import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.control.condition.ElseIFInternal;
-import cn.wensiqun.asmsupport.core.block.control.condition.ElseInternal;
-import cn.wensiqun.asmsupport.core.block.control.condition.IFInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
+import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
+import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -75,23 +75,23 @@ public class IFBlockGenerator extends AbstractExample{
 				new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, 
 				new String[]{"str", "i"}, null, null,
 		        
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
 						final LocalVariable str = argus[0];
 						final LocalVariable i = argus[1];
 						
-						if_(new IFInternal(call(str, "equals", Value.value("A"))){
+						if_(new KernelIF(call(str, "equals", Value.value("A"))){
 							@Override
 							public void body() {
-								if_(new IFInternal(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, Value.value(0))){
 
 									@Override
 									public void body() {
 									    call(systemOut, "println", Value.value("str is 'A', i is 0"));
 									}
 									
-								}).else_(new ElseInternal(){
+								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
@@ -100,18 +100,18 @@ public class IFBlockGenerator extends AbstractExample{
 									
 								});
 							}
-						}).elseif(new ElseIFInternal(call(str, "equals", Value.value("B"))){
+						}).elseif(new KernelElseIF(call(str, "equals", Value.value("B"))){
 
 							@Override
 							public void body() {
-								if_(new IFInternal(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, Value.value(0))){
 
 									@Override
 									public void body() {
 									    call(systemOut, "println", Value.value("str is 'B', i is 0"));
 									}
 									
-								}).else_(new ElseInternal(){
+								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
@@ -121,18 +121,18 @@ public class IFBlockGenerator extends AbstractExample{
 								});
 							}
 							
-						}).else_(new ElseInternal(){
+						}).else_(new KernelElse(){
 
 							@Override
 							public void body() {
-								if_(new IFInternal(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, Value.value(0))){
 
 									@Override
 									public void body() {
 									    call(systemOut, "println", Value.value("str is unknow, i is 0"));
 									}
 									
-								}).else_(new ElseInternal(){
+								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
@@ -151,7 +151,7 @@ public class IFBlockGenerator extends AbstractExample{
 		
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
 						call(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));

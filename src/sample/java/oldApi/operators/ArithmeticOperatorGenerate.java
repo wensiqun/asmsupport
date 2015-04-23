@@ -3,7 +3,7 @@ package oldApi.operators;
 import java.util.Random;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -22,7 +22,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
 
 		//printIn方法
-		creator.createStaticMethod(0, "printInt", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, new String[]{"s", "i"}, null, null, new StaticMethodBodyInternal(){
+		creator.createStaticMethod(0, "printInt", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, new String[]{"s", "i"}, null, null, new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -33,7 +33,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});
 		
 		//printIn方法
-		creator.createStaticMethod(0, "printFloat", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(float.class)}, new String[]{"s", "f"}, null, null, new StaticMethodBodyInternal(){
+		creator.createStaticMethod(0, "printFloat", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(float.class)}, new String[]{"s", "f"}, null, null, new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -44,7 +44,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});		
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-				new AClass[] { AClassFactory.getType(String[].class) }, new String[] { "args" }, null, null, new StaticMethodBodyInternal() {
+				new AClass[] { AClassFactory.getType(String[].class) }, new String[] { "args" }, null, null, new KernelStaticMethodBody() {
 
 					@Override
 					public void body(LocalVariable... argus) {

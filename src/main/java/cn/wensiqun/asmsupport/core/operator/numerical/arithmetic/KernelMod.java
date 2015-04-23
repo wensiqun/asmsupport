@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,7 +32,7 @@ public class KernelMod extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelMod.class);
     
-    protected KernelMod(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
+    protected KernelMod(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2) {
         super(block, factor1, factor2, Operator.MOD);
     }
 

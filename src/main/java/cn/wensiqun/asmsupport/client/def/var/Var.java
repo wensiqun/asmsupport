@@ -1,6 +1,7 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.def.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
@@ -11,19 +12,14 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  * @author sqwen
  *
  */
-public abstract class Var extends DummyParam implements IVar {
+public abstract class Var extends UncertainParam implements IVar {
 
-    public Var(IVariable target) {
-        super(target);
+    public Var(KernelProgramBlock block, IVariable target) {
+        super(block, target);
     }
 
     private IVariable getPreciseTarget() {
         return (IVariable) target;
-    }
-    
-    @Override
-    public FieldVar field(String name) {
-        return new FieldVar(target.field(name));
     }
     
     @Override

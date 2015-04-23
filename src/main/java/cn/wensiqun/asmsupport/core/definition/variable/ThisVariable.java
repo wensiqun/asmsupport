@@ -19,13 +19,13 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
@@ -41,7 +41,7 @@ public class ThisVariable extends ImplicitVariable {
     }
     
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         block.getInsnHelper().loadThis();
     }
 
@@ -56,7 +56,7 @@ public class ThisVariable extends ImplicitVariable {
     }
 
     @Override
-    public VariableMeta getMeta() {
+    public VarMeta getMeta() {
         return globalVariableMeta;
     }
 }

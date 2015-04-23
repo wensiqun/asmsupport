@@ -8,15 +8,16 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyEnum;
 import cn.wensiqun.asmsupport.client.DummyInterface;
-import cn.wensiqun.asmsupport.client.EnumConstructorBody;
-import cn.wensiqun.asmsupport.client.EnumStaticBlockBody;
-import cn.wensiqun.asmsupport.client.ForEach;
-import cn.wensiqun.asmsupport.client.MethodBody;
-import cn.wensiqun.asmsupport.client.StaticBlockBody;
+import cn.wensiqun.asmsupport.client.block.ConstructorBody;
+import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
+import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
+import cn.wensiqun.asmsupport.client.block.ForEach;
+import cn.wensiqun.asmsupport.client.block.MethodBody;
+import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
+import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
@@ -309,10 +310,10 @@ public class DummyTest {
                 call(dm, "appendString1", sb);
                 call(dm, "appendString2", sb);
                 
-                AClass ExceptedEnumAClass = getType(ExceptedEnum);
-                call(call(call(sb, "append", call(val(ExceptedEnumAClass).field("ENUM1"), "getEnumName")),"append", val("\n")),
-                    "append", val(ExceptedEnumAClass).field("ENUM2")
-                );
+                DummyParam ExceptedEnumAClass = val(getType(ExceptedEnum));
+                sb.call("append", ExceptedEnumAClass.field("ENUM1").call("getEnumName"))
+                .call("append", val("\n"))
+                .call("append", ExceptedEnumAClass.field("ENUM2"));
                 return_(call(sb, "toString"));
             }
             
@@ -331,6 +332,10 @@ public class DummyTest {
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
+    }
+    
+    public static void main(String... a) {
+        new DummyTest().test();
     }
     
 }

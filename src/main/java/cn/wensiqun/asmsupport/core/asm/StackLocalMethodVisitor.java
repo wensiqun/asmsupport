@@ -1335,7 +1335,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
     }
 
     @Override
-    public void visitMethodInsn(final int opcode, final String owner, final String name, final String desc) {
+    public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
         Type returnType = Type.getReturnType(desc);
         if (!Type.VOID_TYPE.equals(returnType)) {
             setNextPushTypes(returnType);
@@ -1343,7 +1343,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
         // pop argument
         Type[] argTypes = Type.getArgumentTypes(desc);
         stackLocalOperator(opcode, argTypes.length);
-        mv.visitMethodInsn(opcode, owner, name, desc);
+        mv.visitMethodInsn(opcode, owner, name, desc, itf);
     }
 
     @Override

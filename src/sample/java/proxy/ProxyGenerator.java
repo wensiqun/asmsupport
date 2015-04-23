@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cn.wensiqun.asmsupport.client.Param;
-import cn.wensiqun.asmsupport.client.ConstructorBody;
 import cn.wensiqun.asmsupport.client.DummyClass;
-import cn.wensiqun.asmsupport.client.IF;
-import cn.wensiqun.asmsupport.client.MethodBody;
+import cn.wensiqun.asmsupport.client.block.ConstructorBody;
+import cn.wensiqun.asmsupport.client.block.IF;
+import cn.wensiqun.asmsupport.client.block.MethodBody;
+import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;

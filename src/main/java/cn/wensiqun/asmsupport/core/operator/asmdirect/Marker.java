@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.UnreachableCodeCheckSkipable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -29,11 +29,11 @@ public class Marker extends ASMDirect implements UnreachableCodeCheckSkipable {
     
     private Label label;
     
-    protected Marker(ProgramBlockInternal block) {
+    protected Marker(KernelProgramBlock block) {
 		super(block);
 	}
 
-    protected Marker(ProgramBlockInternal block, Label lbl) {
+    protected Marker(KernelProgramBlock block, Label lbl) {
         super(block);
         label = lbl;
     }

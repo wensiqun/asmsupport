@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class ConditionBranchBlock extends ProgramBlockInternal {
+public abstract class ConditionBranchBlock extends KernelProgramBlock {
 
     protected ConditionBranchBlock nextBranch;
 

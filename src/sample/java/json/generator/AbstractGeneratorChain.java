@@ -1,9 +1,9 @@
 package json.generator;
 
-import cn.wensiqun.asmsupport.client.Param;
-import cn.wensiqun.asmsupport.client.ProgramBlock;
+import cn.wensiqun.asmsupport.client.block.ProgramBlock;
+import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
@@ -11,7 +11,7 @@ public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
     protected IValueGeneratorChain next;
 
     @Override
-    public boolean generate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
+    public boolean generate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
             LocVar encoder, AClass type, Param value) {
         if(match(type)) {
             return doGenerate(context, block, encoder, type, value);
@@ -21,7 +21,7 @@ public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
         return false;
     }
 
-    protected abstract boolean doGenerate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
+    protected abstract boolean doGenerate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
             LocVar encoder, AClass type, Param value);
     
     @Override

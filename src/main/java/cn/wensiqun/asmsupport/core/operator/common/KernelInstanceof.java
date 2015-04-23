@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
@@ -35,7 +35,7 @@ public class KernelInstanceof extends AbstractParameterizedOperator {
     private KernelParameterized obj;
     private boolean byOtherUsed;
     
-    protected KernelInstanceof(ProgramBlockInternal block, KernelParameterized obj, AClass type) {
+    protected KernelInstanceof(KernelProgramBlock block, KernelParameterized obj, AClass type) {
         super(block, Operator.INSTANCE_OF);
         this.obj = obj;
         this.type = type;
@@ -74,7 +74,7 @@ public class KernelInstanceof extends AbstractParameterizedOperator {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

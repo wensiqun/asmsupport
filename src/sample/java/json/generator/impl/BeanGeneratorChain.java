@@ -3,11 +3,11 @@ package json.generator.impl;
 import json.JSONPool;
 import json.generator.AbstractGeneratorChain;
 import json.generator.IValueGeneratorChain.GeneratorContext;
-import cn.wensiqun.asmsupport.client.Param;
-import cn.wensiqun.asmsupport.client.ProgramBlock;
+import cn.wensiqun.asmsupport.client.block.ProgramBlock;
+import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -27,7 +27,7 @@ public class BeanGeneratorChain extends AbstractGeneratorChain {
     }
 
     @Override
-    protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends ProgramBlockInternal> block,
+    protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
             LocVar encoder, AClass type, Param value) {
         JSONPool jsonPool = context.getJsonPool();
         if(type instanceof ProductClass) {

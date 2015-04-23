@@ -16,6 +16,9 @@ package cn.wensiqun.asmsupport.client;
 
 import java.util.LinkedList;
 
+import cn.wensiqun.asmsupport.client.block.BlockPostern;
+import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
+import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -217,7 +220,8 @@ public class DummyModifiedClass {
         ClassModifier cmi = new ClassModifier(original);
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
-                cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), dummy.getConstructorBody().target);    
+                cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), 
+                        BlockPostern.getTarget(dummy.getConstructorBody()));    
             } else {
                 throw new ASMSupportException("Not found body...");
             }
@@ -235,15 +239,15 @@ public class DummyModifiedClass {
         
         for(DummyMethod dummy : methodDummies) {
             cmi.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
-                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().target);
+                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), BlockPostern.getTarget(dummy.getMethodBody()));
         }
         
         if(staticBlock != null) {
-            cmi.createStaticBlock(staticBlock.target);
+            cmi.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
         for(DummyModifiedMethod dummy : modifyDummies) {
-            cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), dummy.getMethodBody().target);
+            cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), BlockPostern.getTarget(dummy.getMethodBody()));
         }
         
         cmi.setParentClassLoader(classLoader);

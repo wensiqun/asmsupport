@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -39,7 +39,7 @@ public class ConstructorInvoker extends MethodInvoker {
      * @param mv
      * @param dup
      */
-    protected ConstructorInvoker(ProgramBlockInternal block, AClass aclass, KernelParameterized[] arguments) {
+    protected ConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParameterized[] arguments) {
         super(block, aclass, ASConstant.INIT, arguments);
         if (aclass.isPrimitive()) {
             throw new IllegalArgumentException("Cannot new a primitive class");

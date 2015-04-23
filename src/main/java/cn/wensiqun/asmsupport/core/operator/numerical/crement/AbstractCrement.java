@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -39,7 +39,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
     private KernelParameterized factor;
 
-    protected AbstractCrement(ProgramBlockInternal block, KernelParameterized factor, Operator operator) {
+    protected AbstractCrement(KernelProgramBlock block, KernelParameterized factor, Operator operator) {
         super(block, operator);
         if(factor instanceof Crementable) {
             throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);
@@ -48,7 +48,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         execute();
     }
 

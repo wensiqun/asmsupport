@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
@@ -34,7 +34,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected AbstractBitwise(ProgramBlockInternal block, Operator operator) {
+    protected AbstractBitwise(KernelProgramBlock block, Operator operator) {
         super(block, operator);
     }
     
@@ -53,7 +53,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     }
 
     @Override
-    public final void loadToStack(ProgramBlockInternal block) {
+    public final void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
     

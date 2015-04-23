@@ -18,10 +18,10 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.CommonInstructionHelper;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.asm.StackLocalMethodVisitor;
-import cn.wensiqun.asmsupport.core.block.AbstractBlockInternal;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
-import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
+import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
@@ -64,7 +64,7 @@ public class AMethod {
     private InstructionHelper insnHelper;
 
     /** 当前Method的methodBody类 */
-    private AbstractMethodBody methodBody;
+    private AbstractKernelMethodBody methodBody;
 
     /** 当前Method所包含的所有字节码操作 */
     private int totalIns = 0;
@@ -93,7 +93,7 @@ public class AMethod {
      * 
      * 这样做的主要目的是为了能自动将finally语句块的内容插入到try或catch中所有return指令之前
      **/
-    private TryInternal nearlyTryBlock;
+    private KernelTry nearlyTryBlock;
 
     /**
      * 构造方法
@@ -103,7 +103,7 @@ public class AMethod {
      * @param methodBody
      * @param mode
      */
-    public AMethod(AMethodMeta me, IClassContext context, AbstractMethodBody methodBody, int mode) {
+    public AMethod(AMethodMeta me, IClassContext context, AbstractKernelMethodBody methodBody, int mode) {
         super();
         this.me = me;
         this.context = context;
@@ -142,9 +142,9 @@ public class AMethod {
      * 
      * @param block
      */
-    private void getThrowExceptionsInProgramBlock(AbstractBlockInternal block) {
-        if (block instanceof ProgramBlockInternal) {
-            ThrowExceptionContainer blockExceptions = ((ProgramBlockInternal) block).getThrowExceptions();
+    private void getThrowExceptionsInProgramBlock(AbstractKernelBlock block) {
+        if (block instanceof KernelProgramBlock) {
+            ThrowExceptionContainer blockExceptions = ((KernelProgramBlock) block).getThrowExceptions();
             if (blockExceptions != null) {
                 for (AClass exp : blockExceptions) {
                     throwExceptions.add(exp);
@@ -153,8 +153,8 @@ public class AMethod {
         }
 
         for (Executable exe : block.getQueue()) {
-            if (exe instanceof AbstractBlockInternal) {
-                getThrowExceptionsInProgramBlock((AbstractBlockInternal) exe);
+            if (exe instanceof AbstractKernelBlock) {
+                getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
             }
         }
     }
@@ -166,8 +166,8 @@ public class AMethod {
 
         if (!ModifierUtils.isAbstract(me.getModifier())) {
             for (Executable exe : getMethodBody().getQueue()) {
-                if (exe instanceof AbstractBlockInternal) {
-                    getThrowExceptionsInProgramBlock((AbstractBlockInternal) exe);
+                if (exe instanceof AbstractKernelBlock) {
+                    getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
                 }
             }
         }
@@ -224,7 +224,7 @@ public class AMethod {
         return totalIns;
     }
 
-    public AbstractMethodBody getMethodBody() {
+    public AbstractKernelMethodBody getMethodBody() {
         return methodBody;
     }
 
@@ -265,11 +265,11 @@ public class AMethod {
         return mode;
     }
 
-    public TryInternal getNearlyTryBlock() {
+    public KernelTry getNearlyTryBlock() {
         return nearlyTryBlock;
     }
 
-    public void setNearlyTryBlock(TryInternal nearlyTryBlock) {
+    public void setNearlyTryBlock(KernelTry nearlyTryBlock) {
         this.nearlyTryBlock = nearlyTryBlock;
     }
 

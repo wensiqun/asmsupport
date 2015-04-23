@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.VisitIincInsn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 
@@ -29,9 +29,9 @@ public class VisitIincInsnAdapter implements VisitXInsnAdapter {
 	}
 
 	@Override
-	public void newVisitXInsnOperator(ProgramBlockInternal block) {
+	public void newVisitXInsnOperator(KernelProgramBlock block) {
 		OperatorFactory.newOperator(VisitIincInsn.class, 
-				new Class[]{ProgramBlockInternal.class, int.class, int.class}, 
+				new Class[]{KernelProgramBlock.class, int.class, int.class}, 
 				block, var, increment);
 		//new VisitIincInsn(block, var, increment);
 	}

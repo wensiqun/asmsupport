@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.utils.bridge2method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
@@ -117,7 +117,7 @@ public class OverrideBridgeMethodCreator {
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
     	return MethodCreator.methodCreatorForAdd(name, argClasses, argNames,
-                returnClass, exceptions, access, new MethodBodyInternal(){
+                returnClass, exceptions, access, new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {

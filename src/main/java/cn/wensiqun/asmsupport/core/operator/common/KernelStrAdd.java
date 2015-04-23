@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
@@ -37,7 +37,7 @@ public class KernelStrAdd extends AbstractParameterizedOperator {
     private boolean byOtherUsed;
     private MethodInvoker invoker;
     
-    protected KernelStrAdd(ProgramBlockInternal block, KernelParameterized par1, KernelParameterized... pars) {
+    protected KernelStrAdd(KernelProgramBlock block, KernelParameterized par1, KernelParameterized... pars) {
         super(block, Operator.COMMON);
         this.paras = new KernelParameterized[pars.length + 1];
         this.paras[0] = par1;
@@ -86,7 +86,7 @@ public class KernelStrAdd extends AbstractParameterizedOperator {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

@@ -2,8 +2,8 @@ package bug.fixed.test65150;
 
 import bug.fixed.AbstractFix;
 import junit.framework.Assert;
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -20,7 +20,7 @@ public class Main extends AbstractFix {
 		
 		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClassFactory.getType(int.class));
 		
-		creator.createStaticBlock(new StaticBlockBodyInternal(){
+		creator.createStaticBlock(new KernelStaticBlockBody(){
 
 			@Override
 			public void body() {
@@ -37,7 +37,7 @@ public class Main extends AbstractFix {
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
 				AClassFactory.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
@@ -67,7 +67,7 @@ public class Main extends AbstractFix {
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
 				AClassFactory.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

@@ -16,14 +16,14 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import java.lang.reflect.Modifier;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 public class CommonMethodInvoker extends MethodInvoker {
 	
@@ -31,7 +31,7 @@ public class CommonMethodInvoker extends MethodInvoker {
     
 	private KernelParameterized callObjReference;
 	
-	protected CommonMethodInvoker(ProgramBlockInternal block, KernelParameterized objRef, String name, KernelParameterized[] arguments) {
+	protected CommonMethodInvoker(KernelProgramBlock block, KernelParameterized objRef, String name, KernelParameterized[] arguments) {
 		super(block, objRef.getResultType(), name, arguments);
 		this.callObjReference = objRef;
 		if(callObjReference.getResultType().isPrimitive()){
@@ -74,11 +74,11 @@ public class CommonMethodInvoker extends MethodInvoker {
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
                 //如果是接口
-                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes(), true);
             }else{
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
-                	 VariableMeta ve = ((IVariable)callObjReference).getMeta();
+                	 VarMeta ve = ((IVariable)callObjReference).getMeta();
                 	 if(ve.getName().equals(ASConstant.SUPER)){
                          insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
                      }else {

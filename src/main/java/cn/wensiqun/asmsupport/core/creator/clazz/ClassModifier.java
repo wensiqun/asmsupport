@@ -21,11 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.ModifiedMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
@@ -53,7 +53,7 @@ public class ClassModifier extends AbstractClassContext {
 	
     protected List<IMethodCreator> methodModifiers;
     
-    private List<ModifiedMethodBodyInternal> modifyConstructorBodies;
+    private List<KernelModifiedMethodBody> modifyConstructorBodies;
     
 	private ProductClass productClass;
 	
@@ -69,7 +69,7 @@ public class ClassModifier extends AbstractClassContext {
 		fieldCreators = new ArrayList<IFieldCreator>();
 	}
 	
-	public final void modifyMethod(String name, Class<?>[] argClasses, ModifiedMethodBodyInternal mb){
+	public final void modifyMethod(String name, Class<?>[] argClasses, KernelModifiedMethodBody mb){
 		Class<?> clazz = productClass.getReallyClass();
 		if(argClasses == null){
 			argClasses = new Class<?>[0];
@@ -87,7 +87,7 @@ public class ClassModifier extends AbstractClassContext {
 				methodCreator = MethodCreator.methodCreatorForModify(name, argCls, defaultArgNames, AClassFactory.getType(void.class), null, Opcodes.ACC_STATIC, mb);
 			}else if(name.equals(ASConstant.INIT)){
 				if(modifyConstructorBodies == null){
-					modifyConstructorBodies = new ArrayList<ModifiedMethodBodyInternal>();
+					modifyConstructorBodies = new ArrayList<KernelModifiedMethodBody>();
 				}
 				modifyConstructorBodies.add(mb);
 				
@@ -124,7 +124,7 @@ public class ClassModifier extends AbstractClassContext {
 	 * @param body
 	 * @return
 	 */
-    public IMethodCreator createConstructor(int access, AClass[] argTypes, String[] argNames, AClass[] exceptions, ConstructorBodyInternal body) {
+    public IMethodCreator createConstructor(int access, AClass[] argTypes, String[] argNames, AClass[] exceptions, KernelConstructorBody body) {
         IMethodCreator creator = MethodCreator.methodCreatorForAdd(ASConstant.INIT, argTypes, argNames,
                 null, exceptions, access, body);
         methodCreaters.add(creator);
@@ -144,7 +144,7 @@ public class ClassModifier extends AbstractClassContext {
      * @return
      */
     public IMethodCreator createMethodForDummy(int access, String name, AClass[] argTypes, String[] argNames,
-            AClass returnClass, AClass[] exceptions, MethodBodyInternal body) {
+            AClass returnClass, AClass[] exceptions, KernelMethodBody body) {
         IMethodCreator creator = MethodCreator.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
         methodCreaters.add(creator);
@@ -164,7 +164,7 @@ public class ClassModifier extends AbstractClassContext {
      */
     public final void createMethod(String name, AClass[] argClasses,
             String[] argNames, AClass returnClass, AClass[] exceptions,
-            int access, MethodBodyInternal mb) {
+            int access, KernelMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
     	}
@@ -185,7 +185,7 @@ public class ClassModifier extends AbstractClassContext {
      */
     public void createStaticMethod(String name, AClass[] argClasses,
             String[] argNames, AClass returnClass, AClass[] exceptions,
-            int access, StaticMethodBodyInternal mb) {
+            int access, KernelStaticMethodBody mb) {
     	if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
     	}
@@ -200,7 +200,7 @@ public class ClassModifier extends AbstractClassContext {
     	super.checkStaticBlock();
     }
     
-    public void createStaticBlock(StaticBlockBodyInternal mb){
+    public void createStaticBlock(KernelStaticBlockBody mb){
     	checkStaticBlock();
     	existedStaticBlock = true;
         methodCreaters.add(0, MethodCreator.methodCreatorForAdd(ASConstant.CLINIT, null, null, null, null,
@@ -266,7 +266,7 @@ public class ClassModifier extends AbstractClassContext {
         }
 
         if(modifyConstructorBodies != null){
-            for(ModifiedMethodBodyInternal mbfm : modifyConstructorBodies){
+            for(KernelModifiedMethodBody mbfm : modifyConstructorBodies){
                  Type[] argumentTypes = mbfm.getMethod().getMethodMeta().getArgTypes();
                  String desc = Type.getMethodDescriptor(Type.VOID_TYPE, argumentTypes);
                  mbfm.setSuperConstructorOperators(superConstructorMap.get(desc));

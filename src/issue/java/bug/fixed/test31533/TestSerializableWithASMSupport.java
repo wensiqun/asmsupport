@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -25,7 +25,7 @@ public class TestSerializableWithASMSupport {
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
     			new AClass[]{AClassFactory.getType(String.class)}, new String[]{"name"}, 
-    			null, null, new MethodBodyInternal(){
+    			null, null, new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -38,7 +38,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClassFactory.getType(String.class), null,new MethodBodyInternal(){
+    			AClassFactory.getType(String.class), null,new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -50,7 +50,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClassFactory.getType(String.class), null, new MethodBodyInternal(){
+    			AClassFactory.getType(String.class), null, new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {

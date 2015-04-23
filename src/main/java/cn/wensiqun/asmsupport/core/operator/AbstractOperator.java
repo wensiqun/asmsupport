@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  */
 public abstract class AbstractOperator extends ByteCodeExecutor {
 
-    protected ProgramBlockInternal block;
+    protected KernelProgramBlock block;
 
     protected InstructionHelper insnHelper;
 
@@ -41,7 +41,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     
     private Operator operatorSymbol;
 
-    protected AbstractOperator(ProgramBlockInternal block, Operator operatorSymbol) {
+    protected AbstractOperator(KernelProgramBlock block, Operator operatorSymbol) {
         this.insnHelper = block.getInsnHelper();
         this.block = block;
         this.operatorSymbol = operatorSymbol;
@@ -49,7 +49,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
         block.getQueue().add(this);
     }
 
-    public ProgramBlockInternal getBlock() {
+    public KernelProgramBlock getBlock() {
         return block;
     }
 

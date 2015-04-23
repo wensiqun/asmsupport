@@ -14,10 +14,10 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 
 public interface VisitXInsnAdapter {
 	
-    public void newVisitXInsnOperator(ProgramBlockInternal block);
+    public void newVisitXInsnOperator(KernelProgramBlock block);
 
 }

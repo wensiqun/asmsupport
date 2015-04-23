@@ -12,12 +12,12 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
-import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
-import cn.wensiqun.asmsupport.core.block.control.loop.WhileInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
-import cn.wensiqun.asmsupport.core.block.sync.SynchronizedInternal;
+import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
+import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
+import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
+import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
@@ -63,7 +63,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         
         creator.createField("list", Opcodes.ACC_PUBLIC, AClassFactory.getType(List.class));
         
-        creator.createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new ConstructorBodyInternal() {
+        creator.createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new KernelConstructorBody() {
 
             @Override
             public void body(LocalVariable... argus) {
@@ -75,16 +75,16 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
         });
         
-        creator.createMethod(Opcodes.ACC_PUBLIC, "syncThis", null, null, null, null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "syncThis", null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
                 final GlobalVariable list = this_().field("list");
-                sync(new SynchronizedInternal(this_()){
+                sync(new KernelSync(this_()){
                     @Override
                     public void body(KernelParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
-                        while_(new WhileInternal(lt(i, Value.value(10))){
+                        while_(new KernelWhile(lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
@@ -101,16 +101,16 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             
         });
         
-        creator.createMethod(Opcodes.ACC_PUBLIC, "syncLock", null, null, null, null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "syncLock", null, null, null, null, new KernelMethodBody(){
             
             @Override
             public void body(LocalVariable... argus) {
                 final GlobalVariable list = this_().field("list");
-                sync(new SynchronizedInternal(this_().field("lock")){
+                sync(new KernelSync(this_().field("lock")){
                     @Override
                     public void body(KernelParameterized e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
-                        while_(new WhileInternal(lt(i, Value.value(10))){
+                        while_(new KernelWhile(lt(i, Value.value(10))){
 
                             @Override
                             public void body() {
@@ -146,7 +146,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         
         creator.createField("sgst", Opcodes.ACC_PRIVATE, synchronizedGeneratorExampleClass);
         
-        creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{synchronizedGeneratorExampleClass}, new String[]{"sgst"},  null, new ConstructorBodyInternal(){
+        creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{synchronizedGeneratorExampleClass}, new String[]{"sgst"},  null, new KernelConstructorBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -157,11 +157,11 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         	
         });
         
-        creator.createMethod(Opcodes.ACC_PUBLIC, "run", null, null, null, null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "run", null, null, null, null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				this.try_(new TryInternal(){
+				this.try_(new KernelTry(){
 
 					@Override
 					public void body() {
@@ -169,7 +169,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 					    call(this_().field("sgst"), "sync" + name);
 					}
 					
-				}).catch_(new CatchInternal(AClassFactory.getType(InterruptedException.class)) {
+				}).catch_(new KernelCatch(AClassFactory.getType(InterruptedException.class)) {
 
 					@Override
 					public void body(LocalVariable e) {
@@ -197,7 +197,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
     private static void createTestSyncMethod(ClassCreator creator, final String name, final AClass syncCls, final AClass threadClass) {
 
 
-        creator.createMethod(Opcodes.ACC_PUBLIC, "testSync" + name, null, null, null, null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "testSync" + name, null, null, null, null, new KernelMethodBody(){
             
             @Override
             public void body(LocalVariable... argus) {
@@ -218,7 +218,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                         AClassFactory.getType(int.class),
                         Value.value(0)
                );
-                this.while_(new WhileInternal(lt(i, Value.value(10))){
+                this.while_(new KernelWhile(lt(i, Value.value(10))){
 						@Override
 						public void body() {
 							call(objs, "add", call(es, "submit", new_(threadClass, sgst)));
@@ -226,7 +226,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 						}
 					});
                 call(es, "shutdown");
-                while_(new WhileInternal(no(call(es, "isTerminated"))){
+                while_(new KernelWhile(no(call(es, "isTerminated"))){
 						@Override
 						public void body() {
 							
@@ -236,7 +236,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), call(sgst.field("list"), "size"));
                 
                 assign(i, Value.value(0));
-                while_(new WhileInternal(lt(i, Value.value(100))) {
+                while_(new KernelWhile(lt(i, Value.value(100))) {
 
 					@Override
 					public void body() {

@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.creator.clazz;
 
 
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
@@ -125,7 +125,7 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
      * 
      * @param mb Method Body
      */
-    public InterfaceCreator createStaticBlock(StaticBlockBodyInternal clinitb) {
+    public InterfaceCreator createStaticBlock(KernelStaticBlockBody clinitb) {
     	checkStaticBlock();
     	existedStaticBlock = true;
         methodCreaters.add(0,  MethodCreator.methodCreatorForAdd(ASConstant.CLINIT, null, null, null, null,

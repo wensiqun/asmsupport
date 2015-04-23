@@ -14,6 +14,8 @@
  */
 package cn.wensiqun.asmsupport.client;
 
+import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
+
 
 public class DummyModifiedMethod {
     

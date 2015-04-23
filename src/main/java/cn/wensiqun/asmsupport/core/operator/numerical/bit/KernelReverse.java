@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,7 +32,7 @@ public class KernelReverse extends KernelUnaryBitwise {
 
     private static final Log LOG = LogFactory.getLog(KernelReverse.class);
     
-    protected KernelReverse(ProgramBlockInternal block, KernelParameterized factor) {
+    protected KernelReverse(KernelProgramBlock block, KernelParameterized factor) {
         super(block, factor, Operator.REVERSE);
     }
 

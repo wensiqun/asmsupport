@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -91,7 +91,7 @@ public class CreateInterface extends AbstractExample {
 		 * 的时候可以写多个static块在同一个类中，但是java编译器到最后会将所有写在static块中的代
 		 * 码归并到<cinit>方法当中去。
 		 */
-		interfaceCreator.createStaticBlock(new StaticBlockBodyInternal(){
+		interfaceCreator.createStaticBlock(new KernelStaticBlockBody(){
 
 			@Override
 			public void body() {

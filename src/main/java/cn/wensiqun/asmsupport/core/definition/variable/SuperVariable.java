@@ -18,14 +18,14 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 
 /**
@@ -49,7 +49,7 @@ public class SuperVariable extends ImplicitVariable{
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         block.getInsnHelper().loadThis();
     }
 
@@ -65,7 +65,7 @@ public class SuperVariable extends ImplicitVariable{
     }
 
     @Override
-    public VariableMeta getMeta() {
+    public VarMeta getMeta() {
         return globalVariableMeta;
     }
    

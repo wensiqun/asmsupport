@@ -86,11 +86,11 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		
 		@Override
 		public void visitMethodInsn(final int opcode, 
-				final String owner, final String name, final String desc){
+				final String owner, final String name, final String desc, boolean itf){
 			if(owner.equals(classInternalName) && isModified(name, desc)){
-				super.visitMethodInsn(opcode, owner, name + ASConstant.METHOD_PROXY_SUFFIX, desc);
+				super.visitMethodInsn(opcode, owner, name + ASConstant.METHOD_PROXY_SUFFIX, desc, itf);
 			}else{
-				super.visitMethodInsn(opcode, owner, name, desc);
+				super.visitMethodInsn(opcode, owner, name, desc, itf);
 			}
 		}
     	
@@ -243,19 +243,34 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 			}
 		}
 
+	    /*@Deprecated
 		@Override
 		public void visitMethodInsn(int opcode, String owner, String name,
 				String desc) {
 			if (invokedSuper){
 				super.visitMethodInsn(opcode, owner, name, desc);
 			}else{
-				addSuperConstructorMap(constructorDesc, new VisitMethodInsnAdapter(opcode, owner, name, desc));
+				//addSuperConstructorMap(constructorDesc, new VisitMethodInsnAdapter(opcode, owner, name, desc));
 			}
 
 			if (opcode == Opcodes.INVOKESPECIAL) {
 				invokedSuper = true;
 			}
-		}
+		}*/
+
+        @Override
+        public void visitMethodInsn(int opcode, String owner, String name,
+                String desc, boolean itf) {
+            if (invokedSuper){
+                super.visitMethodInsn(opcode, owner, name, desc, itf);
+            }else{
+                addSuperConstructorMap(constructorDesc, new VisitMethodInsnAdapter(opcode, owner, name, desc, itf));
+            }
+
+            if (opcode == Opcodes.INVOKESPECIAL) {
+                invokedSuper = true;
+            }
+        }
 
 		@Override
 		public void visitLdcInsn(Object cst) {

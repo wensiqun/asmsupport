@@ -2,7 +2,7 @@ package oldApi.variable;
 
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -23,7 +23,7 @@ public class LocalVariableExample extends AbstractExample {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
 				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {

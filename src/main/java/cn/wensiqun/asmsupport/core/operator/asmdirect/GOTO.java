@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 
@@ -30,7 +30,7 @@ public class GOTO extends ASMDirect {
     
     private Label to;
 
-    protected GOTO(ProgramBlockInternal block, Label label) {
+    protected GOTO(KernelProgramBlock block, Label label) {
         super(block);
         this.to = label;
     }

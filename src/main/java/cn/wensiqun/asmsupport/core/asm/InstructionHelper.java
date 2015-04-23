@@ -649,9 +649,9 @@ public abstract class InstructionHelper {
      * @param arguTypes
      */
     private void invokeInsn(final int opcode, final Type type, final String name, final Type returnType,
-            final Type[] arguTypes) {
+            final Type[] arguTypes, boolean itf) {
         String owner = type.getSort() == Type.ARRAY ? type.getDescriptor() : type.getInternalName();
-        getMv().visitMethodInsn(opcode, owner, name, Type.getMethodDescriptor(returnType, arguTypes));
+        getMv().visitMethodInsn(opcode, owner, name, Type.getMethodDescriptor(returnType, arguTypes), itf);
     }
 
     /**
@@ -663,7 +663,7 @@ public abstract class InstructionHelper {
      * @param arguTypes
      */
     public void invokeVirtual(final Type owner, final String name, final Type returnType, final Type[] arguTypes) {
-        invokeInsn(Opcodes.INVOKEVIRTUAL, owner, name, returnType, arguTypes);
+        invokeInsn(Opcodes.INVOKEVIRTUAL, owner, name, returnType, arguTypes, false);
     }
 
     /**
@@ -675,7 +675,7 @@ public abstract class InstructionHelper {
      *            the constructor to be invoked.
      */
     public void invokeConstructor(final Type ownerType, final Type[] argTypes) {
-        invokeInsn(Opcodes.INVOKESPECIAL, ownerType, "<init>", Type.VOID_TYPE, argTypes);
+        invokeInsn(Opcodes.INVOKESPECIAL, ownerType, "<init>", Type.VOID_TYPE, argTypes, false);
     }
 
     /**
@@ -687,7 +687,7 @@ public abstract class InstructionHelper {
      * @param argTypes
      */
     public void invokeSuperMethod(final Type ownerType, final String name, final Type returnType, final Type[] argTypes) {
-        invokeInsn(Opcodes.INVOKESPECIAL, ownerType, name, returnType, argTypes);
+        invokeInsn(Opcodes.INVOKESPECIAL, ownerType, name, returnType, argTypes, false);
     }
 
     /**
@@ -699,7 +699,7 @@ public abstract class InstructionHelper {
      * @param arguTypes
      */
     public void invokeStatic(final Type owner, final String name, final Type returnType, final Type[] arguTypes) {
-        invokeInsn(Opcodes.INVOKESTATIC, owner, name, returnType, arguTypes);
+        invokeInsn(Opcodes.INVOKESTATIC, owner, name, returnType, arguTypes, false);
     }
 
     /**
@@ -710,8 +710,8 @@ public abstract class InstructionHelper {
      * @param returnType
      * @param arguTypes
      */
-    public void invokeInterface(final Type owner, final String name, final Type returnType, final Type[] arguTypes) {
-        invokeInsn(Opcodes.INVOKEINTERFACE, owner, name, returnType, arguTypes);
+    public void invokeInterface(final Type owner, final String name, final Type returnType, final Type[] arguTypes, boolean itf) {
+        invokeInsn(Opcodes.INVOKEINTERFACE, owner, name, returnType, arguTypes, itf);
     }
 
     /**

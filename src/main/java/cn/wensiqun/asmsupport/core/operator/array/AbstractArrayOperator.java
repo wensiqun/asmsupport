@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.array;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
@@ -43,7 +43,7 @@ public abstract class AbstractArrayOperator extends AbstractParameterizedOperato
     
     protected KernelParameterized[] parDims;
     
-    protected AbstractArrayOperator(ProgramBlockInternal block, KernelParameterized arrayVar) {
+    protected AbstractArrayOperator(KernelProgramBlock block, KernelParameterized arrayVar) {
         super(block, Operator.COMMON);
         this.arrayReference = arrayVar;
     }

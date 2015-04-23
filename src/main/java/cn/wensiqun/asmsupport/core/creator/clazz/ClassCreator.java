@@ -15,10 +15,10 @@
 package cn.wensiqun.asmsupport.core.creator.clazz;
 
 
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
@@ -88,7 +88,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
      * @param body
      * @return
      */
-	public IMethodCreator createConstructor(int access, AClass[] argTypes, String[] argNames, AClass[] exceptions, ConstructorBodyInternal body) {
+	public IMethodCreator createConstructor(int access, AClass[] argTypes, String[] argNames, AClass[] exceptions, KernelConstructorBody body) {
 		IMethodCreator creator = MethodCreator.methodCreatorForAdd(ASConstant.INIT, argTypes, argNames,
                 null, exceptions, access, body);
         methodCreaters.add(creator);
@@ -109,7 +109,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
 	 * @return
 	 */
 	public IMethodCreator createMethodForDummy(int access, String name, AClass[] argTypes, String[] argNames,
-            AClass returnClass, AClass[] exceptions, MethodBodyInternal body) {
+            AClass returnClass, AClass[] exceptions, KernelMethodBody body) {
         IMethodCreator creator = MethodCreator.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
         methodCreaters.add(creator);
@@ -129,7 +129,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
      * @return
      */
 	public IMethodCreator createMethod(int access, String name, AClass[] argTypes, String[] argNames,
-			AClass returnClass, AClass[] exceptions, MethodBodyInternal body) {
+			AClass returnClass, AClass[] exceptions, KernelMethodBody body) {
 		if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
     	}
@@ -152,7 +152,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
      * @return
      */
 	public IMethodCreator createStaticMethod(int access, String name, AClass[] argTypes, String[] argNames,
-			AClass returnClass, AClass[] exceptions, StaticMethodBodyInternal body) {
+			AClass returnClass, AClass[] exceptions, KernelStaticMethodBody body) {
 		if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
     	}
@@ -168,7 +168,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
 	 * @param block
 	 * @return
 	 */
-	public IMethodCreator createStaticBlock(StaticBlockBodyInternal block) {
+	public IMethodCreator createStaticBlock(KernelStaticBlockBody block) {
     	checkStaticBlock();
     	existedStaticBlock = true;
     	IMethodCreator creator = MethodCreator.methodCreatorForAdd(ASConstant.CLINIT, null, null, null, null,
@@ -179,7 +179,7 @@ public class ClassCreator extends AbstractClassCreatorContext {
 
     @Override
     protected void createDefaultConstructor() {
-        createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new ConstructorBodyInternal() {
+        createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new KernelConstructorBody() {
             @Override
             public void body(LocalVariable... argus) {
                 supercall();

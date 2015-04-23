@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.VisitMethodInsn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 
@@ -24,20 +24,22 @@ public class VisitMethodInsnAdapter implements VisitXInsnAdapter {
 	private String owner;
 	private String name;
 	private String desc;
+	private boolean itf;
 
 	public VisitMethodInsnAdapter(int opcode, String owner, String name,
-			String desc) {
+			String desc, boolean itf) {
 		this.opcode = opcode;
 		this.owner = owner;
 		this.name = name;
 		this.desc = desc;
+		this.itf = itf;
 	}
 
 	@Override
-	public void newVisitXInsnOperator(ProgramBlockInternal block) {
+	public void newVisitXInsnOperator(KernelProgramBlock block) {
 		OperatorFactory.newOperator(VisitMethodInsn.class, 
-				new Class[]{ProgramBlockInternal.class, int.class, String.class, String.class, String.class}, 
-				block, opcode, owner, name, desc);
+				new Class[]{KernelProgramBlock.class, int.class, String.class, String.class, String.class, boolean.class}, 
+				block, opcode, owner, name, desc, itf);
 		//new VisitMethodInsn(block, opcode, owner, name, desc);
 	}
 

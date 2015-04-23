@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
@@ -37,7 +37,7 @@ public abstract class KernelAssign extends AbstractParameterizedOperator {
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected KernelAssign(ProgramBlockInternal block, IVariable var, KernelParameterized value) {
+    protected KernelAssign(KernelProgramBlock block, IVariable var, KernelParameterized value) {
         super(block, Operator.ASSIGN);
         this.value = value;
         this.var = var;
@@ -69,7 +69,7 @@ public abstract class KernelAssign extends AbstractParameterizedOperator {
     
     
     @Override
-	public void loadToStack(ProgramBlockInternal block) {
+	public void loadToStack(KernelProgramBlock block) {
         this.execute();
 		var.loadToStack(block);
 	}

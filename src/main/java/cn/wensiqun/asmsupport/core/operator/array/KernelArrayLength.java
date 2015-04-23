@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.array;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -40,7 +40,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
      * @param arrayReference
      * @param parDims
      */
-    protected KernelArrayLength(ProgramBlockInternal block, KernelParameterized arrayReference, KernelParameterized... parDims) {
+    protected KernelArrayLength(KernelProgramBlock block, KernelParameterized arrayReference, KernelParameterized... parDims) {
         super(block, arrayReference);
         this.parDims = parDims;
     }
@@ -63,7 +63,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

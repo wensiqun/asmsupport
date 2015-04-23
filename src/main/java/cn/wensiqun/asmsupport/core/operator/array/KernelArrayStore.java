@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.array;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
@@ -60,7 +60,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
         }
     }
 
-    protected KernelArrayStore(ProgramBlockInternal block, KernelParameterized arrayReference, KernelParameterized value, KernelParameterized pardim, KernelParameterized... parDims) {
+    protected KernelArrayStore(KernelProgramBlock block, KernelParameterized arrayReference, KernelParameterized value, KernelParameterized pardim, KernelParameterized... parDims) {
         super(block, arrayReference);
         init(value, pardim, parDims);
     }
@@ -115,7 +115,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         throw new UnsupportedOperationException("Un imple");
     }
 

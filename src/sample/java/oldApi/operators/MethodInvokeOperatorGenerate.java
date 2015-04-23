@@ -2,8 +2,8 @@ package oldApi.operators;
 
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -59,7 +59,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 这里我们将看到如何生产调用父类方法
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClassFactory.getType(String.class), null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClassFactory.getType(String.class), null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -78,7 +78,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClassFactory.getType(String.class), null, new MethodBodyInternal(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClassFactory.getType(String.class), null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -99,7 +99,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClassFactory.getType(String.class), null,
-                new StaticMethodBodyInternal(){
+                new KernelStaticMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -120,7 +120,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
         		"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-                new StaticMethodBodyInternal(){
+                new KernelStaticMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {

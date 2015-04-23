@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 
@@ -27,11 +27,11 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 public class Athrow extends ASMDirect {
     
     
-	protected Athrow(ProgramBlockInternal block) {
+	protected Athrow(KernelProgramBlock block) {
 		super(block);
 	}
 
-	protected Athrow(ProgramBlockInternal block, Label lbl) {
+	protected Athrow(KernelProgramBlock block, Label lbl) {
         super(block);
     }
 

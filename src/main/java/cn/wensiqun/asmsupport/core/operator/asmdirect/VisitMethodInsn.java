@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
@@ -24,19 +24,21 @@ public class VisitMethodInsn extends AbstractOperator {
 	private String owner;
 	private String name;
 	private String desc;
+    private boolean itf;
 
-	protected VisitMethodInsn(ProgramBlockInternal block, int opcode, String owner, String name,
-			String desc) {
+	protected VisitMethodInsn(KernelProgramBlock block, int opcode, String owner, String name,
+			String desc, boolean itf) {
 		super(block, Operator.COMMON);
 		this.opcode = opcode;
 		this.owner = owner;
 		this.name = name;
 		this.desc = desc;
+		this.itf = itf;
 	}
 
 	@Override
 	protected void doExecute() {
-        block.getInsnHelper().getMv().visitMethodInsn(opcode, owner, name, desc);
+        block.getInsnHelper().getMv().visitMethodInsn(opcode, owner, name, desc, itf);
 	}
 
 }

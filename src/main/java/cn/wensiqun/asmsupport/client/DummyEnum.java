@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import cn.wensiqun.asmsupport.client.block.BlockPostern;
+import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreator;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -334,7 +336,7 @@ public class DummyEnum {
         		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
         for(DummyEnumConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
-                eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getConstructorBody().target);    
+                eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), BlockPostern.getTarget(dummy.getConstructorBody()));    
             } else {
                 throw new ASMSupportException("Not found body...");
             }
@@ -360,11 +362,11 @@ public class DummyEnum {
                     dummy.getReturnType(), 
                     dummy.getThrows(), 
                     dummy.getModifiers(), 
-                    dummy.getMethodBody().target);
+                    BlockPostern.getTarget(dummy.getMethodBody()));
         }
         
         if(staticBlock != null) {
-            eci.createStaticBlock(staticBlock.target);
+            eci.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
         eci.setParentClassLoader(classLoader);

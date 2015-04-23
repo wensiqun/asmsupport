@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.exception.UnreachableCodeException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
@@ -59,11 +59,11 @@ public abstract class OperatorFactory {
             }
         } else if (ArrayUtils.isEmpty(parameterTypes) || ArrayUtils.isEmpty(arguments)) {
             throw new NullPointerException();
-        } else if (!ProgramBlockInternal.class.equals(parameterTypes[0])) {
+        } else if (!KernelProgramBlock.class.equals(parameterTypes[0])) {
             throw new ASMSupportException("first argument type must be ProgramBlock");
         }
 
-        ProgramBlockInternal block = (ProgramBlockInternal) arguments[0];
+        KernelProgramBlock block = (KernelProgramBlock) arguments[0];
         ByteCodeExecutor last = block.getQueue().getLast();
         if (checkSerial && last != null && last instanceof ExceptionSerialBlock) {
             last.prepare();

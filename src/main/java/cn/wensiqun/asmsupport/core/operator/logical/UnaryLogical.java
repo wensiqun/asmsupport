@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -39,7 +39,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected UnaryLogical(ProgramBlockInternal block, KernelParameterized factor, Operator operator) {
+    protected UnaryLogical(KernelProgramBlock block, KernelParameterized factor, Operator operator) {
         super(block, operator);
         this.factor = factor;
         falseLbl = new Label();

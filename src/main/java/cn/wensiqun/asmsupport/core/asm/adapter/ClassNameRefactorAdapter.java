@@ -67,15 +67,6 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 		}
 
 		@Override
-		public void visitMethodInsn(int opcode, String owner, String name,
-				String desc) {
-			if(originalName.equals(owner)){
-				owner = jvmProxyClassName;
-			}
-			super.visitMethodInsn(opcode, owner, name, desc);
-		}
-
-		@Override
 		public void visitLocalVariable(String name, String desc,
 				String signature, Label start, Label end, int index) {
 			if(desc.equals("L" + originalName + ";")){

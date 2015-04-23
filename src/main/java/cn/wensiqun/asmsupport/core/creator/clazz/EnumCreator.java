@@ -17,10 +17,10 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.block.method.clinit.EnumStaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.init.EnumConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.init.KernelEnumConstructorBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
@@ -135,7 +135,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @param mb
      */
     public final void createMethodForDummy(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, MethodBodyInternal mb) {
+            AClass[] exceptions, int access, KernelMethodBody mb) {
         methodCreaters.add(MethodCreator.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
@@ -152,7 +152,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @return
      */
     public final void createMethod(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, MethodBodyInternal mb) {
+            AClass[] exceptions, int access, KernelMethodBody mb) {
         if ((access & Opcodes.ACC_STATIC) != 0) {
             access -= Opcodes.ACC_STATIC;
         }
@@ -172,7 +172,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @return
      */
     public void createStaticMethod(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, StaticMethodBodyInternal mb) {
+            AClass[] exceptions, int access, KernelStaticMethodBody mb) {
         if ((access & Opcodes.ACC_STATIC) == 0) {
             access += Opcodes.ACC_STATIC;
         }
@@ -188,7 +188,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * @param mb
      * @param access
      */
-    public void createConstructor(AClass[] argClasses, String[] argNames, EnumConstructorBodyInternal mb) {
+    public void createConstructor(AClass[] argClasses, String[] argNames, KernelEnumConstructorBody mb) {
 
         if (ArrayUtils.isNotEmpty(argClasses) && ArrayUtils.isEmpty(argNames)) {
             argNames = new String[argClasses.length];
@@ -231,7 +231,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
      * 
      * @param mb
      */
-    public void createStaticBlock(final EnumStaticBlockBodyInternal body) {
+    public void createStaticBlock(final KernelEnumStaticBlockBody body) {
         checkStaticBlock();
         body.setEnumNameList(enumConstantNameList);
         if (existEnumConstant) {
@@ -247,7 +247,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
     @Override
     protected void createDefaultConstructor() {
-        createConstructor(null, null, new EnumConstructorBodyInternal() {
+        createConstructor(null, null, new KernelEnumConstructorBody() {
             @Override
             public void body(LocalVariable... argus) {
                 return_();
@@ -263,7 +263,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
         // create "publis static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
-                new StaticMethodBodyInternal() {
+                new KernelStaticMethodBody() {
 
                     @Override
                     public void body(LocalVariable... argus) {
@@ -294,7 +294,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
         // create "public static Enum valueOf(java.lang.String)" method
         this.createStaticMethod("valueOf", new AClass[] { AClassFactory.getType(String.class) }, new String[] { "name" }, sc, null,
-                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new StaticMethodBodyInternal() {
+                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelStaticMethodBody() {
 
                     @Override
                     public void body(LocalVariable... argus) {
@@ -309,7 +309,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
     private void createDefaultStaticBlock() {
         if (!existedStaticBlock && !CollectionUtils.isEmpty(enumConstantNameList) && existNoArgumentsConstructor) {
-            createStaticBlock(new EnumStaticBlockBodyInternal() {
+            createStaticBlock(new KernelEnumStaticBlockBody() {
 
                 {
                     enumNameList = enumConstantNameList;

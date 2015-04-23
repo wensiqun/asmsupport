@@ -16,6 +16,8 @@ package cn.wensiqun.asmsupport.client;
 
 import java.util.LinkedList;
 
+import cn.wensiqun.asmsupport.client.block.BlockPostern;
+import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -374,7 +376,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         				parent, interfaces);
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
-                cci.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), dummy.getConstructorBody().target);    
+                cci.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), BlockPostern.getTarget(dummy.getConstructorBody()));    
             } else {
                 throw new ASMSupportException("Not found body...");
             }
@@ -393,11 +395,11 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         for(DummyMethod dummy : methodDummies) {
             cci.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
                     dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), 
-                    dummy.getMethodBody() == null ? null : dummy.getMethodBody().target);
+                    dummy.getMethodBody() == null ? null : BlockPostern.getTarget(dummy.getMethodBody()));
         }
         
         if(staticBlock != null) {
-            cci.createStaticBlock(staticBlock.target);
+            cci.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
         cci.setParentClassLoader(classLoader);

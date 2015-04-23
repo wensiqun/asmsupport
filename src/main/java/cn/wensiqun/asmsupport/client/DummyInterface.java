@@ -16,6 +16,8 @@ package cn.wensiqun.asmsupport.client;
 
 import java.util.LinkedList;
 
+import cn.wensiqun.asmsupport.client.block.BlockPostern;
+import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -369,7 +371,7 @@ public class DummyInterface {
         }
         
         if(staticBlock != null) {
-            ici.createStaticBlock(staticBlock.target);
+            ici.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
         ici.setParentClassLoader(classLoader);

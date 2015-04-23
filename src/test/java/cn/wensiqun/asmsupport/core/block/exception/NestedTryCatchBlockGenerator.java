@@ -1,10 +1,10 @@
 package cn.wensiqun.asmsupport.core.block.exception;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
-import cn.wensiqun.asmsupport.core.block.control.exception.CatchInternal;
-import cn.wensiqun.asmsupport.core.block.control.exception.TryInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
+import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -26,16 +26,16 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
         
         
         creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("fullTryCatch1"), null, null, null, null,
-            new StaticMethodBodyInternal(){
+            new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                     call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("Root"));
-                    try_(new TryInternal(){
+                    try_(new KernelTry(){
                         @Override
                         public void body()
                         {
                             call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    |-Try"));
-                            try_(new TryInternal(){
+                            try_(new KernelTry(){
 
                                 @Override
                                 public void body()
@@ -44,7 +44,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                     throw_(new_(AClassFactory.getType(Exception.class)));
                                 }
                                 
-                            }).catch_(new CatchInternal(AClassFactory.getType(Exception.class)){
+                            }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
 
                                 @Override
                                 public void body(LocalVariable e)
@@ -55,7 +55,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 
                             });
                         }
-                    }).catch_(new CatchInternal(AClassFactory.getType(Exception.class)){
+                    }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
 
                         @Override
                         public void body(LocalVariable e)
@@ -72,16 +72,16 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
         
         
         creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("fullTryCatch2"), null, null, null, null,
-                new StaticMethodBodyInternal(){
+                new KernelStaticMethodBody(){
                     @Override
                     public void body(LocalVariable... argus) {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("Root"));
-                        try_(new TryInternal(){
+                        try_(new KernelTry(){
                             @Override
                             public void body()
                             {
                                 call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    |-Try"));
-                                try_(new TryInternal(){
+                                try_(new KernelTry(){
 
                                     @Override
                                     public void body()
@@ -90,7 +90,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                         throw_(new_(AClassFactory.getType(Exception.class)));
                                     }
                                     
-                                }).catch_(new CatchInternal(runtime){
+                                }).catch_(new KernelCatch(runtime){
 
                                     @Override
                                     public void body(LocalVariable e)
@@ -98,7 +98,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Catch(RuntimeException)"));
                                     }
                                     
-                                }).catch_(new CatchInternal(AClassFactory.getType(Exception.class)){
+                                }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
 
 									@Override
 									public void body(LocalVariable e) {
@@ -108,13 +108,13 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 	
                                 });
                             }
-                        }).catch_(new CatchInternal(runtime){
+                        }).catch_(new KernelCatch(runtime){
 
                             @Override
                             public void body(LocalVariable e)
                             {
                                 call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    |-Catch(RuntimeException)"));
-                                try_(new TryInternal(){
+                                try_(new KernelTry(){
 
 									@Override
 									public void body() {
@@ -122,7 +122,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                         throw_(new_(AClassFactory.getType(Exception.class)));
 									}
                                 	
-                                }).catch_(new CatchInternal(AClassFactory.getType(Exception.class)){
+                                }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
 
 									@Override
 									public void body(LocalVariable e) {
@@ -132,7 +132,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                                 });
                             }
                             
-                        }).catch_(new CatchInternal(AClassFactory.getType(Exception.class)){
+                        }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
 
                             @Override
                             public void body(LocalVariable e)
@@ -150,7 +150,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
         
         
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-            new StaticMethodBodyInternal(){
+            new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                     for(String name : testMethodNames)
@@ -166,10 +166,10 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
     }
     
     
-    private static void noExceptionCall(ProgramBlockInternal block, final String methodName)
+    private static void noExceptionCall(KernelProgramBlock block, final String methodName)
     {
         block.call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
-        block.try_(new TryInternal(){
+        block.try_(new KernelTry(){
 
             @Override
             public void body()
@@ -177,7 +177,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
                 call(getMethodOwner(), methodName);
             }
             
-        }).catch_(new CatchInternal(AClassFactory.getType(Throwable.class)){
+        }).catch_(new KernelCatch(AClassFactory.getType(Throwable.class)){
 
             @Override
             public void body(LocalVariable e)

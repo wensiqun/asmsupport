@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
@@ -67,7 +67,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
      * @param arguments
      * @param block
      */
-    protected MethodInvoker(ProgramBlockInternal block, AClass owner, String name, KernelParameterized[] arguments) {
+    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParameterized[] arguments) {
         super(block, Operator.COMMON);
         this.methodOwner = owner;
         this.name = name;
@@ -166,12 +166,11 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
     
     @Override
     public void asArgument() {
-        //如果方法调用是作为参数传入给其他参数。那么将此方法调用操作从执行队列中移除
         block.removeExe(this);
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         if(getReturnType().equals(Type.VOID_TYPE)){
             throw new ASMSupportException("cannot push the void return type to stack!");
         }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -54,7 +54,7 @@ public abstract class AbstractRelational extends AbstractParameterizedOperator i
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected AbstractRelational(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
+    protected AbstractRelational(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
         super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -90,7 +90,7 @@ public abstract class AbstractRelational extends AbstractParameterizedOperator i
     }
     
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

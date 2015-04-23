@@ -2,8 +2,8 @@ package oldApi.operators;
 
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -37,7 +37,7 @@ public class CrementOperatorGenerate extends AbstractExample {
          *     System.out.println("d = " + d);
          * }
 		 */
-		creator.createMethod(Opcodes.ACC_PUBLIC, "demonstrate", null, null, null, null, new MethodBodyInternal() {
+		creator.createMethod(Opcodes.ACC_PUBLIC, "demonstrate", null, null, null, null, new KernelMethodBody() {
 			@Override
 			public void body(LocalVariable... argus) {
 				call(systemOut, "println", Value.value("******************************demonstrate***************************"));
@@ -72,7 +72,7 @@ public class CrementOperatorGenerate extends AbstractExample {
          *    System.out.println(count);
          * }
 		 */
-		creator.createMethod(Opcodes.ACC_PUBLIC, "incrementAndDecrement", null, null, null, null, new MethodBodyInternal() {
+		creator.createMethod(Opcodes.ACC_PUBLIC, "incrementAndDecrement", null, null, null, null, new KernelMethodBody() {
 		    @Override
 		    public void body(LocalVariable... argus) {
 				call(systemOut, "println", Value.value("******************************incrementAndDecrement***************************"));
@@ -90,7 +90,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
 				new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {

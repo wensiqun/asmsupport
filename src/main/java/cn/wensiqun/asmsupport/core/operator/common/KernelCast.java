@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -37,7 +37,7 @@ public class KernelCast extends AbstractParameterizedOperator {
     private AClass to;
     private KernelParameterized orginal;
     
-    protected KernelCast(ProgramBlockInternal block, KernelParameterized orgi, AClass to) {
+    protected KernelCast(KernelProgramBlock block, KernelParameterized orgi, AClass to) {
         super(block, Operator.COMMON);
         this.orginal = orgi;
         this.to = to;
@@ -81,7 +81,7 @@ public class KernelCast extends AbstractParameterizedOperator {
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         this.execute();
     }
 

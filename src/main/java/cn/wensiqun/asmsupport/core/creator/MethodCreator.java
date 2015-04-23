@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.creator;
 
-import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
@@ -35,7 +35,7 @@ public class MethodCreator implements IMethodCreator {
 	private AClass returnClass;
 	private AClass[] exceptions;
 	private int access;
-	private AbstractMethodBody methodBody;
+	private AbstractKernelMethodBody methodBody;
 	private AMethodMeta me;
 	private AMethod method;
 	private int mtdCrtMode;
@@ -45,21 +45,21 @@ public class MethodCreator implements IMethodCreator {
 	}
 	
 	public static MethodCreator methodCreatorForModify(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_MODIFY);
 		return mc;
 	}
 	
 	public static MethodCreator methodCreatorForAdd(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractMethodBody mb){
+			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodCreator mc = new MethodCreator(name, arguments, argNames, returnClass, exceptions, access, mb);
 		mc.setMethodCreateMode(ASConstant.METHOD_CREATE_MODE_ADD);
 		return mc;
 	}
 	
 	private MethodCreator(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractMethodBody mb) {
+			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb) {
 		this.name = name;
 		this.arguments = arguments;
 		this.argNames = argNames;

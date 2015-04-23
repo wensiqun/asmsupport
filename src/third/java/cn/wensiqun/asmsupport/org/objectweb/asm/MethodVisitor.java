@@ -440,7 +440,7 @@ public abstract class MethodVisitor {
      *            the method's descriptor (see {@link Type Type}).
      */
     @Deprecated
-    public void visitMethodInsn(int opcode, String owner, String name,
+    private void visitMethodInsn(int opcode, String owner, String name,
             String desc) {
         if (api >= Opcodes.ASM5) {
             boolean itf = opcode == Opcodes.INVOKEINTERFACE;

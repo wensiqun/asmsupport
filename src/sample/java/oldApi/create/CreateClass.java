@@ -3,10 +3,10 @@ package oldApi.create;
 import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.method.clinit.StaticBlockBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.MethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
-import cn.wensiqun.asmsupport.core.block.method.init.ConstructorBodyInternal;
+import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -85,7 +85,7 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 * 
 		 */
-		creator.createStaticBlock(new StaticBlockBodyInternal(){
+		creator.createStaticBlock(new KernelStaticBlockBody(){
 			@Override
 			public void body() {
 				assign(val(getMethodOwner()).field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
@@ -120,7 +120,7 @@ public class CreateClass extends AbstractExample {
 		 * 3.构造参数的方法体
 		 * 4.构造方法的修饰符
 		 */
-		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.getType(int.class)}, new String[]{"intVal"}, null, new ConstructorBodyInternal(){
+		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.getType(int.class)}, new String[]{"intVal"}, null, new KernelConstructorBody(){
 
 			/*
 			 * 这个方法中的内容就是我们创建的构造方法里面需要执行的内容了，他有一个变元参数 argus。
@@ -162,7 +162,7 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 * 
 		 */
-		creator.createMethod(Opcodes.ACC_PRIVATE, "commonMethod", null, null, null, null, new MethodBodyInternal(){
+		creator.createMethod(Opcodes.ACC_PRIVATE, "commonMethod", null, null, null, null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -183,7 +183,7 @@ public class CreateClass extends AbstractExample {
 		 * }
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-				new StaticMethodBodyInternal(){
+				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

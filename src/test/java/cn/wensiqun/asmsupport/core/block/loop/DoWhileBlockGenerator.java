@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.core.block.loop;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.control.loop.DoWhileInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.control.loop.KernelDoWhile;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -17,7 +17,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
     {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.DoWhileBlockGeneratorExample", null, null);
 		
-		 creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, "test", null, null, null, null, new StaticMethodBodyInternal(){
+		 creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, "test", null, null, null, null, new KernelStaticMethodBody(){
 
 	            @Override
 	            public void body(LocalVariable... argus)
@@ -25,7 +25,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable intVar1  = var("intVar1", AClassFactory.getType(int.class), Value.value(10));
                     
-                    dowhile(new DoWhileInternal(gt(postdec(intVar1), Value.value(0))){
+                    dowhile(new KernelDoWhile(gt(postdec(intVar1), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -37,7 +37,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable intVar2  = var("intVar2", AClassFactory.getType(int.class), Value.value(10));
                     
-                    dowhile(new DoWhileInternal(gt(predec(intVar2), Value.value(0))){
+                    dowhile(new KernelDoWhile(gt(predec(intVar2), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -49,7 +49,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	                
                     final LocalVariable byteVar  = var("byteVar", AClassFactory.getType(byte.class), Value.value((byte)10));
                     
-	            	dowhile(new DoWhileInternal(gt(postdec(byteVar), Value.value(0))){
+	            	dowhile(new KernelDoWhile(gt(postdec(byteVar), Value.value(0))){
 
 						@Override
 						public void body() {
@@ -61,7 +61,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 	            	
 	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.getType(double.class), Value.value(10D));
                     
-                    dowhile(new DoWhileInternal(gt(predec(doubleVar), Value.value(0))){
+                    dowhile(new KernelDoWhile(gt(predec(doubleVar), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -73,7 +73,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable shortObj  = var("shortObj", AClassFactory.getType(Short.class), Value.value((short)10));
                     
-                    dowhile(new DoWhileInternal(gt(postdec(shortObj), Value.value((short)0))){
+                    dowhile(new KernelDoWhile(gt(postdec(shortObj), Value.value((short)0))){
 
                         @Override
                         public void body() {
@@ -85,7 +85,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
                     
                     final LocalVariable longObj  = var("longObj", AClassFactory.getType(Long.class), Value.value(10L));
                     
-                    dowhile(new DoWhileInternal(gt(predec(longObj), Value.value(0))){
+                    dowhile(new KernelDoWhile(gt(predec(longObj), Value.value(0))){
 
                         @Override
                         public void body() {
@@ -101,7 +101,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 		 });
 	        
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-            new StaticMethodBodyInternal(){
+            new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                 	call(getMethodOwner(), "test");

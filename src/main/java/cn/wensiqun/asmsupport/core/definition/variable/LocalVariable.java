@@ -17,14 +17,13 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
-import cn.wensiqun.asmsupport.standard.def.var.meta.LocalVariableMeta;
-import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
@@ -33,13 +32,13 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.VariableMeta;
  */
 public class LocalVariable extends ExplicitVariable implements ILocVar{
 
-    private LocalVariableMeta meta;
+    private VarMeta meta;
 
     protected ScopeLogicVariable scopeLogicVar;
 
     private boolean isFirstAssign = true;
     
-    public LocalVariable(LocalVariableMeta lve) {
+    public LocalVariable(VarMeta lve) {
         this.meta = lve;
     }
 
@@ -60,7 +59,7 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     }
 
     @Override
-    public void loadToStack(ProgramBlockInternal block) {
+    public void loadToStack(KernelProgramBlock block) {
         block.getMethod().getInsnHelper().loadInsn(meta.getDeclareType().getType(), scopeLogicVar.getInitStartPos());
     }
 
@@ -79,7 +78,7 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     }
 
     @Override
-    public VariableMeta getMeta() {
+    public VarMeta getMeta() {
         return meta;
     }
 

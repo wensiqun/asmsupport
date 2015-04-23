@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.AbstractExample;
-import cn.wensiqun.asmsupport.core.block.control.loop.ForEachInternal;
-import cn.wensiqun.asmsupport.core.block.method.common.StaticMethodBodyInternal;
+import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -20,7 +20,7 @@ public class ForEachBlockGenerator extends AbstractExample {
     {
 		ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ForEachBlockGeneratorExample", null, null);
 		
-		 creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, "test", null, null, null, null, new StaticMethodBodyInternal(){
+		 creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, "test", null, null, null, null, new KernelStaticMethodBody(){
 
 	            @Override
 	            public void body(LocalVariable... argus)
@@ -29,7 +29,7 @@ public class ForEachBlockGenerator extends AbstractExample {
                     LocalVariable list  = var("list", List.class, new_(ArrayList.class));
                     call(list, "add", Value.value("ForEach "));
                     call(list, "add", Value.value("Test "));
-                    for_(new ForEachInternal(list){
+                    for_(new KernelForEach(list){
 
                         @Override
                         public void body(LocalVariable l) {
@@ -42,7 +42,7 @@ public class ForEachBlockGenerator extends AbstractExample {
 		 });
 	        
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
-            new StaticMethodBodyInternal(){
+            new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                 	call(getMethodOwner(), "test");

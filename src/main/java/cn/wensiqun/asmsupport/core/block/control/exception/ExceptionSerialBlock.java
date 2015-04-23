@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
-import cn.wensiqun.asmsupport.core.block.AbstractBlockInternal;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
 import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -35,19 +35,19 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public class ExceptionSerialBlock extends SerialBlock {
-    private TryInternal tryBlock;
+    private KernelTry tryBlock;
 
-    private List<CatchInternal> catchs;
+    private List<KernelCatch> catchs;
 
     private ImplicitCatch implicitCatch;
 
-    private FinallyInternal finallyBlock;
+    private KernelFinally finallyBlock;
 
     private List<Label> anyCatchRange;
 
     private List<TryCatchInfo> tryCatchInfoes;
 
-    public ExceptionSerialBlock(ProgramBlockInternal parent, TryInternal tryBlock) {
+    public ExceptionSerialBlock(KernelProgramBlock parent, KernelTry tryBlock) {
         super(parent);
         this.tryBlock = tryBlock;
         initEpisode(tryBlock);
@@ -63,14 +63,14 @@ public class ExceptionSerialBlock extends SerialBlock {
             tryBlock.prepare();
 
             if (!tryBlock.isFinish()) {
-                OperatorFactory.newOperator(GOTO.class, new Class[] { ProgramBlockInternal.class, Label.class },
+                OperatorFactory.newOperator(GOTO.class, new Class[] { KernelProgramBlock.class, Label.class },
                         tryBlock, getSerialEnd());
             }
 
-            for (CatchInternal c : catchs) {
+            for (KernelCatch c : catchs) {
                 c.prepare();
                 if (!c.isFinish()) {
-                    OperatorFactory.newOperator(GOTO.class, new Class[] { ProgramBlockInternal.class, Label.class }, c,
+                    OperatorFactory.newOperator(GOTO.class, new Class[] { KernelProgramBlock.class, Label.class }, c,
                             getSerialEnd());
                 }
             }
@@ -80,7 +80,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             tryBlock.prepare();
 
             if (!tryBlock.isFinish()) {
-                OperatorFactory.newOperator(GOTO.class, new Class[] { ProgramBlockInternal.class, Label.class },
+                OperatorFactory.newOperator(GOTO.class, new Class[] { KernelProgramBlock.class, Label.class },
                         tryBlock, finallyBlock.getStart());
             }
 
@@ -98,14 +98,14 @@ public class ExceptionSerialBlock extends SerialBlock {
             tryBlock.prepare();
 
             if (!tryBlock.isFinish()) {
-                OperatorFactory.newOperator(GOTO.class, new Class[] { ProgramBlockInternal.class, Label.class },
+                OperatorFactory.newOperator(GOTO.class, new Class[] { KernelProgramBlock.class, Label.class },
                         tryBlock, finallyBlock.getStart());
             }
 
             // insert finally for BreakStack operator in try block.
             insertFinallyBeforeReturn(tryBlock);
 
-            for (CatchInternal c : catchs) {
+            for (KernelCatch c : catchs) {
                 c.prepare();
 
                 // insert finally for BreakStack operator in try block.
@@ -119,14 +119,14 @@ public class ExceptionSerialBlock extends SerialBlock {
                     {
                         // inject implicit finally block code at end of catch
                         OperatorFactory.newOperator(Marker.class,
-                                new Class[] { ProgramBlockInternal.class, Label.class }, c, finallyStart);
+                                new Class[] { KernelProgramBlock.class, Label.class }, c, finallyStart);
                         finallyBlock.generateTo(c);
 
                         OperatorFactory.newOperator(GOTO.class,
-                                new Class[] { ProgramBlockInternal.class, Label.class }, c, getSerialEnd());
+                                new Class[] { KernelProgramBlock.class, Label.class }, c, getSerialEnd());
 
                         OperatorFactory.newOperator(Marker.class,
-                                new Class[] { ProgramBlockInternal.class, Label.class }, c, finallyEnd);
+                                new Class[] { KernelProgramBlock.class, Label.class }, c, finallyEnd);
                     }
                     addAnyExceptionCatchRange(finallyEnd);
                 }
@@ -165,7 +165,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         tryBlock.execute();
 
         if (CollectionUtils.isNotEmpty(catchs)) {
-            for (CatchInternal c : catchs) {
+            for (KernelCatch c : catchs) {
                 c.execute();
             }
         }
@@ -176,12 +176,12 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
     }
 
-    void appendEpisode(CatchInternal catchBlock) {
+    void appendEpisode(KernelCatch catchBlock) {
         if (catchs == null) {
-            catchs = new ArrayList<CatchInternal>();
+            catchs = new ArrayList<KernelCatch>();
             getQueue().addAfter(tryBlock, catchBlock);
         } else {
-            CatchInternal previous = catchs.get(catchs.size() - 1);
+            KernelCatch previous = catchs.get(catchs.size() - 1);
             AClass exceptionType = catchBlock.getExceptionType();
 
             if (exceptionType != null && exceptionType.isChildOrEqual(previous.getExceptionType())) {
@@ -199,7 +199,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         addTreCatchInfo(tryBlock.getStart(), tryBlock.getEnd(), catchBlock.getStart(), catchBlock.getExceptionType());
     }
 
-    void appendEpisode(FinallyInternal finallyBlock) {
+    void appendEpisode(KernelFinally finallyBlock) {
         if (this.finallyBlock != null) {
             throw new ASMSupportException("Finally block already exists.");
         }
@@ -219,11 +219,11 @@ public class ExceptionSerialBlock extends SerialBlock {
      * 
      * @param block
      */
-    private void insertFinallyBeforeReturn(AbstractBlockInternal block) {
+    private void insertFinallyBeforeReturn(AbstractKernelBlock block) {
         List<KernelReturn> returns = fetchAllBreakStack(block, null);
 
         for (KernelReturn ret : returns) {
-            ProgramBlockInternal breakBlock = ret.getBlock();
+            KernelProgramBlock breakBlock = ret.getBlock();
 
             Label startLbl = new Label("implicit finally before break stack start");
             Label endLbl = new Label("implicit finally before break stack end");
@@ -236,7 +236,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             breakBlock.setFinish(false);
 
             // dosen't detected previous whether serial block.
-            OperatorFactory.newOperator(Marker.class, false, new Class[] { ProgramBlockInternal.class, Label.class },
+            OperatorFactory.newOperator(Marker.class, false, new Class[] { KernelProgramBlock.class, Label.class },
                     breakBlock, startLbl);
 
             // append finally block code to list
@@ -257,20 +257,20 @@ public class ExceptionSerialBlock extends SerialBlock {
                 }
             }
 
-            OperatorFactory.newOperator(Marker.class, new Class[] { ProgramBlockInternal.class, Label.class },
+            OperatorFactory.newOperator(Marker.class, new Class[] { KernelProgramBlock.class, Label.class },
                     breakBlock, endLbl);
         }
     }
 
-    private List<KernelReturn> fetchAllBreakStack(AbstractBlockInternal block, List<KernelReturn> container) {
+    private List<KernelReturn> fetchAllBreakStack(AbstractKernelBlock block, List<KernelReturn> container) {
         if (container == null) {
             container = new ArrayList<KernelReturn>();
         }
         for (ByteCodeExecutor executor : block.getQueue()) {
             if (executor instanceof KernelReturn) {
                 container.add((KernelReturn) executor);
-            } else if (executor instanceof AbstractBlockInternal && !(executor instanceof ImplicitCatch)) {
-                fetchAllBreakStack((AbstractBlockInternal) executor, container);
+            } else if (executor instanceof AbstractKernelBlock && !(executor instanceof ImplicitCatch)) {
+                fetchAllBreakStack((AbstractKernelBlock) executor, container);
             }
         }
         return container;
@@ -289,7 +289,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         anyCatchRange.add(label);
     }
 
-    public FinallyInternal getFinally() {
+    public KernelFinally getFinally() {
         return finallyBlock;
     }
 
@@ -297,13 +297,13 @@ public class ExceptionSerialBlock extends SerialBlock {
 	 * 
 	 *
 	 */
-    private class ImplicitCatch extends ProgramBlockInternal {
+    private class ImplicitCatch extends KernelProgramBlock {
 
         @Override
         public void generate() {
             LocalVariable exception = getLocalAnonymousVariableModel(AnyException.ANY);
 
-            OperatorFactory.newOperator(Store.class, new Class[] { ProgramBlockInternal.class, LocalVariable.class },
+            OperatorFactory.newOperator(Store.class, new Class[] { KernelProgramBlock.class, LocalVariable.class },
                     this, exception);
 
             // new Store(this, exception);

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
@@ -32,13 +32,13 @@ public class DUP extends ASMDirect implements KernelParameterized {
 	
 	private AClass type;
 	
-	protected DUP(ProgramBlockInternal block, AClass stackTopType) {
+	protected DUP(KernelProgramBlock block, AClass stackTopType) {
 		super(block);
 		type = stackTopType;
 	}
 
 	@Override
-	public void loadToStack(ProgramBlockInternal block) {
+	public void loadToStack(KernelProgramBlock block) {
 		this.execute();
 	}
 

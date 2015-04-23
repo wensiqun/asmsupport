@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.block.ProgramBlockInternal;
+import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public class KernelLessEqual extends NumericalRelational {
 
-    protected KernelLessEqual(ProgramBlockInternal block, KernelParameterized factor1, KernelParameterized factor2) {
+    protected KernelLessEqual(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2) {
         super(block, factor1, factor2, Operator.LESS_THAN_OR_EQUAL_TO);
     }
 
