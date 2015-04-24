@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -36,15 +36,15 @@ public class KernelArrayStore extends AbstractArrayOperator {
 
     private static final Log LOG = LogFactory.getLog(KernelArrayStore.class);
     
-    private KernelParameterized value;
+    private KernelParame value;
     
     private AClass storeClass;
     
-    private KernelParameterized lastDim;
+    private KernelParame lastDim;
 
-    private void init(KernelParameterized value, KernelParameterized pardim, KernelParameterized... parDims){
+    private void init(KernelParame value, KernelParame pardim, KernelParame... parDims){
     	this.value = value;
-        this.parDims = new KernelParameterized[parDims.length];
+        this.parDims = new KernelParame[parDims.length];
         
         if(parDims.length != 0){
             this.parDims[0] = pardim;
@@ -60,7 +60,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
         }
     }
 
-    protected KernelArrayStore(KernelProgramBlock block, KernelParameterized arrayReference, KernelParameterized value, KernelParameterized pardim, KernelParameterized... parDims) {
+    protected KernelArrayStore(KernelProgramBlock block, KernelParame arrayReference, KernelParame value, KernelParame pardim, KernelParame... parDims) {
         super(block, arrayReference);
         init(value, pardim, parDims);
     }

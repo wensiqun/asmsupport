@@ -15,6 +15,7 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
@@ -26,33 +27,33 @@ public class NonStaticGlobalVariable extends GlobalVariable {
 
     private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariable.class);
     
-    private IVariable owner;
+    private KernelParame owner;
     
     /**
      * 
      * @param var
      * @param gve
      */
-    public NonStaticGlobalVariable(IVariable owner, Field meta){
+    public NonStaticGlobalVariable(KernelParame owner, Field meta){
         super(meta);
         this.owner = owner;
     }
     
-    public IVariable getOwner() {
+    public KernelParame getOwner() {
         return owner;
     }
     
     @Override
     public AClass getResultType() {
-        return meta.getDeclareType();
+        return meta.getType();
     }
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        if(!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), 
-                meta.getActuallyOwnerType(), meta.getModifiers())){
-            throw new IllegalArgumentException("cannot access field " +
-                    meta.getActuallyOwnerType() + "#" + meta.getName()
+        if(!AClassUtils.visible(block.getMethodOwner(), meta.getDirectOwnerType(), 
+                meta.getDeclaringClass(), meta.getModifiers())){
+            throw new IllegalArgumentException("Cannot access field " +
+                    meta.getDeclaringClass() + "#" + meta.getName()
                     + " from " + block.getMethodOwner());
         }
         
@@ -60,7 +61,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
             LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
         }
         owner.loadToStack(block);
-        block.getInsnHelper().getField(meta.getOwner().getType(), meta.getName(), meta.getDeclareType().getType());
+        block.getInsnHelper().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

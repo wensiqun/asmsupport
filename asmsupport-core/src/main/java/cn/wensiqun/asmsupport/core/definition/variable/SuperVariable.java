@@ -61,7 +61,7 @@ public class SuperVariable extends ImplicitVariable{
 
     @Override
     public AClass getResultType() {
-        return globalVariableMeta.getDeclareType();
+        return globalVariableMeta.getType();
     }
 
     @Override

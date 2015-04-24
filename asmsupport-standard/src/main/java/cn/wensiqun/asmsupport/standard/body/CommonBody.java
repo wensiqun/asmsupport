@@ -14,10 +14,17 @@
  */
 package cn.wensiqun.asmsupport.standard.body;
 
+
+/**
+ * Indicate a common program block
+ * 
+ * @author sqwen
+ *
+ */
 public interface CommonBody extends IBody {
     
     /**
-     * Common body.
+     * Enter program block
      * 
      */
     void body();

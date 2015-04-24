@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  *
  * @author wensiqun(at)163.com
  */
-public interface ArrayAction<_P extends IParameterized> {
+public interface ArrayAction<_P extends IParam> {
     
 
 	/**
@@ -63,7 +63,7 @@ public interface ArrayAction<_P extends IParameterized> {
 	 * 
      * <p>
      * Make an array value according an array type and an array value that element type is 
-     * {@link cn.wensiqun.asmsupport.standard.def.IParameterized}, call this method is seem like to 
+     * {@link cn.wensiqun.asmsupport.standard.def.IParam}, call this method is seem like to 
      * following java code :
      * </p>
      * 

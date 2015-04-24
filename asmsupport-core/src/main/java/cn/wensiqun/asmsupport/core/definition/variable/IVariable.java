@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
  * @author 温斯群(Joe Wen)
  *
  */
-public interface IVariable extends KernelParameterized, IVar {
+public interface IVariable extends KernelParame, IVar {
     
     /**
      * 当前变量对于传入的操作是否可用

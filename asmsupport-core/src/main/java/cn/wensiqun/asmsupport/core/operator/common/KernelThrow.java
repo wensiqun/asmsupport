@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.AnyException;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
@@ -31,14 +31,14 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  */
 public class KernelThrow extends BreakStack {
 
-    private KernelParameterized exception;
+    private KernelParame exception;
 
-    protected KernelThrow(KernelProgramBlock block, KernelParameterized exception) {
+    protected KernelThrow(KernelProgramBlock block, KernelParame exception) {
         super(block, false);
         this.exception = exception;
     }
 
-    protected KernelThrow(KernelProgramBlock block, KernelParameterized exception, boolean autoCreate) {
+    protected KernelThrow(KernelProgramBlock block, KernelParame exception, boolean autoCreate) {
         super(block, true);
         this.exception = exception;
     }

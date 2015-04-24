@@ -85,11 +85,12 @@ public class StringEncoder {
         return this.append(c.toString());
     }
     
-    public void trimLastComma() {
+    public StringEncoder trimLastComma() {
         int len = stringBuilder.length() - 1;
         if(',' == stringBuilder.charAt(len)) {
             stringBuilder.deleteCharAt(len);
         }
+        return this;
     }
 
     public StringEncoder deleteCharAt(int index) {

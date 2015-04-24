@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
  */
 public class KernelShiftRight extends BinaryBitwise {
 
-    protected KernelShiftRight(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2) {
+    protected KernelShiftRight(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
         super(block, factor1, factor2, Operator.SHIFT_RIGHT);
     }
 

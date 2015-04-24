@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  *
  */
 public interface ActionSet<
-_P extends IParameterized,
+_P extends IParam,
 _V extends IVar,
 _F extends IFieldVar, 
 _IF, _While, _DoWhile, _ForEach, _TRY, _SYN> 

@@ -151,7 +151,7 @@ public class JSONPool {
                 final LocVar encoder = args[0];
                 final LocVar val = var(type, checkcast(args[1], type));
                 
-                call(encoder, "append", val('{'));
+                encoder.call("append", val('{'));
                 
                 Field[] fields = type.getDeclaredFields();
                 for(Field f : fields) {
@@ -175,41 +175,41 @@ public class JSONPool {
                         continue;
                     }
                     
-                    final UncertainParam getterCall = call(val, getterStr);
+                    final UncertainParam getterCall = val.call(getterStr);
                     
                     if(fieldType.isPrimitive()) {
                         if(name.matches("^[A-Za-z][_A-Za-z0-9]*$")) {
-                            call(encoder, "append", val(name + ":"));
+                            encoder.call("append", val(name + ":"));
                         } else {
-                            call(encoder, "appendDirect", val('\"'));
-                            call(encoder, "append", val(name));
-                            call(encoder, "appendDirect", val('\"'));
-                            call(encoder, "appendDirect", val(':'));
+                            encoder.call("appendDirect", val('\"'));
+                            encoder.call("append", val(name));
+                            encoder.call("appendDirect", val('\"'));
+                            encoder.call("appendDirect", val(':'));
                         }
-                        call(encoder, "append", getterCall);
-                        call(encoder, "appendDirect", val(','));
+                        encoder.call("append", getterCall);
+                        encoder.call("appendDirect", val(','));
                     } else {
-                        if_(new IF(ne(getterCall, null_(Object.class))) {
+                        if_(new IF(getterCall.ne(null_(Object.class))) {
 
                             @Override
                             public void body() {
                                 if(name.matches("^[A-Za-z][_A-Za-z0-9]*$")) {
-                                    call(encoder, "append", val(name + ":"));
+                                    encoder.call("append", val(name + ":"));
                                 } else {
-                                    call(encoder, "appendDirect", val('\"'));
-                                    call(encoder, "append", val(name));
-                                    call(encoder, "appendDirect", val('\"'));
-                                    call(encoder, "appendDirect", val(':'));
+                                    encoder.call("appendDirect", val('\"'));
+                                    encoder.call("append", val(name));
+                                    encoder.call("appendDirect", val('\"'));
+                                    encoder.call("appendDirect", val(':'));
                                 }
                                 header.generate(context, this, encoder, getType(fieldType), getterCall);
-                                call(encoder, "appendDirect", val(','));
+                                encoder.call("appendDirect", val(','));
                             }
                             
                         });
                     }
                 }
-                call(encoder, "trimLastComma");
-                call(encoder, "append", val('}'));
+                encoder.call("trimLastComma");
+                encoder.call("append", val('}'));
                 return_();
             }
             

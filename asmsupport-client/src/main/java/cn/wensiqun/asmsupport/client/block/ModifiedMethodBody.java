@@ -21,22 +21,23 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 
 public abstract class ModifiedMethodBody extends ProgramBlock<KernelModifiedMethodBody> implements
-    IModifiedMethodBody<LocVar> {
+        IModifiedMethodBody<LocVar> {
 
-	public ModifiedMethodBody() {
-	     targetBlock = new KernelModifiedMethodBody() {
+    public ModifiedMethodBody() {
+        targetBlock = new KernelModifiedMethodBody() {
 
-			@Override
-			public void body(LocalVariable... args) {
-				ModifiedMethodBody.this.body(internalVar2ClientVar(args));
-			}
-	    	 
-	     };
-	}
+            @Override
+            public void body(LocalVariable... args) {
+                ModifiedMethodBody.this.body(internalVar2ClientVar(args));
+            }
 
-	@Override
-	public AClass getOrigReturnType(){
-		return targetBlock.getOrigReturnType();
-	}
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
+
+    @Override
+    public AClass getOrigReturnType() {
+        return targetBlock.getOrigReturnType();
+    }
 
 }

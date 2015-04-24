@@ -40,7 +40,7 @@ public abstract class GlobalVariable extends ExplicitVariable implements IFieldV
 
     @Override
     public final AClass getDeclaringClass() {
-        return getMeta().getActuallyOwnerType();
+        return getMeta().getDeclaringClass();
     }
 
 }

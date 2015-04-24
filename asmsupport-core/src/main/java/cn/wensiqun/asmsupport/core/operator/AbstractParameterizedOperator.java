@@ -1,10 +1,16 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
-public abstract class AbstractParameterizedOperator extends AbstractOperator implements KernelParameterized{
+public abstract class AbstractParameterizedOperator extends AbstractOperator implements KernelParame{
 
     protected AbstractParameterizedOperator(KernelProgramBlock block, Operator operatorSymbol) {
         super(block, operatorSymbol);
@@ -12,7 +18,15 @@ public abstract class AbstractParameterizedOperator extends AbstractOperator imp
 
     @Override
     public GlobalVariable field(String name) {
-        throw new UnsupportedOperationException();
+        if(this.getResultType() instanceof ArrayClass){
+            throw new ASMSupportException("Cannot get global variable from array type variable : " + this);
+        }
+        Field field = getResultType().getField(name);
+        if(ModifierUtils.isStatic(field.getModifiers())){
+            return new StaticGlobalVariable(field.getDeclaringClass(), field);
+        } else {
+            return new NonStaticGlobalVariable(this, field);
+        }
     }
 
 

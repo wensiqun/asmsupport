@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -39,11 +39,11 @@ public abstract class AbstractArrayOperator extends AbstractParameterizedOperato
 
     private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
-    protected KernelParameterized arrayReference;
+    protected KernelParame arrayReference;
     
-    protected KernelParameterized[] parDims;
+    protected KernelParame[] parDims;
     
-    protected AbstractArrayOperator(KernelProgramBlock block, KernelParameterized arrayVar) {
+    protected AbstractArrayOperator(KernelProgramBlock block, KernelParame arrayVar) {
         super(block, Operator.COMMON);
         this.arrayReference = arrayVar;
     }
@@ -52,7 +52,7 @@ public abstract class AbstractArrayOperator extends AbstractParameterizedOperato
 	protected void checkAsArgument() {
         arrayReference.asArgument();
         if(parDims != null){
-            for(KernelParameterized par : parDims){
+            for(KernelParame par : parDims){
                 par.asArgument();
             }
         }
@@ -65,7 +65,7 @@ public abstract class AbstractArrayOperator extends AbstractParameterizedOperato
         }
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
-			for(KernelParameterized par : parDims){
+			for(KernelParame par : parDims){
 				if(!AClassUtils.checkAssignable(par.getResultType(), AClassFactory.getType(int.class))) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + AClassFactory.getType(int.class) + "");
 				}

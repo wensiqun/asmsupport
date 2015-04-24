@@ -21,15 +21,16 @@ import cn.wensiqun.asmsupport.standard.method.IMethodBody;
 
 public abstract class MethodBody extends ProgramBlock<KernelMethodBody> implements IMethodBody<LocVar> {
 
-	public MethodBody() {
-	     targetBlock = new KernelMethodBody() {
+    public MethodBody() {
+        targetBlock = new KernelMethodBody() {
 
-			@Override
-			public void body(LocalVariable... args) {
-				MethodBody.this.body(internalVar2ClientVar(args));
-			}
-	    	 
-	     };
-	}
+            @Override
+            public void body(LocalVariable... args) {
+                MethodBody.this.body(internalVar2ClientVar(args));
+            }
+
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
 
 }

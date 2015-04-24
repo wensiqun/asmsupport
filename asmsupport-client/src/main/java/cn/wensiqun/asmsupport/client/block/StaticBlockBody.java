@@ -19,13 +19,14 @@ import cn.wensiqun.asmsupport.standard.method.IStaticBlockBody;
 
 public abstract class StaticBlockBody extends ProgramBlock<KernelStaticBlockBody> implements IStaticBlockBody {
 
-	public StaticBlockBody() {
-		targetBlock = new KernelStaticBlockBody() {
-			@Override
-			public void body() {
-				StaticBlockBody.this.body();
-			}
-		};
-	}
-	
+    public StaticBlockBody() {
+        targetBlock = new KernelStaticBlockBody() {
+            @Override
+            public void body() {
+                StaticBlockBody.this.body();
+            }
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
+
 }

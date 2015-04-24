@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.standard.def.IParameterized;
  *
  * @author wensiqun(at)163.com
  */
-public interface ArithmeticAction<_P extends IParameterized> {
+public interface ArithmeticAction<_P extends IParam> {
     
     /**
      * 生成加法操作指令例如：factor1 + factor2,对应下面的红色java代码

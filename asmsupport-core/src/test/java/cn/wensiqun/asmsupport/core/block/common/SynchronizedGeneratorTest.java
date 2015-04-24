@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -82,7 +82,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new KernelSync(this_()){
                     @Override
-                    public void body(KernelParameterized e) {
+                    public void body(KernelParame e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new KernelWhile(lt(i, Value.value(10))){
 
@@ -108,7 +108,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 final GlobalVariable list = this_().field("list");
                 sync(new KernelSync(this_().field("lock")){
                     @Override
-                    public void body(KernelParameterized e) {
+                    public void body(KernelParame e) {
                         final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
                         while_(new KernelWhile(lt(i, Value.value(10))){
 

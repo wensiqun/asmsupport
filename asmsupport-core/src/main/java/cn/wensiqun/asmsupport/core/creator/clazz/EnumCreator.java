@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -276,7 +276,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                         LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
 
                         // get lengt operator for tmpValues;
-                        KernelParameterized copyLen = arrayLength(copy);
+                        KernelParame copyLen = arrayLength(copy);
 
                         // System
                         AClass systemClass = AClassFactory.getType(System.class);

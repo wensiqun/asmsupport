@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
  * @author wensiqun(at)163.com
  *
  */
-public interface MethodInvokeAction<_P extends IParameterized, _Field extends IFieldVar> {
+public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar> {
     
     /**
      * <p>

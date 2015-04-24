@@ -68,11 +68,6 @@ public class SemiClass extends MutableClass {
     }
 
     @Override
-    public int getCastOrder() {
-        return 9;
-    }
-
-    @Override
     public Field getField(final String name) {
         
         final LinkedList<Field> found = new LinkedList<Field>();
@@ -87,10 +82,10 @@ public class SemiClass extends MutableClass {
             Class<?> fieldOwner = getSuperClass();
             for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
                 try {
-                    java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
+                    java.lang.reflect.Field field = fieldOwner.getDeclaredField(name);
                     found.add(new Field(this,
                             AClassFactory.getType(fieldOwner),
-                            AClassFactory.getType(f.getType()), f.getModifiers(), name));
+                            AClassFactory.getType(field.getType()), field.getModifiers(), name));
                     break;
                 } catch (NoSuchFieldException e) {
                 }
@@ -120,7 +115,7 @@ public class SemiClass extends MutableClass {
 
         StringBuilder errorSuffix = new StringBuilder();
         for(Field field : found) {
-            errorSuffix.append(field.getActuallyOwnerType()).append(',');
+            errorSuffix.append(field.getDeclaringClass()).append(',');
         }
         throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
     }

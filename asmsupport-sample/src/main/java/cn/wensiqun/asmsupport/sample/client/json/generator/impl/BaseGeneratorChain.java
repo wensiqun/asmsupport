@@ -24,11 +24,9 @@ public class BaseGeneratorChain extends AbstractGeneratorChain {
         if(type.isChildOrEqual(AClassFactory.getType(CharSequence.class)) ||
            type.equals(AClassFactory.getType(char.class)) ||
            type.equals(AClassFactory.getType(Character.class))) {
-            block.call(encoder, "appendDirect", block.val('"'));
-            block.call(encoder, "append", value); 
-            block.call(encoder, "appendDirect", block.val('"'));
+            encoder.call("appendDirect", block.val('"')).call("append", value).call("appendDirect", block.val('"'));
         } else {
-            block.call(encoder, "append", value); 
+            encoder.call("append", value); 
         }
         return true;
     }

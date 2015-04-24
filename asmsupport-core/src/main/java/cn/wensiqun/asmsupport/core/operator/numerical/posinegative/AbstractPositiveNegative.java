@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -28,13 +28,13 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  */
 public abstract class AbstractPositiveNegative extends AbstractNumerical {
     
-    protected KernelParameterized factor;
+    protected KernelParame factor;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
     
 
-    protected AbstractPositiveNegative(KernelProgramBlock block, KernelParameterized factor, Operator operator) {
+    protected AbstractPositiveNegative(KernelProgramBlock block, KernelParame factor, Operator operator) {
         super(block, operator);
         this.factor = factor;
     }

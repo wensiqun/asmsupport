@@ -26,31 +26,22 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public abstract class AClass implements IClass {
 	
-    /**
-     * Class name
-     */
     protected String name;
 
-    /** Class对应的java的版本 */
     protected int version;
 
-    /** Class的修饰符值 */
     protected int mod;
 
-    /** Class的父类 */
     protected Class<?> superClass;
 
-    /** Class的接口 */
     protected Class<?>[] interfaces;
     
-    /** 当前Class对应的Type类型 */
     protected Type type;
     
-    /** 当前的Class的包名 */
     protected String pkg;
     
     @Override
-    public String getPackage() {
+    public final String getPackage() {
         if(pkg == null){
             pkg = getPackageName(name);
         }
@@ -108,7 +99,7 @@ public abstract class AClass implements IClass {
     }
 
     @Override
-    public Type getType() {
+    public final Type getType() {
         if(type == null){
             type = Type.getType(getDescription());
         }
@@ -140,6 +131,30 @@ public abstract class AClass implements IClass {
 
     @Override
     public abstract AClass getNextDimType();
+
+    @Override
+    public final int getCastOrder() {
+        int order = 9;
+        if (type == Type.BOOLEAN_TYPE || name.equals(Boolean.class.getName())) {
+            order = 1;
+        } else if (type == Type.CHAR_TYPE || name.equals(Character.class.getName())) {
+            order = 2;
+        } else if (type == Type.BYTE_TYPE || name.equals(Byte.class.getName())) {
+            order = 3;
+        } else if (type == Type.SHORT_TYPE || name.equals(Short.class.getName())) {
+            order = 4;
+        } else if (type == Type.INT_TYPE || name.equals(Integer.class.getName())) {
+            order = 5;
+        } else if (type == Type.LONG_TYPE || name.equals(Long.class.getName())) {
+            order = 6;
+        } else if (type == Type.FLOAT_TYPE || name.equals(Float.class.getName())) {
+            order = 7;
+        } else if (type == Type.DOUBLE_TYPE || name.equals(Double.class.getName())) {
+            order = 8;
+        }
+        return order;
+
+    }
 
     /**
      * <p>Gets the package name from a {@code String}.</p>

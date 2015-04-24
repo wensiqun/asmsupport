@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.DUP;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
@@ -38,9 +38,9 @@ import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
  * @author 温斯群(Joe Wen)
  * 
  */
-public abstract class KernelSync extends KernelProgramBlock implements ISynchronized<KernelParameterized> {
+public abstract class KernelSync extends KernelProgramBlock implements ISynchronized<KernelParame> {
 
-	private KernelParameterized lock;
+	private KernelParame lock;
 	private LocalVariable dupSynArgument;
 	
 	private Label monitorenter;
@@ -51,7 +51,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	
 	private Marker flag1;
 
-	public KernelSync(KernelParameterized lock) {
+	public KernelSync(KernelParame lock) {
 		super();
 		this.lock = lock;
 		monitorenter = new Label();

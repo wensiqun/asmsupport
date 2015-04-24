@@ -16,10 +16,18 @@ package cn.wensiqun.asmsupport.standard.body;
 
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
+/**
+ * Indicate a program block, it's will be passes an local variable (is the sub type of
+ * {@link ILocVar}) when enter the block.
+ * 
+ * @author sqwen
+ *
+ * @param <_Var>
+ */
 public interface ILocVarBody<_Var extends ILocVar> extends IBody {
     
     /**
-     * Program block with a variable.
+     * enter a program block with a local variable.
      * 
      * @param e
      */

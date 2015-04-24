@@ -1,21 +1,21 @@
 
 package cn.wensiqun.asmsupport.client.operations.action;
 
+import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class ReverseAction extends AbstractUnaryAction {
 
-    public ReverseAction(KernelProgramBlock block) {
-        super(block, Operator.REVERSE);
+    public ReverseAction(KernelProgramBlockCursor cursor) {
+        super(cursor, Operator.REVERSE);
     }
 
     @Override
     public Param doAction(Param... operands) {
-       return new DummyParam(block, block.reverse(ParamPostern.getTarget(operands[0])));
+       return new DummyParam(cursor, cursor.getPointer().reverse(ParamPostern.getTarget(operands[0])));
     }
 
 }

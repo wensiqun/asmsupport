@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class KernelPostDecrment extends AbstractCrement {
 
-	protected KernelPostDecrment(KernelProgramBlock block, KernelParameterized crement) {
+	protected KernelPostDecrment(KernelProgramBlock block, KernelParame crement) {
 		super(block, crement, Operator.POS_DEC);
 	}
 

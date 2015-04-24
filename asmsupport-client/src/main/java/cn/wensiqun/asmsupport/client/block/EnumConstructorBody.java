@@ -19,16 +19,18 @@ import cn.wensiqun.asmsupport.core.block.method.init.KernelEnumConstructorBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IEnumConstructorBody;
 
-public abstract class EnumConstructorBody extends ProgramBlock<KernelEnumConstructorBody> implements IEnumConstructorBody<LocVar> {
+public abstract class EnumConstructorBody extends ProgramBlock<KernelEnumConstructorBody> implements
+        IEnumConstructorBody<LocVar> {
 
-	public EnumConstructorBody() {
-		targetBlock = new KernelEnumConstructorBody(){
+    public EnumConstructorBody() {
+        targetBlock = new KernelEnumConstructorBody() {
 
-			@Override
-			public void body(LocalVariable... args) {
-				EnumConstructorBody.this.body(internalVar2ClientVar(args));
-			}
-			
-		};
-	}
+            @Override
+            public void body(LocalVariable... args) {
+                EnumConstructorBody.this.body(internalVar2ClientVar(args));
+            }
+
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
 }

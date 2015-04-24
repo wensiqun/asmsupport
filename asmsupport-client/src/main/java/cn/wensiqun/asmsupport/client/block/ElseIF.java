@@ -32,13 +32,25 @@ public abstract class ElseIF extends ProgramBlock<KernelElseIF> implements IElse
 
 	@Override
 	public ElseIF elseif(ElseIF elseif) {
+        elseif.cursor = cursor;
+        elseif.parent = parent;
+        cursor.setPointer(elseif.targetBlock);
+        
 		targetBlock.elseif(elseif.targetBlock);
+		
+        cursor.setPointer(parent.targetBlock);
 		return elseif;
 	}
 	
 	@Override
 	public Else else_(Else els) {
+        els.cursor = cursor;
+        els.parent = parent;
+        cursor.setPointer(els.targetBlock);
+        
 		targetBlock.else_(els.targetBlock);
+        
+        cursor.setPointer(parent.targetBlock);
 		return els;
 	}
 }

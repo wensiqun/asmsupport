@@ -21,26 +21,28 @@ import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
 
-public abstract class EnumStaticBlockBody extends ProgramBlock<KernelEnumStaticBlockBody> implements IEnumStaticBlockBody<Param, LocVar> {
+public abstract class EnumStaticBlockBody extends ProgramBlock<KernelEnumStaticBlockBody> implements
+        IEnumStaticBlockBody<Param, LocVar> {
 
-	public EnumStaticBlockBody() {
-		targetBlock = new KernelEnumStaticBlockBody() {
+    public EnumStaticBlockBody() {
+        targetBlock = new KernelEnumStaticBlockBody() {
 
-			@Override
-			public void body(LocalVariable... argus) {
-				EnumStaticBlockBody.this.body(internalVar2ClientVar(argus));
-			}
+            @Override
+            public void body(LocalVariable... argus) {
+                EnumStaticBlockBody.this.body(internalVar2ClientVar(argus));
+            }
 
-			@Override
-			public void constructEnumConsts() {
-				EnumStaticBlockBody.this.constructEnumConsts();
-			}
-		};
-	}
-	
-	@Override
-	public void constructEnumConst(String name, Param... argus) {
-		targetBlock.constructEnumConst(name, ParamPostern.getTarget(argus));
-	}
-	
+            @Override
+            public void constructEnumConsts() {
+                EnumStaticBlockBody.this.constructEnumConsts();
+            }
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
+
+    @Override
+    public void constructEnumConst(String name, Param... argus) {
+        targetBlock.constructEnumConst(name, ParamPostern.getTarget(argus));
+    }
+
 }

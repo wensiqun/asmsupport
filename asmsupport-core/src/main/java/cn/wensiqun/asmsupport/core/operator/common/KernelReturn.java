@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.common;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
@@ -33,11 +33,11 @@ public class KernelReturn extends BreakStack {
 
     private static final Log LOG = LogFactory.getLog(KernelReturn.class);
     
-    private KernelParameterized returner;
+    private KernelParame returner;
     
     private Type returnType;
     
-    protected KernelReturn(KernelProgramBlock block, KernelParameterized returner) {
+    protected KernelReturn(KernelProgramBlock block, KernelParame returner) {
         super(block, false);
         this.returner = returner;
         if(returner != null){
@@ -45,7 +45,7 @@ public class KernelReturn extends BreakStack {
         }
     }
     
-    protected KernelReturn(KernelProgramBlock block, KernelParameterized returner, boolean autoCreate) {
+    protected KernelReturn(KernelProgramBlock block, KernelParame returner, boolean autoCreate) {
         super(block, autoCreate);
         this.returner = returner;
         if(returner != null){

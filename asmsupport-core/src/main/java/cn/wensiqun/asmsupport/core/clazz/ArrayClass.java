@@ -89,14 +89,6 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public int getCastOrder() {
-        return 9;
-    }
-    
-    /**
-     * 获取下一维的类型
-     * @return
-     */
     public AClass getNextDimType(){
         if(dim > 1){
             return new ArrayClass(aclass, dim - 1);

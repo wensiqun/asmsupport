@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.method;
 import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -29,13 +29,13 @@ public class CommonMethodInvoker extends MethodInvoker {
 	
 	private static final Log LOG = LogFactory.getLog(CommonMethodInvoker.class);
     
-	private KernelParameterized callObjReference;
+	private KernelParame callObjReference;
 	
-	protected CommonMethodInvoker(KernelProgramBlock block, KernelParameterized objRef, String name, KernelParameterized[] arguments) {
+	protected CommonMethodInvoker(KernelProgramBlock block, KernelParame objRef, String name, KernelParame[] arguments) {
 		super(block, objRef.getResultType(), name, arguments);
 		this.callObjReference = objRef;
 		if(callObjReference.getResultType().isPrimitive()){
-			throw new IllegalArgumentException("cannot invoke method at primitive type \"" + callObjReference.getResultType() +  "\" : must be a non-primitive variable");
+			throw new IllegalArgumentException("Cannot invoke method at primitive type \"" + callObjReference.getResultType() +  "\" : must be a non-primitive variable");
 		}
         //默认不保存引用
         setSaveReference(false);

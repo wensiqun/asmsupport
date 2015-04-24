@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -32,21 +32,21 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  */
 public class KernelStrAdd extends AbstractParameterizedOperator {
     
-    private KernelParameterized[] paras;
+    private KernelParame[] paras;
 
     private boolean byOtherUsed;
     private MethodInvoker invoker;
     
-    protected KernelStrAdd(KernelProgramBlock block, KernelParameterized par1, KernelParameterized... pars) {
+    protected KernelStrAdd(KernelProgramBlock block, KernelParame par1, KernelParame... pars) {
         super(block, Operator.COMMON);
-        this.paras = new KernelParameterized[pars.length + 1];
+        this.paras = new KernelParame[pars.length + 1];
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
         AClass strBlderCls = AClassFactory.getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
-        for(KernelParameterized par : pars){
+        for(KernelParame par : pars){
             mi = block.call(mi, "append", par);
         }
         invoker = block.call(mi, "toString");

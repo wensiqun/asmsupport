@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * integrated DUP DUP2 instruction according to type of the top element.
  *
  */
-public class DUP extends ASMDirect implements KernelParameterized {
+public class DUP extends ASMDirect implements KernelParame {
 
 	private static final Log LOG = LogFactory.getLog(DUP.class);
 	

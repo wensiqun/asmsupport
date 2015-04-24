@@ -1,10 +1,10 @@
 package cn.wensiqun.asmsupport.client.def;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
-public abstract class Param implements IParameterized {
+public abstract class Param implements IParam {
 
-    protected abstract KernelParameterized getTarget();
+    protected abstract KernelParame getTarget();
     
 }

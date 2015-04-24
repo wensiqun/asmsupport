@@ -6,12 +6,8 @@ import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.sample.client.json.JSONPool;
 import cn.wensiqun.asmsupport.sample.client.json.generator.AbstractGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.generator.IValueGeneratorChain.GeneratorContext;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class BeanGeneratorChain extends AbstractGeneratorChain {
@@ -33,7 +29,7 @@ public class BeanGeneratorChain extends AbstractGeneratorChain {
         if(type instanceof ProductClass) {
             if(jsonPool.getOrRegister(((ProductClass)type).getReallyClass()) != null) {
                 FieldVar pool = block.this_().field("jsonPool");
-                block.call(block.call(pool, "getOrRegister", block.val(type)), "parse", encoder, value);
+                pool.call("getOrRegister", block.val(type)).call("parse", encoder, value);
                 return true;
             }
         }

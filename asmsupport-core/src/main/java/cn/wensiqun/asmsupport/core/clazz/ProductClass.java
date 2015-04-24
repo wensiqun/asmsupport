@@ -110,35 +110,9 @@ public class ProductClass extends MutableClass {
 
         StringBuilder errorSuffix = new StringBuilder();
         for(Field field : found) {
-            errorSuffix.append(field.getActuallyOwnerType()).append(',');
+            errorSuffix.append(field.getDeclaringClass()).append(',');
         }
         throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
-    }
-    
-    @Override
-    public int getCastOrder(){
-        int order = 0;
-        if(type == Type.BOOLEAN_TYPE || name.equals(Boolean.class.getName())){
-            order = 1;
-        } else if(type == Type.CHAR_TYPE || name.equals(Character.class.getName())){
-            order = 2;
-        } else if(type == Type.BYTE_TYPE || name.equals(Byte.class.getName())){
-            order = 3;
-        } else if (type == Type.SHORT_TYPE || name.equals(Short.class.getName())) {
-            order = 4;
-        } else if (type == Type.INT_TYPE || name.equals(Integer.class.getName())) {
-            order = 5;
-        } else if (type == Type.LONG_TYPE || name.equals(Long.class.getName())) {
-            order = 6;
-        } else if (type == Type.FLOAT_TYPE || name.equals(Float.class.getName())) {
-            order = 7;
-        } else if (type == Type.DOUBLE_TYPE || name.equals(Double.class.getName())) {
-            order = 8;
-        } else {
-            order = 9;
-        }
-        
-        return order;
     }
 
 	@Override

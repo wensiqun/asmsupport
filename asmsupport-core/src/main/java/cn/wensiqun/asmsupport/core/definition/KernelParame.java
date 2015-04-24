@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.definition;
 
 import cn.wensiqun.asmsupport.core.PushStackable;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.def.IParameterized;
  * @author 温斯群(Joe Wen)
  * 
  */
-public interface KernelParameterized extends IParameterized, PushStackable {
+public interface KernelParame extends IParam, PushStackable {
     
     /**
      * 
@@ -39,7 +39,6 @@ public interface KernelParameterized extends IParameterized, PushStackable {
     
     /**
      * Override change return type.
-     * 
      */
     @Override
     GlobalVariable field(String name);

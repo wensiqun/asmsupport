@@ -19,7 +19,7 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
  * 
  *
  */
-public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody implements IEnumStaticBlockBody<KernelParameterized, LocalVariable> {
+public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody implements IEnumStaticBlockBody<KernelParame, LocalVariable> {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	
@@ -52,9 +52,9 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 	
 	private class EnumConstructorInfo{
 		String name;
-		KernelParameterized[] argus;
+		KernelParame[] argus;
 		  
-		private EnumConstructorInfo(String name, KernelParameterized[] argus) {
+		private EnumConstructorInfo(String name, KernelParame[] argus) {
 			super();
 			this.name = name;
 			this.argus = argus;
@@ -62,7 +62,7 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 	}
 
 	@Override
-	public void constructEnumConst(String name, KernelParameterized... argus) {
+	public void constructEnumConst(String name, KernelParame... argus) {
         if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
@@ -84,7 +84,7 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 			throw new ASMSupportException("exist unassign enum constant!");
 		}
 		
-		KernelParameterized[] values = new KernelParameterized[getMethodOwner().getEnumNum()];
+		KernelParame[] values = new KernelParame[getMethodOwner().getEnumNum()];
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
@@ -92,8 +92,8 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
-			KernelParameterized[] otherArgus = enumArgu.argus;
-	        KernelParameterized[] enumArgus = new KernelParameterized[otherArgus.length + 2];
+			KernelParame[] otherArgus = enumArgu.argus;
+	        KernelParame[] enumArgus = new KernelParame[otherArgus.length + 2];
 	        enumArgus[0] = Value.value(enumName);
 	        enumArgus[1] = Value.value(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);

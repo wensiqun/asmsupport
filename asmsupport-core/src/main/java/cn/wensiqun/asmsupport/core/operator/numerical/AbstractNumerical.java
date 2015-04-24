@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
@@ -52,7 +52,7 @@ public abstract class AbstractNumerical extends AbstractParameterizedOperator {
      * 
      * @param factor
      */
-    protected void pushFactorToStack(KernelParameterized factor) {
+    protected void pushFactorToStack(KernelParame factor) {
 
         AClass factorCls = factor.getResultType();
 

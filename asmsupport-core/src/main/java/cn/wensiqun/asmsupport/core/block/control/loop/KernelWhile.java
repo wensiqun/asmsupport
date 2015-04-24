@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.standard.loop.IWhile;
 
 /**
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.loop.IWhile;
  */
 public abstract class KernelWhile extends KernelDoWhile implements IWhile  {
 
-    public KernelWhile(KernelParameterized condition) {
+    public KernelWhile(KernelParame condition) {
         super(condition);
     }
 

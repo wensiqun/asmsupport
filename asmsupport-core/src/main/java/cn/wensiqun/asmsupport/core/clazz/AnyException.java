@@ -21,6 +21,13 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
+
+/**
+ * Use internal, 
+ * 
+ * @author sqwen
+ *
+ */
 public class AnyException extends AClass {
 
     public static final AClass ANY = new AnyException();
@@ -61,18 +68,8 @@ public class AnyException extends AClass {
     }
 
     @Override
-    public int getCastOrder() {
-        return 12;
-    }
-
-    @Override
     public boolean existStaticInitBlock() {
         return false;
-    }
-
-    @Override
-    public String getPackage() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -109,12 +106,6 @@ public class AnyException extends AClass {
     public int hashCode() {
         return ANY.hashCode();
     }
-
-    @Override
-    public Type getType() {
-        return type;
-    }
-
 
     @Override
     public String toString() {

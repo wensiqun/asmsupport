@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -31,7 +31,7 @@ public class KernelNeg extends AbstractPositiveNegative {
 
     private static final Log LOG = LogFactory.getLog(KernelNeg.class);
     
-    protected KernelNeg(KernelProgramBlock block, KernelParameterized factor) {
+    protected KernelNeg(KernelProgramBlock block, KernelParame factor) {
         super(block, factor, Operator.NEG);
     }
     

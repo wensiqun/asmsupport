@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.assign;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -31,7 +31,7 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
     
     private StaticGlobalVariable var;
     
-    protected StaticGlobalVariableAssigner(KernelProgramBlock block, final StaticGlobalVariable var, KernelParameterized value) {
+    protected StaticGlobalVariableAssigner(KernelProgramBlock block, final StaticGlobalVariable var, KernelParame value) {
         super(block, var, value);
         this.var = var;
     }
@@ -54,7 +54,7 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
         //判读如果是静态变量
         insnHelper.putStatic(var.getOwner().getType(), 
                 var.getMeta().getName(),
-                var.getMeta().getDeclareType().getType());
+                var.getMeta().getType().getType());
         /*end--执行赋值操作--end*/
     }
 

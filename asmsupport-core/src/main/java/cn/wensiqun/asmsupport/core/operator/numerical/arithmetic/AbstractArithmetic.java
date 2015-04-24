@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
@@ -29,19 +29,18 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractArithmetic extends AbstractNumerical implements
-        KernelParameterized {
+public abstract class AbstractArithmetic extends AbstractNumerical {
 
     /**算数因子1 */
-    protected KernelParameterized factor1;
+    protected KernelParame factor1;
 
     /**算数因子2 */
-    protected KernelParameterized factor2;
+    protected KernelParame factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
 
-    protected AbstractArithmetic(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2, Operator operator) {
+    protected AbstractArithmetic(KernelProgramBlock block, KernelParame factor1, KernelParame factor2, Operator operator) {
         super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;

@@ -19,17 +19,19 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
 
-public abstract class StaticMethodBody extends ProgramBlock<KernelStaticMethodBody> implements IStaticMethodBody<LocVar> {
+public abstract class StaticMethodBody extends ProgramBlock<KernelStaticMethodBody> implements
+        IStaticMethodBody<LocVar> {
 
-	public StaticMethodBody() {
-	     targetBlock = new KernelStaticMethodBody() {
+    public StaticMethodBody() {
+        targetBlock = new KernelStaticMethodBody() {
 
-			@Override
-			public void body(LocalVariable... args) {
-				StaticMethodBody.this.body(internalVar2ClientVar(args));
-			}
-	    	 
-	     };
-	}
+            @Override
+            public void body(LocalVariable... args) {
+                StaticMethodBody.this.body(internalVar2ClientVar(args));
+            }
+
+        };
+        cursor = new KernelProgramBlockCursor(targetBlock);
+    }
 
 }

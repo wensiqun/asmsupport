@@ -30,7 +30,7 @@ public abstract class ForEach extends ProgramBlock<KernelForEach> implements IFo
 
 			@Override
 			public void body(LocalVariable e) {
-				ForEach.this.body(new LocVar(this, e));
+				ForEach.this.body(new LocVar(cursor, e));
 			}
 			
 		};
@@ -41,7 +41,7 @@ public abstract class ForEach extends ProgramBlock<KernelForEach> implements IFo
 
             @Override
             public void body(LocalVariable e) {
-                ForEach.this.body(new LocVar(this, e));
+                ForEach.this.body(new LocVar(cursor, e));
             }
             
         };
@@ -52,7 +52,7 @@ public abstract class ForEach extends ProgramBlock<KernelForEach> implements IFo
 
             @Override
             public void body(LocalVariable e) {
-                ForEach.this.body(new LocVar(this, e));
+                ForEach.this.body(new LocVar(cursor, e));
             }
             
         };

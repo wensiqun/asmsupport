@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.block.method.init;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
@@ -34,9 +34,9 @@ import cn.wensiqun.asmsupport.standard.method.IConstructorBody;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class KernelConstructorBody extends AbstractKernelMethodBody implements IConstructorBody<KernelParameterized, LocalVariable> {
+public abstract class KernelConstructorBody extends AbstractKernelMethodBody implements IConstructorBody<KernelParame, LocalVariable> {
 
-	public MethodInvoker supercall(KernelParameterized... arguments) {
+	public MethodInvoker supercall(KernelParame... arguments) {
     	AClass owner = getMethodOwner();
     	if(ModifierUtils.isEnum(getMethodOwner().getModifiers())){
     		throw new ASMSupportException("Cannot invoke super constructor from enum type " + owner);
@@ -44,7 +44,7 @@ public abstract class KernelConstructorBody extends AbstractKernelMethodBody imp
         invokeVerify(owner);
 
         return OperatorFactory.newOperator(SuperConstructorInvoker.class, 
-        		new Class<?>[]{KernelProgramBlock.class, AClass.class, KernelParameterized[].class}, 
+        		new Class<?>[]{KernelProgramBlock.class, AClass.class, KernelParame[].class}, 
         		getExecutor(), owner, arguments);
 	}
     

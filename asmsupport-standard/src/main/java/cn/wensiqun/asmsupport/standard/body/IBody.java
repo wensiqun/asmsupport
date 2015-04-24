@@ -14,6 +14,12 @@
  */
 package cn.wensiqun.asmsupport.standard.body;
 
+/**
+ * The super type of any program block
+ * 
+ * @author sqwen
+ *
+ */
 public interface IBody {
 
 }

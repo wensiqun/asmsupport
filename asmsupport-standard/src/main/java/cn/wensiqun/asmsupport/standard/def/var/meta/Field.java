@@ -17,57 +17,83 @@ package cn.wensiqun.asmsupport.standard.def.var.meta;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 
- * @author 温斯群(Joe Wen)
- *
+ * The Field of class
  */
 public class Field extends VarMeta {
 
-    private AClass owner;
+    private AClass directOwnerType;
 
-    private AClass actuallyOwnerType;
+    private AClass declaringClass;
 
     /**
-     * @param owner
-     *            变量所属的Class
-     * @param actuallyOwnerType
-     *            变量实际有用者
-     * @param variableClass
-     *            变量类型
-     * @param modifiers
-     *            变量修饰符
-     * @param name
-     *            变量名
+     * @param directOwner The direct owner see {@link #getDirectOwnerType()}
+     * @param declaringClass The field see {@link #getDeclaringClass()}
+     * @param type Field type see {@link VarMeta#getType()}
+     * @param modifiers Field modifiers see {@link VarMeta#getModifiers()}
+     * @param name Field name see {@link VarMeta#getName()}
      */
-    public Field(AClass owner, AClass actuallyOwnerType, AClass declareClass, int modifiers, String name) {
-        super(name, modifiers, declareClass);
-        this.owner = owner;
-        this.actuallyOwnerType = actuallyOwnerType;
+    public Field(AClass directOwnerType, AClass declaringClass, AClass type, int modifiers, String name) {
+        super(name, modifiers, type);
+        this.directOwnerType = directOwnerType;
+        this.declaringClass = declaringClass;
     }
 
     /**
-     * getter of owner
+     * <p>
+     * Get the direct owner of current {@link Field}, what's the different to {@link #getDeclaringClass()},
+     * the direct owner is a enter class. For example :
+     * <p>
      * 
-     * @return
+     * <pre>
+     * public class Foo {
+     *     public String field; 
+     * }
+     * 
+     * public class SubFoo extends Foo{
+     * 
+     * }
+     * </pre>
+     * 
+     * <p>
+     * If you get the field via SubFoo class, such as following asmsupport code :
+     * <pre>
+     * AClass subFoo = getType(SubFoo.class);
+     * Field field = subFoo.field("field");
+     * </pre>
+     * Than the {@link #getDirectOwnerType()} is <code>SubFoo<code> and {@link #getDeclaringClass()} is <code>Foo<code>
+     * </p>
      */
-    public AClass getOwner() {
-        return owner;
+    public AClass getDirectOwnerType() {
+        return directOwnerType;
     }
 
     /**
+     * <p>
+     * Returns the <code>{@link AClass}</code> object representing the class or interface
+     * that declares the field represented by this <code>{@link Field}</code> object.
+     * For example :
+     * </p>
      * 
-     * @return
+     * <p>
+     * <pre>
+     * public class Foo {
+     *     public String field; 
+     * }
+     * </pre>
+     * 
+     * The declaring class is Foo of Field "field"
+     * </p> 
      */
-    public AClass getActuallyOwnerType() {
-        return actuallyOwnerType;
+    public AClass getDeclaringClass() {
+        return declaringClass;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((actuallyOwnerType == null) ? 0 : actuallyOwnerType.hashCode());
-        result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+        result = prime * result + ((declaringClass == null) ? 0 : declaringClass.hashCode());
+        result = prime * result + ((directOwnerType == null) ? 0 : directOwnerType.hashCode());
         return result;
     }
 
@@ -83,18 +109,18 @@ public class Field extends VarMeta {
             return false;
         }
         Field other = (Field) obj;
-        if (actuallyOwnerType == null) {
-            if (other.actuallyOwnerType != null) {
+        if (declaringClass == null) {
+            if (other.declaringClass != null) {
                 return false;
             }
-        } else if (!actuallyOwnerType.equals(other.actuallyOwnerType)) {
+        } else if (!declaringClass.equals(other.declaringClass)) {
             return false;
         }
-        if (owner == null) {
-            if (other.owner != null) {
+        if (directOwnerType == null) {
+            if (other.directOwnerType != null) {
                 return false;
             }
-        } else if (!owner.equals(other.owner)) {
+        } else if (!directOwnerType.equals(other.directOwnerType)) {
             return false;
         }
         return true;

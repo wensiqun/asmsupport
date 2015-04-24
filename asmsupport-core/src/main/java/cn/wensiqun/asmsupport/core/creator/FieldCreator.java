@@ -87,7 +87,7 @@ public class FieldCreator implements IFieldCreator {
         }
         context.getClassVisitor().visitField(
                 fe.getModifiers(), name, 
-                fe.getDeclareType().getDescription(), null, value).visitEnd();
+                fe.getType().getDescription(), null, value).visitEnd();
     }
 
 }

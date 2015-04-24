@@ -6,7 +6,8 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 
 /**
- * Java Class的抽象
+ * Indicate a java class.
+ * 
  * 
  * @author 温斯群(Joe Wen)
  *
@@ -14,61 +15,74 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 public interface IClass { 
 	
     /**
-     * 判断当前Class是否是数组
-     * @return 如果当前Class是数组返回true, 否则返回false
+     * Check the class is array type.
+     * 
+     * @return true if current class is array.
      */
     boolean isArray();
     
     /**
-     * 如果当前Class是数组返回当前数组的维度
+     * Get the dimension number of current class. 
      * 
-     * @return 如果当前Class是数组返回当前数组的维度, 否则返回-1
+     * @return return dimension number if current class is array, otherwise return -1
      */
     int getDimension();
 
     /**
-     * 获取包名
+     * Get the package name.
      * 
-     * @return 包的全名
+     * @return String package name
      */
     String getPackage();
 
     /**
-     * 获取当前Class的名字
+     * Get the qualified name of current class.
      * 
-     * @return Class全名
+     * @return class qualified name
      */
     String getName();
 
     /**
-     * 获取当前Class的修饰符, 修饰符表示使用ASM的方法表示(see {@link Opcodes})
-     * @return 修饰符所表示的值
+     * Get the class modifier, it's an integer value which 
+     * is a sum value of same field from {@link Opcodes}, the field 
+     * is start with 'ACC_', for exampel : "public final class" modifiers,
+     * the value is  {@link Opcodes#ACC_PUBLIC} + {@link Opcodes#ACC_FINAL}
+     * 
+     * @return int the modifiers
      */
     int getModifiers();
 
     /**
-     * 获取当前Class的java版本, 版本的表示使用ASM的方法表示(see {@link Opcodes})
+     * Get the class version, is should be (see {@link Opcodes#V1_1} ~ {@link Opcodes#V_MAX})
      * 
      * @return 
      */
     int getVersion();
 
     /**
-     * 获取父类
-     * @return 父类
+     * Get the super class.
+     * 
+     * @return Class super class
      */
     Class<?> getSuperClass();
 
     /**
-     * 所实现的直接接口
-     * @return 接口Class的数组
+     * Get all interfaces
+     * 
+     * @return all interface
      */
     Class<?>[] getInterfaces();
 
+    /**
+     * Get the class description, the description is the same to {@link Type#getDescriptor()},
+     * It's the indication of class in jvm.
+     * 
+     * @return String class description
+     */
     String getDescription();
     
     /**
-     * Get all global variable metadata, that possible contain static and non-static field.
+     * Get all field of current class, it's possible contain static and non-static field.
      * 
      * @param name
      * @return
@@ -77,40 +91,58 @@ public interface IClass {
     
     
     /**
-     * 获取当前Class对应的ASM中的Type
+     * Get the asm 
      * @return
      */
     Type getType();
 
     /**
+     * Check the class is primitive
      * 
-     * @return 
      */
     boolean isPrimitive();
 
+    
+    /**
+     * 
+     * Check the class is interface
+     * 
+     */
     boolean isInterface();
 
+    /**
+     * Check the class is abstract class
+     * 
+     */
     boolean isAbstract();
     
     /**
-     * 返回类型转换优先级顺序
-     * @return
+     * When do cast will get the most specially type according the cast order.
+     * 
      */
     int getCastOrder();
     
+    
+    /**
+     * Check the class exist static init block.
+     * 
+     */
     boolean existStaticInitBlock();
     
     
     /**
      * if the class is array type, get the next dim type.
      * 
-     * @return
      */
     public IClass getNextDimType();
     
     /**
-     * 获取数组的最基本类型
-     * @return
+     * IF current class is array type, than get the basic type, for example : 
+     * <pre>
+     * String[][][] str;
+     * </pre>
+     * 
+     * The root component class is String in preceding code.
      */
     public IClass getRootComponentClass();
     

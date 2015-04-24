@@ -39,9 +39,9 @@ public abstract class AbstractVariable implements IVariable {
         if(this.getResultType() instanceof ArrayClass){
             throw new ASMSupportException("Cannot get global variable from array type variable : " + this);
         }
-        Field field = getMeta().getDeclareType().getField(name);
+        Field field = getMeta().getType().getField(name);
         if(ModifierUtils.isStatic(field.getModifiers())){
-            return new StaticGlobalVariable(field.getActuallyOwnerType(), field);
+            return new StaticGlobalVariable(field.getDeclaringClass(), field);
         } else {
             return new NonStaticGlobalVariable(this, field);
         }

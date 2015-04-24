@@ -14,9 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.sync;
 
-import cn.wensiqun.asmsupport.standard.body.IParameterizedBody;
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.body.IParamBody;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
-public interface ISynchronized<_Parameterized extends IParameterized> extends IParameterizedBody<_Parameterized>{
+public interface ISynchronized<_P extends IParam> extends IParamBody<_P>{
 
 }

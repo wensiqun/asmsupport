@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  *
  * @author wensiqun(at)163.com
  */
-public interface ValueAction<_P extends IParameterized> {
+public interface ValueAction<_P extends IParam> {
     
 
     /**

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  * @param <_P> The parameterized generic type.
  * @param <_V>      The Local Variable generic type
  */
-public interface VariableAction<_P extends IParameterized, _V extends IVar> {
+public interface VariableAction<_P extends IParam, _V extends IVar> {
 
     /**
      * 

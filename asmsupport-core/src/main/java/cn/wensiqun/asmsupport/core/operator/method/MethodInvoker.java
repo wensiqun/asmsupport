@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -51,7 +51,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
 
     //protected AClass[] argumentClasses;
     protected String name;
-    protected KernelParameterized[] arguments;
+    protected KernelParame[] arguments;
     protected AClass methodOwner;
     
     /** 调用完方法是否需要保存返回值栈 如果是构造方法则是否需要保存新构造的方法的一个引用 */
@@ -67,7 +67,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
      * @param arguments
      * @param block
      */
-    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParameterized[] arguments) {
+    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParame[] arguments) {
         super(block, Operator.COMMON);
         this.methodOwner = owner;
         this.name = name;
@@ -79,7 +79,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
      */
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
-            KernelParameterized argu = arguments[i];
+            KernelParame argu = arguments[i];
             if(LOG.isPrintEnabled()) {
                 LOG.print("push argument to stack");
             }
@@ -132,16 +132,16 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
         		
         		int fixedArgsLen = mtdEntity.getArgClasses().length - 1;//argumentClasses.length - 1;
-                KernelParameterized[] fixedArgs = new KernelParameterized[fixedArgsLen];
+                KernelParame[] fixedArgs = new KernelParame[fixedArgsLen];
                 System.arraycopy(arguments, 0, fixedArgs, 0, fixedArgsLen);
 
                 KernelArrayValue variableVarifyArauments;
                 ArrayClass arrayClass = (ArrayClass)mtdEntity.getArgClasses()[mtdEntity.getArgClasses().length - 1];
                 variableVarifyArauments = block.newarray(arrayClass, 
-                       (KernelParameterized[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
+                       (KernelParame[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
                 variableVarifyArauments.asArgument();
                 
-                arguments = (KernelParameterized[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
+                arguments = (KernelParame[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
         	}
         }
 
@@ -153,7 +153,7 @@ public abstract class MethodInvoker extends AbstractParameterizedOperator {
 
     @Override
     protected void checkAsArgument() {
-        for (KernelParameterized argu : arguments) {
+        for (KernelParame argu : arguments) {
             // 将argu从Block的执行队列中删除
             // 因为此时由方法调用负责调用value
             argu.asArgument();

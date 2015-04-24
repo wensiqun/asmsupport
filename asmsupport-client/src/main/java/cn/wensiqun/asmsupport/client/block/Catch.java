@@ -27,7 +27,7 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
 
             @Override
             public void body(LocalVariable e) {
-                Catch.this.body(new LocVar(this, e));
+                Catch.this.body(new LocVar(cursor, e));
             }
         };
     }
@@ -37,18 +37,30 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
 
             @Override
             public void body(LocalVariable e) {
-                Catch.this.body(new LocVar(this, e));
+                Catch.this.body(new LocVar(cursor, e));
             }
         };
     }
 
     public Catch catch_(Catch catchBlock) {
+        catchBlock.cursor = cursor;
+        catchBlock.parent = parent;
+        cursor.setPointer(catchBlock.targetBlock);
+        
         targetBlock.catch_(catchBlock.targetBlock);
+        
+        cursor.setPointer(parent.targetBlock);
         return catchBlock;
     }
 
     public Finally finally_(Finally finallyClient) {
+        finallyClient.cursor = cursor;
+        finallyClient.parent = parent;
+        cursor.setPointer(finallyClient.targetBlock);
+        
         targetBlock.finally_(finallyClient.targetBlock);
+        
+        cursor.setPointer(parent.targetBlock);
         return finallyClient;
     }
 

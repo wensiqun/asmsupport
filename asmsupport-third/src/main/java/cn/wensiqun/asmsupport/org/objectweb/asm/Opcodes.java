@@ -58,7 +58,8 @@ public interface Opcodes {
     int V1_6 = 0 << 16 | 50;
     //int V1_7 = 0 << 16 | 51;
     //int V1_8 = 0 << 16 | 52;
-
+    int V_MAX = V1_6;
+    
     // access flags
 
     int ACC_PUBLIC = 0x0001; // class, field, method

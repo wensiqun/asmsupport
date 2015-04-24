@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -32,7 +32,7 @@ public class KernelAdd extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelAdd.class);
     
-    protected KernelAdd(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2) {
+    protected KernelAdd(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
         super(block, factor1, factor2, Operator.ADD);
     }
 

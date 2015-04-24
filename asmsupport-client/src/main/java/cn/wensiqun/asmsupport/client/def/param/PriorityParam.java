@@ -1,22 +1,22 @@
 package cn.wensiqun.asmsupport.client.def.param;
 
+import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 public abstract class PriorityParam extends Param {
 
-    protected KernelParameterized target; 
-    protected KernelProgramBlock block;
+    protected KernelParame target; 
+    protected KernelProgramBlockCursor cursor;
     protected PriorityStack priorityStack;
     
-    public PriorityParam(KernelProgramBlock block, OperatorAction action, Param... operands) {
-    	this.block = block;
+    public PriorityParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
+    	this.cursor = cursor;
     	priorityStack = new PriorityStack();
     	priorityStack.pushAction(action, operands);
     }
@@ -32,7 +32,7 @@ public abstract class PriorityParam extends Param {
     }
 
     @Override
-    public KernelParameterized getTarget() {
+    public KernelParame getTarget() {
     	if(target == null) {
     		priorityStack.marriageAction();
     		target = ParamPostern.getTarget(priorityStack.operandStack.pop());

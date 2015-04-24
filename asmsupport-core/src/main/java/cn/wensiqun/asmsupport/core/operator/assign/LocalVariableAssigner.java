@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.assign;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,7 +32,7 @@ public class LocalVariableAssigner extends KernelAssign {
     
     private LocalVariable var;
     
-    protected LocalVariableAssigner(KernelProgramBlock block, final LocalVariable var, KernelParameterized value) {
+    protected LocalVariableAssigner(KernelProgramBlock block, final LocalVariable var, KernelParame value) {
         super(block, var, value);
         this.var = var;
     }

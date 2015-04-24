@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.block.method.init;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
@@ -38,8 +38,8 @@ public abstract class KernelEnumConstructorBody extends AbstractKernelMethodBody
     @Override
     public final void generateBody() {
         OperatorFactory.newOperator(SuperConstructorInvoker.class, 
-        		new Class<?>[]{KernelProgramBlock.class, AClass.class, KernelParameterized[].class}, 
-        		getExecutor(), getMethodOwner(), new KernelParameterized[]{argments[0], argments[1]});
+        		new Class<?>[]{KernelProgramBlock.class, AClass.class, KernelParame[].class}, 
+        		getExecutor(), getMethodOwner(), new KernelParame[]{argments[0], argments[1]});
         body((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
     }
     

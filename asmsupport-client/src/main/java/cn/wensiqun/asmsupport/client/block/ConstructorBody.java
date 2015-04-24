@@ -33,10 +33,11 @@ public abstract class ConstructorBody extends ProgramBlock<KernelConstructorBody
 			}
 			
 		};
+		cursor = new KernelProgramBlockCursor(targetBlock);
 	}
 
 	@Override
 	public UncertainParam supercall(Param... arguments) {
-    	return new UncertainParam(targetBlock, targetBlock.supercall(ParamPostern.getTarget(arguments)));
+    	return new UncertainParam(cursor, targetBlock.supercall(ParamPostern.getTarget(arguments)));
 	}
 }

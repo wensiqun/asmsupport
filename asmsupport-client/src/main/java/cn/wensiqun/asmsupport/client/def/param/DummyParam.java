@@ -1,19 +1,19 @@
 package cn.wensiqun.asmsupport.client.def.param;
 
+import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class DummyParam extends Param {
 
-    protected KernelParameterized target;
+    protected KernelParame target;
     
-    protected KernelProgramBlock block;
+    protected KernelProgramBlockCursor cursor;
     
-    public DummyParam(KernelProgramBlock block, KernelParameterized target) {
-        this.block = block;
+    public DummyParam(KernelProgramBlockCursor cursor, KernelParame target) {
+        this.cursor = cursor;
         this.target = target;
     }
 
@@ -23,12 +23,19 @@ public class DummyParam extends Param {
     }
 
     @Override
-    protected KernelParameterized getTarget() {
+    protected KernelParame getTarget() {
         return target;
     }
 
     @Override
     public final FieldVar field(String name) {
-        return new FieldVar(block, target.field(name));
+        return new FieldVar(cursor, target.field(name));
     }
+
+    @Override
+    public String toString() {
+        return getTarget().toString();
+    }
+    
+    
 }

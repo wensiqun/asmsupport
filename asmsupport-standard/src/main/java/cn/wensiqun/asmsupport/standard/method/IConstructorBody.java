@@ -15,10 +15,10 @@
 package cn.wensiqun.asmsupport.standard.method;
 
 import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IConstructorBody<_P extends IParameterized, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
+public interface IConstructorBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
 	
     /**
      * Call super constructor, corresponding to following java code : 

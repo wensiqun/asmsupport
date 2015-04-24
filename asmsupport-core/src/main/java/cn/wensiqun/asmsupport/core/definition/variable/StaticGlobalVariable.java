@@ -45,22 +45,22 @@ public class StaticGlobalVariable extends GlobalVariable {
 
     @Override
     public AClass getResultType() {
-        return meta.getDeclareType();
+        return meta.getType();
     }
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        if (!AClassUtils.visible(block.getMethodOwner(), meta.getOwner(), meta.getActuallyOwnerType(),
+        if (!AClassUtils.visible(block.getMethodOwner(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
                 meta.getModifiers())) {
-            throw new IllegalArgumentException("Cannot access field " + meta.getActuallyOwnerType() + "#"
+            throw new IllegalArgumentException("Cannot access field " + meta.getDeclaringClass() + "#"
                     + meta.getName() + " from " + block.getMethodOwner());
         }
 
         if (LOG.isPrintEnabled()) {
-            LOG.print("get field " + meta.getName() + " from class " + meta.getOwner().getName()
+            LOG.print("get field " + meta.getName() + " from class " + meta.getDirectOwnerType().getName()
                     + " and push to stack!");
         }
-        block.getInsnHelper().getStatic(owner.getType(), meta.getName(), meta.getDeclareType().getType());
+        block.getInsnHelper().getStatic(owner.getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

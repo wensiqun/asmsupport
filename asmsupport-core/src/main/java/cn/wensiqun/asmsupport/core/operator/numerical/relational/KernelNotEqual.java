@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public class KernelNotEqual extends AbstractNullCompareRelational {
 
-    protected KernelNotEqual(KernelProgramBlock block, KernelParameterized factor1, KernelParameterized factor2) {
+    protected KernelNotEqual(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
         super(block, factor1, factor2, Operator.NOT_EQUAL_TO);
     }
 

@@ -52,7 +52,7 @@ public class ThisVariable extends ImplicitVariable {
 
     @Override
     public AClass getResultType() {
-        return globalVariableMeta.getDeclareType();
+        return globalVariableMeta.getType();
     }
 
     @Override

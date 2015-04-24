@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -42,8 +42,8 @@ import cn.wensiqun.asmsupport.standard.loop.IForEach;
  */
 public abstract class KernelForEach extends KernelProgramBlock implements Loop, IForEach<LocalVariable> {
     
-    private KernelParameterized elements;
-    private KernelParameterized condition;
+    private KernelParame elements;
+    private KernelParame condition;
     private AClass elementType;
     
     private Label startLbl = new Label();
@@ -51,11 +51,11 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
     private Label continueLbl = new Label();
     private Label endLbl = new Label();
     
-    public KernelForEach(KernelParameterized elements) {
+    public KernelForEach(KernelParame elements) {
         this(elements, null);
     }
     
-    public KernelForEach(KernelParameterized elements, AClass elementType) {
+    public KernelForEach(KernelParame elements, AClass elementType) {
         this.elements = elements;
         this.elementType = elementType;
         

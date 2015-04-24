@@ -16,6 +16,21 @@ package cn.wensiqun.asmsupport.standard.body;
 
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
+/**
+ * Indicate a program block, it's will be passes multiple local variables (is the sub type of
+ * {@link ILocVar}) when enter the block.
+ * 
+ * @author sqwen
+ *
+ * @param <_Var>
+ */
 public interface MultiLocVarBody<_Var extends ILocVar> extends IBody {
+    
+    /**
+     * Enter a program block with multiple local variable.
+     * 
+     * @param args
+     */
     void body(_Var... args);
+    
 }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.def.IParameterized;
  * @author wensiqun(at)163.com
  *
  */
-public interface CrementAction<_P extends IParameterized> {
+public interface CrementAction<_P extends IParam> {
     
     /**
      * 生成类似--i操作指令

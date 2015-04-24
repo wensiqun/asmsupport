@@ -23,8 +23,8 @@ public class MapGeneratorChain extends AbstractGeneratorChain {
     protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
             LocVar encoder, AClass type, Param value) {
         Var jsonPool = block.this_().field("jsonPool");
-        UncertainParam getOrRegisterCall = block.call(jsonPool, "getOrRegister", block.val(block.getType(Map.class)));
-        block.call(getOrRegisterCall, "parse", encoder, value);
+        UncertainParam getOrRegisterCall = jsonPool.call("getOrRegister", block.val(Map.class));
+        getOrRegisterCall.call("parse", encoder, value);
         return true;
     }
 

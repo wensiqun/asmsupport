@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -34,7 +34,7 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     
     private NonStaticGlobalVariable var;
     
-    protected NonStaticGlobalVariableAssigner(KernelProgramBlock block, final NonStaticGlobalVariable var, KernelParameterized value) {
+    protected NonStaticGlobalVariableAssigner(KernelProgramBlock block, final NonStaticGlobalVariable var, KernelParame value) {
         super(block, var, value);
         this.var = var;
     }
@@ -44,26 +44,18 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     	if(LOG.isPrintEnabled()){
             LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
-        /*start--执行赋值操作--start*/
-    	//如果当前方法是静态的抛异常
-        if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
-            throw new ASMSupportException("current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
+    	if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
+            throw new ASMSupportException("Current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
         }
         var.getOwner().loadToStack(block);
         
-        
-        //加载值到栈
         value.loadToStack(block);
         
-        //autoBoxAndUnBox();
-        //如果是基本类型则执行类型转换
         autoCast();
         
-        //将栈内的值存储到全局变量中
-        insnHelper.putField(var.getOwner().getMeta().getDeclareType().getType(), 
+        insnHelper.putField(var.getOwner().getResultType().getType(), 
                 var.getMeta().getName(),
-                var.getMeta().getDeclareType().getType());
-        /*end--执行赋值操作--end*/
+                var.getMeta().getType().getType());
     }
 
 }

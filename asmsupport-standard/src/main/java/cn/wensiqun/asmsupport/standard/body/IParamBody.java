@@ -14,10 +14,23 @@
  */
 package cn.wensiqun.asmsupport.standard.body;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
-public interface IParameterizedBody<_Parameterized extends IParameterized> extends IBody {
-    
-    void body(_Parameterized e);
-    
+/**
+ * Indicate a program block, it's will be passes an argument(is the sub type of
+ * {@link IParam}) when enter the block.
+ * 
+ * @author sqwen
+ *
+ * @param <_P>
+ */
+public interface IParamBody<_P extends IParam> extends IBody {
+
+    /**
+     * Enter the block with an argument 
+     * 
+     * @param e
+     */
+    void body(_P e);
+
 }

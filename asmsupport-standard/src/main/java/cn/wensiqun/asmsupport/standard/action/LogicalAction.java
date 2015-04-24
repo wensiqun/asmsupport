@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.action;
 
-import cn.wensiqun.asmsupport.standard.def.IParameterized;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.def.IParameterized;
  * @author wensiqun(at)163.com
  *
  */
-public interface LogicalAction<_P extends IParameterized> {
+public interface LogicalAction<_P extends IParam> {
     
     /**
      * 生成逻辑与操作指令,对应下面的红色java代码

@@ -206,7 +206,7 @@ public class Value implements IValue {
         }
         return defaultValue(type);
     }
-
+    
     /**
      * Get {@code int} value
      * 

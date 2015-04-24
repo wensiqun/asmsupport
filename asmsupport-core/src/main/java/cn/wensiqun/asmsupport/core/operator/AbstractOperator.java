@@ -66,7 +66,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     }
 
     /**
-     * template for {@link #prepare()} method. <h4>Order :</h4>
+     * Template for {@link #prepare()} method. <h4>Order :</h4>
      * <ol>
      * <li><b>startPrepare</b></li>
      * <li>initAdditionalProperties</li>
@@ -79,7 +79,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     }
 
     /**
-     * template for {@link #prepare()} method. <h4>Order :</h4>
+     * Template for {@link #prepare()} method. <h4>Order :</h4>
      * <ol>
      * <li>startPrepare</li>
      * <li><b>initAdditionalProperties</b></li>
@@ -92,7 +92,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     }
 
     /**
-     * template for {@link #prepare()} method. <h4>Order :</h4>
+     * Template for {@link #prepare()} method. <h4>Order :</h4>
      * <ol>
      * <li>startPrepare</li>
      * <li>initAdditionalProperties</li>
@@ -105,7 +105,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     }
 
     /**
-     * template for {@link #prepare()} method. <h4>Order :</h4>
+     * Template for {@link #prepare()} method. <h4>Order :</h4>
      * <ol>
      * <li>startPrepare</li>
      * <li>initAdditionalProperties</li>
@@ -118,7 +118,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     }
 
     /**
-     * template for {@link #prepare()} method. <h4>Order :</h4>
+     * Template for {@link #prepare()} method. <h4>Order :</h4>
      * <ol>
      * <li>startPrepare</li>
      * <li>initAdditionalProperties</li>

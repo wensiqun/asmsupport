@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.block.control.condition;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParameterized;
+import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.branch.IElseIF;
@@ -25,9 +25,9 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
 public abstract class KernelElseIF extends ConditionBranchBlock implements IElseIF<KernelElseIF, KernelElse> {
 
-    private KernelParameterized condition;
+    private KernelParame condition;
 
-    public KernelElseIF(KernelParameterized condition) {
+    public KernelElseIF(KernelParame condition) {
         this.condition = condition;
         condition.asArgument();
     }
