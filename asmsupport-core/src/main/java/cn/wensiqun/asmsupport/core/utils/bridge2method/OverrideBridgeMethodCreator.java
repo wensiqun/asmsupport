@@ -87,7 +87,7 @@ public class OverrideBridgeMethodCreator {
     }
     
     private boolean needBridge(AMethod method, java.lang.reflect.Method parent){
-    	Type implReturnType = method.getMethodMeta().getReturnType();
+    	Type implReturnType = method.getMeta().getReturnType();
     	Class<?> parentReturnClass = parent.getReturnType();
     	Type parentReturnType = parentReturnClass == null ? Type.VOID_TYPE : Type.getType(parentReturnClass);
     	if(parentReturnType == null){
@@ -103,15 +103,15 @@ public class OverrideBridgeMethodCreator {
      * @param overriden 被重写的方法
      */
     private MethodCreator createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
-    	final String name = method.getMethodMeta().getName();
+    	final String name = method.getMeta().getName();
     	
-    	AClass[] argClasses = method.getMethodMeta().getArgClasses();
+    	AClass[] argClasses = method.getMeta().getArgClasses();
     	
-    	String[] argNames = method.getMethodMeta().getArgNames();
+    	String[] argNames = method.getMeta().getArgNames();
     	
     	AClass returnClass = AClassFactory.getType(overriden.getReturnType());
     	
-    	AClass[] exceptions = method.getMethodMeta().getExceptions();
+    	AClass[] exceptions = method.getMeta().getExceptions();
     	
     	//先消除abstract的flag，再加入bridge的flag
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;

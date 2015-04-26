@@ -26,6 +26,7 @@ import cn.wensiqun.asmsupport.client.operations.action.OrAction;
 import cn.wensiqun.asmsupport.client.operations.action.ShiftLeftAction;
 import cn.wensiqun.asmsupport.client.operations.action.ShiftRightAction;
 import cn.wensiqun.asmsupport.client.operations.action.SubAction;
+import cn.wensiqun.asmsupport.client.operations.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.operations.behavior.UncertainBehavior;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -129,7 +130,7 @@ public class UncertainParam extends DummyParam implements UncertainBehavior {
 
     @Override
     public NumParam ushr(Param para) {
-        return new NumParam(cursor, new ShiftRightAction(cursor), this, para);
+        return new NumParam(cursor, new UnsignedShiftRightAction(cursor), this, para);
     }
 
     @Override

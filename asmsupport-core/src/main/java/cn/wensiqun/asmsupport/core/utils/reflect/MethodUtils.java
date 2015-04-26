@@ -42,7 +42,7 @@ public class MethodUtils {
      */
     public static Method getOverriddenMethod(AMethod overrideMethod) {
         Class<?> superClass = overrideMethod.getMethodOwner().getSuperClass();
-        AMethodMeta entity = overrideMethod.getMethodMeta();
+        AMethodMeta entity = overrideMethod.getMeta();
         String methodName = entity.getName();
         AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
         Class<?>[] argTypes = new Class[argClasses.length];
@@ -100,7 +100,7 @@ public class MethodUtils {
      * @return
      */
     public static Method[] getImplementedMethod(AMethod implementMethod) {
-        AMethodMeta entity = implementMethod.getMethodMeta();
+        AMethodMeta entity = implementMethod.getMeta();
         String methodName = entity.getName();
         AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
         Class<?>[] argTypes = new Class[argClasses.length];

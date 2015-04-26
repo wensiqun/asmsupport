@@ -18,6 +18,14 @@ import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
 import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
+/**
+ * Representing a constructor body.
+ * 
+ * @author
+ *
+ * @param <_P>
+ * @param <_Var>
+ */
 public interface IConstructorBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
 	
     /**

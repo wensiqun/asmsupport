@@ -67,11 +67,11 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     @Override
     protected void init() {
         AMethod method = getMethod();
-        AMethodMeta me = method.getMethodMeta();
+        AMethodMeta me = method.getMeta();
         if (!method.isStatic()) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
                     String.class, Type.class, Type.class }, getExecutor(), ASConstant.THIS, me.getOwner().getType(),
-                    method.getMethodMeta().getOwner().getType());
+                    method.getMeta().getOwner().getType());
         }
 
         String[] argNames = me.getArgNames();
@@ -93,7 +93,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         AMethod method = getMethod();
         if (LOG.isPrintEnabled()) {
             StringBuilder str = new StringBuilder("create method: ------------");
-            str.append(method.getMethodMeta().getMethodString());
+            str.append(method.getMeta().getMethodString());
             LOG.print(str);
         }
 

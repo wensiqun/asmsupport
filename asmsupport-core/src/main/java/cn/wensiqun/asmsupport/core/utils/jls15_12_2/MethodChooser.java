@@ -197,18 +197,18 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		    if(directCallClass instanceof SemiClass){
 	            if(ASConstant.INIT.equals(name)){
 	                for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
-	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                    tempPotentially.add(directCallClass, method.getMeta());
 	                }
 	            }else{
 	                for(AMethod method : ((SemiClass)directCallClass).getMethods()){
-	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                    tempPotentially.add(directCallClass, method.getMeta());
 	                }
 	                fetchMatchMethod(tempPotentially, directCallClass.getSuperClass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
 	            if(ASConstant.INIT.equals(name)){
 	                for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
-	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                    tempPotentially.add(directCallClass, method.getMeta());
 	                }
 	                
 	                List<AMethodMeta> methods = ClassUtils.getAllMethod(((ProductClass) directCallClass).getReallyClass(), name);
@@ -218,7 +218,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	                
 	            }else{
 	                for(AMethod method : ((ProductClass)directCallClass).getMethods()){
-	                    tempPotentially.add(directCallClass, method.getMethodMeta());
+	                    tempPotentially.add(directCallClass, method.getMeta());
 	                }
 	                fetchMatchMethod(tempPotentially, ((ProductClass) directCallClass).getReallyClass(), name);
 	            }

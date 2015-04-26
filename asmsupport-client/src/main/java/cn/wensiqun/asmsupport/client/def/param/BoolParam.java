@@ -15,6 +15,10 @@ import cn.wensiqun.asmsupport.core.definition.value.Value;
 
 public class BoolParam extends PriorityParam implements BoolBehavior {
 
+	public BoolParam(KernelProgramBlockCursor cursor, Param param) {
+        super(cursor, param);
+    }
+	
     public BoolParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
         super(cursor, action, operands);
     }

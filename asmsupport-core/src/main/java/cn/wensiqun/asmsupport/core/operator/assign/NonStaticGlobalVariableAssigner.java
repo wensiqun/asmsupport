@@ -44,7 +44,7 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     	if(LOG.isPrintEnabled()){
             LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
-    	if(Modifier.isStatic(block.getMethod().getMethodMeta().getModifier())){
+    	if(Modifier.isStatic(block.getMethod().getMeta().getModifier())){
             throw new ASMSupportException("Current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
         }
         var.getOwner().loadToStack(block);

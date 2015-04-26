@@ -8,6 +8,7 @@ import cn.wensiqun.asmsupport.client.operations.action.InstanceofAction;
 import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.operations.behavior.ObjectBehavior;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public class ObjectParam extends DummyParam implements ObjectBehavior {
@@ -18,6 +19,12 @@ public class ObjectParam extends DummyParam implements ObjectBehavior {
 
     @Override
     public UncertainParam call(String methodName, Param... arguments) {
+    	if(target instanceof Value && ((Value)target).getValue() instanceof AClass) {
+    		return new UncertainParam(cursor, 
+    				cursor.getPointer().call(
+    						(AClass)((Value)target).getValue(), 
+    						methodName, ParamPostern.getTarget(arguments)));
+    	}
         return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
     }
 

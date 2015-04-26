@@ -19,7 +19,9 @@ import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.ArrayParam;
 import cn.wensiqun.asmsupport.client.def.param.BoolParam;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.NullParam;
 import cn.wensiqun.asmsupport.client.def.param.NumParam;
+import cn.wensiqun.asmsupport.client.def.param.ObjectParam;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
@@ -477,18 +479,18 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public DummyParam val(Integer val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Integer val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(Short val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Short val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(Byte val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Byte val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
@@ -497,48 +499,48 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public DummyParam val(Long val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Long val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(Double val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Double val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(Character val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Character val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(Float val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public NumParam val(Float val) {
+		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
 	}
 
 	@Override
-	public DummyParam val(AClass val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public ObjectParam val(AClass val) {
+		return new ObjectParam(cursor, targetBlock.val(val));
 	}
 
 	@Override
-	public DummyParam val(Class<?> val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public ObjectParam val(Class<?> val) {
+		return new ObjectParam(cursor, targetBlock.val(val));
 	}
 
 	@Override
-	public DummyParam val(String val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+	public ObjectParam val(String val) {
+		return new ObjectParam(cursor, targetBlock.val(val));
 	}
 
 	@Override
-	public DummyParam null_(AClass type) {
-		return new DummyParam(cursor, targetBlock.null_(type));
+	public NullParam null_(AClass type) {
+		return new NullParam(cursor, targetBlock.null_(type));
 	}
 
 	@Override
-	public DummyParam null_(Class<?> type) {
-		return new DummyParam(cursor, targetBlock.null_(type));
+	public NullParam null_(Class<?> type) {
+		return new NullParam(cursor, targetBlock.null_(type));
 	}
 
 	@Override

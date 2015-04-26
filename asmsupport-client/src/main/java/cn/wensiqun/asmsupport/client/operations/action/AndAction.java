@@ -14,7 +14,7 @@ public class AndAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().sub(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
+        return new DummyParam(cursor, cursor.getPointer().and(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
     }
 
 }

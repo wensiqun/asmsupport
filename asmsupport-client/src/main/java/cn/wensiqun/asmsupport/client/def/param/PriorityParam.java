@@ -5,6 +5,7 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
@@ -14,6 +15,12 @@ public abstract class PriorityParam extends Param {
     protected KernelParame target; 
     protected KernelProgramBlockCursor cursor;
     protected PriorityStack priorityStack;
+    
+    protected PriorityParam(KernelProgramBlockCursor cursor, Param result) {
+    	this.cursor = cursor;
+    	priorityStack = new PriorityStack();
+    	priorityStack.operandStack.push(result);
+    }
     
     public PriorityParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
     	this.cursor = cursor;
@@ -34,7 +41,7 @@ public abstract class PriorityParam extends Param {
     @Override
     public KernelParame getTarget() {
     	if(target == null) {
-    		priorityStack.marriageAction();
+    		priorityStack.marriageAction(Operator.MIN_PRIORITY);
     		target = ParamPostern.getTarget(priorityStack.operandStack.pop());
     	}
         return target;
@@ -49,7 +56,7 @@ public abstract class PriorityParam extends Param {
         	if(!symbolStack.isEmpty()) {
         	    int cmpVal = action.getOperator().compare(symbolStack.peek().getOperator());
         	    if(cmpVal < 0) {
-                    marriageAction();
+                    marriageAction(action.getOperator());
         	    } else if (cmpVal == 0){
         	        operandStack.push(symbolStack.pop().doAction(operandStack));
         	    }
@@ -60,8 +67,9 @@ public abstract class PriorityParam extends Param {
     		}
         }
         
-        void marriageAction() {
-        	while(!symbolStack.isEmpty()) {
+        void marriageAction(Operator operator) {
+        	while(!symbolStack.isEmpty() && 
+        		   symbolStack.peek().getOperator().compare(operator) >= 0) {
         		operandStack.push(symbolStack.pop().doAction(operandStack));
         	}
         }

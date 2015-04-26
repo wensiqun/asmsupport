@@ -227,9 +227,9 @@ public class AClassUtils {
         Class<?> reallyClass = null;
         if (owner instanceof SemiClass) {
             for (AMethod method : ((SemiClass) owner).getMethods()) {
-                if ((method.getMethodMeta().getModifier() & Opcodes.ACC_VARARGS) != 0
-                        && method.getMethodMeta().getName().equals(name)) {
-                    list.add(method.getMethodMeta());
+                if ((method.getMeta().getModifier() & Opcodes.ACC_VARARGS) != 0
+                        && method.getMeta().getName().equals(name)) {
+                    list.add(method.getMeta());
                 }
             }
             reallyClass = owner.getSuperClass();

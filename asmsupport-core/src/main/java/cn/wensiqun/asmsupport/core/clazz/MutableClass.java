@@ -148,7 +148,7 @@ public abstract class MutableClass extends AClass {
     @Override
 	public boolean existStaticInitBlock() {
 		for(AMethod m : this.getMethods()){
-			if(m.getMethodMeta().getName().equals(ASConstant.CLINIT)){
+			if(m.getMeta().getName().equals(ASConstant.CLINIT)){
 				return true;
 			}
 		}

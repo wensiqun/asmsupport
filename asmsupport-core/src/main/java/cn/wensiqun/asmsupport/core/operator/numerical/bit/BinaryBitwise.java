@@ -69,11 +69,20 @@ public abstract class BinaryBitwise extends AbstractBitwise {
             targetClass = ftrCls2;
         }
         
-        if(factor1 instanceof Value)
+        if(factor1 instanceof Value) {
             ((Value)factor1).convert(targetClass);
+        }
         
-        if(factor2 instanceof Value)
-            ((Value)factor2).convert(targetClass);
+        if(factor2 instanceof Value) {
+        	if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
+        	   getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
+        	   getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
+        		((Value)factor2).convert(AClassFactory.getType(int.class));
+        	} else {
+        		((Value)factor2).convert(targetClass);	
+        	}
+            
+        }
     }
 
     @Override
@@ -88,7 +97,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         insnHelper.unbox(factor1.getResultType().getType());
         insnHelper.cast(factor1.getResultType().getType(), targetClass.getType());    
         
-        LOG.print("push the second arithmetic factor to stack");
+        if(LOG.isPrintEnabled()) {
+            LOG.print("push the second arithmetic factor to stack");	
+        }
         factor2.loadToStack(block);
         
         if(LOG.isPrintEnabled()){

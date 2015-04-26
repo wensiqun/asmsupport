@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 用于执行Return
@@ -34,8 +34,6 @@ public class KernelReturn extends BreakStack {
     private static final Log LOG = LogFactory.getLog(KernelReturn.class);
     
     private KernelParame returner;
-    
-    private Type returnType;
     
     protected KernelReturn(KernelProgramBlock block, KernelParame returner) {
         super(block, false);
@@ -74,11 +72,13 @@ public class KernelReturn extends BreakStack {
             insnHelper.returnInsn();
         }else{
             returner.loadToStack(block);
-            returnType = returner.getResultType().getType();
-            if(returnType == null){
-                throw new NullPointerException("return type must be non-null!");
+            AClass actullyReturnType = returner.getResultType();
+            if(actullyReturnType == null){
+                throw new NullPointerException("Return type must be non-null!");
             }
-            insnHelper.returnInsn(returnType);
+            AClass methodReturnType = block.getMethod().getMeta().getReturnClass();
+            autoCast(actullyReturnType, methodReturnType, false);
+            insnHelper.returnInsn(methodReturnType.getType());
         }
     }
 

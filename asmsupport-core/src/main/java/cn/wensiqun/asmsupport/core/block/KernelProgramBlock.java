@@ -794,7 +794,11 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public MethodInvoker call(String methodName, KernelParame... args) {
-        return call(this_(), methodName, args);
+    	if(getMethod().isStatic()) {
+            return call(getMethodOwner(), methodName, args);
+    	} else {
+            return call(this_(), methodName, args);
+    	}
     }
 
     protected final void invokeVerify(AClass a) {
@@ -942,7 +946,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final MethodInvoker callOrig() {
         if (getMethod().getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY) {
-            String originalMethodName = getMethod().getMethodMeta().getName();
+            String originalMethodName = getMethod().getMeta().getName();
             if (originalMethodName.equals(ASConstant.CLINIT)) {
                 originalMethodName = ASConstant.CLINIT_PROXY;
             } else if (originalMethodName.equals(ASConstant.INIT)) {
@@ -966,7 +970,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      */
     @Override
     public final void return_() {
-        if (!getMethod().getMethodMeta().getReturnType().equals(Type.VOID_TYPE)) {
+        if (!getMethod().getMeta().getReturnType().equals(Type.VOID_TYPE)) {
             throw new VerifyErrorException("Do not specify a return type! ");
         }
         OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { KernelProgramBlock.class,

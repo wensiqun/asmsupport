@@ -87,25 +87,25 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
 
 
     @Override
-    public void jumpNegative(KernelParame from, Label posLbl, Label negLbl) {
+    public void jumpNegative(KernelParame from, Label trueLbl, Label falseLbl) {
         MethodVisitor mv = insnHelper.getMv();
         Label label4Or = new Label();
         if(factor1 instanceof KernelShortCircuitOr) {
-            ((Jumpable) factor1).jumpNegative(this, posLbl, label4Or);
+            ((Jumpable) factor1).jumpNegative(this, trueLbl, label4Or);
         } else if(factor1 instanceof Jumpable) {
-            ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
+            ((Jumpable) factor1).jumpNegative(this, trueLbl, falseLbl);
         } else {
             factor1.loadToStack(block);
             insnHelper.unbox(factor1.getResultType().getType());
-            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
+            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
         }
 
         if(factor2 instanceof Jumpable) {
-            ((Jumpable) factor2).jumpNegative(this, posLbl, negLbl);
+            ((Jumpable) factor2).jumpNegative(this, trueLbl, falseLbl);
         } else {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getResultType().getType());
-            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
+            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
         }
         insnHelper.mark(label4Or);
     }

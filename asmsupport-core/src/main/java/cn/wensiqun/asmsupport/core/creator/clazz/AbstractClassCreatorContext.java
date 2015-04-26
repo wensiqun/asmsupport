@@ -191,7 +191,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     		for(int j=0; j<scImplMethods.size(); j++ ) {
     			AMethod nonAbstractMethod = scImplMethods.get(j);
     			
-    			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMethodMeta(), abstractMethod)){
+    			if(MethodUtils.methodEqualWithoutOwner(nonAbstractMethod.getMeta(), abstractMethod)){
     				abstractMethods.remove(i);
     				scImplMethods.remove(j);
     				exist = true;
@@ -285,7 +285,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     	List<AMethod> methods = 
     			new ArrayList<AMethod>(sc.getMethods());
     	for(AMethod validateMethod : methods){
-    	    if(ASConstant.CLINIT.equals(validateMethod.getMethodMeta().getName())) {
+    	    if(ASConstant.CLINIT.equals(validateMethod.getMeta().getName())) {
     	        continue;
     	    }
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);

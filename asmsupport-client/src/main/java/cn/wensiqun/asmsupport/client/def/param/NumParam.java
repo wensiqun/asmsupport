@@ -16,11 +16,17 @@ import cn.wensiqun.asmsupport.client.operations.action.ModAction;
 import cn.wensiqun.asmsupport.client.operations.action.MulAction;
 import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
+import cn.wensiqun.asmsupport.client.operations.action.ShiftLeftAction;
+import cn.wensiqun.asmsupport.client.operations.action.ShiftRightAction;
 import cn.wensiqun.asmsupport.client.operations.action.SubAction;
 import cn.wensiqun.asmsupport.client.operations.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.operations.behavior.NumBehavior;
 
 public class NumParam extends PriorityParam implements NumBehavior {
+
+	public NumParam(KernelProgramBlockCursor cursor, Param param) {
+        super(cursor, param);
+    }
 
     public NumParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
         super(cursor, action, operands);
@@ -76,13 +82,13 @@ public class NumParam extends PriorityParam implements NumBehavior {
 
     @Override
     public NumParam shl(Param para) {
-        priorityStack.pushAction(new BxorAction(cursor), para);
+        priorityStack.pushAction(new ShiftLeftAction(cursor), para);
         return this;
     }
 
     @Override
     public NumParam shr(Param para) {
-        priorityStack.pushAction(new BxorAction(cursor), para);
+        priorityStack.pushAction(new ShiftRightAction(cursor), para);
         return this;
     }
 

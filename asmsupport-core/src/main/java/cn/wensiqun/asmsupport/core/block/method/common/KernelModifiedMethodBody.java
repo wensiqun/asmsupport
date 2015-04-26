@@ -36,7 +36,7 @@ public abstract class KernelModifiedMethodBody extends KernelMethodBody implemen
 
     @Override
     public AClass getOrigReturnType(){
-    	return getMethod().getMethodMeta().getReturnClass();
+    	return getMethod().getMeta().getReturnClass();
     }
     
 	public void setSuperConstructorOperators(
@@ -46,7 +46,7 @@ public abstract class KernelModifiedMethodBody extends KernelMethodBody implemen
 
 	@Override
     public void generateBody() {
-		AMethodMeta me = getMethod().getMethodMeta();
+		AMethodMeta me = getMethod().getMeta();
 		if(me.getName().equals(ASConstant.INIT)){
 			//如果是构造方法，将被修改的构造方法中调用父类构造方法的那段字节码转移到新的构造方法中。
 			if(superConstructorOperators != null){

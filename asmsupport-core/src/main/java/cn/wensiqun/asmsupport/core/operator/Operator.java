@@ -66,7 +66,9 @@ public enum Operator {
     
     TERNARY("? :", 12),
     
-    ASSIGN("=", 13);
+    ASSIGN("=", 13),
+    
+    MIN_PRIORITY("Unnuse", Integer.MIN_VALUE);
     
     private String symbol;
     

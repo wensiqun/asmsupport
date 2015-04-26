@@ -232,7 +232,7 @@ public class AMethod {
         return insnHelper;
     }
 
-    public AMethodMeta getMethodMeta() {
+    public AMethodMeta getMeta() {
         return me;
     }
 
