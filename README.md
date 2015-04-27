@@ -1,5 +1,8 @@
-ASMSupport[中文README](./README_CN.md)
+ASMSupport
 ===
+
+[中文README](./README_CN.md)
+
 
 A java class byte code operate framework
 ---
@@ -54,13 +57,14 @@ The following is code to generate preceding case.
            .newMethod("main").public_().static_().argTypes(String[].class)
            .body(new MethodBody(){
 					public void body(LocalVariable... args) {
-						call(defType(System.class).field("out"), "println", val("Hello ASMSupport."))
+						getType(System.class).field("out").call("println", val("Hello ASMSupport."))
 						return_();
 					}
            });
     Class<?> FirstCaseClass = dummy.build();
     Method mainMethod = FirstCaseClass.getMethod("main", String[].class);
     mainMethod.invoke(FirstCaseClass, mainMethod);
+    
     
 ## Sample : JSON & Proxy 
 
