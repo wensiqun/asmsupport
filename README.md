@@ -1,4 +1,4 @@
-ASMSupport
+ASMSupport[中文README](./README_CN.md)
 ===
 
 A java class byte code operate framework
@@ -8,28 +8,19 @@ The asmsupport is a java class byte code operate library, it make easier to writ
 
 ## Folder introduction
 
+
     asmsupport
-      |-src/main/java          
-        |-java                     : Maven standard source
-          |-.../asmsupport 
-            |-standard             : The asmsupport api 
-            |-client               : The dummy api
-            |-core                 : The asmsupport core implements
-        |-resource                 : Maven standard source resources  
-      |-src/test
-        |-java                     : Maven standard test
-        |-resource                 : Maven standard test resources
-      |-src/third/java             : The third-part source code(as source folder)
-      |-src/issue/java             : The fixed bug test code(as test folder)
-      |-src/sample/java            : The some simple exampe.(as test folder)
-          |-oldApi                 : The old api example.
-          |-dummy                  : The dummy api example
-          |-json                   : The simple json serialization tool use asmsupport
-          |-proxy                  : The simple dynamic proxy framework use asmsupport
-      |-src/site                   : The project document site folder.
-
-Preceding is all of the sources folder structure and descriptions, if you want import the project to eclipse, you must be manual use ["src/third/java", "src/issue/java", "src/sample/java"] as source folder. 
-
+      |-asmsupport-third           : The asmsupport third-part source code
+      |-asmsupport-standard        : The asmsupport standard api 
+      |-asmsupport-core            : The asmsupport core implements
+      |-asmsupport-client          ： The asmsupport client api, it's the core wrapper
+      |-asmsupport-issues          ： Some fixed bug test code
+      |-asmsupport-sample          : The asmsupport sample
+      |-src/site                   : Standard maven site folder.
+      |-LICENSE.txt                : LGPL license
+      |-README.md                  : README english version
+      |-README_CN.md               : README chinese version
+      
 ## Maven Dependency
     
     <dependency>
@@ -68,13 +59,12 @@ The following is code to generate preceding case.
 					}
            });
     Class<?> FirstCaseClass = dummy.build();
-    //The following code will use reflection to call main method.
     Method mainMethod = FirstCaseClass.getMethod("main", String[].class);
     mainMethod.invoke(FirstCaseClass, mainMethod);
     
 ## Sample : JSON & Proxy 
 
-The JSON sample under the folder "src/sample/java/json", run the json.demo.Runner main method, and you can get the generated class in folder "target/sample/json".
+The JSON sample under the package "cn.wensiqun.asmsupport.sample.client.json下", run the "cn.wensiqun.asmsupport.sample.client.json.demo.Runner" main method, and you can get the generated class in folder "target/asmsupport-test-generated".
 
 
-The Proxy sample under the folder "src/sample/java/proxy", run the json.demo.Runner main method, and you can get the generated class in folder "target/sample/proxy".
+The Proxy sample under the package "cn.wensiqun.asmsupport.sample.client.proxy", run the cn.wensiqun.asmsupport.sample.client.proxy.demo.Runner main method, and you can get the generated class in folder "target/asmsupport-test-generated".
