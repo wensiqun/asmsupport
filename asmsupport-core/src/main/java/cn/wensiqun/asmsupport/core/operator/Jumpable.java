@@ -55,6 +55,6 @@ public interface Jumpable {
      * @param posLbl
      * @param negLbl
      */
-    void jumpNegative(KernelParame from, Label trueLbl, Label falseLbl);
+    void jumpNegative(KernelParame from, Label posLbl, Label negLbl);
     
 }

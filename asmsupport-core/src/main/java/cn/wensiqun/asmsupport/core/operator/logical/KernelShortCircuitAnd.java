@@ -43,17 +43,17 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
     
     @Override
     protected void executing() {
-        Label trueLbl = new Label();
+        Label andEndLbl = new Label();
         Label falseLbl = new Label();
         MethodVisitor mv = insnHelper.getMv();
 
-        jumpNegative(this, trueLbl, falseLbl);
+        jumpNegative(this, andEndLbl, falseLbl);
         
         mv.visitInsn(Opcodes.ICONST_1);
-        mv.visitJumpInsn(Opcodes.GOTO, trueLbl);
+        mv.visitJumpInsn(Opcodes.GOTO, andEndLbl);
         mv.visitLabel(falseLbl);
         mv.visitInsn(Opcodes.ICONST_0);
-        mv.visitLabel(trueLbl);
+        mv.visitLabel(andEndLbl);
         
         Stack stack = block.getMethod().getStack();
         stack.pop();
@@ -74,7 +74,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
             insnHelper.unbox(factor1.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
-
+        
         if(factor2 instanceof Jumpable) {
             ((Jumpable) factor2).jumpPositive(this, posLbl, negLbl);
         } else {
@@ -87,25 +87,25 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
 
 
     @Override
-    public void jumpNegative(KernelParame from, Label trueLbl, Label falseLbl) {
+    public void jumpNegative(KernelParame from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
         Label label4Or = new Label();
         if(factor1 instanceof KernelShortCircuitOr) {
-            ((Jumpable) factor1).jumpNegative(this, trueLbl, label4Or);
+            ((Jumpable) factor1).jumpNegative(this, posLbl, label4Or);
         } else if(factor1 instanceof Jumpable) {
-            ((Jumpable) factor1).jumpNegative(this, trueLbl, falseLbl);
+            ((Jumpable) factor1).jumpNegative(this, posLbl, negLbl);
         } else {
             factor1.loadToStack(block);
             insnHelper.unbox(factor1.getResultType().getType());
-            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
+            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
 
         if(factor2 instanceof Jumpable) {
-            ((Jumpable) factor2).jumpNegative(this, trueLbl, falseLbl);
+            ((Jumpable) factor2).jumpNegative(this, posLbl, negLbl);
         } else {
             factor2.loadToStack(block);
             insnHelper.unbox(factor2.getResultType().getType());
-            mv.visitJumpInsn(Opcodes.IFEQ, falseLbl);
+            mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
         insnHelper.mark(label4Or);
     }

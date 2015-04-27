@@ -30,19 +30,71 @@ public class BoolSampleTest {
 				LocVar b2 = args[1];
 				LocVar b3 = args[2];
 				LocVar b4 = args[3];
-				//sb.append(      b1 &&  b2  || b3       |  b4  &&  b2);          
-				//sb.call("append", b1.and(b2).or(b3).and(b2));      
-				sb.call("append", or(and(b1, b2), b3));
-				//                b1  && b2  || b3        | b4   && b2         & b3         ^ b1   && b1
-				//sb.call("append", b1.and(b2).or(b3).logicOr(b4).and(b2).logicAnd(b3).logicXor(b1).and(b1));
+				
+				sb.call("append", b1.and(b2).and(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).and(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).or(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).or(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).and(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).and(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).or(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).or(b3).or(b4)).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).and(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2.and(b3)).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).and(b3.and(b4))).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).and(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2.and(b3)).or(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).and(b3.or(b4))).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).or(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2.or(b3)).and(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2.or(b3).and(b4))).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).or(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2.or(b3)).or(b4)).call("append", val("|"));
+                sb.call("append", b1.and(b2).or(b3.or(b4))).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).and(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2.and(b3)).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).and(b3.and(b4))).call("append", val("|"));
+                
+                sb.call("append", and(b1, b2).and(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2.and(b3)).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).and(b3.or(b4))).call("append", val("|"));
+                
+                sb.call("append", b1.or(b2).or(b3).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2.or(b3)).and(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).or(b3.and(b4))).call("append", val("|"));
+                
+                sb.call("append", b1.or(b2).or(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).or(b3).or(b4)).call("append", val("|"));
+                sb.call("append", b1.or(b2).or(b3).or(b4)).call("append", val("|"));
+                
+                
+                sb.call("append", and(b1.and(b2), b3.and(b4))).call("append", val("|"));
+                sb.call("append", and(b1.and(b2), b3.or(b4))).call("append", val("|"));
+                sb.call("append", or(b1.and(b2), b3.and(b4))).call("append", val("|"));
+                sb.call("append", or(b1.and(b2), b3.or(b4))).call("append", val("|"));
+                sb.call("append", and(b1.or(b2), b3.and(b4))).call("append", val("|"));
+                sb.call("append", and(b1.or(b2), b3.or(b4))).call("append", val("|"));
+                sb.call("append", or(b1.or(b2), b3.and(b4))).call("append", val("|"));
+                sb.call("append", or(b1.or(b2), b3.or(b4))).call("append", val("|"));
+
+                sb.call("append", b1.and(b2).or(b3).logicOr(b4).and(b2).logicAnd(b3).logicXor(b1).and(b1));
 				return_(sb.call("toString"));
                 
 			}
         	
         });
         Class<?> clazz = dummy.build();
-        Assert.assertEquals(BoolSample.excepted(true, false, false, true), clazz.getMethod("excepted", boolean.class, boolean.class, boolean.class, boolean.class)
-        		.invoke(clazz, true, false, false, true));
+        String exceptedStr = BoolSample.excepted(true, false, false, true);
+        String actuallyStr = clazz.getMethod("excepted", boolean.class, boolean.class, boolean.class, boolean.class)
+                .invoke(clazz, true, false, false, true).toString();
+        System.out.println("Excepted : " + exceptedStr);
+        System.out.println("Actually : " + actuallyStr);
+        Assert.assertEquals(exceptedStr, actuallyStr);
     }
 
 }
