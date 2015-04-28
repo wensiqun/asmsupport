@@ -17,7 +17,7 @@
     dummy.modify("test", new Class[]{int.class, String}, new ModifiedMethodBody(){
     
         @Override
-         public void body(LocalVariable... args) {
+         public void body(LocVar... args) {
              //TODO
          }
     
@@ -28,7 +28,7 @@
 上面的第三个参数就是我们修改的方法方法体。我们希望修改的业务逻辑在标记"//TODO"的位置上。我们能够在这里写入自己的逻辑。比如下面：
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         GlobalVariable out = defType(System.class).field("out");
         call(out, "println", val("Hello ASMSupport"))
         return_();
@@ -37,8 +37,8 @@
 我们将方法修改成了只打印一句"Hello ASMSupport"，如果希望添加一个逻辑，就是计算方法执行时间，那么就需要调用方法被修改前的内容了，代码如下：
 
     @Override
-    public void body(LocalVariable... args) {
-        LocalVariable time = var("time", long.class, call(System.class, "currentTimeMillis"));         
+    public void body(LocVar... args) {
+        LocVar time = var("time", long.class, call(System.class, "currentTimeMillis"));         
         callOrig();
         GlobalVariable out = defType(System.class).field("out");
         call(out, "println", sub(call(System.class, "currentTimeMillis"), time));
@@ -49,9 +49,9 @@
 
 
     @Override
-    public void body(LocalVariable... args) {
-        LocalVariable time = var("time", long.class, call(System.class, "currentTimeMillis"));         
-        LocalVariable result = var("result", getOrigReturnType(), callOrig());
+    public void body(LocVar... args) {
+        LocVar time = var("time", long.class, call(System.class, "currentTimeMillis"));         
+        LocVar result = var("result", getOrigReturnType(), callOrig());
         GlobalVariable out = defType(System.class).field("out");
         call(out, "println", sub(call(System.class, "currentTimeMillis"), time));
         return_(result);
@@ -64,7 +64,7 @@
     dummy.modifyConstructor(new Class[]{int.class, String.class}, new ModifiedMethodBody(){
     
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             //TODO
         }
      
@@ -77,7 +77,7 @@
     dummy.modifyConstructor(new ModifiedMethodBody(){
     
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             //TODO
         }
      

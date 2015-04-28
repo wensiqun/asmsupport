@@ -40,7 +40,7 @@
     dc.newMethod("main").public_().static_().argTypes(Stirng[].class)._argNames("args")
       .body(new MethodBody(){
           @Override
-          public void body(LocalVariable... args) {
+          public void body(LocVar... args) {
               //在这里调用相印的操作生产字节码。
               //TODO
           }
@@ -118,18 +118,18 @@
 
      //创建String类型变量name，并且赋值为"asmsupport"
      //String name = "asmsupport";
-    1. LocalVariable name = var("name", String.class, val("asmsupport"));
+    1. LocVar name = var("name", String.class, val("asmsupport"));
     
     //创建一个String数组
     //String[] names = new String[]{"Hello", "ASMSupport"};
-    2. LocalVariable names = arrayvar("names", String[].class, 
+    2. LocVar names = arrayvar("names", String[].class, 
             newArray(String[].class, new Parameterized[]{val("Hello"), val("ASMSupport")}););
 
 ## 后置自增减(expr++ expr--)
 
 这个两个操作是通过CrementAction接口完成，该接口是完成自增减操作。
 
-    1. LocalVariable i = var("i", int.class, val(1));
+    1. LocVar i = var("i", int.class, val(1));
     2. postinc(i); //i++
     3. postdec(i); //i--
     
@@ -137,7 +137,7 @@
 
 这里的操作都是一元操作，其中++expr --expr依然采用CrementAction接口的方法完成。+expr不需要任何操作，-expr是取负数采用ActionSet接口中的neg方法。~则是取反操作，使用BitwiseAction的reverse方法。
 
-    1. LocalVariable i = var("i", int.class, val(8));
+    1. LocVar i = var("i", int.class, val(8));
     2. perinc(i); // ++i;
     3. perdec(i); // --i;
     4. neg(i); // -i;
@@ -147,8 +147,8 @@
 
 这里实现了乘法除法取模操作，其方法是在ArithmeticAction接口中
 
-    1. LocalVariable i = var("i", int.class, val(8));
-    2. LocalVariable j = var("i", int.class, val(2));
+    1. LocVar i = var("i", int.class, val(8));
+    2. LocVar j = var("i", int.class, val(2));
     3. mul(i, j); // i * j
     4. div(i, j); // i / j
     5. mod(i, j); // i % j
@@ -157,8 +157,8 @@
 
 加法减法操作
 
-    1. LocalVariable i = var("i", int.class, val(8));
-    2. LocalVariable j = var("i", int.class, val(2));
+    1. LocVar i = var("i", int.class, val(8));
+    2. LocVar j = var("i", int.class, val(2));
     3. add(i, j); // i + j
     4. sub(i, j); // i - j
     
@@ -167,7 +167,7 @@
 
 这里的操作实现了位移操作分别是左移，右移，无符号右移,通过BitwiseAction接口的方法完成
 
-    1. LocalVariable i = var("i", int.class, val(8));
+    1. LocVar i = var("i", int.class, val(8));
     2. shl(i, val(2));  // i << 2 
     3. shr(i, val(2));  // i >> 2
     4. ushr(i, val(2)); // i >>> 2
@@ -176,19 +176,19 @@
     
 这组的操作关系操作，其中这一组(<,>,<=,>=)是使用RelationalAction接口，instanceof使用的是ActionSet接口的instanceof_方法。
 
-    1. LocalVariable i = var("i", int.class, val(8));
-    2. LocalVariable j = var("i", int.class, val(2));
+    1. LocVar i = var("i", int.class, val(8));
+    2. LocVar j = var("i", int.class, val(2));
     3. lt(i, j); // i < j
     4. gt(i, j); // i > j
     5. le(i, j); // i <= j
     6. ge(i, j); // i >= j
-    7. LocalVariable list = var("list", List.class, new(ArrayList.class))
+    7. LocVar list = var("list", List.class, new(ArrayList.class))
     8. instanceof_(list, ArrayList.class);(
 
 ## 等值操作(==,!=)
 
-    1. LocalVariable i = var("i", int.class, val(8));
-    2. LocalVariable j = var("i", int.class, val(2));
+    1. LocVar i = var("i", int.class, val(8));
+    2. LocVar j = var("i", int.class, val(2));
     3. eq(i, j); // i == j
     4. ne(i, j); // i != j)
 
@@ -198,10 +198,10 @@
 
 这里的的与操作存在两种含义，一个是对数字类型的进行与运算，比如1&2，还有就是对于boolean类型的的逻辑与，但底层是同样的字节码实现。这样的两种操作很容易操作失误护着产生歧义，后期版本将会修复。
 
-    1. LocalVariable i = var("i", int.class, val(8));
-    2. LocalVariable j = var("i", int.class, val(2));
-    3. LocalVariable m = var("i", boolean.class, val(true));
-    4. LocalVariable n = var("i", boolean.class, val(false));
+    1. LocVar i = var("i", int.class, val(8));
+    2. LocVar j = var("i", int.class, val(2));
+    3. LocVar m = var("i", boolean.class, val(true));
+    4. LocVar n = var("i", boolean.class, val(false));
     5. band(i, j); // i & j
     6. logicAnd(m, n); // m & n
     
@@ -242,14 +242,14 @@
 
 这里的赋值操作非常多，但是asmsupport仅仅实现了单一的赋值操作，其余的都是先执行运算再赋值大同小异。使用的是VariableAction接口中的assign.
 
-    1. LocalVariable i = var("i", int.class, val(1));
+    1. LocVar i = var("i", int.class, val(1));
     2. assign(i, val(10));
     
 ## 数组操作
 
 之前已经介绍如何创建一个数组，这里将介绍如何对数组操作，比如获取数组元素，获取数组长度，保存数组元素，这些操作均来自与接口ArrayAction接口
 
-    1. LocalVariable array = arrayvar("i", int[][].class, makeArray(int[][].class, val(2), val(2)));//int[][] i = new int[2][2];
+    1. LocVar array = arrayvar("i", int[][].class, makeArray(int[][].class, val(2), val(2)));//int[][] i = new int[2][2];
     2. arrayStore(array, val(100), val(1), val(1)); //array[1][1] = 100;
     3. arrayLoad(array, val(1), val(1)); //array[1][1]
     4. arrayLength(array, val[1]); //array[1].length
@@ -278,7 +278,7 @@ IVariable对象获取静态field同样也允许的。比如有下面这个类
     
 下面是asmsupport获取field的方式
 
-    1. LocalVariable a = var("a", new_(A.class)); //A a = new A();
+    1. LocVar a = var("a", new_(A.class)); //A a = new A();
     2. a.field("field1"); // a.field1
     3. a.field("field2"); // A.field2
     4. defType(A.class).field("field2"); //A.field2
@@ -289,7 +289,7 @@ IVariable对象获取静态field同样也允许的。比如有下面这个类
 
 总共有三种类型的方法调用：1.调用构造方法，2.调用对象的方法，3.调用静态方法。这些操作是在MethodInvokeAction接口中
 
-    1. LocalVariable list = var("list", List.class, new_(ArrayList.class)); //创建一个ArrayList对象，new ArrayList();
+    1. LocVar list = var("list", List.class, new_(ArrayList.class)); //创建一个ArrayList对象，new ArrayList();
     2. call(list, "add", val(1)); // list.add(1);
     3. call(Integer.class, "parseInt", val("100")); // Integer.parseInt("100")
 

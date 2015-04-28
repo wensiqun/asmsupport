@@ -68,7 +68,7 @@
     constructor.body(new EnumConstructorBody(){
         
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             ...
             return_();
         }

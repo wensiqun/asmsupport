@@ -2,25 +2,27 @@ package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.operations.action.AddAction;
-import cn.wensiqun.asmsupport.client.operations.action.BandAction;
-import cn.wensiqun.asmsupport.client.operations.action.BorAction;
-import cn.wensiqun.asmsupport.client.operations.action.BxorAction;
-import cn.wensiqun.asmsupport.client.operations.action.DivAction;
-import cn.wensiqun.asmsupport.client.operations.action.EqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.GreaterEqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.GreaterThanAction;
-import cn.wensiqun.asmsupport.client.operations.action.LessEqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.LessThanAction;
-import cn.wensiqun.asmsupport.client.operations.action.ModAction;
-import cn.wensiqun.asmsupport.client.operations.action.MulAction;
-import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
-import cn.wensiqun.asmsupport.client.operations.action.ShiftLeftAction;
-import cn.wensiqun.asmsupport.client.operations.action.ShiftRightAction;
-import cn.wensiqun.asmsupport.client.operations.action.SubAction;
-import cn.wensiqun.asmsupport.client.operations.action.UnsignedShiftRightAction;
-import cn.wensiqun.asmsupport.client.operations.behavior.NumBehavior;
+import cn.wensiqun.asmsupport.client.def.ParamPostern;
+import cn.wensiqun.asmsupport.client.def.action.AddAction;
+import cn.wensiqun.asmsupport.client.def.action.BandAction;
+import cn.wensiqun.asmsupport.client.def.action.BorAction;
+import cn.wensiqun.asmsupport.client.def.action.BxorAction;
+import cn.wensiqun.asmsupport.client.def.action.DivAction;
+import cn.wensiqun.asmsupport.client.def.action.EqualAction;
+import cn.wensiqun.asmsupport.client.def.action.GreaterEqualAction;
+import cn.wensiqun.asmsupport.client.def.action.GreaterThanAction;
+import cn.wensiqun.asmsupport.client.def.action.LessEqualAction;
+import cn.wensiqun.asmsupport.client.def.action.LessThanAction;
+import cn.wensiqun.asmsupport.client.def.action.ModAction;
+import cn.wensiqun.asmsupport.client.def.action.MulAction;
+import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
+import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
+import cn.wensiqun.asmsupport.client.def.action.ShiftLeftAction;
+import cn.wensiqun.asmsupport.client.def.action.ShiftRightAction;
+import cn.wensiqun.asmsupport.client.def.action.SubAction;
+import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
+import cn.wensiqun.asmsupport.client.def.behavior.NumBehavior;
+import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
 
 public class NumParam extends PriorityParam implements NumBehavior {
 
@@ -126,5 +128,10 @@ public class NumParam extends PriorityParam implements NumBehavior {
     @Override
     public BoolParam ne(Param para) {
         return new BoolParam(cursor, new NotEqualAction(cursor), this, para);
+    }
+
+    @Override
+    public ObjectBehavior stradd(Param param) {
+        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
     }
 }

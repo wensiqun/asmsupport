@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Maven">
+	<body>
+		<head>
+			<title>ASMSupport 0.4 - Document</title>
+		</head>
+		<menu name="概述">
+			<item name="简介" href="summary/summary.html" />
+			<item name="Release Note" href="summary/release-note.html" />
+		</menu>
+		<menu name="使用手册">
+			<item name="介绍" href="manual/introduction.html" />
+			<item name="基本操作" href="manual/operators.html" />
+			<item name="创建接口" href="manual/interface.html" />
+			<item name="创建类" href="manual/class.html" />
+			<item name="创建枚举" href="manual/enum.html" />
+			<item name="修改类" href="manual/modify_class.html" />
+			<item name="创建程序块" href="manual/block.html" />
+			<item name="如何查看Log日志" href="manual/seeLog.html" />
+		</menu>
+		<menu name="字节码相关">
+			<item name="init方法与clinit方法" href="bytecode/init_clinit.html" />
+			<item name="变量声明" href="bytecode/declare_variable.html" />
+			<item name="条件控制" href="bytecode/condition_block.html" />
+			<item name="枚举类型" href="bytecode/enum.html" />
+			<item name="字节码Label" href="bytecode/label.html" />
+			<item name="Java栈" href="bytecode/stack_simple_desc.html" />
+			<item name="字节码指令集" href="jvmref/opcodes.html" />
+		</menu>
+		<menu name="ASMSupport实现原理">
+			<item name="局部变量的实现" href="theory/localvariable.html" />
+			<item name="指令顺序的控制" href="theory/instruction_order.html" />
+		</menu>
+	    <menu ref="parent"/>
+	    <menu ref="modules"/>
+	    <menu ref="reports"/>
+	</body>
+</project>

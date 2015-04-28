@@ -35,13 +35,13 @@ ArrayClass是ASMSupport对java中数组类型的一个封装,比如int[], String
 Asmsupport的总体思想就是，尽可能的还原真实代码的结构。所以在asmsupport中将会大量使用匿名类的方式。比如下面的代码:
 
     new MethodBody() {
-        public void body(LocalVariable... args) {//方法开始
+        public void body(LocVar... args) {//方法开始
             //位置1
             if_(new IF(condition){
              
                 public void body(){//if块开始
                     //位置2
-                    LocalVariable name = var("name", String.class, val("asmsupport"))
+                    LocVar name = var("name", String.class, val("asmsupport"))
                 }//if块结束
                 
             }).elseif(new Else(){

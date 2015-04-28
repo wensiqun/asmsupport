@@ -21,13 +21,13 @@
 	
 上面的的代码我们用作用域的方式表现出来如下图：
 
-![](../../resources/images/theory_localvariable_1.png)<br/>
-<img src="../images/theory_localvariable_1.png"/>
+![](../../resources/images/theory_LocVar_1.png)<br/>
+<img src="../images/theory_LocVar_1.png"/>
 
 如果按照程序流程执行，很显然这里会有两种执行结果。分别是当bool为真的时候执行if语句块，当bool为false执行else语句块。如下图就是这两种情况的局部变量图
 
-![](../../resources/images/theory_localvariable_2.png)<br/>
-<img src="../images/theory_localvariable_2.png"/>
+![](../../resources/images/theory_LocVar_2.png)<br/>
+<img src="../images/theory_LocVar_2.png"/>
 
 上面前局部变量中，前三个变量是共享的，发生变化的是第后面的变量，对于这两种执行情况，虽然声明的变量类型不同，并且变量字长是不同的，但是由于if和else两个程序块是并行的，所以局部变量中后三个位置是公用的。根据这种情况，ASMSupport采用一种树形结构来模拟和实现作用域和局部变量之间的关系。
 
@@ -55,8 +55,8 @@
     
 我们用方形表示程序块，圆形表示局部变量，并且给予各程序块别名得到如下图的树形结构。
 
-![](../../resources/images/theory_localvariable_3.png)<br/>
-<img src="../images/theory_localvariable_3.png"/>
+![](../../resources/images/theory_LocVar_3.png)<br/>
+<img src="../images/theory_LocVar_3.png"/>
 图1
 
 通过这个树，我们能够完成两个事情：
@@ -80,8 +80,8 @@ this->bool->bool2->prefix-IF->d->s->ELSE-IF2->f->c->l
 - 执行到IF2了，这时候发现_d_和_s_ 这两个变量的空间我是可以复用的，因为IF和ELSE是并行的，同一时刻同一线程不可能同时执行到IF和ELSE，而IF2又是ELSE的子块，所以它将f 分配给了下标为4的空间，这里4位置上已经被变量d 和s 复用了。
 - 继续执行到_c_和_l_的时候，发现刚才分配给f 变量的空间是可以复用的，因为f 所在的程序块是IF2，他是ELSE的一个自程序块，在这个程序块的作用域中声明的变量只在当前作用域下有效，所以将_c_分配给下标为 f 所分配的空间4，这时候4位置已经被_d f c_ 三个变量共享了；这时候继续变量到l , 由于l是long型占两个字的空间，同样发现d所占位置5和s所占位置6是可以共享的，所以将5和6位置的局部变量分配给l
 
-![](../../resources/images/theory_localvariable_4.png)<br/>
-<img src="../images/theory_localvariable_4.png"/>
+![](../../resources/images/theory_LocVar_4.png)<br/>
+<img src="../images/theory_LocVar_4.png"/>
 图2
 
 首先来描述下上图的几个图形：
@@ -127,15 +127,15 @@ this->bool->bool2->prefix-IF->d->s->ELSE-IF2->f->c->l
 
 在图二中我们看到了局部变量数组的模型，在ASMSupport中我们也是采用一个List来作为主体容器。起初我们只是在这个List中每个位置存储最新的变量，比如图二中道4 存储f 的时候，就会将之前的d 覆盖，类似于下图的过程：
 
-![](../../resources/images/theory_localvariable_5.png)<br/>
-<img src="../images/theory_localvariable_5.png"/>
+![](../../resources/images/theory_LocVar_5.png)<br/>
+<img src="../images/theory_LocVar_5.png"/>
 图3
 
 但是由于我们希望通过【如何查看ASMSupport的log文件】，在生产每一条局部变量操作指令的时候都打印出当前局部变量状态，这样更便于我们调试和跟踪自己的程序。所以我们在局部变量这个List的容器中存储的是一个自定义的类LocalHistory的对象，每一个LocalHistory对象对应一个本地变量数组中的一个单元位置，比如图二中的局部变量d 是double类型的，占两个单元，所以将会创建两个LocalHistory对象，并且在LocalHistory类中通过一个List存储在该位置上局部变量的变更历史，也就是我们图二中的局部变量的结构。
 
-这些逻辑在ASMSupport代码中使用cn.wensiqun.asmsupport.utils.memory.LocalVariables 和 cn.wensiqun.asmsupport.utils.memory.LocalVariables.LocalHistory 实现的。后者是前者的一个内部类，并且是一个静态私有类型，仅仅在内部被LocalVariables使用。
+这些逻辑在ASMSupport代码中使用cn.wensiqun.asmsupport.utils.memory.LocVars 和 cn.wensiqun.asmsupport.utils.memory.LocVars.LocalHistory 实现的。后者是前者的一个内部类，并且是一个静态私有类型，仅仅在内部被LocVars使用。
 
-LocalVariables还有个功能是打印局部变量的状态，这部分代码并不是局部变量实现的核心所以不做解释。
+LocVars还有个功能是打印局部变量的状态，这部分代码并不是局部变量实现的核心所以不做解释。
 
 ###作用域和局部变量的逻辑抽象
 
@@ -157,8 +157,8 @@ Component
 
 这里的componentOrder并不像图二中是一串连续的数字，二是用辈数和点号实现的，类似如下结构：
 
-![](../../resources/images/theory_localvariable_6.png)<br/>
-<img src="../images/theory_localvariable_6.png"/>
+![](../../resources/images/theory_LocVar_6.png)<br/>
+<img src="../images/theory_LocVar_6.png"/>
 图5
 
 那么比较两个Component的先后顺序的话先比较第一个点前面的数字，数字值大的componentOrder比另一个componentOrder大，如果相等则继续比较第二个点前面的数字依次类推，比如“5.1 > 4", "6.1.1 > 5.2", "6.2 > 6.1.1"。具体实现是在compareComponentOrder方法中实现的。
@@ -225,4 +225,4 @@ components和start比较好理解，按照上面解释。但是innerEnd和outerE
 - **end ：**变量所在作用域的结束位置，对应于所在Scope的innerEnd
 - **index ：** 变量在局部变量数组的其实下标值，对应于initStartPos
 
-再调用MethodVisitor.visitLocalVariable(name, desc, null, start,  end,  index)的方法，告诉编译器，在start和end范围内，局部变变量位置为index的空间是desc类型的，并且叫做name。这个方法的第三个参数是变量签名，如果使用泛型可以使用，但是ASMSupport暂不支持泛型，所以这个值在ASMSupport中恒为空。
+再调用MethodVisitor.visitLocVar(name, desc, null, start,  end,  index)的方法，告诉编译器，在start和end范围内，局部变变量位置为index的空间是desc类型的，并且叫做name。这个方法的第三个参数是变量签名，如果使用泛型可以使用，但是ASMSupport暂不支持泛型，所以这个值在ASMSupport中恒为空。

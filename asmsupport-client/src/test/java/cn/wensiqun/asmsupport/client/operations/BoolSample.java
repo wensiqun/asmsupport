@@ -58,7 +58,7 @@ public class BoolSample {
         sb.append((b1 || b2) || (b3 && b4)).append("|");
         sb.append((b1 || b2) || (b3 || b4)).append("|");
 
-        sb.append(b1 && b2 || b3 | b4 && b2 & b3 ^ b1 && b1);
+        sb.append(b1 && b2 || b3 | b4 == true && b2 & b3 ^ b1 && b1 != false);
 
         return sb.toString();
     }

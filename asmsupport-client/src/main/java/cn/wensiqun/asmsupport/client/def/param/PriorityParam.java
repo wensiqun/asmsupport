@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.client.def.param;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
+import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;

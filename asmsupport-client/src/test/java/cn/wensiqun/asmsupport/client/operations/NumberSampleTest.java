@@ -23,7 +23,7 @@ public class NumberSampleTest {
         .argTypes(int.class, int.class, int.class, int.class, int.class, int.class, long.class)
         .argNames("t1", "t2", "t3", "t4", "t5", "t6", "t7")
         .body(new MethodBody() {
-//13918685816@163.com
+
 			@Override
 			public void body(LocVar... args) {
 				Var sb = var("sb", StringBuilder.class, new_(StringBuilder.class));

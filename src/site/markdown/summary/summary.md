@@ -38,7 +38,7 @@ asmsupport实在asm的基础上做的一封装，使用asmsupport将最大限度
     16. mv.visitInsn(RETURN);
     17. Label l2 = new Label();
     18. mv.visitLabel(l2);
-    19. mv.visitLocalVariable("name", "Ljava/lang/String;", null, l0, l2, 0);
+    19. mv.visitLocVar("name", "Ljava/lang/String;", null, l0, l2, 0);
     20. mv.visitMaxs(4, 1);
     21. mv.visitEnd();
     22. cw.visitEnd();
@@ -54,7 +54,7 @@ asmsupport实在asm的基础上做的一封装，使用asmsupport将最大限度
       .argTypes(String.class).argNames_("name")
       .body_(new MethodBody(){
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             call_(defType(System.class).field("out"), "println", stradd(val("Hello : "), args[0]));
             return_();
         }

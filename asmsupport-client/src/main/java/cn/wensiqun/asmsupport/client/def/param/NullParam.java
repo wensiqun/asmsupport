@@ -3,8 +3,8 @@ package cn.wensiqun.asmsupport.client.def.param;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.operations.action.EqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
+import cn.wensiqun.asmsupport.client.def.action.EqualAction;
+import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 
 public class NullParam extends DummyParam {

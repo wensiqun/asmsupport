@@ -86,12 +86,12 @@ Parameterized接口目前来看应该需要如下方法：
 
 代码5
 
-	public class LocalVariableAssigner extends AbstractOperator implements Parameterized {
+	public class LocVarAssigner extends AbstractOperator implements Parameterized {
 	     
-	    private LocalVariable var;
+	    private LocVar var;
 	    private Parameterized value;
 	    
-	    protected LocalVariableAssigner(List queue, LocalVariable var, Parameterized value) {
+	    protected LocVarAssigner(List queue, LocVar var, Parameterized value) {
 	        super(queue);
 	        this.var= var;
 	        this.value= value;
@@ -116,9 +116,9 @@ Parameterized接口目前来看应该需要如下方法：
 代码6
 
 	//设已经能够存在变量i，j，执行队列queue
-	LocalVariableAssigner i_assign = new LocalVariableAssigner(queue, i, Value.value(1));
+	LocVarAssigner i_assign = new LocVarAssigner(queue, i, Value.value(1));
 	Addition add = new Addition(queue, i, Value.value(1), Value.value(2));
-	LocalVariableAssigner j_assign = new LocalVariableAssigner(queue, j, add);
+	LocVarAssigner j_assign = new LocVarAssigner(queue, j, add);
 	
 但是对于上面的代码，由于每次new一个对象的时候都会将当前对象存储到queue中，所以生成的执行队列如下图所示：
 
@@ -131,9 +131,9 @@ ASMSupport拿到这个队列遍历执行execute的时候会执行两次add的exe
 代码7
 
 	//设已经能够存在变量i，j，执行队列queue
-	LocalVariableAssigner i_assign = new LocalVariableAssigner(queue, i, Value.value(1));
+	LocVarAssigner i_assign = new LocVarAssigner(queue, i, Value.value(1));
 	Addition add = new Addition(queue, i, Value.value(1), Value.value(2));
-	LocalVariableAssigner j_assign = new LocalVariableAssigner(queue, j, add);
+	LocVarAssigner j_assign = new LocVarAssigner(queue, j, add);
 	add.asArgument();
 	
 经过这段代码生成的执行队列如下图：

@@ -3,11 +3,11 @@ package cn.wensiqun.asmsupport.client.def.param;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.operations.action.ArrayLengthAction;
-import cn.wensiqun.asmsupport.client.operations.action.EqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.InstanceofAction;
-import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.operations.behavior.ArrayBehavior;
+import cn.wensiqun.asmsupport.client.def.action.ArrayLengthAction;
+import cn.wensiqun.asmsupport.client.def.action.EqualAction;
+import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
+import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
+import cn.wensiqun.asmsupport.client.def.behavior.ArrayBehavior;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 

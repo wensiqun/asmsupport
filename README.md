@@ -1,4 +1,4 @@
-ASMSupport
+![asmsupport](./src/site/resources/images/logo.png)
 ===
 
 [中文README](./README_CN.md)

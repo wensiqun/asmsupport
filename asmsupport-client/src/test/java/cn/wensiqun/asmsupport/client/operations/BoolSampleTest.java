@@ -82,7 +82,7 @@ public class BoolSampleTest {
                 sb.call("append", or(b1.or(b2), b3.and(b4))).call("append", val("|"));
                 sb.call("append", or(b1.or(b2), b3.or(b4))).call("append", val("|"));
 
-                sb.call("append", b1.and(b2).or(b3).logicOr(b4).and(b2).logicAnd(b3).logicXor(b1).and(b1));
+                sb.call("append", b1.and(b2).or(b3).logicOr(b4).eq(val(true)).and(b2).logicAnd(b3).logicXor(b1).and(b1).ne(val(false)));
 				return_(sb.call("toString"));
                 
 			}

@@ -140,7 +140,7 @@
     method.body(new MethodBody() {
         
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             //DO method logic here.
         }
         
@@ -174,7 +174,7 @@
     constructor.body(new ConstructorBody(){
         
         @Override
-        public void body(LocalVariable... args) {
+        public void body(LocVar... args) {
             supercall();
             return_();
         }

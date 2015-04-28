@@ -2,15 +2,17 @@ package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.operations.action.AndAction;
-import cn.wensiqun.asmsupport.client.operations.action.EqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.LogicAndAction;
-import cn.wensiqun.asmsupport.client.operations.action.LogicOrAction;
-import cn.wensiqun.asmsupport.client.operations.action.LogicXorAction;
-import cn.wensiqun.asmsupport.client.operations.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.operations.action.OperatorAction;
-import cn.wensiqun.asmsupport.client.operations.action.OrAction;
-import cn.wensiqun.asmsupport.client.operations.behavior.BoolBehavior;
+import cn.wensiqun.asmsupport.client.def.ParamPostern;
+import cn.wensiqun.asmsupport.client.def.action.AndAction;
+import cn.wensiqun.asmsupport.client.def.action.EqualAction;
+import cn.wensiqun.asmsupport.client.def.action.LogicAndAction;
+import cn.wensiqun.asmsupport.client.def.action.LogicOrAction;
+import cn.wensiqun.asmsupport.client.def.action.LogicXorAction;
+import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
+import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
+import cn.wensiqun.asmsupport.client.def.action.OrAction;
+import cn.wensiqun.asmsupport.client.def.behavior.BoolBehavior;
+import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 
 public class BoolParam extends PriorityParam implements BoolBehavior {
@@ -88,6 +90,11 @@ public class BoolParam extends PriorityParam implements BoolBehavior {
     @Override
     public BoolParam logicXor(boolean param) {
         return logicXor(new DummyParam(cursor, Value.value(param)));
+    }
+
+    @Override
+    public ObjectBehavior stradd(Param param) {
+        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
     }
 
 }

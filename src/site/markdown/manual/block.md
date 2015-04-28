@@ -7,7 +7,7 @@
 在body方法内通过调用CreateBlockAction的if_方法传入一个cn.wensiqun.asmsupport.client.IF的匿名类对象。如果下
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         if_(new IF(call("isTrue")){
             @Override
             public void body() {
@@ -26,7 +26,7 @@
 上述代码我们构造IF对象的时候传入了一个参数，这个参数就是当前if语句的条判断。if_放方法返回的是我们传入的IF对象。通过这个对象我们就能够添加else if分支和else分支。
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         if_(new IF(call("isTrue")){
             @Override
             public void body() {
@@ -70,7 +70,7 @@
 上面我们通过调用IF对象的elseif方法和else方法引出了else..if分支和else分支，这个两个分支所产生的对象分别是cn.wensiqun.asmsupport.client.ElseIF和cn.wensiqun.asmsupport.client.Else, 构造ElseIF对象和构造IF类似同样要传入一个判断条件，而Else则没有。ElseIF对象继续可以展出else...if和else分支。而else则是终点站了。
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         if_(new IF(call("isTrue")){
             @Override
             public void body() {
@@ -114,7 +114,7 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
 
     
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         try_(new Try(){
             @Override
             public void body() {
@@ -122,12 +122,12 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
             }
         }).catch_(new Catch(RuntimeException.class){
             @Override
-            public void body(LocalVariable e) {
+            public void body(LocVar e) {
                 //Do catch block
             }
         }).catch_(new Catch(Exception.class){
             @Override
-            public void body(LocalVariable e) {
+            public void body(LocVar e) {
                 //Do catch block
             }
         }).finally_(new Finally(){
@@ -148,7 +148,7 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
         return_();
     }
     
-上面的代码可以看出，和是使用java代码一样，通过Catch对象同样能够展出catch和finally分支。这里要注意下Catch类的body方法，该方法有一个参数"LocalVariable e", 这个参数就是捕获到的异常。上面的代码部分转换成java如下：
+上面的代码可以看出，和是使用java代码一样，通过Catch对象同样能够展出catch和finally分支。这里要注意下Catch类的body方法，该方法有一个参数"LocVar e", 这个参数就是捕获到的异常。上面的代码部分转换成java如下：
 
     try{
         //Do try branch.
@@ -171,7 +171,7 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
 在body方法内通过调用CreateBlockAction的dowhile方法传入一个cn.wensiqun.asmsupport.client.DoWhile的匿名类对象。如果下
     
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         dowhile(new DoWhile(call("isTrue")){
             @Override
             public void body(){
@@ -192,7 +192,7 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
 在body方法内通过调用CreateBlockAction的while_方法传入一个cn.wensiqun.asmsupport.client.While的匿名类对象,和do...while类似：
     
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         while_(new While(call("isTrue")){
             @Override
             public void body(){
@@ -213,10 +213,10 @@ try_方法将会返回Try对象，我们同样通过该对象能够展出cn.wens
 在body方法内通过调用CreateBlockAction的foreach方法传入一个cn.wensiqun.asmsupport.client.ForEach的匿名类对象
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         foreach(new ForEach(arrayOrIterable, String.class){
             @Override
-            public void body(LocalVariable ele){
+            public void body(LocVar ele){
                 //Do for each loop
             }
         });
@@ -234,11 +234,11 @@ ForEach有三个构造方法
 如果我们在上面的代码中使用第一个构造方法，那么在body方法内如果需要使用每个元素则先要强制转换如下：
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         foreach(new ForEach(arrayOrIterable){
             @Override
-            public void body(LocalVariable ele){
-                LocalVariable stringObj = var("stringObj", String.class, checkcast(ele, String.class))
+            public void body(LocVar ele){
+                Var stringObj = var("stringObj", String.class, ele.cast(String.class))
                 //Do for each loop
             }
         });
@@ -258,7 +258,7 @@ ForEach有三个构造方法
 相对来说synchronized比较简单，通过CreateBlockAction的sync方法完成。
 
     @Override
-    public void body(LocalVariable... args) {
+    public void body(LocVar... args) {
         sync(new Synchronized(lockObj){
             @Override
             public void body(Parameterized lock){
