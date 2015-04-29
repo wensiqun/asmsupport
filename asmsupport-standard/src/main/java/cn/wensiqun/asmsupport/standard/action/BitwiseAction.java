@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 
 /**
  * 
- * 位操作
+ * Bit operations
  * 
  * @author wensiqun(at)163.com
  */

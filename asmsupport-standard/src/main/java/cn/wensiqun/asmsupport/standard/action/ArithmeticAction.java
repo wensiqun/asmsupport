@@ -18,14 +18,14 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
- * 生成算数运算
+ * Indicate arithmetic action here
  *
  * @author wensiqun(at)163.com
  */
 public interface ArithmeticAction<_P extends IParam> {
     
     /**
-     * 生成加法操作指令例如：factor1 + factor2,对应下面的红色java代码
+     * Generate addition instructions such as : factor1 + factor2, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * int count = <b style="color:#FF3300">factor1 + factor2;</b>
@@ -38,7 +38,7 @@ public interface ArithmeticAction<_P extends IParam> {
     _P add(_P factor1, _P factor2);
 
     /**
-     * 生成减法操作指令例如：factor1 - factor2,对应下面的红色java代码
+     * Generate substruction instructions such as : factor1 - factor2, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * int count = <b style="color:#FF3300">factor1 - factor12;</b>
@@ -51,7 +51,7 @@ public interface ArithmeticAction<_P extends IParam> {
     _P sub(_P factor1, _P factor2);
     
     /**
-     * 生成乘法操作指令例如：factor1 * factor2,对应下面的红色java代码
+     * Generate multiplication instructions such as : factor1 * factor2, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * int count = <b style="color:#FF3300">factor1 * factor12;</b>
@@ -78,7 +78,7 @@ public interface ArithmeticAction<_P extends IParam> {
     
     /**
      * 
-     * generate mod instruction : factor1 % factor2,对应下面的红色java代码
+     * generate mod instruction : factor1 % factor2, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * int count = <b style="color:#FF3300">factor1 % factor12;</b>

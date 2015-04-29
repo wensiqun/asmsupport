@@ -1,16 +1,16 @@
-# 关于ASM
+# About ASM
 
-ASM 是一个 Java 字节码操纵框架。它可以直接以二进制形式动态地生成 sub类或其他代理类，或者在装载时动态地修改类。ASM 提供类似于 BCEL 和 SERP 之类的工具包的功能，但是被设计得更小巧、更快速，这使它适用于实时代码插装。
+ASM is an all purpose Java bytecode manipulation and analysis framework. It can be used to modify existing classes or dynamically generate classes, directly in binary form. Provided common transformations and analysis algorithms allow to easily assemble custom complex transformations and code analysis tools.
 
 # ASMSupport
 
-asmsupport是在asm的基础上做的一封装，使用asmsupport将最大限度的降低字节码操作的成本，屏蔽了使用asm的时候对堆栈操作，以及原生的字节码指令。同时增加了更多的灵活性，采用匿名类的方式是方法块更清晰。
+The asmsupport is a java class byte code operate library, it make easier to write or modify a class at runtime. This framework developed base on [asm](http://asm.ow2.org/) framework, but different from asm that avoid use original jvm instruction and avoid maintain stack and local variables.
 
-# 对比
+# Compare
 
-这里我们简单的使用asm和asmsupport来生成如下代码：
+We compare two method to generate class between asm framework and asmsupport framework.
 
-## java源代码
+## java source code
 
     public class Test {
         public static void main(String name) {
@@ -18,7 +18,7 @@ asmsupport是在asm的基础上做的一封装，使用asmsupport将最大限度
         }
     }
     
-## asm
+## asm framework code
 
     1.  ClassWriter mv = cw.visitMethod(Opcodes.ACCpublic_ + Opcodes.ACC_STATIC, "main", "(Ljava/lang/String;)V", null, null);
     2.  mv.visitCode();
@@ -44,8 +44,6 @@ asmsupport是在asm的基础上做的一封装，使用asmsupport将最大限度
     22. cw.visitEnd();
     23. byte[] classBytes = cw.toByteArray();
     24. //convert class Bytes to class
-      
-从上面可以看到我们想要创建一个class不仅需要使用复杂的字节码指令(比如第5，6,9...行)，而且还要关注堆栈操作(比如第10行就是从局部变量中获取第0个位置，就是方法的参数name)，同时在最后需要确定好方法所需要的堆栈数目(第20行)。对一些隐式的方法字节码还需特殊处理，比如第6~12行的代码对应的就是("Hello : " + name),但实际根据字节码生成的内容实际是调用了new StringBuilder("Hello : ").append(name).toString().这样就大大的增加了开发难度。
 
 ## asmsupport
 
@@ -62,4 +60,3 @@ asmsupport是在asm的基础上做的一封装，使用asmsupport将最大限度
     );
     Class cls = dc.build();
     
-使用asmsupport完全屏蔽了字节码指令和堆栈操作，更重要的一点是采用匿名类的方式，是的程序的结构更清晰，倾向与原始的java代码结构，使用简单更灵活。

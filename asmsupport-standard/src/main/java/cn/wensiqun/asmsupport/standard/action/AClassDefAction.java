@@ -16,6 +16,13 @@ package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
+
+/**
+ * Get class indication in this interface 
+ * 
+ * @author WSQ
+ *
+ */
 public interface AClassDefAction {
     
     /**
@@ -30,7 +37,7 @@ public interface AClassDefAction {
      * Defined an array type according component and dimension
      * 
      * <pre>
-     *     defArrayType(int.class, 3) is equals to defArrayType(int[][][].class)
+     *     getArrayType(int.class, 3) is equals to getArrayType(int[][][].class)
      * </pre>
      * 
      * @param cls
