@@ -6,6 +6,8 @@
     <version>0.4.1-SNAPSHOT</version>
   </parent>
   <artifactId>asmsupport-standard</artifactId>
+  <name>asmsupport-standard</name>
+  <description>This module is a standard apid definition of asmsupport, all implements of asmsupport will be following this standard api.</description>
   
   <dependencies>
       <dependency>

@@ -37,7 +37,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P}
      */
     _P gt(_P factor1, _P factor2);
     
@@ -51,7 +51,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P} 
      */
     _P ge(_P factor1, _P factor2);
     
@@ -64,7 +64,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P}
      */
     _P lt(_P factor1, _P factor2);
 
@@ -78,7 +78,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P}
      */
     _P le(_P factor1, _P factor2);
     
@@ -92,7 +92,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P}
      */
     _P eq(_P factor1, _P factor2);
 
@@ -106,7 +106,7 @@ public interface RelationalAction<_P extends IParam> {
      * 
      * @param factor1
      * @param factor2
-     * @return
+     * @return {@link _P}
      */
     _P ne(_P factor1, _P factor2);
 }

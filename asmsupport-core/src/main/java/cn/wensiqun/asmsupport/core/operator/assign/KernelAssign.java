@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 /**
  * @author 温斯群(Joe Wen)
  */
-public abstract class KernelAssign extends AbstractParameterizedOperator {
+public abstract class KernelAssign extends AbstractParamOperator {
 
     protected KernelParame value;
     

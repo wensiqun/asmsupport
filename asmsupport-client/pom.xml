@@ -1,18 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>cn.wensiqun</groupId>
-    <artifactId>asmsupport</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>asmsupport-client</artifactId>
-  
-  <dependencies>
-      <dependency>
-          <groupId>cn.wensiqun</groupId>
-          <artifactId>asmsupport-core</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-  </dependencies>
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.wensiqun</groupId>
+		<artifactId>asmsupport</artifactId>
+		<version>0.4.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>asmsupport-client</artifactId>
+	<name>asmsupport-client</name>
+	<description>This modules is a wrapper of asmsupport-core, it make a most simple api to developer when use asmsupport.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.wensiqun</groupId>
+			<artifactId>asmsupport-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>

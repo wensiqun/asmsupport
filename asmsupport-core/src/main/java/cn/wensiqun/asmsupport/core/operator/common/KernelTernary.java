@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
-import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  * @author 温斯群(Joe Wen)
  *
  */
-public class KernelTernary extends AbstractParameterizedOperator {
+public class KernelTernary extends AbstractParamOperator {
     
     private KernelParame exp1;
     private KernelParame exp2;

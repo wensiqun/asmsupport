@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Maven">
+<project name="ASMSupport 0.4.1 - Document">
+	<bannerLeft>
+		<name>ASMSupport</name>
+		<src>./images/logo.png</src>
+		<href>http://asmsupport.github.io/</href>
+	</bannerLeft>
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.3.1</version>
+	</skin>
+
 	<body>
-		<head>
-			<title>ASMSupport 0.4 - Document</title>
-		</head>
-		<menu name="概述">
-			<item name="简介" href="summary/summary.html" />
+		<menu name="Summary">
+			<item name="Summary" href="summary/summary.html" />
 			<item name="Release Note" href="summary/release-note.html" />
 		</menu>
-		<menu name="使用手册">
-			<item name="介绍" href="manual/introduction.html" />
-			<item name="基本操作" href="manual/operators.html" />
-			<item name="创建接口" href="manual/interface.html" />
-			<item name="创建类" href="manual/class.html" />
-			<item name="创建枚举" href="manual/enum.html" />
-			<item name="修改类" href="manual/modify_class.html" />
-			<item name="创建程序块" href="manual/block.html" />
-			<item name="如何查看Log日志" href="manual/seeLog.html" />
+		<menu name="generally manual">
+			<item name="Introduce" href="manual/introduction.html" />
+			<item name="How to see log" href="manual/seeLog.html" />
 		</menu>
-		<menu name="字节码相关">
-			<item name="init方法与clinit方法" href="bytecode/init_clinit.html" />
-			<item name="变量声明" href="bytecode/declare_variable.html" />
-			<item name="条件控制" href="bytecode/condition_block.html" />
-			<item name="枚举类型" href="bytecode/enum.html" />
-			<item name="字节码Label" href="bytecode/label.html" />
-			<item name="Java栈" href="bytecode/stack_simple_desc.html" />
-			<item name="字节码指令集" href="jvmref/opcodes.html" />
+		<menu name="core manual">
 		</menu>
-		<menu name="ASMSupport实现原理">
-			<item name="局部变量的实现" href="theory/localvariable.html" />
-			<item name="指令顺序的控制" href="theory/instruction_order.html" />
+		<menu name="client manual">
+			<item name="basic operator" href="client/manual/operators.html" />
+			<item name="crate interface" href="client/manual/interface.html" />
+			<item name="crate class" href="client/manual/class.html" />
+			<item name="crate enum" href="client/manual/enum.html" />
+			<item name="modify class" href="client/manual/modify_class.html" />
+			<item name="create block" href="client/manual/block.html" />
 		</menu>
-	    <menu ref="parent"/>
+		<menu name="About bytecode">
+			<item name="init and clinit" href="bytecode/init_clinit.html" />
+			<item name="declare variable" href="bytecode/declare_variable.html" />
+			<item name="condition branch" href="bytecode/condition_block.html" />
+			<item name="enum type" href="bytecode/enum.html" />
+			<item name="what's the lable in bytecode" href="bytecode/label.html" />
+			<item name="The stack at runtime" href="bytecode/stack_simple_desc.html" />
+			<item name="JVM instruction set" href="jvmref/opcodes.html" />
+		</menu>
+		<menu name="ASMSupport Theory">
+			<item name="How to control variable in asmsupport" href="theory/localvariable.html" />
+			<item name="The order of instruction" href="theory/instruction_order.html" />
+		</menu>
 	    <menu ref="modules"/>
-	    <menu ref="reports"/>
 	</body>
 </project>

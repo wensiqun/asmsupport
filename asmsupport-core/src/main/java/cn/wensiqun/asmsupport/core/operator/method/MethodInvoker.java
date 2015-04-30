@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -45,7 +45,7 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class MethodInvoker extends AbstractParameterizedOperator {
+public abstract class MethodInvoker extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(MethodInvoker.class);
 

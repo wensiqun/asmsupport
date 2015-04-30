@@ -31,7 +31,8 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
 
     /**
      * 
-     * 在程序块中获取this关键字. 需要注意的是，和java代码一样，这个变量只能够在非静态方法或者程序块中调用，否则会抛异常。
+     * Get {@code this} keyword as a variable, if current is a static method, will throw
+     * exception while call this method.
      * 
      * @return {@link _LocVar}
      * @see #super_()
@@ -50,7 +51,8 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
     public _V this_(String name);
     
     /**
-     * 获取父类super关键字。 需要注意的是，和java代码一样，这个变量只能够在非静态方法或者程序块中调用，否则会抛异常。
+     * Get {@code super} keyword as a variable, if current is a static method, will throw
+     * exception while call this method.
      * 
      * @return {@link _LocVar}
      * @see #this_()

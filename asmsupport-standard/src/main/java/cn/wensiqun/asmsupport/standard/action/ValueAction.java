@@ -30,7 +30,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code int} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Integer val);
 
@@ -38,7 +38,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code short} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Short val);
 
@@ -46,7 +46,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code byte} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Byte val);
 
@@ -54,7 +54,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code boolean} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Boolean val);
 
@@ -62,7 +62,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code long} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Long val);
 
@@ -70,7 +70,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code double} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Double val);
 
@@ -78,7 +78,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code char} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Character val);
 
@@ -86,7 +86,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code float} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Float val);
 
@@ -94,7 +94,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code class} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(AClass val);
 
@@ -102,7 +102,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code class} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(Class<?> val);
 
@@ -110,7 +110,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code String} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P val(String val);
 
@@ -118,7 +118,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code null} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P null_(AClass type);
 
@@ -126,7 +126,7 @@ public interface ValueAction<_P extends IParam> {
      * Get {@code null} val
      * 
      * @param val
-     * @return
+     * @return {@link _P}
      */
     _P null_(Class<?> type);
 }

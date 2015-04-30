@@ -6,6 +6,8 @@
     <version>0.4.1-SNAPSHOT</version>
   </parent>
   <artifactId>asmsupport-issues</artifactId>
+  <name>asmsupport-issues</name>
+  <description>This module is all of the test code for each issue test.</description>
   
   <dependencies>
       <dependency>

@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * @author 温斯群(Joe Wen)
  *
  */
-public class KernelCast extends AbstractParameterizedOperator {
+public class KernelCast extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(KernelCast.class);
     private AClass to;

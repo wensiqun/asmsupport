@@ -6,6 +6,8 @@
     <version>0.4.1-SNAPSHOT</version>
   </parent>
   <artifactId>asmsupport-sample</artifactId>
+  <name>asmsupport-sample</name>
+  <description>Some simple sample use asmsupport, such as dynamic proxy, json serialize and so on.</description>
   
   <dependencies>
       <dependency>

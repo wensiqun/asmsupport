@@ -6,6 +6,8 @@
     <version>0.4.1-SNAPSHOT</version>
   </parent>
   <artifactId>asmsupport-core</artifactId>
+  <name>asmsupport-core</name>
+  <description>This module is the core implement of asmsupport-standard</description>
   
   <dependencies>
       <dependency>

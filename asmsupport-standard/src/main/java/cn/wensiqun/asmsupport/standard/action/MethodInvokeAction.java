@@ -30,15 +30,8 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
     
     /**
      * <p>
-     * 生成方法调用操作
-     * <ul>
-     * <li>objRef : 方法所属的对象</li>
-     * <li>name : 方法名</li>
-     * <li>arguments : 方法参数列表</li>
-     * </ul>
+     * Generate method call instructions. for example we generate the following code : 
      * </p>
-     * <p>对应于红色部分代码:</p>
-     * 
      * 
      * <p style="border:1px solid;width:550px;padding:10px;">
      * <b style="color:#FF3300">String.class.toString();</b><br/>
@@ -46,23 +39,23 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * <b style="color:#FF3300">object.getOther().test("hello");</b><br/>
      * </p>
      * 
-     * 上面红色部分对应的asmsupport代码
+     * Corresponding the asmsupport code :
+     * 
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * call(AClassFactory.defType(String.class), "toString");
-     * call(objectParameterized, "test" Value.value("hello"));
-     * //objectParameterized是上面object在ASMSupport中的表示
-     * call(invoke(objectParameterized, "getOther"), "test" Value.value("hello"));
+     * 
+     * call(AClassFactory.getType(String.class), "toString");
+     * call(paraObj, "test" Value.value("hello"));
+     * call(call(paraObj, "getOther"), "test" Value.value("hello"));
+     * 
      * </pre>
      * 
      * <p>
-     * 这个方法同样也可以调用静态方法，如果传入的方法名在对象中是一个静态方法，那么ASMSuppport底层就自动生成调用今天方法的指令。当然我们也可以直接通过
-     * 调用{@link #call(AClass, String, _P...)}方法生成静态方法调用指令。这一点其实和我们编写java代码是
-     * 一样的，当我们调用某一个变量的方法时候，如果这个方法是静态方法，我们可以采用"变量名.方法名()"和"类名.方法名()"这两种方式。
+     * This method is also to generate static method call. if the method is a static
      * </p>
      * 
-     * @param objRef
-     * @param methodName
-     * @param arguments
+     * @param objRef What's the method owner.
+     * @param methodName The method name.
+     * @param arguments The argument list
      * @return {@link _P}
      */
     _P call(_P objRef, String methodName, _P... arguments);
@@ -82,7 +75,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
     /**
      * 
      * <p>
-     * 调用静态方法， 对应下面红色部分的代码
+     * Genreate static method call.
      * </p>
      * 
      * <p style="border:1px solid;width:550px;padding:10px;">
@@ -90,10 +83,10 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * <b style="color:#FF3300">Thread.sleep(1000)</b><br/>
      * </p>
      * 
-     * 上面红色部分对应的asmsupport代码
+     * Corresponding the asmsupport code :
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * call(ThreadAClass, "getAllStackTraces");
-     * call(ThreadAClass, "sleep", Value.value(1000));
+     * call(AClassFactory.getType(Thread.class), "getAllStackTraces");
+     * call(AClassFactory.getType(Thread.class), "sleep", Value.value(1000));
      * </pre>
      * 
      * 
@@ -118,7 +111,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
     /**
      * 
      * <p>
-     * 调用构造方法， 对应下面红色部分的代码
+     * Generate the construction call. for example we generate the following code : 
      * </p>
      * 
      * 
@@ -127,7 +120,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * String str2 = <b style="color:#FF3300">new String("hello world")</b>;<br/>
      * </p>
      * 
-     * 上面红色部分对应的asmsupport代码
+     * Corresponding the asmsupport code :
      * <pre style="border:1px solid;width:550px;padding:10px;">
      * new_(AClassFactory.defType(String.class));
      * new_(AClassFactory.defType(String.class), Value.value("hello world"));
@@ -150,8 +143,10 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
     
     
     /**
-     * 这个是用在修改class的时候，当我们修改某个方法的时候，ASMSupport会自动为这个方法生成一个代理方法，
-     * 我们只需要调用这个各方，就可以在代理方法中调用被修改的方法。比如存在方法：
+     * This method use in modify class. Generally, if you modify a method,
+     * asmsupport will generate a proxy method for the method that's you 
+     * want to modify. and we can call the original method by this method.
+     * for example you want modify the following method.
      * 
      * <pre>
      * public String test(){
@@ -159,7 +154,9 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * }
      * <pre>
      * 
-     * 那么我们希望在返回"hello world"之后打印出所花费的时间,经过asmsupport修改之后就会出现下面方法内容
+     * And now you want calculate the spend time of this method, you will get
+     * the following code after moidfy. the method test@original is a original
+     * method.
      * <pre>
      * 
      * public String test@original(){
@@ -174,7 +171,8 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * }
      * </pre>
      * 
-     * 在上面的代码中"test@original()"这个方法调用指令就是asmsupport调用了invokeOriginalMethod方法生成的。
+     * As you see the code "test@original()" in method test(). this statement is
+     * generate call {@link #callOrig()}
      * @return {@link _P}
      */
     _P callOrig();

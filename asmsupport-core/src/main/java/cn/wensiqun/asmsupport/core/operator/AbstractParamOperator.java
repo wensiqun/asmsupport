@@ -10,9 +10,9 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
 
-public abstract class AbstractParameterizedOperator extends AbstractOperator implements KernelParame{
+public abstract class AbstractParamOperator extends AbstractOperator implements KernelParame{
 
-    protected AbstractParameterizedOperator(KernelProgramBlock block, Operator operatorSymbol) {
+    protected AbstractParamOperator(KernelProgramBlock block, Operator operatorSymbol) {
         super(block, operatorSymbol);
     }
 

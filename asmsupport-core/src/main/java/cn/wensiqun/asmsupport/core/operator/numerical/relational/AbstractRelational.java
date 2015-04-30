@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.operator.AbstractParameterizedOperator;
+import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
  * @author 温斯群(Joe Wen)
  *
  */
-public abstract class AbstractRelational extends AbstractParameterizedOperator implements Jumpable  {
+public abstract class AbstractRelational extends AbstractParamOperator implements Jumpable  {
 
     private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
     
