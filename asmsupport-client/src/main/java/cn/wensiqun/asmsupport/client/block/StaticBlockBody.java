@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
-import cn.wensiqun.asmsupport.standard.method.IStaticBlockBody;
+import cn.wensiqun.asmsupport.standard.block.method.IStaticBlockBody;
 
 public abstract class StaticBlockBody extends ProgramBlock<KernelStaticBlockBody> implements IStaticBlockBody {
 

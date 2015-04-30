@@ -20,8 +20,8 @@ import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.standard.block.loop.IForEach;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.loop.IForEach;
 
 public abstract class ForEach extends ProgramBlock<KernelForEach> implements IForEach<LocVar> {
 

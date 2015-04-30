@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelEnumConstructorBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IEnumConstructorBody;
+import cn.wensiqun.asmsupport.standard.block.method.IEnumConstructorBody;
 
 public abstract class EnumConstructorBody extends ProgramBlock<KernelEnumConstructorBody> implements
         IEnumConstructorBody<LocVar> {

@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
+import cn.wensiqun.asmsupport.standard.block.method.IEnumStaticBlockBody;
 
 public abstract class EnumStaticBlockBody extends ProgramBlock<KernelEnumStaticBlockBody> implements
         IEnumStaticBlockBody<Param, LocVar> {

@@ -4,7 +4,7 @@ import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public abstract class AbstractBinaryAction extends OperatorAction {
 

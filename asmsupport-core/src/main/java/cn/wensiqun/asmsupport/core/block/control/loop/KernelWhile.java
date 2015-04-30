@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
-import cn.wensiqun.asmsupport.standard.loop.IWhile;
+import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 
 /**
  * 

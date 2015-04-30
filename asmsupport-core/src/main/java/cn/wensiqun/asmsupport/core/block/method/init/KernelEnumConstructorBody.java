@@ -24,8 +24,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
+import cn.wensiqun.asmsupport.standard.block.method.IEnumConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.method.IEnumConstructorBody;
 
 
 /**

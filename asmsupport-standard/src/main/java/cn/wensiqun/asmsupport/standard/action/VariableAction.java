@@ -34,7 +34,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * Get {@code this} keyword as a variable, if current is a static method, will throw
      * exception while call this method.
      * 
-     * @return {@link _LocVar}
+     * @return {@link _V}
      * @see #super_()
      */
     public _V this_();
@@ -46,7 +46,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      *     _this().getGlobalVariable(name);
      * <pre>
      * @param name
-     * @return {@link _LocVar}
+     * @return {@link _V}
      */
     public _V this_(String name);
     
@@ -54,7 +54,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * Get {@code super} keyword as a variable, if current is a static method, will throw
      * exception while call this method.
      * 
-     * @return {@link _LocVar}
+     * @return {@link _V}
      * @see #this_()
      */
     public _V super_();
@@ -63,7 +63,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * Create a local variable with anonymous
      * @param type
      * @param para
-     * @return
+     * @return {@link _V} 
      */
     public _V var(Class<?> type, _P para);
 
@@ -74,7 +74,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * </p>
      * @param type
      * @param para
-     * @return
+     * @return {@link _V}
      */
     public _V var(AClass type, _P para);
 
@@ -83,7 +83,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * @param name
      * @param type
      * @param para
-     * @return
+     * @return {@link _V}
      */
     public _V var(String name, Class<?> type, _P para);
     
@@ -95,7 +95,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * @param name
      * @param type
      * @param para
-     * @return
+     * @return {@link _V}
      */
     public _V var(String name, AClass type, _P para);
     
@@ -108,7 +108,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * </pre>
      * 
      * @param name
-     * @return
+     * @return {@link _V}
      */
     public _V field(String name);
     
@@ -124,7 +124,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
 	 * </pre>
 	 * @param variable
 	 * @param val
-	 * @return
+	 * @return {@link _P}
 	 */
 	_P assign(_V variable, _P val);
 	

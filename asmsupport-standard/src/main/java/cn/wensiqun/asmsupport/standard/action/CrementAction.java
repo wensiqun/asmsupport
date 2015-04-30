@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
- * 创建自增或自减操作
+ * Increment or decrement operator
  * 
  * @author wensiqun(at)163.com
  *
@@ -26,7 +26,8 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 public interface CrementAction<_P extends IParam> {
     
     /**
-     * 生成类似--i操作指令
+     * 
+     * Generate seem like operator : --i
      * 
      * @param crement
      * @return {@link _P}
@@ -34,7 +35,8 @@ public interface CrementAction<_P extends IParam> {
     _P predec(_P crement);
     
     /**
-     * 生成类似i--操作指令
+     * 
+     * Generate seem like operator : i--
      * 
      * @param crement
      * @return {@link PreposeIncrement}
@@ -42,7 +44,8 @@ public interface CrementAction<_P extends IParam> {
     _P postdec(_P crement);
     
     /**
-     * 生成类似++i操作指令
+     * 
+     * Generate seem like operator : ++i
      * 
      * @param crement
      * @return {@link PreposeIncrement}
@@ -50,7 +53,8 @@ public interface CrementAction<_P extends IParam> {
     _P preinc(_P crement);
     
     /**
-     * 生成类似i++操作指令
+     * 
+     * Generate seem like operator : i++
      * 
      * @param crement
      * @return {@link PostposeIncrement}

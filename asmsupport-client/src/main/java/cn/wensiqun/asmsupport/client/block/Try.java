@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
-import cn.wensiqun.asmsupport.standard.excep.ITry;
+import cn.wensiqun.asmsupport.standard.block.exception.ITry;
 
 public abstract class Try extends ProgramBlock<KernelTry> implements ITry<Catch, Finally> {
 

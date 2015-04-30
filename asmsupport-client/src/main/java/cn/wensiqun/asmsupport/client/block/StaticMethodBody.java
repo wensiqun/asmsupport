@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
+import cn.wensiqun.asmsupport.standard.block.method.IStaticMethodBody;
 
 public abstract class StaticMethodBody extends ProgramBlock<KernelStaticMethodBody> implements
         IStaticMethodBody<LocVar> {

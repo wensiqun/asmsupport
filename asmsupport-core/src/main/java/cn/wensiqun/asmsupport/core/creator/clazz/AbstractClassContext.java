@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.loader.ASMClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 
 public abstract class AbstractClassContext extends AClassFactory implements IClassContext{

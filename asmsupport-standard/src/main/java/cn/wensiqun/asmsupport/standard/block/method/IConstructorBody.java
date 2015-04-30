@@ -12,30 +12,30 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block.method;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
 import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IEnumStaticBlockBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
-
+/**
+ * Representing a constructor body.
+ * 
+ * @author
+ *
+ * @param <_P>
+ * @param <_Var>
+ */
+public interface IConstructorBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
+	
     /**
-     * 
-     * @param name
-     * @param argus
+     * Call super constructor, corresponding to following java code : 
+     * <pre>
+     *     super(arg1, arg2...);
+     * </pre>
+     * @param arguments
+     * @return
      */
-	void constructEnumConst(String name, _P... argus);
-	
-	/**
-	 * <p>
-	 * call {@link #constructEnumConst} method at this method.
-	 * get some information about current enum type constructor.
-	 * </p>
-	 * <p>
-	 * 在此方法中调用{@link #constructEnumConst}方法， 获取构造枚举列表中每个枚举类型需要的参数信息，枚举类型名等信息。
-	 * </p>
-	 */
-	void constructEnumConsts();
-	
+    _P supercall(_P... arguments);
+
 }

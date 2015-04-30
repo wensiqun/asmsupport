@@ -12,25 +12,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.body;
+package cn.wensiqun.asmsupport.standard.block.method;
 
+import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
 /**
- * Indicate a program block, it's will be passes multiple local variables (is the sub type of
- * {@link ILocVar}) when enter the block.
+ * Representing a constructor of an enum type.
  * 
- * @author sqwen
+ * @author WSQ
  *
  * @param <_Var>
  */
-public interface MultiLocVarBody<_Var extends ILocVar> extends IBody {
-    
-    /**
-     * Enter a program block with multiple local variable.
-     * 
-     * @param args
-     */
-    void body(_Var... args);
-    
+public interface IEnumConstructorBody<_Var extends ILocVar> extends MultiLocVarBody<_Var> {
+
 }

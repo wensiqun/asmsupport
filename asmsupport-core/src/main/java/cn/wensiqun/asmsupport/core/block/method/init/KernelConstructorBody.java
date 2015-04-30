@@ -25,9 +25,9 @@ import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.block.method.IConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.method.IConstructorBody;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 

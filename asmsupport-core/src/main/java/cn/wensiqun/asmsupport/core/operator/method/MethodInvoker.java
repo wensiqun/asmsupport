@@ -38,7 +38,7 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 

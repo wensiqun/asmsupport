@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 /**
  * 
- * 生成方法调用操作
+ * Generate method invoke.
  * 
  * @author wensiqun(at)163.com
  *

@@ -12,25 +12,36 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.body;
+package cn.wensiqun.asmsupport.standard.block.branch;
 
-import cn.wensiqun.asmsupport.standard.def.IParam;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
+import cn.wensiqun.asmsupport.standard.block.IBody;
+
 
 /**
- * Indicate a program block, it's will be passes an argument(is the sub type of
- * {@link IParam}) when enter the block.
+ * Representing a if block
  * 
- * @author sqwen
+ * @author WSQ
  *
- * @param <_P>
+ * @param <_ElseIF>
+ * @param <_Else>
  */
-public interface IParamBody<_P extends IParam> extends IBody {
-
-    /**
-     * Enter the block with an argument 
-     * 
-     * @param e
-     */
-    void body(_P e);
-
+public interface IIF<_ElseIF extends IBody, _Else extends IBody> extends CommonBody {
+	
+	/**
+	 * Create an else if block from current block
+	 * 
+	 * @param elseif
+	 * @return
+	 */
+	_ElseIF elseif(_ElseIF elseif);
+	
+	/**
+	 * Create an else block from current block
+	 *  
+	 * @param els
+	 * @return
+	 */
+	_Else else_(_Else els);
+	
 }

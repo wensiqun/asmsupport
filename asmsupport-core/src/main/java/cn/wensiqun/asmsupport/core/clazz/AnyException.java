@@ -19,7 +19,7 @@ import java.lang.reflect.Constructor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 
 /**

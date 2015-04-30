@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
-import cn.wensiqun.asmsupport.standard.branch.IElseIF;
+import cn.wensiqun.asmsupport.standard.block.branch.IElseIF;
 
 public abstract class ElseIF extends ProgramBlock<KernelElseIF> implements IElseIF<ElseIF, Else> {
 	

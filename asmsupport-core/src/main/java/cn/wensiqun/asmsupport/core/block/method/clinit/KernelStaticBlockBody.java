@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.method.clinit;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.standard.method.IStaticBlockBody;
+import cn.wensiqun.asmsupport.standard.block.method.IStaticBlockBody;
 
 public abstract class KernelStaticBlockBody extends AbstractKernelMethodBody implements IStaticBlockBody {
 

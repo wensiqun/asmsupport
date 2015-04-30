@@ -12,10 +12,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.branch;
+package cn.wensiqun.asmsupport.standard.block.branch;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
 
+
+/**
+ * Representing a else block
+ * 
+ * @author WSQ
+ *
+ */
 public interface IElse extends CommonBody {
 	
 }

@@ -44,7 +44,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 
 public class ClassModifier extends AbstractClassContext {

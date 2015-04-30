@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
- * 生成关系运算操作
+ * Generate relational operator.
  * 
  * @author wensiqun(at)163.com
  *

@@ -26,9 +26,9 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.standard.block.method.IEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.method.IEnumStaticBlockBody;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 

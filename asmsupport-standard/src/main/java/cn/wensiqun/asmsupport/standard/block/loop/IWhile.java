@@ -12,29 +12,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.exception;
+package cn.wensiqun.asmsupport.standard.block.loop;
 
-public class ASMSupportException extends RuntimeException {
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1370065717673124976L;
 
-	public ASMSupportException() {
-		super();
-	}
-
-	public ASMSupportException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public ASMSupportException(String message) {
-		super(message);
-	}
-
-	public ASMSupportException(Throwable cause) {
-		super(cause);
-	}
+/**
+ * Representing a while block.
+ * 
+ * @author WSQ
+ *
+ */
+public interface IWhile extends CommonBody {
 
 }

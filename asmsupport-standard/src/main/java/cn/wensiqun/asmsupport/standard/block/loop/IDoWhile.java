@@ -12,19 +12,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block.loop;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
 
-public interface IModifiedMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var> {
+/**
+ * Representing a do...while block
+ * 
+ * @author WSQ
+ *
+ */
+public interface IDoWhile extends CommonBody {
 
-    /**
-     * Get original return type.
-     * 
-     * @return
-     */
-    public AClass getOrigReturnType();
-    
 }

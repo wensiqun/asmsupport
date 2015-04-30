@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.standard.block.method.IModifiedMethodBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 
 public abstract class ModifiedMethodBody extends ProgramBlock<KernelModifiedMethodBody> implements
         IModifiedMethodBody<LocVar> {

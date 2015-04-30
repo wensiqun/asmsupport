@@ -12,17 +12,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.excep;
+package cn.wensiqun.asmsupport.standard.block.exception;
 
-import cn.wensiqun.asmsupport.standard.body.IBody;
-import cn.wensiqun.asmsupport.standard.body.ILocVarBody;
-import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
+import cn.wensiqun.asmsupport.standard.block.IBody;
 
+/**
+ * Representing a try block
+ * 
+ * @author WSQ
+ *
+ * @param <_Catch>
+ * @param <_Finally>
+ */
+public interface ITry<_Catch extends IBody, _Finally extends IBody> extends CommonBody {
 
-public interface ICatch<_Var extends ILocVar, _Catch extends IBody, _Finally extends IBody> extends ILocVarBody<_Var> {
-
+	/**
+	 * Create an catch block from current block
+	 * 
+	 * @param catchBlock
+	 * @return {@link _Catch}
+	 */
 	public _Catch catch_(_Catch catchBlock);
     
-    public _Finally finally_(_Finally finallyClient);
+	/**
+	 * Create an finally block from current block
+	 * 
+	 * @param finallyBlock
+	 * @return {@link _Finally}
+	 */
+    public _Finally finally_(_Finally finallyBlock);
 	
 }

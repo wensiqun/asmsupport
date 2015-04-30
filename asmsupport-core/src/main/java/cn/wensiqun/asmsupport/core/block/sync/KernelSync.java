@@ -30,8 +30,8 @@ import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.block.sync.ISynchronized;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.sync.ISynchronized;
 
 
 /**

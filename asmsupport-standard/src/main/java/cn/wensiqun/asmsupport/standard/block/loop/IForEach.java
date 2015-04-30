@@ -12,11 +12,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block.loop;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.block.ILocVarBody;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IStaticMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
+
+/**
+ * Representing a for...each block.
+ * 
+ * @author WSQ
+ *
+ * @param <_Var>
+ */
+public interface IForEach<_Var extends ILocVar> extends ILocVarBody<_Var> {
 
 }

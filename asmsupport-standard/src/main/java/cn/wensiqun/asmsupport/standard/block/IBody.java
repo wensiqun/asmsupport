@@ -12,11 +12,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
-import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
-
-public interface IMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
+/**
+ * The super type of any program block
+ * 
+ * @author sqwen
+ *
+ */
+public interface IBody {
 
 }

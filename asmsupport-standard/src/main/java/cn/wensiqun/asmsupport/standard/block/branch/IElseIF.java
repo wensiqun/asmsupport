@@ -12,30 +12,37 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block.branch;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
-import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
+import cn.wensiqun.asmsupport.standard.block.IBody;
+
 
 /**
- * Representing a constructor body.
+ * Representing an else...if block. 
  * 
- * @author
+ * @author WSQ
  *
- * @param <_P>
- * @param <_Var>
+ * @param <_ElseIF>
+ * @param <_Else>
  */
-public interface IConstructorBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
+public interface IElseIF<_ElseIF extends IBody, _Else extends IBody> extends CommonBody {
 	
-    /**
-     * Call super constructor, corresponding to following java code : 
-     * <pre>
-     *     super(arg1, arg2...);
-     * </pre>
-     * @param arguments
-     * @return
-     */
-    _P supercall(_P... arguments);
+	/**
+	 * Create an else if block from current block
+	 * 
+	 * @param elseif
+	 * @return {@link _ElseIF}
+	 */
+	_ElseIF elseif(_ElseIF elseif);
 
+	/**
+	 * 
+	 * Create an else block from current block
+	 *  
+	 * @param els Else block
+	 * @return {@link _Else}
+	 */
+	_Else else_(_Else els);
+	
 }

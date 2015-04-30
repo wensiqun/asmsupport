@@ -12,24 +12,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.body;
+package cn.wensiqun.asmsupport.standard.error;
 
-import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
+public class ASMSupportException extends RuntimeException {
 
-/**
- * Indicate a program block, it's will be passes an local variable (is the sub type of
- * {@link ILocVar}) when enter the block.
- * 
- * @author sqwen
- *
- * @param <_Var>
- */
-public interface ILocVarBody<_Var extends ILocVar> extends IBody {
-    
-    /**
-     * enter a program block with a local variable.
-     * 
-     * @param e
-     */
-    void body(_Var e);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1370065717673124976L;
+
+	public ASMSupportException() {
+		super();
+	}
+
+	public ASMSupportException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ASMSupportException(String message) {
+		super(message);
+	}
+
+	public ASMSupportException(Throwable cause) {
+		super(cause);
+	}
+
 }

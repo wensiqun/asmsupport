@@ -12,10 +12,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.excep;
+package cn.wensiqun.asmsupport.standard.block;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IFinally extends CommonBody {
-
+/**
+ * Indicate a program block, it's will be passes multiple local variables (is the sub type of
+ * {@link ILocVar}) when enter the block.
+ * 
+ * @author sqwen
+ *
+ * @param <_Var>
+ */
+public interface MultiLocVarBody<_Var extends ILocVar> extends IBody {
+    
+    /**
+     * Enter a program block with multiple local variable.
+     * 
+     * @param args
+     */
+    void body(_Var... args);
+    
 }

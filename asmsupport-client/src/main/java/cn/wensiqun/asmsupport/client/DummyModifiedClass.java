@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public class DummyModifiedClass {
 

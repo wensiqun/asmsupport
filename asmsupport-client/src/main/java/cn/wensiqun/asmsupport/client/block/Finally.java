@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelFinally;
-import cn.wensiqun.asmsupport.standard.excep.IFinally;
+import cn.wensiqun.asmsupport.standard.block.exception.IFinally;
 
 public abstract class Finally extends ProgramBlock<KernelFinally> implements IFinally {
 

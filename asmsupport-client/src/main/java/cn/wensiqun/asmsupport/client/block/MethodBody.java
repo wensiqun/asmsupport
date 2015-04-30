@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IMethodBody;
+import cn.wensiqun.asmsupport.standard.block.method.IMethodBody;
 
 public abstract class MethodBody extends ProgramBlock<KernelMethodBody> implements IMethodBody<LocVar> {
 

@@ -12,15 +12,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.excep;
+package cn.wensiqun.asmsupport.standard.block.sync;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
-import cn.wensiqun.asmsupport.standard.body.IBody;
+import cn.wensiqun.asmsupport.standard.block.IParamBody;
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
-public interface ITry<_Catch extends IBody, _Finally extends IBody> extends CommonBody {
 
-	public _Catch catch_(_Catch catchBlock);
-    
-    public _Finally finally_(_Finally finallyClient);
-	
+/**
+ * Representing a synchronized block.
+ * 
+ * @author WSQ
+ *
+ * @param <_P>
+ */
+public interface ISynchronized<_P extends IParam> extends IParamBody<_P>{
+
 }

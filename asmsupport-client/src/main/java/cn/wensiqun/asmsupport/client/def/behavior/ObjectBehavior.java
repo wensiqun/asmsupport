@@ -9,8 +9,6 @@ public interface ObjectBehavior extends CommonBehavior {
 
     ObjectBehavior call(String methodName, Param... arguments);
     
-    //ObjectBehavior stradd(Param param);
-    
     ObjectBehavior cast(Class<?> type);
 
     ObjectBehavior cast(AClass type);

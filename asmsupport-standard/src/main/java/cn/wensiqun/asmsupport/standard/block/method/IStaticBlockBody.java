@@ -12,15 +12,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.branch;
+package cn.wensiqun.asmsupport.standard.block.method;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
-import cn.wensiqun.asmsupport.standard.body.IBody;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
 
-public interface IElseIF<_ElseIF extends IBody, _Else extends IBody> extends CommonBody {
-	
-	_ElseIF elseif(_ElseIF elseif);
+/**
+ * 
+ * Representing a static block of a class.
+ * 
+ * @author WSQ
+ *
+ */
+public interface IStaticBlockBody extends CommonBody {
 
-	_Else else_(_Else els);
-	
 }

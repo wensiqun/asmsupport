@@ -12,11 +12,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.sync;
+package cn.wensiqun.asmsupport.standard.block.method;
 
-import cn.wensiqun.asmsupport.standard.body.IParamBody;
-import cn.wensiqun.asmsupport.standard.def.IParam;
+import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface ISynchronized<_P extends IParam> extends IParamBody<_P>{
+
+/**
+ * Representing a static method body.
+ * 
+ * @author WSQ
+ *
+ * @param <_Var>
+ */
+public interface IStaticMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
 
 }

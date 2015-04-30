@@ -12,20 +12,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.body;
+package cn.wensiqun.asmsupport.standard.block;
 
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
 /**
- * Indicate a common program block
+ * Indicate a program block, it's will be passes an local variable (is the sub type of
+ * {@link ILocVar}) when enter the block.
  * 
  * @author sqwen
  *
+ * @param <_Var>
  */
-public interface CommonBody extends IBody {
+public interface ILocVarBody<_Var extends ILocVar> extends IBody {
     
     /**
-     * Enter program block
+     * enter a program block with a local variable.
      * 
+     * @param e
      */
-    void body();
+    void body(_Var e);
 }

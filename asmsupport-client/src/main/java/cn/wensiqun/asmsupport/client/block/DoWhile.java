@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelDoWhile;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
-import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
+import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
 
 public abstract class DoWhile extends ProgramBlock<KernelDoWhile> implements IDoWhile {
     

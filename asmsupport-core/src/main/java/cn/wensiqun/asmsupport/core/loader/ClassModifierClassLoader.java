@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public class ClassModifierClassLoader extends ClassLoader {
 	

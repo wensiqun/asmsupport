@@ -12,11 +12,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.method;
+package cn.wensiqun.asmsupport.standard.block.method;
 
-import cn.wensiqun.asmsupport.standard.body.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IEnumConstructorBody<_Var extends ILocVar> extends MultiLocVarBody<_Var> {
+/**
+ * Representing a method body.
+ * 
+ * @author WSQ
+ *
+ * @param <_Var>
+ */
+public interface IMethodBody<_Var extends ILocVar> extends MultiLocVarBody<_Var>{
 
 }

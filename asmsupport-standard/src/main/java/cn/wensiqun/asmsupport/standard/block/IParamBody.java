@@ -12,14 +12,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.body;
+package cn.wensiqun.asmsupport.standard.block;
+
+import cn.wensiqun.asmsupport.standard.def.IParam;
 
 /**
- * The super type of any program block
+ * Indicate a program block, it's will be passes an argument(is the sub type of
+ * {@link IParam}) when enter the block.
  * 
  * @author sqwen
  *
+ * @param <_P>
  */
-public interface IBody {
+public interface IParamBody<_P extends IParam> extends IBody {
+
+    /**
+     * Enter the block with an argument 
+     * 
+     * @param e
+     */
+    void body(_P e);
 
 }

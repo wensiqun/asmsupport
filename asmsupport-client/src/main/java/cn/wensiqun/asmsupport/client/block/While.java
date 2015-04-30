@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
-import cn.wensiqun.asmsupport.standard.loop.IWhile;
+import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 
 public abstract class While extends ProgramBlock<KernelWhile> implements IWhile {
     

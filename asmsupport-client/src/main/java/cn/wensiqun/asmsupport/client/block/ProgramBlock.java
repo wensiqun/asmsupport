@@ -65,6 +65,13 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
+/**
+ * A wrapper of {@link KernelProgramBlock}
+ * 
+ * @author WSQ
+ *
+ * @param <B>
+ */
 public class ProgramBlock<B extends KernelProgramBlock> implements ActionSet<
 Param, Var, FieldVar,
 IF, While, DoWhile, ForEach, Try, Sync> {

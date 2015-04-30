@@ -12,10 +12,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.loop;
+package cn.wensiqun.asmsupport.standard.block;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
 
-public interface IDoWhile extends CommonBody {
-
+/**
+ * Indicate a common program block
+ * 
+ * @author sqwen
+ *
+ */
+public interface CommonBody extends IBody {
+    
+    /**
+     * Enter program block
+     * 
+     */
+    void body();
 }

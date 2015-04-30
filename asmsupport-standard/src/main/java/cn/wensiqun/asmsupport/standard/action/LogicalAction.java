@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 
 
 /**
- * 逻辑操作
+ * Logical operator
  * 
  * @author wensiqun(at)163.com
  *
@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 public interface LogicalAction<_P extends IParam> {
     
     /**
-     * 生成逻辑与操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 & factor2;</b>
@@ -39,7 +39,7 @@ public interface LogicalAction<_P extends IParam> {
     _P logicalAnd(_P factor1, _P factor2);
     
     /**
-     * 生成逻辑或操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 | factor2;</b>
@@ -54,7 +54,7 @@ public interface LogicalAction<_P extends IParam> {
 
     /**
      * 
-     * 生成逻辑异或操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 ^ factor2;</b>
@@ -68,7 +68,7 @@ public interface LogicalAction<_P extends IParam> {
     
     /**
      * 
-     * 生成条件与操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 && factor2;</b>
@@ -83,7 +83,7 @@ public interface LogicalAction<_P extends IParam> {
     
     /**
      * 
-     * 生成条件或操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">factor1 || factor2;</b>
@@ -96,7 +96,7 @@ public interface LogicalAction<_P extends IParam> {
     _P or(_P factor1, _P factor2, _P... otherFactors);
     
     /**
-     * 生成条件非操作指令,对应下面的红色java代码
+     * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
      * <b style="color:#FF3300">!factor;</b>

@@ -12,10 +12,30 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.loop;
+package cn.wensiqun.asmsupport.standard.block.method;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
+import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
+import cn.wensiqun.asmsupport.standard.def.IParam;
+import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
-public interface IWhile extends CommonBody {
+/**
+ * Representing a static block of an enum type
+ * 
+ * @author WSQ
+ *
+ * @param <_P>
+ * @param <_Var>
+ */
+public interface IEnumStaticBlockBody<_P extends IParam, _Var extends ILocVar> extends MultiLocVarBody<_Var> {
 
+	/**
+	 * constructor an enum constant.
+	 * 
+	 * @param name
+	 * @param argus
+	 */
+	void constructEnumConst(String name, _P... argus);
+	
+	void constructEnumConsts();
+	
 }

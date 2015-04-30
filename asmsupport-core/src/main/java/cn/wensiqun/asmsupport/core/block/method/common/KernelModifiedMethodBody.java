@@ -23,8 +23,8 @@ import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.standard.block.method.IModifiedMethodBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.method.IModifiedMethodBody;
 
 /**
  * @author

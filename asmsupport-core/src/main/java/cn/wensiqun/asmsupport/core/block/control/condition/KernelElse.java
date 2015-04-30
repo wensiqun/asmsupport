@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.standard.branch.IElse;
+import cn.wensiqun.asmsupport.standard.block.branch.IElse;
 
 public abstract class KernelElse extends ConditionBranchBlock implements IElse {
 

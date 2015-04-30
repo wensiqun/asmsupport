@@ -12,15 +12,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.standard.branch;
+package cn.wensiqun.asmsupport.standard.block.exception;
 
-import cn.wensiqun.asmsupport.standard.body.CommonBody;
-import cn.wensiqun.asmsupport.standard.body.IBody;
+import cn.wensiqun.asmsupport.standard.block.CommonBody;
 
-public interface IIF<_ElseIF extends IBody, _Else extends IBody> extends CommonBody {
+/**
+ * Representing a finally block
+ * 
+ * @author WSQ
+ *
+ */
+public interface IFinally extends CommonBody {
 
-	_ElseIF elseif(_ElseIF elseif);
-	
-	_Else else_(_Else els);
-	
 }

@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.block.method.common;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IMethodBody;
+import cn.wensiqun.asmsupport.standard.block.method.IMethodBody;
 
 /**
  * @author 温斯群(Joe Wen)

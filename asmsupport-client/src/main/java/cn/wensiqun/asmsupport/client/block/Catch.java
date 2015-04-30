@@ -17,11 +17,16 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.standard.block.exception.ICatch;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.excep.ICatch;
 
 public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<LocVar, Catch, Finally> {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param exceptionType exception type
+	 */
     public Catch(AClass exceptionType) {
         targetBlock = new KernelCatch(exceptionType) {
 
@@ -32,6 +37,11 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
         };
     }
     
+    /**
+     * Constructor
+     * 
+     * @param exceptionType exception type
+     */
     public Catch(Class<?> exceptionType) {
         targetBlock = new KernelCatch(getType(exceptionType)) {
 
@@ -42,6 +52,7 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
         };
     }
 
+    @Override
     public Catch catch_(Catch catchBlock) {
         catchBlock.cursor = cursor;
         catchBlock.parent = parent;
@@ -53,6 +64,7 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
         return catchBlock;
     }
 
+    @Override
     public Finally finally_(Finally finallyClient) {
         finallyClient.cursor = cursor;
         finallyClient.parent = parent;

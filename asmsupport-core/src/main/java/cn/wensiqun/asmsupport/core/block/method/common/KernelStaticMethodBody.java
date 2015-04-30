@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.block.method.common;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IStaticMethodBody;
+import cn.wensiqun.asmsupport.standard.block.method.IStaticMethodBody;
 
 public abstract class KernelStaticMethodBody extends AbstractKernelMethodBody implements IStaticMethodBody<LocalVariable> {
     

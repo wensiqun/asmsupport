@@ -104,14 +104,12 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
- * 
- * 
+ * A implements of ProgramBlock
  * 
  * @author wensiqun(at)163.com
- * 
  */
 public abstract class KernelProgramBlock extends AbstractKernelBlock implements 
 ActionSet<KernelParame, IVariable, GlobalVariable,

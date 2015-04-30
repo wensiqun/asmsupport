@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * @author 温斯群(Joe Wen)

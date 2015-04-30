@@ -21,8 +21,8 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.standard.exception.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.loop.IDoWhile;
+import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 

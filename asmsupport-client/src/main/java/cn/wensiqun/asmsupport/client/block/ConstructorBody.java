@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.standard.method.IConstructorBody;
+import cn.wensiqun.asmsupport.standard.block.method.IConstructorBody;
 
 public abstract class ConstructorBody extends ProgramBlock<KernelConstructorBody> implements IConstructorBody<Param, LocVar> {
 
