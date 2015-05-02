@@ -24,6 +24,7 @@
 		    <item name="asmsupport-client">
 				<item name="介绍" href="manual/client/introduction.html" />
 				<item name="基本操作" href="manual/client/operators.html" />
+				<item name="链式调用" href="manual/client/chaincall.html" />
 				<item name="创建接口" href="manual/client/interface.html" />
 				<item name="创建类" href="manual/client/class.html" />
 				<item name="创建枚举" href="manual/client/enum.html" />

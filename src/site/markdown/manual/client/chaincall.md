@@ -16,3 +16,8 @@
 	        )
 	    )
 
+采用链式调用方式：
+
+    Var message = _new(StringBuilder.class).call("append", val("Hello,")).call("append", val("ASMSupport")).asVar("String", StringBuilder.class)
+    
+链式调用的接口均定义在包cn.wensiqun.asmsupport.client。def.behavior，我们可以通过ProgramBlock调用一个操作，这个操作将返回链式调用的接口对象。
