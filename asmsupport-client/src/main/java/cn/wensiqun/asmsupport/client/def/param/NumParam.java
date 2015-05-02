@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.AddAction;
+import cn.wensiqun.asmsupport.client.def.action.AssignAction;
 import cn.wensiqun.asmsupport.client.def.action.BandAction;
 import cn.wensiqun.asmsupport.client.def.action.BorAction;
 import cn.wensiqun.asmsupport.client.def.action.BxorAction;
@@ -36,8 +36,15 @@ import cn.wensiqun.asmsupport.client.def.action.ShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.action.SubAction;
 import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.behavior.NumBehavior;
-import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 
+
+/**
+ * Indicate a number parameter
+ * 
+ * @author WSQ
+ *
+ */
 public class NumParam extends PriorityParam implements NumBehavior {
 
 	public NumParam(KernelProgramBlockCursor cursor, Param param) {
@@ -144,8 +151,10 @@ public class NumParam extends PriorityParam implements NumBehavior {
         return new BoolParam(cursor, new NotEqualAction(cursor), this, para);
     }
 
-    @Override
-    public ObjectBehavior stradd(Param param) {
-        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
-    }
+	@Override
+	public NumParam assign(Var var) {
+        priorityStack.pushAction(new AssignAction(cursor, var), this);
+        return this;
+	}
+
 }

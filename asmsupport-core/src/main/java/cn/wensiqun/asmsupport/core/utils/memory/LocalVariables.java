@@ -85,7 +85,7 @@ public class LocalVariables implements Printable, Cloneable{
     @Override
     public void printState(){
         if(LOG.isPrintEnabled()) {
-            LOG.print(printHelper.getGridString(generateGridArray(), true, "local variables states"));
+            LOG.print(printHelper.getGridString(generateGridArray(), true, "\nLocal Variables States"));
         }
     }
 

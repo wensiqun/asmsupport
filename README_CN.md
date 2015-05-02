@@ -7,19 +7,16 @@
 ---
 asmsupport是一个字节码操作类库，它能够让程序员非常简单的在动态创建和修改类，该框架是基于[asm](http://asm.ow2.org/)开发的，不同与asm的是，它避免了直接操作jvm指令，栈和局部变量。更多内容可见[文档](http://asmsupport.github.io)
 
-## 文件夹结构
+## 模块
 
-    asmsupport
-      |-asmsupport-third           : ASMSupport的第三方依赖的源码
-      |-asmsupport-standard        : ASMSupport的标准接口
-      |-asmsupport-core            : ASMSupport的核心实现
-      |-asmsupport-client          ： ASMSupport的client实现，是core的高一层的封装
-      |-asmsupport-issues          ： ASMSupport的一些bug修复的测试类
-      |-asmsupport-sample          : 使用ASMSupport实现的一些例子
-      |-src/site                   : 项目标准的site文档
-      |-LICENSE.txt                : LGPL license
-      |-README.md                  : README英文版
-      |-README_CN.md               : README中文版本
+| 模块|描述|
+|:-------------|:-------------|
+|asmsupport-thrid|这个模块的包含了asmsupport使用的第三方依赖包的源码，这些源码在asmsupport中都重新定义了命名空间，这样的好处就是实现零依赖，同时在开发过程中避免了因为使用asmsupport而产生包冲突|
+|asmsupport-standard|这个模块是asmsupport的标准，可以基于这个api标准完成一个新的asmsupport的实现|
+|asmsupport-core|这个模块是asmsupport-standard的一个核心实现|
+|asmsupport-client|这个模块是对asmsupport-core的一个高层封装，实现了很多简便的方式，比如链式调用，同时也实现了asmsupport-standard标准.|
+|asmsupport-issues|这个模块包含了所以asmsupport以往的issue的测试类，这个包的作用可以在后续开发中确保运行'maven test'的时候同一问题不再出现。|
+|asmsupport-sample|这个模块包含了一些asmsupport的实例, 比如动态代理，json序列化等等.|
 
 ## Maven坐标
     

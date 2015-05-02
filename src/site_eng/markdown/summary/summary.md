@@ -6,7 +6,7 @@ ASM is an all purpose Java bytecode manipulation and analysis framework. It can 
 
 The asmsupport is a java class byte code operate library, it make easier to write or modify a class at runtime. This framework developed base on [asm](http://asm.ow2.org/) framework, but different from asm that avoid use original jvm instruction and avoid maintain stack and local variables.
 
-# Compare
+# Compare ASM & ASMSupport
 
 We compare two method to generate class between asm framework and asmsupport framework.
 
@@ -44,6 +44,8 @@ We compare two method to generate class between asm framework and asmsupport fra
     22. cw.visitEnd();
     23. byte[] classBytes = cw.toByteArray();
     24. //convert class Bytes to class
+
+As you see, there have most jvm instruction that's you need to know, and will be careful stack and local variable operate.
 
 ## asmsupport
 

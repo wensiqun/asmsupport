@@ -7,12 +7,18 @@ import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 
+/**
+ * Get array length action
+ * 
+ * @author WSQ
+ *
+ */
 public class ArrayLengthAction extends OperatorAction {
 
     private int dimSize;
     
     public ArrayLengthAction(KernelProgramBlockCursor cursor, int dimSize) {
-        super(cursor, Operator.CONDITION_AND);
+        super(cursor, Operator.COMMON);
         this.dimSize = dimSize;
     }
 

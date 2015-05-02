@@ -41,7 +41,7 @@
       .body(new MethodBody(){
           @Override
           public void body(LocVar... args) {
-              //在这里调用相印的操作生产字节码。
+              //在这里调用相应的操作生产字节码。
               //TODO
           }
       });
@@ -83,7 +83,7 @@
 上面两种方式一个只创建了数组空间，而第二个则是在创建数组的时候就赋予了值。那么接下来就是使用asmsupport创建上面两个值，我们使用ArrayAction接口中的makeArray和newarray两个方法来实现。
    
     makeArray(int[][][].class, val(1), val(2));
-    newArray(String[].class, new Parameterized[]{val("Hello"), val("ASMSupport")});
+    newarray(String[].class, new Parameterized[]{val("Hello"), val("ASMSupport")});
     
 该接口下还有很多重载方法。    
     

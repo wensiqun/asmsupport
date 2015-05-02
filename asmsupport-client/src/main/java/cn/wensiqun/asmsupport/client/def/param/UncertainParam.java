@@ -20,11 +20,11 @@ import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.AddAction;
 import cn.wensiqun.asmsupport.client.def.action.AndAction;
 import cn.wensiqun.asmsupport.client.def.action.ArrayLengthAction;
+import cn.wensiqun.asmsupport.client.def.action.AssignAction;
 import cn.wensiqun.asmsupport.client.def.action.BandAction;
 import cn.wensiqun.asmsupport.client.def.action.BorAction;
 import cn.wensiqun.asmsupport.client.def.action.BxorAction;
 import cn.wensiqun.asmsupport.client.def.action.DivAction;
-import cn.wensiqun.asmsupport.client.def.action.EqualAction;
 import cn.wensiqun.asmsupport.client.def.action.GreaterEqualAction;
 import cn.wensiqun.asmsupport.client.def.action.GreaterThanAction;
 import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
@@ -35,18 +35,24 @@ import cn.wensiqun.asmsupport.client.def.action.LogicOrAction;
 import cn.wensiqun.asmsupport.client.def.action.LogicXorAction;
 import cn.wensiqun.asmsupport.client.def.action.ModAction;
 import cn.wensiqun.asmsupport.client.def.action.MulAction;
-import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.action.OrAction;
 import cn.wensiqun.asmsupport.client.def.action.ShiftLeftAction;
 import cn.wensiqun.asmsupport.client.def.action.ShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.action.SubAction;
 import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.behavior.UncertainBehavior;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
-public class UncertainParam extends DummyParam implements UncertainBehavior {
+/**
+ * If asmsupport can't know what's the parameter type, use this parameter
+ * 
+ * @author WSQ
+ *
+ */
+public class UncertainParam extends CommonParam implements UncertainBehavior {
 
     public UncertainParam(KernelProgramBlockCursor cursor, KernelParame target) {
         super(cursor, target);
@@ -55,11 +61,6 @@ public class UncertainParam extends DummyParam implements UncertainBehavior {
     @Override
     public UncertainParam call(String methodName, Param... arguments) {
         return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
-    }
-
-    @Override
-    public ObjectParam stradd(Param param) {
-        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
     }
 
     @Override
@@ -80,16 +81,6 @@ public class UncertainParam extends DummyParam implements UncertainBehavior {
     @Override
     public BoolParam instanceof_(AClass type) {
         return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
-    }
-
-    @Override
-    public BoolParam eq(Param para) {
-        return new BoolParam(cursor, new EqualAction(cursor), this, para);
-    }
-
-    @Override
-    public BoolParam ne(Param para) {
-        return new BoolParam(cursor, new NotEqualAction(cursor), this, para);
     }
 
     @Override
@@ -225,7 +216,7 @@ public class UncertainParam extends DummyParam implements UncertainBehavior {
     @Override
     public NumParam length(Param... dims) {
         Param[] operands = ParamPostern.unionParam(new DummyParam(cursor, target), dims);
-        return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length), operands);
+        return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length - 1), operands);
     }
 
     @Override
@@ -234,4 +225,9 @@ public class UncertainParam extends DummyParam implements UncertainBehavior {
                 ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
     }
     
+    @Override
+	public UncertainParam assign(Var var) {
+		return new UncertainParam(cursor, 
+				ParamPostern.getTarget(new AssignAction(cursor, var).doAction(var)));
+	}
 }

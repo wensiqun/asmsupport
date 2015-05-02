@@ -10,6 +10,9 @@ public class Log {
     
     public Log(Logger logger) {
         this.logger = logger;
+        if(logger != null) {
+            this.logger.setUseParentHandlers(false);
+        }
     }
 
     public boolean isPrintEnabled() {

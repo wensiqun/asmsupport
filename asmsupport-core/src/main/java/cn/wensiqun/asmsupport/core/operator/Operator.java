@@ -68,7 +68,7 @@ public enum Operator {
     
     ASSIGN("=", 13),
     
-    MIN_PRIORITY("Unnuse", Integer.MIN_VALUE);
+    MIN_PRIORITY("Unnuse", Integer.MAX_VALUE);
     
     private String symbol;
     

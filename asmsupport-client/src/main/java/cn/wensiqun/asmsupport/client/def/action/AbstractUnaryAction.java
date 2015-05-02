@@ -5,6 +5,13 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 
+/**
+ * 
+ * This action indicate the operator have one operand.
+ * 
+ * @author WSQ
+ *
+ */
 public abstract class AbstractUnaryAction extends OperatorAction {
 
     public AbstractUnaryAction(KernelProgramBlockCursor cursor, Operator operator) {

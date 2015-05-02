@@ -190,6 +190,9 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 		return new ArrayParam(cursor, targetBlock.newarray(aClass, ParamPostern.getTarget(arrayObject)));
 	}
 
+	/**
+	 * The second parameter must be a array and element type of array is {@link Param} type
+	 */
 	@Override
 	public ArrayParam newarray(Class<?> type, Object arrayObject) {
 		return new ArrayParam(cursor, targetBlock.newarray(type, ParamPostern.getTarget(arrayObject)));
@@ -209,7 +212,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	@Override
 	public NumParam arrayLength(Param arrayReference, Param... dims) {
 	    Param[] operands = ParamPostern.unionParam(arrayReference, dims);
-		return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length), operands);
+		return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length - 1), operands);
 	}
 	
 	@Override
@@ -368,8 +371,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public DummyParam ternary(Param exp1, Param exp2,
-	        Param exp3) {
+	public DummyParam ternary(Param exp1, Param exp2, Param exp3) {
 		return new DummyParam(cursor, targetBlock.ternary(ParamPostern.getTarget(exp1), ParamPostern.getTarget(exp2), ParamPostern.getTarget(exp3)));
 	}
 

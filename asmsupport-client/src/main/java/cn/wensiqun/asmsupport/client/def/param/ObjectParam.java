@@ -17,15 +17,22 @@ package cn.wensiqun.asmsupport.client.def.param;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.def.action.EqualAction;
+import cn.wensiqun.asmsupport.client.def.action.AssignAction;
 import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
-import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
-public class ObjectParam extends DummyParam implements ObjectBehavior {
+
+/**
+ * Indicate a object parameter.
+ * 
+ * @author WSQ
+ *
+ */
+public class ObjectParam extends CommonParam implements ObjectBehavior {
 
     public ObjectParam(KernelProgramBlockCursor cursor, KernelParame target) {
         super(cursor, target);
@@ -40,11 +47,6 @@ public class ObjectParam extends DummyParam implements ObjectBehavior {
     						methodName, ParamPostern.getTarget(arguments)));
     	}
         return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
-    }
-
-    @Override
-    public ObjectParam stradd(Param param) {
-        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
     }
 
     @Override
@@ -67,14 +69,10 @@ public class ObjectParam extends DummyParam implements ObjectBehavior {
         return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
     }
 
-    @Override
-    public BoolParam eq(Param para) {
-        return new BoolParam(cursor, new EqualAction(cursor), this);
-    }
-
-    @Override
-    public BoolParam ne(Param para) {
-        return new BoolParam(cursor, new NotEqualAction(cursor), this);
-    }
+	@Override
+	public ObjectParam assign(Var var) {
+		return new ObjectParam(cursor, 
+				ParamPostern.getTarget(new AssignAction(cursor, var).doAction(var)));
+	}
 
 }

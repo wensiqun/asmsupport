@@ -22,6 +22,11 @@ public abstract class OperatorAction {
         this.operator = operator;
     }
 
+    /**
+     * Get the {@link Operator} corresponding to current action
+     * 
+     * @return
+     */
     public Operator getOperator() {
         return operator;
     }

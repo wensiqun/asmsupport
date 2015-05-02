@@ -40,7 +40,7 @@ public interface ArrayAction<_P extends IParam> {
      * 
      * Following code is the implement of preceding code :
      * <p style="border:1px solid;width:550px;padding:10px;">
-     * newArray(AClassFactory.getArrayClass(String[][][].class), Value.value(2), Value.value(3), Value.value(4));<br>
+     * newArray(AClassFactory.getArrayClass(String[][][].class), val(2), val(3), val(4));<br>
      * </p>
 	 * 空间
 	 * @param arraytype array value type. must be an array type
@@ -55,7 +55,7 @@ public interface ArrayAction<_P extends IParam> {
 	 * 
 	 * @param arraytype
 	 * @param dimensions
-	 * @return
+	 * @return {@link _P}
 	 */
 	_P makeArray(Class<?> arraytype, final _P... dimensions);
 
@@ -73,11 +73,11 @@ public interface ArrayAction<_P extends IParam> {
      * 
      * Following code is the implement of preceding code :
      * <pre style="border:1px solid;width:550px;padding:10px;">
-     * Parameterized[][] values = new Parameterized[][]{
-     *     {Value.value("00"), Value.value("01")},
-     *     {Value.value("10"), Value.value("11")}
+     * {@link _P}[][] values = {@link _P}[][]{
+     *     {val("00"), val("01")},
+     *     {val("10"), val("11")}
      * };
-     * newArrayWithValue(AClassFactory.getArrayClass(String[][].class), values);
+     * newarray(AClassFactory.getType(String[][].class), values);
      * </pre>
 	 * 
 	 * @param arraytype array type you want to make. must be an array type
@@ -89,10 +89,11 @@ public interface ArrayAction<_P extends IParam> {
 	_P newarray(AClass arraytype, final Object arrayobject);
 	
 	/**
+	 * It's seem like {@link #newarray(AClass, Object)}
 	 * 
 	 * @param type
 	 * @param arrayObject
-	 * @return
+	 * @return {@link _P}
 	 */
 	_P newarray(Class<?> type, Object arrayObject);
     
@@ -109,7 +110,7 @@ public interface ArrayAction<_P extends IParam> {
      * 
      * Following code is the implement of preceding code :
      * <p style="border:1px solid;width:400px;padding:10px;">
-     * _arrayLoad(values, Value.value(0), Value.value(1));<br>
+     * _arrayLoad(values, val(0), val(1));<br>
      * </p>
      * 
      * 
@@ -134,7 +135,7 @@ public interface ArrayAction<_P extends IParam> {
      * 
      * Following code is the implement of preceding code :
      * <p style="border:1px solid;width:400px;padding:10px;">
-     * _arrayStore(arrayValues, Value.value(100), Value.value(0), Value.value(1))
+     * _arrayStore(arrayValues, val(100), val(0), val(1))
      * </p>
      * 
      * @param arrayReference array reference
@@ -156,7 +157,7 @@ public interface ArrayAction<_P extends IParam> {
      * 
      * Following code is the implement of preceding code :
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * _arrayLength(values, Value.value(0))
+     * _arrayLength(values, val(0))
      * </p>
      * 
      * 

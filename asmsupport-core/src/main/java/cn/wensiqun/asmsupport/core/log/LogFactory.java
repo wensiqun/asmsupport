@@ -28,10 +28,12 @@ public class LogFactory {
             System.out.println("Error to create FileHandler cause by " + e.getMessage() + ", create ConsoleHandler replace.");
             handler = new ConsoleHandler();
         }
+        handler.setFormatter(new LogFormatter());
     }
 
     public LogFactory() {
         handler = new ConsoleHandler();
+        handler.setFormatter(new LogFormatter());
     }
     
     private Log getLogInternal(Class<?> type) {

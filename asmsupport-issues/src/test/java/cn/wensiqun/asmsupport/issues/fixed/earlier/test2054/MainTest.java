@@ -19,7 +19,7 @@ public class MainTest {
 		ClassCreator creator = 
 				new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "fixed.Test2054", null, null);
 		creator.setClassOutPutPath(IssuesConstant.classOutPutPath);
-		
+        
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 

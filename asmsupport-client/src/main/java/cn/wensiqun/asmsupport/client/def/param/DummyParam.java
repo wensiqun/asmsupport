@@ -20,6 +20,12 @@ import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
+/**
+ * A simple parameter that only a proxy of {@link KernelParame}
+ * 
+ * @author WSQ
+ *
+ */
 public class DummyParam extends Param {
 
     protected KernelParame target;
@@ -32,6 +38,11 @@ public class DummyParam extends Param {
     }
 
     @Override
+    public final FieldVar field(String name) {
+        return new FieldVar(cursor, target.field(name));
+    }
+    
+    @Override
     public final AClass getResultType() {
         return target.getResultType();
     }
@@ -39,11 +50,6 @@ public class DummyParam extends Param {
     @Override
     protected KernelParame getTarget() {
         return target;
-    }
-
-    @Override
-    public final FieldVar field(String name) {
-        return new FieldVar(cursor, target.field(name));
     }
 
     @Override

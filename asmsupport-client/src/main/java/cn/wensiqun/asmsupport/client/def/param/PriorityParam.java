@@ -18,13 +18,22 @@ import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
+import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
+import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParame;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
-public abstract class PriorityParam extends Param {
+
+/**
+ * Indicate a parameter that's support priority for each operator
+ * 
+ * @author WSQ
+ *
+ */
+public abstract class PriorityParam extends Param implements CommonBehavior {
 
     protected KernelParame target; 
     protected KernelProgramBlockCursor cursor;
@@ -48,11 +57,6 @@ public abstract class PriorityParam extends Param {
     }
 
     @Override
-    public IFieldVar field(String name) {
-        return getTarget().field(name);
-    }
-
-    @Override
     public KernelParame getTarget() {
     	if(target == null) {
     		priorityStack.marriageAction(Operator.MIN_PRIORITY);
@@ -61,7 +65,47 @@ public abstract class PriorityParam extends Param {
         return target;
     }
 
-    static class PriorityStack {
+    @Override
+    public final FieldVar field(String name) {
+        return new FieldVar(cursor, getTarget().field(name));
+    }
+    
+    @Override
+    public final ObjectParam stradd(Param param) {
+        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
+    }
+
+	@Override
+	public LocVar asVar() {
+		return asVar(getResultType());
+	}
+	
+	@Override
+	public LocVar asVar(AClass type) {
+		return new LocVar(cursor, cursor.getPointer().var(type, getTarget()));
+	}
+
+	@Override
+	public LocVar asVar(Class<?> type) {
+		return new LocVar(cursor, cursor.getPointer().var(type, getTarget()));
+	}
+
+	@Override
+	public LocVar asVar(String varName) {
+		return asVar(varName, getResultType());
+	}
+
+	@Override
+	public LocVar asVar(String varName, AClass type) {
+		return new LocVar(cursor, cursor.getPointer().var(varName, type, getTarget()));
+	}
+
+	@Override
+	public LocVar asVar(String varName, Class<?> type) {
+		return new LocVar(cursor, cursor.getPointer().var(varName, type, getTarget()));
+	}
+
+	static class PriorityStack {
         
     	ArrayStack<OperatorAction> symbolStack = new ArrayStack<OperatorAction>();
         ArrayStack<Param> operandStack = new ArrayStack<Param>();
@@ -89,5 +133,4 @@ public abstract class PriorityParam extends Param {
         }
         
     }
-
 }

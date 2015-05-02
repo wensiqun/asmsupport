@@ -23,37 +23,37 @@ package cn.wensiqun.asmsupport.standard.action;
  * @author wensiqun(at)163.com
  *
  */
-public interface CreateBlockAction<TIF, TWhile, TDoWhile, TForEach, TTry, TSynchronized> {
+public interface CreateBlockAction<IF_TYPE, While_TYPE, DoWhile_TYPE, ForEach_TYPE, Try_TYPE, Synchronized_TYPE> {
 
     /**
      * Create an if program block
      */
-    public TIF if_(TIF ifBlock);
+    public IF_TYPE if_(IF_TYPE ifBlock);
     
     /**
      * Create a while program block
      */
-    public TWhile while_(TWhile whileLoop);
+    public While_TYPE while_(While_TYPE whileLoop);
     
     /**
      * Create a do...while program block
      */
-    public TDoWhile dowhile(TDoWhile doWhile);
+    public DoWhile_TYPE dowhile(DoWhile_TYPE doWhile);
     
     /**
      * Create a for each program block
      */
-    public TForEach for_(final TForEach forEach);
+    public ForEach_TYPE for_(final ForEach_TYPE forEach);
     
     
     /**
      * Create a try program block
      */
-    public TTry try_(final TTry tryPara);
+    public Try_TYPE try_(final Try_TYPE tryPara);
     
     /**
      * Create synchronized block.
      */
-    public TSynchronized sync(TSynchronized sync);
+    public Synchronized_TYPE sync(Synchronized_TYPE sync);
 	
 }

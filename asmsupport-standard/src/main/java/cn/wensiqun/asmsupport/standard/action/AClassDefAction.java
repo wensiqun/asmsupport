@@ -29,7 +29,7 @@ public interface AClassDefAction {
      * Defined a class object to AClass
      * 
      * @param cls
-     * @return
+     * @return {@link AClass}
      */
     AClass getType(Class<?> cls);
     
@@ -42,7 +42,7 @@ public interface AClassDefAction {
      * 
      * @param cls
      * @param dim
-     * @return
+     * @return {@link AClass}
      */
     AClass getArrayType(Class<?> cls, int dim);
     
@@ -51,7 +51,7 @@ public interface AClassDefAction {
      * 
      * @param rootComponent
      * @param dim
-     * @return
+     * @return {@link AClass}
      */
     AClass getArrayType(AClass rootComponent, int dim);
 }

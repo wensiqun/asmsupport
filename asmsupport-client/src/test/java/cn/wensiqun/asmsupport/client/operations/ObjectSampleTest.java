@@ -27,14 +27,14 @@ public class ObjectSampleTest {
             
 			@Override
 			public void body(LocVar... args) {
-			    Var list = var("list", List.class, new_(ArrayList.class));
+			    Var list = new_(ArrayList.class).asVar("list", List.class);
 			    list.call("add", val("100"));
                 list.call("add", val("200"));
                 Var arrayList = var("arraylist", ArrayList.class, list.cast(ArrayList.class));
-                Var str = var("str", String.class, val("Test Str : ")
+                Var str = val("Test Str : ")
                         .stradd(list.eq(arrayList))
                         .stradd(list.call("size"))
-                        .stradd(list.instanceof_(Serializable.class)));
+                        .stradd(list.instanceof_(Serializable.class)).asVar();
 			    return_(str);
 			}
         	

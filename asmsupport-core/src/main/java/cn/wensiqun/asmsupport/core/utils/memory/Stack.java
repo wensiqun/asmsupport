@@ -156,7 +156,7 @@ public class Stack implements Printable, Cloneable {
 
     @Override
     public void printState() {
-        LOG.print(ph.getGridString(generateGridArray(), true, "Stack states"));
+        LOG.print(ph.getGridString(generateGridArray(), true, "\nStack States"));
     }
 
     @Override

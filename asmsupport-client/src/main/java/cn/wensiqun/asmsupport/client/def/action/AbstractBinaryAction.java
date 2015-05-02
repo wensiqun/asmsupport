@@ -6,6 +6,12 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
+/**
+ * This action indicate the operator have two operand.
+ * 
+ * @author WSQ
+ *
+ */
 public abstract class AbstractBinaryAction extends OperatorAction {
 
     public AbstractBinaryAction(KernelProgramBlockCursor cursor, Operator operator) {

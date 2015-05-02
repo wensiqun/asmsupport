@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.AndAction;
+import cn.wensiqun.asmsupport.client.def.action.AssignAction;
 import cn.wensiqun.asmsupport.client.def.action.EqualAction;
 import cn.wensiqun.asmsupport.client.def.action.LogicAndAction;
 import cn.wensiqun.asmsupport.client.def.action.LogicOrAction;
@@ -26,9 +26,15 @@ import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
 import cn.wensiqun.asmsupport.client.def.action.OrAction;
 import cn.wensiqun.asmsupport.client.def.behavior.BoolBehavior;
-import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 
+/**
+ * Indicate a boolean parameter
+ * 
+ * @author WSQ
+ *
+ */
 public class BoolParam extends PriorityParam implements BoolBehavior {
 
 	public BoolParam(KernelProgramBlockCursor cursor, Param param) {
@@ -106,9 +112,10 @@ public class BoolParam extends PriorityParam implements BoolBehavior {
         return logicXor(new DummyParam(cursor, Value.value(param)));
     }
 
-    @Override
-    public ObjectBehavior stradd(Param param) {
-        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
-    }
+	@Override
+	public BoolParam assign(Var var) {
+        priorityStack.pushAction(new AssignAction(cursor, var), this);
+        return this;
+	}
 
 }
