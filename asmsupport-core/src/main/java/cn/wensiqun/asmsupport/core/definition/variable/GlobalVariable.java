@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 /**
  * 全局变量。这个class只用于方法体内操作变量
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  */
 public abstract class GlobalVariable extends ExplicitVariable implements IFieldVar {
 

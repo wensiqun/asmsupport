@@ -6,7 +6,7 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
@@ -17,7 +17,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 /**
  * 在这个例子中我们将实现数组的相关操作
  *
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class ArrayOperatorGenerate extends AbstractExample {
@@ -175,7 +175,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * System.out.println("value of s2[0][0] is " + s2[0][0]);
 				 */
 				//s2[0]
-				KernelParame arrayLoader = arrayLoad(s2, Value.value(0));
+				KernelParam arrayLoader = arrayLoad(s2, Value.value(0));
 				call(systemOut, "println", stradd(Value.value("value of s2[0] is "), call(AClassFactory.getType(ArrayUtils.class), "toString", arrayLoader)));
 				
 				//s2[0][0]
@@ -189,7 +189,7 @@ public class ArrayOperatorGenerate extends AbstractExample {
 				 * s2[1][0] = "new s2[1][0]"
 				 * System.out.println("new value of s2 is : " + ArrayUtils.toString(s2));
 				 */
-				arrayStore(s2, newarray((ArrayClass) AClassFactory.getType(String[].class), new KernelParame[]{Value.value("new s2[0][0]"), Value.value("new s2[0][1]")}), Value.value(0));
+				arrayStore(s2, newarray((ArrayClass) AClassFactory.getType(String[].class), new KernelParam[]{Value.value("new s2[0][0]"), Value.value("new s2[0][1]")}), Value.value(0));
 				arrayStore(s2, Value.value("new s2[1][0]"), Value.value(1), Value.value(0));
 				call(systemOut, "println", stradd(Value.value("new value of s2 is : "), call(AClassFactory.getType(ArrayUtils.class), "toString", s2)));
 				

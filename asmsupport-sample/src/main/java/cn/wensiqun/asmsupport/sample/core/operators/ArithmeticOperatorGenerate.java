@@ -61,10 +61,10 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						LocalVariable k = var("k", AClassFactory.getType(int.class), add1);
 						
 						//printInt("j", j);
-						call(getMethodOwner(), "printInt", Value.value("j"), j);
+						call(getMethodDeclaringClass(), "printInt", Value.value("j"), j);
 
 						//printInt("k", k);
-						call(getMethodOwner(), "printInt", Value.value("k"), k);
+						call(getMethodDeclaringClass(), "printInt", Value.value("k"), k);
 						
 						//j + k
 						KernelAdd add2 = add(j, k);
@@ -72,37 +72,37 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						LocalVariable i = var("i", AClassFactory.getType(int.class), add2);
 						
 						//printInt("j + k", i);
-						call(getMethodOwner(), "printInt", Value.value("j + k"), i);
+						call(getMethodDeclaringClass(), "printInt", Value.value("j + k"), i);
 						
 						//i = j - k;
 						assign(i, sub(j, k));
 						
 						//printInt("j - k", i);
-						call(getMethodOwner(), "printInt", Value.value("j - k"), i);
+						call(getMethodDeclaringClass(), "printInt", Value.value("j - k"), i);
 						
                         //i = k / j;
 						assign(i, div(k, j));
 						
 						//printInt("k / j", i);
-						call(getMethodOwner(), "printInt", Value.value("k / j"), i);
+						call(getMethodDeclaringClass(), "printInt", Value.value("k / j"), i);
 						
 						//i = k * j;
 						assign(i, mul(k, j));
 						
 						//printInt("k * j", i);
-						call(getMethodOwner(), "printInt", Value.value("k * j"), i);
+						call(getMethodDeclaringClass(), "printInt", Value.value("k * j"), i);
 						
 						//i = k % j;
 						assign(i, mod(k, j));
 						
 						//printInt("k % j", i);
-						call(getMethodOwner(), "printInt", Value.value("k % j"), i);
+						call(getMethodDeclaringClass(), "printInt", Value.value("k % j"), i);
 						
 						//j %= k;
 						assign(j, mod(j, k));
 						
 						//printInt("j %= k", j);
-						call(getMethodOwner(), "printInt", Value.value("j %= k"), j);
+						call(getMethodDeclaringClass(), "printInt", Value.value("j %= k"), j);
 						
 						
 						//rand.nextFloat()
@@ -115,58 +115,58 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 						LocalVariable w = var("w", AClassFactory.getType(float.class), nextFloat);
 						
 						//printFloat("v", v);
-						call(getMethodOwner(), "printFloat", Value.value("v"), v);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("v"), v);
 						
 						//printFloat("w", w);
-						call(getMethodOwner(), "printFloat", Value.value("w"), w);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("w"), w);
 						
 						//u = v + w;
 						LocalVariable u = var("u", AClassFactory.getType(float.class), add(v,w));
 						
 						//printFloat("v + w", u);
-						call(getMethodOwner(), "printFloat", Value.value("v + w"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("v + w"), u);
 
 						//u = v - w;
 						assign(u, sub(v, w));
 						
 						//printFloat("v - w", u);
-						call(getMethodOwner(), "printFloat", Value.value("v - w"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("v - w"), u);
 						
 						//u = v * w;
 						assign(u, mul(v, w));
 						
 						//printFloat("v * w", u);
-						call(getMethodOwner(), "printFloat", Value.value("v * w"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("v * w"), u);
 						
 						//u = v / w;
 						assign(u, div(v, w));
 						
 						//printFloat("v / w", u);
-						call(getMethodOwner(), "printFloat", Value.value("v / w"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("v / w"), u);
 						
 						//u += v;
 						assign(u, add(u, v));
 						
 						//printFloat("u += v", u);
-						call(getMethodOwner(), "printFloat", Value.value("u += v"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("u += v"), u);
 						
 						//u -= v;
 						assign(u, sub(u, v));
 						
 						//printFloat("u -= v", u);
-						call(getMethodOwner(), "printFloat", Value.value("u -= v"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("u -= v"), u);
 						
 						//u *= v;
 						assign(u, mul(u, v));
 						
 						//printFloat("u *= v", u);
-						call(getMethodOwner(), "printFloat", Value.value("u *= v"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("u *= v"), u);
 						
 						//u /= v;
 						assign(u, div(u, v));
 						
 						//printFloat("u /= v", u);
-						call(getMethodOwner(), "printFloat", Value.value("u /= v"), u);
+						call(getMethodDeclaringClass(), "printFloat", Value.value("u /= v"), u);
 						
 						return_();
 					}

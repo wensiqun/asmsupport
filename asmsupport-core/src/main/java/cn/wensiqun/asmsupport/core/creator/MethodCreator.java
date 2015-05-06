@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class MethodCreator implements IMethodCreator {
@@ -95,35 +95,14 @@ public class MethodCreator implements IMethodCreator {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public AClass[] getArguments() {
 		return arguments;
-	}
-
-	public String[] getArgNames() {
-		return argNames;
-	}
-
-	public AClass getReturnClass() {
-		return returnClass;
-	}
-
-	public AClass[] getExceptions() {
-		return exceptions;
-	}
-
-	public int getAccess() {
-		return access;
-	}
-	
-	
-
-	@Override
-	public String getMethodString() {
-		return me.getMethodString();
 	}
 
 }

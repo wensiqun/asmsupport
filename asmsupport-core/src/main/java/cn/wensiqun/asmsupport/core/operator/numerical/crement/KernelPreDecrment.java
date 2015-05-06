@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 public class KernelPreDecrment extends AbstractCrement {
 
-	protected KernelPreDecrment(KernelProgramBlock block, KernelParame crement) {
+	protected KernelPreDecrment(KernelProgramBlock block, KernelParam crement) {
 		super(block, crement, Operator.PRE_DEC);
 	}
 

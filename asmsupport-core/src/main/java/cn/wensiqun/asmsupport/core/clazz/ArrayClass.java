@@ -21,8 +21,9 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 /**
- * 数组类型
- * @author 温斯群(Joe Wen)
+ * Indicate Array Class
+ * 
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class ArrayClass extends AClass {

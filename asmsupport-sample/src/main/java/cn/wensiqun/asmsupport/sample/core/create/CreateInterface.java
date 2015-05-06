@@ -110,7 +110,7 @@ public class CreateInterface extends AbstractExample {
 				 * 具体如何使用全局变量在以后的例子中有详细的解释。
 				 * 
 				 */
-				assign(val(getMethodOwner()).field("globalValue"), Value.value("I'm a global variable at Interface"));
+				assign(val(getMethodDeclaringClass()).field("globalValue"), Value.value("I'm a global variable at Interface"));
 				/*
 				 * 这段代码是调用println方法 
 				 * 

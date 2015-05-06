@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  */
 public abstract class PriorityParam extends Param implements CommonBehavior {
 
-    protected KernelParame target; 
+    protected KernelParam target; 
     protected KernelProgramBlockCursor cursor;
     protected PriorityStack priorityStack;
     
@@ -57,7 +57,7 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
     }
 
     @Override
-    public KernelParame getTarget() {
+    public KernelParam getTarget() {
     	if(target == null) {
     		priorityStack.marriageAction(Operator.MIN_PRIORITY);
     		target = ParamPostern.getTarget(priorityStack.operandStack.pop());

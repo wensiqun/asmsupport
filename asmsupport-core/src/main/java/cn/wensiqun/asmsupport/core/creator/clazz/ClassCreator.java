@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * 
  * 
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class ClassCreator extends AbstractClassCreatorContext {

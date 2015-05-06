@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
@@ -39,7 +39,7 @@ public interface Jumpable {
      * @param posLbl
      * @param negLbl
      */
-    void jumpPositive(KernelParame from, Label posLbl, Label negLbl);
+    void jumpPositive(KernelParam from, Label posLbl, Label negLbl);
     
     
     /**
@@ -55,6 +55,6 @@ public interface Jumpable {
      * @param posLbl
      * @param negLbl
      */
-    void jumpNegative(KernelParame from, Label posLbl, Label negLbl);
+    void jumpNegative(KernelParam from, Label posLbl, Label negLbl);
     
 }

@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.client.def.action.AssignAction;
 import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
 import cn.wensiqun.asmsupport.client.def.behavior.ArrayBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  */
 public class ArrayParam extends CommonParam implements ArrayBehavior{
 
-    public ArrayParam(KernelProgramBlockCursor cursor, KernelParame arrayReference) {
+    public ArrayParam(KernelProgramBlockCursor cursor, KernelParam arrayReference) {
         super(cursor, arrayReference);
     }
 

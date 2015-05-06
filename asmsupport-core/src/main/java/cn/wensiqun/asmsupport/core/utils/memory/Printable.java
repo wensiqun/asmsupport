@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 
 /**
  * 实现这个接口表示能够打印
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface Printable {

@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -32,18 +32,18 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class AbstractArrayOperator extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
-    protected KernelParame arrayReference;
+    protected KernelParam arrayReference;
     
-    protected KernelParame[] parDims;
+    protected KernelParam[] parDims;
     
-    protected AbstractArrayOperator(KernelProgramBlock block, KernelParame arrayVar) {
+    protected AbstractArrayOperator(KernelProgramBlock block, KernelParam arrayVar) {
         super(block, Operator.COMMON);
         this.arrayReference = arrayVar;
     }
@@ -52,7 +52,7 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 	protected void checkAsArgument() {
         arrayReference.asArgument();
         if(parDims != null){
-            for(KernelParame par : parDims){
+            for(KernelParam par : parDims){
                 par.asArgument();
             }
         }
@@ -65,7 +65,7 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
         }
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
-			for(KernelParame par : parDims){
+			for(KernelParam par : parDims){
 				if(!AClassUtils.checkAssignable(par.getResultType(), AClassFactory.getType(int.class))) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + AClassFactory.getType(int.class) + "");
 				}

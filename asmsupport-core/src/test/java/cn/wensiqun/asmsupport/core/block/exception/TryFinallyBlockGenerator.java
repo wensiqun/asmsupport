@@ -482,7 +482,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             @Override
             public void body()
             {
-                call(getMethodOwner(), methodName);
+                call(getMethodDeclaringClass(), methodName);
             }
             
         }).catch_(new KernelCatch(AClassFactory.getType(Throwable.class)){

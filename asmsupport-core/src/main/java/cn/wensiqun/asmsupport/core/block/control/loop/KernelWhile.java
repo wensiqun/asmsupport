@@ -14,17 +14,17 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class KernelWhile extends KernelDoWhile implements IWhile  {
 
-    public KernelWhile(KernelParame condition) {
+    public KernelWhile(KernelParam condition) {
         super(condition);
     }
 

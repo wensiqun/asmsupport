@@ -94,7 +94,7 @@ public class CrementOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				LocalVariable currentObj = var("currentObj", getMethodOwner(), new_(getMethodOwner()));
+				LocalVariable currentObj = var("currentObj", getMethodDeclaringClass(), new_(getMethodDeclaringClass()));
 				call(currentObj, "demonstrate");
 				call(currentObj, "incrementAndDecrement");
 				return_();

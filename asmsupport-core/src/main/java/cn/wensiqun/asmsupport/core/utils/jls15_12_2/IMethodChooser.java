@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface IMethodChooser {

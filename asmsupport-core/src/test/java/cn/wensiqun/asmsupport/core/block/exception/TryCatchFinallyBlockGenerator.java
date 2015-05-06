@@ -147,7 +147,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
 							@Override
 							public void body() {
 								call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Try"));
-							    call(getMethodOwner(), "exception");
+							    call(getMethodDeclaringClass(), "exception");
 							}
 							
 						}).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -179,7 +179,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    |-Try"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
 				    }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -241,7 +241,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
 									@Override
 									public void body() {
 										call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("            |-Try"));
-				                        call(getMethodOwner(), "exception");
+				                        call(getMethodDeclaringClass(), "exception");
 									}
 		                        	
 		                        }).catch_(new KernelCatch(runtime){
@@ -339,7 +339,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
                             public void body(LocalVariable e)
                             {
                                 call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        |-Catch(Exception)"));
-                                call(getMethodOwner(), "runtimeException");
+                                call(getMethodDeclaringClass(), "runtimeException");
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -566,7 +566,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
             @Override
             public void body()
             {
-                call(getMethodOwner(), methodName);
+                call(getMethodDeclaringClass(), methodName);
             }
             
         }).catch_(new KernelCatch(AClassFactory.getType(Throwable.class)){

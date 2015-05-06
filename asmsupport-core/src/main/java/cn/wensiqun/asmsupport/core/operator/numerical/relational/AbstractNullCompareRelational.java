@@ -18,7 +18,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractNullCompareRelational extends NumericalAndReferenceRelational {
 
-	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParame factor1, KernelParame factor2, Operator operator) {
+	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
 		super(block, factor1, factor2, operator);
 	}
 	
@@ -94,7 +94,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		}
 	}
 
-	protected boolean isNullValue(KernelParame val){
+	protected boolean isNullValue(KernelParam val){
     	if(val != null && val instanceof Value && ((Value) val).getValue() == null){
     		return true;
     	}

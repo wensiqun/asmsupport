@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.block.sync.ISynchronized;
 
 public abstract class Sync extends ProgramBlock<KernelSync> implements ISynchronized<Param> {
@@ -27,7 +27,7 @@ public abstract class Sync extends ProgramBlock<KernelSync> implements ISynchron
 		targetBlock = new KernelSync(ParamPostern.getTarget(lock)) {
 
 			@Override
-			public void body(KernelParame e) {
+			public void body(KernelParam e) {
 				Sync.this.body(new DummyParam(cursor, e));
 			}
 			

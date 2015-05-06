@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 
 
 /**
@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParame;
  */
 public class NullParam extends DummyParam {
 
-	public NullParam(KernelProgramBlockCursor cursor, KernelParame target) {
+	public NullParam(KernelProgramBlockCursor cursor, KernelParam target) {
 		super(cursor, target);
 	}
 

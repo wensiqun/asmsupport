@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -32,14 +32,14 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class AbstractCrement extends AbstractNumerical {
 
-    private KernelParame factor;
+    private KernelParam factor;
 
-    protected AbstractCrement(KernelProgramBlock block, KernelParame factor, Operator operator) {
+    protected AbstractCrement(KernelProgramBlock block, KernelParam factor, Operator operator) {
         super(block, operator);
         if(factor instanceof Crementable) {
             throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);

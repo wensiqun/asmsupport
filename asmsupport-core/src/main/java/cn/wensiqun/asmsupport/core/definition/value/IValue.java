@@ -17,12 +17,12 @@
  */
 package cn.wensiqun.asmsupport.core.definition.value;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface IValue extends KernelParame {
+public interface IValue extends KernelParam {
 
 }

@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -42,7 +42,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class MethodInvoker extends AbstractParamOperator {
@@ -51,7 +51,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
 
     //protected AClass[] argumentClasses;
     protected String name;
-    protected KernelParame[] arguments;
+    protected KernelParam[] arguments;
     protected AClass methodOwner;
     
     /** 调用完方法是否需要保存返回值栈 如果是构造方法则是否需要保存新构造的方法的一个引用 */
@@ -67,7 +67,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
      * @param arguments
      * @param block
      */
-    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParame[] arguments) {
+    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParam[] arguments) {
         super(block, Operator.COMMON);
         this.methodOwner = owner;
         this.name = name;
@@ -79,7 +79,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
      */
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
-            KernelParame argu = arguments[i];
+            KernelParam argu = arguments[i];
             if(LOG.isPrintEnabled()) {
                 LOG.print("push argument to stack");
             }
@@ -118,7 +118,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             mtdEntity.setName(name);
         }else{
             // 如果是构造方法则返回类型为自己本身
-            mtdEntity = new MethodChooser(block.getMethodOwner(), methodOwner, name, argumentClasses).chooseMethod();
+            mtdEntity = new MethodChooser(block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
             if(mtdEntity == null){
                 throw new NoSuchMethod(methodOwner, name, argumentClasses);
             }
@@ -132,16 +132,16 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
         		
         		int fixedArgsLen = mtdEntity.getArgClasses().length - 1;//argumentClasses.length - 1;
-                KernelParame[] fixedArgs = new KernelParame[fixedArgsLen];
+                KernelParam[] fixedArgs = new KernelParam[fixedArgsLen];
                 System.arraycopy(arguments, 0, fixedArgs, 0, fixedArgsLen);
 
                 KernelArrayValue variableVarifyArauments;
                 ArrayClass arrayClass = (ArrayClass)mtdEntity.getArgClasses()[mtdEntity.getArgClasses().length - 1];
                 variableVarifyArauments = block.newarray(arrayClass, 
-                       (KernelParame[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
+                       (KernelParam[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
                 variableVarifyArauments.asArgument();
                 
-                arguments = (KernelParame[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
+                arguments = (KernelParam[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
         	}
         }
 
@@ -153,7 +153,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
 
     @Override
     protected void checkAsArgument() {
-        for (KernelParame argu : arguments) {
+        for (KernelParam argu : arguments) {
             // 将argu从Block的执行队列中删除
             // 因为此时由方法调用负责调用value
             argu.asArgument();

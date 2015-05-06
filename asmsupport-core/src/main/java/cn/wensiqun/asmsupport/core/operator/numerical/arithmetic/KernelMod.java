@@ -18,21 +18,21 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * modulus operator
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelMod extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelMod.class);
     
-    protected KernelMod(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
+    protected KernelMod(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
         super(block, factor1, factor2, Operator.MOD);
     }
 

@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelDoWhile;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
 
 public abstract class DoWhile extends ProgramBlock<KernelDoWhile> implements IDoWhile {
     
-	public DoWhile(KernelParame condition) {
+	public DoWhile(KernelParam condition) {
 		targetBlock = new KernelDoWhile(condition) {
 			@Override
 			public void body() {

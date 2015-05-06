@@ -21,14 +21,16 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 
 /**
  * 
- * 如果某类继承此接口那么该类则能够将值做入栈操作
- * @author 温斯群(Joe Wen)
+ * Indicate an operator or value that's support push to stack. 
+ * 
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public interface PushStackable {
     
     /**
-     * 在指定程序块内将值压入栈
+     * Push current to a stack of specify block
+     * 
      * @param block
      */
     public void loadToStack(KernelProgramBlock block);

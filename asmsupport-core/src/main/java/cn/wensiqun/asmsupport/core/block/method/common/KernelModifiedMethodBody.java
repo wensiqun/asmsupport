@@ -48,7 +48,6 @@ public abstract class KernelModifiedMethodBody extends KernelMethodBody implemen
     public void generateBody() {
 		AMethodMeta me = getMethod().getMeta();
 		if(me.getName().equals(ASConstant.INIT)){
-			//如果是构造方法，将被修改的构造方法中调用父类构造方法的那段字节码转移到新的构造方法中。
 			if(superConstructorOperators != null){
 			    for(VisitXInsnAdapter visitXInsnAdapter : superConstructorOperators){
 			    	visitXInsnAdapter.newVisitXInsnOperator(getExecutor());

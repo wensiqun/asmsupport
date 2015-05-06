@@ -181,7 +181,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     		}
     	}
     	
-    	//#30205 [BUG] 新建方法中无法调用重写的方法 
+    	//#30205 [BUG]
     	List<AMethod> scImplMethods = 
     			new ArrayList<AMethod>(sc.getMethods());
     	for(int i=0; i<abstractMethods.size(); ){
@@ -278,7 +278,9 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkOverriedAndCreateBridgeMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     /**
-     * 检测那些新建的方法为重写方法，如果存在返回类型不同，则抛异常或者创建bridge方法
+     * Check if the created method is override, than check the return type, 
+     * throw exception or make it to bridge if return type if different to 
+     * parent
      * 
      */
     private void checkOverriedAndCreateBridgeMethod(){

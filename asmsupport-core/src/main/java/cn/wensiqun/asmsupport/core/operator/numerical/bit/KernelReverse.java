@@ -18,21 +18,21 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelReverse extends KernelUnaryBitwise {
 
     private static final Log LOG = LogFactory.getLog(KernelReverse.class);
     
-    protected KernelReverse(KernelProgramBlock block, KernelParame factor) {
+    protected KernelReverse(KernelProgramBlock block, KernelParam factor) {
         super(block, factor, Operator.REVERSE);
     }
 

@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelArrayValue extends AbstractParamOperator  {
@@ -71,7 +71,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
         		return preArrayDoor == - 1 ? over + 1 : preArrayDoor;
         	}else{
         		try{
-                    process((KernelParame) object);
+                    process((KernelParam) object);
                 }catch(ClassCastException e){
                 	throw new IllegalArgumentException("exception occur when " + KernelArrayValue.this.toString(), e);
                 }
@@ -79,12 +79,12 @@ public class KernelArrayValue extends AbstractParamOperator  {
         	}
         }
         
-        abstract void process(KernelParame para);
+        abstract void process(KernelParam para);
         
     }
     
     private ArrayClass arrayCls;
-    private KernelParame[] allocateDims;
+    private KernelParam[] allocateDims;
     //it's array by reflect to parse
     private Object values;
     
@@ -93,14 +93,14 @@ public class KernelArrayValue extends AbstractParamOperator  {
     private void batchAsArgument(Object values){
         new EachValue(values){
             @Override
-            void process(KernelParame para) {
+            void process(KernelParam para) {
                 para.asArgument();    
             }
             
         }.process();
     }
     
-    protected KernelArrayValue(KernelProgramBlock block, ArrayClass arrayCls, KernelParame... allocateDims) {
+    protected KernelArrayValue(KernelProgramBlock block, ArrayClass arrayCls, KernelParam... allocateDims) {
         super(block, Operator.COMMON);
         if(arrayCls.getDimension() < allocateDims.length){
             throw new IllegalArgumentException("dimension not enough: array type is " + arrayCls + " and allocate dims is " + ArrayUtils.toString(allocateDims));
@@ -125,7 +125,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     		//check verify
     		int dim = new EachValue(values){
 				@Override
-				void process(KernelParame para) {
+				void process(KernelParam para) {
 				    //Nothing TO DO
 				}
     		}.process();
@@ -139,7 +139,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     protected void verifyArgument() {
     	//当调用ArrayValue(ProgramBlock block, ArrayClass arrayCls, Parameterized... allocateDims)构造方法
     	if(allocateDims != null){
-            for(KernelParame dim : allocateDims){
+            for(KernelParam dim : allocateDims){
                 int order = AClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
                 if(order > AClassFactory.getType(int.class).getCastOrder() ||
                    order <= AClassFactory.getType(boolean.class).getCastOrder()){
@@ -152,7 +152,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     	final AClass rootComp = arrayCls.getRootComponentClass();
         new EachValue(values){
             @Override
-            void process(KernelParame para) {
+            void process(KernelParam para) {
 				if(!AClassUtils.checkAssignable(para.getResultType(), rootComp)) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + para.getResultType() + " to " + rootComp + "");
 				}
@@ -186,9 +186,9 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 }
             }
         }else{
-            ((KernelParame) arrayOrElement).loadToStack(block);
+            ((KernelParam) arrayOrElement).loadToStack(block);
             //auto cast each value for array
-            autoCast(((KernelParame)arrayOrElement).getResultType(), acls, false);
+            autoCast(((KernelParam)arrayOrElement).getResultType(), acls, false);
         }
     }
 
@@ -214,7 +214,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 ih.unbox(allocateDims[0].getResultType().getType());
                 ih.newArray(arrayCls.getNextDimType().getType());
             }else{
-                for(KernelParame allocate : allocateDims){
+                for(KernelParam allocate : allocateDims){
                     allocate.loadToStack(block);
                     ih.unbox(allocate.getResultType().getType());
                 }

@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class LocalVariables implements Printable, Cloneable{

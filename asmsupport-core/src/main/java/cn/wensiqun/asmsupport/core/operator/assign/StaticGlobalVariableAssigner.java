@@ -15,14 +15,14 @@
 package cn.wensiqun.asmsupport.core.operator.assign;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class StaticGlobalVariableAssigner extends KernelAssign {
@@ -31,7 +31,7 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
     
     private StaticGlobalVariable var;
     
-    protected StaticGlobalVariableAssigner(KernelProgramBlock block, final StaticGlobalVariable var, KernelParame value) {
+    protected StaticGlobalVariableAssigner(KernelProgramBlock block, final StaticGlobalVariable var, KernelParam value) {
         super(block, var, value);
         this.var = var;
     }

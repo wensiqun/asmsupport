@@ -18,16 +18,16 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelShiftLeft extends BinaryBitwise {
 
-    protected KernelShiftLeft(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
+    protected KernelShiftLeft(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
         super(block, factor1, factor2, Operator.SHIFT_LEFT);
     }
 

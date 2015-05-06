@@ -17,22 +17,22 @@ package cn.wensiqun.asmsupport.client.def.param;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * A simple parameter that only a proxy of {@link KernelParame}
+ * A simple parameter that only a proxy of {@link KernelParam}
  * 
  * @author WSQ
  *
  */
 public class DummyParam extends Param {
 
-    protected KernelParame target;
+    protected KernelParam target;
     
     protected KernelProgramBlockCursor cursor;
     
-    public DummyParam(KernelProgramBlockCursor cursor, KernelParame target) {
+    public DummyParam(KernelProgramBlockCursor cursor, KernelParam target) {
         this.cursor = cursor;
         this.target = target;
     }
@@ -48,7 +48,7 @@ public class DummyParam extends Param {
     }
 
     @Override
-    protected KernelParame getTarget() {
+    protected KernelParam getTarget() {
         return target;
     }
 

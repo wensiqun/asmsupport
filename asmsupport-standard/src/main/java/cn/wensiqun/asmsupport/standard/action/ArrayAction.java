@@ -42,7 +42,7 @@ public interface ArrayAction<_P extends IParam> {
      * <p style="border:1px solid;width:550px;padding:10px;">
      * newArray(AClassFactory.getArrayClass(String[][][].class), val(2), val(3), val(4));<br>
      * </p>
-	 * 空间
+
 	 * @param arraytype array value type. must be an array type
 	 * @param allocateDims length of each dimensions
 	 * @return {@link _P}

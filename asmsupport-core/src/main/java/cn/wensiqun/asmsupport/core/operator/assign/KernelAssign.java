@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.assign;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -26,18 +26,18 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  */
 public abstract class KernelAssign extends AbstractParamOperator {
 
-    protected KernelParame value;
+    protected KernelParam value;
     
     private IVariable var;
     
     /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
-    protected KernelAssign(KernelProgramBlock block, IVariable var, KernelParame value) {
+    protected KernelAssign(KernelProgramBlock block, IVariable var, KernelParam value) {
         super(block, Operator.ASSIGN);
         this.value = value;
         this.var = var;

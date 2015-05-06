@@ -25,21 +25,18 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 /**
  * This interface indicate it can be assign to a variable or method as parameter
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public interface KernelParame extends IParam, PushStackable {
+public interface KernelParam extends IParam, PushStackable {
     
     /**
-     * 
-     * <p>如果当前操作或者变量被其他操作所引用，那么就需要调用当前的这个操作对象或者变量的asArgument方法.</p>
-     * <p>大多数情况下，重写这个方法是为了将当前操作从栈中移除。</p>
+     * If current {@link KernelParam} has used by other, than need call this method.
      */
-    public void asArgument();
+    void asArgument();
     
     /**
      * Override change return type.
      */
-    @Override
     GlobalVariable field(String name);
 }

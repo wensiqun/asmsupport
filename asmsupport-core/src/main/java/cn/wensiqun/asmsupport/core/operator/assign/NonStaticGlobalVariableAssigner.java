@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.operator.assign;
 import java.lang.reflect.Modifier;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class NonStaticGlobalVariableAssigner extends KernelAssign {
@@ -34,7 +34,7 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     
     private NonStaticGlobalVariable var;
     
-    protected NonStaticGlobalVariableAssigner(KernelProgramBlock block, final NonStaticGlobalVariable var, KernelParame value) {
+    protected NonStaticGlobalVariableAssigner(KernelProgramBlock block, final NonStaticGlobalVariable var, KernelParam value) {
         super(block, var, value);
         this.var = var;
     }

@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public enum Operator {

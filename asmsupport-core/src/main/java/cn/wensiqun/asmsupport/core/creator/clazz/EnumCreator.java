@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.creator.FieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -41,7 +41,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class EnumCreator extends AbstractClassCreatorContext {
@@ -267,7 +267,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
 
                     @Override
                     public void body(LocalVariable... argus) {
-                        AClass owner = getMethodOwner();
+                        AClass owner = getMethodDeclaringClass();
                         // get ENUM$VALUES
                         GlobalVariable values = val(owner).field("ENUM$VALUES");
 
@@ -276,7 +276,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                         LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
 
                         // get lengt operator for tmpValues;
-                        KernelParame copyLen = arrayLength(copy);
+                        KernelParam copyLen = arrayLength(copy);
 
                         // System
                         AClass systemClass = AClassFactory.getType(System.class);
@@ -299,7 +299,7 @@ public class EnumCreator extends AbstractClassCreatorContext {
                     @Override
                     public void body(LocalVariable... argus) {
                         LocalVariable name = argus[0];
-                        AClass owner = getMethodOwner();
+                        AClass owner = getMethodDeclaringClass();
                         return_(checkcast(call(owner, "valueOf", Value.value(owner), name), owner));
                     }
 

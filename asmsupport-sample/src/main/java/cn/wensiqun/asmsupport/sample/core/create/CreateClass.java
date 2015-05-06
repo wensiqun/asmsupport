@@ -88,7 +88,7 @@ public class CreateClass extends AbstractExample {
 		creator.createStaticBlock(new KernelStaticBlockBody(){
 			@Override
 			public void body() {
-				assign(val(getMethodOwner()).field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
+				assign(val(getMethodDeclaringClass()).field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
 				return_();
 			}
 		});
@@ -166,7 +166,7 @@ public class CreateClass extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), val(getMethodOwner()).field("staticGlobalVariable")));
+				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), val(getMethodDeclaringClass()).field("staticGlobalVariable")));
 				call(systemOut, "println", stradd(Value.value("globalVariable : "), this_().field("globalVariable")));
 				return_();
 			}
@@ -187,11 +187,11 @@ public class CreateClass extends AbstractExample {
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	call(new_(getMethodOwner(), Value.value(1024)), "commonMethod");
+	        	call(new_(getMethodDeclaringClass(), Value.value(1024)), "commonMethod");
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodOwner()).field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodOwner()).field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
 				
 	        	//invoke(systemOut, "println", append(Value.value("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
 				

@@ -27,7 +27,7 @@ public class Main extends AbstractFix {
 				
 				call(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
 				
-				assign(val(getMethodOwner()).field("DEFAULT_VALUE"), Value.value(100));
+				assign(val(getMethodDeclaringClass()).field("DEFAULT_VALUE"), Value.value(100));
 				
 			    return_();
 			}
@@ -42,9 +42,9 @@ public class Main extends AbstractFix {
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodOwner()).field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodOwner()).field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
 	        	
 			    return_();
 			}

@@ -20,7 +20,6 @@ import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.asm.StackLocalMethodVisitor;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.creator.IClassContext;
@@ -34,120 +33,81 @@ import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 方法的抽象。
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public class AMethod {
 
-    /** 方法实体 */
-    private AMethodMeta me;
+    /** Method Meta */
+    private AMethodMeta meta;
 
-    /** 该方法对应的栈 */
+    /** A stakc of current method */
     private Stack stack;
 
-    // 0 : indicate add, 1 : indicate modify
-    /** 表示当前的Method是添加到Class中还是修改Method */
+    /** 0 : indicate add, 1 : indicate modif*/
     private int mode = ASConstant.METHOD_CREATE_MODE_ADD;
 
-    /** 该方法对应的本地变量 */
+    /** The local vairable container of current method*/
     private LocalVariables locals;
 
-    /** 调用ASM框架的帮助类 */
     private InstructionHelper insnHelper;
 
-    /** 当前Method的methodBody类 */
+    /** The method body of current method */
     private AbstractKernelMethodBody methodBody;
 
-    /** 当前Method所包含的所有字节码操作 */
-    private int totalIns = 0;
+    /** A counter indicate the jvm instruction count */
+    private int instructionCounter = 0;
 
-    /** ClassCreator 或者 ClassModifier的引用 */
+    /** A context holder */
     private IClassContext context;
 
-    /** 当前方法的描述 */
-    private String methodDesc;
+    /** Indicate the method that's need to throw in this method  */
+    private ThrowExceptionContainer exceptionContainer;
 
-    /** 当前方法需要抛出的异常 */
-    private ThrowExceptionContainer throwExceptions;
-
-    /** 当前方法的参数 */
+    /** The method of current method */
     private LocalVariable[] arguments;
 
-    /**
-     * 
-     */
-    private boolean creatingImplicitFinally = false;
-
-    /**
-     * 当在Method中发现需要创建try catch finally程序块的时候将 try语句块的引用保存在此变量中
-     * 然后延迟try程序块内的一些操作的创建。 当和当前Try相关的所有catch和finally程序块都创建 完成 再一一调用期prepare方法
-     * 具体可见ProgramBlock的tiggerTryCatchPrepare方法
-     * 
-     * 这样做的主要目的是为了能自动将finally语句块的内容插入到try或catch中所有return指令之前
-     **/
-    private KernelTry nearlyTryBlock;
-
-    /**
-     * 构造方法
-     * 
-     * @param me
-     * @param context
-     * @param methodBody
-     * @param mode
-     */
-    public AMethod(AMethodMeta me, IClassContext context, AbstractKernelMethodBody methodBody, int mode) {
+    
+    public AMethod(AMethodMeta meta, IClassContext context, AbstractKernelMethodBody methodBody, int mode) {
         super();
-        this.me = me;
+        this.meta = meta;
         this.context = context;
-        this.throwExceptions = new ThrowExceptionContainer();
+        this.exceptionContainer = new ThrowExceptionContainer();
         this.stack = new Stack();
         this.locals = new LocalVariables();
         this.mode = mode;
 
-        CollectionUtils.addAll(throwExceptions, me.getExceptions());
-
-        Type[] argTypes = new Type[me.getArgClasses().length];
-
-        for (int i = 0; i < argTypes.length; i++) {
-            argTypes[i] = me.getArgClasses()[i].getType();
-        }
-
-        methodDesc = Type.getMethodDescriptor(this.me.getReturnType(), argTypes);
+        CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
 
         this.insnHelper = new CommonInstructionHelper(this);
 
-        if (!ModifierUtils.isAbstract(me.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifier())) {
             if (methodBody != null) {
-                // 设置method属性
                 this.methodBody = methodBody;
                 this.methodBody.setScope(new Scope(this.locals, null));
                 this.methodBody.setInsnHelper(insnHelper);
             } else {
-                throw new ASMSupportException("Error while create method '" + me.getName()
+                throw new ASMSupportException("Error while create method '" + meta.getName()
                         + "', cause by not found method body and it not abstract method.");
             }
         }
     }
 
     /**
-     * 获取所有需要抛出的异常
-     * 
-     * @param block
+     * Get all exception that's need to throws.
      */
     private void getThrowExceptionsInProgramBlock(AbstractKernelBlock block) {
         if (block instanceof KernelProgramBlock) {
             ThrowExceptionContainer blockExceptions = ((KernelProgramBlock) block).getThrowExceptions();
             if (blockExceptions != null) {
                 for (AClass exp : blockExceptions) {
-                    throwExceptions.add(exp);
+                    exceptionContainer.add(exp);
                 }
             }
         }
@@ -160,11 +120,11 @@ public class AMethod {
     }
 
     /**
-     * 创建ASM的MethodVisitor
+     * Create {@link MethodVisitor} for current method
      */
     private void createMethodVisitor() {
 
-        if (!ModifierUtils.isAbstract(me.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifier())) {
             for (Executable exe : getMethodBody().getQueue()) {
                 if (exe instanceof AbstractKernelBlock) {
                     getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
@@ -172,13 +132,13 @@ public class AMethod {
             }
         }
 
-        String[] exceptions = new String[this.throwExceptions.size()];
+        String[] exceptions = new String[this.exceptionContainer.size()];
         int i = 0;
-        for (AClass te : this.throwExceptions) {
+        for (AClass te : this.exceptionContainer) {
             exceptions[i++] = te.getType().getInternalName();
         }
 
-        MethodVisitor mv = context.getClassVisitor().visitMethod(me.getModifier(), me.getName(), methodDesc, null,
+        MethodVisitor mv = context.getClassVisitor().visitMethod(meta.getModifier(), meta.getName(), meta.getDescription(), null,
                 exceptions);
 
         insnHelper.setMv(new StackLocalMethodVisitor(mv, stack));
@@ -186,99 +146,93 @@ public class AMethod {
     }
 
     /**
-     * 当前Method是否是static的
-     * 
-     * @return
-     */
-    public boolean isStatic() {
-        return (me.getModifier() & Opcodes.ACC_STATIC) != 0;
-    }
-
-    /**
-     * 启动创建或修改程序
+     * Start create/modify method
      */
     public void startup() {
         createMethodVisitor();
-        if (!ModifierUtils.isAbstract(me.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifier())) {
             this.methodBody.execute();
             this.methodBody.endMethodBody();
         }
         insnHelper.endMethod();
     }
 
+    /**
+     * Get the operand stack of current method
+     */
     public Stack getStack() {
         return stack;
     }
 
+    /**
+     * Get the local variable container of current method
+     */
     public LocalVariables getLocals() {
         return locals;
     }
 
     /**
-     * 下一条指令的序号
-     * 
-     * @return
+     * Get the order of next instruction.
      */
-    public int nextInsNumber() {
-        totalIns++;
-        return totalIns;
+    public int getNextInstructionNumber() {
+        return ++instructionCounter;
     }
 
+    
     public AbstractKernelMethodBody getMethodBody() {
         return methodBody;
     }
 
+    /**
+     * Get helper
+     */
     public InstructionHelper getInsnHelper() {
         return insnHelper;
     }
 
+    /**
+     * Get the method meta.
+     */
     public AMethodMeta getMeta() {
-        return me;
+        return meta;
     }
 
+    /**
+     * Remove a exception type from container
+     */
     public void removeThrowException(AClass exception) {
-        throwExceptions.remove(exception);
-    }
-
-    public String getDesc() {
-        return methodDesc;
+        exceptionContainer.remove(exception);
     }
 
     @Override
     public String toString() {
-        return me.getMethodString();
+        return meta.getMethodString();
     }
 
-    public MutableClass getMethodOwner() {
+    /**
+     * Returns the {@code MutableClass} object representing the class or interface
+     * that declares the method represented by this {@code AMethod} object.
+     */
+    public MutableClass getDeclaringClass() {
         return context.getCurrentClass();
     }
 
-    public LocalVariable[] getArguments() {
+    /**
+     * Return the parameters, the parameter represent as a {@link LocalVariable}
+     */
+    public LocalVariable[] getParameters() {
         return arguments;
     }
 
-    public void setArguments(LocalVariable[] arguments) {
+    /**
+     * Set the parameters to this method
+     */
+    public void setParameters(LocalVariable[] arguments) {
         this.arguments = arguments;
     }
 
     public int getMode() {
         return mode;
-    }
-
-    public KernelTry getNearlyTryBlock() {
-        return nearlyTryBlock;
-    }
-
-    public void setNearlyTryBlock(KernelTry nearlyTryBlock) {
-        this.nearlyTryBlock = nearlyTryBlock;
-    }
-
-    public boolean isCreatingImplicitFinally() {
-        return creatingImplicitFinally;
-    }
-
-    public void setCreatingImplicitFinally(boolean creatingImplicitFinally) {
-        this.creatingImplicitFinally = creatingImplicitFinally;
     }
 
 }

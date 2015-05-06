@@ -43,7 +43,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(systemOut, "println", call(getMethodOwner(), "commonMethod"));
+				call(systemOut, "println", call(getMethodDeclaringClass(), "commonMethod"));
 				return_();
 			}
         });

@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -27,26 +27,26 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelStrAdd extends AbstractParamOperator {
     
-    private KernelParame[] paras;
+    private KernelParam[] paras;
 
     private boolean byOtherUsed;
     private MethodInvoker invoker;
     
-    protected KernelStrAdd(KernelProgramBlock block, KernelParame par1, KernelParame... pars) {
+    protected KernelStrAdd(KernelProgramBlock block, KernelParam par1, KernelParam... pars) {
         super(block, Operator.COMMON);
-        this.paras = new KernelParame[pars.length + 1];
+        this.paras = new KernelParam[pars.length + 1];
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
         AClass strBlderCls = AClassFactory.getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
-        for(KernelParame par : pars){
+        for(KernelParam par : pars){
             mi = block.call(mi, "append", par);
         }
         invoker = block.call(mi, "toString");

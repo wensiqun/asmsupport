@@ -28,10 +28,11 @@ import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.common.TryCatchInfo;
+import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.core.utils.memory.Component;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
@@ -41,13 +42,13 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
 
     private static final Log LOG = LogFactory.getLog(AbstractKernelMethodBody.class);
 
-    private List<TryCatchInfo> tryCatches;
+    private List<ExceptionTableEntry> exceptionTable;
 
     protected LocalVariable[] argments;
 
     public AbstractKernelMethodBody() {
         super();
-        tryCatches = new ArrayList<TryCatchInfo>();
+        exceptionTable = new ArrayList<ExceptionTableEntry>();
     }
 
     public LocalVariable[] getMethodArguments() {
@@ -67,15 +68,15 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     @Override
     protected void init() {
         AMethod method = getMethod();
-        AMethodMeta me = method.getMeta();
-        if (!method.isStatic()) {
+        AMethodMeta meta = method.getMeta();
+        if (!ModifierUtils.isStatic(meta.getModifier())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
-                    String.class, Type.class, Type.class }, getExecutor(), ASConstant.THIS, me.getOwner().getType(),
+                    String.class, Type.class, Type.class }, getExecutor(), ASConstant.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());
         }
 
-        String[] argNames = me.getArgNames();
-        AClass[] argClsses = me.getArgClasses();
+        String[] argNames = meta.getArgNames();
+        AClass[] argClsses = meta.getArgClasses();
         argments = new LocalVariable[argNames.length];
         for (int i = 0; i < argNames.length; i++) {
             ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], getScope(), argClsses[i].getType(),
@@ -85,7 +86,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
             lv.setScopeLogicVar(slv);
             argments[i] = lv;
         }
-        method.setArguments(argments);
+        method.setParameters(argments);
     }
 
     @Override
@@ -101,10 +102,10 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
             exe.execute();
         }
 
-        for (TryCatchInfo tci : tryCatches) {
+        for (ExceptionTableEntry tci : exceptionTable) {
             if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
                 Type type = tci.getException();
-                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHander(), type == null
+                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(), type == null
                         || type == AnyException.ANY.getType() ? null : type);
             }
         }
@@ -112,22 +113,14 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     }
 
     /**
-     * 
+     * Finish method body generated
      */
     public void endMethodBody() {
-        checkNoReturnBlock();
         declarationVariable(getScope());
         int s = getMethod().getStack().getMaxSize();
         int l = getScope().getLocals().getSize();
         insnHelper.maxs(s, l);
     }
-
-    /**
-     * 检测时候有未返回的分支
-     */
-    private void checkNoReturnBlock() {
-
-    };
 
     /**
      * local variable declaration.
@@ -152,12 +145,12 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         }
     }
 
-    public void addTryCatchInfo(Label start, Label end, Label handler, Type exception) {
-        addTryCatchInfo(new TryCatchInfo(start, end, handler, exception));
+    public void addExceptionTableEntry(Label start, Label end, Label handler, Type exception) {
+        addExceptionTableEntry(new ExceptionTableEntry(start, end, handler, exception));
     }
 
-    public void addTryCatchInfo(TryCatchInfo info) {
-        tryCatches.add(info);
+    public void addExceptionTableEntry(ExceptionTableEntry info) {
+        exceptionTable.add(info);
     }
 
 }

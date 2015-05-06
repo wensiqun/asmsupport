@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
@@ -26,17 +26,17 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, IDoWhile {
 
-    private KernelParame condition;
+    private KernelParam condition;
 
     Label conditionLbl;
     Label contentStart;
 
-    public KernelDoWhile(KernelParame condition) {
+    public KernelDoWhile(KernelParam condition) {
         this.condition = condition;
         conditionLbl = new Label();
         contentStart = new Label();

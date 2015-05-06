@@ -53,7 +53,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -82,7 +82,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -117,7 +117,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -146,7 +146,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -165,7 +165,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -174,7 +174,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -194,7 +194,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -204,7 +204,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -224,7 +224,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -232,7 +232,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -253,7 +253,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -262,7 +262,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -281,7 +281,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -318,7 +318,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -353,7 +353,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -390,7 +390,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -433,7 +433,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -470,7 +470,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -513,7 +513,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -550,7 +550,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -569,7 +569,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -578,7 +578,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -606,7 +606,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -616,7 +616,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -644,7 +644,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -652,7 +652,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -681,7 +681,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -690,7 +690,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -716,7 +716,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -733,7 +733,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -752,7 +752,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -770,7 +770,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -789,7 +789,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -805,7 +805,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -825,7 +825,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -842,7 +842,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -861,7 +861,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -870,7 +870,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -879,7 +879,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -899,7 +899,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -908,7 +908,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -918,7 +918,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -937,7 +937,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -947,7 +947,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -955,7 +955,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -975,7 +975,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
                     }
                     
@@ -985,7 +985,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -994,7 +994,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -1014,7 +1014,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -1022,7 +1022,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -1031,7 +1031,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -1052,7 +1052,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -1060,7 +1060,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -1070,7 +1070,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -1090,7 +1090,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -1099,7 +1099,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 }).catch_(new KernelCatch(AClassFactory.getType(Exception.class)){
@@ -1107,7 +1107,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
                     }
                     
@@ -1130,7 +1130,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body()
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
-                        call(getMethodOwner(), "exception");
+                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -1138,7 +1138,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    runtime exception"));
                     }
                     
@@ -1148,7 +1148,7 @@ public class TryCatchBlockGenerator extends AbstractExample
                     public void body(LocalVariable e)
                     {
                         call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    exception"));
-                        call(getMethodOwner(), "runtimeException");
+                        call(getMethodDeclaringClass(), "runtimeException");
                     }
                     
                 });
@@ -1184,7 +1184,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             @Override
             public void body()
             {
-                call(getMethodOwner(), methodName);
+                call(getMethodDeclaringClass(), methodName);
             }
             
         }).catch_(new KernelCatch(AClassFactory.getType(Throwable.class)){

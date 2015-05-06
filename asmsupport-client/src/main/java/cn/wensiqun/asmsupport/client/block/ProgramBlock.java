@@ -92,7 +92,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 * @return
 	 */
 	public AClass getMethodOwner() {
-		return targetBlock.getMethodOwner();
+		return targetBlock.getMethodDeclaringClass();
 	}
 
 	@Override

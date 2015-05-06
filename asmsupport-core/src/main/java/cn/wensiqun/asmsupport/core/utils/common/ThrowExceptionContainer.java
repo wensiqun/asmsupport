@@ -24,34 +24,32 @@ import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 异常集合
+ * The exception container. 
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class ThrowExceptionContainer implements Set<AClass> {
 
-	/**异常List */
-	private List<AClass> allThrowExceptions;
+	private List<AClass> exceptionEntryList;
 
 	public ThrowExceptionContainer() {
 		super();
-		allThrowExceptions = new ArrayList<AClass>();
+		exceptionEntryList = new ArrayList<AClass>();
 	}
 
 	@Override
 	public int size() {
-		return allThrowExceptions.size();
+		return exceptionEntryList.size();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return allThrowExceptions.isEmpty();
+		return exceptionEntryList.isEmpty();
 	}
 
 	/**
-	 * 如果当前集合包含当前给定的异常或者包含当前给定异常的父类异常则
-	 * 返回true，否则返回false
+	 * if the parameter is sub type of any exception type in this class.
 	 */
 	@Override
 	public boolean contains(Object o) {
@@ -61,7 +59,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 			return false;
 		}
 
-		for (AClass exception : allThrowExceptions) {
+		for (AClass exception : exceptionEntryList) {
 			if (((AClass) o).isChildOrEqual(exception)) {
 				return true;
 			}
@@ -71,21 +69,22 @@ public class ThrowExceptionContainer implements Set<AClass> {
 
 	@Override
 	public Iterator<AClass> iterator() {
-		return allThrowExceptions.iterator();
+		return exceptionEntryList.iterator();
 	}
 
 	@Override
 	public Object[] toArray() {
-		return allThrowExceptions.toArray();
+		return exceptionEntryList.toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		return allThrowExceptions.toArray(a);
+		return exceptionEntryList.toArray(a);
 	}
 
-	/*
-	 * 添加异常。 如果新增的异常已经存在，或者其父类已经存在则不添加
+	/**
+	 * Add an exception type, make sure the exception type is not sub type(or equal) of any element in this container 
+	 * 
 	 * @see java.util.Set#add(java.lang.Object)
 	 */
 	@Override
@@ -98,7 +97,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 		}
 
 		boolean hasExist = false;
-		for (AClass thrExc : this.allThrowExceptions) {
+		for (AClass thrExc : this.exceptionEntryList) {
 			if (e.isChildOrEqual(thrExc)) {
 				hasExist = true;
 				break;
@@ -106,15 +105,15 @@ public class ThrowExceptionContainer implements Set<AClass> {
 		}
 
 		if (!hasExist) {
-			for (int i = 0; i < allThrowExceptions.size();) {
-				AClass thrExc = allThrowExceptions.get(i);
+			for (int i = 0; i < exceptionEntryList.size();) {
+				AClass thrExc = exceptionEntryList.get(i);
 				if (thrExc.isChildOrEqual(e)) {
-					allThrowExceptions.remove(i);
+					exceptionEntryList.remove(i);
 				} else {
 					i++;
 				}
 			}
-			this.allThrowExceptions.add(e);
+			this.exceptionEntryList.add(e);
 			return true;
 		} else {
 			return false;
@@ -129,9 +128,9 @@ public class ThrowExceptionContainer implements Set<AClass> {
 			return false;
 		}
 		for (int i = 0; i < size(); i++) {
-			AClass thrExc = allThrowExceptions.get(i);
+			AClass thrExc = exceptionEntryList.get(i);
 			if (thrExc.equals(o)) {
-				allThrowExceptions.remove(i);
+				exceptionEntryList.remove(i);
 				return true;
 			}
 		}
@@ -188,7 +187,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 
 	@Override
 	public void clear() {
-		allThrowExceptions.clear();
+		exceptionEntryList.clear();
 	}
 
 }

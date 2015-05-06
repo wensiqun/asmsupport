@@ -19,7 +19,7 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  * 
  *
  */
-public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody implements IEnumStaticBlockBody<KernelParame, LocalVariable> {
+public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody implements IEnumStaticBlockBody<KernelParam, LocalVariable> {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	
@@ -52,9 +52,9 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 	
 	private class EnumConstructorInfo{
 		String name;
-		KernelParame[] argus;
+		KernelParam[] argus;
 		  
-		private EnumConstructorInfo(String name, KernelParame[] argus) {
+		private EnumConstructorInfo(String name, KernelParam[] argus) {
 			super();
 			this.name = name;
 			this.argus = argus;
@@ -62,50 +62,48 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 	}
 
 	@Override
-	public void constructEnumConst(String name, KernelParame... argus) {
-        if(!ModifierUtils.isEnum(getMethodOwner().getModifiers())){
+	public void constructEnumConst(String name, KernelParam... argus) {
+        if(!ModifierUtils.isEnum(getMethodDeclaringClass().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
-        IFieldVar constant = val(getMethodOwner()).field(name);
+        IFieldVar constant = val(getMethodDeclaringClass()).field(name);
         if(!ModifierUtils.isEnum(constant.getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
         enumArgumentsList.add(new EnumConstructorInfo(name, argus));
     }
 	
-	/**
-	 * 将构造枚举类型的操作添加到执行队列
-	 */
+	
 	private void constructEachEnumConstant(){
 
 		constructEnumConsts();
 		
-		if(getMethodOwner().getEnumNum() != enumArgumentsList.size()){
+		if(getMethodDeclaringClass().getEnumNum() != enumArgumentsList.size()){
 			throw new ASMSupportException("exist unassign enum constant!");
 		}
 		
-		KernelParame[] values = new KernelParame[getMethodOwner().getEnumNum()];
+		KernelParam[] values = new KernelParam[getMethodDeclaringClass().getEnumNum()];
 		GlobalVariable enumConstant;
 		int i = 0;
 		for(EnumConstructorInfo enumArgu : enumArgumentsList){
-			enumConstant = val(getMethodOwner()).field(enumArgu.name);
+			enumConstant = val(getMethodDeclaringClass()).field(enumArgu.name);
 			
 			values[i] = enumConstant;
 			String enumName = enumArgu.name;
-			KernelParame[] otherArgus = enumArgu.argus;
-	        KernelParame[] enumArgus = new KernelParame[otherArgus.length + 2];
+			KernelParam[] otherArgus = enumArgu.argus;
+	        KernelParam[] enumArgus = new KernelParam[otherArgus.length + 2];
 	        enumArgus[0] = Value.value(enumName);
 	        enumArgus[1] = Value.value(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
 	        
-	        MethodInvoker mi = new_(getMethodOwner(), enumArgus);
+	        MethodInvoker mi = new_(getMethodDeclaringClass(), enumArgus);
 	        assign(enumConstant, mi);
 	        i++;
 		}
 		
-		GlobalVariable gv = val(getMethodOwner()).field("ENUM$VALUES");
+		GlobalVariable gv = val(getMethodDeclaringClass()).field("ENUM$VALUES");
 		
-		KernelArrayValue av = newarray(AClassFactory.getArrayType(getMethodOwner(), 1), values);
+		KernelArrayValue av = newarray(AClassFactory.getArrayType(getMethodDeclaringClass(), 1), values);
 		assign(gv, av);
 	}
 	

@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.method;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 静态方法调用
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class StaticMethodInvoker extends MethodInvoker {
@@ -32,7 +32,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(StaticMethodInvoker.class);
     
     protected StaticMethodInvoker(KernelProgramBlock block, AClass owner, String name,
-            KernelParame[] arguments) {
+            KernelParam[] arguments) {
         super(block, owner, name, arguments);
         if (owner.isPrimitive()) {
             throw new IllegalArgumentException("Cannot call static method from primitive");

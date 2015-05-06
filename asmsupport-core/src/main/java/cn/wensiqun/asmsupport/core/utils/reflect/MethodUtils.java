@@ -29,19 +29,18 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class MethodUtils {
 
     /**
-     * 获取哪个方法被传入方法重写
+     * Return a method, that have overrided by passed method.
      * 
-     * @param overrideMethod
-     * @return
+     * @param overrideMethod the override method
      */
     public static Method getOverriddenMethod(AMethod overrideMethod) {
-        Class<?> superClass = overrideMethod.getMethodOwner().getSuperClass();
+        Class<?> superClass = overrideMethod.getDeclaringClass().getSuperClass();
         AMethodMeta entity = overrideMethod.getMeta();
         String methodName = entity.getName();
         AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
@@ -59,7 +58,7 @@ public class MethodUtils {
             try {
                 Method method = superClass.getDeclaredMethod(methodName, argTypes);
 
-                AClass callerOwner = overrideMethod.getMethodOwner();
+                AClass callerOwner = overrideMethod.getDeclaringClass();
                 AClass calledOwner = AClassFactory.getType(method.getDeclaringClass());
                 if (AClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifiers())) {
                     return method;
@@ -73,7 +72,7 @@ public class MethodUtils {
     }
 
     /**
-     * 获取哪个方法被传入方法重写
+     * Return a method, that have overrided by passed method.
      * 
      * @param overrideMethod
      * @return
@@ -96,8 +95,8 @@ public class MethodUtils {
 
     /**
      * 
+     * 
      * @param implementMethod
-     * @return
      */
     public static Method[] getImplementedMethod(AMethod implementMethod) {
         AMethodMeta entity = implementMethod.getMeta();
@@ -114,7 +113,7 @@ public class MethodUtils {
         }
 
         List<Method> foundList = new ArrayList<Method>();
-        List<Class<?>> interfaces = AClassUtils.getAllInterfaces(implementMethod.getMethodOwner());
+        List<Class<?>> interfaces = AClassUtils.getAllInterfaces(implementMethod.getDeclaringClass());
 
         for (Class<?> inter : interfaces) {
             try {

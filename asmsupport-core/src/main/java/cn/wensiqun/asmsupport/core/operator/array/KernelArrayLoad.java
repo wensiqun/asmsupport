@@ -19,17 +19,17 @@ package cn.wensiqun.asmsupport.core.operator.array;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class KernelArrayLoad extends AbstractArrayOperator implements KernelParame {
+public class KernelArrayLoad extends AbstractArrayOperator implements KernelParam {
 
     private static final Log LOG = LogFactory.getLog(KernelArrayLoad.class);
     
@@ -37,8 +37,8 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
     
     private boolean useByOther;
 
-    private void init(KernelParame pardim, KernelParame... parDims){
-    	this.parDims = new KernelParame[1 + parDims.length];
+    private void init(KernelParam pardim, KernelParam... parDims){
+    	this.parDims = new KernelParam[1 + parDims.length];
         this.parDims[0] = pardim;
         System.arraycopy(parDims, 0, this.parDims, 1, parDims.length);
         
@@ -48,7 +48,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
         }
     }
     
-    protected KernelArrayLoad(KernelProgramBlock block, KernelParame arrayReference, KernelParame pardim, KernelParame... parDims) {
+    protected KernelArrayLoad(KernelProgramBlock block, KernelParam arrayReference, KernelParam pardim, KernelParam... parDims) {
         super(block, arrayReference);
         init(pardim, parDims);
     }
@@ -88,7 +88,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
 	@Override
 	public String toString() {
 		StringBuilder toString = new StringBuilder(arrayReference.toString());
-		for(KernelParame p : parDims){
+		for(KernelParam p : parDims){
 			toString.append("[").append(p).append("]");
 		}
 		return toString.toString();

@@ -40,10 +40,10 @@ public class CreateClassAndExtend extends AbstractExample {
 		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new KernelModifiedMethodBody(){
 			@Override
 			public void body(LocalVariable... argus) {
-				GlobalVariable age = val(getMethodOwner()).field("age");
+				GlobalVariable age = val(getMethodDeclaringClass()).field("age");
 				assign(age, val(20));
 				this.callOrig();
-				GlobalVariable name = val(getMethodOwner()).field("name");
+				GlobalVariable name = val(getMethodDeclaringClass()).field("name");
 				assign(name, Value.value("wensiqun"));
 				call(out, "println", name);
 				return_();
@@ -98,7 +98,7 @@ public class CreateClassAndExtend extends AbstractExample {
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	call(new_(getMethodOwner()), "helloWorld");
+	        	call(new_(getMethodDeclaringClass()), "helloWorld");
 			    return_();
 			}
 			

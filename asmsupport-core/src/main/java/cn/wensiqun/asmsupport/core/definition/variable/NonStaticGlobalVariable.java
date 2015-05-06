@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
@@ -27,19 +27,19 @@ public class NonStaticGlobalVariable extends GlobalVariable {
 
     private static final Log LOG = LogFactory.getLog(NonStaticGlobalVariable.class);
     
-    private KernelParame owner;
+    private KernelParam owner;
     
     /**
      * 
      * @param var
      * @param gve
      */
-    public NonStaticGlobalVariable(KernelParame owner, Field meta){
+    public NonStaticGlobalVariable(KernelParam owner, Field meta){
         super(meta);
         this.owner = owner;
     }
     
-    public KernelParame getOwner() {
+    public KernelParam getOwner() {
         return owner;
     }
     
@@ -50,11 +50,11 @@ public class NonStaticGlobalVariable extends GlobalVariable {
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        if(!AClassUtils.visible(block.getMethodOwner(), meta.getDirectOwnerType(), 
+        if(!AClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), 
                 meta.getDeclaringClass(), meta.getModifiers())){
             throw new IllegalArgumentException("Cannot access field " +
                     meta.getDeclaringClass() + "#" + meta.getName()
-                    + " from " + block.getMethodOwner());
+                    + " from " + block.getMethodDeclaringClass());
         }
         
         if(LOG.isPrintEnabled()){

@@ -15,14 +15,14 @@
 package cn.wensiqun.asmsupport.core.operator.assign;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class LocalVariableAssigner extends KernelAssign {
@@ -32,7 +32,7 @@ public class LocalVariableAssigner extends KernelAssign {
     
     private LocalVariable var;
     
-    protected LocalVariableAssigner(KernelProgramBlock block, final LocalVariable var, KernelParame value) {
+    protected LocalVariableAssigner(KernelProgramBlock block, final LocalVariable var, KernelParam value) {
         super(block, var, value);
         this.var = var;
     }
@@ -65,7 +65,7 @@ public class LocalVariableAssigner extends KernelAssign {
 
     @Override
     public void execute() {
-        var.setVariableCompileOrder(insnHelper.getMethod().nextInsNumber());
+        var.setVariableCompileOrder(insnHelper.getMethod().getNextInstructionNumber());
         super.execute();
     }
 

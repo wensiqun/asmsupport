@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -28,16 +28,16 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelCast extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(KernelCast.class);
     private AClass to;
-    private KernelParame orginal;
+    private KernelParam orginal;
     
-    protected KernelCast(KernelProgramBlock block, KernelParame orgi, AClass to) {
+    protected KernelCast(KernelProgramBlock block, KernelParam orgi, AClass to) {
         super(block, Operator.COMMON);
         this.orginal = orgi;
         this.to = to;

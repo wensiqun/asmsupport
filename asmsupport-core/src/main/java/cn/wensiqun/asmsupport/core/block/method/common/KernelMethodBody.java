@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.block.method.IMethodBody;
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public abstract class KernelMethodBody extends AbstractKernelMethodBody implements IMethodBody<LocalVariable> {

@@ -17,17 +17,17 @@ package cn.wensiqun.asmsupport.core.operator.array;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class KernelArrayLength extends AbstractArrayOperator implements KernelParame {
+public class KernelArrayLength extends AbstractArrayOperator implements KernelParam {
 
 
     private static final Log LOG = LogFactory.getLog(KernelArrayLength.class);
@@ -40,7 +40,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
      * @param arrayReference
      * @param parDims
      */
-    protected KernelArrayLength(KernelProgramBlock block, KernelParame arrayReference, KernelParame... parDims) {
+    protected KernelArrayLength(KernelProgramBlock block, KernelParam arrayReference, KernelParam... parDims) {
         super(block, arrayReference);
         this.parDims = parDims;
     }
@@ -81,7 +81,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     @Override
 	public String toString() {
 		StringBuilder toString = new StringBuilder(arrayReference.toString());
-		for(KernelParame p : parDims){
+		for(KernelParam p : parDims){
 			toString.append("[").append(p).append("]");
 		}
 		toString.append(".length");

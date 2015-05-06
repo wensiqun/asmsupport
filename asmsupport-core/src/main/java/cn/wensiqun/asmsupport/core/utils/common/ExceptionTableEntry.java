@@ -17,31 +17,64 @@ package cn.wensiqun.asmsupport.core.utils.common;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
-public class TryCatchInfo {
+/**
+ * 
+ * Each method have an exception in class. it's seem like following :
+ * 
+ *  <pre>
+ *  exception table :
+ *      [pc: 0, pc: 32] -> 33 when : java.lang.Exception
+ *      [pc: 34, pc: 50] -> 51 when : java.lang.RuntimeException
+ *  </pre>
+ *  
+ * Each row indicate a try...catch... information
+ * 
+ *  <ul>
+ *      <li>start : 0</li>
+ *      <li>end : 32</li>
+ *      <li>handle position : 33</li>
+ *      <li>catch exception : RuntimeException</li>
+ *  </ul>
+ *
+ */
+public class ExceptionTableEntry {
+	
     private Label start;
     private Label end;
     private Label hander;
     private Type exception;
 
-    public TryCatchInfo(Label start, Label end, Label hander, Type exception) {
+    public ExceptionTableEntry(Label start, Label end, Label handler, Type exception) {
         this.start = start;
         this.end = end;
-        this.hander = hander;
+        this.hander = handler;
         this.exception = exception;
     }
 
+    /**
+     * Get try start label
+     */
     public Label getStart() {
         return start;
     }
 
+    /**
+     * Get try end label
+     */
     public Label getEnd() {
         return end;
     }
 
-    public Label getHander() {
+    /**
+     * Get exception handler position
+     */
+    public Label getHandler() {
         return hander;
     }
 
+    /**
+     * Get the what's type to catch
+     */
     public Type getException() {
         return exception;
     }

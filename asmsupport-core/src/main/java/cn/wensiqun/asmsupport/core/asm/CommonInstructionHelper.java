@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class CommonInstructionHelper extends InstructionHelper {

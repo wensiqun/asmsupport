@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class AbstractRelational extends AbstractParamOperator implements Jumpable  {
@@ -41,10 +41,10 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
     
     /**算数因子1 */
-    protected KernelParame factor1;
+    protected KernelParam factor1;
 
     /**算数因子2 */
-    protected KernelParame factor2;
+    protected KernelParam factor2;
     
     /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
@@ -54,7 +54,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected AbstractRelational(KernelProgramBlock block, KernelParame factor1, KernelParame factor2, Operator operator) {
+    protected AbstractRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
         super(block, operator);
         this.factor1 = factor1;
         this.factor2 = factor2;
@@ -172,13 +172,13 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 	}*/
 	
     @Override
-    public void jumpPositive(KernelParame from, Label posLbl, Label negLbl) {
+    public void jumpPositive(KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack();
         positiveCmp(posLbl);
     }
 
     @Override
-    public void jumpNegative(KernelParame from, Label posLbl, Label negLbl) {
+    public void jumpNegative(KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack();
         negativeCmp(negLbl);
     }

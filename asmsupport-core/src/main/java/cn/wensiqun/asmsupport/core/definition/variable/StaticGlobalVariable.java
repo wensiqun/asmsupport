@@ -50,10 +50,10 @@ public class StaticGlobalVariable extends GlobalVariable {
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        if (!AClassUtils.visible(block.getMethodOwner(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
+        if (!AClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
                 meta.getModifiers())) {
             throw new IllegalArgumentException("Cannot access field " + meta.getDeclaringClass() + "#"
-                    + meta.getName() + " from " + block.getMethodOwner());
+                    + meta.getName() + " from " + block.getMethodDeclaringClass());
         }
 
         if (LOG.isPrintEnabled()) {

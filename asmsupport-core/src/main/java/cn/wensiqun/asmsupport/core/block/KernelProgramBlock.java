@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.MutableClass;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -99,6 +99,7 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
+import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
@@ -112,7 +113,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  * @author wensiqun(at)163.com
  */
 public abstract class KernelProgramBlock extends AbstractKernelBlock implements 
-ActionSet<KernelParame, IVariable, GlobalVariable,
+ActionSet<KernelParam, IVariable, GlobalVariable,
 KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
 	/** the actually executor.*/
@@ -287,7 +288,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * @return
      */
     public LocalVariable[] getMethodArguments() {
-        return getMethod().getArguments();
+        return getMethod().getParameters();
     }
 
     /**
@@ -305,8 +306,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * 
      * @return
      */
-    public MutableClass getMethodOwner() {
-        return getMethod().getMethodOwner();
+    public MutableClass getMethodDeclaringClass() {
+        return getMethod().getDeclaringClass();
     }
 
     /**
@@ -381,13 +382,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             throw new IllegalArgumentException("variable must be non-null if 'anonymous' is false");
         }
 
-        VarMeta lve = new VarMeta(anonymous || getMethod().isCreatingImplicitFinally() ? "anonymous" : name, 0, aClass);
+        VarMeta lve = new VarMeta(anonymous ? "anonymous" : name, 0, aClass);
 
         LocalVariableCreator lvc = OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] {
                 KernelProgramBlock.class, String.class, Type.class, Type.class }, getExecutor(), anonymous ? null
                 : name, aClass.getType(), aClass.getType());
         ScopeLogicVariable slv = lvc.getScopeLogicVariable();
-        slv.setCompileOrder(getMethod().nextInsNumber());
+        slv.setCompileOrder(getMethod().getNextInstructionNumber());
         LocalVariable lv = new LocalVariable(lve);
         lv.setScopeLogicVar(slv);
         return lv;
@@ -404,7 +405,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * the basic create variable method.
      */
-    private final LocalVariable var(String name, AClass type, boolean anonymous, KernelParame value) {
+    private final LocalVariable var(String name, AClass type, boolean anonymous, KernelParam value) {
         LocalVariable lv = createOnlyVariable(type, name, anonymous);
         if (value == null) {
             assign(lv, Value.defaultValue(type));
@@ -415,22 +416,22 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public LocalVariable var(String name, Class<?> type, KernelParame para) {
+    public LocalVariable var(String name, Class<?> type, KernelParam para) {
         return var(name, AClassFactory.getType(type), false, para);
     }
 
     @Override
-    public LocalVariable var(Class<?> type, KernelParame para) {
+    public LocalVariable var(Class<?> type, KernelParam para) {
         return var("", AClassFactory.getType(type), true, para);
     }
 
     @Override
-    public LocalVariable var(String name, AClass type, KernelParame para) {
+    public LocalVariable var(String name, AClass type, KernelParam para) {
         return var(name, type, false, para);
     }
 
     @Override
-    public LocalVariable var(AClass type, KernelParame para) {
+    public LocalVariable var(AClass type, KernelParam para) {
         return var("", type, true, para);
     }
 
@@ -440,18 +441,18 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 	}
 
 	@Override
-    public final KernelAssign assign(IVariable variable, KernelParame val) {
+    public final KernelAssign assign(IVariable variable, KernelParam val) {
         if (variable instanceof LocalVariable) {
             return OperatorFactory.newOperator(LocalVariableAssigner.class, new Class<?>[] {
-                    KernelProgramBlock.class, LocalVariable.class, KernelParame.class }, getExecutor(), variable,
+                    KernelProgramBlock.class, LocalVariable.class, KernelParam.class }, getExecutor(), variable,
                     val);
         } else if (variable instanceof StaticGlobalVariable) {
             return OperatorFactory.newOperator(StaticGlobalVariableAssigner.class, new Class<?>[] {
-                    KernelProgramBlock.class, StaticGlobalVariable.class, KernelParame.class }, getExecutor(),
+                    KernelProgramBlock.class, StaticGlobalVariable.class, KernelParam.class }, getExecutor(),
                     variable, val);
         } else if (variable instanceof NonStaticGlobalVariable) {
             return OperatorFactory.newOperator(NonStaticGlobalVariableAssigner.class, new Class<?>[] {
-                    KernelProgramBlock.class, NonStaticGlobalVariable.class, KernelParame.class }, getExecutor(),
+                    KernelProgramBlock.class, NonStaticGlobalVariable.class, KernelParam.class }, getExecutor(),
                     variable, val);
         } else {
             throw new IllegalArgumentException("Can't assign value to variable : " + variable.getName());
@@ -463,16 +464,16 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelArrayValue makeArray(AClass arrayType, final KernelParame... allocateDims) {
+    public final KernelArrayValue makeArray(AClass arrayType, final KernelParam... allocateDims) {
     	if(!arrayType.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arrayType);
     	}
         return OperatorFactory.newOperator(KernelArrayValue.class, new Class<?>[] { KernelProgramBlock.class,
-                ArrayClass.class, KernelParame[].class }, getExecutor(), arrayType, allocateDims);
+                ArrayClass.class, KernelParam[].class }, getExecutor(), arrayType, allocateDims);
     }
 
     @Override
-    public KernelArrayValue makeArray(Class<?> arraytype, KernelParame... dimensions) {
+    public KernelArrayValue makeArray(Class<?> arraytype, KernelParam... dimensions) {
     	if(!arraytype.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arraytype);
     	}
@@ -501,24 +502,24 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelArrayLoad arrayLoad(KernelParame arrayReference, KernelParame pardim, KernelParame... parDims) {
+    public final KernelArrayLoad arrayLoad(KernelParam arrayReference, KernelParam pardim, KernelParam... parDims) {
         return OperatorFactory.newOperator(KernelArrayLoad.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class, KernelParame[].class }, getExecutor(), arrayReference,
+                KernelParam.class, KernelParam.class, KernelParam[].class }, getExecutor(), arrayReference,
                 pardim, parDims);
     }
 
     @Override
-    public final KernelArrayStore arrayStore(KernelParame arrayReference, KernelParame value, KernelParame dim,
-            KernelParame... dims) {
+    public final KernelArrayStore arrayStore(KernelParam arrayReference, KernelParam value, KernelParam dim,
+            KernelParam... dims) {
         return OperatorFactory.newOperator(KernelArrayStore.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class, KernelParame.class, KernelParame[].class }, getExecutor(),
+                KernelParam.class, KernelParam.class, KernelParam.class, KernelParam[].class }, getExecutor(),
                 arrayReference, value, dim, dims);
     }
 
     @Override
-    public final KernelArrayLength arrayLength(KernelParame arrayReference, KernelParame... dims) {
+    public final KernelArrayLength arrayLength(KernelParam arrayReference, KernelParam... dims) {
         return OperatorFactory.newOperator(KernelArrayLength.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame[].class }, getExecutor(), arrayReference, dims);
+                KernelParam.class, KernelParam[].class }, getExecutor(), arrayReference, dims);
     }
 
     // *******************************************************************************************//
@@ -526,16 +527,16 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelCast checkcast(KernelParame cc, AClass to) {
+    public final KernelCast checkcast(KernelParam cc, AClass to) {
         if (to.isPrimitive()) {
             throw new IllegalArgumentException("Cannot check cast to type " + to + " from " + cc.getResultType());
         }
         return OperatorFactory.newOperator(KernelCast.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, AClass.class }, getExecutor(), cc, to);
+                KernelParam.class, AClass.class }, getExecutor(), cc, to);
     }
 
     @Override
-    public final KernelCast checkcast(KernelParame cc, Class<?> to) {
+    public final KernelCast checkcast(KernelParam cc, Class<?> to) {
         return checkcast(cc, AClassFactory.getType(to));
     }
 
@@ -544,39 +545,39 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelAdd add(KernelParame factor1, KernelParame factor2) {
+    public final KernelAdd add(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelAdd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelSub sub(KernelParame factor1, KernelParame factor2) {
+    public final KernelSub sub(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelSub.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelMul mul(KernelParame factor1, KernelParame factor2) {
+    public final KernelMul mul(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelMul.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelDiv div(KernelParame factor1, KernelParame factor2) {
+    public final KernelDiv div(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelDiv.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelMod mod(KernelParame factor1, KernelParame factor2) {
+    public final KernelMod mod(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelMod.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelNeg neg(KernelParame factor) {
+    public final KernelNeg neg(KernelParam factor) {
         return OperatorFactory.newOperator(KernelNeg.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class }, getExecutor(), factor);
+                KernelParam.class }, getExecutor(), factor);
     }
 
     // *******************************************************************************************//
@@ -584,44 +585,44 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelReverse reverse(KernelParame factor) {
+    public final KernelReverse reverse(KernelParam factor) {
         return OperatorFactory.newOperator(KernelReverse.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class }, getExecutor(), factor);
+                KernelParam.class }, getExecutor(), factor);
     }
 
     @Override
-    public final KernelBitAnd band(KernelParame factor1, KernelParame factor2) {
+    public final KernelBitAnd band(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelBitAnd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelBitOr bor(KernelParame factor1, KernelParame factor2) {
+    public final KernelBitOr bor(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelBitOr.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelBitXor bxor(KernelParame factor1, KernelParame factor2) {
+    public final KernelBitXor bxor(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelBitXor.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelShiftLeft shl(KernelParame factor1, KernelParame factor2) {
+    public final KernelShiftLeft shl(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelShiftLeft.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
-    public final KernelShiftRight shr(KernelParame factor1, KernelParame factor2) {
+    public final KernelShiftRight shr(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelShiftRight.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelUnsignedShiftRight ushr(KernelParame factor1, KernelParame factor2) {
+    public final KernelUnsignedShiftRight ushr(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelUnsignedShiftRight.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     // *******************************************************************************************//
@@ -629,27 +630,27 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelPreDecrment predec(KernelParame crement) {
+    public final KernelPreDecrment predec(KernelParam crement) {
         return OperatorFactory.newOperator(KernelPreDecrment.class, new Class<?>[] { KernelProgramBlock.class,
-            KernelParame.class }, getExecutor(), crement);
+            KernelParam.class }, getExecutor(), crement);
     }
 
     @Override
-    public final KernelPostDecrment postdec(KernelParame crement) {
+    public final KernelPostDecrment postdec(KernelParam crement) {
         return OperatorFactory.newOperator(KernelPostDecrment.class, new Class<?>[] { KernelProgramBlock.class,
-            KernelParame.class }, getExecutor(), crement);
+            KernelParam.class }, getExecutor(), crement);
     }
 
     @Override
-    public final KernelPreIncrment preinc(KernelParame crement) {
+    public final KernelPreIncrment preinc(KernelParam crement) {
         return OperatorFactory.newOperator(KernelPreIncrment.class, new Class<?>[] { KernelProgramBlock.class,
-            KernelParame.class }, getExecutor(), crement);
+            KernelParam.class }, getExecutor(), crement);
     }
 
     @Override
-    public final KernelPostIncrment postinc(KernelParame crement) {
+    public final KernelPostIncrment postinc(KernelParam crement) {
         return OperatorFactory.newOperator(KernelPostIncrment.class, new Class<?>[] { KernelProgramBlock.class,
-            KernelParame.class }, getExecutor(), crement);
+            KernelParam.class }, getExecutor(), crement);
     }
 
     // *******************************************************************************************//
@@ -657,39 +658,39 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelGreaterThan gt(KernelParame factor1, KernelParame factor2) {
+    public final KernelGreaterThan gt(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelGreaterThan.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelGreaterEqual ge(KernelParame factor1, KernelParame factor2) {
+    public final KernelGreaterEqual ge(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelGreaterEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelLessThan lt(KernelParame factor1, KernelParame factor2) {
+    public final KernelLessThan lt(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelLessThan.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelLessEqual le(KernelParame factor1, KernelParame factor2) {
+    public final KernelLessEqual le(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelLessEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelEqual eq(KernelParame factor1, KernelParame factor2) {
+    public final KernelEqual eq(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelNotEqual ne(KernelParame factor1, KernelParame factor2) {
+    public final KernelNotEqual ne(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelNotEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     // *******************************************************************************************//
@@ -697,61 +698,61 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelLogicalAnd logicalAnd(KernelParame factor1, KernelParame factor2) {
+    public final KernelLogicalAnd logicalAnd(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelLogicalAnd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelLogicalOr logicalOr(KernelParame factor1, KernelParame factor2) {
+    public final KernelLogicalOr logicalOr(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelLogicalOr.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelLogicalXor logicalXor(KernelParame factor1, KernelParame factor2) {
+    public final KernelLogicalXor logicalXor(KernelParam factor1, KernelParam factor2) {
         return OperatorFactory.newOperator(KernelLogicalXor.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
     }
 
     @Override
-    public final KernelShortCircuitAnd and(KernelParame factor1, KernelParame factor2, KernelParame... otherFactors) {
+    public final KernelShortCircuitAnd and(KernelParam factor1, KernelParam factor2, KernelParam... otherFactors) {
         KernelShortCircuitAnd sca = OperatorFactory
-                .newOperator(KernelShortCircuitAnd.class, new Class<?>[] { KernelProgramBlock.class, KernelParame.class,
-                        KernelParame.class }, getExecutor(), factor1, factor2);
+                .newOperator(KernelShortCircuitAnd.class, new Class<?>[] { KernelProgramBlock.class, KernelParam.class,
+                        KernelParam.class }, getExecutor(), factor1, factor2);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
-            for (KernelParame factor : otherFactors) {
+            for (KernelParam factor : otherFactors) {
                 sca = OperatorFactory.newOperator(KernelShortCircuitAnd.class, new Class<?>[] { KernelProgramBlock.class,
-                        KernelParame.class, KernelParame.class }, getExecutor(), sca, factor);
+                        KernelParam.class, KernelParam.class }, getExecutor(), sca, factor);
             }
         }
         return sca;
     }
 
     @Override
-    public final KernelShortCircuitOr or(KernelParame factor1, KernelParame factor2, KernelParame... otherFactors) {
+    public final KernelShortCircuitOr or(KernelParam factor1, KernelParam factor2, KernelParam... otherFactors) {
         KernelShortCircuitOr sco = OperatorFactory
-                .newOperator(KernelShortCircuitOr.class, new Class<?>[] { KernelProgramBlock.class, KernelParame.class,
-                        KernelParame.class }, getExecutor(), factor1, factor2);
+                .newOperator(KernelShortCircuitOr.class, new Class<?>[] { KernelProgramBlock.class, KernelParam.class,
+                        KernelParam.class }, getExecutor(), factor1, factor2);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
-            for (KernelParame factor : otherFactors) {
+            for (KernelParam factor : otherFactors) {
                 sco = OperatorFactory.newOperator(KernelShortCircuitOr.class, new Class<?>[] { KernelProgramBlock.class,
-                        KernelParame.class, KernelParame.class }, getExecutor(), sco, factor);
+                        KernelParam.class, KernelParam.class }, getExecutor(), sco, factor);
             }
         }
         return sco;
     }
 
     @Override
-    public final KernelNot no(KernelParame factor) {
+    public final KernelNot no(KernelParam factor) {
         return OperatorFactory.newOperator(KernelNot.class,
-                new Class<?>[] { KernelProgramBlock.class, KernelParame.class }, getExecutor(), factor);
+                new Class<?>[] { KernelProgramBlock.class, KernelParam.class }, getExecutor(), factor);
     }
 
     @Override
-    public final KernelTernary ternary(KernelParame exp1, KernelParame exp2, KernelParame exp3) {
+    public final KernelTernary ternary(KernelParam exp1, KernelParam exp2, KernelParam exp3) {
         return OperatorFactory.newOperator(KernelTernary.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame.class, KernelParame.class }, getExecutor(), exp1, exp2, exp3);
+                KernelParam.class, KernelParam.class, KernelParam.class }, getExecutor(), exp1, exp2, exp3);
     }
 
     // *******************************************************************************************//
@@ -759,9 +760,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelStrAdd stradd(KernelParame par1, KernelParame... pars) {
+    public final KernelStrAdd stradd(KernelParam par1, KernelParam... pars) {
         return OperatorFactory.newOperator(KernelStrAdd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, KernelParame[].class }, getExecutor(), par1, pars);
+                KernelParam.class, KernelParam[].class }, getExecutor(), par1, pars);
     }
 
     // *******************************************************************************************//
@@ -769,13 +770,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelInstanceof instanceof_(KernelParame obj, AClass type) {
+    public final KernelInstanceof instanceof_(KernelParam obj, AClass type) {
         return OperatorFactory.newOperator(KernelInstanceof.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, AClass.class }, getExecutor(), obj, type);
+                KernelParam.class, AClass.class }, getExecutor(), obj, type);
     }
 
     @Override
-    public final KernelInstanceof instanceof_(KernelParame obj, Class<?> type) {
+    public final KernelInstanceof instanceof_(KernelParam obj, Class<?> type) {
         return instanceof_(obj, getType(type));
     }
 
@@ -784,16 +785,16 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final MethodInvoker call(KernelParame caller, String methodName, KernelParame... arguments) {
+    public final MethodInvoker call(KernelParam caller, String methodName, KernelParam... arguments) {
         return OperatorFactory.newOperator(CommonMethodInvoker.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class, String.class, KernelParame[].class }, getExecutor(), caller, methodName,
+                KernelParam.class, String.class, KernelParam[].class }, getExecutor(), caller, methodName,
                 arguments);
     }
 
     @Override
-    public MethodInvoker call(String methodName, KernelParame... args) {
-    	if(getMethod().isStatic()) {
-            return call(getMethodOwner(), methodName, args);
+    public MethodInvoker call(String methodName, KernelParam... args) {
+    	if(ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+            return call(getMethodDeclaringClass(), methodName, args);
     	} else {
             return call(this_(), methodName, args);
     	}
@@ -801,36 +802,36 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     protected final void invokeVerify(AClass a) {
         if (a.isInterface()) {
-            throw new MethodInvokeException("the class " + getExecutor().getMethodOwner()
+            throw new MethodInvokeException("the class " + getExecutor().getMethodDeclaringClass()
                     + " is a interface and interfaces have no static methods");
         }
 
         if (a.isPrimitive()) {
-            throw new MethodInvokeException("the class " + getExecutor().getMethodOwner()
+            throw new MethodInvokeException("the class " + getExecutor().getMethodDeclaringClass()
                     + " is a primitive and primitive cannot as a method invoker owner");
         }
     }
 
     @Override
-    public final MethodInvoker call(AClass owner, String methodName, KernelParame... arguments) {
+    public final MethodInvoker call(AClass owner, String methodName, KernelParam... arguments) {
         invokeVerify(owner);
         return OperatorFactory.newOperator(StaticMethodInvoker.class, new Class<?>[] { KernelProgramBlock.class,
-                AClass.class, String.class, KernelParame[].class }, getExecutor(), owner, methodName, arguments);
+                AClass.class, String.class, KernelParam[].class }, getExecutor(), owner, methodName, arguments);
     }
 
-    public final MethodInvoker call(Class<?> owner, String methodName, KernelParame... arguments) {
+    public final MethodInvoker call(Class<?> owner, String methodName, KernelParam... arguments) {
         return call(getType(owner), methodName, arguments);
     }
 
     @Override
-    public final MethodInvoker new_(AClass owner, KernelParame... arguments) {
+    public final MethodInvoker new_(AClass owner, KernelParam... arguments) {
         invokeVerify(owner);
         return OperatorFactory.newOperator(ConstructorInvoker.class, new Class<?>[] { KernelProgramBlock.class,
-                AClass.class, KernelParame[].class }, getExecutor(), owner, arguments);
+                AClass.class, KernelParam[].class }, getExecutor(), owner, arguments);
     }
 
     @Override
-    public final MethodInvoker new_(Class<?> owner, KernelParame... arguments) {
+    public final MethodInvoker new_(Class<?> owner, KernelParam... arguments) {
         return this.new_(AClassFactory.getType(owner), arguments);
     }
 
@@ -901,8 +902,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public final void throw_(KernelParame exception) {
-        OperatorFactory.newOperator(KernelThrow.class, new Class<?>[] { KernelProgramBlock.class, KernelParame.class },
+    public final void throw_(KernelParam exception) {
+        OperatorFactory.newOperator(KernelThrow.class, new Class<?>[] { KernelProgramBlock.class, KernelParam.class },
                 getExecutor(), exception);
     }
 
@@ -922,10 +923,10 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final ThisVariable this_() {
-        if (getMethod().isStatic()) {
+        if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
-        return getMethodOwner().getThisVariable();
+        return getMethodDeclaringClass().getThisVariable();
     }
 
     @Override
@@ -935,10 +936,10 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final SuperVariable super_() {
-        if (getMethod().isStatic()) {
+        if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
             throw new ASMSupportException("cannot use \"super\" keyword in static block");
         }
-        return getMethodOwner().getSuperVariable();
+        return getMethodDeclaringClass().getSuperVariable();
     }
 
     @Override
@@ -951,8 +952,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
                 originalMethodName = ASConstant.INIT_PROXY;
             }
             originalMethodName += ASConstant.METHOD_PROXY_SUFFIX;
-            if (getMethod().isStatic()) {
-                return call(getMethod().getMethodOwner(), originalMethodName, getMethodArguments());
+            if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+                return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {
                 return call(this_(), originalMethodName, getMethodArguments());
             }
@@ -972,7 +973,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             throw new VerifyErrorException("Do not specify a return type! ");
         }
         OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class }, getExecutor(), null);
+                KernelParam.class }, getExecutor(), null);
     }
 
     /**
@@ -982,9 +983,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      *            return value
      */
     @Override
-    public final void return_(KernelParame parame) {
+    public final void return_(KernelParam parame) {
         OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParame.class }, getExecutor(), parame);
+                KernelParam.class }, getExecutor(), parame);
     }
 
     @Override

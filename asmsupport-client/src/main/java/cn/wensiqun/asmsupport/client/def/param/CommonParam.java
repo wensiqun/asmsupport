@@ -7,12 +7,12 @@ import cn.wensiqun.asmsupport.client.def.action.EqualAction;
 import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 public abstract class CommonParam extends DummyParam implements CommonBehavior {
 
-	public CommonParam(KernelProgramBlockCursor cursor, KernelParame target) {
+	public CommonParam(KernelProgramBlockCursor cursor, KernelParam target) {
 		super(cursor, target);
 	}
 	

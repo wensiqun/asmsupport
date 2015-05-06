@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.method;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -25,14 +25,14 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 /**
  * 构造方法调用者。
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public class SuperConstructorInvoker extends MethodInvoker {
 
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
-    protected SuperConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParame[] arguments) {
+    protected SuperConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParam[] arguments) {
         super(block, AClassFactory.getType(aclass.getSuperClass()), ASConstant.INIT, arguments);
     }
 

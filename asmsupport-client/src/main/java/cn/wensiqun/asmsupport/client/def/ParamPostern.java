@@ -2,30 +2,30 @@ package cn.wensiqun.asmsupport.client.def;
 
 import java.lang.reflect.Array;
 
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 
 public class ParamPostern {
 
-    public static KernelParame getTarget(Param param) {
+    public static KernelParam getTarget(Param param) {
         return param.getTarget();
     }
     
-    public static KernelParame[] getTarget(Param[] params) {
+    public static KernelParam[] getTarget(Param[] params) {
         if(params == null) {
             return null;
         }
-        KernelParame[] paras = new KernelParame[params.length];
+        KernelParam[] paras = new KernelParam[params.length];
         for(int i=0; i<params.length; i++) {
             paras[i] = params[i].getTarget();
         }
         return paras;
     }
     
-    public static KernelParame[] getTarget(Param[] params, int start) {
+    public static KernelParam[] getTarget(Param[] params, int start) {
         if(params == null || params.length == 0) {
             return null;
         }
-        KernelParame[] paras = new KernelParame[params.length - start];
+        KernelParam[] paras = new KernelParam[params.length - start];
         for(int i=start; i<params.length; i++) {
             paras[i] = params[i].getTarget();
         }

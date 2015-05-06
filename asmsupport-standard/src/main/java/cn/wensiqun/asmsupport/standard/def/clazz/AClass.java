@@ -19,9 +19,9 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 
 /**
- * Java Class的抽象
+ * Indicate a java class.
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class AClass implements IClass {

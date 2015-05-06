@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class AMethodMeta implements Cloneable {
@@ -161,7 +161,19 @@ public class AMethodMeta implements Cloneable {
         return getMethodString();
     }
 
-    public String getName() {
+	public String getDescription() {
+		if (ArrayUtils.isEmpty(argClasses)) {
+			return Type.getMethodDescriptor(returnType);
+		} else {
+			Type[] argTypes = new Type[argClasses.length];
+			for (int i = 0; i < argTypes.length; i++) {
+				argTypes[i] = argClasses[i].getType();
+			}
+			return Type.getMethodDescriptor(returnType, argTypes);
+		}
+	}
+
+	public String getName() {
         return name;
     }
     

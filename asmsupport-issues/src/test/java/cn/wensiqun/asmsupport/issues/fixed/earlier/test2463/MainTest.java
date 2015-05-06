@@ -37,7 +37,7 @@ public class MainTest {
 
             @Override
             public void body(LocalVariable... argus) {
-                call(new_(getMethodOwner()), "getMyObject");
+                call(new_(getMethodDeclaringClass()), "getMyObject");
             	return_();
             }
         });

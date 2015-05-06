@@ -33,13 +33,10 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
  * <p>
- * 字节码操作的帮助类。 这里只需要操作栈。而本地变量的操作已经由LcoalVariables和ScopeLogicVariable封装完成了。
- * </p>
- * <p>
- * this class wrap same asm api make to easy
+ * ASM jvm instruction helper
  * </p>
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  */
 public abstract class InstructionHelper {
 
@@ -77,7 +74,7 @@ public abstract class InstructionHelper {
      */
     public static final int LE = Opcodes.IFLE;
 
-    /** 是否自动装箱和拆箱以及转换类型 */
+    /** flat that indicate whether or not do check cast, box/unbox and other cast automatically */
     private boolean castAndbox = true;
 
     private StackLocalMethodVisitor mv;
@@ -679,7 +676,7 @@ public abstract class InstructionHelper {
     }
 
     /**
-     * 调用父类方法
+     * Call super method
      * 
      * @param ownerType
      * @param name

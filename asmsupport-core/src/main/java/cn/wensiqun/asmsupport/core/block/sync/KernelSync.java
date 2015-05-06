@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.DUP;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
@@ -35,12 +35,12 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public abstract class KernelSync extends KernelProgramBlock implements ISynchronized<KernelParame> {
+public abstract class KernelSync extends KernelProgramBlock implements ISynchronized<KernelParam> {
 
-	private KernelParame lock;
+	private KernelParam lock;
 	private LocalVariable dupSynArgument;
 	
 	private Label monitorenter;
@@ -51,7 +51,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	
 	private Marker flag1;
 
-	public KernelSync(KernelParame lock) {
+	public KernelSync(KernelParam lock) {
 		super();
 		this.lock = lock;
 		monitorenter = new Label();
@@ -73,8 +73,8 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		lock.asArgument();
 
         AbstractKernelMethodBody mb = getMethodBody();
-        mb.addTryCatchInfo(monitorenter, monitorexit, excetpionStart, null);
-        mb.addTryCatchInfo(excetpionStart, excetpionEnd, excetpionStart, null);
+        mb.addExceptionTableEntry(monitorenter, monitorexit, excetpionStart, null);
+        mb.addExceptionTableEntry(excetpionStart, excetpionEnd, excetpionStart, null);
 	}
 
 	@Override

@@ -104,7 +104,7 @@ public class WhileBlockGenerator extends AbstractExample {
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
-                	call(getMethodOwner(), "test");
+                	call(getMethodDeclaringClass(), "test");
                     return_();
                 }
         

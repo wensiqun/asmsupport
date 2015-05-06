@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 /**
  * The class create or modify context
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface IClassContext {

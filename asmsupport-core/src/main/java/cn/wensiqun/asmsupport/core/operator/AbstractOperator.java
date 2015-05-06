@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public abstract class AbstractOperator extends ByteCodeExecutor {
@@ -138,7 +138,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
 
     @Override
     public void execute() {
-        compileOrder = insnHelper.getMethod().nextInsNumber();
+        compileOrder = insnHelper.getMethod().getNextInstructionNumber();
         try {
             doExecute();
         } catch (Exception e) {

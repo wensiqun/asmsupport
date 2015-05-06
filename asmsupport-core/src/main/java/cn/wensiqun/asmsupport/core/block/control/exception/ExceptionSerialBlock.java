@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.core.utils.common.TryCatchInfo;
+import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -45,7 +45,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
     private List<Label> anyCatchRange;
 
-    private List<TryCatchInfo> tryCatchInfoes;
+    private List<ExceptionTableEntry> tryCatchInfoes;
 
     public ExceptionSerialBlock(KernelProgramBlock parent, KernelTry tryBlock) {
         super(parent);
@@ -154,8 +154,8 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         // for exception table
         if (CollectionUtils.isNotEmpty(tryCatchInfoes)) {
-            for (TryCatchInfo info : tryCatchInfoes) {
-                targetParent.getMethod().getMethodBody().addTryCatchInfo(info);
+            for (ExceptionTableEntry info : tryCatchInfoes) {
+                targetParent.getMethod().getMethodBody().addExceptionTableEntry(info);
             }
         }
     }
@@ -278,9 +278,9 @@ public class ExceptionSerialBlock extends SerialBlock {
 
     private void addTreCatchInfo(Label start, Label end, Label handler, AClass type) {
         if (tryCatchInfoes == null) {
-            tryCatchInfoes = new ArrayList<TryCatchInfo>();
+            tryCatchInfoes = new ArrayList<ExceptionTableEntry>();
         }
-        tryCatchInfoes.add(new TryCatchInfo(start, end, handler, type.getType()));
+        tryCatchInfoes.add(new ExceptionTableEntry(start, end, handler, type.getType()));
     }
 
     public void addAnyExceptionCatchRange(Label label) {

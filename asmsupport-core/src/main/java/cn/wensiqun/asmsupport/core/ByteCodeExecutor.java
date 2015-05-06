@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.utils.collections.LinkedListNode;
 
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public abstract class ByteCodeExecutor extends LinkedListNode implements Executable{

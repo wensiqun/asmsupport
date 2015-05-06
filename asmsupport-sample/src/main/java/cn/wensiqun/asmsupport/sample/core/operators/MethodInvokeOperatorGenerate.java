@@ -131,7 +131,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
                  * 1.表示需要构造的类，这里我们通过调用getMethodOwner获取当前操作类
                  * 2.表示构造方法的参数。这个参数是个变元参数
                  */
-            	LocalVariable obj = var("obj", getMethodOwner(), new_(getMethodOwner()));
+            	LocalVariable obj = var("obj", getMethodDeclaringClass(), new_(getMethodDeclaringClass()));
                 
             	/**
             	 * 实现System.out.println("Call static method : " + MyObject.getDescription(obj));
@@ -144,7 +144,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
             	 * 2.静态方法的名称
             	 * 3.参数
             	 */
-            	MethodInvoker getDescriptionInvoker = call(getMethodOwner(), "getDescription", obj);
+            	MethodInvoker getDescriptionInvoker = call(getMethodDeclaringClass(), "getDescription", obj);
             	
             	call(systemOut, "println", stradd(Value.value("Call static method : "), getDescriptionInvoker));
                 

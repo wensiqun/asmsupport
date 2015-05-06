@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.method;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 /**
  * 构造方法调用者。
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  * 
  */
 public class ConstructorInvoker extends MethodInvoker {
@@ -39,7 +39,7 @@ public class ConstructorInvoker extends MethodInvoker {
      * @param mv
      * @param dup
      */
-    protected ConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParame[] arguments) {
+    protected ConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParam[] arguments) {
         super(block, aclass, ASConstant.INIT, arguments);
         if (aclass.isPrimitive()) {
             throw new IllegalArgumentException("Cannot new a primitive class");

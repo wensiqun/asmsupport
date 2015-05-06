@@ -21,7 +21,7 @@ package cn.wensiqun.asmsupport.core.operator.common;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -32,21 +32,21 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 
 /**
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelTernary extends AbstractParamOperator {
     
-    private KernelParame exp1;
-    private KernelParame exp2;
-    private KernelParame exp3;
+    private KernelParam exp1;
+    private KernelParam exp2;
+    private KernelParam exp3;
     
     private boolean byOtherUsed;
     
     private AClass resultClass;
     
-    protected KernelTernary(KernelProgramBlock block, KernelParame expression1,
-            KernelParame expression2, KernelParame expression3) {
+    protected KernelTernary(KernelProgramBlock block, KernelParam expression1,
+            KernelParam expression2, KernelParam expression3) {
         super(block, Operator.TERNARY);
         this.exp1 = expression1;
         this.exp2 = expression2;

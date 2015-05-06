@@ -19,20 +19,24 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface IMethodCreator extends Executable {
     
     /**
-     * 创建逻辑实体
-     * @param cv
+     * Create a method
      */
     public void create(IClassContext cv);
 	
+    /**
+     * Get method name.
+     */
     public String getName();
 
+    /**
+     * Get the argument types of current method.
+     */
     public AClass[] getArguments();
     
-    public String getMethodString();
 }

@@ -42,7 +42,7 @@ import cn.wensiqun.asmsupport.client.def.action.SubAction;
 import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.behavior.UncertainBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
@@ -54,7 +54,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  */
 public class UncertainParam extends CommonParam implements UncertainBehavior {
 
-    public UncertainParam(KernelProgramBlockCursor cursor, KernelParame target) {
+    public UncertainParam(KernelProgramBlockCursor cursor, KernelParam target) {
         super(cursor, target);
     }
 

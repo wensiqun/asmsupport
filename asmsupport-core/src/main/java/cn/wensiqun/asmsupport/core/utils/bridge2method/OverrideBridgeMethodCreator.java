@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 
 /**
- * 
+ * This class will convert a method to bridge method.
  *
  */
 public class OverrideBridgeMethodCreator {
@@ -53,9 +53,7 @@ public class OverrideBridgeMethodCreator {
 	}
 
 	/**
-	 * 获取指定方法的父类方法或者接口中的方法
-	 * 
-	 * @return
+	 * Get all super method
 	 */
     private List<java.lang.reflect.Method> foundParentMethod(){
     	List<java.lang.reflect.Method> found = new ArrayList<java.lang.reflect.Method>();
@@ -97,10 +95,10 @@ public class OverrideBridgeMethodCreator {
     }
 
 	/**
-     * 创建bridge方法
+     * Create bridge method
      * 
-     * @param method 新创建重写的方法
-     * @param overriden 被重写的方法
+     * @param method the overide method
+     * @param overriden the super method
      */
     private MethodCreator createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
     	final String name = method.getMeta().getName();
@@ -113,7 +111,7 @@ public class OverrideBridgeMethodCreator {
     	
     	AClass[] exceptions = method.getMeta().getExceptions();
     	
-    	//先消除abstract的flag，再加入bridge的flag
+    	//remove abstract flag first and then add bridge flag.
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
     	return MethodCreator.methodCreatorForAdd(name, argClasses, argNames,

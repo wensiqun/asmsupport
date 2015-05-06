@@ -188,7 +188,6 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 
 	
 	class ConstructorVisitor extends MethodAdapter {
-        //是否调用了super
 		private boolean invokedSuper = false;
 		private String constructorDesc;
 		

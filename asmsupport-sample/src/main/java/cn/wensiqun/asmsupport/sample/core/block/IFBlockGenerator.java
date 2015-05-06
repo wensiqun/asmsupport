@@ -154,12 +154,12 @@ public class IFBlockGenerator extends AbstractExample{
 				new KernelStaticMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
-						call(getMethodOwner(), "ifelse", Value.value("A"), Value.value(0));
-						call(getMethodOwner(), "ifelse", Value.value("A"), Value.value(1));
-						call(getMethodOwner(), "ifelse", Value.value("B"), Value.value(0));
-						call(getMethodOwner(), "ifelse", Value.value("B"), Value.value(1));
-						call(getMethodOwner(), "ifelse", Value.value("C"), Value.value(0));
-						call(getMethodOwner(), "ifelse", Value.value("C"), Value.value(1));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("A"), Value.value(0));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("A"), Value.value(1));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("B"), Value.value(0));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("B"), Value.value(1));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("C"), Value.value(0));
+						call(getMethodDeclaringClass(), "ifelse", Value.value("C"), Value.value(1));
 						return_();
 					}
 			

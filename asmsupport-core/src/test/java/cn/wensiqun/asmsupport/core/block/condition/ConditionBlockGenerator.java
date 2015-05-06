@@ -365,7 +365,7 @@ public class ConditionBlockGenerator extends AbstractExample
                 	List<String> list = ConditionBlockGeneratorSample.allPossiable();
                 	for(String str : list)
                 	{
-                		call(getMethodOwner(), "test", Value.value(str));
+                		call(getMethodDeclaringClass(), "test", Value.value(str));
                 	}
                     return_();
                 }

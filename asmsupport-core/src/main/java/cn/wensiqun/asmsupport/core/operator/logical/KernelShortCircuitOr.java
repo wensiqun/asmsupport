@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
@@ -31,12 +31,12 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelShortCircuitOr extends ConditionOperator implements Jumpable {
     
-    protected KernelShortCircuitOr(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
+    protected KernelShortCircuitOr(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
         super(block, factor1, factor2, Operator.CONDITION_OR);
     }
     
@@ -62,7 +62,7 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
     }
 
     @Override
-    public void jumpPositive(KernelParame from, Label posLbl, Label negLbl) {
+    public void jumpPositive(KernelParam from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
         Label factor2JudgeLbl = new Label();
         if(factor1 instanceof KernelShortCircuitAnd) {
@@ -91,7 +91,7 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
     }
 
     @Override
-    public void jumpNegative(KernelParame from, Label posLbl, Label negLbl) {
+    public void jumpNegative(KernelParam from, Label posLbl, Label negLbl) {
         MethodVisitor mv = insnHelper.getMv();
         Label factor2JudgeLbl = new Label();
         Label conditionCheckEnd = new Label();

@@ -19,17 +19,17 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class KernelLogicalOr extends BinaryLogical {
     
-    protected KernelLogicalOr(KernelProgramBlock block, KernelParame factor1, KernelParame factor2) {
+    protected KernelLogicalOr(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
         super(block, factor1, factor2, Operator.BIT_OR);
     }
 

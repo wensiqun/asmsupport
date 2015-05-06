@@ -41,7 +41,6 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
         LocalVariable exception = getLocalAnonymousVariableModel(exceptionType);
         OperatorFactory.newOperator(Store.class, new Class[] { KernelProgramBlock.class, LocalVariable.class },
                 getExecutor(), exception);
-        // new Store(getExecutor(), exception);
         body(exception);
     }
 

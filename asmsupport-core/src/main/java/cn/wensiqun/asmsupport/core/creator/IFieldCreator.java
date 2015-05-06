@@ -18,13 +18,14 @@ import cn.wensiqun.asmsupport.core.Executable;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface IFieldCreator extends Executable {
     
     /**
-     * 创建逻辑实体
+     * Create a field.
+     * 
      * @param cv
      */
     public void create(IClassContext cv);

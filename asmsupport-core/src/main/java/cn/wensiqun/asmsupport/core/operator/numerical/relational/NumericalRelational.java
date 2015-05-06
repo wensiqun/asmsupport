@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.KernelParame;
+import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -25,14 +25,14 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
  * 
- * @author 温斯群(Joe Wen)
+ * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public abstract class NumericalRelational extends AbstractRelational {
 
     private static final Log LOG = LogFactory.getLog(NumericalRelational.class);
 
-    protected NumericalRelational(KernelProgramBlock block, KernelParame factor1, KernelParame factor2, Operator operator) {
+    protected NumericalRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
         super(block, factor1, factor2, operator);
     }
 
@@ -56,7 +56,7 @@ public abstract class NumericalRelational extends AbstractRelational {
         pushFactorToStack(factor2);
     }
 
-    private void pushFactorToStack(KernelParame factor) {
+    private void pushFactorToStack(KernelParam factor) {
 
         AClass factorCls = factor.getResultType();
 
