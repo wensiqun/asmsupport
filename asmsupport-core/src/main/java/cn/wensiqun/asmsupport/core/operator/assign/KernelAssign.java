@@ -26,6 +26,8 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
+ * Represent variable assign operation.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  */
 public abstract class KernelAssign extends AbstractParamOperator {
@@ -33,9 +35,6 @@ public abstract class KernelAssign extends AbstractParamOperator {
     protected KernelParam value;
     
     private IVariable var;
-    
-    /**该操作是否被其他操作引用 */
-    protected boolean byOtherUsed;
     
     protected KernelAssign(KernelProgramBlock block, IVariable var, KernelParam value) {
         super(block, Operator.ASSIGN);
@@ -81,7 +80,6 @@ public abstract class KernelAssign extends AbstractParamOperator {
 
 	@Override
 	public void asArgument() {
-        byOtherUsed = true;
         block.removeExe(this);
 	}
 

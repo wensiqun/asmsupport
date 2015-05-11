@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
+ * Represent a local variable assign opertion.
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
@@ -39,28 +40,17 @@ public class LocalVariableAssigner extends KernelAssign {
 
     @Override
     public void doExecute() {
-        //检测是否可用
         var.availableFor(this);
-
         if(LOG.isPrintEnabled()) { 
             LOG.print("start execute assign value to variable '" + var.getMeta().getName() + "' from " + value.getResultType());
-            /*start--执行赋值操作--start*/
-            //加载值到栈
             LOG.print("load value to stack");
         }
         value.loadToStack(block);
-        
-        //autoBoxAndUnBox();
         autoCast();
-
         if(LOG.isPrintEnabled()) { 
             LOG.print("store to local variable");
         }
-        //将栈内的值存储到本地变量中
         insnHelper.storeInsn(var);
-                //var.getScopeLogicVar().getPosition()[0]);
-        /*end--执行赋值操作--end*/
-        
     }
 
     @Override

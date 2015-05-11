@@ -30,12 +30,13 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 public abstract class OperatorFactory {
 
     /**
-     * 通过反射创建字节码操作
+     * Create {@link AbstractOperator} by reflect
      * 
-     * @param clazz
-     * @param parameterTypes
-     * @param arguments
-     * @return
+     * @param clazz operator type
+     * @param parameterTypes the argument type list
+     * @param arguments the argument value
+     * @return {@link T} the operator the type is the first argument
+     * @see {@link #newOperator(Class, boolean, Class[], Object...)}
      */
     public static <T extends AbstractOperator> T newOperator(Class<T> clazz, Class<?>[] parameterTypes,
             Object... arguments) {
@@ -43,13 +44,13 @@ public abstract class OperatorFactory {
     }
 
     /**
-     * 通过反射创建字节码操作
+     * Create {@link AbstractOperator} by reflect
      * 
-     * @param clazz
-     * @param checkSerial
-     * @param parameterTypes
-     * @param arguments
-     * @return
+     * @param clazz operator type
+     * @param checkSerial whether or not to call method {@link ExceptionSerialBlock#prepare()}
+     * @param parameterTypes the argument type list
+     * @param arguments the argument value
+     * @return {@link T} the operator the type is the first argument
      */
     public static <T extends AbstractOperator> T newOperator(Class<T> clazz, boolean checkSerial,
             Class<?>[] parameterTypes, Object... arguments) {

@@ -25,25 +25,20 @@ import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
-/**
- * @author wensiqun at 163.com(Joe Wen)
- *
- */
 public abstract class AbstractArithmetic extends AbstractNumerical {
 
-    /**算数因子1 */
-    protected KernelParam factor1;
-
-    /**算数因子2 */
-    protected KernelParam factor2;
+	/** the left factor of arithmetic */
+    protected KernelParam leftFactor;
     
-    /**该操作是否被其他操作引用 */
+    /** the right factor of arithmetic */
+    protected KernelParam rightFactor;
+    
     private boolean byOtherUsed;
 
-    protected AbstractArithmetic(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
+    protected AbstractArithmetic(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
         super(block, operator);
-        this.factor1 = factor1;
-        this.factor2 = factor2;
+        this.leftFactor = leftFactor;
+        this.rightFactor = rightFactor;
     }
     
     @Override
@@ -53,8 +48,8 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     
     @Override
     protected void verifyArgument() {
-        AClass f1cls = factor1.getResultType();
-        AClass f2cls = factor2.getResultType();
+        AClass f1cls = leftFactor.getResultType();
+        AClass f2cls = rightFactor.getResultType();
         if(!AClassUtils.isArithmetical(f1cls) || !AClassUtils.isArithmetical(f2cls)){
             throw new ArithmeticException("cannot execute arithmetic operator whit " + f1cls + " and " + f2cls);
         }
@@ -62,20 +57,20 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
 
     @Override
     protected void checkAsArgument() {
-        factor1.asArgument();
-        factor2.asArgument();
+        leftFactor.asArgument();
+        rightFactor.asArgument();
     }
 
     @Override
     protected void initAdditionalProperties() {
         
-        targetClass = AClassUtils.getArithmeticalResultType(factor1.getResultType(), factor2.getResultType());
+        targetClass = AClassUtils.getArithmeticalResultType(leftFactor.getResultType(), rightFactor.getResultType());
         
-        if(factor1 instanceof Value)
-            ((Value)factor1).convert(targetClass);
+        if(leftFactor instanceof Value)
+            ((Value)leftFactor).convert(targetClass);
         
-        if(factor2 instanceof Value)
-            ((Value)factor2).convert(targetClass);
+        if(rightFactor instanceof Value)
+            ((Value)rightFactor).convert(targetClass);
     }
     
     @Override
@@ -83,22 +78,20 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the arithmetic operator " + factor1.getResultType() + " " + getOperatorSymbol() + " " + 
-                                          factor2.getResultType() + " has not been used by other operator.");
+            throw new ArithmeticException("the arithmetic operator " + leftFactor.getResultType() + " " + getOperatorSymbol() + " " + 
+                                          rightFactor.getResultType() + " has not been used by other operator.");
         }
     }
 
     @Override
     protected void factorToStack() {
-        pushFactorToStack(factor1);
-        pushFactorToStack(factor2);
+        pushFactorToStack(leftFactor);
+        pushFactorToStack(rightFactor);
     }
     
     @Override
     public void asArgument() {
-        //由参数使用者调用
         block.removeExe(this);
-        //指明是被其他操作引用
         byOtherUsed = true;
     }
     

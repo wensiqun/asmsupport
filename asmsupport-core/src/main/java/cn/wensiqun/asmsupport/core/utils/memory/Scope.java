@@ -29,13 +29,14 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
  * 
+ * 
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  */
-public class Scope extends Component {
+public class Scope extends ScopeComponent {
 
     /** variable and scope */
-    private List<Component> components;
-    // Scope的范围边界
+    private List<ScopeComponent> components;
     private Label start;
     private Label end;
 
@@ -47,10 +48,10 @@ public class Scope extends Component {
         if(parent != null){
             parent.addComponent(this);
         }
-        this.components = new ArrayList<Component>();
+        this.components = new ArrayList<ScopeComponent>();
     }
 
-    public Component addComponent(Component component) {
+    public ScopeComponent addComponent(ScopeComponent component) {
         if (component == null) {
             throw new NullPointerException("component must be non-null");
         }
@@ -58,7 +59,7 @@ public class Scope extends Component {
         return component;
     }
 
-    public List<Component> getComponents() {
+    public List<ScopeComponent> getComponents() {
         return components;
     }
 

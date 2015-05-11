@@ -30,6 +30,7 @@ public abstract class AbstractKernelBlock extends ByteCodeExecutor implements Cl
 	}
 
     /**
+     * Remove an executor from execute queue.
      * 
      * @param exe
      */

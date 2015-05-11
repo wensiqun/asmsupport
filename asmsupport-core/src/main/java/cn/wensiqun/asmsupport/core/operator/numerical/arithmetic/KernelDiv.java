@@ -32,8 +32,8 @@ public class KernelDiv extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelDiv.class);
     
-    protected KernelDiv(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.DIV);
+    protected KernelDiv(KernelProgramBlock block, KernelParam leftFactor, KernelParam factor2) {
+        super(block, leftFactor, factor2, Operator.DIV);
     }
 
 

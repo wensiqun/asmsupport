@@ -23,9 +23,9 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 静态方法调用
+ * Represent a static method call
+ * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
 public class StaticMethodInvoker extends MethodInvoker {
 
@@ -37,7 +37,6 @@ public class StaticMethodInvoker extends MethodInvoker {
         if (owner.isPrimitive()) {
             throw new IllegalArgumentException("Cannot call static method from primitive");
         }
-        //默认不保存引用
         setSaveReference(false);
     }
     
@@ -51,7 +50,6 @@ public class StaticMethodInvoker extends MethodInvoker {
 
 	@Override
     public void doExecute() {
-        //参数入栈
         argumentsToStack();
         LOG.print("invoke static method : " + name);
         insnHelper.invokeStatic(methodOwner.getType(), name, getReturnType(), mtdEntity.getArgTypes());

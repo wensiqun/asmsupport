@@ -54,7 +54,6 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	@Override
 	public boolean contains(Object o) {
 		assert o != null;
-		//当前集合只能包含AClass
 		if (!(o instanceof AClass)) {
 			return false;
 		}

@@ -39,7 +39,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
         //if those two factories are both null value
 		//direct push true or false
 		MethodVisitor mv = insnHelper.getMv();
-		if(isNullValue(factor1) && isNullValue(factor2)){
+		if(isNullValue(leftFactor) && isNullValue(rightFactor)){
 			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
 				//push true to stack
 		        mv.visitInsn(Opcodes.ICONST_0 + 1);
@@ -51,7 +51,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		        block.getMethod().getStack().push(Type.INT_TYPE);
 		        return;
 			}
-		}else if(isNullValue(factor1) || isNullValue(factor2)){
+		}else if(isNullValue(leftFactor) || isNullValue(rightFactor)){
 			instructionGenerate();
 	        block.getMethod().getStack().pop();
 	        block.getMethod().getStack().push(Type.INT_TYPE);
@@ -67,14 +67,14 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
             MethodVisitor mv = insnHelper.getMv();
             switch (mode) {
                 case InstructionHelper.EQ:
-                    if((isNullValue(factor1) && !isNullValue(factor2)) ||
-                       (!isNullValue(factor1) && isNullValue(factor2))){
+                    if((isNullValue(leftFactor) && !isNullValue(rightFactor)) ||
+                       (!isNullValue(leftFactor) && isNullValue(rightFactor))){
                         mv.visitJumpInsn(Opcodes.IFNULL, label);
                         return;
                     }
                 case InstructionHelper.NE:
-                    if((isNullValue(factor1) && !isNullValue(factor2)) ||
-                       (!isNullValue(factor1) && isNullValue(factor2))){
+                    if((isNullValue(leftFactor) && !isNullValue(rightFactor)) ||
+                       (!isNullValue(leftFactor) && isNullValue(rightFactor))){
                         mv.visitJumpInsn(Opcodes.IFNONNULL, label);
                         return;
                     }
@@ -85,10 +85,10 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	
 	@Override
 	protected void factorsToStack() {
-		if(isNullValue(factor1) && !isNullValue(factor2)){
-			factor2.loadToStack(block);
-		}else if(!isNullValue(factor1) && isNullValue(factor2)){
-			factor1.loadToStack(block);
+		if(isNullValue(leftFactor) && !isNullValue(rightFactor)){
+			rightFactor.loadToStack(block);
+		}else if(!isNullValue(leftFactor) && isNullValue(rightFactor)){
+			leftFactor.loadToStack(block);
 		}else{
 			super.factorsToStack();
 		}

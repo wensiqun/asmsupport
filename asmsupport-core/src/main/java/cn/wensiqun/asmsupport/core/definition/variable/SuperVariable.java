@@ -29,17 +29,14 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 
 /**
- * 全局变量。这个class只用于方法体内操作变量
+ * Represent a {@code super} keyword variable.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  */
 public class SuperVariable extends ImplicitVariable{
 
     private Field globalVariableMeta;
     
-    /**
-     * 通过Class获取的全局变量
-     * @param insnHelper
-     */
     public SuperVariable(AClass aclass) {
         this.globalVariableMeta = new Field(
                 AClassFactory.getType(aclass.getSuperClass()), 

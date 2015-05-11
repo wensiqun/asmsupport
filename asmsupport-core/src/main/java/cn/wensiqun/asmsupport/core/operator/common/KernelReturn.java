@@ -25,7 +25,8 @@ import cn.wensiqun.asmsupport.core.operator.BreakStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 用于执行Return
+ * Represent a return statement in java code.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */

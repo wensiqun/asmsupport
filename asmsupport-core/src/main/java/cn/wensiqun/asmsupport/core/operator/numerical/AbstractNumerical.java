@@ -29,6 +29,8 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
+ * Represent a numerical operation
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
@@ -36,7 +38,7 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArithmetic.class);
 
-    /** 执行的结果类型 */
+    /** The result type of current numerical operation */
     protected AClass targetClass;
 
     protected AbstractNumerical(KernelProgramBlock block, Operator operatorSymbol) {
@@ -44,13 +46,14 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
     }
 
     /**
-     * 运算因子入栈
+     * Push the operand of numerical operation to stack
      */
     protected abstract void factorToStack();
 
     /**
+     * Defined a common method use in sub class 
      * 
-     * @param factor
+     * @param factor the operand
      */
     protected void pushFactorToStack(KernelParam factor) {
 

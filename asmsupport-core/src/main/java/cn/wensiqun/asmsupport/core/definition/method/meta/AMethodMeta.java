@@ -31,23 +31,28 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public class AMethodMeta implements Cloneable {
 
-    /** 方法名 */
+    /** Method Name */
     private String name;
 
-    /** 方法所属的类 */
+    /** Method Owner */
     private AClass owner;
 
+    /** Method Actually Owner */
     private AClass actuallyOwner;
 
-    /** 方法参数类型 */
+    /** The parameter type list of method */
     private Type[] argTypes;
-    /** 参数Class类型 */
+    
+    /** The parameter type list of method */
     private AClass[] argClasses;
-    /** 方法参数名 */
+    
+    /** The parameter name list of method */
     private String[] argNames;
-    /** 方法的返回类型 */
+    
+    /** The method return type */
     private Type returnType;
-    /** 方法的修饰符 */
+    
+    /** The method modifier */
     private int modifier;
 
     private AClass[] exceptions;

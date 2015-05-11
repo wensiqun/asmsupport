@@ -32,8 +32,8 @@ public class KernelAdd extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelAdd.class);
     
-    protected KernelAdd(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.ADD);
+    protected KernelAdd(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.ADD);
     }
 
     @Override

@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
-import cn.wensiqun.asmsupport.core.utils.memory.Component;
+import cn.wensiqun.asmsupport.core.utils.memory.ScopeComponent;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -126,8 +126,8 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
      * local variable declaration.
      */
     private void declarationVariable(Scope parent) {
-        List<Component> coms = parent.getComponents();
-        Component com;
+        List<ScopeComponent> coms = parent.getComponents();
+        ScopeComponent com;
         Scope lastBrotherScope = null;
         for (int i = 0; i < coms.size(); i++) {
             com = coms.get(i);

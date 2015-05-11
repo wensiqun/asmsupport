@@ -33,8 +33,9 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
+ * Represent an array operation to make a new array.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
 public class KernelArrayValue extends AbstractParamOperator  {
 
@@ -137,7 +138,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
 
     @Override
     protected void verifyArgument() {
-    	//当调用ArrayValue(ProgramBlock block, ArrayClass arrayCls, Parameterized... allocateDims)构造方法
+    	//When call ArrayValue(ProgramBlock block, ArrayClass arrayCls, Parameterized... allocateDims)
     	if(allocateDims != null){
             for(KernelParam dim : allocateDims){
                 int order = AClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
@@ -148,7 +149,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
             }
         }
 
-    	//当调用其他构造方法
+    	//When call other constructor
     	final AClass rootComp = arrayCls.getRootComponentClass();
         new EachValue(values){
             @Override

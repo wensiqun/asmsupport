@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 /**
- * 全局变量。这个class只用于方法体内操作变量
+ * Represent a local variable
  * 
  * @author wensiqun at 163.com(Joe Wen)
  */
@@ -41,10 +41,10 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     public LocalVariable(VarMeta lve) {
         this.meta = lve;
     }
-
+    
+    @Override
     public boolean availableFor(AbstractOperator operator) {
         Scope operScope = operator.getBlock().getScope();
-        // 如果此变量是operator的直系变量
         if (this.scopeLogicVar.isSubOf(operScope)) {
             if(scopeLogicVar.getCompileOrder() > operator.getCompileOrder()){
                 throw new VariableOperatorException();
@@ -82,17 +82,24 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
         return meta;
     }
 
+    /**
+     * Set the {@link ScopeLogicVariable}
+     * @param scopeLogicVar
+     */
     public void setScopeLogicVar(ScopeLogicVariable scopeLogicVar) {
         this.scopeLogicVar = scopeLogicVar;
     }
     
+    /**
+     * Get the {@link ScopeLogicVariable}
+     */
     public ScopeLogicVariable getScopeLogicVar() {
         return scopeLogicVar;
     }
     
     /**
-     * 设置逻辑变量编译顺序
-     * @param complieOrder
+     * Set the compile order
+     * @param complieOrder compile order
      */
     public void setVariableCompileOrder(int complieOrder){
         if(isFirstAssign){

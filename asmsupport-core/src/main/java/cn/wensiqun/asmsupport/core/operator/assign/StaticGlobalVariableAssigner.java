@@ -21,6 +21,7 @@ import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
+ * Represent a static field assign opertion.
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
@@ -41,21 +42,11 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
     	if(LOG.isPrintEnabled()){
             LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
-        /*start--执行赋值操作--start*/
-        
-        //加载值到栈
         value.loadToStack(block);
-        
-        //autoBoxAndUnBox();
-        //如果是基本类型则执行类型转换
         autoCast();
-        
-        //将栈内的值存储到全局变量中
-        //判读如果是静态变量
         insnHelper.putStatic(var.getOwner().getType(), 
                 var.getMeta().getName(),
                 var.getMeta().getType().getType());
-        /*end--执行赋值操作--end*/
     }
 
 }

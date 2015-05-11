@@ -31,7 +31,6 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public abstract class AbstractBitwise extends AbstractNumerical {
 
-    /**该操作是否被其他操作引用 */
     protected boolean byOtherUsed;
     
     protected AbstractBitwise(KernelProgramBlock block, Operator operator) {

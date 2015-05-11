@@ -25,6 +25,10 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
+/**
+ * Represent a method call.
+ *
+ */
 public class CommonMethodInvoker extends MethodInvoker {
 	
 	private static final Log LOG = LogFactory.getLog(CommonMethodInvoker.class);
@@ -37,11 +41,12 @@ public class CommonMethodInvoker extends MethodInvoker {
 		if(callObjReference.getResultType().isPrimitive()){
 			throw new IllegalArgumentException("Cannot invoke method at primitive type \"" + callObjReference.getResultType() +  "\" : must be a non-primitive variable");
 		}
-        //默认不保存引用
-        setSaveReference(false);
         if(callObjReference instanceof MethodInvoker){
         	//set the method caller to save reference;
             ((MethodInvoker)callObjReference).setSaveReference(true);    
+        } else {
+            //default to don't save return result reference of this method.
+            setSaveReference(false);
         }
 	}
 
@@ -53,11 +58,15 @@ public class CommonMethodInvoker extends MethodInvoker {
 
 	@Override
     public void endingPrepare() {
-        //如果是静态方法那么则创建一个静态方法调用者到执行队列
+		//if current method call is a static method call, than 
+		//change CommonMethodInvoker to StaticMethodInvoker
         if(Modifier.isStatic(getModifiers())){
-            //移除当前的方法调用
+        	//constructor a StaticMethodInvoker
             MethodInvoker mi = new StaticMethodInvoker(block, getActuallyOwner(), name, arguments);
+            //Remove the StaticMethodInvoker from execute queue cause 
+            //by add to queue when construct StaticMethodInvoker default.
             block.removeExe(mi);
+            //replace CommonMethodInvoker to StaticMethodInvoker
             block.getQueue().replace(this, mi);
         }
     }
@@ -68,12 +77,10 @@ public class CommonMethodInvoker extends MethodInvoker {
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
             LOG.print("put reference to stack");
-            //变量入栈
             callObjReference.loadToStack(block);
             argumentsToStack();
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
-                //如果是接口
                 insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes(), true);
             }else{
                 LOG.print("invoke class method : " + name);

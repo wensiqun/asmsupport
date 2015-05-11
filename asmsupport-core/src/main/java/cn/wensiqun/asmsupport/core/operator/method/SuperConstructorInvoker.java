@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 构造方法调用者。
+ * Call constructor opertion
  * 
  * @author wensiqun at 163.com(Joe Wen)
  * 

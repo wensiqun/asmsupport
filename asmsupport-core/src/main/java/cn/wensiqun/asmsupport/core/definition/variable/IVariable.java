@@ -24,22 +24,32 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
 
 /**
+ * Represent a variable
  * 
- * 变量的接口
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public interface IVariable extends KernelParam, IVar {
     
     /**
-     * 当前变量对于传入的操作是否可用
-     * @param operator
+     * check the variable is available for current operator. for example 
+     * <pre>
+     * int i = 10;
+     * if(i % 2 == 0) {
+     *     int j = 100;
+     *     System.out.println(i);
+     * } else {
+     *     System.out.println(j);
+     * }
+     * </pre>
+     * The preceding code will be get an error cause by variable j is not 
+     * available for the second method call operator.
+     * 
      */
     boolean availableFor(AbstractOperator operator);
     
     /**
-     * 获取当前变量的VariableEntity
-     * @return
+     * Get meta
      */
     VarMeta getMeta();
     
@@ -47,7 +57,6 @@ public interface IVariable extends KernelParam, IVar {
      * Get field value from current variable.
      * 
      * @param name
-     * @return
      */
     GlobalVariable field(String name);
 

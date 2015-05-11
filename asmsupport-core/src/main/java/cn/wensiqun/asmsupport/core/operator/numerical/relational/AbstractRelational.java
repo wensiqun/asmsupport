@@ -39,14 +39,13 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 public abstract class AbstractRelational extends AbstractParamOperator implements Jumpable  {
 
     private static final Log LOG = LogFactory.getLog(AbstractRelational.class);
-    
-    /**算数因子1 */
-    protected KernelParam factor1;
 
-    /**算数因子2 */
-    protected KernelParam factor2;
+	/** the left factor of arithmetic */
+    protected KernelParam leftFactor;
+
+	/** the left factor of arithmetic */
+    protected KernelParam rightFactor;
     
-    /**该操作是否被其他操作引用 */
     private boolean byOtherUsed;
     
     protected AClass targetClass;
@@ -56,8 +55,8 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     
     protected AbstractRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
         super(block, operator);
-        this.factor1 = factor1;
-        this.factor2 = factor2;
+        this.leftFactor = factor1;
+        this.rightFactor = factor2;
         falseLbl = new Label();
         trueLbl = new Label();
     }
@@ -65,9 +64,8 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     protected void initAdditionalProperties() {
         //replace Value object
-        
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getResultType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getResultType());
+        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         
         if(ftrCls1.getCastOrder() > ftrCls2.getCastOrder()){
             targetClass = ftrCls1;
@@ -75,11 +73,11 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
             targetClass = ftrCls2;
         }
         
-        if(factor1 instanceof Value)
-            ((Value)factor1).convert(targetClass);
+        if(leftFactor instanceof Value)
+            ((Value)leftFactor).convert(targetClass);
         
-        if(factor2 instanceof Value)
-            ((Value)factor2).convert(targetClass);
+        if(rightFactor instanceof Value)
+            ((Value)rightFactor).convert(targetClass);
     }
     
     protected final void checkFactorForNumerical(AClass ftrCls){
@@ -98,12 +96,12 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     public void execute() {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
-            	LOG.print("run operator " + factor1.getResultType() + getOperatorSymbol().getSymbol() + factor2.getResultType());
+            	LOG.print("run operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() + rightFactor.getResultType());
             }
             super.execute();
         }else{
-            throw new ASMSupportException("the operator " + factor1.getResultType() + getOperatorSymbol().getSymbol() +
-                                          factor2.getResultType() + " has not been used by other operator.");
+            throw new ASMSupportException("the operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() +
+                                          rightFactor.getResultType() + " has not been used by other operator.");
         }
     }
 
@@ -120,20 +118,12 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 
     protected abstract void factorsToStack();
 
-    /*@Override
-	public void setJumpLable(Label lbl) {
-		this.falseLbl = lbl;
-	}*/
-
 	@Override
     protected void doExecute() {
 		instructionGenerate();
         defaultStackOperator();
     }
 	
-	/**
-	 * 
-	 */
 	protected void instructionGenerate(){
 		factorsToStack();
 		
@@ -151,25 +141,11 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
         mv.visitLabel(trueLbl);
 	}
 	
-	/**
-	 * 
-	 */
 	protected void defaultStackOperator(){
 		block.getMethod().getStack().pop();
         block.getMethod().getStack().pop();
         block.getMethod().getStack().push(Type.INT_TYPE);
 	}
-	
-	/*@Override
-	public final void executeJump(int cmpType, Label lbl){
-        factorsToStack();
-        switch(cmpType) {
-        case Opcodes.JUMP_POSITIVE :
-            positiveCmp(lbl);break;
-        case Opcodes.JUMP_NEGATIVE : 
-            negativeCmp(lbl);break;
-        }
-	}*/
 	
     @Override
     public void jumpPositive(KernelParam from, Label posLbl, Label negLbl) {

@@ -30,8 +30,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
- * 通常一些基本类型的常量值，String类型的值，null，Class类型，这些在编写java代码的时候都是直接可以获取的到，
- * 那么这些值在ASMSupport中我们都要将其封装成ASMSupport内部可识别的对象, 这个类就是对这种内部可识别对象的类型。
+ * Represent a basic value(Can store in constant pool.), such as {@code String}, {@code Class} and all of primitive type,
  * 
  * @author wensiqun(at)163.com
  * 
@@ -42,9 +41,7 @@ public class Value implements IValue {
     private Object value;
 
     /**
-     * boolean值
-     * 
-     * @param value
+     * boolean value
      */
     private Value(Boolean value) {
         this.cls = AClassFactory.getType(boolean.class);
@@ -52,9 +49,7 @@ public class Value implements IValue {
     }
 
     /**
-     * byte值
-     * 
-     * @param value
+     * byte value
      */
     private Value(Byte value) {
         this.cls = AClassFactory.getType(byte.class);
@@ -63,8 +58,6 @@ public class Value implements IValue {
 
     /**
      * short value
-     * 
-     * @param value
      */
     private Value(Short value) {
         this.cls = AClassFactory.getType(short.class);
@@ -73,8 +66,6 @@ public class Value implements IValue {
 
     /**
      * char value
-     * 
-     * @param value
      */
     private Value(Character value) {
         this.cls = AClassFactory.getType(char.class);
@@ -83,8 +74,6 @@ public class Value implements IValue {
 
     /**
      * int value
-     * 
-     * @param value
      */
     private Value(Integer value) {
         this.cls = AClassFactory.getType(int.class);
@@ -93,8 +82,6 @@ public class Value implements IValue {
 
     /**
      * long value
-     * 
-     * @param value
      */
     private Value(Long value) {
         this.cls = AClassFactory.getType(long.class);
@@ -103,8 +90,6 @@ public class Value implements IValue {
 
     /**
      * float value
-     * 
-     * @param value
      */
     private Value(Float value) {
         this.cls = AClassFactory.getType(float.class);
@@ -113,8 +98,6 @@ public class Value implements IValue {
 
     /**
      * double value
-     * 
-     * @param value
      */
     private Value(Double value) {
         this.cls = AClassFactory.getType(double.class);
@@ -123,8 +106,6 @@ public class Value implements IValue {
 
     /**
      * string value
-     * 
-     * @param value
      */
     private Value(String value) {
         this.cls = AClassFactory.getType(String.class);
@@ -140,15 +121,13 @@ public class Value implements IValue {
     }
 
     private void setProperites(Object value) {
-        // this.type = aclass.getType();
         this.value = value;
     }
 
     /**
-     * 传入AClass 根据AClass获取默认值
+     * Get a default value according class type.
      * 
-     * @param aclass
-     * @return
+     * @param aclass the value type that's you want to create
      */
     public static Value defaultValue(AClass aclass) {
 
@@ -320,7 +299,7 @@ public class Value implements IValue {
     private static Value value(Object obj) {
         if (obj == null) {
             throw new NullPointerException(
-                    "Cannot support null value for this method, use nullValue(AClass type) method to get null value if you want get null!");
+                    "Cannot support null value for this method, use getNullValue method to get null value if you want get null!");
         }
         if (obj instanceof Integer) {
 

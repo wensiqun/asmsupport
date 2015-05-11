@@ -34,17 +34,13 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
-/**
- * 
- * @author wensiqun at 163.com(Joe Wen)
- *
- */
 public class AClassUtils {
-    /**
+    
+	/**
      * this class is a tools class. so don't support constructor
      */
     private AClassUtils() {
-        throw new UnsupportedOperationException("cannot support new instance the utils class");
+        throw new UnsupportedOperationException("Cannot support new instance the utils class");
     }
 
     public static boolean isPrimitiveWrapAClass(AClass aclass) {
@@ -101,10 +97,7 @@ public class AClassUtils {
     }
 
     /**
-     * 传入一组可以参与算术运算的类型，获取这些类型的值计算后的最终类型
-     * 
-     * @param type
-     * @return
+     * according the passed type list, to figure out the finally result type
      */
     public static AClass getArithmeticalResultType(AClass... types) {
         AClass resultType = null;
@@ -143,10 +136,7 @@ public class AClassUtils {
     }
 
     /**
-     * 判断传入的class是否可以做unbox和box操作
-     * 
-     * @param aclass
-     * @return
+     * Check the type support unbox or box.
      */
     public static boolean boxUnboxable(AClass aclass) {
         if (aclass.isPrimitive() || isPrimitiveWrapAClass(aclass)) {
@@ -156,16 +146,12 @@ public class AClassUtils {
     }
 
     /**
-     * 判断是否可见
+     * Check the method call is visible
      * 
-     * @param invoker
-     *            调用者所在的类
-     * @param invoked
-     *            被调用的方法或者field所在的类
-     * @param actuallyInvoked
-     *            被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
-     * @param mod
-     *            被调用的方法或者field的修饰符
+     * @param invoker 调用者所在的类
+     * @param invoked 被调用的方法或者field所在的类
+     * @param actuallyInvoked 被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
+     * @param mod 被调用的方法或者field的修饰符
      * @return
      */
     public static boolean visible(AClass invoker, AClass invoked, AClass actuallyInvoked, int mod) {

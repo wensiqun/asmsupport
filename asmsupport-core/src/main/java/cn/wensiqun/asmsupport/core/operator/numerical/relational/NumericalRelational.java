@@ -38,22 +38,22 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getResultType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getResultType());
+        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         checkFactorForNumerical(ftrCls1);
         checkFactorForNumerical(ftrCls2);
     }
 
     @Override
     protected void checkAsArgument() {
-        factor1.asArgument();
-        factor2.asArgument();
+        leftFactor.asArgument();
+        rightFactor.asArgument();
     }
     
     @Override
     protected void factorsToStack() {
-        pushFactorToStack(factor1);
-        pushFactorToStack(factor2);
+        pushFactorToStack(leftFactor);
+        pushFactorToStack(rightFactor);
     }
 
     private void pushFactorToStack(KernelParam factor) {

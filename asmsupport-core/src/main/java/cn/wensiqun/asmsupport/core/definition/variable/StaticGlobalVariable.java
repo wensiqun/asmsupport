@@ -22,11 +22,14 @@ import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
+/**
+ * Represent a static global variable
+ *
+ */
 public class StaticGlobalVariable extends GlobalVariable {
 
     private static final Log LOG = LogFactory.getLog(StaticGlobalVariable.class);
 
-    /** 如果当前全局变量是静态变量，那么staticOwner表示静态变量的所属Class */
     private AClass owner;
 
     /**

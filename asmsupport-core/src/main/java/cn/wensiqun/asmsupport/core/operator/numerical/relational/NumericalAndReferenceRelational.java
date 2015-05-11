@@ -38,8 +38,8 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(factor1.getResultType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(factor2.getResultType());
+        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         
         if(ftrCls1.equals(AClassFactory.getType(boolean.class))&&
            ftrCls2.equals(AClassFactory.getType(boolean.class))){
@@ -52,19 +52,19 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
 
     @Override
     protected void checkAsArgument() {
-        factor1.asArgument();
-        factor2.asArgument();
+        leftFactor.asArgument();
+        rightFactor.asArgument();
     }
 
     @Override
     protected void factorsToStack() {
-        AClass ftrCls1 = factor1.getResultType();
-        AClass ftrCls2 = factor2.getResultType();
+        AClass ftrCls1 = leftFactor.getResultType();
+        AClass ftrCls2 = rightFactor.getResultType();
         
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             
             LOG.print("push the first factor to stack");
-            factor1.loadToStack(block);
+            leftFactor.loadToStack(block);
             
             if(!ftrCls1.isPrimitive()){
                 LOG.print("unbox " + ftrCls1);
@@ -83,7 +83,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             }
 
             LOG.print("push the second factor to stack");
-            factor2.loadToStack(block);
+            rightFactor.loadToStack(block);
             
             if(!ftrCls2.isPrimitive()){
                 LOG.print("unbox " + ftrCls1);
@@ -99,10 +99,10 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             }
         }else{
             LOG.print("push the first factor to stack");
-            factor1.loadToStack(block);
+            leftFactor.loadToStack(block);
             
             LOG.print("push the second factor to stack");
-            factor2.loadToStack(block);
+            rightFactor.loadToStack(block);
         }
     }
     

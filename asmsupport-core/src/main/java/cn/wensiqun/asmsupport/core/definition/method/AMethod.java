@@ -37,10 +37,9 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
- * 方法的抽象。
+ * The method
  * 
  * @author wensiqun at 163.com(Joe Wen)
- * 
  */
 public class AMethod {
 

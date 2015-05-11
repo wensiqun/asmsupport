@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
- * 构造方法调用者。
+ * Represent a call constructor operation.
  * 
  * @author wensiqun at 163.com(Joe Wen)
  * 
@@ -46,7 +46,7 @@ public class ConstructorInvoker extends MethodInvoker {
         }else if(aclass.isAbstract()){
             throw new IllegalArgumentException(aclass.getName() + "is an abstract class cannot new an abstract class");
         }
-        //默认不保存引用
+        //default to don't save return result reference of this method.
         setSaveReference(false);
     }
 
@@ -58,7 +58,6 @@ public class ConstructorInvoker extends MethodInvoker {
         if (isSaveReference()) {
             insnHelper.dup();
         }
-        //将参数入栈
         argumentsToStack();
         LOG.print("call the constrcutor");
         insnHelper.invokeConstructor(methodOwner.getType(), mtdEntity.getArgTypes());

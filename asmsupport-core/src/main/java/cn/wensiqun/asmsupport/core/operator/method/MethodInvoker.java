@@ -40,21 +40,16 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
-/**
- * 
- * @author wensiqun at 163.com(Joe Wen)
- *
- */
 public abstract class MethodInvoker extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(MethodInvoker.class);
 
-    //protected AClass[] argumentClasses;
     protected String name;
     protected KernelParam[] arguments;
     protected AClass methodOwner;
     
-    /** 调用完方法是否需要保存返回值栈 如果是构造方法则是否需要保存新构造的方法的一个引用 */
+    /** whether or not save the return value to stack, must be save a 
+     * result to stack when call constructor*/
     private boolean saveReturn;
     
     /** found method entity will be called*/
@@ -74,9 +69,6 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         this.arguments = arguments;
     }
 
-    /**
-     * 将方法的参数入栈
-     */
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
             KernelParam argu = arguments[i];
@@ -117,7 +109,6 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
             mtdEntity.setName(name);
         }else{
-            // 如果是构造方法则返回类型为自己本身
             mtdEntity = new MethodChooser(block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
             if(mtdEntity == null){
                 throw new NoSuchMethod(methodOwner, name, argumentClasses);
@@ -131,7 +122,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         	if(ArrayUtils.getLength(foundMethodArgTypes) != ArrayUtils.getLength(arguments) ||
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
         		
-        		int fixedArgsLen = mtdEntity.getArgClasses().length - 1;//argumentClasses.length - 1;
+        		int fixedArgsLen = mtdEntity.getArgClasses().length - 1;
                 KernelParam[] fixedArgs = new KernelParam[fixedArgsLen];
                 System.arraycopy(arguments, 0, fixedArgs, 0, fixedArgsLen);
 
@@ -154,8 +145,6 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     @Override
     protected void checkAsArgument() {
         for (KernelParam argu : arguments) {
-            // 将argu从Block的执行队列中删除
-            // 因为此时由方法调用负责调用value
             argu.asArgument();
         }
     }
@@ -181,7 +170,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         setSaveReference(saveRef);
     }
 
-    public void setSaveReference(boolean saveReturn) {
+    protected void setSaveReference(boolean saveReturn) {
         this.saveReturn = saveReturn;
     }
     

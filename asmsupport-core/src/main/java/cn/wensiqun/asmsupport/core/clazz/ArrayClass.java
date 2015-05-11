@@ -98,10 +98,7 @@ public class ArrayClass extends AClass {
         }
     }
     
-    /**
-     * 获取数组的最基本类型
-     * @return
-     */
+    @Override
     public AClass getRootComponentClass(){
         return aclass;
     }

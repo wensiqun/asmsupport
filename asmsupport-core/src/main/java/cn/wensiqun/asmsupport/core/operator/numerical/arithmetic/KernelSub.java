@@ -32,8 +32,8 @@ public class KernelSub extends AbstractArithmetic {
 
     private static final Log LOG = LogFactory.getLog(KernelSub.class);
     
-    protected KernelSub(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.SUB);
+    protected KernelSub(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.SUB);
     }
 
     @Override

@@ -31,117 +31,123 @@ import cn.wensiqun.asmsupport.standard.def.Crementable;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
-/**
- * @author wensiqun at 163.com(Joe Wen)
- *
- */
 public abstract class AbstractCrement extends AbstractNumerical {
 
-    private KernelParam factor;
+	private KernelParam factor;
 
-    protected AbstractCrement(KernelProgramBlock block, KernelParam factor, Operator operator) {
-        super(block, operator);
-        if(factor instanceof Crementable) {
-            throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);
-        }
-        this.factor = factor;
-    }
+	protected AbstractCrement(KernelProgramBlock block, KernelParam factor,
+			Operator operator) {
+		super(block, operator);
+		if (factor instanceof Crementable) {
+			throw new ASMSupportException("Can't do '" + operator + "' on : "
+					+ factor);
+		}
+		this.factor = factor;
+	}
 
-    @Override
-    public void loadToStack(KernelProgramBlock block) {
-        execute();
-    }
+	@Override
+	public void loadToStack(KernelProgramBlock block) {
+		execute();
+	}
 
-    @Override
-    public void asArgument() {
-        block.removeExe(this);
-    }
+	@Override
+	public void asArgument() {
+		block.removeExe(this);
+	}
 
-    @Override
-    protected void factorToStack() {
+	@Override
+	protected void factorToStack() {
 
-    }
+	}
 
-    @Override
-    protected void initAdditionalProperties() {
-        targetClass = factor.getResultType();
-    }
+	@Override
+	protected void initAdditionalProperties() {
+		targetClass = factor.getResultType();
+	}
 
-    @Override
-    protected void verifyArgument() {
-        AClass fatCls = factor.getResultType();
-        if (!AClassUtils.isArithmetical(fatCls)) {
-            throw new ArithmeticException("cannot execute arithmetic operator whit " + fatCls);
-        }
-    }
+	@Override
+	protected void verifyArgument() {
+		AClass fatCls = factor.getResultType();
+		if (!AClassUtils.isArithmetical(fatCls)) {
+			throw new ArithmeticException(
+					"cannot execute arithmetic operator whit " + fatCls);
+		}
+	}
 
-    @Override
-    protected void checkAsArgument() {
-        factor.asArgument();
-    }
+	@Override
+	protected void checkAsArgument() {
+		factor.asArgument();
+	}
 
-    @Override
-    protected void doExecute() {
-        Type type = targetClass.getType();
-        boolean asArgument = !block.getQueue().contains(this);
-        boolean isPos = Operator.POS_DEC.equals(getOperatorSymbol()) || Operator.POS_INC.equals(getOperatorSymbol());
-        boolean isInc = Operator.PRE_INC.equals(getOperatorSymbol()) || Operator.POS_INC.equals(getOperatorSymbol());
-        if (factor instanceof LocalVariable && Type.INT_TYPE.equals(targetClass.getType())) {
-            if (asArgument && isPos) {
-                factor.loadToStack(block);
-            }
-            
-            insnHelper.iinc(((LocalVariable) factor).getScopeLogicVar().getInitStartPos(), isInc ? 1 : -1);
+	@Override
+	protected void doExecute() {
+		Type type = targetClass.getType();
+		boolean asArgument = !block.getQueue().contains(this);
+		boolean isPos = Operator.POS_DEC.equals(getOperatorSymbol())
+				|| Operator.POS_INC.equals(getOperatorSymbol());
+		boolean isInc = Operator.PRE_INC.equals(getOperatorSymbol())
+				|| Operator.POS_INC.equals(getOperatorSymbol());
+		if (factor instanceof LocalVariable
+				&& Type.INT_TYPE.equals(targetClass.getType())) {
+			if (asArgument && isPos) {
+				factor.loadToStack(block);
+			}
 
-            if (asArgument && !isPos) {
-                factor.loadToStack(block);
-            }
-        } else {
-            AClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
-            Type primitiveType = primitiveClass.getType();
+			insnHelper.iinc(((LocalVariable) factor).getScopeLogicVar()
+					.getInitStartPos(), isInc ? 1 : -1);
 
-            // factor load to stack
-            factor.loadToStack(block);
+			if (asArgument && !isPos) {
+				factor.loadToStack(block);
+			}
+		} else {
+			AClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
+			Type primitiveType = primitiveClass.getType();
 
-            if (asArgument && isPos)
-                insnHelper.dup(type);
+			// factor load to stack
+			factor.loadToStack(block);
 
-            // unbox
-            autoCast(targetClass, primitiveClass, true);
+			if (asArgument && isPos)
+				insnHelper.dup(type);
 
-            // load 1 to stack
-            getIncreaseValue().loadToStack(block);
+			// unbox
+			autoCast(targetClass, primitiveClass, true);
 
-            // generate xadd/xsub for decrement
-            if (isInc) {
-                insnHelper.add(primitiveType);
-            } else {
-                insnHelper.sub(primitiveType);
-            }
+			// load 1 to stack
+			getIncreaseValue().loadToStack(block);
 
-            // box and cast
-            autoCast(primitiveType.getSort() <= Type.INT ? AClassFactory.getType(int.class) : primitiveClass, targetClass, true);
+			// generate xadd/xsub for decrement
+			if (isInc) {
+				insnHelper.add(primitiveType);
+			} else {
+				insnHelper.sub(primitiveType);
+			}
 
-            if (asArgument && !isPos)
-                insnHelper.dup(type);
+			// box and cast
+			autoCast(
+					primitiveType.getSort() <= Type.INT ? AClassFactory.getType(int.class)
+							: primitiveClass, targetClass, true);
 
-            // 将栈内的值存储到全局变量中
-            // 判读如果是静态变量
-            insnHelper.commonPutField((ExplicitVariable) factor);
-        }
-    }
+			if (asArgument && !isPos)
+				insnHelper.dup(type);
 
-    private Value getIncreaseValue() {
-        AClass type = factor.getResultType();
-        if (type.equals(AClassFactory.getType(double.class)) || type.equals(AClassFactory.getType(Double.class))) {
-            return Value.value(1d);
-        } else if (type.equals(AClassFactory.getType(float.class)) || type.equals(AClassFactory.getType(Float.class))) {
-            return Value.value(1f);
-        } else if (type.equals(AClassFactory.getType(long.class)) || type.equals(AClassFactory.getType(Long.class))) {
-            return Value.value(1L);
-        } else {
-            return Value.value(1);
-        }
-    }
+			insnHelper.commonPutField((ExplicitVariable) factor);
+		}
+	}
+
+	private Value getIncreaseValue() {
+		AClass type = factor.getResultType();
+		if (type.equals(AClassFactory.getType(double.class))
+				|| type.equals(AClassFactory.getType(Double.class))) {
+			return Value.value(1d);
+		} else if (type.equals(AClassFactory.getType(float.class))
+				|| type.equals(AClassFactory.getType(Float.class))) {
+			return Value.value(1f);
+		} else if (type.equals(AClassFactory.getType(long.class))
+				|| type.equals(AClassFactory.getType(Long.class))) {
+			return Value.value(1L);
+		} else {
+			return Value.value(1);
+		}
+	}
 
 }

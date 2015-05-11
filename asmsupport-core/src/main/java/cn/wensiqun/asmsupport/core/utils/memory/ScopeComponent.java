@@ -18,25 +18,51 @@
 package cn.wensiqun.asmsupport.core.utils.memory;
 
 /**
+ * Represent a scope component, it's a tree structure, we can simulate
+ * a local variable scope like following diagram:
+ * 
+ * <pre>
+ *              ,------------------.                            
+ *              |Parent_Scope      |                            
+ *              |------------------|                            
+ *              |generation : 0    |                            
+ *              |componentOrder : 1|                            
+ *              `------------------'                            
+ *                    /      \                                  
+ * ,--------------------.  ,--------------------.               
+ * |Sub_Scope_1         |  |Sub_Scope_2         |               
+ * |--------------------|  |--------------------|               
+ * |generation : 1      |  |generation : 1      |               
+ * |componentOrder : 1.1|  |componentOrder : 1.2|               
+ * `--------------------'  `--------------------'               
+ *                              /           \      
+ *           ,----------------------.   ,----------------------.
+ *           |Sub_Scope_2_1         |   |Sub_Scope_2_2         |
+ *           |----------------------|   |----------------------|
+ *           |generation : 2        |   |generation : 2        |
+ *           |componentOrder : 1.2.1|   |componentOrder : 1.2.2|
+ *           `----------------------'   `----------------------'
+ * <pre> 
  * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
-public abstract class Component {
+public abstract class ScopeComponent {
 
-    /** 本地变量的引用 */
+    /** The local variables */
     protected LocalVariables locals;
 
-    /** 第几代 */
+    /** indicate the generation see diagram in description of {@link ScopeComponent} */
     protected int generation;
     
-    /** 该Component的出现顺序, 比如在第一层第二个出现则值为1.2, 第一层中的第二个中的第三个出现则为1.2.3 */
+    /**
+     * The order number of current component in parent scope, the format is 'a.b.c'.
+     * see diagram in description of {@link ScopeComponent}
+     */
     protected String componentOrder;
 
-    /** 组件的父容器 */
     private Scope parent;
 
-    public Component(LocalVariables locals) {
+    public ScopeComponent(LocalVariables locals) {
         super();
         this.locals = locals;
     }
@@ -52,40 +78,22 @@ public abstract class Component {
             generation = parent.generation + 1;
         }
         this.parent = parent;
-        setComponentOrder();
-    }
-
-    private final void setComponentOrder(){
-    	if(parent == null){
+        if(parent == null){
         	this.componentOrder = "1";
     	}else{
     		this.componentOrder = parent.componentOrder + "." + (parent.getComponents().size() + 1);
     	}
-    	/*if(parent == null){
-        	this.componentOrder = "1";
-            return;
-        }
-        
-        if(parent.getComponents().isEmpty()){
-            this.componentOrder = parent.componentOrder + 1;
-        }else{
-            Component lastCom = parent.getComponents().get(parent.getComponents().size() - 1);
-            while(lastCom instanceof Scope){
-                Scope scope = (Scope) lastCom;
-                if(scope.getComponents().isEmpty()){
-                    break;
-                }else{
-                    lastCom = scope.getComponents().get(scope.getCTomponents().size() - 1);
-                }
-            }
-            this.componentOrder = lastCom.componentOrder + 1;
-        }*/
     }
     
     /**
-     * order1 great than order2 return 1;
-     * order1 less than order2 return -1;
-     * order1 equeas order2 return 0;
+     * The compare rule is : 
+     * <ul>
+     * <li>compare each generation order, for example 1.1.2 > 1.1.1, 1.1 > 1</li>
+     * <li>order1 great than order2 return 1;</li>
+     * <li>order1 less than order2 return -1;</li>
+     * <li>order1 equal to order2 return 0;</li>
+     * </ul>
+     * 
      * 
      * @param order1
      * @param order2
@@ -123,6 +131,9 @@ public abstract class Component {
     	return 0;
     }
     
+    /**
+     * Get @{link LocalVariables}
+     */
     public LocalVariables getLocals() {
         return locals;
     }

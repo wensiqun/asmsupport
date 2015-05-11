@@ -27,66 +27,63 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  *
  */
 public abstract class AbstractPositiveNegative extends AbstractNumerical {
-    
-    protected KernelParam factor;
-    
-    /**该操作是否被其他操作引用 */
-    private boolean byOtherUsed;
-    
 
-    protected AbstractPositiveNegative(KernelProgramBlock block, KernelParam factor, Operator operator) {
-        super(block, operator);
-        this.factor = factor;
-    }
-    
+	protected KernelParam factor;
 
-    @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
-    }
-    
-    @Override
-    public void execute() {
-        if(byOtherUsed){
-            super.execute();
-        }else{
-            throw new ArithmeticException("the operator has not been used by other operator.");
-        }
-        
-    }
+	private boolean byOtherUsed;
 
-    @Override
-    protected void initAdditionalProperties() {
-        AClass fatCls = factor.getResultType();
-        targetClass = AClassUtils.getPrimitiveAClass(fatCls);
-    }
-    
-    @Override
-    protected void verifyArgument() {
-        AClass fatCls = factor.getResultType();
-        if(!AClassUtils.isArithmetical(fatCls)){
-            throw new ArithmeticException("cannot execute arithmetic operator whit " + fatCls);
-        }
-    }
+	protected AbstractPositiveNegative(KernelProgramBlock block,
+			KernelParam factor, Operator operator) {
+		super(block, operator);
+		this.factor = factor;
+	}
 
-    @Override
-    protected void checkAsArgument() {
-        factor.asArgument();
-    }
+	@Override
+	public void loadToStack(KernelProgramBlock block) {
+		this.execute();
+	}
 
-    @Override
-    public void asArgument() {
-        //由参数使用者调用
-        block.removeExe(this);
-        //指明是被其他操作引用
-        byOtherUsed = true;
-    }
+	@Override
+	public void execute() {
+		if (byOtherUsed) {
+			super.execute();
+		} else {
+			throw new ArithmeticException(
+					"the operator has not been used by other operator.");
+		}
 
-    @Override
-    protected void factorToStack() {
-        factor.loadToStack(block);
-        insnHelper.unbox(factor.getResultType().getType());
-    }
+	}
 
+	@Override
+	protected void initAdditionalProperties() {
+		AClass fatCls = factor.getResultType();
+		targetClass = AClassUtils.getPrimitiveAClass(fatCls);
+	}
+
+	@Override
+	protected void verifyArgument() {
+		AClass fatCls = factor.getResultType();
+		if (!AClassUtils.isArithmetical(fatCls)) {
+			throw new ArithmeticException(
+					"cannot execute arithmetic operator whit " + fatCls);
+		}
+	}
+
+	@Override
+	protected void checkAsArgument() {
+		factor.asArgument();
+	}
+
+	@Override
+	public void asArgument() {
+		block.removeExe(this);
+		byOtherUsed = true;
+	}
+
+	@Override
+	protected void factorToStack() {
+		factor.loadToStack(block);
+		insnHelper.unbox(factor.getResultType().getType());
+	}
 
 }

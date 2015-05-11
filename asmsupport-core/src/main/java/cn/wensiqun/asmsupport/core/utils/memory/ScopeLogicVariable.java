@@ -19,14 +19,18 @@ import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 
 
 /**
+ * Represent a logic variable, it's different to {@link LocalVariable}, this class
+ * will use internal in order to compute size of {@link LocalVariables} and determine
+ * the scope of variable.
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ScopeLogicVariable extends Component implements Localable {
+public class ScopeLogicVariable extends ScopeComponent implements Localable {
 
     private Type actuallyType;
     private Type declareType;
@@ -46,8 +50,7 @@ public class ScopeLogicVariable extends Component implements Localable {
     public ScopeLogicVariable(String name, Scope parent, Type declareClass,
             Type actuallyClass) {
         super(parent.locals);
-        // 添加父子关系
-        this.setParent(parent);
+        setParent(parent);
         parent.addComponent(this);
 
         this.name = name;
@@ -96,26 +99,24 @@ public class ScopeLogicVariable extends Component implements Localable {
     }
     
     /**
-     * var相对于当前变量是可共享空间的。
+     * Check the space in local variable of current variable is sharable for other variable.
      * 
-     * @return
+     * @return boolean {@code true} allow share
      */
     private boolean isShareable(ScopeLogicVariable var) {
         if (compareComponentOrder(this.componentOrder, var.componentOrder) == -1 || this.equals(var)) {
             return false;
         }
         
-        // 当前变量与var相差的代数
-        int currDiff = this.generation - var.generation;
+        int generationGap = this.generation - var.generation;
 
-        // 如果两个变量的代数不同，代数多的一直向上获取parent直到获取到和另一个变量相同的代数
-
-        if (currDiff >= 0) {// 如果当前变量的代数多，既辈份低
+        //如果两个变量的代数不同，代数多的一直向上获取parent直到获取到和另一个变量相同的代数
+        if (generationGap >= 0) {// 如果当前变量的代数多，既辈份低
             // 当前变量向上获取parent直到获取到和另一个变量相同的辈份
-            Component currCom = this;
-            while (currDiff > 0) {
+            ScopeComponent currCom = this;
+            while (generationGap > 0) {
                 currCom = currCom.getParent();
-                currDiff--;
+                generationGap--;
             }
             // 如果他们的父类相同说明不能share
             if (currCom.getParent().equals(var.getParent())) {
@@ -126,13 +127,10 @@ public class ScopeLogicVariable extends Component implements Localable {
     }
 
     /**
-     * 变量是Scope说的子代
-     * 
-     * @param scope
-     * @return
+     * Check current variable is bellow in a specially {@code Scope}
      */
     public boolean isSubOf(Scope scope) {
-        Component com = this;
+        ScopeComponent com = this;
         while (com != null) {
             if (com.equals(scope)) {
                 return true;
@@ -143,22 +141,19 @@ public class ScopeLogicVariable extends Component implements Localable {
     }
 
     /**
-     * 指定的Component可否使用该变量
-     * 
-     * @param scope
-     * @return
+     * Check current variable is available for a specially {@link ScopeComponent}
      */
-    public boolean availableFor(Component com) {
-        if (this.equals(com)) {
+    public boolean availableFor(ScopeComponent scopeComponent) {
+        if (this.equals(scopeComponent)) {
             return true;
         }
 
-        if (compareComponentOrder(this.componentOrder, com.componentOrder) == 1) {
+        if (compareComponentOrder(this.componentOrder, scopeComponent.componentOrder) == 1) {
         	return false;
         }
 
         // 当前变量与com相差的代数
-        int currDiff = com.generation - this.generation;
+        int currDiff = scopeComponent.generation - this.generation;
 
         // 如果两个变量的代数不同，代数多的一直向上获取parent直到获取到和另一个变量相同的代数
 
@@ -166,11 +161,11 @@ public class ScopeLogicVariable extends Component implements Localable {
             // Com向上获取parent直到获取到和另一个变量相同的辈份
             // Component currCom = com;
             while (currDiff > 0) {
-                com = com.getParent();
+                scopeComponent = scopeComponent.getParent();
                 currDiff--;
             }
             // 如果他们的父类相同说明可是使用
-            if (this.getParent().equals(com.getParent())) {
+            if (this.getParent().equals(scopeComponent.getParent())) {
                 return true;
             }
         }
@@ -182,7 +177,8 @@ public class ScopeLogicVariable extends Component implements Localable {
     }
 
     /**
-     * 设置编译顺序
+     * Set compile order. Represent the order in class instruction.
+     * 
      * @param compileOrder
      */
     public void setCompileOrder(Integer compileOrder) {

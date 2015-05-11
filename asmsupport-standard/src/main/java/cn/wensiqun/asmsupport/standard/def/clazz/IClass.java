@@ -160,4 +160,5 @@ public interface IClass {
      */
     public IClass getRootComponentClass();
     
+    
 }
