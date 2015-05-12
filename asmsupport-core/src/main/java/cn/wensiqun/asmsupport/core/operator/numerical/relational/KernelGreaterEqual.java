@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public class KernelGreaterEqual extends NumericalRelational {
 
-    protected KernelGreaterEqual(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.GREATER_THAN_OR_EQUAL_TO);
+    protected KernelGreaterEqual(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.GREATER_THAN_OR_EQUAL_TO);
     }
 
     @Override

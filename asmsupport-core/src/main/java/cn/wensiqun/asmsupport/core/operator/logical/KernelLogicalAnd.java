@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
  */
 public class KernelLogicalAnd extends BinaryLogical {
     
-    protected KernelLogicalAnd(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.BIT_AND);
+    protected KernelLogicalAnd(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.BIT_AND);
     }
 
     @Override

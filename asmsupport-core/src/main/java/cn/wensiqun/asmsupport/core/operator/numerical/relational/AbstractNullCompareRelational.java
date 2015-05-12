@@ -28,8 +28,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 public abstract class AbstractNullCompareRelational extends NumericalAndReferenceRelational {
 
-	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
-		super(block, factor1, factor2, operator);
+	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
+		super(block, leftFactor, rightFactor, operator);
 	}
 	
 	

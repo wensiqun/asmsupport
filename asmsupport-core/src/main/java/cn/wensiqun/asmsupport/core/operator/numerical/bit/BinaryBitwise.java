@@ -34,19 +34,19 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected KernelParam factor1;
-    protected KernelParam factor2;
+    protected KernelParam leftFactor;
+    protected KernelParam rightFactor;
     
-    protected BinaryBitwise(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
+    protected BinaryBitwise(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
         super(block, operator);
-        this.factor1 = factor1;
-        this.factor2 = factor2;
+        this.leftFactor = leftFactor;
+        this.rightFactor = rightFactor;
     }
 
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = factor1.getResultType();
-        AClass ftrCls2 = factor2.getResultType();
+        AClass ftrCls1 = leftFactor.getResultType();
+        AClass ftrCls2 = rightFactor.getResultType();
         
         checkFactor(ftrCls1);
         checkFactor(ftrCls2);
@@ -54,14 +54,14 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected void checkAsArgument() {
-        factor1.asArgument();
-        factor2.asArgument();
+        leftFactor.asArgument();
+        rightFactor.asArgument();
     }
 
     @Override
     protected void initAdditionalProperties() {
-        AClass ftrCls1 = factor1.getResultType();
-        AClass ftrCls2 = factor2.getResultType();
+        AClass ftrCls1 = leftFactor.getResultType();
+        AClass ftrCls2 = rightFactor.getResultType();
         
         if(ftrCls2.getCastOrder() < ftrCls1.getCastOrder()){
             targetClass = ftrCls1;
@@ -69,17 +69,17 @@ public abstract class BinaryBitwise extends AbstractBitwise {
             targetClass = ftrCls2;
         }
         
-        if(factor1 instanceof Value) {
-            ((Value)factor1).convert(targetClass);
+        if(leftFactor instanceof Value) {
+            ((Value)leftFactor).convert(targetClass);
         }
         
-        if(factor2 instanceof Value) {
+        if(rightFactor instanceof Value) {
         	if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
         	   getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
         	   getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-        		((Value)factor2).convert(AClassFactory.getType(int.class));
+        		((Value)rightFactor).convert(AClassFactory.getType(int.class));
         	} else {
-        		((Value)factor2).convert(targetClass);	
+        		((Value)rightFactor).convert(targetClass);	
         	}
             
         }
@@ -88,34 +88,34 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     @Override
     protected final void factorToStack() {
         LOG.print("push the first arithmetic factor to stack");
-        factor1.loadToStack(block);
+        leftFactor.loadToStack(block);
         if(LOG.isPrintEnabled()){
-            if(!factor1.getResultType().equals(targetClass)){
-                LOG.print("cast arithmetic factor from " + factor1.getResultType() + " to " + targetClass);
+            if(!leftFactor.getResultType().equals(targetClass)){
+                LOG.print("cast arithmetic factor from " + leftFactor.getResultType() + " to " + targetClass);
             }
         }
-        insnHelper.unbox(factor1.getResultType().getType());
-        insnHelper.cast(factor1.getResultType().getType(), targetClass.getType());    
+        insnHelper.unbox(leftFactor.getResultType().getType());
+        insnHelper.cast(leftFactor.getResultType().getType(), targetClass.getType());    
         
         if(LOG.isPrintEnabled()) {
             LOG.print("push the second arithmetic factor to stack");	
         }
-        factor2.loadToStack(block);
+        rightFactor.loadToStack(block);
         
         if(LOG.isPrintEnabled()){
-            if(!factor2.getResultType().equals(targetClass)){
-                LOG.print("cast arithmetic factor from " + factor2.getResultType() + " to " + targetClass);
+            if(!rightFactor.getResultType().equals(targetClass)){
+                LOG.print("cast arithmetic factor from " + rightFactor.getResultType() + " to " + targetClass);
             }
         }
         
-        insnHelper.unbox(factor2.getResultType().getType());
+        insnHelper.unbox(rightFactor.getResultType().getType());
         
         if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
            getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
            getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-            insnHelper.cast(factor2.getResultType().getType(), AClassFactory.getType(int.class).getType());
+            insnHelper.cast(rightFactor.getResultType().getType(), AClassFactory.getType(int.class).getType());
         }else{
-            insnHelper.cast(factor2.getResultType().getType(), targetClass.getType());
+            insnHelper.cast(rightFactor.getResultType().getType(), targetClass.getType());
         }
     }
     

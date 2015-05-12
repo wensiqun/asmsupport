@@ -27,8 +27,8 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
  */
 public class KernelBitXor extends BinaryBitwise {
 
-    protected KernelBitXor(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.XOR);
+    protected KernelBitXor(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.XOR);
     }
 
     @Override

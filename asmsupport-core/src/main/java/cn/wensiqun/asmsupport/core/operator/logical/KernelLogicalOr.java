@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
  */
 public class KernelLogicalOr extends BinaryLogical {
     
-    protected KernelLogicalOr(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.BIT_OR);
+    protected KernelLogicalOr(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.BIT_OR);
     }
 
     @Override

@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public class KernelLessThan extends NumericalRelational {
 
-    protected KernelLessThan(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.LESS_THAN);
+    protected KernelLessThan(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.LESS_THAN);
     }
 
     @Override

@@ -53,10 +53,10 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected AbstractRelational(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
+    protected AbstractRelational(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
         super(block, operator);
-        this.leftFactor = factor1;
-        this.rightFactor = factor2;
+        this.leftFactor = leftFactor;
+        this.rightFactor = rightFactor;
         falseLbl = new Label();
         trueLbl = new Label();
     }

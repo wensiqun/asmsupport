@@ -28,7 +28,7 @@ public interface BitwiseAction<_P extends IParam> {
     /**
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">～factor1</b>
+     * <b style="color:#FF3300">～leftFactor</b>
      * </p>
      * 
      * @param factor
@@ -40,82 +40,82 @@ public interface BitwiseAction<_P extends IParam> {
      * The bit and operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 & factor2</b>
+     * <b style="color:#FF3300">leftFactor & rightFactor</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P band(_P factor1, _P factor2);
+    _P band(_P leftFactor, _P rightFactor);
 	
     /**
      * 
      * The bit or operator, the following code is the sample :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 | factor2</b>
+     * <b style="color:#FF3300">leftFactor | rightFactor</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P bor(_P factor1, _P factor2);
+    _P bor(_P leftFactor, _P rightFactor);
     
     /**
      * 
      * The xor operator, the following code is the sample.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 ^ factor2</b>
+     * <b style="color:#FF3300">leftFactor ^ rightFactor</b>
      * </p>
      * 
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P bxor(_P factor1, _P factor2);
+    _P bxor(_P leftFactor, _P rightFactor);
     
     /**
      * 
      * The shift left operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 << factor2</b>
+     * <b style="color:#FF3300">leftFactor << rightFactor</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P shl(_P factor1, _P factor2);
+    _P shl(_P leftFactor, _P rightFactor);
     
     /**
      * The bitwise shift right operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 >> factor2</b>
+     * <b style="color:#FF3300">leftFactor >> rightFactor</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P shr(_P factor1, _P factor2);
+    _P shr(_P leftFactor, _P rightFactor);
     
     /**
      * The unsigned shift right operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 >>> factor2</b>
+     * <b style="color:#FF3300">leftFactor >>> rightFactor</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P ushr(_P factor1, _P factor2);
+    _P ushr(_P leftFactor, _P rightFactor);
     
 }

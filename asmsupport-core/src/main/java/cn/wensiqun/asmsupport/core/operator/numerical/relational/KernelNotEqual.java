@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  */
 public class KernelNotEqual extends AbstractNullCompareRelational {
 
-    protected KernelNotEqual(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.NOT_EQUAL_TO);
+    protected KernelNotEqual(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.NOT_EQUAL_TO);
     }
 
     @Override

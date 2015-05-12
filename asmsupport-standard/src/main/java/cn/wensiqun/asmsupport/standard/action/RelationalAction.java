@@ -31,82 +31,82 @@ public interface RelationalAction<_P extends IParam> {
      * The greater than operator
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 > factor2;</b>
+     * <b style="color:#FF3300">leftFactor > rightFactor;</b>
      * </p>
      * 
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P gt(_P factor1, _P factor2);
+    _P gt(_P leftFactor, _P rightFactor);
     
     /**
      * 
      * The greater equals operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 >= factor2;</b>
+     * <b style="color:#FF3300">leftFactor >= rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P} 
      */
-    _P ge(_P factor1, _P factor2);
+    _P ge(_P leftFactor, _P rightFactor);
     
     /**
      * The less than equals.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 < factor2;</b>
+     * <b style="color:#FF3300">leftFactor < rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P lt(_P factor1, _P factor2);
+    _P lt(_P leftFactor, _P rightFactor);
 
     /**
      * 
      * The less equals operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 <= factor2;</b>
+     * <b style="color:#FF3300">leftFactor <= rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P le(_P factor1, _P factor2);
+    _P le(_P leftFactor, _P rightFactor);
     
     /**
      * 
      * The equal operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 == factor2;</b>
+     * <b style="color:#FF3300">leftFactor == rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P eq(_P factor1, _P factor2);
+    _P eq(_P leftFactor, _P rightFactor);
 
     /**
      * 
      * The not equal operator.
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 != factor2;</b>
+     * <b style="color:#FF3300">leftFactor != rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P ne(_P factor1, _P factor2);
+    _P ne(_P leftFactor, _P rightFactor);
 }

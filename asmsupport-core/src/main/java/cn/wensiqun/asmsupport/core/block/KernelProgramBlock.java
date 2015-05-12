@@ -545,33 +545,33 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelAdd add(KernelParam factor1, KernelParam factor2) {
+    public final KernelAdd add(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelAdd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelSub sub(KernelParam factor1, KernelParam factor2) {
+    public final KernelSub sub(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelSub.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelMul mul(KernelParam factor1, KernelParam factor2) {
+    public final KernelMul mul(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelMul.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelDiv div(KernelParam factor1, KernelParam factor2) {
+    public final KernelDiv div(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelDiv.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelMod mod(KernelParam factor1, KernelParam factor2) {
+    public final KernelMod mod(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelMod.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
@@ -591,38 +591,38 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public final KernelBitAnd band(KernelParam factor1, KernelParam factor2) {
+    public final KernelBitAnd band(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelBitAnd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelBitOr bor(KernelParam factor1, KernelParam factor2) {
+    public final KernelBitOr bor(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelBitOr.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelBitXor bxor(KernelParam factor1, KernelParam factor2) {
+    public final KernelBitXor bxor(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelBitXor.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelShiftLeft shl(KernelParam factor1, KernelParam factor2) {
+    public final KernelShiftLeft shl(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelShiftLeft.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
-    public final KernelShiftRight shr(KernelParam factor1, KernelParam factor2) {
+    public final KernelShiftRight shr(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelShiftRight.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelUnsignedShiftRight ushr(KernelParam factor1, KernelParam factor2) {
+    public final KernelUnsignedShiftRight ushr(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelUnsignedShiftRight.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     // *******************************************************************************************//
@@ -658,39 +658,39 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelGreaterThan gt(KernelParam factor1, KernelParam factor2) {
+    public final KernelGreaterThan gt(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelGreaterThan.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelGreaterEqual ge(KernelParam factor1, KernelParam factor2) {
+    public final KernelGreaterEqual ge(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelGreaterEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelLessThan lt(KernelParam factor1, KernelParam factor2) {
+    public final KernelLessThan lt(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelLessThan.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelLessEqual le(KernelParam factor1, KernelParam factor2) {
+    public final KernelLessEqual le(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelLessEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelEqual eq(KernelParam factor1, KernelParam factor2) {
+    public final KernelEqual eq(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelNotEqual ne(KernelParam factor1, KernelParam factor2) {
+    public final KernelNotEqual ne(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelNotEqual.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     // *******************************************************************************************//
@@ -698,28 +698,28 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     // *******************************************************************************************//
 
     @Override
-    public final KernelLogicalAnd logicalAnd(KernelParam factor1, KernelParam factor2) {
+    public final KernelLogicalAnd logicalAnd(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelLogicalAnd.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelLogicalOr logicalOr(KernelParam factor1, KernelParam factor2) {
+    public final KernelLogicalOr logicalOr(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelLogicalOr.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelLogicalXor logicalXor(KernelParam factor1, KernelParam factor2) {
+    public final KernelLogicalXor logicalXor(KernelParam leftFactor, KernelParam rightFactor) {
         return OperatorFactory.newOperator(KernelLogicalXor.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class, KernelParam.class }, getExecutor(), factor1, factor2);
+                KernelParam.class, KernelParam.class }, getExecutor(), leftFactor, rightFactor);
     }
 
     @Override
-    public final KernelShortCircuitAnd and(KernelParam factor1, KernelParam factor2, KernelParam... otherFactors) {
+    public final KernelShortCircuitAnd and(KernelParam leftFactor, KernelParam rightFactor, KernelParam... otherFactors) {
         KernelShortCircuitAnd sca = OperatorFactory
                 .newOperator(KernelShortCircuitAnd.class, new Class<?>[] { KernelProgramBlock.class, KernelParam.class,
-                        KernelParam.class }, getExecutor(), factor1, factor2);
+                        KernelParam.class }, getExecutor(), leftFactor, rightFactor);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
             for (KernelParam factor : otherFactors) {
                 sca = OperatorFactory.newOperator(KernelShortCircuitAnd.class, new Class<?>[] { KernelProgramBlock.class,
@@ -730,10 +730,10 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public final KernelShortCircuitOr or(KernelParam factor1, KernelParam factor2, KernelParam... otherFactors) {
+    public final KernelShortCircuitOr or(KernelParam leftFactor, KernelParam rightFactor, KernelParam... otherFactors) {
         KernelShortCircuitOr sco = OperatorFactory
                 .newOperator(KernelShortCircuitOr.class, new Class<?>[] { KernelProgramBlock.class, KernelParam.class,
-                        KernelParam.class }, getExecutor(), factor1, factor2);
+                        KernelParam.class }, getExecutor(), leftFactor, rightFactor);
         if (ArrayUtils.isNotEmpty(otherFactors)) {
             for (KernelParam factor : otherFactors) {
                 sco = OperatorFactory.newOperator(KernelShortCircuitOr.class, new Class<?>[] { KernelProgramBlock.class,

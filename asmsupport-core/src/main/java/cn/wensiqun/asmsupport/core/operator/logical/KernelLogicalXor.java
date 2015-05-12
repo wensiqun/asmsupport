@@ -29,8 +29,8 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
  */
 public class KernelLogicalXor extends BinaryLogical {
     
-    protected KernelLogicalXor(KernelProgramBlock block, KernelParam factor1, KernelParam factor2) {
-        super(block, factor1, factor2, Operator.XOR);
+    protected KernelLogicalXor(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor) {
+        super(block, leftFactor, rightFactor, Operator.XOR);
     }
 
     @Override

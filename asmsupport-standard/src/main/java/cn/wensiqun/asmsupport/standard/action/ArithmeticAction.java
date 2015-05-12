@@ -25,70 +25,70 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
 public interface ArithmeticAction<_P extends IParam> {
     
     /**
-     * Generate addition instructions such as : factor1 + factor2, seem like following
+     * Generate addition instructions such as : leftFactor + rightFactor, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 + factor2;</b>
+     * int count = <b style="color:#FF3300">leftFactor + rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P add(_P factor1, _P factor2);
+    _P add(_P leftFactor, _P rightFactor);
 
     /**
-     * Generate substruction instructions such as : factor1 - factor2, seem like following
+     * Generate substruction instructions such as : leftFactor - rightFactor, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 - factor12;</b>
+     * int count = <b style="color:#FF3300">leftFactor - leftrightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P sub(_P factor1, _P factor2);
+    _P sub(_P leftFactor, _P rightFactor);
     
     /**
-     * Generate multiplication instructions such as : factor1 * factor2, seem like following
+     * Generate multiplication instructions such as : leftFactor * rightFactor, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 * factor12;</b>
+     * int count = <b style="color:#FF3300">leftFactor * leftrightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P mul(_P factor1, _P factor2);
+    _P mul(_P leftFactor, _P rightFactor);
     
     /**
-     * generate division instruction : factor1 / factor2
+     * generate division instruction : leftFactor / rightFactor
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 / factor12;</b>
+     * int count = <b style="color:#FF3300">leftFactor / leftrightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P div(_P factor1, _P factor2);
+    _P div(_P leftFactor, _P rightFactor);
     
     /**
      * 
-     * generate mod instruction : factor1 % factor2, seem like following
+     * generate mod instruction : leftFactor % rightFactor, seem like following
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * int count = <b style="color:#FF3300">factor1 % factor12;</b>
+     * int count = <b style="color:#FF3300">leftFactor % leftrightFactor;</b>
      * </p>
      * 
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P mod(_P factor1, _P factor2);
+    _P mod(_P leftFactor, _P rightFactor);
     
 }

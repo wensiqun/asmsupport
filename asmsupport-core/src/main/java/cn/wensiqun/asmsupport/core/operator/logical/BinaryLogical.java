@@ -33,19 +33,19 @@ public abstract class BinaryLogical extends AbstractLogical {
     
     private static final Log LOG = LogFactory.getLog(BinaryBitwise.class);
     
-    protected KernelParam factor1;
-    protected KernelParam factor2;
+    protected KernelParam leftFactor;
+    protected KernelParam rightFactor;
     
-    protected BinaryLogical(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
+    protected BinaryLogical(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
         super(block, operator);
-        this.factor1 = factor1;
-        this.factor2 = factor2;
+        this.leftFactor = leftFactor;
+        this.rightFactor = rightFactor;
     }
 
 	@Override
 	protected void verifyArgument() {
-		AClass ftrCls1 = factor1.getResultType();
-        AClass ftrCls2 = factor2.getResultType();
+		AClass ftrCls1 = leftFactor.getResultType();
+        AClass ftrCls2 = rightFactor.getResultType();
         
         if(!((ftrCls1.equals(AClassFactory.getType(boolean.class)) || ftrCls1.equals(AClassFactory.getType(Boolean.class))) &&
            (ftrCls2.equals(AClassFactory.getType(boolean.class)) || ftrCls2.equals(AClassFactory.getType(Boolean.class))))){
@@ -55,8 +55,8 @@ public abstract class BinaryLogical extends AbstractLogical {
 
 	@Override
 	protected void checkAsArgument() {
-        factor1.asArgument();
-        factor2.asArgument();
+        leftFactor.asArgument();
+        rightFactor.asArgument();
 	}
 
 	@Override
@@ -64,8 +64,8 @@ public abstract class BinaryLogical extends AbstractLogical {
         if(byOtherUsed){
             super.execute();
         }else{
-            throw new ArithmeticException("the logical operator " + factor1.getResultType() + " " + getOperatorSymbol() + " " + 
-                                          factor2.getResultType() + " has not been used by other operator.");
+            throw new ArithmeticException("the logical operator " + leftFactor.getResultType() + " " + getOperatorSymbol() + " " + 
+                                          rightFactor.getResultType() + " has not been used by other operator.");
         }
     }
 
@@ -74,11 +74,11 @@ public abstract class BinaryLogical extends AbstractLogical {
         if(LOG.isPrintEnabled()) {
             LOG.print("Factors to stack");
         }
-        factor1.loadToStack(block);
-        insnHelper.unbox(factor1.getResultType().getType());
+        leftFactor.loadToStack(block);
+        insnHelper.unbox(leftFactor.getResultType().getType());
         
-        factor2.loadToStack(block);
-        insnHelper.unbox(factor2.getResultType().getType());
+        rightFactor.loadToStack(block);
+        insnHelper.unbox(rightFactor.getResultType().getType());
     }
 
 }

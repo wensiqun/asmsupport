@@ -31,8 +31,8 @@ public abstract class ConditionOperator extends BinaryLogical {
     protected Label trueLbl;
     protected Label falseLbl;
     
-    protected ConditionOperator(KernelProgramBlock block, KernelParam factor1, KernelParam factor2, Operator operator) {
-        super(block, factor1, factor2, operator);
+    protected ConditionOperator(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
+        super(block, leftFactor, rightFactor, operator);
         falseLbl = new Label();
         trueLbl = new Label();
     }

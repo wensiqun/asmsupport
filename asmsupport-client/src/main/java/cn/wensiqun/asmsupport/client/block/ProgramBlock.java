@@ -216,28 +216,28 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 	
 	@Override
-	public NumParam add(Param factor1, Param factor2) {
-	    return new NumParam(cursor, new AddAction(cursor), factor1, factor2);
+	public NumParam add(Param leftFactor, Param rightFactor) {
+	    return new NumParam(cursor, new AddAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam sub(Param factor1, Param factor2) {
-        return new NumParam(cursor, new SubAction(cursor), factor1, factor2);
+	public NumParam sub(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new SubAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam mul(Param factor1, Param factor2) {
-        return new NumParam(cursor, new MulAction(cursor), factor1, factor2);
+	public NumParam mul(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new MulAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam div(Param factor1, Param factor2) {
-        return new NumParam(cursor, new DivAction(cursor), factor1, factor2);
+	public NumParam div(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new DivAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam mod(Param factor1, Param factor2) {
-        return new NumParam(cursor, new ModAction(cursor), factor1, factor2);
+	public NumParam mod(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new ModAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
@@ -246,33 +246,33 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public NumParam band(Param factor1, Param factor2) {
-		return new NumParam(cursor, new BandAction(cursor), factor1, factor2);
+	public NumParam band(Param leftFactor, Param rightFactor) {
+		return new NumParam(cursor, new BandAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam bor(Param factor1, Param factor2) {
-        return new NumParam(cursor, new BorAction(cursor), factor1, factor2);
+	public NumParam bor(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new BorAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam bxor(Param factor1, Param factor2) {
-        return new NumParam(cursor, new BxorAction(cursor), factor1, factor2);
+	public NumParam bxor(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new BxorAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam shl(Param factor1, Param factor2) {
-		return new NumParam(cursor, new ShiftLeftAction(cursor), factor1, factor2);
+	public NumParam shl(Param leftFactor, Param rightFactor) {
+		return new NumParam(cursor, new ShiftLeftAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam shr(Param factor1, Param factor2) {
-        return new NumParam(cursor, new ShiftRightAction(cursor), factor1, factor2);
+	public NumParam shr(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new ShiftRightAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public NumParam ushr(Param factor1, Param factor2) {
-        return new NumParam(cursor, new UnsignedShiftRightAction(cursor), factor1, factor2);
+	public NumParam ushr(Param leftFactor, Param rightFactor) {
+        return new NumParam(cursor, new UnsignedShiftRightAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
@@ -296,58 +296,58 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public BoolParam gt(Param factor1, Param factor2) {
-		return new BoolParam(cursor, new GreaterThanAction(cursor), factor1, factor2);
+	public BoolParam gt(Param leftFactor, Param rightFactor) {
+		return new BoolParam(cursor, new GreaterThanAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam ge(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new GreaterEqualAction(cursor), factor1, factor2);
+	public BoolParam ge(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new GreaterEqualAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam lt(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new LessThanAction(cursor), factor1, factor2);
+	public BoolParam lt(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new LessThanAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam le(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new LessEqualAction(cursor), factor1, factor2);
+	public BoolParam le(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new LessEqualAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam eq(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new EqualAction(cursor), factor1, factor2);
+	public BoolParam eq(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new EqualAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam ne(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new NotEqualAction(cursor), factor1, factor2);
+	public BoolParam ne(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new NotEqualAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam logicalAnd(Param factor1, Param factor2) {
-		return new BoolParam(cursor, new LogicAndAction(cursor), factor1, factor2);
+	public BoolParam logicalAnd(Param leftFactor, Param rightFactor) {
+		return new BoolParam(cursor, new LogicAndAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam logicalOr(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new LogicOrAction(cursor), factor1, factor2);
+	public BoolParam logicalOr(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new LogicOrAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam logicalXor(Param factor1, Param factor2) {
-        return new BoolParam(cursor, new LogicXorAction(cursor), factor1, factor2);
+	public BoolParam logicalXor(Param leftFactor, Param rightFactor) {
+        return new BoolParam(cursor, new LogicXorAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam and(Param factor1, Param factor2, Param... otherFactor) {
-        return new BoolParam(cursor, new AndAction(cursor), factor1, factor2);
+	public BoolParam and(Param leftFactor, Param rightFactor, Param... otherFactor) {
+        return new BoolParam(cursor, new AndAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override
-	public BoolParam or(Param factor1, Param factor2, Param... otherFactor) {
-        return new BoolParam(cursor, new OrAction(cursor), factor1, factor2);
+	public BoolParam or(Param leftFactor, Param rightFactor, Param... otherFactor) {
+        return new BoolParam(cursor, new OrAction(cursor), leftFactor, rightFactor);
 	}
 
 	@Override

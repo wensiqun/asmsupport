@@ -29,71 +29,71 @@ public interface LogicalAction<_P extends IParam> {
      * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 & factor2;</b>
+     * <b style="color:#FF3300">leftFactor & rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P logicalAnd(_P factor1, _P factor2);
+    _P logicalAnd(_P leftFactor, _P rightFactor);
     
     /**
      * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 | factor2;</b>
+     * <b style="color:#FF3300">leftFactor | rightFactor;</b>
      * </p>
      * 
      *  
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P logicalOr(_P factor1, _P factor2);
+    _P logicalOr(_P leftFactor, _P rightFactor);
 
     /**
      * 
      * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 ^ factor2;</b>
+     * <b style="color:#FF3300">leftFactor ^ rightFactor;</b>
      * </p>
      *  
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P logicalXor(_P factor1, _P factor2);
+    _P logicalXor(_P leftFactor, _P rightFactor);
     
     /**
      * 
      * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 && factor2;</b>
+     * <b style="color:#FF3300">leftFactor && rightFactor;</b>
      * </p>
      * 
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link _P}
      */
-    _P and(_P factor1, _P factor2, _P... otherFactors);
+    _P and(_P leftFactor, _P rightFactor, _P... otherFactors);
     
     /**
      * 
      * Generate seem like following code :
      * 
      * <p style="border:1px solid;width:300px;padding:10px;">
-     * <b style="color:#FF3300">factor1 || factor2;</b>
+     * <b style="color:#FF3300">leftFactor || rightFactor;</b>
      * </p>
      * 
-     * @param factor1
-     * @param factor2
+     * @param leftFactor
+     * @param rightFactor
      * @return {@link }
      */
-    _P or(_P factor1, _P factor2, _P... otherFactors);
+    _P or(_P leftFactor, _P rightFactor, _P... otherFactors);
     
     /**
      * Generate seem like following code :
