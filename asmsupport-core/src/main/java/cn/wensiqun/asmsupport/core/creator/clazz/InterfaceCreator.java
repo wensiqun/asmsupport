@@ -41,8 +41,9 @@ public class InterfaceCreator extends AbstractClassCreatorContext {
 	}
 	
 	/**
+	 * Create an interface method
 	 * 
-	 * @param name
+	 * @param name method name
 	 * @param argClasses
 	 * @param returnClass
 	 * @param exceptions

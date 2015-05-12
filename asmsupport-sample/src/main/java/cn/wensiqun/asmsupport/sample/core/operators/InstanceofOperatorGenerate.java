@@ -1,7 +1,6 @@
 package cn.wensiqun.asmsupport.sample.core.operators;
 
 
-import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
@@ -10,6 +9,7 @@ import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**

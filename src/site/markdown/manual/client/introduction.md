@@ -1,6 +1,8 @@
-# Welcome to ASMSupport
+# Welcome to ASMSupport Client
 
-在这个部分内容中，我们将介绍如何使用asmsupport来创建各种操作以及class。首先会介绍一下java中的基本操作在asmsupport中如何实现（在这个过程中会简单的使用asmsupport创建一个类来支持这些操作），然后再介绍如何创建一个class，方法，属性，最后再介绍如何创建各种程序块。在介绍这些之前，先来了解下asmsupport的一些基本类型。
+当前目录下的教程使用的是基于asmsupport-client，相比于asmsupport-core。asmsupport-client的教程更容易使用。asmsupport-client是对asmsupport-core的高一层封装，所以对于希望学习源码建议直接从asmsupport-core入手
+
+在这个部分内容中，我们将介绍如何使用asmsupport-client来创建各种操作以及class。首先会介绍一下java中的基本操作在asmsupport-client中如何实现（在这个过程中会简单的使用asmsupport-client创建一个类来支持这些操作），然后再介绍如何创建一个class，方法，属性，最后再介绍如何创建各种程序块。在介绍这些之前，先来了解下asmsupport的一些基本类型。
 
 # 1.基本类型介绍
 

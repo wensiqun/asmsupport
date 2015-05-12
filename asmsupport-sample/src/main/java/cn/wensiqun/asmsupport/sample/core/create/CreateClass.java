@@ -19,6 +19,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  * 这个例子将学习到如何生成一个Class。并且在这个Class中添加局部变量和各种类型的方法
  * 最终将生产java代码如下:
  * 
+ *<pre>
  *public class CreateClassExample
  *{
  *  private static String staticGlobalVariable = "I'm a static global variable at class";
@@ -40,7 +41,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  *    new CreateClassExample(1024).commonMethod();
  *  }
  *}
- *
+ *</pre>
  */
 public class CreateClass extends AbstractExample {
 

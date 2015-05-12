@@ -19,7 +19,7 @@
 		</menu>
 		<menu name="使用手册">
 		    <item name="asmsupport-core">
-				<item name="介绍" href="manual/client/introduction.html" />
+				<item name="介绍" href="manual/core/summary.html" />
 		    </item>
 		    <item name="asmsupport-client">
 				<item name="介绍" href="manual/client/introduction.html" />
@@ -40,7 +40,7 @@
 			<item name="枚举类型" href="bytecode/enum.html" />
 			<item name="字节码Label" href="bytecode/label.html" />
 			<item name="Java栈" href="bytecode/stack_simple_desc.html" />
-			<item name="字节码指令集" href="jvmref/opcodes.html" />
+			<item name="字节码指令集" href="/jvmref/opcodes.html" />
 		</menu>
 		<menu name="ASMSupport实现原理">
 			<item name="局部变量的实现" href="theory/localvariable.html" />

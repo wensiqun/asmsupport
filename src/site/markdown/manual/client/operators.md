@@ -57,9 +57,9 @@
 
 直接通过Value类的静态方法value获取非null值，获取null值通过方法getNullValue。代码如下：
     
-    IValue one = Value.val(1); //获取一个int类型的值1
-    IValue oneDotOne = Value.val(2.2D); //获取一个double类型的值2.2
-    IValue str = Value.val("asmsupport"); //获取一个String类型的"asmsupport"值
+    IValue one = Value.value(1); //获取一个int类型的值1
+    IValue oneDotOne = Value.value(2.2D); //获取一个double类型的值2.2
+    IValue str = Value.value("asmsupport"); //获取一个String类型的"asmsupport"值
     IValue nullVal = Value.getNullValue(String.class); //获取String类型的
 
 ### 方式2

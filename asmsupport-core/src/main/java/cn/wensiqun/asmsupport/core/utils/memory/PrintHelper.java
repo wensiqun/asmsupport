@@ -30,7 +30,7 @@ public class PrintHelper {
         sb.append(lineSeq);
         
         if(grid.length == 0 || grid[0].length == 0){
-            return sb.append("*").append(lineSeq).append("*").toString();
+            return sb.append("-").append(lineSeq).append("-").toString();
         }
         
         int[] maxLen = new int[grid[0].length];
@@ -47,7 +47,7 @@ public class PrintHelper {
             gridLength += maxLen[i];
         }
         //input of grid top line;
-        repateAppend(sb, "*", gridLength).append(lineSeq);
+        repateAppend(sb.append(','), "-", gridLength - 2).append('.').append(lineSeq);
         
         //input hearder
         
@@ -59,12 +59,12 @@ public class PrintHelper {
             }
             sb.append("|").append(lineSeq);
             if(rowIndex == 0 && header){
-                repateAppend(sb, "*", gridLength).append(lineSeq);
+                repateAppend(sb.append('|'), "-", gridLength - 2).append('|').append(lineSeq);
             }
         }
 
         //input of grid bottom line;
-        repateAppend(sb, "*", gridLength).append(lineSeq);
+        repateAppend(sb.append('`'), "-", gridLength - 2).append('\'').append(lineSeq);
         
         return sb.toString();
     }

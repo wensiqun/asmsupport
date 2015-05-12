@@ -48,7 +48,7 @@ public class CreateInterface extends AbstractExample {
 		interfaceCreator.createMethod("test", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, AClassFactory.getType(boolean.class), null);
 		
 		/*
-		 * 通过createGlobalVariable创建局部变量，当然这个变量的修饰符是public static final的
+		 * 通过createField创建局部变量，当然这个变量的修饰符是public static final的
 		 * 需要注意的一点是，我们不能像java代码里一样在声明变量的同时给变量赋值，因为这个变量是
 		 * static的，所以我们只能在下面的代码createStaticBlock中对其赋值。事实上，如果你在编写
 		 * java代码的时候在接口中申明了一个变量，java的编译器其实也会将你代码中的赋值部分解释出来，
@@ -78,11 +78,11 @@ public class CreateInterface extends AbstractExample {
 		 * 如下，这里首先将"I'm a global variable at Interface"字符串赋值给我们上面申明的
 		 * 变量。然后在打印"I'm in static block at interface".
 		 * 
-		 * 这里我们发现有一个runReturn()方法。这个方法是生成return语句。这里为什么要这么写。首先要
+		 * 这里我们发现有一个return_()方法。这个方法是生成return语句。这里为什么要这么写。首先要
 		 * 明确个概念，对于JVM来说，或者说在字节码的层面上来讲，静态语句块其实是特殊一个静态方法，它的
 		 * 名字叫做"<cinit>"，返回类型是void，我们用java代码来描述就是static void <cinit>()，
 		 * 所以我们需要执行return操作。当然在我们编写java代码的时候，对于void返回类型的方法我们是不需
-		 * 要显式的写return的，但是在使用asmsupport的时候，我们需要显式的执行一次runReturn().
+		 * 要显式的写return的，但是在使用asmsupport的时候，我们需要显式的执行一次return_().
 		 * 事实上在你编写java代码的时候，对于void的方法，如果你不写return，java编译器会自动在你所写
 		 * 方法的最后自动加上一条return指令。
 		 * 

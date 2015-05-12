@@ -1,7 +1,5 @@
 # 如何查看log文件内容
 
-Asmsupport采用log4j作为日志工具，配置直接采用log4j的配置。如果配置成debug模式则会输出下面的日志：
-
     [ASMSupport-Info] create method: ------------main([Ljava/lang/String;)            //这里表示开始创建main(String[])方法
     [ASMSupport-Info] call method by variable :out                                    //这里表示调用了out变量的方法
     [ASMSupport-Info] put variable reference to stack                                 //既然要调用out变量的方法就需要将out变量的引用压入栈
