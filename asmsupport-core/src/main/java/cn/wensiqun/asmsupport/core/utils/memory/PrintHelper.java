@@ -18,8 +18,9 @@
 package cn.wensiqun.asmsupport.core.utils.memory;
 
 /**
+ * Print helper.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
 public class PrintHelper {
     

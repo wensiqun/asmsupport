@@ -67,10 +67,20 @@ public abstract class ScopeComponent {
         this.locals = locals;
     }
 
+    /**
+     * Get parent scope
+     * 
+     * @return
+     */
     public Scope getParent() {
         return parent;
     }
 
+    /**
+     * Set the parent {@link Scope} to current {@link ScopeComponent}
+     * 
+     * @param parent
+     */
     public final void setParent(Scope parent) {
         if (parent == null) {
             generation = 0;

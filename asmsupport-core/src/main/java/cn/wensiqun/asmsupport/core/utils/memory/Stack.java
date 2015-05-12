@@ -23,19 +23,26 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
  * 
+ * Represent a stack of stack frame in jvm.
+ * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
 public class Stack implements Printable, Cloneable {
 
     private static final Log LOG = LogFactory.getLog(Stack.class);
-    private ArrayStack<Stackable> stack;
-    /** 栈的大小 */
+    
+    private ArrayStack<StackableType> stack;
+    
+    /** Stack current size */
     private int size;
-    /** 栈的最大空间 */
+    
+    /** Stack max size */
     private int maxSize;
-    /** 栈中有多少个值 */
+    
+    /** How many value in the stack */
     private int valueNumber;
+    
     private PrintHelper ph;
 
     @Override
@@ -48,7 +55,7 @@ public class Stack implements Printable, Cloneable {
     }
 
     public Stack() {
-        stack = new ArrayStack<Stackable>();
+        stack = new ArrayStack<StackableType>();
         ph = new PrintHelper();
     }
 
@@ -59,8 +66,8 @@ public class Stack implements Printable, Cloneable {
      * @throws EmptyStackException
      *             if the stack is empty
      */
-    public Stackable peek() throws EmptyStackException {
-        return (Stackable) stack.peek();
+    public StackableType peek() throws EmptyStackException {
+        return (StackableType) stack.peek();
     }
 
     /**
@@ -74,26 +81,26 @@ public class Stack implements Printable, Cloneable {
      *             if there are not enough items on the stack to satisfy this
      *             request
      */
-    public Stackable peek(int n) throws EmptyStackException {
-        return (Stackable) stack.peek(n);
+    public StackableType peek(int n) throws EmptyStackException {
+        return (StackableType) stack.peek(n);
     }
 
-    public Stackable pop() throws EmptyStackException {
-        Stackable s = peek();
+    public StackableType pop() throws EmptyStackException {
+        StackableType s = peek();
         pop(1);
         return s;
     }
 
     public void pop(int times) throws EmptyStackException {
         while (times > 0) {
-            Stackable t = (Stackable) stack.pop();
+            StackableType t = (StackableType) stack.pop();
             size -= t.getSize();
             times--;
             valueNumber--;
         }
     }
 
-    public void push(Stackable item) {
+    public void push(StackableType item) {
         valueNumber++;
         stack.push(item);
         size += item.getSize();
@@ -103,7 +110,7 @@ public class Stack implements Printable, Cloneable {
     }
 
     public void push(Type item) {
-        Stackable stype = new StackableType(item);
+        StackableType stype = new StackableType(item);
         push(stype);
     }
 
@@ -115,7 +122,7 @@ public class Stack implements Printable, Cloneable {
         }
     }
 
-    public void insert(int pos, Stackable item) {
+    public void insert(int pos, StackableType item) {
         valueNumber++;
         stack.add(getReallyPosition(pos), item);
         size += item.getSize();
@@ -172,7 +179,7 @@ public class Stack implements Printable, Cloneable {
         int valueIndex = valueNumber;
         int rowIndex = 1;
         for (; rowIndex < size + 1;) {
-            Type t = ((Stackable) stack.get(valueIndex - 1)).getType();
+            Type t = ((StackableType) stack.get(valueIndex - 1)).getType();
             int valueSize = t.getSize();
 
             while (valueSize > 0) {

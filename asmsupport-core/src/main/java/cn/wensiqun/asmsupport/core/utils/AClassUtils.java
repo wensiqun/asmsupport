@@ -22,27 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ProductClass;
-import cn.wensiqun.asmsupport.core.clazz.SemiClass;
-import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
-import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
+/**
+ * The AClass Helper
+ */
 public class AClassUtils {
     
-	/**
-     * this class is a tools class. so don't support constructor
+    /**
+     * Check the specify type is primitive wrap type.
+     * 
+     * @param aclass
      */
-    private AClassUtils() {
-        throw new UnsupportedOperationException("Cannot support new instance the utils class");
-    }
-
     public static boolean isPrimitiveWrapAClass(AClass aclass) {
         if (aclass.getName().equals(Byte.class.getName()) || aclass.getName().equals(Short.class.getName())
                 || aclass.getName().equals(Character.class.getName())
@@ -54,6 +49,10 @@ public class AClassUtils {
         return false;
     }
 
+    /**
+     * Get the primitive type if the argument is wrap type, otherwise
+     * return the argument self.
+     */
     public static AClass getPrimitiveAClass(AClass aclass) {
         if (aclass.equals(AClassFactory.getType(Boolean.class))) {
             return AClassFactory.getType(boolean.class);
@@ -74,7 +73,11 @@ public class AClassUtils {
         }
         return aclass;
     }
-
+    
+    /**
+     * Get the primitive wrap type if the argument is primitive type, otherwise
+     * return the argument self.
+     */
     public static AClass getPrimitiveWrapAClass(AClass aclass) {
         if (aclass.equals(AClassFactory.getType(boolean.class))) {
             return AClassFactory.getType(Boolean.class);
@@ -121,10 +124,7 @@ public class AClassUtils {
     }
 
     /**
-     * 判断传入的class是否可以参与算术运算操作
-     * 
-     * @param aclass
-     * @return
+     * Check the specify whether or not as an arithmetical operation factor.
      */
     public static boolean isArithmetical(AClass aclass) {
         if (aclass.isPrimitive() && !aclass.getName().equals(boolean.class.getName())) {
@@ -146,51 +146,71 @@ public class AClassUtils {
     }
 
     /**
-     * Check the method call is visible
+     * <p>
+     * Check the method call is visible, following is an example: 
+     * <pre>
+     * Class Super {
+     *     public void call() {...}
+     * }
+     * Class Sub extends Super {
+     * }
+     * Class Main {
+     *     public static void main(String... args) {
+     *         Sub sub = new Sub();
+     *         sub.call();
+     *     }
+     * }
+     * </pre>
+     * For code {@code sub.call()}, see parameter description for detail.
+     * </p>
      * 
-     * @param invoker 调用者所在的类
-     * @param invoked 被调用的方法或者field所在的类
-     * @param actuallyInvoked 被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
-     * @param mod 被调用的方法或者field的修饰符
+     * @param where the call occur in which class, in preceding code {@code sub.call()}, 
+     *        the {@code where} is Main.class
+     * @param callFrom where the call from, in preceding code {@code sub.call()}, 
+     *        the {@code callFrom} is Sub.class
+     * @param declaringClass the method declaring class, in preceding code {@code sub.call()}, 
+     *        the {@code declaringClass} is Super.class
+     * @param methodDescription method description
+     * @param modifiers the modifier of method
      * @return
      */
-    public static boolean visible(AClass invoker, AClass invoked, AClass actuallyInvoked, int mod) {
+    public static boolean visible(AClass where, AClass callFrom, AClass methodDescription, int modifiers) {
         // 只要是public就可见
-        if (Modifier.isPublic(mod)) {
+        if (Modifier.isPublic(modifiers)) {
             return true;
         }
 
         // 如果invoked和 actuallyInvoked相同
-        if (invoked.equals(actuallyInvoked)) {
+        if (callFrom.equals(methodDescription)) {
             // 如果invoker和invoked相同
-            if (invoker.equals(invoked)) {
+            if (where.equals(callFrom)) {
                 // 在同一个类中允许调用
                 return true;
             } else {
-                if (Modifier.isPrivate(mod)) {
+                if (Modifier.isPrivate(modifiers)) {
                     return false;
                 } else {
-                    if (invoker.getPackage().equals(invoked.getPackage())) {
+                    if (where.getPackage().equals(callFrom.getPackage())) {
                         return true;
-                    } else if (Modifier.isProtected(mod) && invoker.isChildOrEqual(invoked)){
+                    } else if (Modifier.isProtected(modifiers) && where.isChildOrEqual(callFrom)){
                         return true;
                     }
                 }
             }
         } else {
             // 先判断actuallyInvoked对invoked的可见性
-            if (Modifier.isPrivate(mod)) {
+            if (Modifier.isPrivate(modifiers)) {
                 return false;
             }
 
             // 如果都在同一包下
-            if (invoker.getPackage().equals(invoked.getPackage())
-                    && invoker.getPackage().equals(actuallyInvoked.getPackage())) {
+            if (where.getPackage().equals(callFrom.getPackage())
+                    && where.getPackage().equals(methodDescription.getPackage())) {
                 return true;
             }
 
-            if (Modifier.isProtected(mod)) {
-                if (invoker.isChildOrEqual(invoked) && invoked.isChildOrEqual(actuallyInvoked)) {
+            if (Modifier.isProtected(modifiers)) {
+                if (where.isChildOrEqual(callFrom) && callFrom.isChildOrEqual(methodDescription)) {
                     return true;
                 }
             }
@@ -200,149 +220,7 @@ public class AClassUtils {
     }
 
     /**
-     * 
-     * @param invoker
-     * @param owner
-     * @param name
-     * @param actualArgLength
-     * @return
-     */
-    public static List<AMethodMeta> allDeclareVariableArityMethod(AClass invoker, AClass owner, String name,
-            int actualArgLength) {
-        List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-        Class<?> reallyClass = null;
-        if (owner instanceof SemiClass) {
-            for (AMethod method : ((SemiClass) owner).getMethods()) {
-                if ((method.getMeta().getModifier() & Opcodes.ACC_VARARGS) != 0
-                        && method.getMeta().getName().equals(name)) {
-                    list.add(method.getMeta());
-                }
-            }
-            reallyClass = owner.getSuperClass();
-        } else if (owner instanceof ProductClass) {
-            reallyClass = ((ProductClass) owner).getReallyClass();
-        }
-
-        Class<?> actuallyMethodOwner = reallyClass;
-        AClass invoked = AClassFactory.getType(reallyClass);
-        // ACC_VARARGS
-        List<AMethodMeta> methods = new ArrayList<AMethodMeta>();
-        java.lang.reflect.Method[] mes;
-        for (; actuallyMethodOwner != null; actuallyMethodOwner = actuallyMethodOwner.getSuperclass()) {
-            mes = actuallyMethodOwner.getDeclaredMethods();
-            for (int i = 0; i < mes.length; i++) {
-                if (mes[i].getName().equals(name) && mes[i].isVarArgs()) {
-                    methods.add(AMethodMeta.methodToMethodEntity(invoked, mes[i]));
-                }
-            }
-            addAndEliminateDupVariableArityMethod(invoker, invoked, name, actualArgLength, list, methods);
-        }
-
-        return list;
-    }
-
-    /**
-     * 
-     * @param invoker
-     * @param invoked
-     * @param name
-     * @param actualArgLength
-     * @param list
-     * @param methods
-     */
-    private static void addAndEliminateDupVariableArityMethod(AClass invoker, AClass invoked, String name,
-            int actualArgLength, List<AMethodMeta> list, List<AMethodMeta> methods) {
-        boolean same;
-        int length = list.size();
-        for (AMethodMeta m1 : methods) {
-            same = false;
-            for (int i = 0; i < length; i++) {
-                if (MethodUtils.methodEqualWithoutOwner(m1, list.get(i))) {
-                    same = true;
-                    break;
-                }
-            }
-
-            if (!same && ((m1.getModifier() & Opcodes.ACC_VARARGS) != 0) && m1.getName().equals(name)) {
-
-                if (AClassUtils.visible(invoker, invoked, m1.getActuallyOwner(), m1.getModifier())
-                        && m1.getArgClasses().length <= actualArgLength + 1) {
-                    list.add(m1);
-                }
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param aclasses
-     * @return
-     */
-    public static int allArgumentWithBoxAndUnBoxCountExceptSelf(AClass[] aclasses) {
-        int size = 0;
-        for (AClass a : aclasses) {
-            if (AClassUtils.boxUnboxable(a)) {
-                if (size == 0) {
-                    size = 1;
-                }
-                size = size << 1;
-            }
-        }
-        return size == 0 ? 0 : size - 1;
-    }
-
-    public static int primitiveFlag(AClass[] aclasses) {
-        int flagVal = 0;
-        if (aclasses == null) {
-            return flagVal;
-        }
-
-        for (int i = 0; i < aclasses.length; i++) {
-            if (aclasses[i].isPrimitive()) {
-                if (i == 0) {
-                    flagVal++;
-                } else {
-                    flagVal += 2 << (i - 1);
-                }
-            }
-        }
-        return flagVal;
-    }
-
-    public static void allArgumentWithBoxAndUnBox(AClass[] orgi, int orgiFlagValue, int index, AClass[] newa,
-            List<AClass[]> list) {
-
-        newa[index] = AClassUtils.getPrimitiveAClass(orgi[index]);
-        if (index == orgi.length - 1) {
-            if (AClassUtils.boxUnboxable(orgi[index])) {
-                AClass[] newb = new AClass[newa.length];
-                System.arraycopy(newa, 0, newb, 0, newa.length);
-                newb[index] = AClassUtils.getPrimitiveWrapAClass(orgi[index]);
-
-                if (primitiveFlag(newb) != orgiFlagValue) {
-                    list.add(newb);
-                }
-            }
-            if (primitiveFlag(newa) != orgiFlagValue) {
-                list.add(newa);
-            }
-        } else {
-            if (AClassUtils.boxUnboxable(orgi[index])) {
-                AClass[] newb = new AClass[newa.length];
-                System.arraycopy(newa, 0, newb, 0, newa.length);
-                newb[index] = AClassUtils.getPrimitiveWrapAClass(orgi[index]);
-
-                allArgumentWithBoxAndUnBox(orgi, orgiFlagValue, index + 1, newb, list);
-            }
-            allArgumentWithBoxAndUnBox(orgi, orgiFlagValue, index + 1, newa, list);
-        }
-    }
-
-    /**
-     * 
-     * @param from
-     * @param to
-     * @return
+     * Check a type({@code from}) whether or not assign to other type({@code to}).
      */
     public static boolean checkAssignable(AClass from, AClass to) {
         if (from.isChildOrEqual(to)) {
@@ -374,9 +252,9 @@ public class AClassUtils {
     }
 
     /**
+     * Get all interface from an {@link AClass}
      * 
-     * @param aclass
-     * @return
+     * @return List<Class<?>> all interface list
      */
     public static List<Class<?>> getAllInterfaces(AClass aclass) {
         Class<?>[] interfaces = aclass.getInterfaces();
@@ -391,18 +269,16 @@ public class AClassUtils {
     }
 
     /**
-     * 
-     * @param clses
-     * @return
+     * Convert {@link Class} list to {@link AClass} list
      */
-    public static AClass[] convertToAClass(Class<?>[] clses) {
-        if (clses == null) {
+    public static AClass[] convertToAClass(Class<?>[] classes) {
+        if (classes == null) {
             return new AClass[0];
         }
 
-        AClass[] aclasses = new AClass[clses.length];
-        for (int i = 0; i < clses.length; i++) {
-            aclasses[i] = AClassFactory.getType(clses[i]);
+        AClass[] aclasses = new AClass[classes.length];
+        for (int i = 0; i < classes.length; i++) {
+            aclasses[i] = AClassFactory.getType(classes[i]);
         }
         return aclasses;
     }

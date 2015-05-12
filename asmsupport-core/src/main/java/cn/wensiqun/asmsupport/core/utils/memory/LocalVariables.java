@@ -21,9 +21,9 @@ import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 
 /**
+ * Represent a local variables of stack frame in jvm.
  * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
 public class LocalVariables implements Printable, Cloneable{
 
@@ -55,7 +55,7 @@ public class LocalVariables implements Printable, Cloneable{
     private List<LocalHistory> histories;
     private PrintHelper printHelper;
     private int maxPrintSize;
-    private Localable cursor;
+    private ScopeLogicVariable cursor;
     
 	public LocalVariables() {
         super();
@@ -68,7 +68,7 @@ public class LocalVariables implements Printable, Cloneable{
         return histories.size();
     }
 
-    public Localable getLastVariable(int index) {
+    public ScopeLogicVariable getLastVariable(int index) {
         return histories.get(index).getLastVariable();
     }
     
@@ -89,12 +89,12 @@ public class LocalVariables implements Printable, Cloneable{
         }
     }
 
-    public void setCursor(Localable cursor) {
+    public void setCursor(ScopeLogicVariable cursor) {
         this.cursor = cursor;
         hierarchy(cursor);
     }
 
-    private void hierarchy(Localable cursor){
+    private void hierarchy(ScopeLogicVariable cursor){
         for(LocalHistory history : histories){
             for(int i=0, len = history.variables.size(); i<len; i++){
                 if(history.variables.get(i).equals(cursor)){
@@ -104,8 +104,8 @@ public class LocalVariables implements Printable, Cloneable{
         }
     }
     
-    public List<Localable> getFrameLocals(Scope scope) {
-        List<Localable> locals = new ArrayList<Localable>();
+    public List<ScopeLogicVariable> getFrameLocals(Scope scope) {
+        List<ScopeLogicVariable> locals = new ArrayList<ScopeLogicVariable>();
         for(LocalHistory his : histories) {
             ScopeLogicVariable var = his.getActiveVariable();
             if(var.getParent().generation > scope.generation || 
@@ -130,11 +130,11 @@ public class LocalVariables implements Printable, Cloneable{
         int gridBodyRowSize = getSize();
         int i = 0;
         for(; i<gridBodyRowSize; i++){
-            Localable loc = histories.get(i).getActiveVariable();
+            ScopeLogicVariable loc = histories.get(i).getActiveVariable();
             grid[i + 1][0] = localGraph(i);
-            grid[i + 1][1] = loc.getDeclareType().getDescriptor();
+            grid[i + 1][1] = loc.getType().getDescriptor();
             grid[i + 1][2] = loc.getName();
-            grid[i + 1][3] = loc.getDeclareType().getSize() == loc.getPositions().length ? "false" : "true";
+            grid[i + 1][3] = loc.getType().getSize() == loc.getPositions().length ? "false" : "true";
             
             if(loc.equals(cursor)){
                 if(maxPrintSize < i + 1){

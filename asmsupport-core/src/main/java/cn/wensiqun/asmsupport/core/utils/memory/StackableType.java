@@ -18,11 +18,11 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
+ * Represent an element that's should be push to {@link Stack}
  * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
-public class StackableType implements Stackable {
+public class StackableType {
     
     private Type type;
 
@@ -31,12 +31,16 @@ public class StackableType implements Stackable {
         this.type = type;
     }
 
-    @Override
+    /**
+     * Get the element type.
+     */
     public Type getType(){
         return type;
     }
 
-    @Override
+    /**
+     * Get the element size in stack
+     */
     public int getSize() {
         return type.getSize();
     }

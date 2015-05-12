@@ -136,7 +136,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
                 if (slv.isAnonymous()) {
                     continue;
                 }
-                insnHelper.declarationVariable(slv.getName(), slv.getDeclareType().getDescriptor(), null,
+                insnHelper.declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
                         slv.getSpecifiedStartLabel(), parent.getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;

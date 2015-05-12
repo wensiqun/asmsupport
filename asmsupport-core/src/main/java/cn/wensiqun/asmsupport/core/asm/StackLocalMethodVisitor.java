@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.log.Log;
 import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.asm.MethodAdapter;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
-import cn.wensiqun.asmsupport.core.utils.memory.Stackable;
+import cn.wensiqun.asmsupport.core.utils.memory.StackableType;
 import cn.wensiqun.asmsupport.org.objectweb.asm.AnnotationVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Attribute;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -69,7 +69,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
      * @param opcode
      */
     private void stackLocalOperator(int opcode, int popNum) {
-        Stackable top;
+        StackableType top;
         switch (opcode) {
         case NOP:
             if (LOG.isPrintEnabled()) {

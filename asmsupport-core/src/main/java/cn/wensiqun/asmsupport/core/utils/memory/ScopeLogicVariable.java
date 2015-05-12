@@ -15,11 +15,11 @@
 package cn.wensiqun.asmsupport.core.utils.memory;
 
 
+import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 
 
 /**
@@ -30,10 +30,9 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ScopeLogicVariable extends ScopeComponent implements Localable {
+public class ScopeLogicVariable extends ScopeComponent {
 
-    private Type actuallyType;
-    private Type declareType;
+    private Type type;
     private String name;
     private int[] positions;
     private int initStartPos;
@@ -47,29 +46,31 @@ public class ScopeLogicVariable extends ScopeComponent implements Localable {
         this.anonymous = anonymous;
     }
     
-    public ScopeLogicVariable(String name, Scope parent, Type declareClass,
+    public ScopeLogicVariable(String name, Scope parent, Type type,
             Type actuallyClass) {
         super(parent.locals);
         setParent(parent);
         parent.addComponent(this);
 
         this.name = name;
-        if(declareClass.equals(Type.VOID_TYPE) || actuallyClass.equals(Type.VOID_TYPE) ){
+        if(type.equals(Type.VOID_TYPE) || actuallyClass.equals(Type.VOID_TYPE) ){
         	throw new ASMSupportException("cannot declare a void type");
         }
-        this.actuallyType = actuallyClass;
-        this.declareType = declareClass;
+        this.type = type;
         this.specifiedStartLabel = parent.getStart();
         store();
     }
     
+    /**
+     * Check the variable is anonymous
+     */
     public boolean isAnonymous() {
         return anonymous;
     }
 
     private void store() {
         int localSize = locals.getSize();
-        int needSize = actuallyType.getSize();
+        int needSize = type.getSize();
         for (int i = 0; i < localSize; i++) {
             ScopeLogicVariable survivor = (ScopeLogicVariable) locals.getLastVariable(i);
             if (isShareable(survivor)) {
@@ -84,7 +85,7 @@ public class ScopeLogicVariable extends ScopeComponent implements Localable {
             } else {
                 if(!this.isAnonymous() && !survivor.isAnonymous()){
                     if (survivor.getName().equals(this.name)) {
-                        throw new DuplicateLocalVariableNameException();
+                        throw new ASMSupportException("Duplicate local variable \"" + name + "\"");
                     }
                 }
             }
@@ -185,29 +186,14 @@ public class ScopeLogicVariable extends ScopeComponent implements Localable {
         this.compileOrder = compileOrder;
     }
 
-    private class DuplicateLocalVariableNameException extends RuntimeException {
-
-        private static final long serialVersionUID = -78653305684942300L;
-
-        private DuplicateLocalVariableNameException() {
-            super("Duplicate local variable \"" + name + "\"");
-        }
-    }
-
-    @Override
     public String getName() {
         return name;
     }
 
-    public Type getActuallyType() {
-        return actuallyType;
+    public Type getType() {
+        return type;
     }
 
-    public Type getDeclareType() {
-        return declareType;
-    }
-
-    @Override
     public int[] getPositions() {
         return positions;
     }
@@ -222,6 +208,6 @@ public class ScopeLogicVariable extends ScopeComponent implements Localable {
 
     @Override
     public String toString() {
-        return getDeclareType() + " " + getName();
+        return getType() + " " + getName();
     }
 }

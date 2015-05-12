@@ -28,8 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 
 /**
- * 
- * 
+ * Represent a scope, the scope could be contain {@link Scope} and {@link ScopeLogicVariable}
  * 
  * @author wensiqun at 163.com(Joe Wen)
  */
@@ -63,10 +62,16 @@ public class Scope extends ScopeComponent {
         return components;
     }
 
+    /**
+     * Get the scope start label
+     */
     public Label getStart() {
         return start;
     }
 
+    /**
+     * Get the scope end label
+     */
     public Label getEnd() {
         return end;
     }

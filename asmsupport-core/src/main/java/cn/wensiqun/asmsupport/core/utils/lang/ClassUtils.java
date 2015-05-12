@@ -22,7 +22,6 @@ import java.util.List;
 import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.loader.ASMClassLoader;
-import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.core.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -31,9 +30,9 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
+ * Class Helper Class
  * 
  * @author wensiqun at 163.com(Joe Wen)
- *
  */
 public class ClassUtils { 
 
@@ -109,11 +108,7 @@ public class ClassUtils {
     }
 
     /**
-     * 判断innerCls是否是owner的内部类
-     * 
-     * @param owner
-     * @param innerCls
-     * @return
+     * Check a class {@code innerClas} whether or not a inner class of an {@code owner}.
      */
     public static boolean isInnerClass(Class<?> owner, Class<?> innerCls) {
         int ownerIndex = innerCls.getName().indexOf(owner.getName());
@@ -128,16 +123,17 @@ public class ClassUtils {
     }
 
     /**
-     * 通过className获取class实例，这里的参数可以是int，char的那个基本类型
+     * Get class from a class name, the name also support description, internal name in jvm,
+     * and primitive name such int, char.
      * 
-     * @param className
-     * @return
+     * @param className class name, such java.lang.String, [java.lang.String, int, [java/lang/String etc... 
+     * @return Class the java class
      * @throws ClassNotFoundException
      */
     public static Class<?> forName(String className) throws ClassNotFoundException {
         try {
 
-            Class<?> clazz = primitivesToClasses(className);
+            Class<?> clazz = primitiveToClass(className);
             if (clazz != null) {
                 return clazz;
             }
@@ -151,7 +147,7 @@ public class ClassUtils {
 
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            Class<?> cls = (Class<?>) primitivesToClasses(className);
+            Class<?> cls = (Class<?>) primitiveToClass(className);
             if (cls != null) {
                 return cls;
             } else {
@@ -166,84 +162,91 @@ public class ClassUtils {
         }
     }
 
-    public static Class<?> primitivesToClasses(String primNameOrDesc) {
-        if ("boolean".equals(primNameOrDesc)) {
+    /**
+     * Convert a primitive name or description to java class.
+     * @param nameOrDesc primitive name or description 
+     * @return Class java class
+     */
+    public static Class<?> primitiveToClass(String nameOrDesc) {
+        if ("boolean".equals(nameOrDesc)) {
             return boolean.class;
         }
-        if ("int".equals(primNameOrDesc)) {
+        if ("int".equals(nameOrDesc)) {
             return int.class;
         }
-        if ("char".equals(primNameOrDesc)) {
+        if ("char".equals(nameOrDesc)) {
             return char.class;
         }
-        if ("short".equals(primNameOrDesc)) {
+        if ("short".equals(nameOrDesc)) {
             return short.class;
         }
-        if ("int".equals(primNameOrDesc)) {
+        if ("int".equals(nameOrDesc)) {
             return int.class;
         }
-        if ("long".equals(primNameOrDesc)) {
+        if ("long".equals(nameOrDesc)) {
             return long.class;
         }
-        if ("float".equals(primNameOrDesc)) {
+        if ("float".equals(nameOrDesc)) {
             return float.class;
         }
-        if ("double".equals(primNameOrDesc)) {
+        if ("double".equals(nameOrDesc)) {
             return double.class;
         }
-        if ("void".equals(primNameOrDesc)) {
+        if ("void".equals(nameOrDesc)) {
             return void.class;
         }
 
         /* class description */
-        if ("Z".equals(primNameOrDesc)) {
+        if ("Z".equals(nameOrDesc)) {
             return boolean.class;
         }
-        if ("B".equals(primNameOrDesc)) {
+        if ("B".equals(nameOrDesc)) {
             return byte.class;
         }
-        if ("C".equals(primNameOrDesc)) {
+        if ("C".equals(nameOrDesc)) {
             return char.class;
         }
-        if ("S".equals(primNameOrDesc)) {
+        if ("S".equals(nameOrDesc)) {
             return short.class;
         }
-        if ("I".equals(primNameOrDesc)) {
+        if ("I".equals(nameOrDesc)) {
             return int.class;
         }
-        if ("J".equals(primNameOrDesc)) {
+        if ("J".equals(nameOrDesc)) {
             return long.class;
         }
-        if ("F".equals(primNameOrDesc)) {
+        if ("F".equals(nameOrDesc)) {
             return float.class;
         }
-        if ("D".equals(primNameOrDesc)) {
+        if ("D".equals(nameOrDesc)) {
             return double.class;
         }
-        if ("V".equals(primNameOrDesc)) {
+        if ("V".equals(nameOrDesc)) {
             return void.class;
         }
         return null;
     }
 
     /**
+     * According to a method name to find all method meta information 
+     * from a class(whit out super class) 
      * 
-     * @param clazz
-     * @return
+     * @param clazz the method owner
+     * @param methodName the method name
+     * @return a list of {@link AMethodMeta}
      * @throws IOException
      */
-    public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String findName) throws IOException {
+    public static List<AMethodMeta> getAllMethod(Class<?> clazz, final String methodName) throws IOException {
         final AClass owner = AClassFactory.getType(clazz);
         InputStream classStream = ASMClassLoader.getInstance().getResourceAsStream(
                 clazz.getName().replace('.', '/') + ".class");
         ClassReader cr = new ClassReader(classStream);
         final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-
         cr.accept(new ClassAdapter() {
 
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-                if (name.equals(findName)) {
+                if (name.equals(methodName)) {
 
                     if (exceptions == null) {
                         exceptions = new String[0];
@@ -275,17 +278,15 @@ public class ClassUtils {
                 }
                 return super.visitMethod(access, name, desc, signature, exceptions);
             }
-
         }, 0);
-
         return list;
     }
 
     /**
-     * get all interfaces
+     * get all interfaces from a class
      * 
      * @param clazz
-     * @return
+     * @return a class list
      */
     public static List<Class<?>> getAllInterfaces(Class<?> clazz) {
         List<Class<?>> interfaceColl = new ArrayList<Class<?>>();
@@ -294,7 +295,7 @@ public class ClassUtils {
     }
 
     /**
-     * 递归获取class的所有接口，并且保存到传入的List中
+     * Get all interface from a class and put the found classes to a list.
      */
     public static void getAllInterfaces(List<Class<?>> interfaceColl, Class<?> clazz) {
         if (clazz == null || Object.class.equals(clazz)) {
@@ -316,24 +317,6 @@ public class ClassUtils {
             }
         }
 
-    }
-
-    /**
-     * 判断是否可见
-     * 
-     * @param invoker
-     *            调用者所在的类
-     * @param invoked
-     *            被调用的方法或者field所在的类
-     * @param actuallyInvoked
-     *            被调用的方法或者field实际所在的类 actuallyInvoked必须是invoked或是其父类
-     * @param mod
-     *            被调用的方法或者field的修饰符
-     * @return
-     */
-    public static boolean visible(Class<?> invoker, Class<?> invoked, Class<?> actuallyInvoked, int mod) {
-        return AClassUtils.visible(AClassFactory.getType(invoker), AClassFactory.getType(invoked),
-                AClassFactory.getType(actuallyInvoked), mod);
     }
 
 }
