@@ -1,4 +1,4 @@
-![asmsupport](./src/site/resources/images/logo.png)
+![asmsupport](http://asmsupport.github.io/images/logo.png)
 
 [![Build Status](https://travis-ci.org/wensiqun/asmsupport.svg?branch=master)](https://travis-ci.org/wensiqun/asmsupport) [![Maven central](https://maven-badges.herokuapp.com/maven-central/cn.wensiqun/asmsupport/badge.svg)](http://search.maven.org/#search|ga|1|g%3A%22cn.wensiqun%22%20AND%20a%3A%22asmsupport%22)
 

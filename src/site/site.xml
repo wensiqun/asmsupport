@@ -3,7 +3,7 @@
 	
 	<bannerLeft>
 		<name>ASMSupport</name>
-		<src>./images/logo.png</src>
+		<src>http://asmsupport.github.io/images/logo.png</src>
 		<href>http://asmsupport.github.io/</href>
 	</bannerLeft>
 	<skin>
@@ -40,7 +40,7 @@
 			<item name="枚举类型" href="bytecode/enum.html" />
 			<item name="字节码Label" href="bytecode/label.html" />
 			<item name="Java栈" href="bytecode/stack_simple_desc.html" />
-			<item name="字节码指令集" href="/jvmref/opcodes.html" />
+			<item name="字节码指令集" href="http://asmsupport.github.io/jvmref/opcodes.html" />
 		</menu>
 		<menu name="ASMSupport实现原理">
 			<item name="局部变量的实现" href="theory/localvariable.html" />
