@@ -46,6 +46,5 @@
 			<item name="局部变量的实现" href="theory/localvariable.html" />
 			<item name="指令顺序的控制" href="theory/instruction_order.html" />
 		</menu>
-	    <menu ref="modules"/>
 	</body>
 </project>

@@ -10,7 +10,9 @@
     int j = 2;
  
 对应的图如下:
-![](http://asmsupport.github.io/images/theory_instruction_order_1.png)<br/>
+
+<img src="http://asmsupport.github.io/images/theory_instruction_order_1.png"/>
+
 图1
 
 这样我们就将如何规划指令的顺序转换成如何规划操作顺序。按照面向对象的思路，首先必然的是先创建对各种操作抽象成类(比如上面例子中的复制操作)，在各个操作类中定义该操作的指令顺序和规范，这里为所有的操作创建一个父类AbstractOperator，这个类的雏形如下：
@@ -121,7 +123,8 @@ Parameterized接口目前来看应该需要如下方法：
 	
 但是对于上面的代码，由于每次new一个对象的时候都会将当前对象存储到queue中，所以生成的执行队列如下图所示：
 
-![](http://asmsupport.github.io/images/theory_instruction_order_2.png)<br/>
+<img src="http://asmsupport.github.io/images/theory_instruction_order_2.png"/>
+
 图2
 
 ASMSupport拿到这个队列遍历执行execute的时候会执行两次add的execute方法，这样肯定是不对的，目前执行顺序是“i\_assign->add->add->j\_assign”。因为逻辑上add的执行应该交由j\_assign负责，我们期望的顺序是"i\_assign->add->j\_assign"。也就是上图中红线框住的部分应该移除的，上面我们已经介绍过了每个Parameterized类的asArgument方法，所以当我们创建完j_assign应该继续调用add.asArgument()方法，将其从队列中移除，我们改进下代码6：
@@ -136,7 +139,8 @@ ASMSupport拿到这个队列遍历执行execute的时候会执行两次add的exe
 	
 经过这段代码生成的执行队列如下图：
 
-![](http://asmsupport.github.io/images/theory_instruction_order_3.png)<br/>
+<img src="http://asmsupport.github.io/images/theory_instruction_order_3.png"/>
+
 图3
 
 ## 2.程序块的控制
@@ -160,7 +164,8 @@ ASMSupport拿到这个队列遍历执行execute的时候会执行两次add的exe
 	
 这段代码所对应的可执行队列如下：
 
-![](http://asmsupport.github.io/images/theory_instruction_order_4.png)<br/>
+<img src="http://asmsupport.github.io/images/theory_instruction_order_4.png"/>
+
 图3
 
 通过上面的描述，可执行队列的角度上来说，操作和程序块同属于一个类别，所以我们抽象出一个接口Executable，在这个接口中定义两个方法：

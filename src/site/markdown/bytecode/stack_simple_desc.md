@@ -17,7 +17,8 @@
     
 假设线程执行了test()方法，那么下面就是java栈的变化过程
 
-![](http://asmsupport.github.io/images/bytecode_stack_1.png)
+<img src="http://asmsupport.github.io/images/bytecode_stack_1.png"/>
+
 图一
 
 >接下来的部分内容来自于《深入Java虚拟机第二版》，这里只提取其中一小部分有助于理解字节码操作过程的内容。
@@ -61,7 +62,7 @@ java栈帧的的局部变量区是一个以字长为单位，从0开始计数的
 
 上面的段代码当执行到"return s"指令的时候他们对应的局部变量如下：
 
-![](http://asmsupport.github.io/images/bytecode_stack_2.png)
+<img src="http://asmsupport.github.io/images/bytecode_stack_2.png"/>
 
 通过上面我们可以看到nonStaticMethod相对于staticMethod，在第一个位置上多了一个this的引用，这this只存在于实例方法中，表示调用这个方法的对象本身，显然对于类方法staticMethod是没有this这个变量的。
 
@@ -94,7 +95,7 @@ java栈帧的的局部变量区是一个以字长为单位，从0开始计数的
 
 如果你已经看了【ASMSupport局部变量的实现】那么你就会明白这个方法的局部变量如下图：
 
-![](http://asmsupport.github.io/images/bytecode_stack_3.png)
+<img src="http://asmsupport.github.io/images/bytecode_stack_3.png"/>
 
 那么针对上面的代码所生成的字节码class文件如：
 
@@ -172,7 +173,7 @@ java栈帧的的局部变量区是一个以字长为单位，从0开始计数的
 	
 这里iload\_0和iload\_1和istore\_2也是是虚拟机的指令，在执行这段指令之前我们假定局部变量地0个和第1个位置均存放了int类型的值。假设局部变量第0和第1个位置的值分别是10和5，我们用图的方式更直观的表示，下图中栈是从下方入栈的。
 
-![](http://asmsupport.github.io/images/bytecode_stack_4.png)
+<img src="http://asmsupport.github.io/images/bytecode_stack_4.png"/>
 
 
 ### 帧数据区
