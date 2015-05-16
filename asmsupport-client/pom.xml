@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>cn.wensiqun</groupId>
 		<artifactId>asmsupport</artifactId>
-		<version>0.4.1</version>
+		<version>0.4.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>asmsupport-client</artifactId>
 	<name>asmsupport-client</name>
