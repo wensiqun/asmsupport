@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.wensiqun</groupId>
 	<artifactId>asmsupport</artifactId>
@@ -26,8 +27,8 @@
 		<connection>scm:git:git@github.com:wensiqun/asmsupport.git</connection>
 		<developerConnection>scm:git:git@github.com:wensiqun/asmsupport.git</developerConnection>
 		<url>git@github.com:wensiqun/asmsupport.git</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<developers>
 		<developer>
@@ -52,7 +53,7 @@
 		</repository>
 	</distributionManagement>
 	<profiles>
-	    <!-- mvn xxx -P relese -->
+		<!-- mvn xxx -P relese -->
 		<profile>
 			<id>release</id>
 			<build>
@@ -63,7 +64,7 @@
 						<artifactId>maven-source-plugin</artifactId>
 						<version>2.2.1</version>
 						<configuration>
-						    <source>project.build.sourceEncoding</source>
+							<source>project.build.sourceEncoding</source>
 						</configuration>
 						<executions>
 							<execution>
@@ -113,7 +114,7 @@
 			</build>
 		</profile>
 	</profiles>
-    
+
 	<build>
 		<plugins>
 			<plugin>
@@ -149,7 +150,7 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	
+
 	<dependencies>
 
 		<dependency>

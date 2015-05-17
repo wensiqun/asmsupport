@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ASMSupport 0.4.1 - Document">
+<project name="ASMSupport 0.4.2 - Document">
 	
 	<bannerLeft>
 		<name>ASMSupport</name>
@@ -14,6 +14,7 @@
 	
 	<body>
 		<menu name="概述">
+			<item name="0.4.2首页" href="index.html" />
 			<item name="简介" href="summary/summary.html" />
 			<item name="Release Note" href="summary/release-note.html" />
 		</menu>
@@ -40,11 +41,12 @@
 			<item name="枚举类型" href="bytecode/enum.html" />
 			<item name="字节码Label" href="bytecode/label.html" />
 			<item name="Java栈" href="bytecode/stack_simple_desc.html" />
-			<item name="字节码指令集" href="http://asmsupport.github.io/jvmref/opcodes.html" />
+			<item name="字节码指令集" target="_blank" href="http://asmsupport.github.io/jvmref/opcodes.html" />
 		</menu>
 		<menu name="ASMSupport实现原理">
 			<item name="局部变量的实现" href="theory/localvariable.html" />
 			<item name="指令顺序的控制" href="theory/instruction_order.html" />
+			<item name="类图" target="_blank" href="http://asmsupport.github.io/pdfs/asmsupport_0.4.2_diagram.pdf"/>
 		</menu>
 	</body>
 </project>

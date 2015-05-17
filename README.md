@@ -29,8 +29,6 @@ The asmsupport is a java class byte code operate library, it make easier to writ
         <version>x.x.x</version>
     </dependency>
     
-The last stable version is 0.4
-    
 ## License
 
 Asmsupport is licensed under the GNU Lesser General Public License (LGPL)

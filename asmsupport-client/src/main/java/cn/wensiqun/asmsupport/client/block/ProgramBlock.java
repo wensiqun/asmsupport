@@ -62,6 +62,7 @@ import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
@@ -82,8 +83,23 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	ProgramBlock<? extends KernelProgramBlock> parent;
 	
-	public LocalVariable[] getMethodArguments() {
-		return targetBlock.getMethodArguments();
+	LocVar[] locVars; 
+	
+	final static LocVar[] EMPTY_LOCAL_VARS = new LocVar[0];
+	
+	public LocVar[] getMethodArguments() {
+		if(locVars == null) {
+			LocalVariable[] localVariables = targetBlock.getMethodArguments();
+			if(ArrayUtils.isNotEmpty(localVariables)) {
+				locVars = new LocVar[localVariables.length];
+				for(int i = 0; i<locVars.length; i++) {
+					locVars[i] = new LocVar(this.cursor, localVariables[i]);
+				}
+			} else {
+				locVars = EMPTY_LOCAL_VARS;
+			}
+		}
+		return locVars;
 	}
 
 	/**

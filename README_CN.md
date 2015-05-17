@@ -27,8 +27,6 @@ asmsupport是一个字节码操作类库，它能够让程序员非常简单的�
         <version>x.x.x</version>
     </dependency>
     
-目前稳定版本 0.4
-    
 ## 许可
 
 ASMSupport使用的是GNU Lesser General Public License (LGPL)许可。

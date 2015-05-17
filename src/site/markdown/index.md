@@ -4,15 +4,26 @@ ASMSupport是一个字节码操作类库, 他使得程序员更简单的能够�
 
 ## 如何获取
 
-添加一下依赖到你的pom.xml:
+添加依赖到pom.xml:
 
 ```xml
 <dependency>
   <groupId>cn.wensiqun</groupId>
-  <artifactId>asmsupport</artifactId>
-  <version>0.4.1</version>
+  <artifactId>asmsupport-core</artifactId>
+  <version>0.4.2</version>
 </dependency>
 ```
+或者
+
+```xml
+<dependency>
+  <groupId>cn.wensiqun</groupId>
+  <artifactId>asmsupport-client</artifactId>
+  <version>0.4.2</version>
+</dependency>
+```
+
+这两个依赖对应的是asmsupport的两种实现方式，建议使用asmsupport-client。具体模块含义可参考下面内容。
 
 ## 模块
 
