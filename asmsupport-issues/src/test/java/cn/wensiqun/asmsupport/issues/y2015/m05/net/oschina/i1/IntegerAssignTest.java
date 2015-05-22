@@ -1,10 +1,11 @@
-package cn.wensiqun.asmsupport.issues;
+package cn.wensiqun.asmsupport.issues.y2015.m05.net.oschina.i1;
 
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyMethod;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
+import cn.wensiqun.asmsupport.issues.IssuesConstant;
 import org.junit.Assert;
 import org.junit.Test;
 
