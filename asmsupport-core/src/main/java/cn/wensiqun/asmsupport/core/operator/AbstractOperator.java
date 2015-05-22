@@ -205,6 +205,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 insnHelper.box(original.getType());
                 return;
             } else if (AClassUtils.isPrimitiveWrapAClass(original)
+                    && target.isPrimitive()
                     && original.equals(AClassUtils.getPrimitiveWrapAClass(target))) {
                 Type primType = InstructionHelper.getUnBoxedType(original.getType());
                 insnHelper.unbox(original.getType());
