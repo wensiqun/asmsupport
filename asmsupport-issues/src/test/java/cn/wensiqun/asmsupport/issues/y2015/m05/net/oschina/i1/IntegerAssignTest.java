@@ -16,8 +16,6 @@ public class IntegerAssignTest {
     public void test() throws Exception {
         DummyClass dummy = new DummyClass(IntegerAssignTest.class.getPackage().getName() + ".IntegerAssignTest_");
         dummy.public_().setClassOutPutPath(IssuesConstant.classOutPutPath);
-
-//public static int getIntegerValue() {
         DummyMethod dummyMethod = dummy.newMethod("getIntegerValue")
                 .public_().static_().return_(int.class);
 
