@@ -78,20 +78,5 @@ public abstract class AClassFactory {
         arrayClassDesc.append(rootEleType.getDescription());
         return new ArrayClass(rootEleType, dim);
     }
-    
-    /**
-     * Use it internal, this method will get a class it's we want to create.
-     * 
-     * @param version
-     * @param access
-     * @param name
-     * @param superCls
-     * @param interfaces
-     * @return
-     */
-    protected static SemiClass newSemiClass(int version, int access, String name, Class<?> superCls, Class<?>[] interfaces){
-        return new SemiClass(version, access, name, superCls, interfaces);
-    }
-    
 
 }

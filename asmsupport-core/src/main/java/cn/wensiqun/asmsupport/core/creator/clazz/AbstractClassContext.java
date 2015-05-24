@@ -55,8 +55,7 @@ public abstract class AbstractClassContext extends AClassFactory implements ICla
         	}else{
         		classLoader = ASMClassLoader.getInstance();
         	}
-        	classLoader.defineClass(name, b);
-        	clazz = classLoader.findClass(name);
+        	clazz = classLoader.defineClass(name, b);
         } catch (Exception e) {
             throw new ASMSupportException("Error on define class " + name, e);
         }

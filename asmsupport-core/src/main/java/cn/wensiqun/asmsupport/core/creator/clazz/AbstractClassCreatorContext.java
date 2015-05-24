@@ -16,10 +16,11 @@ package cn.wensiqun.asmsupport.core.creator.clazz;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.clazz.MutableClass;
-import cn.wensiqun.asmsupport.core.clazz.SemiClass;
 import cn.wensiqun.asmsupport.core.creator.IFieldCreator;
 import cn.wensiqun.asmsupport.core.creator.IMethodCreator;
 import cn.wensiqun.asmsupport.core.creator.MethodCreator;
@@ -32,11 +33,17 @@ import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreat
 import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.lang.ClassFileUtils;
+import cn.wensiqun.asmsupport.core.utils.lang.InterfaceLooper;
 import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 	
@@ -54,7 +61,7 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
             throw new ClassException("the super class \"" + superCls.getName()
                     + "\" is an interface");
         }
-        sc = newSemiClass(version, access, name, superCls, interfaces);
+        sc = new SemiClass(version, access, name, superCls, interfaces);
         cw = new ClassWriter(0);
         methodCreaters = new ArrayList<IMethodCreator>();
         fieldCreators = new ArrayList<IFieldCreator>();
@@ -300,4 +307,106 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
     }
     
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>End checkOverriedAndCreateBridgeMethod>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    
+    public static class SemiClass extends MutableClass {
+
+    	SemiClass(int version, int access, String name, Class<?> superCls,
+                Class<?>[] interfaces) {
+            this.version = version;
+            this.name = name;
+            this.mod = access;
+            this.superClass = superCls;
+            this.interfaces = interfaces;
+
+            if(!ModifierUtils.isInterface(mod)){
+                this.mod += Opcodes.ACC_SUPER;
+            }
+            
+        }
+
+        @Override
+        public String getDescription() {
+            return new StringBuilder("L").append(getName().replace(".", "/"))
+                    .append(";").toString();
+        }
+        
+        @Override
+        public boolean isPrimitive() {
+            return false;
+        }
+
+        @Override
+        public boolean isArray() {
+            return false;
+        }
+
+        @Override
+        public int getDimension() {
+            return -1;
+        }
+
+        @Override
+        public Field getField(final String name) {
+            
+            final LinkedList<Field> found = new LinkedList<Field>();
+            
+            for(Field gv : getFields()){
+                if(gv.getName().equals(name)){
+                    found.add(gv);
+                }
+            }
+            
+            if(found.isEmpty()) {
+                Class<?> fieldOwner = getSuperClass();
+                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
+                    try {
+                        java.lang.reflect.Field field = fieldOwner.getDeclaredField(name);
+                        found.add(new Field(this,
+                                AClassFactory.getType(fieldOwner),
+                                AClassFactory.getType(field.getType()), field.getModifiers(), name));
+                        break;
+                    } catch (NoSuchFieldException e) {
+                    }
+                }
+            }
+            
+            new InterfaceLooper() {
+                @Override
+                protected boolean process(Class<?> inter) {
+                    try {
+                        java.lang.reflect.Field f = inter.getDeclaredField(name);
+                        found.add(new Field(SemiClass.this,
+                                AClassFactory.getType(inter),
+                                AClassFactory.getType(f.getType()), f.getModifiers(), name));
+                        return true;
+                    } catch (NoSuchFieldException e) {
+                        return false;
+                    }
+                }
+            }.loop(getInterfaces());
+            
+            if(found.size() == 0) {
+                throw new ASMSupportException("Not found field " + name);
+            } else if(found.size() == 1) {
+                return found.getFirst();
+            } 
+
+            StringBuilder errorSuffix = new StringBuilder();
+            for(Field field : found) {
+                errorSuffix.append(field.getDeclaringClass()).append(',');
+            }
+            throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
+        }
+
+        @Override
+        public AClass getNextDimType() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public IClass getRootComponentClass() {
+            throw new UnsupportedOperationException();
+        }
+        
+    }
 }

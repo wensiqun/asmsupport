@@ -23,7 +23,7 @@ import java.util.Set;
 
 import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.clazz.ProductClass;
-import cn.wensiqun.asmsupport.core.clazz.SemiClass;
+import cn.wensiqun.asmsupport.core.creator.clazz.AbstractClassCreatorContext.SemiClass;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.utils.AClassUtils;
