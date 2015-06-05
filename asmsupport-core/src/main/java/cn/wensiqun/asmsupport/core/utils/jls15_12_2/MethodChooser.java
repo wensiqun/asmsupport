@@ -284,11 +284,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 			private void filter(AClass key, AMethodMeta entity){
-				AClass[] potentialMethodArgs = entity.getArgClasses();
-						
+				
 				if(ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
+				
+				AClass[] potentialMethodArgs = entity.getArgClasses();
+				
 				if(ArrayUtils.getLength(argumentTypes) != ArrayUtils.getLength(potentialMethodArgs)) {
                     return;
                 }
@@ -353,8 +355,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				}
 				
 				AClass[] potentialMethodArgs = entity.getArgClasses();
-				int potenMtdArgLen = ArrayUtils.getLength(potentialMethodArgs);
-				for(int i=0; i < potenMtdArgLen - 1 ; i++){
+				int potentialArgumentLength = ArrayUtils.getLength(potentialMethodArgs);
+				for(int i=0; i < potentialArgumentLength - 1 ; i++){
 					AClass actuallyArg = argumentTypes[i];
 					AClass potentialArg = potentialMethodArgs[i];
 					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg) && 
@@ -362,13 +364,25 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 						return;
 				}
 				
-				int actMtdArgLen = ArrayUtils.getLength(argumentTypes);
-				if(actMtdArgLen >= potenMtdArgLen){
-					AClass varargType = ((ArrayClass)potentialMethodArgs[potenMtdArgLen - 1]).getRootComponentClass();
-					for(int i = potenMtdArgLen - 1; i<actMtdArgLen ; i++){
-						AClass actuallyArg = argumentTypes[i];
-						if(!TypeUtils.isSubtyping(actuallyArg, varargType) && 
-						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, varargType))
+				int argumentLength = ArrayUtils.getLength(argumentTypes);
+				if(argumentLength == potentialArgumentLength) {
+					AClass variableArityType = argumentTypes[argumentLength - 1];
+					AClass potentialVariableArityType = potentialMethodArgs[argumentLength - 1];
+					
+					if(TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) || 
+					   ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType)) {
+						list.add(entity);
+						return;
+					}
+				}
+				
+				if(argumentLength >= potentialArgumentLength){
+					
+					AClass potentialVariableArityType = ((ArrayClass)potentialMethodArgs[potentialArgumentLength - 1]).getRootComponentClass();
+					for(int i = potentialArgumentLength - 1; i<argumentLength ; i++){
+						AClass variableArityType = argumentTypes[i];
+						if(!TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) && 
+						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType))
 							return;
 					}
 				}
