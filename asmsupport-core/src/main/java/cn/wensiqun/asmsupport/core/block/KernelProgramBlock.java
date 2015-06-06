@@ -893,7 +893,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             if (pb instanceof Loop) {
                 OperatorFactory.newOperator(GOTO.class, new Class<?>[] { KernelProgramBlock.class, Label.class },
                         getExecutor(), ((Loop) pb).getContinueLabel());
-                // new GOTO(getExecutor(), ((ILoop)pb).getContinueLabel());
                 return;
             }
             pb = pb.getParent();

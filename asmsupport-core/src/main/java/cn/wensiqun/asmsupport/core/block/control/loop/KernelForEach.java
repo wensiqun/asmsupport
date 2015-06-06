@@ -48,7 +48,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
     
     private Label startLbl = new Label();
     private Label conditionLbl = new Label();
-    private Label continueLbl = new Label();
+    private Label arrayContinueLbl = new Label();
     private Label endLbl = new Label();
     
     public KernelForEach(KernelParam elements) {
@@ -101,7 +101,11 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             
             LocalVariable obj = var(((ArrayClass)elements.getResultType()).getNextDimType(), arrayLoad(elements, i) );
             body(obj);
-
+            
+            OperatorFactory.newOperator(Marker.class, 
+                    new Class[]{KernelProgramBlock.class, Label.class}, 
+                    getExecutor(), arrayContinueLbl);
+            
             postinc(i);
             
             OperatorFactory.newOperator(Marker.class, 
@@ -140,7 +144,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
 
     @Override
     public Label getContinueLabel() {
-        return continueLbl;
+        return elements.getResultType().isArray() ? arrayContinueLbl : conditionLbl;
     }
 
 	@Override
