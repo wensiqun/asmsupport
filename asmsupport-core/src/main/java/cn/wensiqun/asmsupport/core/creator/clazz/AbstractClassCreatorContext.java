@@ -71,10 +71,10 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
 	public MutableClass getCurrentClass() {
 		return sc;
 	}
-
-	@Override
-    public Class<?> startup() {
-        String[] interfaceStrs;
+    
+    @Override
+    public byte[] toClassBytes(){
+    	String[] interfaceStrs;
         if(sc.getInterfaces() == null){
             interfaceStrs = new String[0];
         }else{
@@ -128,18 +128,19 @@ public abstract class AbstractClassCreatorContext extends AbstractClassContext {
         for (IMethodCreator imc : methodCreaters) {
             imc.execute();
         }
-
-        byte[] code = cw.toByteArray();
-        
-        if(!StringUtils.isBlank(classOutPutPath)){
-            ClassFileUtils.toLocal(code, classOutPutPath, sc.getName());
+        byte[] classBytes = cw.toByteArray();
+        if(StringUtils.isNotBlank(classOutPutPath)){
+            ClassFileUtils.toLocal(classBytes, classOutPutPath, sc.getName());
         }
-
         if(LOG.isPrintEnabled()){
         	LOG.print("End create class : " + sc.getName().replace('.', '/'));
         }
-        
-        return loadClass(sc.getName(), code);
+        return classBytes;
+    }
+
+	@Override
+    public Class<?> startup() {
+        return loadClass(sc.getName(), toClassBytes());
     }
     
     private void checkOrCreateDefaultConstructor(){

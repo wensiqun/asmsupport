@@ -302,23 +302,25 @@ public class ClassModifier extends AbstractClassContext {
         }
     }
 
+	@Override
+	public byte[] toClassBytes() {
+		ClassModifierClassLoader loader = new ClassModifierClassLoader(this);
+		try {
+			loader.loadClass(productClass.getName());
+			String proxyClassName = productClass.getName();
+			byte[] modifiedBytes = loader.getModifiedClassBytes();
+			if (StringUtils.isNotBlank(getClassOutPutPath())) {
+				ClassFileUtils.toLocal(modifiedBytes, getClassOutPutPath(), proxyClassName);
+			}
+			return modifiedBytes;
+		} catch (ClassNotFoundException e) {
+			throw new ASMSupportException("Class Not Found Exception");
+		}
+	}
+
     @Override
     public Class<?> startup() {
-        ClassModifierClassLoader loader = new ClassModifierClassLoader(this);
-        
-        try {
-            loader.loadClass(productClass.getName());
-            String proxyClassName = productClass.getName();
-            byte[] modifiedBytes = loader.getModifiedClassBytes();
-            if(!StringUtils.isBlank(getClassOutPutPath())){
-                ClassFileUtils.toLocal(modifiedBytes, getClassOutPutPath(), proxyClassName);
-            }
-            return loadClass(proxyClassName, modifiedBytes);
-        } catch (ClassNotFoundException e) {
-            throw new ASMSupportException("Class Not Found Exception");
-        } finally{
-            //cleanCach();
-        }
+        return loadClass(productClass.getName(), toClassBytes());
     }
     
 	@Override

@@ -57,5 +57,13 @@ public interface IClassContext {
      * @return
      */
     Class<?> startup();
+    
+    
+    /**
+     * Get class bytes
+     * 
+     * @return
+     */
+    byte[] toClassBytes();
 	
 }
