@@ -27,9 +27,6 @@ import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.clazz.MutableClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -93,10 +90,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelGreaterTh
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessEqual;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessThan;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelNotEqual;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
-import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -104,8 +98,14 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 /**
  * A implements of ProgramBlock
@@ -925,7 +925,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
-        return getMethodDeclaringClass().getThisVariable();
+        return getMethod().getThisVariable();
     }
 
     @Override
@@ -938,19 +938,19 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
             throw new ASMSupportException("cannot use \"super\" keyword in static block");
         }
-        return getMethodDeclaringClass().getSuperVariable();
+        return getMethod().getSuperVariable();
     }
 
     @Override
     public final MethodInvoker callOrig() {
-        if (getMethod().getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY) {
+        if (getMethod().getMode() == ByteCodeConstant.METHOD_CREATE_MODE_MODIFY) {
             String originalMethodName = getMethod().getMeta().getName();
-            if (originalMethodName.equals(ASConstant.CLINIT)) {
-                originalMethodName = ASConstant.CLINIT_PROXY;
-            } else if (originalMethodName.equals(ASConstant.INIT)) {
-                originalMethodName = ASConstant.INIT_PROXY;
+            if (originalMethodName.equals(ByteCodeConstant.CLINIT)) {
+                originalMethodName = ByteCodeConstant.CLINIT_PROXY;
+            } else if (originalMethodName.equals(ByteCodeConstant.INIT)) {
+                originalMethodName = ByteCodeConstant.INIT_PROXY;
             }
-            originalMethodName += ASConstant.METHOD_PROXY_SUFFIX;
+            originalMethodName += ByteCodeConstant.METHOD_PROXY_SUFFIX;
             if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
                 return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {

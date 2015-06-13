@@ -19,24 +19,24 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.AnyException;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
-import cn.wensiqun.asmsupport.core.utils.memory.ScopeComponent;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
+import cn.wensiqun.asmsupport.core.utils.memory.ScopeComponent;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 
 public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
 
@@ -71,7 +71,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         AMethodMeta meta = method.getMeta();
         if (!ModifierUtils.isStatic(meta.getModifier())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
-                    String.class, Type.class, Type.class }, getExecutor(), ASConstant.THIS, meta.getOwner().getType(),
+                    String.class, Type.class, Type.class }, getExecutor(), ByteCodeConstant.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());
         }
 

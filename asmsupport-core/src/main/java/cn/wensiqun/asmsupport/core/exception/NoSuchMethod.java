@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.exception;
 
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 
 public class NoSuchMethod extends RuntimeException {
 

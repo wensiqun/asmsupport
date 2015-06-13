@@ -5,10 +5,10 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.ProductClass;
 import cn.wensiqun.asmsupport.sample.client.json.JSONPool;
 import cn.wensiqun.asmsupport.sample.client.json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 
 public class BeanGeneratorChain extends AbstractGeneratorChain {
 

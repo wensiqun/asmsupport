@@ -15,32 +15,43 @@
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.core.clazz.ProductClass;
-import cn.wensiqun.asmsupport.core.creator.clazz.AbstractClassCreatorContext.SemiClass;
-import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.utils.AClassUtils;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.core.utils.collections.LinkedMultiValueMap;
-import cn.wensiqun.asmsupport.core.utils.collections.MapLooper;
-import cn.wensiqun.asmsupport.core.utils.collections.MultiValueMap;
-import cn.wensiqun.asmsupport.core.utils.jls.TypeUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.ClassUtils;
+import cn.wensiqun.asmsupport.core.builder.impl.AbstractClassCreator.SemiClass;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
+import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
+import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
+import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
+import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
+import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
+import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;
+import cn.wensiqun.asmsupport.utils.collections.MapLooper;
+import cn.wensiqun.asmsupport.utils.collections.MultiValueMap;
+import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 
 public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 
+	private ClassLoader classLoader;
+	
 	/**
 	 * where is this method invoke operator
 	 */
@@ -61,9 +72,9 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
      */
     protected AClass[] argumentTypes;
     
-	public MethodChooser(AClass whereCall, AClass directCallClass,
+	public MethodChooser(ClassLoader classLoader, AClass whereCall, AClass directCallClass,
 			String name, AClass[] argumentTypes) {
-		super();
+		this.classLoader = classLoader;
 		this.whereCall = whereCall;
 		this.directCallClass = directCallClass;
 		this.name = name;
@@ -195,30 +206,29 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		
 		try {
 		    if(directCallClass instanceof SemiClass){
-	            if(ASConstant.INIT.equals(name)){
-	                for(AMethod method : ((SemiClass)directCallClass).getConstructors()){
-	                    tempPotentially.add(directCallClass, method.getMeta());
+	            if(ByteCodeConstant.INIT.equals(name)){
+	                for(AMethodMeta method : ((SemiClass)directCallClass).getConstructors()){
+	                    tempPotentially.add(directCallClass, method);
 	                }
 	            }else{
-	                for(AMethod method : ((SemiClass)directCallClass).getMethods()){
-	                    tempPotentially.add(directCallClass, method.getMeta());
+	                for(AMethodMeta method : ((SemiClass)directCallClass).getMethods()){
+	                    tempPotentially.add(directCallClass, method);
 	                }
 	                fetchMatchMethod(tempPotentially, directCallClass.getSuperClass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
-	            if(ASConstant.INIT.equals(name)){
-	                for(AMethod method : ((ProductClass)directCallClass).getConstructors()){
-	                    tempPotentially.add(directCallClass, method.getMeta());
+	            if(ByteCodeConstant.INIT.equals(name)){
+	                for(AMethodMeta method : ((ProductClass)directCallClass).getConstructors()){
+	                    tempPotentially.add(directCallClass, method);
 	                }
 	                
-	                List<AMethodMeta> methods = ClassUtils.getAllMethod(((ProductClass) directCallClass).getReallyClass(), name);
-	                for(AMethodMeta me : methods){
+	                for(AMethodMeta me : getAllMethod(((ProductClass) directCallClass).getReallyClass(), name)){
 	                    tempPotentially.add(me.getActuallyOwner(), me);
 	                }
 	                
 	            }else{
-	                for(AMethod method : ((ProductClass)directCallClass).getMethods()){
-	                    tempPotentially.add(directCallClass, method.getMeta());
+	                for(AMethodMeta method : ((ProductClass)directCallClass).getMethods()){
+	                    tempPotentially.add(directCallClass, method);
 	                }
 	                fetchMatchMethod(tempPotentially, ((ProductClass) directCallClass).getReallyClass(), name);
 	            }
@@ -244,8 +254,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			return;
 		}
 		
-		List<AMethodMeta> methods = ClassUtils.getAllMethod(where, name);
-		for(AMethodMeta me : methods){
+		for(AMethodMeta me : getAllMethod(where, name)){
 			potentially.add(me.getActuallyOwner(), me);
 		}
 		
@@ -527,6 +536,63 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		
 		return true;
 	}
+	
+
+
+    /**
+     * According to a method name to find all method meta information 
+     * from a class(whit out super class) 
+     * 
+     * @param clazz the method owner
+     * @param methodName the method name
+     * @return a list of {@link AMethodMeta}
+     * @throws IOException
+     */
+    public List<AMethodMeta> getAllMethod(Class<?> clazz, final String methodName) throws IOException {
+        final AClass owner = AClassFactory.getType(clazz);
+        InputStream classStream = classLoader.getResourceAsStream(
+                clazz.getName().replace('.', '/') + ".class");
+        ClassReader cr = new ClassReader(classStream);
+        final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+        cr.accept(new ClassAdapter() {
+
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+                if (name.equals(methodName)) {
+
+                    if (exceptions == null) {
+                        exceptions = new String[0];
+                    }
+
+                    try {
+
+                        Type[] types = Type.getArgumentTypes(desc);
+                        AClass[] aclass = new AClass[types.length];
+                        String[] args = new String[types.length];
+                        for (int i = 0; i < types.length; i++) {
+                            aclass[i] = AClassFactory.getType(ClassUtils.forName(types[i].getDescriptor()));
+                            args[i] = "arg" + i;
+                        }
+
+                        AClass returnType = AClassFactory.getType(ClassUtils.forName(Type.getReturnType(desc).getDescriptor()));
+
+                        AClass[] exceptionAclassArray = new AClass[exceptions.length];
+                        for (int i = 0; i < exceptions.length; i++) {
+                            exceptionAclassArray[i] = AClassFactory.getType(ClassUtils.forName(exceptions[i]));
+                        }
+
+                        AMethodMeta me = new AMethodMeta(name, owner, owner, aclass, args, returnType,
+                                exceptionAclassArray, access);
+                        list.add(me);
+                    } catch (ClassNotFoundException e) {
+                        throw new ASMSupportException(e);
+                    }
+                }
+                return super.visitMethod(access, name, desc, signature, exceptions);
+            }
+        }, 0);
+        return list;
+    }
 	
 	
 }

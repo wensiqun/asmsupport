@@ -6,14 +6,14 @@ import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelFinally;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class TryCatchFinallyBlockGenerator extends AbstractExample
 {
@@ -24,7 +24,7 @@ public class TryCatchFinallyBlockGenerator extends AbstractExample
         final AClass nullpointer = AClassFactory.getType(NullPointerException.class);
         
         final MyList testMethodNames = new MyList();
-        ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryCatchFinallyBlockGeneratorExample", null, null);
+        ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryCatchFinallyBlockGeneratorExample", null, null);
         
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "runtimeException", null, null, null, null,  new KernelStaticMethodBody(){
 

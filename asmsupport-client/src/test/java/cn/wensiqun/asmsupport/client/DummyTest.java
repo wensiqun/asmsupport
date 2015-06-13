@@ -330,8 +330,10 @@ public class DummyTest {
     @Test
     public void test() {
         try {
-            Assert.assertEquals(ExceptedDummy.excepted(), amsupportTest());
+        	String actual = amsupportTest();
+            Assert.assertEquals(ExceptedDummy.excepted(), actual);
         } catch (Exception e) {
+        	e.printStackTrace();
             Assert.fail(e.getMessage());
         }
     }

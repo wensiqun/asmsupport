@@ -21,20 +21,23 @@ import cn.wensiqun.asmsupport.core.asm.StackLocalMethodVisitor;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.MutableClass;
-import cn.wensiqun.asmsupport.core.creator.IClassContext;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.collections.CollectionUtils;
+import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 /**
  * The method
@@ -50,7 +53,7 @@ public class AMethod {
     private Stack stack;
 
     /** 0 : indicate add, 1 : indicate modif*/
-    private int mode = ASConstant.METHOD_CREATE_MODE_ADD;
+    private int mode = ByteCodeConstant.METHOD_CREATE_MODE_ADD;
 
     /** The local vairable container of current method*/
     private LocalVariables locals;
@@ -63,27 +66,31 @@ public class AMethod {
     /** A counter indicate the jvm instruction count */
     private int instructionCounter = 0;
 
-    /** A context holder */
-    private IClassContext context;
-
     /** Indicate the method that's need to throw in this method  */
     private ThrowExceptionContainer exceptionContainer;
 
     /** The method of current method */
     private LocalVariable[] arguments;
 
+    /** super key word  */
+    private SuperVariable superVariable;
+
+    /** this key word */
+    private ThisVariable thisVariable;
+
+    private ClassVisitor classVisitor;
     
-    public AMethod(AMethodMeta meta, IClassContext context, AbstractKernelMethodBody methodBody, int mode) {
-        super();
+    private AsmsupportClassLoader classLoader;
+    
+    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, AsmsupportClassLoader classLoader, AbstractKernelMethodBody methodBody, int mode) {
+        this.classVisitor = classVisitor;
+        this.classLoader = classLoader;
         this.meta = meta;
-        this.context = context;
+        this.mode = mode;
         this.exceptionContainer = new ThrowExceptionContainer();
         this.stack = new Stack();
         this.locals = new LocalVariables();
-        this.mode = mode;
-
         CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
-
         this.insnHelper = new CommonInstructionHelper(this);
 
         if (!ModifierUtils.isAbstract(meta.getModifier())) {
@@ -137,7 +144,7 @@ public class AMethod {
             exceptions[i++] = te.getType().getInternalName();
         }
 
-        MethodVisitor mv = context.getClassVisitor().visitMethod(meta.getModifier(), meta.getName(), meta.getDescription(), null,
+        MethodVisitor mv = classVisitor.visitMethod(meta.getModifier(), meta.getName(), meta.getDescription(), null,
                 exceptions);
 
         insnHelper.setMv(new StackLocalMethodVisitor(mv, stack));
@@ -213,7 +220,7 @@ public class AMethod {
      * that declares the method represented by this {@code AMethod} object.
      */
     public MutableClass getDeclaringClass() {
-        return context.getCurrentClass();
+        return (MutableClass) meta.getActuallyOwner();
     }
 
     /**
@@ -233,5 +240,23 @@ public class AMethod {
     public int getMode() {
         return mode;
     }
+    
+    public SuperVariable getSuperVariable() {
+    	if(superVariable == null){
+            superVariable = new SuperVariable(meta.getActuallyOwner());
+    	}
+        return superVariable;
+    }
+
+    public ThisVariable getThisVariable() {
+    	if(thisVariable == null){
+            thisVariable = new ThisVariable(meta.getActuallyOwner());
+    	}
+        return thisVariable;
+    }
+
+	public AsmsupportClassLoader getClassLoader() {
+		return classLoader;
+	}
 
 }

@@ -4,13 +4,13 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * 这个例子将实现instanceof操作的字节码生产
@@ -76,28 +76,28 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 
 	public static void main(String[] args) {
         //create class A
-		ClassCreator ACreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
+		ClassBuilderImpl ACreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
 		ACreator.createField("i", 0, AClassFactory.getType(int.class));
 		ACreator.createField("j", 0, AClassFactory.getType(int.class));
 		final Class A = ACreator.startup();
 		
         //create class B
-		ClassCreator BCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
+		ClassBuilderImpl BCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
 		BCreator.createField("i", 0, AClassFactory.getType(int.class));
 		BCreator.createField("j", 0, AClassFactory.getType(int.class));
 		final Class B = BCreator.startup();
 		
 		//create class C
-		ClassCreator CCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
+		ClassBuilderImpl CCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", A, null);
 		CCreator.createField("k", 0, AClassFactory.getType(int.class));
 		final Class C = CCreator.startup();
 
 		//create class D
-		ClassCreator DCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
+		ClassBuilderImpl DCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", A, null);
 		DCreator.createField("k", 0, AClassFactory.getType(int.class));
 		final Class D = DCreator.startup();
 		
-        ClassCreator creator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
+        ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
 		
 		/*
 		 * 生成一个main方法

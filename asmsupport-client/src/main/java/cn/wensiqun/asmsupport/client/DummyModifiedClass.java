@@ -19,18 +19,19 @@ import java.util.LinkedList;
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyModifiedClass {
 
     private Class<?> original;
 
     /** Specify the classloader */
-    private ClassLoader classLoader;
+    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -67,7 +68,7 @@ public class DummyModifiedClass {
      * @param cl
      * @return
      */
-    public DummyModifiedClass setClassLoader(ClassLoader cl) {
+    public DummyModifiedClass setClassLoader(AsmsupportClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -192,7 +193,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyModifiedClass modifyConstructor(Class<?>[] argTypes, ModifiedMethodBody body) {
-        return this.modify(ASConstant.INIT, argTypes, body);
+        return this.modify(ByteCodeConstant.INIT, argTypes, body);
     }
     
     /**
@@ -202,7 +203,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyModifiedClass modifyStaticBlock(ModifiedMethodBody body) {
-        return this.modify(ASConstant.CLINIT, null, body);
+        return this.modify(ByteCodeConstant.CLINIT, null, body);
     }
 
     /**
@@ -211,13 +212,13 @@ public class DummyModifiedClass {
      * @return
      */
     public Class<?> build() {
-        ASConstant.LOG_FACTORY_LOCAL.remove();
+    	LogFactory.LOG_FACTORY_LOCAL.remove();
         if(StringUtils.isNotBlank(logFilePath)) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
         } else if(printLog) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        ClassModifier cmi = new ClassModifier(original);
+        ClassModifier cmi = classLoader == null ? new ClassModifier(original) : new ClassModifier(original, classLoader) ;
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), 
@@ -250,7 +251,6 @@ public class DummyModifiedClass {
             cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), BlockPostern.getTarget(dummy.getMethodBody()));
         }
         
-        cmi.setParentClassLoader(classLoader);
         cmi.setClassOutPutPath(classOutPutPath);
         return cmi.startup();
     }

@@ -13,10 +13,10 @@ import cn.wensiqun.asmsupport.client.block.IF;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class ProxyGenerator {
 

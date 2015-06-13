@@ -18,14 +18,14 @@ import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyInterface {
 
@@ -42,7 +42,7 @@ public class DummyInterface {
     private Class<?>[] interfaces;
     
     /** Specify the classloader */
-    private ClassLoader classLoader;
+    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -232,7 +232,7 @@ public class DummyInterface {
      * @param cl
      * @return
      */
-    public DummyInterface setClassLoader(ClassLoader cl) {
+    public DummyInterface setClassLoader(AsmsupportClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -347,14 +347,21 @@ public class DummyInterface {
      * @return
      */
     public Class<?> build() {
-        ASConstant.LOG_FACTORY_LOCAL.remove();
+    	LogFactory.LOG_FACTORY_LOCAL.remove();
         if(StringUtils.isNotBlank(logFilePath)) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
         } else if(printLog) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        InterfaceCreator ici = new InterfaceCreator(javaVersion, 
-        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
+        InterfaceBuilderImpl ici; 
+        if(this.classLoader == null) {
+        	ici = new InterfaceBuilderImpl(javaVersion, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
+        } else {
+        	ici = new InterfaceBuilderImpl(javaVersion, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, classLoader);
+        }
+        		
         
         for(DummyField dummy : fieldDummies) {
             if(dummy.getType() == null) {
@@ -374,7 +381,6 @@ public class DummyInterface {
             ici.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
-        ici.setParentClassLoader(classLoader);
         ici.setClassOutPutPath(classOutPutPath);
         return ici.startup();
     }

@@ -1,6 +1,5 @@
 package cn.wensiqun.asmsupport.issues.fixed.earlier.test4646;
 
-import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.Child;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.ChildChild;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.parent.AbstractClass;
 

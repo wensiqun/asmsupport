@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.block;
 
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
-import cn.wensiqun.asmsupport.core.utils.collections.CommonLinkedList;
+import cn.wensiqun.asmsupport.utils.collections.CommonLinkedList;
 
 public abstract class AbstractKernelBlock extends ByteCodeExecutor implements Cloneable {
 
     private CommonLinkedList<ByteCodeExecutor> queue;
-
+    
 	public AbstractKernelBlock() {
 		this.queue = new CommonLinkedList<ByteCodeExecutor>();
 	}
@@ -37,4 +37,6 @@ public abstract class AbstractKernelBlock extends ByteCodeExecutor implements Cl
     public void removeExe(ByteCodeExecutor exe) {
         getQueue().remove(exe);
     }
+    
+    
 }

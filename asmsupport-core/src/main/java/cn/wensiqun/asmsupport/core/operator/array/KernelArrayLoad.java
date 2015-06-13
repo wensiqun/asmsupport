@@ -18,12 +18,12 @@
 package cn.wensiqun.asmsupport.core.operator.array;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)

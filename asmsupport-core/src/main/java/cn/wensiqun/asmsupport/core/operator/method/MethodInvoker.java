@@ -19,26 +19,26 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
-import cn.wensiqun.asmsupport.core.utils.AClassUtils;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
-import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 public abstract class MethodInvoker extends AbstractParamOperator {
 
@@ -105,11 +105,11 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         argumentClassList.toArray(argumentClasses);
         
     	AMethod currentMethod = block.getMethod();
-        if(currentMethod.getMode() == ASConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASConstant.METHOD_PROXY_SUFFIX)){
+        if(currentMethod.getMode() == ByteCodeConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ByteCodeConstant.METHOD_PROXY_SUFFIX)){
         	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
             mtdEntity.setName(name);
         }else{
-            mtdEntity = new MethodChooser(block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
+            mtdEntity = new MethodChooser(block.getMethod().getClassLoader(), block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
             if(mtdEntity == null){
                 throw new NoSuchMethod(methodOwner, name, argumentClasses);
             }
@@ -179,7 +179,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     }
 
     public final AClass getReturnClass() {
-        if(name.equals(ASConstant.INIT)){
+        if(name.equals(ByteCodeConstant.INIT)){
             return methodOwner;
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();

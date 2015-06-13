@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * The exception container. 

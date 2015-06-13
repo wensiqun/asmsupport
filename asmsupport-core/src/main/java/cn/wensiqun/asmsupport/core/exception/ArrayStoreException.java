@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.exception;
 
-import cn.wensiqun.asmsupport.core.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 
 /**
  * 

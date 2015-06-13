@@ -15,12 +15,12 @@
 package cn.wensiqun.asmsupport.core.operator.method;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 
 /**
  * Call constructor opertion
@@ -33,7 +33,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParam[] arguments) {
-        super(block, AClassFactory.getType(aclass.getSuperClass()), ASConstant.INIT, arguments);
+        super(block, AClassFactory.getType(aclass.getSuperClass()), ByteCodeConstant.INIT, arguments);
     }
 
     @Override

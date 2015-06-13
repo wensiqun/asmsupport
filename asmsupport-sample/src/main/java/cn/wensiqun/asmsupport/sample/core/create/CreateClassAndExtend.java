@@ -2,21 +2,21 @@ package cn.wensiqun.asmsupport.sample.core.create;
 
 import java.util.Random;
 
-import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 
 public class CreateClassAndExtend extends AbstractExample {
 
@@ -37,7 +37,7 @@ public class CreateClassAndExtend extends AbstractExample {
 			}
 		});
 		
-		byModifyModifer.modifyMethod(ASConstant.CLINIT, null, new KernelModifiedMethodBody(){
+		byModifyModifer.modifyMethod(ByteCodeConstant.CLINIT, null, new KernelModifiedMethodBody(){
 			@Override
 			public void body(LocalVariable... argus) {
 				GlobalVariable age = val(getMethodDeclaringClass()).field("age");
@@ -91,7 +91,7 @@ public class CreateClassAndExtend extends AbstractExample {
 		byModifyModifer.setClassOutPutPath(classOutPutPath);
 		Class<?> ByModify = byModifyModifer.startup();
 		
-        ClassCreator childCreator = new ClassCreator(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", ByModify, null);
+        ClassBuilderImpl childCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", ByModify, null);
 		
 		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
@@ -111,7 +111,7 @@ public class CreateClassAndExtend extends AbstractExample {
 		Class<?> cls = childCreator.startup();
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
-		if(childCreator instanceof ClassCreator){
+		if(childCreator instanceof ClassBuilderImpl){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {

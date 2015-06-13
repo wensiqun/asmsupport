@@ -7,10 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 
 public class MethodChooserTest {
 
@@ -24,7 +25,9 @@ public class MethodChooserTest {
 
 	@Test
 	public void testIdentifyPotentiallyApplicableMethods() {
-		MethodChooser am = new MethodChooser(AClassFactory.getType(this.getClass()), 
+		MethodChooser am = new MethodChooser(
+				CachedThreadLocalClassLoader.getInstance(), 
+				AClassFactory.getType(this.getClass()), 
 				AClassFactory.getType(Child.class), 
 				"work", new AClass[]{AClassFactory.getType(Object.class)}){
 

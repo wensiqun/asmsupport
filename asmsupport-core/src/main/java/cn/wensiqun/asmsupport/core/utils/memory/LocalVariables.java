@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 
 /**
  * Represent a local variables of stack frame in jvm.

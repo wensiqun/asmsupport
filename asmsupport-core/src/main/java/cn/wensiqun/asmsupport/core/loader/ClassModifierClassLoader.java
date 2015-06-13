@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.loader;
 import java.io.InputStream;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.ClassModifierClassAdapter;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassModifier;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
@@ -53,7 +53,7 @@ public class ClassModifierClassLoader extends ClassLoader {
 			ClassReader cr = new ClassReader(is);
 			ClassWriter cw = new ClassWriter(0);
 			ClassVisitor cv = new ClassModifierClassAdapter(cw, modifier);
-			modifier.setClassWriter(cw);
+			//modifier.setClassWriter(cw);
 			cr.accept(cv, 0);
 			modifiedClassBytes = cw.toByteArray();
 			

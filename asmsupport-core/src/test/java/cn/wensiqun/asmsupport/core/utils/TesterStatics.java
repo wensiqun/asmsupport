@@ -2,9 +2,8 @@ package cn.wensiqun.asmsupport.core.utils;
 
 import org.junit.Ignore;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 @Ignore
 public class TesterStatics

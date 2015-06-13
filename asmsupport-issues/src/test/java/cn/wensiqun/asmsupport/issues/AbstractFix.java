@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.issues;
 
-import cn.wensiqun.asmsupport.core.creator.IClassContext;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 
@@ -12,7 +12,7 @@ public abstract class AbstractFix {
 	 */
 	public static GlobalVariable systemOut = Value.value(System.class).field("out");
 	
-	public static Class<?> generate(IClassContext creator){
+	public static Class<?> generate(IClassBuilder creator){
 		//_这是Class的输出路径。主要为了调试作用。我们通过asmsupport生成的class将获输出到这个路径
 		//你可以通过反编译软件看看我们生成的结果
 		creator.setClassOutPutPath(IssuesConstant.classOutPutPath);
@@ -22,7 +22,7 @@ public abstract class AbstractFix {
 		Class<?> cls = creator.startup();
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
-		if(creator instanceof ClassCreator){
+		if(creator instanceof ClassBuilderImpl){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {

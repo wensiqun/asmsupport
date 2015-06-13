@@ -3,13 +3,13 @@ package cn.wensiqun.asmsupport.sample.core.create;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.clazz.InterfaceCreator;
+import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * 这里类中我们主要内容如下:
@@ -39,7 +39,7 @@ public class CreateInterface extends AbstractExample {
 		 * 2.接口的全路径名
 		 * 3.接口所继承哪些接口,是一个Class的数组
 		 */
-		InterfaceCreator interfaceCreator = new InterfaceCreator(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
+		InterfaceBuilderImpl interfaceCreator = new InterfaceBuilderImpl(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
 		
 		/*
 		 * 通过createMethod声明方法

@@ -18,14 +18,14 @@ import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {
 
@@ -45,7 +45,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     private Class<?>[] interfaces;
 
     /** Specify the classloader */
-    private ClassLoader classLoader;
+    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -242,7 +242,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @param cl
      * @return
      */
-    public DummyClass setClassLoader(ClassLoader cl) {
+    public DummyClass setClassLoader(AsmsupportClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -365,15 +365,24 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public Class<?> build() {
-        ASConstant.LOG_FACTORY_LOCAL.remove();
+    	LogFactory.LOG_FACTORY_LOCAL.remove();
         if(StringUtils.isNotBlank(logFilePath)) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
         } else if(printLog) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        ClassCreator cci = new ClassCreator(javaVersion, modifiers, 
+        ClassBuilderImpl cci = new ClassBuilderImpl(javaVersion, modifiers, 
         		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
         				parent, interfaces);
+        if(classLoader != null) {
+        	cci = new ClassBuilderImpl(javaVersion, modifiers, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
+            				parent, interfaces, classLoader);
+        } else {
+        	cci = new ClassBuilderImpl(javaVersion, modifiers, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
+            				parent, interfaces);
+        }
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cci.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), BlockPostern.getTarget(dummy.getConstructorBody()));    
@@ -402,7 +411,6 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
             cci.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
         
-        cci.setParentClassLoader(classLoader);
         cci.setClassOutPutPath(classOutPutPath);
         return cci.startup();
     }

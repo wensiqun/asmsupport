@@ -20,13 +20,13 @@ import java.util.Set;
 
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
-import cn.wensiqun.asmsupport.core.creator.clazz.EnumCreator;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.builder.impl.EnumBuilderImpl;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
-import cn.wensiqun.asmsupport.core.utils.lang.StringUtils;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyEnum {
 
@@ -58,7 +58,7 @@ public class DummyEnum {
     private LinkedList<DummyMethod> methodDummies = new LinkedList<DummyMethod>();
 
     /** Specify the classloader */
-    private ClassLoader classLoader;
+    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -170,7 +170,7 @@ public class DummyEnum {
      * @param cl
      * @return
      */
-    public DummyEnum setClassLoader(ClassLoader cl) {
+    public DummyEnum setClassLoader(AsmsupportClassLoader cl) {
         this.classLoader = cl;
         return this;
     }
@@ -326,14 +326,21 @@ public class DummyEnum {
      * @return
      */
     public Class<?> build() {
-        ASConstant.LOG_FACTORY_LOCAL.remove();
+    	LogFactory.LOG_FACTORY_LOCAL.remove();
         if(StringUtils.isNotBlank(logFilePath)) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory(logFilePath)); 
         } else if(printLog) {
-            ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory()); 
+        	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        EnumCreator eci = new EnumCreator(javaVersion, 
-        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
+        EnumBuilderImpl eci; 
+        if(this.classLoader == null) {
+        	eci = new EnumBuilderImpl(javaVersion, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
+        } else {
+        	eci = new EnumBuilderImpl(javaVersion, 
+            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, classLoader);
+        }
+        		
         for(DummyEnumConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), BlockPostern.getTarget(dummy.getConstructorBody()));    
@@ -368,8 +375,6 @@ public class DummyEnum {
         if(staticBlock != null) {
             eci.createStaticBlock(BlockPostern.getTarget(staticBlock));
         }
-        
-        eci.setParentClassLoader(classLoader);
         eci.setClassOutPutPath(classOutPutPath);
         return eci.startup();
     }

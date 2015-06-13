@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.creator.MethodCreator;
-import cn.wensiqun.asmsupport.core.definition.method.AMethod;
+import cn.wensiqun.asmsupport.core.builder.impl.MethodBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 
 /**
@@ -35,14 +35,14 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
  */
 public class OverrideBridgeMethodCreator {
 	
-	private AMethod validateMethod;
+	private AMethodMeta validateMethod;
 	
-	public OverrideBridgeMethodCreator(AMethod validateMethod) {
+	public OverrideBridgeMethodCreator(AMethodMeta validateMethod) {
 		this.validateMethod = validateMethod;
 	}
 
-	public List<MethodCreator> getList(){
-		List<MethodCreator> creatorList = new ArrayList<MethodCreator>();
+	public List<MethodBuilderImpl> getList(){
+		List<MethodBuilderImpl> creatorList = new ArrayList<MethodBuilderImpl>();
 		List<java.lang.reflect.Method> parentMethods = foundParentMethod();
 		for(java.lang.reflect.Method method : parentMethods){
 			if(needBridge(validateMethod, method)){
@@ -84,8 +84,8 @@ public class OverrideBridgeMethodCreator {
     	return false;
     }
     
-    private boolean needBridge(AMethod method, java.lang.reflect.Method parent){
-    	Type implReturnType = method.getMeta().getReturnType();
+    private boolean needBridge(AMethodMeta method, java.lang.reflect.Method parent){
+    	Type implReturnType = method.getReturnType();
     	Class<?> parentReturnClass = parent.getReturnType();
     	Type parentReturnType = parentReturnClass == null ? Type.VOID_TYPE : Type.getType(parentReturnClass);
     	if(parentReturnType == null){
@@ -100,21 +100,21 @@ public class OverrideBridgeMethodCreator {
      * @param method the overide method
      * @param overriden the super method
      */
-    private MethodCreator createBridgeMethodCreator(AMethod method, java.lang.reflect.Method overriden){
-    	final String name = method.getMeta().getName();
+    private MethodBuilderImpl createBridgeMethodCreator(AMethodMeta method, java.lang.reflect.Method overriden){
+    	final String name = method.getName();
     	
-    	AClass[] argClasses = method.getMeta().getArgClasses();
+    	AClass[] argClasses = method.getArgClasses();
     	
-    	String[] argNames = method.getMeta().getArgNames();
+    	String[] argNames = method.getArgNames();
     	
     	AClass returnClass = AClassFactory.getType(overriden.getReturnType());
     	
-    	AClass[] exceptions = method.getMeta().getExceptions();
+    	AClass[] exceptions = method.getExceptions();
     	
     	//remove abstract flag first and then add bridge flag.
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
-    	return MethodCreator.methodCreatorForAdd(name, argClasses, argNames,
+    	return MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
                 returnClass, exceptions, access, new KernelMethodBody(){
 
 					@Override

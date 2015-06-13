@@ -19,13 +19,13 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 
 
 /**
@@ -42,7 +42,7 @@ public class SuperVariable extends ImplicitVariable{
                 AClassFactory.getType(aclass.getSuperClass()), 
                 AClassFactory.getType(aclass.getSuperClass()), 
                 AClassFactory.getType(aclass.getSuperClass()), 
-                Opcodes.ACC_FINAL, ASConstant.SUPER);
+                Opcodes.ACC_FINAL, ByteCodeConstant.SUPER);
     }
 
     @Override

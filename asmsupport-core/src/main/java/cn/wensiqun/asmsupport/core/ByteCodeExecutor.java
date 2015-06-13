@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.utils.collections.LinkedListNode;
+import cn.wensiqun.asmsupport.utils.collections.LinkedListNode;
 
 
 
@@ -26,5 +26,5 @@ import cn.wensiqun.asmsupport.core.utils.collections.LinkedListNode;
  * 
  */
 public abstract class ByteCodeExecutor extends LinkedListNode implements Executable{
-    
+	
 }

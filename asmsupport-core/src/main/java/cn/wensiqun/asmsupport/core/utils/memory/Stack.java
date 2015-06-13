@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 
 import java.util.EmptyStackException;
 
-import cn.wensiqun.asmsupport.core.log.Log;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 

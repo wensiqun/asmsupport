@@ -18,12 +18,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wensiqun.asmsupport.core.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.core.clazz.ProductClass;
-import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
-import cn.wensiqun.asmsupport.core.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
  * 
@@ -37,9 +36,8 @@ public class MethodUtils {
      * 
      * @param overrideMethod the override method
      */
-    public static Method getOverriddenMethod(AMethod overrideMethod) {
-        Class<?> superClass = overrideMethod.getDeclaringClass().getSuperClass();
-        AMethodMeta entity = overrideMethod.getMeta();
+    public static Method getOverriddenMethod(AMethodMeta entity) {
+        Class<?> superClass = entity.getActuallyOwner().getSuperClass();
         String methodName = entity.getName();
         AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
         Class<?>[] argTypes = new Class[argClasses.length];
@@ -56,7 +54,7 @@ public class MethodUtils {
             try {
                 Method method = superClass.getDeclaredMethod(methodName, argTypes);
 
-                AClass callerOwner = overrideMethod.getDeclaringClass();
+                AClass callerOwner = entity.getActuallyOwner();
                 AClass calledOwner = AClassFactory.getType(method.getDeclaringClass());
                 if (AClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifiers())) {
                     return method;
@@ -74,8 +72,7 @@ public class MethodUtils {
      * 
      * @param implementMethod
      */
-    public static Method[] getImplementedMethod(AMethod implementMethod) {
-        AMethodMeta entity = implementMethod.getMeta();
+    public static Method[] getImplementedMethod(AMethodMeta entity) {
         String methodName = entity.getName();
         AClass[] argClasses = entity.getArgClasses() == null ? new AClass[0] : entity.getArgClasses();
         Class<?>[] argTypes = new Class[argClasses.length];
@@ -89,7 +86,7 @@ public class MethodUtils {
         }
 
         List<Method> foundList = new ArrayList<Method>();
-        List<Class<?>> interfaces = AClassUtils.getAllInterfaces(implementMethod.getDeclaringClass());
+        List<Class<?>> interfaces = AClassUtils.getAllInterfaces(entity.getActuallyOwner());
 
         for (Class<?> inter : interfaces) {
             try {

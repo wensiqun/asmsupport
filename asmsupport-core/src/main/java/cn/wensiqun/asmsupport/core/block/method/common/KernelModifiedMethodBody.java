@@ -20,11 +20,11 @@ package cn.wensiqun.asmsupport.core.block.method.common;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
-import cn.wensiqun.asmsupport.core.definition.method.meta.AMethodMeta;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
 import cn.wensiqun.asmsupport.standard.block.method.IModifiedMethodBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 
 /**
  * @author
@@ -47,7 +47,7 @@ public abstract class KernelModifiedMethodBody extends KernelMethodBody implemen
 	@Override
     public void generateBody() {
 		AMethodMeta me = getMethod().getMeta();
-		if(me.getName().equals(ASConstant.INIT)){
+		if(me.getName().equals(ByteCodeConstant.INIT)){
 			if(superConstructorOperators != null){
 			    for(VisitXInsnAdapter visitXInsnAdapter : superConstructorOperators){
 			    	visitXInsnAdapter.newVisitXInsnOperator(getExecutor());

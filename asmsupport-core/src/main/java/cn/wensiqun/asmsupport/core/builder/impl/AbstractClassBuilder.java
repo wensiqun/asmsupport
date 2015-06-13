@@ -1,0 +1,108 @@
+/**    
+ *  Asmsupport is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package cn.wensiqun.asmsupport.core.builder.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.utils.CommonUtils;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
+import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
+import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
+import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+
+public abstract class AbstractClassBuilder implements IClassBuilder{
+	
+    private static final Log LOG = LogFactory.getLog(AbstractClassBuilder.class);
+
+    protected List<IMethodBuilder> methodCreaters = new ArrayList<IMethodBuilder>();
+
+    protected List<IFieldBuilder> fieldCreators = new ArrayList<IFieldBuilder>();
+
+    protected String classOutPutPath;
+	
+    protected boolean existedStaticBlock = false;
+	
+    protected ClassWriter cw;
+
+    protected AsmsupportClassLoader asmsupportClassLoader;
+    
+    /**
+     * 
+     * @param asmsupportClassLoader
+     */
+	public AbstractClassBuilder(AsmsupportClassLoader asmsupportClassLoader) {
+		this.asmsupportClassLoader = asmsupportClassLoader;
+	}
+
+	protected void checkStaticBlock(){
+    	if(existedStaticBlock){
+    		throw new UnsupportedOperationException("the static block has alreay exist this method!");
+    	}
+    }
+    
+    protected Class<?> loadClass(String name, byte[] b) {
+        try {
+        	return asmsupportClassLoader.defineClass(name, b);
+        } catch (Exception e) {
+            throw new ASMSupportException("Error on define class " + name, e);
+        }
+    }
+
+    @Override
+    public final ClassVisitor getClassVisitor() {
+        return cw;
+    }
+
+	public String getClassOutPutPath() {
+		return classOutPutPath;
+	}
+
+	@Override
+	public void setClassOutPutPath(String classOutPutPath) {
+		this.classOutPutPath = classOutPutPath;
+	}
+	
+	@Override
+	public AsmsupportClassLoader getClassLoader() {
+		return asmsupportClassLoader;
+	}
+	
+	@Override
+    public Class<?> startup() {
+		create();
+		prepare();
+		byte[] code = execute();
+		
+		AClass currentClass = getCurrentClass();
+        if(!StringUtils.isBlank(classOutPutPath)){
+        	CommonUtils.toLocal(code, classOutPutPath, currentClass.getName());
+        }
+        if(LOG.isPrintEnabled()){
+        	LOG.print("End create class : " + currentClass.getName().replace('.', '/'));
+        }
+        return loadClass(currentClass.getName(), code);
+    }
+	
+
+}

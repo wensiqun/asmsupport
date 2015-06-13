@@ -1,11 +1,10 @@
 package cn.wensiqun.asmsupport.sample.core;
 
-import cn.wensiqun.asmsupport.core.creator.IClassContext;
-import cn.wensiqun.asmsupport.core.creator.clazz.ClassCreator;
+import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.ASConstant;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
 
 public abstract class AbstractExample {
@@ -15,14 +14,14 @@ public abstract class AbstractExample {
 	 */
 	public static GlobalVariable systemOut = Value.value(System.class).field("out");
 	static {
-	    ASConstant.LOG_FACTORY_LOCAL.set(new LogFactory());
+		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}
-	public static Class<?> generate(IClassContext creator){
+	public static Class<?> generate(IClassBuilder creator){
 		return generate(creator, true);
 	}
 	
 
-	public static Class<?> generate(IClassContext creator, boolean callMain){
+	public static Class<?> generate(IClassBuilder creator, boolean callMain){
 		//_这是Class的输出路径。主要为了调试作用。我们通过asmsupport生成的class将获输出到这个路径
 		//你可以通过反编译软件看看我们生成的结果
 		creator.setClassOutPutPath(SampleConstant.classOutPutPath);
@@ -33,7 +32,7 @@ public abstract class AbstractExample {
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
 		if(callMain) {
-			if(creator instanceof ClassCreator){
+			if(creator instanceof ClassBuilderImpl){
 				try {
 					cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 				} catch (Exception e) {
