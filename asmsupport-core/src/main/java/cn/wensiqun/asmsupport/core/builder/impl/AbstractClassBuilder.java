@@ -88,11 +88,17 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 		return asmsupportClassLoader;
 	}
 	
+	
 	@Override
-    public Class<?> startup() {
+	public byte[] toClassBytes() {
 		create();
 		prepare();
-		byte[] code = execute();
+		return execute();
+	}
+
+	@Override
+    public Class<?> startup() {
+		byte[] code = toClassBytes();
 		
 		AClass currentClass = getCurrentClass();
         if(!StringUtils.isBlank(classOutPutPath)){

@@ -39,20 +39,30 @@ public interface IClassBuilder {
     
     /**
      * Second phase, asmsupport will verify the code you want's to generated.
-     * such as : check the method call is legally. 
+     * such as : check the method call is legally.  must call {@link #create()}
+     * before call this method
      */
     void prepare();
     
     
     /**
      * Third phase, asmsupport will generate byte code. and 
-     * will return the byte array of class.
+     * will return the byte array of class. must call {@link #prepare()}
+     * before call this method
      */
     byte[] execute();
-    
+
+	/**
+	 * Start create/modify class, this method will integrate the three phase. and get the
+	 * byte[] as result.
+	 * 
+	 * @return
+	 */
+	byte[] toClassBytes();
     
     /**
-     * Start create/modify class, this method will integrate the three phase.
+     * Start create/modify class, this method will integrate the three phase. and get the
+	 * class as result.
      * 
      * @return
      */
@@ -83,5 +93,4 @@ public interface IClassBuilder {
      * @param classOutPutPath
      */
 	void setClassOutPutPath(String classOutPutPath);
-	
 }
