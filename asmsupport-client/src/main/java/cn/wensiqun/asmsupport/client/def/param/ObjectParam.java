@@ -72,7 +72,7 @@ public class ObjectParam extends CommonParam implements ObjectBehavior {
 	@Override
 	public ObjectParam assign(Var var) {
 		return new ObjectParam(cursor, 
-				ParamPostern.getTarget(new AssignAction(cursor, var).doAction(var)));
+				ParamPostern.getTarget(new AssignAction(cursor, var).doAction(this)));
 	}
 
 }
