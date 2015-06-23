@@ -14,8 +14,14 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
+import java.util.Collection;
+
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 
 
 /**
@@ -26,13 +32,15 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  */
 public abstract class AClass implements IClass {
 	
+	protected AsmsupportClassLoader classLoader;
+	
     protected String name;
 
     protected int version;
 
     protected int mod;
 
-    protected Class<?> superClass;
+    protected IClass superClass;
 
     protected Class<?>[] interfaces;
     
@@ -40,7 +48,11 @@ public abstract class AClass implements IClass {
     
     protected String pkg;
     
-    @Override
+    public AClass(AsmsupportClassLoader classLoader) {
+		this.classLoader = classLoader;
+	}
+
+	@Override
     public final String getPackage() {
         if(pkg == null){
             pkg = getPackageName(name);
@@ -64,7 +76,7 @@ public abstract class AClass implements IClass {
     }
 
     @Override
-    public Class<?> getSuperClass() {
+    public IClass getSuperClass() {
         return superClass;
     }
 
@@ -121,17 +133,6 @@ public abstract class AClass implements IClass {
         return getName();
     }
 
-    /**
-     * Check current class is child or equal other type.
-     * 
-     * @param otherType
-     * @return boolean
-     */
-    public abstract boolean isChildOrEqual(AClass otherType);
-
-    @Override
-    public abstract AClass getNextDimType();
-
     @Override
     public final int getCastOrder() {
         int order = 9;
@@ -153,10 +154,15 @@ public abstract class AClass implements IClass {
             order = 8;
         }
         return order;
-
     }
 
-    /**
+    
+    @Override
+	public AsmsupportClassLoader getClassLoader() {
+		return classLoader;
+	}
+
+	/**
      * <p>Gets the package name from a {@code String}.</p>
      *
      * <p>The string passed in is assumed to be a class name - it is not checked.</p>
@@ -185,4 +191,71 @@ public abstract class AClass implements IClass {
         }
         return className.substring(0, i);
     }
+    
+	@Override
+	public final boolean isChildOrEqual(IClass otherType) {
+        return TypeUtils.isSubtyping(this, otherType);
+	}
+
+	@Override
+	public IClass getNextDimType() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isArray() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int getDimension() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getDescription() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Field getField(String name) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<AMethodMeta> getDeclaredConstructors() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AMethodMeta getDeclaredConstructor(IClass... parameterTypes) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<AMethodMeta> getDeclaredMethods() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AMethodMeta getDeclaredMethod(String name, IClass... parameterTypes) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isPrimitive() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean existStaticInitBlock() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IClass getRootComponentClass() {
+        throw new UnsupportedOperationException();
+	}
+    
+    
 }

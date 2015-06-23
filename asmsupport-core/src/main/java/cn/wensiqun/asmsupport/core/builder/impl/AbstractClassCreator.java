@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,8 +21,8 @@ import java.util.List;
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
+import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -32,16 +31,13 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
 
 public abstract class AbstractClassCreator extends AbstractClassBuilder {
@@ -52,19 +48,20 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
     protected boolean haveInitMethod;
 
-    public AbstractClassCreator(int version, int access, String name, Class<?> superCls, Class<?>[] interfaces) {
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, Class<?>[] interfaces) {
     	this(version, access, name, superCls, interfaces, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public AbstractClassCreator(int version, int access, String name, Class<?> superCls, Class<?>[] interfaces, AsmsupportClassLoader asmsupportClassLoader) {
-    	super(asmsupportClassLoader);
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, Class<?>[] interfaces, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+    	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
-            superCls = Object.class;
+            superCls = classLoader.getType(Object.class);
         } else if (superCls.isInterface()) {
             throw new ClassException("the super class \"" + superCls.getName()
                     + "\" is an interface");
         }
-        sc = new SemiClass(version, access, name, superCls, interfaces);
+        sc = new SemiClass(classLoader, version, access, name, superCls, interfaces);
         cw = new ClassWriter(0);
     }
     
@@ -88,7 +85,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         // create class
         cw.visit(sc.getVersion(), sc.getModifiers(),
                 sc.getName().replace('.', '/'), null,
-                Type.getInternalName(sc.getSuperClass()), interfaceStrs);
+                Type.getInternalName(sc.getSuperClass().getName()), interfaceStrs);
 
         //beforeCreate        
         this.beforeCreate();
@@ -176,20 +173,20 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     		return;
     	}
     	
-    	List<Method> abstractMethods = new ArrayList<Method>();
-    	List<Method> nonAbstractMethods = new ArrayList<Method>();
+    	List<AMethodMeta> abstractMethods = new ArrayList<AMethodMeta>();
+    	List<AMethodMeta> nonAbstractMethods = new ArrayList<AMethodMeta>();
     	allMethodInClass(sc.getSuperClass(), abstractMethods, nonAbstractMethods);
     	
     	for(Class<?> inter : sc.getInterfaces()){
-        	allMethodInClass(inter, abstractMethods, nonAbstractMethods);
+        	allMethodInClass(asmsupportClassLoader.getType(inter), abstractMethods, nonAbstractMethods);
     	}
     	
     	for(int i=0; i<abstractMethods.size();){
-    		Method abstractMethod = abstractMethods.get(i);
+    		AMethodMeta abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
     		
     		for(int j=0; j<nonAbstractMethods.size(); j++){
-        		Method nonAbstractMethod = nonAbstractMethods.get(j);
+        		AMethodMeta nonAbstractMethod = nonAbstractMethods.get(j);
     			if(MethodUtils.methodEqualWithoutOwner(abstractMethod, nonAbstractMethod)){
     				abstractMethods.remove(i);
     				nonAbstractMethods.remove(j);
@@ -203,10 +200,9 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	}
     	
     	//#30205 [BUG]
-    	List<AMethodMeta> scImplMethods = 
-    			new ArrayList<AMethodMeta>(sc.getMethods());
+    	List<AMethodMeta> scImplMethods = new ArrayList<AMethodMeta>(sc.getDeclaredMethods());
     	for(int i=0; i<abstractMethods.size(); ){
-    		Method abstractMethod = abstractMethods.get(i);
+    		AMethodMeta abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
     		
     		for(int j=0; j<scImplMethods.size(); j++ ) {
@@ -227,7 +223,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             String lineSeq = System.getProperty("line.separator");
     		StringBuilder sb = new StringBuilder("The type ").append(sc)
     		.append(" must implement the inherited abstract method :").append(lineSeq);
-    		for(Method m : abstractMethods){
+    		for(AMethodMeta m : abstractMethods){
     			sb.append(m.toString()).append(lineSeq);
     		}
     		throw new InternalError(sb.toString());
@@ -241,9 +237,9 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
      * @param method
      * @return
      */
-    private boolean containMethod(List<Method> methods, Method method){
+    private boolean containMethod(List<AMethodMeta> methods, AMethodMeta method){
     	if(CollectionUtils.isNotEmpty(methods)){
-    		for(Method m : methods){
+    		for(AMethodMeta m : methods){
     			if(MethodUtils.methodEqualWithoutOwner(m, method)){
     				return true;
     			}
@@ -259,34 +255,35 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
      * @param abstractMethods
      * @param nonAbstractMethods
      */
-    private void allMethodInClass(Class<?> clazz, List<Method> abstractMethods, List<Method> nonAbstractMethods){
+    private void allMethodInClass(IClass clazz, List<AMethodMeta> abstractMethods, List<AMethodMeta> nonAbstractMethods){
         if(clazz == null || clazz.equals(Object.class)){
     		return;
     	}
         
-        Method[] methods = clazz.getDeclaredMethods();
-        if(ArrayUtils.isNotEmpty(methods)){
-        	for(Method m : methods){
-        		if(ModifierUtils.isAbstract(m.getModifiers())){
-        			if(!containMethod(abstractMethods, m)){
-        				abstractMethods.add(m);
-        			}
-        		}else{
-        			if(!containMethod(nonAbstractMethods, m)){
-        				nonAbstractMethods.add(m);
-        			}
-        		}
+        for(AMethodMeta method : clazz.getDeclaredMethods()){
+    		if(ModifierUtils.isAbstract(method.getModifier())){
+    			if(!containMethod(abstractMethods, method)){
+    				abstractMethods.add(method);
+    			}
+    		}else{
+    			if(!containMethod(nonAbstractMethods, method)){
+    				nonAbstractMethods.add(method);
+    			}
+    		}
+    	}
+        
+        if(clazz instanceof MutableClass) {
+        	for(AMethodMeta method : ((MutableClass)clazz).getBridgeMethod()) {
+        		if(!containMethod(nonAbstractMethods, method)){
+    				nonAbstractMethods.add(method);
+    			}
         	}
         }
 
-    	allMethodInClass(clazz.getSuperclass(), abstractMethods, nonAbstractMethods);
+    	allMethodInClass(clazz.getSuperClass(), abstractMethods, nonAbstractMethods);
         
-    	Class<?>[] interfaces = clazz.getInterfaces();
-    	if(ArrayUtils.isNotEmpty(interfaces)){
-    		for(Class<?> interfaceClass : interfaces){
-    			allMethodInClass(interfaceClass, abstractMethods, nonAbstractMethods);
-    			
-        	}
+    	for(Class<?> interfaceClass : clazz.getInterfaces()){
+			allMethodInClass(asmsupportClassLoader.getType(interfaceClass), abstractMethods, nonAbstractMethods);
     	}
     }
 
@@ -303,12 +300,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
      * 
      */
     private void checkOverriedAndCreateBridgeMethod(){
-    	List<AMethodMeta> methods = 
-    			new ArrayList<AMethodMeta>(sc.getMethods());
-    	for(AMethodMeta validateMethod : methods){
-    	    if(ByteCodeConstant.CLINIT.equals(validateMethod.getName())) {
-    	        continue;
-    	    }
+    	for(AMethodMeta validateMethod : sc.getDeclaredMethods()){
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
     		List<MethodBuilderImpl> creatorList = obmc.getList();
     		for(MethodBuilderImpl mc : creatorList){
@@ -322,8 +314,9 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     
     public static class SemiClass extends MutableClass {
 
-    	SemiClass(int version, int access, String name, Class<?> superCls,
+    	SemiClass(AsmsupportClassLoader classLoader, int version, int access, String name, IClass superCls,
                 Class<?>[] interfaces) {
+    		super(classLoader);
             this.version = version;
             this.name = name;
             this.mod = access;
@@ -333,7 +326,6 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             if(!ModifierUtils.isInterface(mod)){
                 this.mod += Opcodes.ACC_SUPER;
             }
-            
         }
 
         @Override
@@ -359,9 +351,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
         @Override
         public Field getField(final String name) {
-            
             final LinkedList<Field> found = new LinkedList<Field>();
-            
             for(Field gv : getFields()){
                 if(gv.getName().equals(name)){
                     found.add(gv);
@@ -369,16 +359,13 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             }
             
             if(found.isEmpty()) {
-                Class<?> fieldOwner = getSuperClass();
-                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
-                    try {
-                        java.lang.reflect.Field field = fieldOwner.getDeclaredField(name);
-                        found.add(new Field(this,
-                                AClassFactory.getType(fieldOwner),
-                                AClassFactory.getType(field.getType()), field.getModifiers(), name));
-                        break;
-                    } catch (NoSuchFieldException e) {
-                    }
+            	IClass fieldOwner = getSuperClass();
+                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperClass()){
+                	Field field = fieldOwner.getField(name);
+                	if(field != null) {
+                		found.add(field);
+                		break;
+                	}
                 }
             }
             
@@ -388,8 +375,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
                     try {
                         java.lang.reflect.Field f = inter.getDeclaredField(name);
                         found.add(new Field(SemiClass.this,
-                                AClassFactory.getType(inter),
-                                AClassFactory.getType(f.getType()), f.getModifiers(), name));
+                        		classLoader.getType(inter),
+                        		classLoader.getType(f.getType()), f.getModifiers(), name));
                         return true;
                     } catch (NoSuchFieldException e) {
                         return false;
@@ -410,15 +397,5 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
         }
 
-        @Override
-        public AClass getNextDimType() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public IClass getRootComponentClass() {
-            throw new UnsupportedOperationException();
-        }
-        
     }
 }

@@ -15,7 +15,8 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
 
 
 /**
@@ -47,7 +48,7 @@ public interface ArrayAction<_P extends IParam> {
 	 * @param allocateDims length of each dimensions
 	 * @return {@link _P}
 	 */
-	_P makeArray(final AClass arraytype, final _P... allocateDims);
+	_P makeArray(final IClass arraytype, final _P... allocateDims);
 	
 	/**
 	 * Same to {@link #makeArray(AClass, _P...)}
@@ -86,7 +87,7 @@ public interface ArrayAction<_P extends IParam> {
 	 * @see ActionSet#arrayvar(String, AClass, _P, _P...)
 	 * @see #makeArray(AClass, _P...)
 	 */
-	_P newarray(AClass arraytype, final Object arrayobject);
+	_P newarray(IClass arraytype, final Object arrayobject);
 	
 	/**
 	 * It's seem like {@link #newarray(AClass, Object)}

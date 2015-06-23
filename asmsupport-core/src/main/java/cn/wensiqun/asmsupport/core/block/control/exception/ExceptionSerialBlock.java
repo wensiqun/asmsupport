@@ -29,8 +29,9 @@ import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
@@ -148,7 +149,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             for (int i = 0; i < anyCatchRange.size();) {
                 Label start = anyCatchRange.get(i++);
                 Label end = anyCatchRange.get(i++);
-                this.addTreCatchInfo(start, end, implicitCatch.getStart(), AnyException.ANY);
+                this.addTreCatchInfo(start, end, implicitCatch.getStart(), targetParent.getType(AnyException.class));
             }
         }
 
@@ -182,7 +183,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             getQueue().addAfter(tryBlock, catchBlock);
         } else {
             KernelCatch previous = catchs.get(catchs.size() - 1);
-            AClass exceptionType = catchBlock.getExceptionType();
+            IClass exceptionType = catchBlock.getExceptionType();
 
             if (exceptionType != null && exceptionType.isChildOrEqual(previous.getExceptionType())) {
                 throw new ASMSupportException("Unreachable catch block for " + exceptionType
@@ -276,7 +277,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         return container;
     }
 
-    private void addTreCatchInfo(Label start, Label end, Label handler, AClass type) {
+    private void addTreCatchInfo(Label start, Label end, Label handler, IClass type) {
         if (tryCatchInfoes == null) {
             tryCatchInfoes = new ArrayList<ExceptionTableEntry>();
         }
@@ -301,13 +302,12 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         @Override
         public void generate() {
-            LocalVariable exception = getLocalAnonymousVariableModel(AnyException.ANY);
+            LocalVariable exception = getLocalAnonymousVariableModel(targetParent.getType(AnyException.class));
 
             OperatorFactory.newOperator(Store.class, new Class[] { KernelProgramBlock.class, LocalVariable.class },
                     this, exception);
 
             // new Store(this, exception);
-
             ExceptionSerialBlock.this.finallyBlock.generateTo(this);
 
             if (!this.isFinish()) {
@@ -317,7 +317,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         @Override
         public void doExecute() {
-            insnHelper.getMv().getStack().push(AnyException.ANY.getType());
+            insnHelper.getMv().getStack().push(Type.ANY_EXP_TYPE);
             for (ByteCodeExecutor exe : getQueue()) {
                 exe.execute();
             }

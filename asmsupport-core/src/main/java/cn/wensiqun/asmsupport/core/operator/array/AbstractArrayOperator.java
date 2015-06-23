@@ -25,9 +25,8 @@ import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -66,8 +65,8 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
 			for(KernelParam par : parDims){
-				if(!AClassUtils.checkAssignable(par.getResultType(), AClassFactory.getType(int.class))) {
-					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + AClassFactory.getType(int.class) + "");
+				if(!AClassUtils.checkAssignable(par.getResultType(), block.getType(int.class))) {
+					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + block.getType(int.class) + "");
 				}
 			}
 		}
@@ -76,16 +75,16 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 
 	protected void getValue(){
         InstructionHelper ih = block.getInsnHelper();
-        AClass cls = arrayReference.getResultType();
+        IClass cls = arrayReference.getResultType();
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");
         }
         arrayReference.loadToStack(block);
         
         for(int i=0; i<parDims.length; i++){
-            cls = ((ArrayClass) cls).getNextDimType();
+            cls = cls.getNextDimType();
             parDims[i].loadToStack(block);
-            autoCast(parDims[i].getResultType(), AClassFactory.getType(int.class), false);
+            autoCast(parDims[i].getResultType(), block.getType(int.class), false);
             ih.arrayLoad(cls.getType());
         }
         

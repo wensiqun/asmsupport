@@ -2,6 +2,7 @@ package cn.wensiqun.asmsupport.standard.utils.jls15_12_2;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 
@@ -26,7 +27,7 @@ public class ConversionsPromotionsUtils {
      * @param to
      * @return
      */
-    public static boolean checkIdentityConversion(AClass from, AClass to) {
+    public static boolean checkIdentityConversion(IClass from, IClass to) {
         return from.equals(to);
     }
     
@@ -45,7 +46,7 @@ public class ConversionsPromotionsUtils {
      * @param to
      * @return
      */
-    public static boolean checkWideningPrimitiveConversion(AClass from, AClass to) {
+    public static boolean checkWideningPrimitiveConversion(IClass from, IClass to) {
         int fromSort = from.getType().getSort();
         int toSort = from.getType().getSort();
         if(fromSort == Type.BOOLEAN || toSort == Type.BOOLEAN) {
@@ -207,7 +208,7 @@ public class ConversionsPromotionsUtils {
      * @param to
      * @return
      */
-    public static boolean checkWideningReferenceConversion(AClass s, AClass t) {
+    public static boolean checkWideningReferenceConversion(IClass s, IClass t) {
         return s.isChildOrEqual(t);
     }
     
@@ -233,7 +234,7 @@ public class ConversionsPromotionsUtils {
      * @param t
      * @return
      */
-    public static boolean checkBoxingConversion(AClass s, AClass t) {
+    public static boolean checkBoxingConversion(IClass s, IClass t) {
         return s.isPrimitive() && t.equals(AClassUtils.getPrimitiveWrapAClass(s));
     }
     
@@ -259,11 +260,11 @@ public class ConversionsPromotionsUtils {
      * @param t
      * @return
      */
-    public static boolean checkUnboxingConversion(AClass s, AClass t) {
+    public static boolean checkUnboxingConversion(IClass s, IClass t) {
         return t.isPrimitive() && s.equals(AClassUtils.getPrimitiveWrapAClass(t));
     }
     
-    public static boolean checkMethodInvocatioConversion(AClass s, AClass t) {
+    public static boolean checkMethodInvocatioConversion(IClass s, IClass t) {
     	return checkIdentityConversion(s, t) || 
     		   checkWideningPrimitiveConversion(s, t) ||
     		   checkWideningReferenceConversion(s, t) ||

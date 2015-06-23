@@ -2,9 +2,6 @@ package cn.wensiqun.asmsupport.core.utils;
 
 import org.junit.Ignore;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
-
 @Ignore
 public class TesterStatics
 {
@@ -13,8 +10,6 @@ public class TesterStatics
     public static final StringBuilder EXPECTED = new StringBuilder();
     
     public static final StringBuilder ACTUALLY = new StringBuilder();
-    
-    public static final AClass ATesterStatics = AClassFactory.getType(TesterStatics.class);
     
     /*public static final GlobalVariable GV_EXPECTED = ATesterStatics.field("EXPECTED");
     

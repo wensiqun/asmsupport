@@ -16,6 +16,10 @@ package cn.wensiqun.asmsupport.core.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -23,6 +27,22 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class CommonUtils {
 
+    public static final Pattern JAVA_CLASS_NAME_PART_PATTERN = Pattern.compile("([A-Za-z_$]+[a-zA-Z0-9_$]*)");
+	
+    public static final Set<String> JAVA_KEYWORDS = new TreeSet<String>(Arrays.asList(
+	    "abstract",     "assert",        "boolean",      "break",           "byte",
+	    "case",         "catch",         "char",         "class",           "const",
+	    "continue",     "default",       "do",           "double",          "else",
+	    "enum",         "extends",       "false",        "final",           "finally",
+	    "float",        "for",           "goto",         "if",              "implements",
+	    "import",       "instanceof",    "int",          "interface",       "long",
+	    "native",       "new",           "null",         "package",         "private",
+	    "protected",    "public",        "return",       "short",           "static",
+	    "strictfp",     "super",         "switch",       "synchronized",    "this",
+	    "throw",        "throws",        "transient",    "true",            "try",
+	    "void",         "volatile",      "while"
+    ));
+    
     /**
      * Get system jdk version for bytecode indication, 
      * current only support jdk1.6- cause asmsupport 
@@ -80,7 +100,29 @@ public class CommonUtils {
                 throw new ASMSupportException(e);
             }
         }
-    	
+    }
+    
+    public static boolean isJavaClassName(String text) {
+        for (String part : text.split("\\.")) {
+            if (JAVA_KEYWORDS.contains(part) || !JAVA_CLASS_NAME_PART_PATTERN.matcher(part).matches()) {
+                return false;
+            }           
+        }
+        return text.length() > 0;
+    }
+    
+    public static void validateJavaClassName(String text) {
+    	if(StringUtils.isBlank(text)) {
+    		throw new ASMSupportException("Class name is blank");
+    	}
+    	for (String part : text.split("\\.")) {
+            if (JAVA_KEYWORDS.contains(part)) {
+        		throw new ASMSupportException("The part of class name is '" + part + "', it's a keyword in java.");
+            }
+            if (!JAVA_CLASS_NAME_PART_PATTERN.matcher(part).matches()) {
+        		throw new ASMSupportException("It's invalid class name : " + text);
+            }
+        }
     }
     
 }

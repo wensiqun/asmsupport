@@ -27,9 +27,9 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -38,7 +38,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;
@@ -55,12 +55,12 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	/**
 	 * where is this method invoke operator
 	 */
-    protected AClass whereCall;
+    protected IClass whereCall;
     
     /**
      * what class call
      */
-    protected AClass directCallClass;
+    protected IClass directCallClass;
     
     /**
      * method name
@@ -70,10 +70,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
     /**
      * 
      */
-    protected AClass[] argumentTypes;
+    protected IClass[] argumentTypes;
     
-	public MethodChooser(ClassLoader classLoader, AClass whereCall, AClass directCallClass,
-			String name, AClass[] argumentTypes) {
+	public MethodChooser(ClassLoader classLoader, IClass whereCall, IClass directCallClass,
+			String name, IClass[] argumentTypes) {
 		this.classLoader = classLoader;
 		this.whereCall = whereCall;
 		this.directCallClass = directCallClass;
@@ -103,13 +103,13 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	}
 	
 	@Override
-	public Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods(){
+	public Map<IClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods(){
 		
 		@SuppressWarnings("serial")
-		MultiValueMap<AClass,AMethodMeta> tempPotentially = new LinkedMultiValueMap<AClass, AMethodMeta>(){
+		MultiValueMap<IClass,AMethodMeta> tempPotentially = new LinkedMultiValueMap<IClass, AMethodMeta>(){
 
 			@Override
-			public void add(AClass key, AMethodMeta value) {
+			public void add(IClass key, AMethodMeta value) {
 				//1.check name
 				//2.check accessible
 				if(!name.equals(value.getName()) ||
@@ -144,8 +144,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					return false;
 				}
 				
-				Set<Entry<AClass, List<AMethodMeta>>> entrySet = entrySet();
-				for(Entry<AClass, List<AMethodMeta>> entry : entrySet){
+				Set<Entry<IClass, List<AMethodMeta>>> entrySet = entrySet();
+				for(Entry<IClass, List<AMethodMeta>> entry : entrySet){
 					if(containsValueInList(entry.getValue(), (AMethodMeta) value)){
 						return true;
 					}
@@ -185,8 +185,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					return false;
 				}
 				
-				AClass[] childArgs = child.getArgClasses();
-				AClass[] superArgs = super_.getArgClasses();
+				IClass[] childArgs = child.getArgClasses();
+				IClass[] superArgs = super_.getArgClasses();
 				if(ArrayUtils.isSameLength(childArgs, superArgs)){
 					if(ArrayUtils.isEmpty(childArgs) && ArrayUtils.isEmpty(superArgs)){
 						return true;
@@ -205,35 +205,36 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		};
 		
 		try {
+        	ClassHolder holder = directCallClass.getClassLoader();
 		    if(directCallClass instanceof SemiClass){
-	            if(ByteCodeConstant.INIT.equals(name)){
-	                for(AMethodMeta method : ((SemiClass)directCallClass).getConstructors()){
+	            if(AsmsupportConstant.INIT.equals(name)){
+	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
 	            }else{
-	                for(AMethodMeta method : ((SemiClass)directCallClass).getMethods()){
+	                for(AMethodMeta method : directCallClass.getDeclaredMethods()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
 	                fetchMatchMethod(tempPotentially, directCallClass.getSuperClass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
-	            if(ByteCodeConstant.INIT.equals(name)){
-	                for(AMethodMeta method : ((ProductClass)directCallClass).getConstructors()){
+	            if(AsmsupportConstant.INIT.equals(name)){
+	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
 	                
-	                for(AMethodMeta me : getAllMethod(((ProductClass) directCallClass).getReallyClass(), name)){
+	                for(AMethodMeta me : getAllMethod((ProductClass) directCallClass, name)){
 	                    tempPotentially.add(me.getActuallyOwner(), me);
 	                }
 	                
 	            }else{
-	                for(AMethodMeta method : ((ProductClass)directCallClass).getMethods()){
+	                for(AMethodMeta method : directCallClass.getDeclaredMethods()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
-	                fetchMatchMethod(tempPotentially, ((ProductClass) directCallClass).getReallyClass(), name);
+	                fetchMatchMethod(tempPotentially, directCallClass, name);
 	            }
 	        }else{
-	            fetchMatchMethod(tempPotentially, Object.class, name);
+	            fetchMatchMethod(tempPotentially, holder.getType(Object.class), name);
 	        }
 		} catch (IOException e) {
 		    throw new RuntimeException(e);
@@ -249,7 +250,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @param name
 	 * @throws IOException
 	 */
-	private void fetchMatchMethod(MultiValueMap<AClass,AMethodMeta> potentially, Class<?> where, String name) throws IOException{
+	private void fetchMatchMethod(MultiValueMap<IClass,AMethodMeta> potentially, IClass where, String name) throws IOException{
 		if(where == null){
 			return;
 		}
@@ -258,19 +259,19 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			potentially.add(me.getActuallyOwner(), me);
 		}
 		
-		fetchMatchMethod(potentially, where.getSuperclass(), name);
-		
+		fetchMatchMethod(potentially, where.getSuperClass(), name);
+		ClassHolder holder = where.getClassLoader();
 		Class<?>[] interfaces = where.getInterfaces();
 		if(ArrayUtils.isNotEmpty(interfaces)){
 			for(Class<?> inter : interfaces){
-				fetchMatchMethod(potentially, inter, name);
+				fetchMatchMethod(potentially, holder.getType(inter), name);
 			}
 		}
 		
 	}
 
 	/** */
-	private Map<AClass, List<AMethodMeta>> potentially;
+	private Map<IClass, List<AMethodMeta>> potentially;
 
 	private void removePotentiallyMethod(AMethodMeta... entities){
 		if(potentially != null && potentially.size() > 0 && ArrayUtils.isNotEmpty(entities)){
@@ -284,28 +285,28 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	public AMethodMeta firstPhase(){
 		//final MultiValueMap<AClass, MethodEntity> map = new LinkedMultiValueMap<AClass, MethodEntity>();
 		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-		new MapLooper<AClass, List<AMethodMeta>>(potentially){
+		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<AMethodMeta> value) {
+			protected void process(IClass key, List<AMethodMeta> value) {
 				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, AMethodMeta entity){
+			private void filter(IClass key, AMethodMeta entity){
 				
 				if(ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
 				
-				AClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getArgClasses();
 				
 				if(ArrayUtils.getLength(argumentTypes) != ArrayUtils.getLength(potentialMethodArgs)) {
                     return;
                 }
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
-					AClass actuallyArg = argumentTypes[i];
-					AClass potentialArg = potentialMethodArgs[i];
+					IClass actuallyArg = argumentTypes[i];
+					IClass potentialArg = potentialMethodArgs[i];
 					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg))
 						return;
 				}
@@ -320,22 +321,22 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	@Override
 	public AMethodMeta secondPhase(){
 		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-		new MapLooper<AClass, List<AMethodMeta>>(potentially){
+		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<AMethodMeta> value) {
+			protected void process(IClass key, List<AMethodMeta> value) {
 				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, AMethodMeta entity){
+			private void filter(IClass key, AMethodMeta entity){
 				if(ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
-				AClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getArgClasses();
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
-					AClass actuallyArg = argumentTypes[i];
-					AClass potentialArg = potentialMethodArgs[i];
+					IClass actuallyArg = argumentTypes[i];
+					IClass potentialArg = potentialMethodArgs[i];
 					if(!ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
 						return;
 				}
@@ -350,24 +351,24 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	@Override
 	public AMethodMeta thirdPhase(){
 		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-		new MapLooper<AClass, List<AMethodMeta>>(potentially){
+		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
-			protected void process(AClass key, List<AMethodMeta> value) {
+			protected void process(IClass key, List<AMethodMeta> value) {
 				for(AMethodMeta e : value){
 					filter(key, e);
 				}
 			}
 			
-			private void filter(AClass key, AMethodMeta entity){
+			private void filter(IClass key, AMethodMeta entity){
 				if(!ModifierUtils.isVarargs(entity.getModifier())){
 					return;
 				}
 				
-				AClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getArgClasses();
 				int potentialArgumentLength = ArrayUtils.getLength(potentialMethodArgs);
 				for(int i=0; i < potentialArgumentLength - 1 ; i++){
-					AClass actuallyArg = argumentTypes[i];
-					AClass potentialArg = potentialMethodArgs[i];
+					IClass actuallyArg = argumentTypes[i];
+					IClass potentialArg = potentialMethodArgs[i];
 					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg) && 
 					   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
 						return;
@@ -375,8 +376,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				
 				int argumentLength = ArrayUtils.getLength(argumentTypes);
 				if(argumentLength == potentialArgumentLength) {
-					AClass variableArityType = argumentTypes[argumentLength - 1];
-					AClass potentialVariableArityType = potentialMethodArgs[argumentLength - 1];
+					IClass variableArityType = argumentTypes[argumentLength - 1];
+					IClass potentialVariableArityType = potentialMethodArgs[argumentLength - 1];
 					
 					if(TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) || 
 					   ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType)) {
@@ -386,10 +387,9 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				}
 				
 				if(argumentLength >= potentialArgumentLength){
-					
-					AClass potentialVariableArityType = ((ArrayClass)potentialMethodArgs[potentialArgumentLength - 1]).getRootComponentClass();
+					IClass potentialVariableArityType = ((ArrayClass)potentialMethodArgs[potentialArgumentLength - 1]).getRootComponentClass();
 					for(int i = potentialArgumentLength - 1; i<argumentLength ; i++){
-						AClass variableArityType = argumentTypes[i];
+						IClass variableArityType = argumentTypes[i];
 						if(!TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) && 
 						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType))
 							return;
@@ -475,8 +475,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @return
 	 */
 	private boolean mostSpecificFixedArityMethod(AMethodMeta method1, AMethodMeta method2){
-		AClass[] t = method1.getArgClasses();
-		AClass[] u = method2.getArgClasses();
+		IClass[] t = method1.getArgClasses();
+		IClass[] u = method2.getArgClasses();
 		int n = ArrayUtils.getLength(t);
 		if(n > 0){
 			for(int j=0; j<n; j++){
@@ -499,8 +499,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @return
 	 */
 	private boolean mostSpecificVarargMethod(AMethodMeta m1, AMethodMeta m2){
-		AClass[] t = m1.getArgClasses();
-		AClass[] u = m2.getArgClasses();
+		IClass[] t = m1.getArgClasses();
+		IClass[] u = m2.getArgClasses();
 		
 		int n;
 		int k;
@@ -548,11 +548,12 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
      * @return a list of {@link AMethodMeta}
      * @throws IOException
      */
-    public List<AMethodMeta> getAllMethod(Class<?> clazz, final String methodName) throws IOException {
-        final AClass owner = AClassFactory.getType(clazz);
+	@Deprecated
+    public List<AMethodMeta> getAllMethod(final IClass owner, final String methodName) throws IOException {
         InputStream classStream = classLoader.getResourceAsStream(
-                clazz.getName().replace('.', '/') + ".class");
+        		owner.getName().replace('.', '/') + ".class");
         ClassReader cr = new ClassReader(classStream);
+        final ClassHolder holder = owner.getClassLoader();
         final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
         cr.accept(new ClassAdapter() {
 
@@ -567,21 +568,21 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
                     try {
 
                         Type[] types = Type.getArgumentTypes(desc);
-                        AClass[] aclass = new AClass[types.length];
+                        IClass[] aclass = new IClass[types.length];
                         String[] args = new String[types.length];
                         for (int i = 0; i < types.length; i++) {
-                            aclass[i] = AClassFactory.getType(ClassUtils.forName(types[i].getDescriptor()));
+                            aclass[i] = holder.getType(ClassUtils.forName(types[i].getDescriptor()));
                             args[i] = "arg" + i;
                         }
 
-                        AClass returnType = AClassFactory.getType(ClassUtils.forName(Type.getReturnType(desc).getDescriptor()));
+                        IClass returnType = holder.getType(ClassUtils.forName(Type.getReturnType(desc).getDescriptor()));
 
-                        AClass[] exceptionAclassArray = new AClass[exceptions.length];
+                        IClass[] exceptionAclassArray = new IClass[exceptions.length];
                         for (int i = 0; i < exceptions.length; i++) {
-                            exceptionAclassArray[i] = AClassFactory.getType(ClassUtils.forName(exceptions[i]));
+                            exceptionAclassArray[i] = holder.getType(ClassUtils.forName(exceptions[i]));
                         }
 
-                        AMethodMeta me = new AMethodMeta(name, owner, owner, aclass, args, returnType,
+                        AMethodMeta me = new AMethodMeta(holder, name, owner, owner, aclass, args, returnType,
                                 exceptionAclassArray, access);
                         list.add(me);
                     } catch (ClassNotFoundException e) {

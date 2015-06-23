@@ -15,9 +15,12 @@
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 /**
  * Indicate Array Class
@@ -26,8 +29,8 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
  *
  */
 public class ArrayClass extends AClass {
-
-    private AClass aclass;
+	
+    private IClass elementType;
 
     private String desc; 
     
@@ -36,16 +39,17 @@ public class ArrayClass extends AClass {
     
     /**
      * 
-     * @param cls
+     * @param elementType
      * @param dim
      */
-    ArrayClass(AClass cls, int dim) {
-    	version = cls.getVersion();
-        mod = cls.getModifiers();
-        superClass = Object.class;
+    public ArrayClass(IClass elementType, int dim, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+    	version = elementType.getVersion();
+        mod = elementType.getModifiers();
+        superClass = classLoader.getType(Object.class);
         interfaces = new Class[]{Cloneable.class, Serializable.class};
         
-        this.aclass = cls;
+        this.elementType = elementType;
         this.dim = dim;
         StringBuilder descsb = new StringBuilder();
         int tmpDim = dim;
@@ -53,7 +57,7 @@ public class ArrayClass extends AClass {
             descsb.append("[");
             tmpDim--;
         }
-        descsb.append(cls.getDescription());
+        descsb.append(elementType.getDescription());
         desc = descsb.toString();
         name = desc;
     }
@@ -89,31 +93,38 @@ public class ArrayClass extends AClass {
     }
 
     @Override
-    public AClass getNextDimType(){
+    public IClass getNextDimType(){
         if(dim > 1){
-            return new ArrayClass(aclass, dim - 1);
+            return new ArrayClass(elementType, dim - 1, classLoader);
         }else{
-            return aclass;
+            return elementType;
         }
     }
     
     @Override
-    public AClass getRootComponentClass(){
-        return aclass;
+    public IClass getRootComponentClass(){
+        return elementType;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(aclass.getName());
+        StringBuilder sb = new StringBuilder(elementType.getName());
         for(int i=0; i<dim; i++){
             sb.append("[]");
         }
         return sb.toString();
     }
 
-    @Override
-    public boolean isChildOrEqual(AClass otherType)  {
-        return TypeUtils.isSubtyping(this, otherType);
-    }
+    
+    
+	@Override
+	public Collection<AMethodMeta> getDeclaredMethods() {
+		return Collections.EMPTY_LIST;
+	}
+
+	@Override
+	public AMethodMeta getDeclaredMethod(String name, IClass... parameterTypes) {
+        return null;
+	}
     
 }

@@ -30,9 +30,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.block.sync.ISynchronized;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
-
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -106,7 +104,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		insnHelper.mark(excetpionStart);
 		dupSynArgument.loadToStack(this);
 		insnHelper.monitorExit();
-		insnHelper.getMv().getStack().push(AClassFactory.getType(Throwable.class).getType());
+		insnHelper.getMv().getStack().push(getClassHolder().getType(Throwable.class).getType());
 		insnHelper.mark(excetpionEnd);
 		insnHelper.throwException();
 		
@@ -120,7 +118,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	public void generate() {
 
         DUP dup = OperatorFactory.newOperator(DUP.class, 
-                new Class<?>[]{KernelProgramBlock.class, AClass.class}, 
+                new Class<?>[]{KernelProgramBlock.class, IClass.class}, 
                 this, lock.getResultType());
         
 		dupSynArgument = var(lock.getResultType(), dup);

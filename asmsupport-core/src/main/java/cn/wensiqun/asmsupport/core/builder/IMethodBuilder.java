@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.builder;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 
@@ -37,6 +37,6 @@ public interface IMethodBuilder extends Executable {
     /**
      * Get the argument types of current method.
      */
-    public AClass[] getArguments();
+    public IClass[] getArguments();
     
 }

@@ -22,7 +22,6 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
@@ -31,13 +30,12 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 public abstract class MethodInvoker extends AbstractParamOperator {
@@ -46,7 +44,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
 
     protected String name;
     protected KernelParam[] arguments;
-    protected AClass methodOwner;
+    protected IClass methodOwner;
     
     /** whether or not save the return value to stack, must be save a 
      * result to stack when call constructor*/
@@ -62,7 +60,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
      * @param arguments
      * @param block
      */
-    protected MethodInvoker(KernelProgramBlock block, AClass owner, String name, KernelParam[] arguments) {
+    protected MethodInvoker(KernelProgramBlock block, IClass owner, String name, KernelParam[] arguments) {
         super(block, Operator.COMMON);
         this.methodOwner = owner;
         this.name = name;
@@ -83,7 +81,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         }
     }
     
-    private void cast(AClass from, AClass to){
+    private void cast(IClass from, IClass to){
         if(from.isPrimitive() && to.isPrimitive()){
             insnHelper.cast(from.getType(), to.getType());
         }else if(from.isPrimitive()){
@@ -97,27 +95,27 @@ public abstract class MethodInvoker extends AbstractParamOperator {
 
     @Override
     protected void initAdditionalProperties() {
-    	AClass[] argumentClasses = new AClass[arguments.length];
-        List<AClass> argumentClassList = new ArrayList<AClass>();
+    	IClass[] argumentClasses = new IClass[arguments.length];
+        List<IClass> argumentClassList = new ArrayList<IClass>();
         for (int i = 0; i < arguments.length; i++) {
             argumentClassList.add(arguments[i].getResultType());
         }
         argumentClassList.toArray(argumentClasses);
         
     	AMethod currentMethod = block.getMethod();
-        if(currentMethod.getMode() == ByteCodeConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ByteCodeConstant.METHOD_PROXY_SUFFIX)){
+        if(currentMethod.getMode() == AsmsupportConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(AsmsupportConstant.METHOD_PROXY_SUFFIX)){
         	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
             mtdEntity.setName(name);
         }else{
             mtdEntity = new MethodChooser(block.getMethod().getClassLoader(), block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
             if(mtdEntity == null){
-                throw new NoSuchMethod(methodOwner, name, argumentClasses);
+                throw new ASMSupportException("No such method " + AMethodMeta.getMethodString(name, argumentClasses) + " in " + methodOwner);
             }
         }
         
         if(ModifierUtils.isVarargs(mtdEntity.getModifier())){
             
-        	AClass[] foundMethodArgTypes = mtdEntity.getArgClasses();
+        	IClass[] foundMethodArgTypes = mtdEntity.getArgClasses();
         	
         	if(ArrayUtils.getLength(foundMethodArgTypes) != ArrayUtils.getLength(arguments) ||
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
@@ -136,7 +134,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         	}
         }
 
-        for(AClass exception : mtdEntity.getExceptions()){
+        for(IClass exception : mtdEntity.getExceptions()){
     	    block.addException(exception);
     	}
         
@@ -178,17 +176,17 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         return getReturnClass() != null ? getReturnClass().getType() : Type.VOID_TYPE;
     }
 
-    public final AClass getReturnClass() {
-        if(name.equals(ByteCodeConstant.INIT)){
+    public final IClass getReturnClass() {
+        if(name.equals(AsmsupportConstant.INIT)){
             return methodOwner;
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();
         }else{
-            return AClassFactory.getType(void.class);
+            return block.getClassHolder().getType(void.class);
         }
     }
     
-    protected AClass getActuallyOwner(){
+    protected IClass getActuallyOwner(){
         return mtdEntity.getActuallyOwner();
     }
     
@@ -201,7 +199,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return getReturnClass();
     }
     

@@ -21,7 +21,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 
@@ -73,7 +73,7 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return meta.getType();
     }
 

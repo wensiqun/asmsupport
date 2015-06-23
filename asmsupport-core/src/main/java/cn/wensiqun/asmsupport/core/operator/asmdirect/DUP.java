@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -30,9 +30,9 @@ public class DUP extends ASMDirect implements KernelParam {
 
 	private static final Log LOG = LogFactory.getLog(DUP.class);
 	
-	private AClass type;
+	private IClass type;
 	
-	protected DUP(KernelProgramBlock block, AClass stackTopType) {
+	protected DUP(KernelProgramBlock block, IClass stackTopType) {
 		super(block);
 		type = stackTopType;
 	}
@@ -43,7 +43,7 @@ public class DUP extends ASMDirect implements KernelParam {
 	}
 
 	@Override
-	public AClass getResultType() {
+	public IClass getResultType() {
 		return type;
 	}
 

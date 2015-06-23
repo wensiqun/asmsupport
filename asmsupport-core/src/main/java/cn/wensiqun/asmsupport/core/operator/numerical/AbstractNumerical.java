@@ -24,8 +24,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.AbstractArithmetic;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -39,7 +38,7 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
     private static final Log LOG = LogFactory.getLog(AbstractArithmetic.class);
 
     /** The result type of current numerical operation */
-    protected AClass targetClass;
+    protected IClass targetClass;
 
     protected AbstractNumerical(KernelProgramBlock block, Operator operatorSymbol) {
         super(block, operatorSymbol);
@@ -57,13 +56,13 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
      */
     protected void pushFactorToStack(KernelParam factor) {
 
-        AClass factorCls = factor.getResultType();
+    	IClass factorCls = factor.getResultType();
 
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
         factor.loadToStack(block);
 
-        AClass factorPrimitiveAClass = factorCls;
+        IClass factorPrimitiveAClass = factorCls;
         // unbox if needs
         if (!factorCls.isPrimitive()) {
             LOG.print("unbox " + factorCls);
@@ -73,14 +72,14 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
 
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
-                && targetClass.getCastOrder() > AClassFactory.getType(int.class).getCastOrder()) {
+                && targetClass.getCastOrder() > block.getClassHolder().getType(int.class).getCastOrder()) {
             LOG.print("cast factor from " + factorCls + " to " + targetClass);
             insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }
     }
 
     @Override
-    public final AClass getResultType() {
+    public final IClass getResultType() {
         return targetClass;
     }
 

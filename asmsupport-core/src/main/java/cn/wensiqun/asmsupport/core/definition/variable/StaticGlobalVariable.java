@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -30,24 +30,24 @@ public class StaticGlobalVariable extends GlobalVariable {
 
     private static final Log LOG = LogFactory.getLog(StaticGlobalVariable.class);
 
-    private AClass owner;
+    private IClass owner;
 
     /**
      * 
      * @param owner
      * @param gve
      */
-    public StaticGlobalVariable(AClass owner, Field meta) {
+    public StaticGlobalVariable(IClass owner, Field meta) {
         super(meta);
         this.owner = owner;
     }
 
-    public AClass getOwner() {
+    public IClass getOwner() {
         return owner;
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return meta.getType();
     }
 

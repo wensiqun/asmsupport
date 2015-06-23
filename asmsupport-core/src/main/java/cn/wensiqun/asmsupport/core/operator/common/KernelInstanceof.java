@@ -21,8 +21,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -31,11 +30,11 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public class KernelInstanceof extends AbstractParamOperator {
 
-    private AClass type; 
+    private IClass type; 
     private KernelParam obj;
     private boolean byOtherUsed;
     
-    protected KernelInstanceof(KernelProgramBlock block, KernelParam obj, AClass type) {
+    protected KernelInstanceof(KernelProgramBlock block, KernelParam obj, IClass type) {
         super(block, Operator.INSTANCE_OF);
         this.obj = obj;
         this.type = type;
@@ -79,8 +78,8 @@ public class KernelInstanceof extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
-        return AClassFactory.getType(boolean.class);
+    public IClass getResultType() {
+        return block.getClassHolder().getType(boolean.class);
     }
 
     @Override

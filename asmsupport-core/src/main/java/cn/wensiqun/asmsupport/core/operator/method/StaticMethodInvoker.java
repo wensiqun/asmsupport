@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * Represent a static method call
@@ -31,7 +31,7 @@ public class StaticMethodInvoker extends MethodInvoker {
 
     private static final Log LOG = LogFactory.getLog(StaticMethodInvoker.class);
     
-    protected StaticMethodInvoker(KernelProgramBlock block, AClass owner, String name,
+    protected StaticMethodInvoker(KernelProgramBlock block, IClass owner, String name,
             KernelParam[] arguments) {
         super(block, owner, name, arguments);
         if (owner.isPrimitive()) {

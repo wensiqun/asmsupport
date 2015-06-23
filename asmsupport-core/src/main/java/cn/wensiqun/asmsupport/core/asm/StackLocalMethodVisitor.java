@@ -25,7 +25,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 
 public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
@@ -1361,7 +1360,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
     public void visitLdcInsn(final Object cst) {
         Class<?> ctsCls = cst.getClass();
         if (ctsCls.equals(Type.class)) {
-            setNextPushTypes(AClassFactory.getType(Class.class).getType());
+            setNextPushTypes(Type.getType(Class.class));
         } else if (ctsCls.equals(Integer.class)) {
             setNextPushTypes(Type.INT_TYPE);
         } else if (ctsCls.equals(Float.class)) {
@@ -1371,7 +1370,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
         } else if (ctsCls.equals(Double.class)) {
             setNextPushTypes(Type.DOUBLE_TYPE);
         } else if (ctsCls.equals(String.class)) {
-            setNextPushTypes(AClassFactory.getType(String.class).getType());
+            setNextPushTypes(Type.getType(String.class));
         }
         stackLocalOperator(LDC);
         mv.visitLdcInsn(cst);

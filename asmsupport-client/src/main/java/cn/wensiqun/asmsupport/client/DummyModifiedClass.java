@@ -20,18 +20,16 @@ import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
-public class DummyModifiedClass {
+public class DummyModifiedClass extends AbstractDummy {
 
     private Class<?> original;
-
-    /** Specify the classloader */
-    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -57,31 +55,15 @@ public class DummyModifiedClass {
     /** All modify methods */
     private LinkedList<DummyModifiedMethod> modifyDummies = new LinkedList<DummyModifiedMethod>();
     
-
     public DummyModifiedClass(Class<?> original) {
+    	this(original, CachedThreadLocalClassLoader.getInstance());
+    }
+    
+    public DummyModifiedClass(Class<?> original, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
         this.original = original;
     }
     
-    /**
-     * Set the classloader
-     * 
-     * @param cl
-     * @return
-     */
-    public DummyModifiedClass setClassLoader(AsmsupportClassLoader cl) {
-        this.classLoader = cl;
-        return this;
-    }
-    
-    /**
-     * Get the class loader
-     * 
-     * @return
-     */
-    public ClassLoader getClassLoader() {
-        return classLoader;
-    }
-
     /**
      * Set the class out put path.
      * 
@@ -132,7 +114,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyField newField() {
-        fieldDummies.add(new DummyField());
+        fieldDummies.add(new DummyField(getClassLoader()));
         return fieldDummies.getLast();
     }
 
@@ -142,7 +124,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyConstructor newConstructor() {
-        constructorDummies.add(new DummyConstructor());
+        constructorDummies.add(new DummyConstructor(getClassLoader()));
         return constructorDummies.getLast();
     }
 
@@ -152,7 +134,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyMethod newMethod(String name) {
-        DummyMethod method = new DummyMethod();
+        DummyMethod method = new DummyMethod(getClassLoader());
         method.name(name);
         methodDummies.add(method);
         return method;
@@ -193,7 +175,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyModifiedClass modifyConstructor(Class<?>[] argTypes, ModifiedMethodBody body) {
-        return this.modify(ByteCodeConstant.INIT, argTypes, body);
+        return this.modify(AsmsupportConstant.INIT, argTypes, body);
     }
     
     /**
@@ -203,7 +185,7 @@ public class DummyModifiedClass {
      * @return
      */
     public DummyModifiedClass modifyStaticBlock(ModifiedMethodBody body) {
-        return this.modify(ByteCodeConstant.CLINIT, null, body);
+        return this.modify(AsmsupportConstant.CLINIT, null, body);
     }
 
     /**
@@ -218,7 +200,7 @@ public class DummyModifiedClass {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        ClassModifier cmi = classLoader == null ? new ClassModifier(original) : new ClassModifier(original, classLoader) ;
+        ClassModifier cmi = new ClassModifier(original, getClassLoader()) ;
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), 

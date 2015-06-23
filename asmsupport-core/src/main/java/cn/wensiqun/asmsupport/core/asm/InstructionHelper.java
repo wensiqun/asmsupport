@@ -29,7 +29,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * <p>
@@ -221,7 +220,7 @@ public abstract class InstructionHelper {
      */
     public void push(final String value) {
         if (value == null) {
-            push(AClassFactory.getType(String.class).getType());
+            push(Type.getType(String.class));
         } else {
             getMv().visitLdcInsn(value);
         }
@@ -348,7 +347,7 @@ public abstract class InstructionHelper {
      *            a class or interface type.
      */
     public void checkCast(final Type type) {
-        if (!type.equals(AClassFactory.getType(Object.class).getType())) {
+        if (!type.equals(Type.getType(Object.class))) {
             typeInsn(Opcodes.CHECKCAST, type);
         }
     }
@@ -360,42 +359,42 @@ public abstract class InstructionHelper {
     public static Type getBoxedType(final Type type) {
         switch (type.getSort()) {
         case Type.BYTE:
-            return AClassFactory.getType(Byte.class).getType();
+            return Type.getType(Byte.class);
         case Type.BOOLEAN:
-            return AClassFactory.getType(Boolean.class).getType();
+            return Type.getType(Boolean.class);
         case Type.SHORT:
-            return AClassFactory.getType(Short.class).getType();
+            return Type.getType(Short.class);
         case Type.CHAR:
-            return AClassFactory.getType(Character.class).getType();
+            return Type.getType(Character.class);
         case Type.INT:
-            return AClassFactory.getType(Integer.class).getType();
+            return Type.getType(Integer.class);
         case Type.FLOAT:
-            return AClassFactory.getType(Float.class).getType();
+            return Type.getType(Float.class);
         case Type.LONG:
-            return AClassFactory.getType(Long.class).getType();
+            return Type.getType(Long.class);
         case Type.DOUBLE:
-            return AClassFactory.getType(Double.class).getType();
+            return Type.getType(Double.class);
         default :
             return type;
         }
     }
 
     public static Type getUnBoxedType(final Type type) {
-        if (type.equals(AClassFactory.getType(Byte.class).getType())) {
+        if (type.equals(Type.getType(Byte.class))) {
             return Type.BYTE_TYPE;
-        } else if (type.equals(AClassFactory.getType(Boolean.class).getType())) {
+        } else if (type.equals(Type.getType(Byte.class))){
             return Type.BOOLEAN_TYPE;
-        } else if (type.equals(AClassFactory.getType(Short.class).getType())) {
+        } else if (type.equals(Type.getType(Short.class))) {
             return Type.SHORT_TYPE;
-        } else if (type.equals(AClassFactory.getType(Character.class).getType())) {
+        } else if (type.equals(Type.getType(Character.class))) {
             return Type.CHAR_TYPE;
-        } else if (type.equals(AClassFactory.getType(Integer.class).getType())) {
+        } else if (type.equals(Type.getType(Integer.class))) {
             return Type.INT_TYPE;
-        } else if (type.equals(AClassFactory.getType(Float.class).getType())) {
+        } else if (type.equals(Type.getType(Float.class))) {
             return Type.FLOAT_TYPE;
-        } else if (type.equals(AClassFactory.getType(Long.class).getType())) {
+        } else if (type.equals(Type.getType(Long.class))) {
             return Type.LONG_TYPE;
-        } else if (type.equals(AClassFactory.getType(Double.class).getType())) {
+        } else if (type.equals(Type.getType(Double.class))) {
             return Type.DOUBLE_TYPE;
         }
         return type;
@@ -892,7 +891,7 @@ public abstract class InstructionHelper {
      * @param type
      */
     public void inverts(final Type type) {
-        if (type.equals(AClassFactory.getType(long.class))) {
+        if (type.equals(Type.LONG_TYPE)) {
             push(-1L);
         } else {
             push(-1);

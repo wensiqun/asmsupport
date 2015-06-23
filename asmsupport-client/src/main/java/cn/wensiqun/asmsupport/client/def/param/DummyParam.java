@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * A simple parameter that only a proxy of {@link KernelParam}
@@ -43,7 +43,7 @@ public class DummyParam extends Param {
     }
     
     @Override
-    public final AClass getResultType() {
+    public final IClass getResultType() {
         return target.getResultType();
     }
 

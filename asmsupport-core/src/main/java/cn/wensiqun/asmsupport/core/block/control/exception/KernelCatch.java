@@ -21,15 +21,15 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.standard.block.exception.ICatch;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> implements
         ICatch<LocalVariable, KernelCatch, KernelFinally> {
 
-    private AClass exceptionType;
+    private IClass exceptionType;
 
-    public KernelCatch(AClass exceptionType) {
+    public KernelCatch(IClass exceptionType) {
         if (exceptionType == null) {
             throw new ASMSupportException("missing catch exception type.");
         }
@@ -76,7 +76,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
         return block;
     }
 
-    AClass getExceptionType() {
+    IClass getExceptionType() {
         return exceptionType;
     }
 

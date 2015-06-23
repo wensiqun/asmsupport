@@ -26,16 +26,15 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -73,7 +72,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param asmsupportClassLoader
      */
     public EnumBuilderImpl(int version, String name, Class<?>[] interfaces, AsmsupportClassLoader asmsupportClassLoader) {
-        super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, Enum.class,
+        super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, 
+        		asmsupportClassLoader.getType(Enum.class),
                 interfaces, asmsupportClassLoader);
         enumConstantNameList = new ArrayList<String>();
     }
@@ -90,7 +90,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      *            the field type
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, AClass type) {
+    public IFieldBuilder createField(String name, int modifiers, IClass type) {
         return createField(name, modifiers, type, null);
     }
 
@@ -111,7 +111,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      *            constructors or methods.
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, AClass type, Object value) {
+    public IFieldBuilder createField(String name, int modifiers, IClass type, Object value) {
         if (!existEnumConstant) {
             throw new ASMSupportException("first field must be an enum object of current enum type " + sc.getName());
         }
@@ -146,8 +146,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param access
      * @param mb
      */
-    public final void createMethodForDummy(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, KernelMethodBody mb) {
+    public final void createMethodForDummy(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
+            IClass[] exceptions, int access, KernelMethodBody mb) {
         methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
@@ -163,8 +163,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param mb
      * @return
      */
-    public final void createMethod(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, KernelMethodBody mb) {
+    public final void createMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
+            IClass[] exceptions, int access, KernelMethodBody mb) {
         if ((access & Opcodes.ACC_STATIC) != 0) {
             access -= Opcodes.ACC_STATIC;
         }
@@ -183,8 +183,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param mb
      * @return
      */
-    public void createStaticMethod(String name, AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int access, KernelStaticMethodBody mb) {
+    public void createStaticMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
+            IClass[] exceptions, int access, KernelStaticMethodBody mb) {
         if ((access & Opcodes.ACC_STATIC) == 0) {
             access += Opcodes.ACC_STATIC;
         }
@@ -200,7 +200,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param mb
      * @param access
      */
-    public void createConstructor(AClass[] argClasses, String[] argNames, KernelEnumConstructorBody mb) {
+    public void createConstructor(IClass[] argClasses, String[] argNames, KernelEnumConstructorBody mb) {
 
         if (ArrayUtils.isNotEmpty(argClasses) && ArrayUtils.isEmpty(argNames)) {
             argNames = new String[argClasses.length];
@@ -213,7 +213,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
             argNames = new String[0];
         }
         if (argClasses == null) {
-            argClasses = new AClass[0];
+            argClasses = new IClass[0];
         }
 
         if (argNames.length != argClasses.length) {
@@ -229,12 +229,12 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         enumArgNames[1] = "ordinal";
         System.arraycopy(argNames, 0, enumArgNames, 2, argNames.length);
 
-        AClass[] enumArgClasses = new AClass[argClasses.length + 2];
-        enumArgClasses[0] = AClassFactory.getType(String.class);
-        enumArgClasses[1] = AClassFactory.getType(int.class);
+        IClass[] enumArgClasses = new IClass[argClasses.length + 2];
+        enumArgClasses[0] = asmsupportClassLoader.getType(String.class);
+        enumArgClasses[1] = asmsupportClassLoader.getType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
-        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(ByteCodeConstant.INIT, enumArgClasses, enumArgNames, null, null,
+        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.INIT, enumArgClasses, enumArgNames, null, null,
                 Opcodes.ACC_PRIVATE, mb));
         haveInitMethod = true;
     }
@@ -249,12 +249,12 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if (existEnumConstant) {
             // create implicit global variable ENUM$VALUES for enum type
             createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
-                    + Opcodes.ACC_SYNTHETIC, AClassFactory.getArrayType(sc, 1));
+                    + Opcodes.ACC_SYNTHETIC, asmsupportClassLoader.getArrayClass(sc, 1));
 
         }
         existedStaticBlock = true;
         methodCreaters.add(0,
-                MethodBuilderImpl.methodCreatorForAdd(ByteCodeConstant.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
+                MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
     }
 
     @Override
@@ -271,7 +271,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     @Override
     protected void beforeCreate() {
 
-        final ArrayClass enumArrayType = AClassFactory.getArrayType(sc, 1);
+        final ArrayClass enumArrayType = asmsupportClassLoader.getArrayClass(sc, 1);
 
         // create "publis static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
@@ -279,7 +279,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
 
                     @Override
                     public void body(LocalVariable... argus) {
-                        AClass owner = getMethodDeclaringClass();
+                        IClass owner = getMethodDeclaringClass();
                         // get ENUM$VALUES
                         GlobalVariable values = val(owner).field("ENUM$VALUES");
 
@@ -291,10 +291,10 @@ public class EnumBuilderImpl extends AbstractClassCreator {
                         KernelParam copyLen = arrayLength(copy);
 
                         // System
-                        AClass systemClass = AClassFactory.getType(System.class);
+                        IClass systemClass = asmsupportClassLoader.getType(System.class);
 
                         // zero value
-                        Value zero = Value.value(0);
+                        Value zero = val(0);
 
                         // call arraycopy
                         call(systemClass, "arraycopy", values, zero, copy, zero, copyLen);
@@ -305,14 +305,14 @@ public class EnumBuilderImpl extends AbstractClassCreator {
                 });
 
         // create "public static Enum valueOf(java.lang.String)" method
-        this.createStaticMethod("valueOf", new AClass[] { AClassFactory.getType(String.class) }, new String[] { "name" }, sc, null,
+        this.createStaticMethod("valueOf", new IClass[] { asmsupportClassLoader.getType(String.class) }, new String[] { "name" }, sc, null,
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelStaticMethodBody() {
 
                     @Override
                     public void body(LocalVariable... argus) {
                         LocalVariable name = argus[0];
-                        AClass owner = getMethodDeclaringClass();
-                        return_(checkcast(call(owner, "valueOf", Value.value(owner), name), owner));
+                        IClass owner = getMethodDeclaringClass();
+                        return_(checkcast(call(owner, "valueOf", val(owner), name), owner));
                     }
 
                 });

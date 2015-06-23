@@ -18,8 +18,8 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 /**
  * Represent a call constructor operation.
@@ -39,8 +39,8 @@ public class ConstructorInvoker extends MethodInvoker {
      * @param mv
      * @param dup
      */
-    protected ConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParam[] arguments) {
-        super(block, aclass, ByteCodeConstant.INIT, arguments);
+    protected ConstructorInvoker(KernelProgramBlock block, IClass aclass, KernelParam[] arguments) {
+        super(block, aclass, AsmsupportConstant.INIT, arguments);
         if (aclass.isPrimitive()) {
             throw new IllegalArgumentException("Cannot new a primitive class");
         }else if(aclass.isAbstract()){

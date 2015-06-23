@@ -26,9 +26,8 @@ import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -142,15 +141,15 @@ public class KernelArrayValue extends AbstractParamOperator  {
     	if(allocateDims != null){
             for(KernelParam dim : allocateDims){
                 int order = AClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
-                if(order > AClassFactory.getType(int.class).getCastOrder() ||
-                   order <= AClassFactory.getType(boolean.class).getCastOrder()){
+                if(order > block.getType(int.class).getCastOrder() ||
+                   order <= block.getType(boolean.class).getCastOrder()){
                     throw new RuntimeException("the allcate dim number must be byte, char, short or int type!");
                 }
             }
         }
 
     	//When call other constructor
-    	final AClass rootComp = arrayCls.getRootComponentClass();
+    	final IClass rootComp = arrayCls.getRootComponentClass();
         new EachValue(values){
             @Override
             void process(KernelParam para) {
@@ -168,12 +167,12 @@ public class KernelArrayValue extends AbstractParamOperator  {
         batchAsArgument(values);
     }
     
-    private void loopArray(AClass acls, Object arrayOrElement){
+    private void loopArray(IClass acls, Object arrayOrElement){
         InstructionHelper ih = block.getInsnHelper();
         if(arrayOrElement.getClass().isArray()){
             int len = Array.getLength(arrayOrElement);
             ih.push(len);
-            AClass nextDimType = ((ArrayClass)acls).getNextDimType();
+            IClass nextDimType = acls.getNextDimType();
             ih.newArray(nextDimType.getType());
             if(len > 0){
                 ih.dup();	
@@ -232,7 +231,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return arrayCls;
     }
 

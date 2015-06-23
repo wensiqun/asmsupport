@@ -2,7 +2,9 @@ package cn.wensiqun.asmsupport.utils;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
-public interface ByteCodeConstant {
+public interface AsmsupportConstant {
+	
+	public final static String CLASS_QUALIFIED_NAME_REGEX = "^[\\p{L} .'-]+$";
 	
 	public final static String CLINIT = "<clinit>";
 	public final static String CLINIT_PROXY = "&clinit&";

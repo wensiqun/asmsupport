@@ -23,10 +23,10 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
+import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
  * The AClass Helper
@@ -38,7 +38,7 @@ public class AClassUtils {
      * 
      * @param aclass
      */
-    public static boolean isPrimitiveWrapAClass(AClass aclass) {
+    public static boolean isPrimitiveWrapAClass(IClass aclass) {
         if (aclass.getName().equals(Byte.class.getName()) || aclass.getName().equals(Short.class.getName())
                 || aclass.getName().equals(Character.class.getName())
                 || aclass.getName().equals(Integer.class.getName()) || aclass.getName().equals(Long.class.getName())
@@ -53,23 +53,24 @@ public class AClassUtils {
      * Get the primitive type if the argument is wrap type, otherwise
      * return the argument self.
      */
-    public static AClass getPrimitiveAClass(AClass aclass) {
-        if (aclass.equals(AClassFactory.getType(Boolean.class))) {
-            return AClassFactory.getType(boolean.class);
-        } else if (aclass.equals(AClassFactory.getType(Byte.class))) {
-            return AClassFactory.getType(byte.class);
-        } else if (aclass.equals(AClassFactory.getType(Short.class))) {
-            return AClassFactory.getType(short.class);
-        } else if (aclass.equals(AClassFactory.getType(Character.class))) {
-            return AClassFactory.getType(char.class);
-        } else if (aclass.equals(AClassFactory.getType(Integer.class))) {
-            return AClassFactory.getType(int.class);
-        } else if (aclass.equals(AClassFactory.getType(Long.class))) {
-            return AClassFactory.getType(long.class);
-        } else if (aclass.equals(AClassFactory.getType(Float.class))) {
-            return AClassFactory.getType(float.class);
-        } else if (aclass.equals(AClassFactory.getType(Double.class))) {
-            return AClassFactory.getType(double.class);
+    public static IClass getPrimitiveAClass(IClass aclass) {
+    	ClassHolder ch = aclass.getClassLoader();
+        if (aclass.equals(ch.getType(Boolean.class))) {
+            return ch.getType(boolean.class);
+        } else if (aclass.equals(ch.getType(Byte.class))) {
+            return ch.getType(byte.class);
+        } else if (aclass.equals(ch.getType(Short.class))) {
+            return ch.getType(short.class);
+        } else if (aclass.equals(ch.getType(Character.class))) {
+            return ch.getType(char.class);
+        } else if (aclass.equals(ch.getType(Integer.class))) {
+            return ch.getType(int.class);
+        } else if (aclass.equals(ch.getType(Long.class))) {
+            return ch.getType(long.class);
+        } else if (aclass.equals(ch.getType(Float.class))) {
+            return ch.getType(float.class);
+        } else if (aclass.equals(ch.getType(Double.class))) {
+            return ch.getType(double.class);
         }
         return aclass;
     }
@@ -78,23 +79,24 @@ public class AClassUtils {
      * Get the primitive wrap type if the argument is primitive type, otherwise
      * return the argument self.
      */
-    public static AClass getPrimitiveWrapAClass(AClass aclass) {
-        if (aclass.equals(AClassFactory.getType(boolean.class))) {
-            return AClassFactory.getType(Boolean.class);
-        } else if (aclass.equals(AClassFactory.getType(byte.class))) {
-            return AClassFactory.getType(Byte.class);
-        } else if (aclass.equals(AClassFactory.getType(short.class))) {
-            return AClassFactory.getType(Short.class);
-        } else if (aclass.equals(AClassFactory.getType(char.class))) {
-            return AClassFactory.getType(Character.class);
-        } else if (aclass.equals(AClassFactory.getType(int.class))) {
-            return AClassFactory.getType(Integer.class);
-        } else if (aclass.equals(AClassFactory.getType(long.class))) {
-            return AClassFactory.getType(Long.class);
-        } else if (aclass.equals(AClassFactory.getType(float.class))) {
-            return AClassFactory.getType(Float.class);
-        } else if (aclass.equals(AClassFactory.getType(double.class))) {
-            return AClassFactory.getType(Double.class);
+    public static IClass getPrimitiveWrapAClass(IClass aclass) {
+    	ClassHolder ch = aclass.getClassLoader();
+        if (aclass.equals(ch.getType(boolean.class))) {
+            return ch.getType(Boolean.class);
+        } else if (aclass.equals(ch.getType(byte.class))) {
+            return ch.getType(Byte.class);
+        } else if (aclass.equals(ch.getType(short.class))) {
+            return ch.getType(Short.class);
+        } else if (aclass.equals(ch.getType(char.class))) {
+            return ch.getType(Character.class);
+        } else if (aclass.equals(ch.getType(int.class))) {
+            return ch.getType(Integer.class);
+        } else if (aclass.equals(ch.getType(long.class))) {
+            return ch.getType(Long.class);
+        } else if (aclass.equals(ch.getType(float.class))) {
+            return ch.getType(Float.class);
+        } else if (aclass.equals(ch.getType(double.class))) {
+            return ch.getType(Double.class);
         }
         return aclass;
     }
@@ -102,16 +104,16 @@ public class AClassUtils {
     /**
      * according the passed type list, to figure out the finally result type
      */
-    public static AClass getArithmeticalResultType(AClass... types) {
-        AClass resultType = null;
-        for (AClass type : types) {
+    public static IClass getArithmeticalResultType(IClass... types) {
+    	IClass resultType = null;
+        for (IClass type : types) {
             type = getPrimitiveAClass(type);
 
             if (isArithmetical(type)) {
                 int typeSort = type.getType().getSort();
                 if (resultType == null || typeSort > resultType.getType().getSort()) {
                     if (typeSort <= Type.INT) {
-                        resultType = AClassFactory.getType(int.class);
+                        resultType = type.getClassLoader().getType(int.class);
                     } else {
                         resultType = type;
                     }
@@ -126,7 +128,7 @@ public class AClassUtils {
     /**
      * Check the specify whether or not as an arithmetical operation factor.
      */
-    public static boolean isArithmetical(AClass aclass) {
+    public static boolean isArithmetical(IClass aclass) {
         if (aclass.isPrimitive() && !aclass.getName().equals(boolean.class.getName())) {
             return true;
         } else if (isPrimitiveWrapAClass(aclass) && !aclass.getName().equals(Boolean.class.getName())) {
@@ -138,7 +140,7 @@ public class AClassUtils {
     /**
      * Check the type support unbox or box.
      */
-    public static boolean boxUnboxable(AClass aclass) {
+    public static boolean boxUnboxable(IClass aclass) {
         if (aclass.isPrimitive() || isPrimitiveWrapAClass(aclass)) {
             return true;
         }
@@ -174,7 +176,7 @@ public class AClassUtils {
      * @param modifiers the modifier of method
      * @return
      */
-    public static boolean visible(AClass where, AClass callFrom, AClass methodDescription, int modifiers) {
+    public static boolean visible(IClass where, IClass callFrom, IClass methodDescription, int modifiers) {
         // 只要是public就可见
         if (Modifier.isPublic(modifiers)) {
             return true;
@@ -222,12 +224,12 @@ public class AClassUtils {
     /**
      * Check a type({@code from}) whether or not assign to other type({@code to}).
      */
-    public static boolean checkAssignable(AClass from, AClass to) {
+    public static boolean checkAssignable(IClass from, IClass to) {
         if (from.isChildOrEqual(to)) {
             return true;
         } else {
-            AClass fromPrim = getPrimitiveAClass(from);
-            AClass toPrim = getPrimitiveAClass(to);
+        	IClass fromPrim = getPrimitiveAClass(from);
+        	IClass toPrim = getPrimitiveAClass(to);
             int fromSort = fromPrim.getType().getSort();
             int toSort = toPrim.getType().getSort();
 
@@ -256,30 +258,58 @@ public class AClassUtils {
      * 
      * @return List<Class<?>> all interface list
      */
-    public static List<Class<?>> getAllInterfaces(AClass aclass) {
+    public static List<IClass> getAllInterfaces(IClass aclass) {
         Class<?>[] interfaces = aclass.getInterfaces();
-        Class<?> superClass = aclass.getSuperClass();
-        List<Class<?>> interfaceColl = new ArrayList<Class<?>>();
-        CollectionUtils.addAll(interfaceColl, interfaces);
+        IClass superClass = aclass.getSuperClass();
+        List<IClass> interfaceColl = new ArrayList<IClass>();
         for (Class<?> inter : interfaces) {
-            ClassUtils.getAllInterfaces(interfaceColl, inter);
+        	IClass interAClass = aclass.getClassLoader().getType(inter);
+        	interfaceColl.add(interAClass);
+            getAllInterfaces(interfaceColl, interAClass);
         }
-        ClassUtils.getAllInterfaces(interfaceColl, superClass);
+        getAllInterfaces(interfaceColl, superClass);
         return interfaceColl;
     }
 
     /**
      * Convert {@link Class} list to {@link AClass} list
      */
-    public static AClass[] convertToAClass(Class<?>[] classes) {
+    public static IClass[] convertToAClass(ClassHolder classHoler, Class<?>[] classes) {
         if (classes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
 
-        AClass[] aclasses = new AClass[classes.length];
+        IClass[] aclasses = new IClass[classes.length];
         for (int i = 0; i < classes.length; i++) {
-            aclasses[i] = AClassFactory.getType(classes[i]);
+            aclasses[i] = classHoler.getType(classes[i]);
         }
         return aclasses;
+    }
+    
+    /**
+     * Get all interface from a class and put the found classes to a list.
+     * 
+     * @param interfaceColl
+     * @param clazz
+     */
+    public static void getAllInterfaces(List<IClass> interfaceColl, IClass clazz) {
+        if (clazz == null || Object.class.getName().endsWith(clazz.getName())) {
+            return;
+        }
+
+        // get interface from super class
+        getAllInterfaces(interfaceColl, clazz.getSuperClass());
+
+        Class<?>[] interfaces = clazz.getInterfaces();
+        if (ArrayUtils.isNotEmpty(interfaces)) {
+            for (Class<?> inter : interfaces) {
+                if (!interfaceColl.contains(inter)) {
+                    interfaceColl.add(clazz.getClassLoader().getType(inter));
+                }
+                // get interface from current interface
+                getAllInterfaces(interfaceColl, clazz.getClassLoader().getType(inter));
+            }
+        }
+
     }
 }

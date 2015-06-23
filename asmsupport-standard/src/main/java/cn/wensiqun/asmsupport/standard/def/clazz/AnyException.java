@@ -14,12 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import java.lang.reflect.Constructor;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 
 /**
@@ -30,26 +26,9 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public class AnyException extends AClass {
 
-    public static final AClass ANY = new AnyException();
-
-    private AnyException() {
-        try {
-            Constructor<Type> con = Type.class.getDeclaredConstructor(int.class, char[].class, int.class, int.class);
-            con.setAccessible(true);
-            type = con.newInstance(12, "AnyExceptionType".toCharArray(), 0, 16);
-        } catch (Exception e) {
-            throw new ASMSupportException(e);
-        }
-    }
-
-    @Override
-    public boolean isArray() {
-        return false;
-    }
-
-    @Override
-    public int getDimension() {
-        return 0;
+    public AnyException(AsmsupportClassLoader holder) {
+    	super(holder);
+    	type = Type.ANY_EXP_TYPE;
     }
 
     @Override
@@ -58,73 +37,18 @@ public class AnyException extends AClass {
     }
 
     @Override
-    public Field getField(String name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isPrimitive() {
-        return false;
-    }
-
-    @Override
-    public boolean existStaticInitBlock() {
-        return false;
-    }
-
-    @Override
     public String getName() {
-        return "Any Exception";
-    }
-
-    @Override
-    public int getModifiers() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int getVersion() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Class<?> getSuperClass() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Class<?>[] getInterfaces() {
-        throw new UnsupportedOperationException();
+        return "ANY_EXCEPTION";
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj == ANY;
+    	return obj instanceof AnyException;
     }
 
     @Override
     public int hashCode() {
-        return ANY.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Any Exception";
-    }
-
-    @Override
-    public AClass getNextDimType() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public AClass getRootComponentClass() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isChildOrEqual(AClass otherType) {
-        throw new UnsupportedOperationException();
+        return getName().hashCode();
     }
 
 }

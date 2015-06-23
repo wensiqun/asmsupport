@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -31,7 +31,7 @@ public class FieldBuildImpl implements IFieldBuilder {
     
     private String name;
     private int modifiers;
-    private AClass type;
+    private IClass type;
 
     private Field fe;
     private IClassBuilder context;
@@ -43,7 +43,7 @@ public class FieldBuildImpl implements IFieldBuilder {
      * @param modifiers
      * @param type
      */
-    public FieldBuildImpl(String name, int modifiers, AClass type) {
+    public FieldBuildImpl(String name, int modifiers, IClass type) {
         this(name, modifiers, type, null);
     }
     
@@ -59,7 +59,7 @@ public class FieldBuildImpl implements IFieldBuilder {
      *            ignored for non static fields, which must be initialized 
      *            through bytecode instructions in constructors or methods.
      */
-    public FieldBuildImpl(String name, int modifiers, AClass type, Object val) {
+    public FieldBuildImpl(String name, int modifiers, IClass type, Object val) {
         this.name = name;
         this.modifiers = modifiers;
         this.type = type;

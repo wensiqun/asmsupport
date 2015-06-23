@@ -22,8 +22,8 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -33,7 +33,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
 
     private static final Log LOG = LogFactory.getLog(KernelArrayLoad.class);
     
-    private AClass valueClass;
+    private IClass valueClass;
     
     private boolean useByOther;
 
@@ -75,7 +75,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return valueClass;
     }
 

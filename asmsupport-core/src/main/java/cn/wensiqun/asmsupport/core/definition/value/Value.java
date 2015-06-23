@@ -24,8 +24,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
@@ -37,86 +37,86 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public class Value implements IValue {
 
-    private AClass cls;
+    private IClass cls;
     private Object value;
 
     /**
      * boolean value
      */
-    private Value(Boolean value) {
-        this.cls = AClassFactory.getType(boolean.class);
+    private Value(ClassHolder holder, Boolean value) {
+        this.cls = holder.getType(boolean.class);
         setProperites(value);
     }
 
     /**
      * byte value
      */
-    private Value(Byte value) {
-        this.cls = AClassFactory.getType(byte.class);
+    private Value(ClassHolder holder, Byte value) {
+        this.cls = holder.getType(byte.class);
         setProperites(value);
     }
 
     /**
      * short value
      */
-    private Value(Short value) {
-        this.cls = AClassFactory.getType(short.class);
+    private Value(ClassHolder holder, Short value) {
+        this.cls = holder.getType(short.class);
         setProperites(value);
     }
 
     /**
      * char value
      */
-    private Value(Character value) {
-        this.cls = AClassFactory.getType(char.class);
+    private Value(ClassHolder holder, Character value) {
+        this.cls = holder.getType(char.class);
         setProperites(value);
     }
 
     /**
      * int value
      */
-    private Value(Integer value) {
-        this.cls = AClassFactory.getType(int.class);
+    private Value(ClassHolder holder, Integer value) {
+        this.cls = holder.getType(int.class);
         setProperites(value);
     }
 
     /**
      * long value
      */
-    private Value(Long value) {
-        this.cls = AClassFactory.getType(long.class);
+    private Value(ClassHolder holder, Long value) {
+        this.cls = holder.getType(long.class);
         setProperites(value);
     }
 
     /**
      * float value
      */
-    private Value(Float value) {
-        this.cls = AClassFactory.getType(float.class);
+    private Value(ClassHolder holder, Float value) {
+        this.cls = holder.getType(float.class);
         setProperites(value);
     }
 
     /**
      * double value
      */
-    private Value(Double value) {
-        this.cls = AClassFactory.getType(double.class);
+    private Value(ClassHolder holder, Double value) {
+        this.cls = holder.getType(double.class);
         setProperites(value);
     }
 
     /**
      * string value
      */
-    private Value(String value) {
-        this.cls = AClassFactory.getType(String.class);
+    private Value(ClassHolder holder, String value) {
+        this.cls = holder.getType(String.class);
         setProperites(value);
     }
 
     private Value() {
     }
 
-    private Value(AClass aclass) {
-        this.cls = AClassFactory.getType(Class.class);
+    private Value(IClass aclass) {
+        this.cls = aclass.getClassLoader().getType(Class.class);
         setProperites(aclass);
     }
 
@@ -129,31 +129,32 @@ public class Value implements IValue {
      * 
      * @param aclass the value type that's you want to create
      */
-    public static Value defaultValue(AClass aclass) {
-
+    public static Value defaultValue(IClass aclass) {
+        
+    	ClassHolder holder = aclass.getClassLoader();
         if (aclass.getName().equals(int.class.getName())) {
-            return new Value(0);
+            return new Value(holder, 0);
 
         } else if (aclass.getName().equals(short.class.getName())) {
-            return new Value((short) 0);
+            return new Value(holder, (short) 0);
 
         } else if (aclass.getName().equals(byte.class.getName())) {
-            return new Value((byte) 0);
+            return new Value(holder, (byte) 0);
 
         } else if (aclass.getName().equals(boolean.class.getName())) {
-            return new Value(false);
+            return new Value(holder, false);
 
         } else if (aclass.getName().equals(long.class.getName())) {
-            return new Value((long) 0);
+            return new Value(holder, (long) 0);
 
         } else if (aclass.getName().equals(double.class.getName())) {
-            return new Value(0d);
+            return new Value(holder, 0d);
 
         } else if (aclass.getName().equals(char.class.getName())) {
-            return new Value((char) 0);
+            return new Value(holder, (char) 0);
 
         } else if (aclass.getName().equals(float.class.getName())) {
-            return new Value(0f);
+            return new Value(holder, 0f);
 
         } else {
             Value v = new Value();
@@ -169,8 +170,8 @@ public class Value implements IValue {
      * @param type
      * @return
      */
-    public static Value getNullValue(Class<?> type) {
-        return getNullValue(AClassFactory.getType(type));
+    public static Value getNullValue(ClassHolder holder, Class<?> type) {
+        return getNullValue(holder.getType(type));
     }
 
     /**
@@ -179,7 +180,7 @@ public class Value implements IValue {
      * @param type
      * @return
      */
-    public static Value getNullValue(AClass type) {
+    public static Value getNullValue(IClass type) {
         if (type.isPrimitive()) {
             throw new IllegalArgumentException("the type of null value cannot be primitive type!");
         }
@@ -192,8 +193,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Integer obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Integer obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -202,8 +203,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Short obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Short obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -212,8 +213,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Byte obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Byte obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -222,8 +223,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Boolean obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Boolean obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -232,8 +233,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Long obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Long obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -242,8 +243,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Double obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Double obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -252,8 +253,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Character obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Character obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -262,8 +263,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Float obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Float obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -272,8 +273,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(AClass obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, IClass obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -282,8 +283,8 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(Class<?> obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, Class<?> obj) {
+        return value(holder, (Object) obj);
     }
 
     /**
@@ -292,58 +293,58 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value value(String obj) {
-        return value((Object) obj);
+    public static Value value(ClassHolder holder, String obj) {
+        return value(holder, (Object) obj);
     }
 
-    private static Value value(Object obj) {
+    private static Value value(ClassHolder holder, Object obj) {
         if (obj == null) {
             throw new NullPointerException(
                     "Cannot support null value for this method, use getNullValue method to get null value if you want get null!");
         }
         if (obj instanceof Integer) {
 
-            return new Value((Integer) obj);
+            return new Value(holder, (Integer) obj);
 
         } else if (obj instanceof Short) {
 
-            return new Value((Short) obj);
+            return new Value(holder, (Short) obj);
 
         } else if (obj instanceof Byte) {
 
-            return new Value((Byte) obj);
+            return new Value(holder, (Byte) obj);
 
         } else if (obj instanceof Boolean) {
 
-            return new Value((Boolean) obj);
+            return new Value(holder, (Boolean) obj);
 
         } else if (obj instanceof Long) {
 
-            return new Value((Long) obj);
+            return new Value(holder, (Long) obj);
 
         } else if (obj instanceof Double) {
 
-            return new Value((Double) obj);
+            return new Value(holder, (Double) obj);
 
         } else if (obj instanceof Character) {
 
-            return new Value((Character) obj);
+            return new Value(holder, (Character) obj);
 
         } else if (obj instanceof Float) {
 
-            return new Value((Float) obj);
+            return new Value(holder, (Float) obj);
 
-        } else if (obj instanceof AClass) {
+        } else if (obj instanceof IClass) {
 
-            return new Value((AClass) obj);
+            return new Value((IClass) obj);
 
         } else if (obj instanceof String) {
 
-            return new Value((String) obj);
+            return new Value(holder, (String) obj);
 
         } else if (obj instanceof Class) {
 
-            return new Value(AClassFactory.getType((Class<?>) obj));
+            return new Value(holder.getType((Class<?>) obj));
 
         }
         throw new ASMSupportException("Cannot support type " + obj.getClass() + " for this method!");
@@ -361,22 +362,23 @@ public class Value implements IValue {
      * @param val
      * @return
      */
-    public static Value number(AClass type, int val) {
+    public static Value number(IClass type, int val) {
+    	ClassHolder holder = type.getClassLoader();
         switch (type.getType().getSort()) {
         case Type.CHAR:
-            return value((char) val);
+            return value(holder, (char) val);
         case Type.BYTE:
-            return value((byte) val);
+            return value(holder, (byte) val);
         case Type.SHORT:
-            return value((short) val);
+            return value(holder, (short) val);
         case Type.INT:
-            return value(val);
+            return value(holder, val);
         case Type.FLOAT:
-            return value((float) val);
+            return value(holder, (float) val);
         case Type.LONG:
-            return value((long) val);
+            return value(holder, (long) val);
         case Type.DOUBLE:
-            return value((double) val);
+            return value(holder, (double) val);
         }
         return null;
     }
@@ -386,7 +388,7 @@ public class Value implements IValue {
      * 
      * @param type
      */
-    public void convert(AClass type) {
+    public void convert(IClass type) {
         convert(this, type);
     }
 
@@ -395,8 +397,8 @@ public class Value implements IValue {
      * 
      * @param type
      */
-    public Value getConvert(AClass type) {
-        Value newVal = value(value);
+    public Value getConvert(IClass type) {
+        Value newVal = value(type.getClassLoader(), value);
         convert(newVal, type);
         return newVal;
     }
@@ -407,7 +409,7 @@ public class Value implements IValue {
      * @param val
      * @param type
      */
-    private void convert(Value val, AClass type) {
+    private void convert(Value val, IClass type) {
         if (cls.equals(type)) {
             return;
         }
@@ -445,7 +447,7 @@ public class Value implements IValue {
      * @param type
      * @param val
      */
-    private void refactor(AClass type, Object val) {
+    private void refactor(IClass type, Object val) {
         this.cls = type;
         this.setProperites(val);
     }
@@ -538,7 +540,7 @@ public class Value implements IValue {
 
         } else if (this.cls.getName().equals(Class.class.getName())) {
 
-            block.getInsnHelper().pushClass(((AClass) value).getType());
+            block.getInsnHelper().pushClass(((IClass) value).getType());
 
         }
     }
@@ -559,8 +561,8 @@ public class Value implements IValue {
         }
 
         Value objval = (Value) obj;
-        AClass curtyp = getResultType();
-        AClass objtyp = objval.getResultType();
+        IClass curtyp = getResultType();
+        IClass objtyp = objval.getResultType();
 
         if (value == null && objval.value == null) {
             if (curtyp.isChildOrEqual(objtyp) || objtyp.isChildOrEqual(curtyp)) {
@@ -591,7 +593,7 @@ public class Value implements IValue {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return cls;
     }
 
@@ -602,10 +604,10 @@ public class Value implements IValue {
 
     @Override
     public GlobalVariable field(String name) {
-        if(value != null && value instanceof AClass) {
-            Field field = ((AClass)value).getField(name);
+        if(value != null && value instanceof IClass) {
+            Field field = ((IClass)value).getField(name);
             if(ModifierUtils.isStatic(field.getModifiers())) {
-                return new StaticGlobalVariable((AClass)value, field);
+                return new StaticGlobalVariable((IClass)value, field);
             } else {
                 throw new ASMSupportException("No such field " + name);
             }

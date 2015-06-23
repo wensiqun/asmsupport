@@ -26,8 +26,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -48,7 +47,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     
     private boolean byOtherUsed;
     
-    protected AClass targetClass;
+    protected IClass targetClass;
     
     protected Label trueLbl;
     protected Label falseLbl;
@@ -64,8 +63,8 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     protected void initAdditionalProperties() {
         //replace Value object
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+    	IClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         
         if(ftrCls1.getCastOrder() > ftrCls2.getCastOrder()){
             targetClass = ftrCls1;
@@ -80,9 +79,9 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
             ((Value)rightFactor).convert(targetClass);
     }
     
-    protected final void checkFactorForNumerical(AClass ftrCls){
+    protected final void checkFactorForNumerical(IClass ftrCls){
         if(!ftrCls.isPrimitive() || 
-           ftrCls.equals(AClassFactory.getType(boolean.class))){
+           ftrCls.equals(block.getClassHolder().getType(boolean.class))){
             throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
         }
     }
@@ -106,8 +105,8 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     }
 
     @Override
-    public AClass getResultType() {
-        return AClassFactory.getType(boolean.class);
+    public IClass getResultType() {
+        return block.getClassHolder().getType(boolean.class);
     }
 
     @Override

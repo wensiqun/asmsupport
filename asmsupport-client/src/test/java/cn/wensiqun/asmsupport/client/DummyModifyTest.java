@@ -33,6 +33,7 @@ public class DummyModifyTest {
             Object obj = asmsupportTest();
             Assert.assertEquals("Append at before{Hello World}append at after", obj.getClass().getMethod("getConstant").invoke(obj));
         } catch (Exception e) {
+        	e.printStackTrace();
             Assert.fail(e.getMessage());
         }
     }

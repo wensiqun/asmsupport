@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.standard.block.method;
 
 import cn.wensiqun.asmsupport.standard.block.MultiLocVarBody;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.ILocVar;
 
 /**
@@ -32,6 +32,6 @@ public interface IModifiedMethodBody<_Var extends ILocVar> extends MultiLocVarBo
      * 
      * @return
      */
-    public AClass getOrigReturnType();
+    public IClass getOrigReturnType();
     
 }

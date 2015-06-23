@@ -4,6 +4,7 @@ import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 
 public abstract class AbstractExample {
@@ -11,8 +12,10 @@ public abstract class AbstractExample {
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = Value.value(System.class).field("out");
+	public static GlobalVariable systemOut;
 	static {
+		systemOut = Value.value(CachedThreadLocalClassLoader.getInstance(), System.class)
+				.field("out");
 		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}
 	public static Class<?> generate(IClassBuilder creator){

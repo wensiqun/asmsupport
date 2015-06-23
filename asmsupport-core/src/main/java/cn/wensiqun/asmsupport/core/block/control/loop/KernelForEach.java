@@ -21,7 +21,6 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.GOTO;
@@ -29,9 +28,8 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.block.loop.IForEach;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 
@@ -44,7 +42,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
     
     private KernelParam elements;
     private KernelParam condition;
-    private AClass elementType;
+    private IClass elementType;
     
     private Label startLbl = new Label();
     private Label conditionLbl = new Label();
@@ -55,18 +53,22 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
         this(elements, null);
     }
     
-    public KernelForEach(KernelParam elements, AClass elementType) {
+    public KernelForEach(KernelParam elements, IClass elementType) {
         this.elements = elements;
         this.elementType = elementType;
-        
-        AClass type = elements.getResultType();
-        if(!type.isArray() &&
-           !type.isChildOrEqual(AClassFactory.getType(Iterable.class))){
-            throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
-        }
     }
+    
 
     @Override
+	protected void init() {
+    	IClass type = elements.getResultType();
+        if(!type.isArray() &&
+           !type.isChildOrEqual(getClassHolder().getType(Iterable.class))){
+            throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
+        }
+	}
+
+	@Override
     public void doExecute() {
     	
         for(Executable exe : getQueue()){
@@ -85,8 +87,8 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
     @Override
     public final void generate() {
         if(elements.getResultType().isArray()){
-            final LocalVariable i = var(AClassFactory.getType(int.class), Value.value(0));
-            final LocalVariable len = var(AClassFactory.getType(int.class), arrayLength(elements));
+            final LocalVariable i = var(getClassHolder().getType(int.class), val(0));
+            final LocalVariable len = var(getClassHolder().getType(int.class), arrayLength(elements));
             if(!(elements instanceof LocalVariable)) {
                 elements = var(elements.getResultType(), elements);
             }
@@ -114,7 +116,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             
             condition = lt(i, len);
         }else{
-        	final LocalVariable itr = var(AClassFactory.getType(Iterator.class), call(elements, "iterator"));
+        	final LocalVariable itr = var(getClassHolder().getType(Iterator.class), call(elements, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{KernelProgramBlock.class, Label.class}, 
@@ -125,7 +127,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                var(AClassFactory.getType(Object.class), call(itr, "next")) :
+                                var(getClassHolder().getType(Object.class), call(itr, "next")) :
                                 var(elementType, checkcast(call(itr, "next"), elementType));
             body(obj);
 

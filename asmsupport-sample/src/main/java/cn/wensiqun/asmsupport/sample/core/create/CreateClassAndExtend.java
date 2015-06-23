@@ -16,7 +16,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 public class CreateClassAndExtend extends AbstractExample {
 
@@ -37,7 +37,7 @@ public class CreateClassAndExtend extends AbstractExample {
 			}
 		});
 		
-		byModifyModifer.modifyMethod(ByteCodeConstant.CLINIT, null, new KernelModifiedMethodBody(){
+		byModifyModifer.modifyMethod(AsmsupportConstant.CLINIT, null, new KernelModifiedMethodBody(){
 			@Override
 			public void body(LocalVariable... argus) {
 				GlobalVariable age = val(getMethodDeclaringClass()).field("age");

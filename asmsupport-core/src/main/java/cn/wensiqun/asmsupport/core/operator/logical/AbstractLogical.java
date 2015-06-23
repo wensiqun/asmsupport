@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
 
 /**
  * 
@@ -39,8 +39,8 @@ public abstract class AbstractLogical extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
-        return AClassFactory.getType(boolean.class);
+    public IClass getResultType() {
+        return block.getClassHolder().getType(boolean.class);
     }
 
     @Override

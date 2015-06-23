@@ -24,7 +24,6 @@ import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
@@ -32,11 +31,12 @@ import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 /**
@@ -53,7 +53,7 @@ public class AMethod {
     private Stack stack;
 
     /** 0 : indicate add, 1 : indicate modif*/
-    private int mode = ByteCodeConstant.METHOD_CREATE_MODE_ADD;
+    private int mode = AsmsupportConstant.METHOD_CREATE_MODE_ADD;
 
     /** The local vairable container of current method*/
     private LocalVariables locals;
@@ -112,7 +112,7 @@ public class AMethod {
         if (block instanceof KernelProgramBlock) {
             ThrowExceptionContainer blockExceptions = ((KernelProgramBlock) block).getThrowExceptions();
             if (blockExceptions != null) {
-                for (AClass exp : blockExceptions) {
+                for (IClass exp : blockExceptions) {
                     exceptionContainer.add(exp);
                 }
             }
@@ -140,7 +140,7 @@ public class AMethod {
 
         String[] exceptions = new String[this.exceptionContainer.size()];
         int i = 0;
-        for (AClass te : this.exceptionContainer) {
+        for (IClass te : this.exceptionContainer) {
             exceptions[i++] = te.getType().getInternalName();
         }
 
@@ -206,7 +206,7 @@ public class AMethod {
     /**
      * Remove a exception type from container
      */
-    public void removeThrowException(AClass exception) {
+    public void removeThrowException(IClass exception) {
         exceptionContainer.remove(exception);
     }
 

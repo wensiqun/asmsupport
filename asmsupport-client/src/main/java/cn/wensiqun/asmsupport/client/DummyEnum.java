@@ -21,14 +21,15 @@ import java.util.Set;
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.EnumBuilderImpl;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
-public class DummyEnum {
+public class DummyEnum extends AbstractDummy {
 
     /** Version of Class File Format */
     private int javaVersion = CommonUtils.getSystemJDKVersion();
@@ -70,9 +71,18 @@ public class DummyEnum {
     private String logFilePath;
 
     public DummyEnum() {
+    	this(null, CachedThreadLocalClassLoader.getInstance());
     }
     
     public DummyEnum(String qualifiedName) {
+    	this(qualifiedName, CachedThreadLocalClassLoader.getInstance());
+    }
+    
+    public DummyEnum(String qualifiedName, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+        if(classLoader == null) {
+        	throw new ASMSupportException("Class loader must be not null");
+        }
         if(StringUtils.isNotBlank(qualifiedName)) {
             int lastDot = qualifiedName.lastIndexOf('.');
             if(lastDot > 0) {
@@ -82,11 +92,6 @@ public class DummyEnum {
             	name = qualifiedName;
             }
         }
-    }
-    
-    public DummyEnum(String pkgName, String name) {
-        this.packageName = pkgName;
-        this.name = name;
     }
     
     /**
@@ -176,15 +181,6 @@ public class DummyEnum {
     }
     
     /**
-     * Get the class loader
-     * 
-     * @return
-     */
-    public ClassLoader getClassLoader() {
-        return classLoader;
-    }
-
-    /**
      * Set the class out put path.
      * 
      * @param path
@@ -262,7 +258,7 @@ public class DummyEnum {
      * @return
      */
     public DummyEnumConstructor newConstructor() {
-        constructorDummies.add(new DummyEnumConstructor());
+        constructorDummies.add(new DummyEnumConstructor(getClassLoader()));
         return constructorDummies.getLast();
     }
     
@@ -286,7 +282,7 @@ public class DummyEnum {
      * @return
      */
     public DummyField newField(AClass type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return fieldDummies.getLast();
@@ -298,7 +294,7 @@ public class DummyEnum {
      * @return
      */
     public DummyField newField(Class<?> type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return fieldDummies.getLast();
@@ -312,7 +308,7 @@ public class DummyEnum {
      * @return
      */
     public DummyMethod newMethod(String name) {
-        DummyMethod method = new DummyMethod();
+        DummyMethod method = new DummyMethod(getClassLoader());
         methodDummies.add(method);
         method.name(name);
         return method;

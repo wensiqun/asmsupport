@@ -23,8 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -45,8 +44,8 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = leftFactor.getResultType();
-        AClass ftrCls2 = rightFactor.getResultType();
+    	IClass ftrCls1 = leftFactor.getResultType();
+    	IClass ftrCls2 = rightFactor.getResultType();
         
         checkFactor(ftrCls1);
         checkFactor(ftrCls2);
@@ -60,8 +59,8 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected void initAdditionalProperties() {
-        AClass ftrCls1 = leftFactor.getResultType();
-        AClass ftrCls2 = rightFactor.getResultType();
+    	IClass ftrCls1 = leftFactor.getResultType();
+    	IClass ftrCls2 = rightFactor.getResultType();
         
         if(ftrCls2.getCastOrder() < ftrCls1.getCastOrder()){
             targetClass = ftrCls1;
@@ -77,7 +76,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         	if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
         	   getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
         	   getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-        		((Value)rightFactor).convert(AClassFactory.getType(int.class));
+        		((Value)rightFactor).convert(block.getClassHolder().getType(int.class));
         	} else {
         		((Value)rightFactor).convert(targetClass);	
         	}
@@ -113,7 +112,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
            getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
            getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-            insnHelper.cast(rightFactor.getResultType().getType(), AClassFactory.getType(int.class).getType());
+            insnHelper.cast(rightFactor.getResultType().getType(), block.getClassHolder().getType(int.class).getType());
         }else{
             insnHelper.cast(rightFactor.getResultType().getType(), targetClass.getType());
         }

@@ -18,9 +18,9 @@
 package cn.wensiqun.asmsupport.core.builder;
 
 
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 
 /**

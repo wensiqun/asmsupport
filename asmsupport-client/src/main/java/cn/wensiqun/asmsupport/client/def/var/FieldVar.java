@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.client.def.var;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 
@@ -23,7 +23,7 @@ public class FieldVar extends Var implements IFieldVar {
     }
     
     @Override
-    public AClass getDeclaringClass() {
+    public IClass getDeclaringClass() {
         return getPreciseTarget().getDeclaringClass();
     }
 

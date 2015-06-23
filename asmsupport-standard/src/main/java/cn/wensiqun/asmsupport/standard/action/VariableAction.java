@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
@@ -76,7 +76,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * @param para
      * @return {@link _V}
      */
-    public _V var(AClass type, _P para);
+    public _V var(IClass type, _P para);
 
     /**
      * Create a local variable
@@ -97,7 +97,7 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * @param para
      * @return {@link _V}
      */
-    public _V var(String name, AClass type, _P para);
+    public _V var(String name, IClass type, _P para);
     
 
     /**

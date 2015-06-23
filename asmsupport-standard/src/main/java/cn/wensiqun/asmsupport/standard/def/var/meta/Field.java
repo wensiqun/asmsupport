@@ -15,15 +15,16 @@
 package cn.wensiqun.asmsupport.standard.def.var.meta;
 
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * The Field of class
  */
 public class Field extends VarMeta {
 
-    private AClass directOwnerType;
+    private IClass directOwnerType;
 
-    private AClass declaringClass;
+    private IClass declaringClass;
 
     /**
      * @param directOwner The direct owner see {@link #getDirectOwnerType()}
@@ -32,7 +33,7 @@ public class Field extends VarMeta {
      * @param modifiers Field modifiers see {@link VarMeta#getModifiers()}
      * @param name Field name see {@link VarMeta#getName()}
      */
-    public Field(AClass directOwnerType, AClass declaringClass, AClass type, int modifiers, String name) {
+    public Field(IClass directOwnerType, IClass declaringClass, IClass type, int modifiers, String name) {
         super(name, modifiers, type);
         this.directOwnerType = directOwnerType;
         this.declaringClass = declaringClass;
@@ -63,7 +64,7 @@ public class Field extends VarMeta {
      * Than the {@link #getDirectOwnerType()} is <code>SubFoo<code> and {@link #getDeclaringClass()} is <code>Foo<code>
      * </p>
      */
-    public AClass getDirectOwnerType() {
+    public IClass getDirectOwnerType() {
         return directOwnerType;
     }
 
@@ -84,7 +85,7 @@ public class Field extends VarMeta {
      * The declaring class is Foo of Field "field"
      * </p> 
      */
-    public AClass getDeclaringClass() {
+    public IClass getDeclaringClass() {
         return declaringClass;
     }
 

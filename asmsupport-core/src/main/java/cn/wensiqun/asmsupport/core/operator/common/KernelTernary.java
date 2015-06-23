@@ -25,8 +25,7 @@ import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -43,7 +42,7 @@ public class KernelTernary extends AbstractParamOperator {
     
     private boolean byOtherUsed;
     
-    private AClass resultClass;
+    private IClass resultClass;
     
     protected KernelTernary(KernelProgramBlock block, KernelParam expression1,
             KernelParam expression2, KernelParam expression3) {
@@ -55,11 +54,12 @@ public class KernelTernary extends AbstractParamOperator {
 
     @Override
     protected void verifyArgument() {
-        AClass expCls1 = exp1.getResultType();
-        AClass expCls2 = exp2.getResultType();
-        AClass expCls3 = exp3.getResultType();
+    	IClass expCls1 = exp1.getResultType();
+    	IClass expCls2 = exp2.getResultType();
+    	IClass expCls3 = exp3.getResultType();
         
-        if(!expCls1.equals(AClassFactory.getType(boolean.class)) && !expCls1.equals(AClassFactory.getType(Boolean.class))){
+        if(!expCls1.equals(block.getClassHolder().getType(boolean.class)) && 
+           !expCls1.equals(block.getClassHolder().getType(Boolean.class))){
             throw new ASMSupportException("the first expression type of ternary operator must by boolean or Boolean!");
         }
         
@@ -75,15 +75,16 @@ public class KernelTernary extends AbstractParamOperator {
          exp3.asArgument();
     }
 
-    private boolean checkExpression(AClass expCls1, AClass expCls2){
-        AClass expPrimCls1 = AClassUtils.getPrimitiveAClass(expCls1);
-        AClass expPrimCls2 = AClassUtils.getPrimitiveAClass(expCls2);
+    private boolean checkExpression(IClass expCls1, IClass expCls2){
+    	IClass expPrimCls1 = AClassUtils.getPrimitiveAClass(expCls1);
+    	IClass expPrimCls2 = AClassUtils.getPrimitiveAClass(expCls2);
         
         if(expPrimCls1.equals(expPrimCls2)){
             resultClass = expPrimCls1;
             return true;
         }else if(expPrimCls1.isPrimitive() && expPrimCls2.isPrimitive()){
-            if(expPrimCls1.equals(AClassFactory.getType(boolean.class)) || expPrimCls2.equals(AClassFactory.getType(boolean.class))){
+            if(expPrimCls1.equals(block.getClassHolder().getType(boolean.class)) || 
+               expPrimCls2.equals(block.getClassHolder().getType(boolean.class))){
                 return false;
             }else{
                 if(expPrimCls1.getCastOrder() > expPrimCls2.getCastOrder()){
@@ -142,7 +143,7 @@ public class KernelTernary extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return resultClass;
     }
 

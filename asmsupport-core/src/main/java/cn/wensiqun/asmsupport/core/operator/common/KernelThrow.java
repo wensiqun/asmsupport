@@ -20,9 +20,8 @@ package cn.wensiqun.asmsupport.core.operator.common;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -45,7 +44,7 @@ public class KernelThrow extends BreakStack {
 
     @Override
     protected void startingPrepare() {
-        if (!AnyException.ANY.equals(exception.getResultType())) {
+        if (!block.getType(AnyException.class).equals(exception.getResultType())) {
             block.addException(exception.getResultType());
         }
         super.startingPrepare();
@@ -53,8 +52,9 @@ public class KernelThrow extends BreakStack {
 
     @Override
     protected void verifyArgument() {
-        AClass type = exception.getResultType();
-        if (AnyException.ANY != type && !type.isChildOrEqual(AClassFactory.getType(Throwable.class))) {
+    	IClass type = exception.getResultType();
+        if (block.getType(AnyException.class) != type && 
+        	!type.isChildOrEqual(block.getClassHolder().getType(Throwable.class))) {
             throw new ASMSupportException("No exception of type " + type
                     + " can be thrown; an exception type must be a subclass of Throwable");
         }
@@ -81,7 +81,7 @@ public class KernelThrow extends BreakStack {
         return " throw " + exception;
     }
 
-    public AClass getThrowExceptionType() {
+    public IClass getThrowExceptionType() {
         return exception.getResultType();
     }
 }

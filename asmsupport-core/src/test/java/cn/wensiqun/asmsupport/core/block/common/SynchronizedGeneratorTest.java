@@ -20,12 +20,13 @@ import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class SynchronizedGeneratorTest extends AbstractExample {
 
@@ -58,18 +59,18 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         
 
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.SynchronizedGeneratorExample", null, null);
+        ClassHolder classHolder = creator.getClassLoader();
+        creator.createField("lock", Opcodes.ACC_PRIVATE, creator.getClassLoader().getType(Object.class));
         
-        creator.createField("lock", Opcodes.ACC_PRIVATE, AClassFactory.getType(Object.class));
-        
-        creator.createField("list", Opcodes.ACC_PUBLIC, AClassFactory.getType(List.class));
+        creator.createField("list", Opcodes.ACC_PUBLIC, creator.getClassLoader().getType(List.class));
         
         creator.createConstructor(Opcodes.ACC_PUBLIC, null, null, null, new KernelConstructorBody() {
 
             @Override
             public void body(LocalVariable... argus) {
             	supercall(argus);
-                assign(this_().field("lock"), new_(AClassFactory.getType(Object.class)));
-                assign(this_().field("list"), new_(AClassFactory.getType(ArrayList.class)));
+                assign(this_().field("lock"), new_(getType(Object.class)));
+                assign(this_().field("list"), new_(getType(ArrayList.class)));
 				return_();
             }
             
@@ -83,8 +84,8 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new KernelSync(this_()){
                     @Override
                     public void body(KernelParam e) {
-                        final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
-                        while_(new KernelWhile(lt(i, Value.value(10))){
+                        final LocalVariable i = var("i", getType(int.class), val(0));
+                        while_(new KernelWhile(lt(i, val(10))){
 
                             @Override
                             public void body() {
@@ -109,8 +110,8 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 sync(new KernelSync(this_().field("lock")){
                     @Override
                     public void body(KernelParam e) {
-                        final LocalVariable i = var("i", AClassFactory.getType(int.class), Value.value(0));
-                        while_(new KernelWhile(lt(i, Value.value(10))){
+                        final LocalVariable i = var("i", getType(int.class), val(0));
+                        while_(new KernelWhile(lt(i, val(10))){
 
                             @Override
                             public void body() {
@@ -128,10 +129,10 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         });
 
         Class<?> syncGenExamp = generate(creator, false);
-        Class<?> thisThread = createThread(AClassFactory.getType(syncGenExamp), "This");
-        Class<?> lockThread = createThread(AClassFactory.getType(syncGenExamp), "Lock");
-        Class<?> junitTestCls = createTestJunit(AClassFactory.getType(syncGenExamp), 
-        		AClassFactory.getType(thisThread), AClassFactory.getType(lockThread));
+        Class<?> thisThread = createThread(classHolder.getType(syncGenExamp), "This");
+        Class<?> lockThread = createThread(classHolder.getType(syncGenExamp), "Lock");
+        Class<?> junitTestCls = createTestJunit(classHolder.getType(syncGenExamp), 
+        		classHolder.getType(thisThread), classHolder.getType(lockThread));
         Object junitTestObj = junitTestCls.newInstance();
         Method testSyncThis = junitTestCls.getMethod("testSyncThis");
         Method testSyncLock = junitTestCls.getMethod("testSyncLock");
@@ -140,9 +141,12 @@ public class SynchronizedGeneratorTest extends AbstractExample {
     }
     
     private static Class<?> createThread(AClass synchronizedGeneratorExampleClass, final String name) {
+    	
+    	AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+    	
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , 
         		"generated.block.Sync" + name + "ThreadExample", 
-        		Thread.class, null);
+        		classLoader.getType(Thread.class), null, classLoader);
         
         creator.createField("sgst", Opcodes.ACC_PRIVATE, synchronizedGeneratorExampleClass);
         
@@ -165,11 +169,11 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 					@Override
 					public void body() {
-						call(AClassFactory.getType(Thread.class), "sleep", Value.value(100));
+						call(getType(Thread.class), "sleep", val(100));
 					    call(this_().field("sgst"), "sync" + name);
 					}
 					
-				}).catch_(new KernelCatch(AClassFactory.getType(InterruptedException.class)) {
+				}).catch_(new KernelCatch(getType(InterruptedException.class)) {
 
 					@Override
 					public void body(LocalVariable e) {
@@ -205,20 +209,20 @@ public class SynchronizedGeneratorTest extends AbstractExample {
                 
                  final LocalVariable es = var(
                         "es", 
-                        AClassFactory.getType(ExecutorService.class),
-                        call(AClassFactory.getType(Executors.class), "newFixedThreadPool", Value.value(10))
+                        getType(ExecutorService.class),
+                        call(getType(Executors.class), "newFixedThreadPool", val(10))
                 );
                  final LocalVariable objs = var(
                         "objs", 
-                        AClassFactory.getType(List.class),
-                        new_(AClassFactory.getType(ArrayList.class))
+                        getType(List.class),
+                        new_(getType(ArrayList.class))
                 );
                  final LocalVariable i = var(
                         "i", 
-                        AClassFactory.getType(int.class),
-                        Value.value(0)
+                        getType(int.class),
+                        val(0)
                );
-                this.while_(new KernelWhile(lt(i, Value.value(10))){
+                this.while_(new KernelWhile(lt(i, val(10))){
 						@Override
 						public void body() {
 							call(objs, "add", call(es, "submit", new_(threadClass, sgst)));
@@ -232,18 +236,18 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 							
 						}
 					});
-                call(AClassFactory.getType(SynchronizedGeneratorTest.class), "assertEquals",
-                		Value.value("Assert.assertEquals(100, sgst.list.size())"), Value.value(100), call(sgst.field("list"), "size"));
+                call(getType(SynchronizedGeneratorTest.class), "assertEquals",
+                		val("Assert.assertEquals(100, sgst.list.size())"), val(100), call(sgst.field("list"), "size"));
                 
-                assign(i, Value.value(0));
-                while_(new KernelWhile(lt(i, Value.value(100))) {
+                assign(i, val(0));
+                while_(new KernelWhile(lt(i, val(100))) {
 
 					@Override
 					public void body() {
-		                call(AClassFactory.getType(SynchronizedGeneratorTest.class), "assertEquals",
+		                call(getType(SynchronizedGeneratorTest.class), "assertEquals",
 		                		i,
-		                		mod(i, Value.value(10)), 
-		                		call(checkcast(call(sgst.field("list"), "get", i), AClassFactory.getType(Integer.class)), "intValue"));
+		                		mod(i, val(10)), 
+		                		call(checkcast(call(sgst.field("list"), "get", i), getType(Integer.class)), "intValue"));
 						postinc(i);
 					}
                 	

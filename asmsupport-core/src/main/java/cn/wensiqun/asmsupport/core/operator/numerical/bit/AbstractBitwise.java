@@ -20,8 +20,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -37,15 +36,15 @@ public abstract class AbstractBitwise extends AbstractNumerical {
         super(block, operator);
     }
     
-    protected final void checkFactor(AClass ftrCls){
+    protected final void checkFactor(IClass ftrCls){
         if(ftrCls.isPrimitive() ||
            AClassUtils.isPrimitiveWrapAClass(ftrCls)){
-           if(ftrCls.equals(AClassFactory.getType(boolean.class)) ||
-              ftrCls.equals(AClassFactory.getType(float.class)) ||
-              ftrCls.equals(AClassFactory.getType(double.class)) ||
-              ftrCls.equals(AClassFactory.getType(Boolean.class)) ||
-              ftrCls.equals(AClassFactory.getType(Float.class)) ||
-              ftrCls.equals(AClassFactory.getType(Double.class))){
+           if(ftrCls.equals(block.getClassHolder().getType(boolean.class)) ||
+              ftrCls.equals(block.getClassHolder().getType(float.class)) ||
+              ftrCls.equals(block.getClassHolder().getType(double.class)) ||
+              ftrCls.equals(block.getClassHolder().getType(Boolean.class)) ||
+              ftrCls.equals(block.getClassHolder().getType(Float.class)) ||
+              ftrCls.equals(block.getClassHolder().getType(Double.class))){
                throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
            }
         }

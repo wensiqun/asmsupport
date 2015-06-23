@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -44,7 +44,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
     }
     
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return meta.getType();
     }
 

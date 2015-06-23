@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 public abstract class AbstractArithmetic extends AbstractNumerical {
@@ -48,8 +48,8 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     
     @Override
     protected void verifyArgument() {
-        AClass f1cls = leftFactor.getResultType();
-        AClass f2cls = rightFactor.getResultType();
+    	IClass f1cls = leftFactor.getResultType();
+    	IClass f2cls = rightFactor.getResultType();
         if(!AClassUtils.isArithmetical(f1cls) || !AClassUtils.isArithmetical(f2cls)){
             throw new ArithmeticException("cannot execute arithmetic operator whit " + f1cls + " and " + f2cls);
         }

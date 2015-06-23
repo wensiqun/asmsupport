@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -74,7 +74,7 @@ public abstract class KernelAssign extends AbstractParamOperator {
 	}
 
 	@Override
-	public AClass getResultType() {
+	public IClass getResultType() {
 		return var.getResultType();
 	}
 

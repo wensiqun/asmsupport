@@ -20,8 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * The exception container. 
@@ -29,13 +28,13 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ThrowExceptionContainer implements Set<AClass> {
+public class ThrowExceptionContainer implements Set<IClass> {
 
-	private List<AClass> exceptionEntryList;
+	private List<IClass> exceptionEntryList;
 
 	public ThrowExceptionContainer() {
 		super();
-		exceptionEntryList = new ArrayList<AClass>();
+		exceptionEntryList = new ArrayList<IClass>();
 	}
 
 	@Override
@@ -54,12 +53,12 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	@Override
 	public boolean contains(Object o) {
 		assert o != null;
-		if (!(o instanceof AClass)) {
+		if (!(o instanceof IClass)) {
 			return false;
 		}
 
-		for (AClass exception : exceptionEntryList) {
-			if (((AClass) o).isChildOrEqual(exception)) {
+		for (IClass exception : exceptionEntryList) {
+			if (((IClass) o).isChildOrEqual(exception)) {
 				return true;
 			}
 		}
@@ -67,7 +66,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	}
 
 	@Override
-	public Iterator<AClass> iterator() {
+	public Iterator<IClass> iterator() {
 		return exceptionEntryList.iterator();
 	}
 
@@ -87,16 +86,15 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	 * @see java.util.Set#add(java.lang.Object)
 	 */
 	@Override
-	public boolean add(AClass e) {
+	public boolean add(IClass e) {
 		assert e != null;
 
-		if (e.isChildOrEqual(AClassFactory
-				.getType(RuntimeException.class))) {
+		if (e.isChildOrEqual(e.getClassLoader(	).getType(RuntimeException.class))) {
 			return false;
 		}
 
 		boolean hasExist = false;
-		for (AClass thrExc : this.exceptionEntryList) {
+		for (IClass thrExc : this.exceptionEntryList) {
 			if (e.isChildOrEqual(thrExc)) {
 				hasExist = true;
 				break;
@@ -105,7 +103,7 @@ public class ThrowExceptionContainer implements Set<AClass> {
 
 		if (!hasExist) {
 			for (int i = 0; i < exceptionEntryList.size();) {
-				AClass thrExc = exceptionEntryList.get(i);
+				IClass thrExc = exceptionEntryList.get(i);
 				if (thrExc.isChildOrEqual(e)) {
 					exceptionEntryList.remove(i);
 				} else {
@@ -123,11 +121,11 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	@Override
 	public boolean remove(Object o) {
 		assert o != null;
-		if (!(o instanceof AClass)) {
+		if (!(o instanceof IClass)) {
 			return false;
 		}
 		for (int i = 0; i < size(); i++) {
-			AClass thrExc = exceptionEntryList.get(i);
+			IClass thrExc = exceptionEntryList.get(i);
 			if (thrExc.equals(o)) {
 				exceptionEntryList.remove(i);
 				return true;
@@ -147,8 +145,8 @@ public class ThrowExceptionContainer implements Set<AClass> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends AClass> c) {
-		for (AClass aclass : c) {
+	public boolean addAll(Collection<? extends IClass> c) {
+		for (IClass aclass : c) {
 			boolean result = this.add(aclass);
 			if (!result) {
 				return false;

@@ -38,6 +38,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  *
  */
 public abstract class SerialBlock extends AbstractKernelBlock {
+	
     protected KernelProgramBlock targetParent;
 
     protected SerialBlock(KernelProgramBlock targetParent) {

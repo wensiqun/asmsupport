@@ -4,12 +4,10 @@ import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class WhileBlockGenerator extends AbstractExample {
 
@@ -23,74 +21,74 @@ public class WhileBlockGenerator extends AbstractExample {
 	            public void body(LocalVariable... argus)
 	            {
                     
-                    final LocalVariable intVar1  = var("intVar1", AClassFactory.getType(int.class), Value.value(10));
+                    final LocalVariable intVar1  = var("intVar1", getType(int.class), val(10));
                     
-                    while_(new KernelWhile(gt(postdec(intVar1), Value.value(0))){
+                    while_(new KernelWhile(gt(postdec(intVar1), val(0))){
 
                         @Override
                         public void body() {
-                            call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", intVar1));
+                            call(getType(TesterStatics.class), 
+                                    "actuallyPrintln", call(getType(String.class), "valueOf", intVar1));
                         }
                         
                     });
                     
-                    final LocalVariable intVar2  = var("intVar2", AClassFactory.getType(int.class), Value.value(10));
+                    final LocalVariable intVar2  = var("intVar2", getType(int.class), val(10));
                     
-                    while_(new KernelWhile(gt(predec(intVar2), Value.value(0))){
+                    while_(new KernelWhile(gt(predec(intVar2), val(0))){
 
                         @Override
                         public void body() {
-                            call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", intVar2));
+                            call(getType(TesterStatics.class), 
+                                    "actuallyPrintln", call(getType(String.class), "valueOf", intVar2));
                         }
                         
                     });
 	                
-                    final LocalVariable byteVar  = var("byteVar", AClassFactory.getType(byte.class), Value.value((byte)10));
+                    final LocalVariable byteVar  = var("byteVar", getType(byte.class), val((byte)10));
                     
-	            	while_(new KernelWhile(gt(postdec(byteVar), Value.value(0))){
+	            	while_(new KernelWhile(gt(postdec(byteVar), val(0))){
 
 						@Override
 						public void body() {
-							call(TesterStatics.ATesterStatics, 
-		                    		"actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", byteVar));
+							call(getType(TesterStatics.class), 
+		                    		"actuallyPrintln", call(getType(String.class), "valueOf", byteVar));
 						}
 	            		
 	            	});
 	            	
-	            	final LocalVariable doubleVar  = var("doubleVar", AClassFactory.getType(double.class), Value.value(10D));
+	            	final LocalVariable doubleVar  = var("doubleVar", getType(double.class), val(10D));
                     
-                    while_(new KernelWhile(gt(predec(doubleVar), Value.value(0))){
+                    while_(new KernelWhile(gt(predec(doubleVar), val(0))){
 
                         @Override
                         public void body() {
-                            call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", doubleVar));
+                            call(getType(TesterStatics.class), 
+                                    "actuallyPrintln", call(getType(String.class), "valueOf", doubleVar));
                         }
                         
                     });
                     
-                    final LocalVariable shortObj  = var("shortObj", AClassFactory.getType(Short.class), Value.value((short)10));
+                    final LocalVariable shortObj  = var("shortObj", getType(Short.class), val((short)10));
                     
-                    while_(new KernelWhile(gt(postdec(shortObj), Value.value((short)0))){
+                    while_(new KernelWhile(gt(postdec(shortObj), val((short)0))){
 
                         @Override
                         public void body() {
-                            call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", shortObj));
+                            call(getType(TesterStatics.class), 
+                                    "actuallyPrintln", call(getType(String.class), "valueOf", shortObj));
                         }
                         
                     });
                     
-                    final LocalVariable longObj  = var("longObj", AClassFactory.getType(Long.class), Value.value(10L));
+                    final LocalVariable longObj  = var("longObj", getType(Long.class), val(10L));
                     
-                    while_(new KernelWhile(gt(predec(longObj), Value.value(0))){
+                    while_(new KernelWhile(gt(predec(longObj), val(0))){
 
                         @Override
                         public void body() {
-                            call(TesterStatics.ATesterStatics, 
-                                    "actuallyPrintln", call(AClassFactory.getType(String.class), "valueOf", longObj));
+                            call(getType(TesterStatics.class), 
+                                    "actuallyPrintln", call(getType(String.class), "valueOf", longObj));
                         }
                         
                     });
@@ -100,7 +98,8 @@ public class WhileBlockGenerator extends AbstractExample {
 	            }
 		 });
 	        
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+        		new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {

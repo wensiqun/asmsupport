@@ -16,18 +16,24 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
-public class DummyEnumConstructor {
+public class DummyEnumConstructor extends AbstractDummy {
 
     /** The constructor argument types.*/
-    private AClass[] argTypes;
+    private IClass[] argTypes;
 
     /** The constructor argument names.*/
     private String[] argNames;
     
     /** The constructor body.*/
     private EnumConstructorBody body;
+    
+    DummyEnumConstructor(AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+    }
     
     /**
      * Set the argument types.
@@ -47,7 +53,7 @@ public class DummyEnumConstructor {
      * @return
      */
     public DummyEnumConstructor argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(argus);
+        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
 	
@@ -56,11 +62,11 @@ public class DummyEnumConstructor {
      * 
      * @return
      */
-    public AClass[] getArgumentTypes() {
+    public IClass[] getArgumentTypes() {
         if(argTypes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
-        AClass[] copy = new AClass[argTypes.length];
+        IClass[] copy = new IClass[argTypes.length];
         System.arraycopy(argTypes, 0, copy, 0, copy.length);
         return copy;
     }

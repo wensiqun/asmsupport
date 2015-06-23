@@ -32,11 +32,10 @@ import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
 
@@ -71,12 +70,12 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         AMethodMeta meta = method.getMeta();
         if (!ModifierUtils.isStatic(meta.getModifier())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
-                    String.class, Type.class, Type.class }, getExecutor(), ByteCodeConstant.THIS, meta.getOwner().getType(),
+                    String.class, Type.class, Type.class }, getExecutor(), AsmsupportConstant.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());
         }
 
         String[] argNames = meta.getArgNames();
-        AClass[] argClsses = meta.getArgClasses();
+        IClass[] argClsses = meta.getArgClasses();
         argments = new LocalVariable[argNames.length];
         for (int i = 0; i < argNames.length; i++) {
             ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], getScope(), argClsses[i].getType(),
@@ -105,8 +104,8 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         for (ExceptionTableEntry tci : exceptionTable) {
             if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
                 Type type = tci.getException();
-                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(), type == null
-                        || type == AnyException.ANY.getType() ? null : type);
+                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(), 
+                		(type == null || type == Type.ANY_EXP_TYPE) ? null : type);
             }
         }
 

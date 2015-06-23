@@ -14,8 +14,11 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
+import java.util.Collection;
+
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 
@@ -77,8 +80,10 @@ public interface IClass {
      * Get the super class.
      * 
      * @return Class super class
+     * rename to getSuperclass
      */
-    Class<?> getSuperClass();
+    @Deprecated
+    IClass getSuperClass();
 
     /**
      * Get all interfaces
@@ -103,6 +108,68 @@ public interface IClass {
      */
     Field getField(String name);
     
+    /**
+     * Returns an array of <code>Constructor</code> objects reflecting all the
+     * constructors declared by the class represented by this
+     * <code>Class</code> object. These are public, protected, default
+     * (package) access, and private constructors.  The elements in the array
+     * returned are not sorted and are not in any particular order.  If the
+     * class has a default constructor, it is included in the returned array.
+     * This method returns an array of length 0 if this <code>Class</code>
+     * object represents an interface, a primitive type, an array class, or
+     * void.
+     * 
+     * @return
+     */
+    Collection<AMethodMeta> getDeclaredConstructors();
+    
+    /**
+     * Returns a <code>Constructor</code> object that reflects the specified
+     * constructor of the class or interface represented by this
+     * <code>Class</code> object.  The <code>parameterTypes</code> parameter is
+     * an array of <code>Class</code> objects that identify the constructor's
+     * formal parameter types, in declared order.
+     * 
+     * @param parameterTypes
+     * @return
+     */
+    AMethodMeta getDeclaredConstructor(IClass... parameterTypes);
+    
+    /**
+     * Returns an array of <code>Method</code> objects reflecting all the
+     * methods declared by the class or interface represented by this
+     * <code>Class</code> object. This includes public, protected, default
+     * (package) access, and private methods, but excludes inherited methods.
+     * The elements in the array returned are not sorted and are not in any
+     * particular order.  This method returns an array of length 0 if the class
+     * or interface declares no methods, or if this <code>Class</code> object
+     * represents a primitive type, an array class, or void.  The class
+     * initialization method <code>&lt;clinit&gt;</code> is not included in the
+     * returned array. If the class declares multiple public member methods
+     * with the same parameter types, they are all included in the returned
+     * array.
+     */
+    Collection<AMethodMeta> getDeclaredMethods();
+    
+    /**
+     * Returns a <code>Method</code> object that reflects the specified
+     * declared method of the class or interface represented by this
+     * <code>Class</code> object. The <code>name</code> parameter is a
+     * <code>String</code> that specifies the simple name of the desired
+     * method, and the <code>parameterTypes</code> parameter is an array of
+     * <code>Class</code> objects that identify the method's formal parameter
+     * types, in declared order.  If more than one method with the same
+     * parameter types is declared in a class, and one of these methods has a
+     * return type that is more specific than any of the others, that method is
+     * returned; otherwise one of the methods is chosen arbitrarily.  If the
+     * name is "&lt;init&gt;"or "&lt;clinit&gt;" a <code>NoSuchMethodException</code>
+     * is raised.
+     * 
+     * @param name the name of the method
+     * @param parameterTypes the parameter array
+     * @return if not found method return null
+     */
+    AMethodMeta getDeclaredMethod(String name, IClass... parameterTypes);
     
     /**
      * Get the asm 
@@ -142,7 +209,14 @@ public interface IClass {
      * 
      */
     boolean existStaticInitBlock();
-    
+
+    /**
+     * Check current class is child or equal other type.
+     * 
+     * @param otherType
+     * @return boolean
+     */
+    boolean isChildOrEqual(IClass otherType);
     
     /**
      * if the class is array type, get the next dim type.
@@ -161,4 +235,5 @@ public interface IClass {
     public IClass getRootComponentClass();
     
     
+    public ClassHolder getClassLoader();
 }

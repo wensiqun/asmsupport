@@ -15,6 +15,7 @@
 package cn.wensiqun.asmsupport.standard.def.var;
 
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
 /**
@@ -33,6 +34,6 @@ public interface IFieldVar extends IVar {
      * @return AClass
      * @see {@link Field#getDeclaringClass()}
      */
-    AClass getDeclaringClass();
+	IClass getDeclaringClass();
     
 }

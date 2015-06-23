@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.standard.def.method;
 import java.lang.reflect.Method;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
@@ -35,16 +35,16 @@ public class AMethodMeta implements Cloneable {
     private String name;
 
     /** Method Owner */
-    private AClass owner;
+    private IClass owner;
 
     /** Method Actually Owner */
-    private AClass actuallyOwner;
+    private IClass actuallyOwner;
 
     /** The parameter type list of method */
     private Type[] argTypes;
     
     /** The parameter type list of method */
-    private AClass[] argClasses;
+    private IClass[] argClasses;
     
     /** The parameter name list of method */
     private String[] argNames;
@@ -55,16 +55,15 @@ public class AMethodMeta implements Cloneable {
     /** The method modifier */
     private int modifier;
 
-    private AClass[] exceptions;
+    private IClass[] exceptions;
     
-    private AClass returnClass;
+    private IClass returnClass;
 
     private String methodStr;
-
-    public AMethodMeta(String name, AClass owner, AClass actuallyOwner,
-            AClass[] argClasses, String[] argNames, AClass returnClass,
-            AClass[] exceptions, int modifier) {
-        
+    
+    public AMethodMeta(ClassHolder classHolder, String name, IClass owner, IClass actuallyOwner,
+    		IClass[] argClasses, String[] argNames, IClass returnClass,
+    		IClass[] exceptions, int modifier) {
         if(ArrayUtils.isNotEmpty(argClasses) && ArrayUtils.isEmpty(argNames)) {
             argNames = new String[argClasses.length];
             for(int i=0; i<argNames.length; i++) {
@@ -73,13 +72,13 @@ public class AMethodMeta implements Cloneable {
         }
         
         if (argClasses == null) {
-            argClasses = new AClass[0];
+            argClasses = new IClass[0];
         }
         if (argNames == null) {
             argNames = new String[0];
         }
         if (exceptions == null) {
-            exceptions = new AClass[0];
+            exceptions = new IClass[0];
         }
         this.exceptions = exceptions;
         this.name = name;
@@ -101,7 +100,7 @@ public class AMethodMeta implements Cloneable {
 
         if (returnClass == null) {
             this.returnType = Type.VOID_TYPE;
-            this.returnClass = AClassFactory.getType(void.class);
+            this.returnClass = classHolder.getType(void.class);
         } else {
             this.returnType = returnClass.getType();
             this.returnClass = returnClass;
@@ -115,10 +114,10 @@ public class AMethodMeta implements Cloneable {
         return methodStr;
     }
 
-    public static String getMethodString(String name, AClass[] arguments) {
+    public static String getMethodString(String name, IClass[] arguments) {
 
         if (arguments == null) {
-            arguments = new AClass[0];
+            arguments = new IClass[0];
         }
 
         StringBuilder str = new StringBuilder(name).append("(");
@@ -132,21 +131,23 @@ public class AMethodMeta implements Cloneable {
         return str.toString();
     }
 
-    public static AMethodMeta methodToMethodEntity(AClass owner, Method m) {
+    @Deprecated
+    public static AMethodMeta methodToMethodEntity(ClassHolder classHolder, IClass owner, Method m) {
         Class<?>[] argCls = m.getParameterTypes();
-        AClass[] arguments = new AClass[argCls.length];
+        IClass[] arguments = new IClass[argCls.length];
         String[] argNames = new String[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
-            arguments[i] = AClassFactory.getType(argCls[i]);
+            arguments[i] = classHolder.getType(argCls[i]);
             argNames[i] = "arg" + i;
         }
 
         Class<?>[] exceptionTypes = m.getExceptionTypes();
-        AClass[] exceptionAclasses = AClassUtils.convertToAClass(exceptionTypes);
+        IClass[] exceptionAclasses = AClassUtils.convertToAClass(classHolder, exceptionTypes);
         
-        AMethodMeta me = new AMethodMeta(m.getName(), owner,
-                AClassFactory.getType(m.getDeclaringClass()), arguments,
-                argNames, AClassFactory.getType(m.getReturnType()),
+        AMethodMeta me = new AMethodMeta(
+        		classHolder, m.getName(), owner,
+        		classHolder.getType(m.getDeclaringClass()), arguments,
+                argNames, classHolder.getType(m.getReturnType()),
                 exceptionAclasses, m.getModifiers());
         
         return me;
@@ -186,7 +187,7 @@ public class AMethodMeta implements Cloneable {
     	this.name = name;
     }
 
-    public AClass getOwner() {
+    public IClass getOwner() {
         return owner;
     }
 
@@ -194,7 +195,9 @@ public class AMethodMeta implements Cloneable {
         return argTypes;
     }
 
-    public AClass[] getArgClasses() {
+    //getParameterTypes
+    @Deprecated
+    public IClass[] getArgClasses() {
         return argClasses;
     }
 
@@ -206,19 +209,20 @@ public class AMethodMeta implements Cloneable {
         return returnType;
     }
 
+    @Deprecated
     public int getModifier() {
         return modifier;
     }
 
-    public AClass getReturnClass() {
+    public IClass getReturnClass() {
         return returnClass;
     }
 
-    public AClass getActuallyOwner() {
+    public IClass getActuallyOwner() {
         return actuallyOwner;
     }
 
-    public AClass[] getExceptions() {
+    public IClass[] getExceptions() {
         return exceptions;
     }
 

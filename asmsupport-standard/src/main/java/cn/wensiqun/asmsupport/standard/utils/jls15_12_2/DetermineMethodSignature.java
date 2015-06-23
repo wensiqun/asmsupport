@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.standard.utils.jls15_12_2;
 import java.util.List;
 import java.util.Map;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 
 public interface DetermineMethodSignature {
@@ -37,7 +37,7 @@ public interface DetermineMethodSignature {
 	 * </p>
 	 * @return
 	 */
-	Map<AClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods();
+	Map<IClass, List<AMethodMeta>> identifyPotentiallyApplicableMethods();
 	
 	/**
 	 * <p>

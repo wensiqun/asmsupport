@@ -7,12 +7,10 @@ import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class ForEachBlockGenerator extends AbstractExample {
 
@@ -27,13 +25,13 @@ public class ForEachBlockGenerator extends AbstractExample {
 	            {
                     
                     LocalVariable list  = var("list", List.class, new_(ArrayList.class));
-                    call(list, "add", Value.value("ForEach "));
-                    call(list, "add", Value.value("Test "));
+                    call(list, "add", val("ForEach "));
+                    call(list, "add", val("Test "));
                     for_(new KernelForEach(list){
 
                         @Override
                         public void body(LocalVariable l) {
-                            call(TesterStatics.ATesterStatics, "actuallyPrintln", checkcast(l, String.class));
+                            call(getType(TesterStatics.class), "actuallyPrintln", checkcast(l, String.class));
                         }
                         
                     });
@@ -41,7 +39,8 @@ public class ForEachBlockGenerator extends AbstractExample {
 	            }
 		 });
 	        
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+        		new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {

@@ -154,6 +154,12 @@ public class Type {
      */
     public static final Type DOUBLE_TYPE = new Type(DOUBLE, null, ('D' << 24)
             | (3 << 16) | (3 << 8) | 2, 1);
+    
+    
+    /**
+     * ASMSupport Hacker, Use by AnyException.class
+     */
+    public static final Type ANY_EXP_TYPE = new Type(12, new char[]{'E'}, 0, 1);
 
     // ------------------------------------------------------------------------
     // Fields
@@ -579,6 +585,25 @@ public class Type {
     public String getInternalName() {
         return new String(buf, off, len);
     }
+    
+    public static void main(String[] args) {
+    	System.out.println(int.class.getName());
+    	System.out.println(Type.getDescriptor(int.class));
+    	System.out.println(Type.getInternalName(int.class));
+    	
+    	System.out.println(int[].class.getName());
+    	System.out.println(Type.getDescriptor(int[].class));
+    	System.out.println(Type.getInternalName(int[].class));
+
+    	
+    	System.out.println(String.class.getName());
+    	System.out.println(Type.getDescriptor(String.class));
+    	System.out.println(Type.getInternalName(String.class));
+    	
+    	System.out.println(String[].class.getName());
+    	System.out.println(Type.getDescriptor(String[].class));
+    	System.out.println(Type.getInternalName(String[].class));
+    }
 
     /**
      * Returns the argument types of methods of this type. This method should
@@ -690,6 +715,16 @@ public class Type {
      */
     public static String getInternalName(final Class<?> c) {
         return c.getName().replace('.', '/');
+    }
+    
+    /**
+     * ASMSupport Hacker 
+     * 
+     * @param className
+     * @return
+     */
+    public static String getInternalName(final String className) {
+    	return className.replace('.', '/');
     }
 
     /**

@@ -18,8 +18,8 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
@@ -53,7 +53,7 @@ public abstract class AbstractVariable implements IVariable {
     }
 
     @Override
-    public final AClass getFormerType() {
+    public final IClass getFormerType() {
         return getResultType();
     }
 

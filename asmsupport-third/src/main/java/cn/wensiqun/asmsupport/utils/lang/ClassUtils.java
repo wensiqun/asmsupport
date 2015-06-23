@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.utils.lang;
 
-import java.util.List;
 
 /**
  * Class Helper Class
@@ -154,93 +153,36 @@ public class ClassUtils {
      * @param nameOrDesc primitive name or description 
      * @return Class java class
      */
+    @Deprecated
     public static Class<?> primitiveToClass(String nameOrDesc) {
-        if ("boolean".equals(nameOrDesc)) {
+        if ("boolean".equals(nameOrDesc) || "Z".equals(nameOrDesc)) {
             return boolean.class;
         }
-        if ("int".equals(nameOrDesc)) {
+        if ("int".equals(nameOrDesc) || "B".equals(nameOrDesc)) {
             return int.class;
         }
-        if ("char".equals(nameOrDesc)) {
+        if ("char".equals(nameOrDesc) || "C".equals(nameOrDesc)) {
             return char.class;
         }
-        if ("short".equals(nameOrDesc)) {
+        if ("short".equals(nameOrDesc) || "S".equals(nameOrDesc)) {
             return short.class;
         }
-        if ("int".equals(nameOrDesc)) {
+        if ("int".equals(nameOrDesc) || "I".equals(nameOrDesc)) {
             return int.class;
         }
-        if ("long".equals(nameOrDesc)) {
+        if ("long".equals(nameOrDesc) || "J".equals(nameOrDesc)) {
             return long.class;
         }
-        if ("float".equals(nameOrDesc)) {
+        if ("float".equals(nameOrDesc) || "F".equals(nameOrDesc)) {
             return float.class;
         }
-        if ("double".equals(nameOrDesc)) {
+        if ("double".equals(nameOrDesc) || "D".equals(nameOrDesc)) {
             return double.class;
         }
-        if ("void".equals(nameOrDesc)) {
-            return void.class;
-        }
-
-        /* class description */
-        if ("Z".equals(nameOrDesc)) {
-            return boolean.class;
-        }
-        if ("B".equals(nameOrDesc)) {
-            return byte.class;
-        }
-        if ("C".equals(nameOrDesc)) {
-            return char.class;
-        }
-        if ("S".equals(nameOrDesc)) {
-            return short.class;
-        }
-        if ("I".equals(nameOrDesc)) {
-            return int.class;
-        }
-        if ("J".equals(nameOrDesc)) {
-            return long.class;
-        }
-        if ("F".equals(nameOrDesc)) {
-            return float.class;
-        }
-        if ("D".equals(nameOrDesc)) {
-            return double.class;
-        }
-        if ("V".equals(nameOrDesc)) {
+        if ("void".equals(nameOrDesc) ||"V".equals(nameOrDesc)) {
             return void.class;
         }
         return null;
-    }
-
-
-    /**
-     * Get all interface from a class and put the found classes to a list.
-     * 
-     * @param interfaceColl
-     * @param clazz
-     */
-    public static void getAllInterfaces(List<Class<?>> interfaceColl, Class<?> clazz) {
-        if (clazz == null || Object.class.equals(clazz)) {
-            return;
-        }
-
-        // get interface from super class
-        getAllInterfaces(interfaceColl, clazz.getSuperclass());
-
-        Class<?>[] interfaces = clazz.getInterfaces();
-        if (ArrayUtils.isNotEmpty(interfaces)) {
-            for (Class<?> inter : interfaces) {
-                if (!interfaceColl.contains(inter)) {
-                    interfaceColl.add(inter);
-                }
-
-                // get interface from current interface
-                getAllInterfaces(interfaceColl, inter);
-            }
-        }
-
     }
 
 }

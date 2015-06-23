@@ -19,15 +19,16 @@ import java.util.LinkedList;
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
-public class DummyInterface {
+public class DummyInterface extends AbstractDummy {
 
     /** Version of Class File Format */
     private int javaVersion = CommonUtils.getSystemJDKVersion();
@@ -41,9 +42,6 @@ public class DummyInterface {
     /** Any interfaces in the class */
     private Class<?>[] interfaces;
     
-    /** Specify the classloader */
-    private AsmsupportClassLoader classLoader;
-
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
     
@@ -69,6 +67,15 @@ public class DummyInterface {
     protected int modifiers = Opcodes.ACC_ABSTRACT;
     
     public DummyInterface() {
+    	this(null, CachedThreadLocalClassLoader.getInstance());
+    }
+    
+    public DummyInterface(AsmsupportClassLoader classLoader) {
+    	this(null, classLoader);
+    }
+    
+    public DummyInterface(String qualifiedName) {
+        this(qualifiedName, CachedThreadLocalClassLoader.getInstance());
     }
     
     /**
@@ -76,7 +83,11 @@ public class DummyInterface {
      * 
      * @param qualifiedName
      */
-    public DummyInterface(String qualifiedName) {
+    public DummyInterface(String qualifiedName, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+    	if(classLoader == null) {
+        	throw new ASMSupportException("Class loader must be not null");
+        }
         if(StringUtils.isNotBlank(qualifiedName)) {
             int lastDot = qualifiedName.lastIndexOf('.');
             if(lastDot > 0) {
@@ -87,18 +98,6 @@ public class DummyInterface {
             }
         }
     }
-    
-    /**
-     * Constructor
-     * 
-     * @param pkgName package name.
-     * @param name interface name
-     */
-    public DummyInterface(String pkgName, String name) {
-    	this.packageName = pkgName;
-    	this.name = name;
-    }
-    
     
     /**
      * Set the access to private.
@@ -225,26 +224,6 @@ public class DummyInterface {
         System.arraycopy(interfaces, 0, copy, 0, copy.length);
         return copy;
     }
-    
-    /**
-     * Set the classloader
-     * 
-     * @param cl
-     * @return
-     */
-    public DummyInterface setClassLoader(AsmsupportClassLoader cl) {
-        this.classLoader = cl;
-        return this;
-    }
-    
-    /**
-     * Get the class loader
-     * 
-     * @return
-     */
-    public ClassLoader getClassLoader() {
-        return classLoader;
-    }
 
     /**
      * Set the class out put path.
@@ -296,7 +275,7 @@ public class DummyInterface {
      * @return
      */
     public DummyField newField(AClass type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return field;
@@ -308,7 +287,7 @@ public class DummyInterface {
      * @return
      */
     public DummyField newField(Class<?> type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return field;
@@ -321,7 +300,7 @@ public class DummyInterface {
      * @return
      */
     public DummyInterfaceMethod newMethod(String name) {
-        DummyInterfaceMethod method = new DummyInterfaceMethod();
+        DummyInterfaceMethod method = new DummyInterfaceMethod(getClassLoader());
         method.name(name);
         methodDummies.add(method);
         return method;
@@ -353,16 +332,9 @@ public class DummyInterface {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        InterfaceBuilderImpl ici; 
-        if(this.classLoader == null) {
-        	ici = new InterfaceBuilderImpl(javaVersion, 
-            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
-        } else {
-        	ici = new InterfaceBuilderImpl(javaVersion, 
-            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, classLoader);
-        }
-        		
-        
+        InterfaceBuilderImpl ici = new InterfaceBuilderImpl(javaVersion, 
+        		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, getClassLoader());
+
         for(DummyField dummy : fieldDummies) {
             if(dummy.getType() == null) {
                 throw new ASMSupportException("Not specify field type for field '" +  dummy.getName() + "'");

@@ -20,8 +20,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -44,11 +43,13 @@ public abstract class BinaryLogical extends AbstractLogical {
 
 	@Override
 	protected void verifyArgument() {
-		AClass ftrCls1 = leftFactor.getResultType();
-        AClass ftrCls2 = rightFactor.getResultType();
+		IClass ftrCls1 = leftFactor.getResultType();
+		IClass ftrCls2 = rightFactor.getResultType();
         
-        if(!((ftrCls1.equals(AClassFactory.getType(boolean.class)) || ftrCls1.equals(AClassFactory.getType(Boolean.class))) &&
-           (ftrCls2.equals(AClassFactory.getType(boolean.class)) || ftrCls2.equals(AClassFactory.getType(Boolean.class))))){
+		if (!((ftrCls1.equals(block.getClassHolder().getType(boolean.class)) || ftrCls1
+				.equals(block.getClassHolder().getType(Boolean.class))) && (ftrCls2
+				.equals(block.getClassHolder().getType(boolean.class)) || ftrCls2
+				.equals(block.getClassHolder().getType(Boolean.class))))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

@@ -21,8 +21,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.bit.BinaryBitwise;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -48,8 +47,8 @@ public abstract class UnaryLogical extends AbstractLogical {
 
     @Override
 	protected void verifyArgument() {
-    	AClass ftrCls = factor.getResultType();
-        if(!(ftrCls.equals(AClassFactory.getType(boolean.class)) && !ftrCls.equals(AClassFactory.getType(Boolean.class)))){
+    	IClass ftrCls = factor.getResultType();
+        if(!(ftrCls.equals(block.getClassHolder().getType(boolean.class)) && !ftrCls.equals(block.getClassHolder().getType(Boolean.class)))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}

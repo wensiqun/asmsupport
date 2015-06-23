@@ -25,9 +25,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.Crementable;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -38,11 +37,17 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	protected AbstractCrement(KernelProgramBlock block, KernelParam factor,
 			Operator operator) {
 		super(block, operator);
-		if (factor instanceof Crementable) {
-			throw new ASMSupportException("Can't do '" + operator + "' on : "
-					+ factor);
+		ClassHolder classHolder = block.getClassHolder();
+		IClass resultType = factor.getResultType();
+		if(resultType != null &&
+		   !classHolder.loadType(boolean.class).equals(resultType) &&
+		   !classHolder.loadType(Boolean.class).equals(resultType) &&
+		   (AClassUtils.isPrimitiveWrapAClass(resultType) || 
+		   resultType.isPrimitive())) {
+			this.factor = factor;
+		} else {
+			throw new ASMSupportException("Can't do '" + operator + "' on : " + factor);
 		}
-		this.factor = factor;
 	}
 
 	@Override
@@ -67,7 +72,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 	@Override
 	protected void verifyArgument() {
-		AClass fatCls = factor.getResultType();
+		IClass fatCls = factor.getResultType();
 		if (!AClassUtils.isArithmetical(fatCls)) {
 			throw new ArithmeticException(
 					"cannot execute arithmetic operator whit " + fatCls);
@@ -100,7 +105,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 				factor.loadToStack(block);
 			}
 		} else {
-			AClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
+			IClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
 			Type primitiveType = primitiveClass.getType();
 
 			// factor load to stack
@@ -124,7 +129,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 			// box and cast
 			autoCast(
-					primitiveType.getSort() <= Type.INT ? AClassFactory.getType(int.class)
+					primitiveType.getSort() <= Type.INT ? block.getClassHolder().getType(int.class)
 							: primitiveClass, targetClass, true);
 
 			if (asArgument && !isPos)
@@ -135,18 +140,19 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	}
 
 	private Value getIncreaseValue() {
-		AClass type = factor.getResultType();
-		if (type.equals(AClassFactory.getType(double.class))
-				|| type.equals(AClassFactory.getType(Double.class))) {
-			return Value.value(1d);
-		} else if (type.equals(AClassFactory.getType(float.class))
-				|| type.equals(AClassFactory.getType(Float.class))) {
-			return Value.value(1f);
-		} else if (type.equals(AClassFactory.getType(long.class))
-				|| type.equals(AClassFactory.getType(Long.class))) {
-			return Value.value(1L);
+		IClass type = factor.getResultType();
+		ClassHolder holder = block.getClassHolder();
+		if (type.equals(holder.getType(double.class))
+				|| type.equals(holder.getType(Double.class))) {
+			return block.val(1d);
+		} else if (type.equals(holder.getType(float.class))
+				|| type.equals(holder.getType(Float.class))) {
+			return block.val(1f);
+		} else if (type.equals(holder.getType(long.class))
+				|| type.equals(holder.getType(Long.class))) {
+			return block.val(1L);
 		} else {
-			return Value.value(1);
+			return block.val(1);
 		}
 	}
 

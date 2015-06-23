@@ -20,10 +20,8 @@ package cn.wensiqun.asmsupport.core.operator;
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
@@ -166,7 +164,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * @param target
      * @param enforce
      */
-    protected void autoCast(AClass original, AClass target, boolean enforce) {
+    protected void autoCast(IClass original, IClass target, boolean enforce) {
         if (enforce) {
             if (original.isPrimitive() && target.isPrimitive()) {
                 insnHelper.cast(original.getType(), target.getType());
@@ -188,21 +186,21 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 insnHelper.cast(originalPrimitiveType, target.getType());
 
                 return;
-            } else if (original.isPrimitive() && target.equals(AClassFactory.getType(Object.class))) {
+            } else if (original.isPrimitive() && target.equals(block.getClassHolder().getType(Object.class))) {
                 insnHelper.box(original.getType());
                 return;
             }
         } else {
             if (original.isPrimitive() && target.isPrimitive()) {
-                if (!original.equals(AClassFactory.getType(Boolean.class)) && 
-                	!target.equals(AClassFactory.getType(Boolean.class)) && 
+                if (!original.equals(block.getClassHolder().getType(Boolean.class)) && 
+                	!target.equals(block.getClassHolder().getType(Boolean.class)) && 
                 	original.getCastOrder() <= target.getCastOrder()) {
                     insnHelper.cast(original.getType(), target.getType());
                     return;
                 }
             } else if (original.isPrimitive()
                     && (AClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
-                            .equals(AClassFactory.getType(Object.class)))) {
+                            .equals(block.getClassHolder().getType(Object.class)))) {
                 insnHelper.box(original.getType());
                 return;
             } else if (AClassUtils.isPrimitiveWrapAClass(original)

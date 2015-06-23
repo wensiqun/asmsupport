@@ -15,7 +15,8 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
 
 
 /**
@@ -96,7 +97,7 @@ public interface ValueAction<_P extends IParam> {
      * @param val
      * @return {@link _P}
      */
-    _P val(AClass val);
+    _P val(IClass val);
 
     /**
      * Get {@code class} val
@@ -120,7 +121,7 @@ public interface ValueAction<_P extends IParam> {
      * @param val
      * @return {@link _P}
      */
-    _P null_(AClass type);
+    _P null_(IClass type);
 
     /**
      * Get {@code null} val

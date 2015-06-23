@@ -19,8 +19,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -38,8 +37,8 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     @Override
     protected void verifyArgument() {
-        AClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-        AClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+    	IClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         checkFactorForNumerical(ftrCls1);
         checkFactorForNumerical(ftrCls2);
     }
@@ -58,13 +57,13 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     private void pushFactorToStack(KernelParam factor) {
 
-        AClass factorCls = factor.getResultType();
+    	IClass factorCls = factor.getResultType();
 
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
         factor.loadToStack(block);
 
-        AClass factorPrimitiveAClass = factorCls;
+        IClass factorPrimitiveAClass = factorCls;
         // unbox if needs
         if (!factorCls.isPrimitive()) {
             LOG.print("unbox " + factorCls);
@@ -74,7 +73,7 @@ public abstract class NumericalRelational extends AbstractRelational {
 
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
-                && targetClass.getCastOrder() > AClassFactory.getType(int.class).getCastOrder()) {
+                && targetClass.getCastOrder() > block.getClassHolder().getType(int.class).getCastOrder()) {
             LOG.print("cast factor from " + factorCls + " to " + targetClass);
             insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }

@@ -8,9 +8,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import cn.wensiqun.asmsupport.client.DummyClass;
-import cn.wensiqun.asmsupport.client.DummyEnum;
-import cn.wensiqun.asmsupport.client.DummyInterface;
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
@@ -132,7 +129,7 @@ public class DummyTest {
     //##################################
     public String amsupportTest() throws Exception {
         String className = getClass().getName();
-        String packageName = className.substring(0, className.lastIndexOf('.') + 1);
+        String packageName = className.substring(0, className.lastIndexOf('.'));
         String classOutPutPath = ".//target//asmsupport-test-generated";
         //Generate ExceptedInterface
         DummyInterface excIter = new DummyInterface();
@@ -156,7 +153,7 @@ public class DummyTest {
         
         
         //Generate ExceptedAbstractClass
-        DummyClass excAbsCls = new DummyClass(packageName + "ExceptedAbstractClass").setClassOutPutPath(classOutPutPath)
+        DummyClass excAbsCls = new DummyClass(packageName + "." + "ExceptedAbstractClass").setClassOutPutPath(classOutPutPath)
                 .abstract_().implements_(ExceptedInterface).setJavaVersion(Opcodes.V1_6);
         excAbsCls.newField(String.class, "abstract_class_field_string").protected_();
         excAbsCls.newField(List.class, "abstract_class_field_list").public_().static_();
@@ -240,7 +237,7 @@ public class DummyTest {
         
         final Class<?> ExceptedEnum = excEnum.build();
         
-        DummyClass excDummy = new DummyClass(packageName + "ExceptedDummy").extends_(ExceptedAbstractClass).setClassOutPutPath(classOutPutPath).setJavaVersion(Opcodes.V1_6);
+        DummyClass excDummy = new DummyClass(packageName + "." + "ExceptedDummy").extends_(ExceptedAbstractClass).setClassOutPutPath(classOutPutPath).setJavaVersion(Opcodes.V1_6);
         
         excDummy.newMethod("method1").public_().return_(String.class).throws_(IllegalArgumentException.class)
                 .body(new MethodBody() {
@@ -285,7 +282,7 @@ public class DummyTest {
                 
                 call(interface_field_list, "add", val("hello asmsupport."));
                 call(sb, "append", val(ExceptedInterfaceAClass).field("interface_field_string"));
-                for_(new ForEach(interface_field_list, String.class) {
+                for_(new ForEach(interface_field_list, getType(String.class)) {
 
                     @Override
                     public void body(LocVar str) {
@@ -340,6 +337,7 @@ public class DummyTest {
     
     public static void main(String... a) {
         new DummyTest().test();
+        //System.out.println(ExceptedInterface.class.getName());
     }
     
 }

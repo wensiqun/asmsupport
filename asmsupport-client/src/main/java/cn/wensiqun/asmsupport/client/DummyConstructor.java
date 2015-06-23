@@ -15,22 +15,28 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 
-    /** The constructor argument types.*/
-    private AClass[] argTypes;
+
+	/** The constructor argument types.*/
+    private IClass[] argTypes;
 
     /** The constructor argument names.*/
     private String[] argNames;
     
     /** The constructor throws exception types.*/
-    private AClass[] exceptionTypes;
+    private IClass[] exceptionTypes;
     
     /** The constructor body.*/
     private ConstructorBody body;
+
+    DummyConstructor(AsmsupportClassLoader classLoader) {
+		super(classLoader);
+	}
     
     /**
      * Set the argument types.
@@ -38,7 +44,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @param argus
      * @return
      */
-    public DummyConstructor argTypes(AClass... argus){
+    public DummyConstructor argTypes(IClass... argus){
         argTypes = argus;
         return this;
     }
@@ -50,7 +56,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @return
      */
     public DummyConstructor argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(argus);
+        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
 	
@@ -59,11 +65,11 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * 
      * @return
      */
-    public AClass[] getArgumentTypes() {
+    public IClass[] getArgumentTypes() {
         if(argTypes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
-        AClass[] copy = new AClass[argTypes.length];
+        IClass[] copy = new IClass[argTypes.length];
         System.arraycopy(argTypes, 0, copy, 0, copy.length);
         return copy;
     }
@@ -103,7 +109,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @return
      */
     public DummyConstructor throws_(Class<?>... exceptionTypes){
-        this.exceptionTypes = AClassUtils.convertToAClass(exceptionTypes);
+        this.exceptionTypes = AClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
         return this;
     }
 	
@@ -113,7 +119,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 	 * @param exceptionTypes
 	 * @return
 	 */
-    public DummyConstructor throws_(AClass[] exceptionTypes){
+    public DummyConstructor throws_(IClass[] exceptionTypes){
         this.exceptionTypes = exceptionTypes;
         return this;
     }
@@ -125,11 +131,11 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * 
      * @return
      */
-    public AClass[] getThrows() {
+    public IClass[] getThrows() {
         if(exceptionTypes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
-        AClass[] copy = new AClass[exceptionTypes.length];
+        IClass[] copy = new IClass[exceptionTypes.length];
         System.arraycopy(exceptionTypes, 0, copy, 0, copy.length);
         return copy;
     }

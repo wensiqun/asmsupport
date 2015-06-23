@@ -16,16 +16,19 @@ package cn.wensiqun.asmsupport.standard.def.clazz;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.reflect.ModifierUtils;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
 
@@ -36,16 +39,22 @@ import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
  *
  */
 public class ProductClass extends MutableClass {
-
+	
     private Class<?> reallyClass;
     
-    protected ProductClass(){
+    private volatile boolean searchedInClass = false;
+    
+    protected ProductClass(AsmsupportClassLoader classLoader){
+    	super(classLoader);
     }
     
-    ProductClass(Class<?> cls) {
+    public ProductClass(Class<?> cls, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
         this.name = cls.getName();
         this.mod = cls.getModifiers();
-        this.superClass = cls.getSuperclass();
+        if(cls.getSuperclass() != null) {
+            this.superClass = classLoader.getType(cls.getSuperclass());
+        }
         this.interfaces = cls.getInterfaces();
         reallyClass = cls;
         type = Type.getType(cls);
@@ -77,8 +86,8 @@ public class ProductClass extends MutableClass {
                 try {
                     java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
                     found.add(new Field(this,
-                            AClassFactory.getType(fieldOwner),
-                            AClassFactory.getType(f.getType()), f.getModifiers(), name));
+                    		classLoader.getType(fieldOwner),
+                    		classLoader.getType(f.getType()), f.getModifiers(), name));
                     break;
                 } catch (NoSuchFieldException e) {
                 }
@@ -91,8 +100,8 @@ public class ProductClass extends MutableClass {
                 try {
                     java.lang.reflect.Field f = inter.getDeclaredField(name);
                     found.add(new Field(ProductClass.this,
-                            AClassFactory.getType(inter),
-                            AClassFactory.getType(f.getType()), f.getModifiers(), name));
+                    		classLoader.getType(inter),
+                    		classLoader.getType(f.getType()), f.getModifiers(), name));
                     return true;
                 } catch (NoSuchFieldException e) {
                     return false;
@@ -126,58 +135,98 @@ public class ProductClass extends MutableClass {
     @Override
     public int getDimension() {
         if(!reallyClass.isArray()){
-            throw new ASMSupportException("this class is not array");
+            throw new ASMSupportException("The class " + getName() + " is not array");
         }
         return type.getDimensions();
     }
 
 	@Override
-	public boolean existStaticInitBlock() {
-		if(super.existStaticInitBlock()){
-			return true;
+	public AMethodMeta getDeclaredConstructor(IClass... parameterTypes) {
+		AMethodMeta result = super.getDeclaredConstructor(parameterTypes);
+		if(result == null) {
+			parseRealClass();
+			result = super.getDeclaredConstructor(parameterTypes);
 		}
-		
-		final boolean[] exist = new boolean[]{false};
-		
-		ClassVisitor cv = new ClassAdapter(){
-			@Override
-			public MethodVisitor visitMethod(int access, String name,
-					String desc, String signature, String[] exceptions) {
-				if(name.equals(ByteCodeConstant.CLINIT)){
-					exist[0] = true;
-				}
-				return super.visitMethod(access, name, desc, signature, exceptions);
-			}
-		};
-		
-    	try {
-    		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-    		
-    		URL resource = loader.getResource(reallyClass.getName().replace('.', '/') + ".class");
-    		if (resource != null) {
-                InputStream in = resource.openStream();
-                try {
-                    ClassReader classReader = new ClassReader(in);
-                    classReader.accept(cv, ClassReader.SKIP_DEBUG);
-                } finally {
-                    in.close();
-                }
-            }
-		} catch (IOException e) {
-            throw new ASMSupportException(e);
+		return result;
+	}
+
+	@Override
+	public Collection<AMethodMeta> getDeclaredConstructors() {
+		parseRealClass();
+		return super.getDeclaredConstructors();
+	}
+
+	@Override
+	public AMethodMeta getDeclaredMethod(String name, IClass... parameterTypes) {
+		AMethodMeta result = super.getDeclaredMethod(name, parameterTypes);
+		if(result == null) {
+			parseRealClass();
+			result = super.getDeclaredMethod(name, parameterTypes);
 		}
-		
-		return exist[0];
+		return result;
+	}
+
+	@Override
+	public Collection<AMethodMeta> getDeclaredMethods() {
+		parseRealClass();
+		return super.getDeclaredMethods();
 	}
     
-    @Override
-    public AClass getNextDimType() {
-        throw new UnsupportedOperationException();
-    }
+	private void parseRealClass() {
+		if(!searchedInClass) {
+			synchronized (this) {
+				if(!searchedInClass) {
+					ClassVisitor cv = new ClassAdapter(){
+						@Override
+						public MethodVisitor visitMethod(int access, String name,
+								String desc, String signature, String[] exceptions) {
+							Type methodType = Type.getMethodType(desc);
+							Type[] argumentTypes = methodType.getArgumentTypes();
+							AClass[] parameterTypes = new AClass[argumentTypes.length];
+							for(int i = 0; i<argumentTypes.length; i++) {
+								parameterTypes[i] = classLoader.getType(argumentTypes[i].getDescriptor());
+							}
+							
+							AClass returnClass = classLoader.getType(methodType.getReturnType().getDescriptor());
+							
+							AClass[] exceptionTypes = new AClass[exceptions == null ? 0 : exceptions.length];
+							for(int i = 0; i<exceptionTypes.length; i++) {
+								exceptionTypes[i] = classLoader.getType(exceptions[i]);
+							}
 
-    @Override
-    public IClass getRootComponentClass() {
-        throw new UnsupportedOperationException();
-    }
-
+							AMethodMeta meta = new AMethodMeta(classLoader, name, ProductClass.this, ProductClass.this,
+									parameterTypes, null, returnClass, exceptionTypes, access);
+							
+							if(name.equals(AsmsupportConstant.CLINIT)){
+								ProductClass.this.addClinitMethod(meta);
+							} else if (name.equals(AsmsupportConstant.INIT)) {
+								ProductClass.this.addConstructor(meta);
+							} else if (ModifierUtils.isBridge(access)){
+								ProductClass.this.getBridgeMethod().add(meta);
+							} else {
+								ProductClass.this.addDeclaredMethod(meta);
+							}
+							return super.visitMethod(access, name, desc, signature, exceptions);
+						}
+					};
+					try {
+			    		AsmsupportClassLoader classLoader = ProductClass.this.getClassLoader();
+			    		InputStream in = classLoader.getResourceAsStream(reallyClass.getName().replace('.', '/') + ".class");
+			    		if (in != null) {
+			                try {
+			                    ClassReader classReader = new ClassReader(in);
+			                    classReader.accept(cv, ClassReader.SKIP_DEBUG);
+			                } finally {
+			                    in.close();
+			                }
+			            }
+					} catch (IOException e) {
+			            throw new ASMSupportException(e);
+					}
+					searchedInClass = true;
+				}
+			}
+		}
+	}
+	
 }

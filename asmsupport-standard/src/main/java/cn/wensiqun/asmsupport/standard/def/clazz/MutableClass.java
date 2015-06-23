@@ -15,67 +15,86 @@
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
 public abstract class MutableClass extends AClass {
     
-    private List<AMethodMeta> methods;
-
     /**
      * store bridge method.
      * 1. overried method that return type is child of super method return type.
      * 2. generice type method(implement future)
      */
-    private List<AMethodMeta> bridgeMethod;
+    private volatile List<AMethodMeta> bridgeMethods = new ArrayList<AMethodMeta>();
     
-    private List<AMethodMeta> constructors;
+    /**
+     * All method that declared in this class
+     */
+    protected volatile ConcurrentMap<String, AMethodMeta> declaredMethods = new ConcurrentHashMap<String, AMethodMeta>();
 
-    private Set<Field> fields;
-
+    /**
+     * All constructor that declared in this class
+     */
+    protected volatile ConcurrentMap<String, AMethodMeta> constructors = new ConcurrentHashMap<String, AMethodMeta>();
+    
+    /**
+     * The static block
+     */
+    protected volatile AMethodMeta clinitMethod;
+    
+    private Set<Field> fields = new HashSet<Field>();
+    
     //available only create enum class
     private int enumNum;
 
-	public MutableClass() {
+	public MutableClass(AsmsupportClassLoader classLoader) {
+		super(classLoader);
 	}
 
+	@Deprecated
 	public int getEnumNum() {
 		return enumNum;
 	}
-
+	
+	@Deprecated
 	public void setEnumNum(int enumNum) {
 		this.enumNum = enumNum;
 	}
 
-    public List<AMethodMeta> getMethods() {
-    	if(methods == null){
-   	        methods = new ArrayList<AMethodMeta>();
-    	}
-        return methods;
-    }
-    
-    
+	
     public List<AMethodMeta> getBridgeMethod() {
-    	if(bridgeMethod == null){
-    		bridgeMethod = new ArrayList<AMethodMeta>();
-    	}
-		return bridgeMethod;
+		return bridgeMethods;
 	}
     
     /**
-     * add method
+     * Add static method
      * 
-     * @param method
+     * @param clinit
      */
-    public void addMethod(AMethodMeta method) {
-    	getMethods().add(method);
+    public void addClinitMethod(AMethodMeta clinit) {
+    	if(!AsmsupportConstant.CLINIT.equals(clinit.getName())) {
+		    throw new ASMSupportException("The static block name must be <clinit> in byte code layer.");
+	    }
+    	if(clinitMethod == null) {
+    		synchronized (this) {
+			    if(clinitMethod == null) {
+			    	clinitMethod = clinit;
+			    	return;
+			    }	
+			}
+    	}
+	    throw new ASMSupportException("The static block name must be <clinit> in byte code layer.");
     }
     
     /**
@@ -83,20 +102,54 @@ public abstract class MutableClass extends AClass {
      * @param constructor
      */
     public void addConstructor(AMethodMeta constructor) {
-    	getConstructors().add(constructor);
+    	if(!AsmsupportConstant.INIT.equals(constructor.getName())) {
+    		throw new ASMSupportException("The constructor name must be <init> in byte code layer.");
+    	}
+    	AMethodMeta previours = constructors.putIfAbsent(getMethodCacheKey(constructor), constructor);
+    	if(previours != null) {
+    		throw new ASMSupportException("The constructor " + constructor.getMethodString() + 
+    				" has alread exist, override it right now!");
+    	}
     }
-
-	public List<AMethodMeta> getConstructors() {
-		if(constructors == null){
-	        constructors = new ArrayList<AMethodMeta>();
-		}
-		return constructors;
+    
+    /**
+     * Add method
+     * 
+     * @param method
+     */
+    public void addDeclaredMethod(AMethodMeta method) {
+    	AMethodMeta previours = declaredMethods.putIfAbsent(getMethodCacheKey(method), method);
+    	if(previours != null) {
+    		throw new ASMSupportException("The method " + method.getMethodString() + " has alread exist, override it right now!");
+    	}
+    } 
+    
+    @Override
+	public boolean existStaticInitBlock() {
+    	return clinitMethod != null;
 	}
     
-    protected Set<Field> getFields() {
-    	if(fields == null){
-    	    fields = new HashSet<Field>();
-    	}
+    @Override
+	public AMethodMeta getDeclaredConstructor(IClass... parameterTypes) {
+    	return declaredMethods.get(getMethodCacheKey(AsmsupportConstant.CLINIT, parameterTypes));
+	}
+
+	@Override
+	public Collection<AMethodMeta> getDeclaredConstructors() {
+		return constructors.values();
+	}
+    
+    @Override
+	public AMethodMeta getDeclaredMethod(String name, IClass... parameterTypes) {
+    	return declaredMethods.get(getMethodCacheKey(name, parameterTypes));
+	}
+	
+    @Override
+	public Collection<AMethodMeta> getDeclaredMethods() {
+		return declaredMethods.values();
+	}
+    
+	protected Set<Field> getFields() {
 		return fields;
 	}
     
@@ -108,20 +161,20 @@ public abstract class MutableClass extends AClass {
     public void addField(Field e) {
         getFields().add(e);
     }
-    
-    @Override
-	public boolean existStaticInitBlock() {
-		for(AMethodMeta m : this.getMethods()){
-			if(m.getName().equals(ByteCodeConstant.CLINIT)){
-				return true;
-			}
-		}
-    	return false;
-	}
 
-    @Override
-    public boolean isChildOrEqual(AClass otherType) {
-        return TypeUtils.isSubtyping(this, otherType);
+    protected String getMethodCacheKey (AMethodMeta meta) {
+    	return getMethodCacheKey(meta.getName(), meta.getArgClasses());
     }
+
+    protected String getMethodCacheKey (String name, IClass... parameterTypes) {
+    	StringBuilder keySb = new StringBuilder(name);
+    	if(parameterTypes != null) {
+        	for(IClass type : parameterTypes) {
+        		keySb.append(type.getDescription());
+        	}
+    	}
+    	return keySb.toString();
+    }
+    
     
 }

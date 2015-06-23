@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 
@@ -95,7 +95,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * @param arguments
      * @return {@link _P}
      */
-    _P call(AClass owner, String methodName, _P... arguments);
+    _P call(IClass owner, String methodName, _P... arguments);
     
     /**
      * Invoke static method. the method is similar method {@link #call(AClass, String, _P...)}
@@ -131,7 +131,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * @param arguments
      * @return {@link _P}
      */
-    _P new_(AClass owner, _P... arguments);
+    _P new_(IClass owner, _P... arguments);
     
     /**
      * @param owner

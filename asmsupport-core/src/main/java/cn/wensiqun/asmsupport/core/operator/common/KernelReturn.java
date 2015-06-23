@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * Represent a return statement in java code.
@@ -73,11 +73,11 @@ public class KernelReturn extends BreakStack {
             insnHelper.returnInsn();
         }else{
             returner.loadToStack(block);
-            AClass actullyReturnType = returner.getResultType();
+            IClass actullyReturnType = returner.getResultType();
             if(actullyReturnType == null){
                 throw new NullPointerException("Return type must be non-null!");
             }
-            AClass methodReturnType = block.getMethod().getMeta().getReturnClass();
+            IClass methodReturnType = block.getMethod().getMeta().getReturnClass();
             autoCast(actullyReturnType, methodReturnType, false);
             insnHelper.returnInsn(methodReturnType.getType());
         }

@@ -19,10 +19,10 @@ import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 /**
  * 
@@ -32,10 +32,10 @@ import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
 public class MethodBuilderImpl implements IMethodBuilder {
 
 	private String name;
-	private AClass[] arguments;
+	private IClass[] arguments;
 	private String[] argNames;
-	private AClass returnClass;
-	private AClass[] exceptions;
+	private IClass returnClass;
+	private IClass[] exceptions;
 	private int access;
 	private AbstractKernelMethodBody methodBody;
 	private AMethodMeta meta;
@@ -46,22 +46,22 @@ public class MethodBuilderImpl implements IMethodBuilder {
 		this.mtdCrtMode = mode;
 	}
 	
-	public static MethodBuilderImpl methodCreatorForModify(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb){
+	public static MethodBuilderImpl methodCreatorForModify(String name, IClass[] arguments, String[] argNames,
+			IClass returnClass, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodBuilderImpl mc = new MethodBuilderImpl(name, arguments, argNames, returnClass, exceptions, access, mb);
-		mc.setMethodCreateMode(ByteCodeConstant.METHOD_CREATE_MODE_MODIFY);
+		mc.setMethodCreateMode(AsmsupportConstant.METHOD_CREATE_MODE_MODIFY);
 		return mc;
 	}
 	
-	public static MethodBuilderImpl methodCreatorForAdd(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb){
+	public static MethodBuilderImpl methodCreatorForAdd(String name, IClass[] arguments, String[] argNames,
+			IClass returnClass, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodBuilderImpl mc = new MethodBuilderImpl(name, arguments, argNames, returnClass, exceptions, access, mb);
-		mc.setMethodCreateMode(ByteCodeConstant.METHOD_CREATE_MODE_ADD);
+		mc.setMethodCreateMode(AsmsupportConstant.METHOD_CREATE_MODE_ADD);
 		return mc;
 	}
 	
-	private MethodBuilderImpl(String name, AClass[] arguments, String[] argNames,
-			AClass returnClass, AClass[] exceptions, int access, AbstractKernelMethodBody mb) {
+	private MethodBuilderImpl(String name, IClass[] arguments, String[] argNames,
+			IClass returnClass, IClass[] exceptions, int access, AbstractKernelMethodBody mb) {
 		this.name = name;
 		this.arguments = arguments;
 		this.argNames = argNames;
@@ -86,14 +86,14 @@ public class MethodBuilderImpl implements IMethodBuilder {
 	@Override
 	public void create(IClassBuilder context){
 		MutableClass owner = context.getCurrentClass();
-		meta = new AMethodMeta(name, owner, owner, arguments, argNames, returnClass, exceptions, access);
+		meta = new AMethodMeta(context.getClassLoader(), name, owner, owner, arguments, argNames, returnClass, exceptions, access);
 		method = new AMethod(meta, context.getClassVisitor(), context.getClassLoader(), methodBody, mtdCrtMode);
-		if(method.getMeta().getName().equals(ByteCodeConstant.INIT)){
+		if(method.getMeta().getName().equals(AsmsupportConstant.INIT)){
 			owner.addConstructor(meta);
 		}else if(ModifierUtils.isBridge(method.getMeta().getModifier())){
 			owner.getBridgeMethod().add(meta);
 		}else{
-			owner.addMethod(meta);
+			owner.addDeclaredMethod(meta);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class MethodBuilderImpl implements IMethodBuilder {
 	}
 
 	@Override
-	public AClass[] getArguments() {
+	public IClass[] getArguments() {
 		return arguments;
 	}
 

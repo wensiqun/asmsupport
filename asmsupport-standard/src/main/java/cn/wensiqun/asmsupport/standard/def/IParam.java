@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.standard.def;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
 
@@ -31,7 +31,7 @@ public interface IParam {
      * 
      * @return
      */
-    AClass getResultType();
+    IClass getResultType();
 
     /**
      * Get a field from a {@link IParam}

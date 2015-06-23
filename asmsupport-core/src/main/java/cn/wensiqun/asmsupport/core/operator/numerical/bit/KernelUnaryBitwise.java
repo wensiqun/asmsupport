@@ -17,7 +17,6 @@ package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -36,8 +35,7 @@ public abstract class KernelUnaryBitwise extends AbstractBitwise {
     
     @Override
     protected void verifyArgument() {
-        AClass ftrCls = factor.getResultType();
-        checkFactor(ftrCls);
+        checkFactor(factor.getResultType());
     }
 
     @Override
@@ -47,8 +45,7 @@ public abstract class KernelUnaryBitwise extends AbstractBitwise {
 
     @Override
     protected void initAdditionalProperties() {
-        AClass ftrCls = factor.getResultType();
-        targetClass = AClassUtils.getPrimitiveAClass(ftrCls);
+        targetClass = AClassUtils.getPrimitiveAClass(factor.getResultType());
     }
     
     @Override

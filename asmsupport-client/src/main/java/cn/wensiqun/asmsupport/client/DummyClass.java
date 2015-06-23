@@ -19,12 +19,13 @@ import java.util.LinkedList;
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {
@@ -39,13 +40,10 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     private String name;
 
     /** The the super class */
-    private Class<?> parent;
+    private AClass parent;
 
     /** Any interfaces in the class */
     private Class<?>[] interfaces;
-
-    /** Specify the classloader */
-    private AsmsupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -69,10 +67,22 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     private StaticBlockBody staticBlock;
     
     public DummyClass() {
+    	this(null, CachedThreadLocalClassLoader.getInstance());
+    }
+    
+    public DummyClass(AsmsupportClassLoader classLoader) {
+    	this(null, classLoader);
     }
     
     public DummyClass(String qualifiedName) {
-        this();
+        this(qualifiedName, CachedThreadLocalClassLoader.getInstance());
+    }
+    
+    public DummyClass(String qualifiedName, AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+        if(classLoader == null) {
+        	throw new ASMSupportException("Class loader must be not null");
+        }
         if(StringUtils.isNotBlank(qualifiedName)) {
             int lastDot = qualifiedName.lastIndexOf('.');
             if(lastDot > 0) {
@@ -84,11 +94,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         }
     }
     
-    public DummyClass(String packageName, String className) {
-        this();
-        this.packageName = packageName;
-        this.name = className;
-    }
+    
 
     /**
      * Set to static
@@ -197,8 +203,13 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyClass extends_(Class<?> parent) {
-        this.parent = parent;
+        this.parent = getClassLoader().getType(parent);
         return this;
+    }
+    
+    public DummyClass extends_(AClass parent) {
+    	this.parent = parent;
+    	return this;
     }
 
     /**
@@ -206,7 +217,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public Class<?> getExtends() {
+    public AClass getExtends() {
         return parent;
     }
     
@@ -234,26 +245,6 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         Class<?>[] copy = new Class[interfaces.length];
         System.arraycopy(interfaces, 0, copy, 0, copy.length);
         return copy;
-    }
-
-    /**
-     * Set the classloader
-     * 
-     * @param cl
-     * @return
-     */
-    public DummyClass setClassLoader(AsmsupportClassLoader cl) {
-        this.classLoader = cl;
-        return this;
-    }
-    
-    /**
-     * Get the class loader
-     * 
-     * @return
-     */
-    public ClassLoader getClassLoader() {
-        return classLoader;
     }
 
     /**
@@ -306,7 +297,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyField newField(AClass type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return fieldDummies.getLast();
@@ -318,7 +309,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyField newField(Class<?> type, String name) {
-        DummyField field = new DummyField(); 
+        DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);
         return fieldDummies.getLast();
@@ -330,7 +321,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyConstructor newConstructor() {
-        constructorDummies.add(new DummyConstructor());
+        constructorDummies.add(new DummyConstructor(getClassLoader()));
         return constructorDummies.getLast();
     }
 
@@ -340,7 +331,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * @return
      */
     public DummyMethod newMethod(String name) {
-        DummyMethod method = new DummyMethod();
+        DummyMethod method = new DummyMethod(getClassLoader());
         methodDummies.add(method);
         method.name(name);
         return method;
@@ -371,18 +362,11 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
+        
         ClassBuilderImpl cci = new ClassBuilderImpl(javaVersion, modifiers, 
         		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
-        				parent, interfaces);
-        if(classLoader != null) {
-        	cci = new ClassBuilderImpl(javaVersion, modifiers, 
-            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
-            				parent, interfaces, classLoader);
-        } else {
-        	cci = new ClassBuilderImpl(javaVersion, modifiers, 
-            		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
-            				parent, interfaces);
-        }
+        				parent, interfaces, getClassLoader());
+        
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cci.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), BlockPostern.getTarget(dummy.getConstructorBody()));    

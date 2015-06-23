@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.client.def.behavior;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -75,7 +75,7 @@ public interface CommonBehavior {
      * @param type
      * @return {@link LocVar}
      */
-    LocVar asVar(AClass type);
+    LocVar asVar(IClass type);
     
     /**
      * 
@@ -107,7 +107,7 @@ public interface CommonBehavior {
      * @param type variable type
      * @return {@link LocVar}
      */
-    LocVar asVar(String varName, AClass type);
+    LocVar asVar(String varName, IClass type);
     
     /**
      * Use current behavior as an variable, and specify a variable

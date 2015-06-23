@@ -19,8 +19,8 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
 
 /**
  * 
@@ -68,8 +68,8 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     }
 
     @Override
-    public AClass getResultType() {
-        return AClassFactory.getType(int.class);
+    public IClass getResultType() {
+        return block.getType(int.class);
     }
 
     @Override

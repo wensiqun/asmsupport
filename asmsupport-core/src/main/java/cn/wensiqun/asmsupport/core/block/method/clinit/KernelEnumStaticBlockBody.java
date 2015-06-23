@@ -26,7 +26,6 @@ import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.block.method.IEnumStaticBlockBody;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
@@ -92,8 +91,8 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 			String enumName = enumArgu.name;
 			KernelParam[] otherArgus = enumArgu.argus;
 	        KernelParam[] enumArgus = new KernelParam[otherArgus.length + 2];
-	        enumArgus[0] = Value.value(enumName);
-	        enumArgus[1] = Value.value(i);
+	        enumArgus[0] = Value.value(getClassHolder(), enumName);
+	        enumArgus[1] = Value.value(getClassHolder(), i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
 	        
 	        MethodInvoker mi = new_(getMethodDeclaringClass(), enumArgus);
@@ -103,7 +102,7 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 		
 		GlobalVariable gv = val(getMethodDeclaringClass()).field("ENUM$VALUES");
 		
-		KernelArrayValue av = newarray(AClassFactory.getArrayType(getMethodDeclaringClass(), 1), values);
+		KernelArrayValue av = newarray(getClassHolder().getArrayClass(getMethodDeclaringClass(), 1), values);
 		assign(gv, av);
 	}
 	

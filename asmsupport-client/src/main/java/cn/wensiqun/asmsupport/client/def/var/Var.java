@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.client.def.var;
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
@@ -28,7 +28,7 @@ public abstract class Var extends UncertainParam implements IVar {
     }
 
     @Override
-    public final AClass getFormerType() {
+    public final IClass getFormerType() {
         return getPreciseTarget().getFormerType();
     }
 

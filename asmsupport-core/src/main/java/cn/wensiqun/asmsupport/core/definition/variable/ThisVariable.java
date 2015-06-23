@@ -22,10 +22,10 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 /**
  * Represent the {@code this} keyword variable.
@@ -37,8 +37,8 @@ public class ThisVariable extends ImplicitVariable {
     private Field globalVariableMeta;
     
     
-    public ThisVariable(AClass aclass) {
-        this.globalVariableMeta = new Field(aclass, aclass, aclass, Opcodes.ACC_FINAL, ByteCodeConstant.THIS);
+    public ThisVariable(IClass aclass) {
+        this.globalVariableMeta = new Field(aclass, aclass, aclass, Opcodes.ACC_FINAL, AsmsupportConstant.THIS);
     }
     
     @Override
@@ -52,7 +52,7 @@ public class ThisVariable extends ImplicitVariable {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return globalVariableMeta.getType();
     }
 

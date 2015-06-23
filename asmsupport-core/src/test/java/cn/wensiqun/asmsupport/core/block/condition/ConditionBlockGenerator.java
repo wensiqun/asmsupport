@@ -8,13 +8,11 @@ import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class ConditionBlockGenerator extends AbstractExample
 {
@@ -25,129 +23,130 @@ public class ConditionBlockGenerator extends AbstractExample
         final MyList testMethodNames = new MyList();
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ConditionBlockGeneratorExample", null, null);
         
-        creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"), new AClass[]{AClassFactory.getType(String.class)}, new String[]{"str"}, null, null, new KernelStaticMethodBody(){
+        creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"), 
+        		new AClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"str"}, null, null, new KernelStaticMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
             {
             	final LocalVariable str = argus[0];
-                if_(new KernelIF(call(str, "startsWith", Value.value("A"))){
+                if_(new KernelIF(call(str, "startsWith", val("A"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    startsWith A!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    startsWith A!"));
 					}
                 	
                 });
                 
 
-                if_(new KernelIF(call(str, "startsWith", Value.value("B"))){
+                if_(new KernelIF(call(str, "startsWith", val("B"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    startsWith B!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    startsWith B!"));
 					}
                 	
                 });
                 
 
-                if_(new KernelIF(call(str, "startsWith", Value.value("C"))){
+                if_(new KernelIF(call(str, "startsWith", val("C"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    startsWith C!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    startsWith C!"));
 					}
                 	
                 });
                 
-                if_(new KernelIF(eq(Value.value(1), call(str, "length"))){
+                if_(new KernelIF(eq(val(1), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is 1!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is 1!"));
 					}
                 	
                 }).else_(new KernelElse(){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is not 1!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is not 1!"));
 					}
                 	
                 });
                 
-                if_(new KernelIF(eq(Value.value(2), call(str, "length"))){
+                if_(new KernelIF(eq(val(2), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is 2!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is 2!"));
 					}
                 	
                 }).else_(new KernelElse(){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is not 2!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is not 2!"));
 					}
                 	
                 });
                 
-                if_(new KernelIF(eq(Value.value(3), call(str, "length"))){
+                if_(new KernelIF(eq(val(3), call(str, "length"))){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is 3!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is 3!"));
 					}
                 	
                 }).else_(new KernelElse(){
 
 					@Override
 					public void body() {
-	                    call(TesterStatics.ATesterStatics, 
-	                    		"actuallyPrintln", Value.value("    length is not 3!"));
+	                    call(getType(TesterStatics.class), 
+	                    		"actuallyPrintln", val("    length is not 3!"));
 					}
                 	
                 });
                 
                 
-                if_(new KernelIF(call(str, "endsWith", Value.value("Z"))){
+                if_(new KernelIF(call(str, "endsWith", val("Z"))){
 
 					@Override
 					public void body() {
 						
-						 call(TesterStatics.ATesterStatics, 
-								 "actuallyPrintln", Value.value("    endsWith Z!"));
+						 call(getType(TesterStatics.class), 
+								 "actuallyPrintln", val("    endsWith Z!"));
 						 
-						 if_(new KernelIF(call(str, "startsWith", Value.value("A"))){
+						 if_(new KernelIF(call(str, "startsWith", val("A"))){
 
 							@Override
 							public void body() {
 
-								 call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        startsWith A!"));
+								 call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        startsWith A!"));
 								
-								 if_(new KernelIF(eq(call(str, "length"), Value.value(2))){
+								 if_(new KernelIF(eq(call(str, "length"), val(2))){
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is 2!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is 2!"));
 									}
 										 
-							    }).elseif(new KernelElseIF(eq(call(str, "length"), Value.value(3))){
+							    }).elseif(new KernelElseIF(eq(call(str, "length"), val(3))){
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is 3!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is 3!"));
 										
 									}
 							    	
@@ -155,8 +154,8 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is Other!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is Other!"));
 									}
 							    	
 							    });
@@ -164,76 +163,76 @@ public class ConditionBlockGenerator extends AbstractExample
 							 
 						 });
 						 
-						 if_(new KernelIF(call(str, "startsWith", Value.value("B"))){
+						 if_(new KernelIF(call(str, "startsWith", val("B"))){
 
 							@Override
 							public void body() {
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        startsWith B!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        startsWith B!"));
 								 
-								if_(new KernelIF(eq(call(str, "length"), Value.value(2))){
+								if_(new KernelIF(eq(call(str, "length"), val(2))){
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is 2!"));
-										if_(new KernelIF(eq(call(str, "charAt", Value.value(1)), Value.value('1'))){
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is 2!"));
+										if_(new KernelIF(eq(call(str, "charAt", val(1)), val('1'))){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is '1'!"));
 											}
 											
 										}).else_(new KernelElse(){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is 'Other'!"));
 											}
 											
 										});
 									}
 									
-								}).elseif(new KernelElseIF(eq(call(str, "length"), Value.value(3))){
+								}).elseif(new KernelElseIF(eq(call(str, "length"), val(3))){
 
 									@Override
 									public void body() {
 
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is 3!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is 3!"));
 										
-										if_(new KernelIF(eq(call(str, "charAt", Value.value(1)), Value.value('1'))){
+										if_(new KernelIF(eq(call(str, "charAt", val(1)), val('1'))){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is '1'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is '1'!"));
 											}
 											
-										}).elseif(new KernelElseIF(eq(call(str, "charAt", Value.value(1)), Value.value('2'))){
+										}).elseif(new KernelElseIF(eq(call(str, "charAt", val(1)), val('2'))){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is '2'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is '2'!"));
 											}
 											
-										}).elseif(new KernelElseIF(eq(call(str, "charAt", Value.value(1)), Value.value('3'))){
+										}).elseif(new KernelElseIF(eq(call(str, "charAt", val(1)), val('3'))){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is '3'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is '3'!"));
 											}
 											
 										}).else_(new KernelElse(){
 
 											@Override
 											public void body() {
-												call(TesterStatics.ATesterStatics, 
-														 "actuallyPrintln", Value.value("                charAt 1 is 'Other'!"));
+												call(getType(TesterStatics.class), 
+														 "actuallyPrintln", val("                charAt 1 is 'Other'!"));
 											}
 											
 										});
@@ -243,8 +242,8 @@ public class ConditionBlockGenerator extends AbstractExample
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            length is Other!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            length is Other!"));
 									}
 									
 								});
@@ -254,28 +253,28 @@ public class ConditionBlockGenerator extends AbstractExample
 						 });
 					}
                 	
-                }).elseif(new KernelElseIF(call(str, "endsWith", Value.value("Y"))){
+                }).elseif(new KernelElseIF(call(str, "endsWith", val("Y"))){
 
 					@Override
 					public void body() {
-						call(TesterStatics.ATesterStatics, 
-								 "actuallyPrintln", Value.value("    endsWith Y!"));
-						if_(new KernelIF(call(str, "startsWith", Value.value("A"))){
+						call(getType(TesterStatics.class), 
+								 "actuallyPrintln", val("    endsWith Y!"));
+						if_(new KernelIF(call(str, "startsWith", val("A"))){
 
 							@Override
 							public void body() {
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        startsWith A!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        startsWith A!"));
 							}
 							
 						});
 					
-						if_(new KernelIF(call(str, "startsWith", Value.value("B"))){
+						if_(new KernelIF(call(str, "startsWith", val("B"))){
 
 							@Override
 							public void body() {
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        startsWith B!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        startsWith B!"));
 							}
 							
 						});
@@ -285,58 +284,58 @@ public class ConditionBlockGenerator extends AbstractExample
 
 					@Override
 					public void body() {
-						call(TesterStatics.ATesterStatics, 
-								 "actuallyPrintln", Value.value("    endsWith Other!"));
+						call(getType(TesterStatics.class), 
+								 "actuallyPrintln", val("    endsWith Other!"));
 						
-						if_(new KernelIF(call(str, "endsWith", Value.value("X"))){
+						if_(new KernelIF(call(str, "endsWith", val("X"))){
 
 							@Override
 							public void body() {
 
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        endsWith X!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        endsWith X!"));
 							}
 							
-						}).elseif(new KernelElseIF(call(str, "endsWith", Value.value("W"))){
+						}).elseif(new KernelElseIF(call(str, "endsWith", val("W"))){
 
 							@Override
 							public void body() {
 
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        endsWith W!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        endsWith W!"));
 							}
 							
 						}).else_(new KernelElse(){
 
 							@Override
 							public void body() {
-								call(TesterStatics.ATesterStatics, 
-										 "actuallyPrintln", Value.value("        endsWith Other!"));
+								call(getType(TesterStatics.class), 
+										 "actuallyPrintln", val("        endsWith Other!"));
 								
-								if_(new KernelIF(call(str, "endsWith", Value.value("V"))){
+								if_(new KernelIF(call(str, "endsWith", val("V"))){
 
 									@Override
 									public void body() {
 
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            endsWith V!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            endsWith V!"));
 									}
 									
-								}).elseif(new KernelElseIF(call(str, "endsWith", Value.value("U"))){
+								}).elseif(new KernelElseIF(call(str, "endsWith", val("U"))){
 
 									@Override
 									public void body() {
 
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            endsWith U!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            endsWith U!"));
 									}
 									
 								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
-										call(TesterStatics.ATesterStatics, 
-												 "actuallyPrintln", Value.value("            endsWith Other!"));
+										call(getType(TesterStatics.class), 
+												 "actuallyPrintln", val("            endsWith Other!"));
 										
 										
 										
@@ -358,14 +357,14 @@ public class ConditionBlockGenerator extends AbstractExample
             }
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                 	List<String> list = ConditionBlockGeneratorSample.allPossiable();
                 	for(String str : list)
                 	{
-                		call(getMethodDeclaringClass(), "test", Value.value(str));
+                		call(getMethodDeclaringClass(), "test", val(str));
                 	}
                     return_();
                 }

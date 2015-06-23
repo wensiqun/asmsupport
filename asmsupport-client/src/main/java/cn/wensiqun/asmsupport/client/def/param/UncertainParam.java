@@ -43,7 +43,6 @@ import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.behavior.UncertainBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 
 /**
@@ -185,27 +184,27 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
 
     @Override
     public BoolParam and(boolean param) {
-        return and(new DummyParam(cursor, Value.value(param)));
+        return and(new DummyParam(cursor, cursor.getPointer().val(param)));
     }
 
     @Override
     public BoolParam or(boolean param) {
-        return or(new DummyParam(cursor, Value.value(param)));
+        return or(new DummyParam(cursor, cursor.getPointer().val(param)));
     }
 
     @Override
     public BoolParam logicAnd(boolean param) {
-        return logicAnd(new DummyParam(cursor, Value.value(param)));
+        return logicAnd(new DummyParam(cursor, cursor.getPointer().val(param)));
     }
 
     @Override
     public BoolParam logicOr(boolean param) {
-        return logicOr(new DummyParam(cursor, Value.value(param)));
+        return logicOr(new DummyParam(cursor, cursor.getPointer().val(param)));
     }
 
     @Override
     public BoolParam logicXor(boolean param) {
-        return logicXor(new DummyParam(cursor, Value.value(param)));
+        return logicXor(new DummyParam(cursor, cursor.getPointer().val(param)));
     }
 
     @Override

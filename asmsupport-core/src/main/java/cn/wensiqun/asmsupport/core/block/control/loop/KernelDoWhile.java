@@ -21,7 +21,6 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -68,8 +67,8 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
 
     @Override
     protected void init() {
-        if (!condition.getResultType().equals(AClassFactory.getType(Boolean.class))
-                && !condition.getResultType().equals(AClassFactory.getType(boolean.class))) {
+        if (!condition.getResultType().equals(getClassHolder().getType(Boolean.class))
+                && !condition.getResultType().equals(getClassHolder().getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getResultType());
         }

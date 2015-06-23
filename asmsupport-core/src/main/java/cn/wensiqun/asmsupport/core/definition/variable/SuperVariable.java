@@ -21,11 +21,10 @@ package cn.wensiqun.asmsupport.core.definition.variable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
 /**
@@ -37,12 +36,12 @@ public class SuperVariable extends ImplicitVariable{
 
     private Field globalVariableMeta;
     
-    public SuperVariable(AClass aclass) {
+    public SuperVariable(IClass aclass) {
         this.globalVariableMeta = new Field(
-                AClassFactory.getType(aclass.getSuperClass()), 
-                AClassFactory.getType(aclass.getSuperClass()), 
-                AClassFactory.getType(aclass.getSuperClass()), 
-                Opcodes.ACC_FINAL, ByteCodeConstant.SUPER);
+        		aclass.getSuperClass(), 
+        		aclass.getSuperClass(), 
+        		aclass.getSuperClass(), 
+                Opcodes.ACC_FINAL, AsmsupportConstant.SUPER);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class SuperVariable extends ImplicitVariable{
 
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return globalVariableMeta.getType();
     }
 

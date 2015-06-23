@@ -20,14 +20,14 @@ import java.util.List;
 import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
-import cn.wensiqun.asmsupport.core.loader.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 
@@ -63,7 +63,7 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
     
     protected Class<?> loadClass(String name, byte[] b) {
         try {
-        	return asmsupportClassLoader.defineClass(name, b);
+        	return asmsupportClassLoader.defineClass(name, b, getCurrentClass());
         } catch (Exception e) {
             throw new ASMSupportException("Error on define class " + name, e);
         }
@@ -99,8 +99,7 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 	@Override
     public Class<?> startup() {
 		byte[] code = toClassBytes();
-		
-		AClass currentClass = getCurrentClass();
+		IClass currentClass = getCurrentClass();
         if(!StringUtils.isBlank(classOutPutPath)){
         	CommonUtils.toLocal(code, classOutPutPath, currentClass.getName());
         }

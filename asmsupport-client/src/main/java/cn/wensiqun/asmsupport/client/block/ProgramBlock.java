@@ -64,6 +64,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
@@ -107,7 +109,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 * 
 	 * @return
 	 */
-	public AClass getMethodOwner() {
+	public IClass getMethodOwner() {
 		return targetBlock.getMethodDeclaringClass();
 	}
 
@@ -137,12 +139,12 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public LocVar var(String name, AClass type, Param para) {
+	public LocVar var(String name, IClass type, Param para) {
 		return new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
 	}
 
 	@Override
-	public LocVar var(AClass type, Param para) {
+	public LocVar var(IClass type, Param para) {
 		return new LocVar(cursor, targetBlock.var(type, ParamPostern.getTarget(para)));
 	}
 
@@ -167,7 +169,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public UncertainParam call(AClass owner, String methodName, Param... arguments) {
+	public UncertainParam call(IClass owner, String methodName, Param... arguments) {
 		return new UncertainParam(cursor, targetBlock.call(owner, methodName, ParamPostern.getTarget(arguments)));
 	}
     
@@ -182,7 +184,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public UncertainParam new_(AClass owner, Param... arguments) {
+	public UncertainParam new_(IClass owner, Param... arguments) {
 		return new UncertainParam(cursor, targetBlock.new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
@@ -192,7 +194,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public ArrayParam makeArray(AClass aClass, Param... allocateDims) {
+	public ArrayParam makeArray(IClass aClass, Param... allocateDims) {
 		return new ArrayParam(cursor, targetBlock.makeArray(aClass, ParamPostern.getTarget(allocateDims)));
 	}
 
@@ -202,7 +204,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public ArrayParam newarray(AClass aClass, Object arrayObject) {
+	public ArrayParam newarray(IClass aClass, Object arrayObject) {
 		return new ArrayParam(cursor, targetBlock.newarray(aClass, ParamPostern.getTarget(arrayObject)));
 	}
 
@@ -372,7 +374,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public UncertainParam checkcast(Param cc, AClass to) {
+	public UncertainParam checkcast(Param cc, IClass to) {
 		return new UncertainParam(cursor, targetBlock.checkcast(ParamPostern.getTarget(cc), to));
 	}
 
@@ -397,7 +399,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public BoolParam instanceof_(Param obj, AClass type) {
+	public BoolParam instanceof_(Param obj, IClass type) {
 		return new BoolParam(cursor, new InstanceofAction(cursor, type), obj);
 	}
 
@@ -544,7 +546,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public ObjectParam val(AClass val) {
+	public ObjectParam val(IClass val) {
 		return new ObjectParam(cursor, targetBlock.val(val));
 	}
 
@@ -559,7 +561,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public NullParam null_(AClass type) {
+	public NullParam null_(IClass type) {
 		return new NullParam(cursor, targetBlock.null_(type));
 	}
 
@@ -569,18 +571,33 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
+	public IClass loadType(Class<?> clazz) {
+		return targetBlock.loadType(clazz);
+	}
+
+	@Override
+	public IClass loadType(String name) {
+		return targetBlock.loadType(name);
+	} 
+
+	@Override
 	public AClass getType(Class<?> cls) {
 		return targetBlock.getType(cls);
 	}
 
 	@Override
-	public AClass getArrayType(Class<?> cls, int dim) {
-		return targetBlock.getArrayType(cls, dim);
+	public AClass getType(String cls) {
+		return targetBlock.getType(cls);
 	}
 
 	@Override
-	public AClass getArrayType(AClass rootComponent, int dim) {
-		return targetBlock.getArrayType(rootComponent, dim);
+	public ArrayClass getArrayClass(Class<?> cls, int dim) {
+		return targetBlock.getArrayClass(cls, dim);
+	}
+
+	@Override
+	public ArrayClass getArrayClass(IClass rootComponent, int dim) {
+		return targetBlock.getArrayClass(rootComponent, dim);
 	}
 	
     LocVar[] internalVar2ClientVar(LocalVariable... pars) {
@@ -592,6 +609,6 @@ IF, While, DoWhile, ForEach, Try, Sync> {
             paras[i] = new LocVar(cursor, pars[i]);
         }
         return paras;
-    } 
+    }
     
 }

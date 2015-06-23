@@ -166,7 +166,7 @@
 		<module>asmsupport-standard</module>
 		<module>asmsupport-core</module>
 		<module>asmsupport-client</module>
-		<module>asmsupport-issues</module>
-		<module>asmsupport-sample</module>
+		<!--<module>asmsupport-issues</module>
+		<module>asmsupport-sample</module>-->
 	</modules>
 </project>

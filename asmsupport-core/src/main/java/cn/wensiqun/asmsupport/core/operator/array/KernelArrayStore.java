@@ -22,9 +22,8 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -38,7 +37,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
     
     private KernelParam value;
     
-    private AClass storeClass;
+    private IClass storeClass;
     
     private KernelParam lastDim;
 
@@ -80,8 +79,8 @@ public class KernelArrayStore extends AbstractArrayOperator {
 		if(!AClassUtils.checkAssignable(value.getResultType(), storeClass)) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + storeClass + "");
 		}
-		if(!AClassUtils.checkAssignable(lastDim.getResultType(), AClassFactory.getType(int.class))) {
-			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getResultType() + " to " + AClassFactory.getType(int.class) + "");
+		if(!AClassUtils.checkAssignable(lastDim.getResultType(), block.getType(int.class))) {
+			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getResultType() + " to " + block.getType(int.class) + "");
 		}
 	}
 
@@ -94,7 +93,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
         InstructionHelper ih = block.getInsnHelper();
         LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
-        autoCast(lastDim.getResultType(), AClassFactory.getType(int.class), false);
+        autoCast(lastDim.getResultType(), block.getType(int.class), false);
         
         value.loadToStack(block);
         autoCast(value.getResultType(), storeClass, false);
@@ -110,7 +109,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         throw new UnsupportedOperationException("Un imple");
     }
 

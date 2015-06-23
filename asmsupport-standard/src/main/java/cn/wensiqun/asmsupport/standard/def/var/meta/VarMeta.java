@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.standard.def.var.meta;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * The variable meta informations. 
@@ -24,9 +24,9 @@ public class VarMeta {
 
     private String name;
     private int modifiers;
-    private AClass type;
+    private IClass type;
 
-    public VarMeta(String name, int modifiers, AClass type) {
+    public VarMeta(String name, int modifiers, IClass type) {
         super();
         this.name = name;
         this.modifiers = modifiers;
@@ -59,7 +59,7 @@ public class VarMeta {
      * 
      * @return
      */
-    public AClass getType() {
+    public IClass getType() {
         return type;
     }
 

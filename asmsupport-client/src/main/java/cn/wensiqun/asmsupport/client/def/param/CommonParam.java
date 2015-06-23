@@ -8,7 +8,7 @@ import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public abstract class CommonParam extends DummyParam implements CommonBehavior {
 
@@ -37,7 +37,7 @@ public abstract class CommonParam extends DummyParam implements CommonBehavior {
 	}
 	
 	@Override
-	public LocVar asVar(AClass type) {
+	public LocVar asVar(IClass type) {
 		return new LocVar(cursor, cursor.getPointer().var(type, getTarget()));
 	}
 
@@ -52,7 +52,7 @@ public abstract class CommonParam extends DummyParam implements CommonBehavior {
 	}
 
 	@Override
-	public LocVar asVar(String varName, AClass type) {
+	public LocVar asVar(String varName, IClass type) {
 		return new LocVar(cursor, cursor.getPointer().var(varName, type, getTarget()));
 	}
 

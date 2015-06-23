@@ -14,8 +14,9 @@
  */
 package cn.wensiqun.asmsupport.standard.def.var;
 
+import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * Indicate a variable
@@ -48,7 +49,7 @@ public interface IVar extends IParam {
      * 
      * @return AClass
      */
-    AClass getFormerType();
+    IClass getFormerType();
     
     /**
      * Get the variable modifier, it's an integer value which 

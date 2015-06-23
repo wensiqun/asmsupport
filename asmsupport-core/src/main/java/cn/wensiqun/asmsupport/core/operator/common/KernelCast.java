@@ -23,8 +23,7 @@ import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 
@@ -34,10 +33,10 @@ import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 public class KernelCast extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(KernelCast.class);
-    private AClass to;
+    private IClass to;
     private KernelParam orginal;
     
-    protected KernelCast(KernelProgramBlock block, KernelParam orgi, AClass to) {
+    protected KernelCast(KernelProgramBlock block, KernelParam orgi, IClass to) {
         super(block, Operator.COMMON);
         this.orginal = orgi;
         this.to = to;
@@ -57,7 +56,7 @@ public class KernelCast extends AbstractParamOperator {
     @Override
     public void doExecute() {
         orginal.loadToStack(block);
-        AClass from = orginal.getResultType();
+        IClass from = orginal.getResultType();
         if(to.equals(from)){
             return;
         }
@@ -67,8 +66,8 @@ public class KernelCast extends AbstractParamOperator {
                 LOG.print("checkcast from " + from + " to " + to );
             }
             if(from.getCastOrder() > to.getCastOrder() ||
-               (from.equals(AClassFactory.getType(char.class)) && to.equals(AClassFactory.getType(short.class))) || 
-               (to.equals(AClassFactory.getType(char.class)) && from.equals(AClassFactory.getType(short.class)))){
+               (from.equals(block.getType(char.class)) && to.equals(block.getType(short.class))) || 
+               (to.equals(block.getType(char.class)) && from.equals(block.getType(short.class)))){
                 insnHelper.cast(from.getType(), to.getType());
                 return;
             }
@@ -86,7 +85,7 @@ public class KernelCast extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
+    public IClass getResultType() {
         return to;
     }
 

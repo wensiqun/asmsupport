@@ -22,8 +22,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
@@ -43,7 +42,7 @@ public class KernelStrAdd extends AbstractParamOperator {
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
-        AClass strBlderCls = AClassFactory.getType(StringBuilder.class);
+        IClass strBlderCls = block.getClassHolder().getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
         for(KernelParam par : pars){
@@ -91,8 +90,8 @@ public class KernelStrAdd extends AbstractParamOperator {
     }
 
     @Override
-    public AClass getResultType() {
-        return AClassFactory.getType(String.class);
+    public IClass getResultType() {
+        return block.getClassHolder().getType(String.class);
     }
 
     @Override

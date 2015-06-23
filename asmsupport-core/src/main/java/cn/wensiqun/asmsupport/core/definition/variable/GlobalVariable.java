@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 
@@ -40,7 +40,7 @@ public abstract class GlobalVariable extends ExplicitVariable implements IFieldV
     }
 
     @Override
-    public final AClass getDeclaringClass() {
+    public final IClass getDeclaringClass() {
         return getMeta().getDeclaringClass();
     }
 

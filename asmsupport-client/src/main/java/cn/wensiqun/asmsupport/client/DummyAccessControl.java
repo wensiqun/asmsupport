@@ -15,13 +15,19 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
-abstract class DummyAccessControl<T extends DummyAccessControl<?>> {
+abstract class DummyAccessControl<T extends DummyAccessControl<?>> extends AbstractDummy {
 
-    /**
+
+	/**
      * The modifiers
      */
     protected int modifiers;
+    
+    DummyAccessControl(AsmsupportClassLoader classLoader) {
+		super(classLoader);
+	}
     
     /**
      * Set the access to private.

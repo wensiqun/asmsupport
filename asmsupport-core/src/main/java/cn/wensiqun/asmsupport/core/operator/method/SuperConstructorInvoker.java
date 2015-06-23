@@ -18,9 +18,8 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
-import cn.wensiqun.asmsupport.utils.ByteCodeConstant;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 /**
  * Call constructor opertion
@@ -32,8 +31,8 @@ public class SuperConstructorInvoker extends MethodInvoker {
 
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
-    protected SuperConstructorInvoker(KernelProgramBlock block, AClass aclass, KernelParam[] arguments) {
-        super(block, AClassFactory.getType(aclass.getSuperClass()), ByteCodeConstant.INIT, arguments);
+    protected SuperConstructorInvoker(KernelProgramBlock block, IClass aclass, KernelParam[] arguments) {
+        super(block, aclass.getSuperClass(), AsmsupportConstant.INIT, arguments);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
         insnHelper.loadThis();
         argumentsToStack();
         
-        AClass[] argTypes = new AClass[arguments.length];
+        IClass[] argTypes = new IClass[arguments.length];
         for(int i=0; i<argTypes.length; i++){
             argTypes[i] = arguments[i].getResultType();
         }

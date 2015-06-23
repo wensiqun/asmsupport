@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 
 /**
@@ -56,13 +56,13 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 
 	@Override
 	protected void initAdditionalProperties() {
-		AClass fatCls = factor.getResultType();
+		IClass fatCls = factor.getResultType();
 		targetClass = AClassUtils.getPrimitiveAClass(fatCls);
 	}
 
 	@Override
 	protected void verifyArgument() {
-		AClass fatCls = factor.getResultType();
+		IClass fatCls = factor.getResultType();
 		if (!AClassUtils.isArithmetical(fatCls)) {
 			throw new ArithmeticException(
 					"cannot execute arithmetic operator whit " + fatCls);

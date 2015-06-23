@@ -7,22 +7,21 @@ import cn.wensiqun.asmsupport.core.block.control.exception.KernelFinally;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class TryFinallyWithReturnBlockGenerator extends AbstractExample
 {
     public static void main(String[] args)
     {
-        final AClass runtime = AClassFactory.getType(RuntimeException.class);
         
         final MyList testMethodNames = new MyList();
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryFinallyWithReturnBlockGeneratorExample", null, null);
+
+        final AClass runtime = creator.getClassLoader().getType(RuntimeException.class);
         
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryFinally"), null, null, null, null,  new KernelStaticMethodBody(){
 
@@ -34,7 +33,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
                     }
                     
                 }).finally_(new KernelFinally(){
@@ -42,7 +41,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -55,19 +54,19 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             @Override
             public void body(LocalVariable... argus)
             {
-                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("start"));
+                call(getType(TesterStatics.class), "actuallyPrintln", val("start"));
                 try_(new KernelTry(){
 
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try{"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try{"));
                         try_(new KernelTry(){
                             
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -75,11 +74,11 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                             }
                             
                         });
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    }"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    }"));
                     }
                     
                 }).finally_(new KernelFinally(){
@@ -87,11 +86,11 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
-                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("end"));
+                call(getType(TesterStatics.class), "actuallyPrintln", val("end"));
                 return_();
             }
             
@@ -107,7 +106,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    try"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
                         return_();
                     }
                     
@@ -121,7 +120,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -146,7 +145,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                                 return_();
                             }
                             
@@ -155,7 +154,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                             }
                             
                         });
@@ -167,7 +166,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -192,7 +191,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -200,7 +199,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                                 return_();
                             }
                             
@@ -213,7 +212,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -238,7 +237,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -246,7 +245,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                             }
                             
                         });
@@ -259,7 +258,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -284,7 +283,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -292,7 +291,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                             }
                             
                         });
@@ -304,7 +303,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                         return_();
                     }
                     
@@ -330,7 +329,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                                 return_();
                             }
                             
@@ -339,7 +338,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                                 return_();
                             }
                             
@@ -352,7 +351,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                     }
                     
                 });
@@ -377,7 +376,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                             }
                             
                         }).finally_(new KernelFinally(){
@@ -385,7 +384,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                             }
                             
                         });
@@ -398,7 +397,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                         return_();
                     }
                     
@@ -424,7 +423,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        try_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        try_inner"));
                                 return_();
                             }
                             
@@ -433,7 +432,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                             @Override
                             public void body()
                             {
-                                call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("        finally_inner"));
+                                call(getType(TesterStatics.class), "actuallyPrintln", val("        finally_inner"));
                                 return_();
                             }
                             
@@ -446,7 +445,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                     @Override
                     public void body()
                     {
-                        call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("    finally"));
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    finally"));
                         return_();
                     }
                     
@@ -456,8 +455,8 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
             
         });
         
-        
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+        		new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
@@ -476,7 +475,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
     
     private static void noExceptionCall(KernelProgramBlock block, final String methodName)
     {
-        block.call(TesterStatics.ATesterStatics, "actuallyPrintln", Value.value("=======" + methodName));
+        block.call(block.getType(TesterStatics.class), "actuallyPrintln", block.val("=======" + methodName));
         block.try_(new KernelTry(){
 
             @Override
@@ -485,7 +484,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
                 call(getMethodDeclaringClass(), methodName);
             }
             
-        }).catch_(new KernelCatch(AClassFactory.getType(Throwable.class)){
+        }).catch_(new KernelCatch(block.getType(Throwable.class)){
 
             @Override
             public void body(LocalVariable e)

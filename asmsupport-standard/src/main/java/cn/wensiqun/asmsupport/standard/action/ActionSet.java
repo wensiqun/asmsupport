@@ -15,7 +15,8 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
@@ -33,7 +34,7 @@ _F extends IFieldVar,
 _IF, _While, _DoWhile, _ForEach, _TRY, _SYN> 
 extends 
 ValueAction<_P>, 
-AClassDefAction,
+ClassHolder,
 VariableAction<_P, _V>, 
 MethodInvokeAction<_P, _F>, 
 ArrayAction<_P>, 
@@ -62,7 +63,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      *            the type need to check cast.
      * @return {@link _P}
      */
-    _P checkcast(_P obj, AClass to);
+    _P checkcast(_P obj, IClass to);
 
     /**
      * check cast object type, such as following code:
@@ -168,7 +169,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      * @param type
      * @return {@link _P}a boolean type Parameterized
      */
-    _P instanceof_(_P obj, AClass type);
+    _P instanceof_(_P obj, IClass type);
 
     /**
      * Generate the instanceof instruction, the method is same as

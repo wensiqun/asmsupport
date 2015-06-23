@@ -17,8 +17,9 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyMethod extends DummyAccessControl<DummyMethod> {
 
@@ -29,16 +30,20 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
     private String name;
 
     /** The constructor argument types.*/
-    private AClass[] argTypes;
+    private IClass[] argTypes;
 
     /** The constructor argument names.*/
     private String[] argNames;
     
     /** The constructor throws exception types.*/
-    private AClass[] exceptionTypes;
+    private IClass[] exceptionTypes;
     
     /** The method body */
     private MethodBody body;
+    
+    DummyMethod(AsmsupportClassLoader classLoader) {
+    	super(classLoader);
+    }
     
     /**
      * Set to static
@@ -181,7 +186,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod return_(Class<?> ret) {
-        this.returnType = AClassFactory.getType(ret);
+        this.returnType = getClassLoader().getType(ret);
         return this;
     }
     
@@ -220,7 +225,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param argus
      * @return
      */
-    public DummyMethod argTypes(AClass... argus){
+    public DummyMethod argTypes(IClass... argus){
         argTypes = argus;
         return this;
     }
@@ -232,7 +237,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(argus);
+        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
     
@@ -241,11 +246,11 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * 
      * @return
      */
-    public AClass[] getArgTypes() {
+    public IClass[] getArgTypes() {
         if(argTypes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
-        AClass[] copy = new AClass[argTypes.length];
+        IClass[] copy = new IClass[argTypes.length];
         System.arraycopy(argTypes, 0, copy, 0, copy.length);
         return copy;
     }
@@ -285,7 +290,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod throws_(Class<?>... exceptionTypes){
-        this.exceptionTypes = AClassUtils.convertToAClass(exceptionTypes);
+        this.exceptionTypes = AClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
         return this;
     }
     
@@ -295,7 +300,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param exceptionTypes
      * @return
      */
-    public DummyMethod throws_(AClass[] exceptionTypes){
+    public DummyMethod throws_(IClass[] exceptionTypes){
         this.exceptionTypes = exceptionTypes;
         return this;
     }
@@ -305,11 +310,11 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * 
      * @return
      */
-    public AClass[] getThrows() {
+    public IClass[] getThrows() {
         if(exceptionTypes == null) {
-            return new AClass[0];
+            return new IClass[0];
         }
-        AClass[] copy = new AClass[exceptionTypes.length];
+        IClass[] copy = new IClass[exceptionTypes.length];
         System.arraycopy(exceptionTypes, 0, copy, 0, copy.length);
         return copy;
     }
