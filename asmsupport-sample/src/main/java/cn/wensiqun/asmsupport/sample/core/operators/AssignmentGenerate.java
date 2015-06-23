@@ -3,12 +3,10 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class AssignmentGenerate extends AbstractExample {
 
@@ -18,27 +16,27 @@ public class AssignmentGenerate extends AbstractExample {
 	public static void main(String[] args) {
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.AssignmentGenerateExample", null, null);
 
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, AClassFactory.getType(String.class), null, new KernelStaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, classLoader.getType(String.class), null, new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				return_(Value.value("I'm from commonMethod"));
+				return_(val("I'm from commonMethod"));
 			}
 		});
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
 				//创建个String变量默认赋值为null
-				LocalVariable string = var("string", AClassFactory.getType(String.class), null);
+				LocalVariable string = var("string", classLoader.getType(String.class), null);
 				
 				assign(string, call(getMethodDeclaringClass(), "commonMethod"));
-				call(systemOut, "println", stradd(Value.value("first asign :"), string));
+				call(systemOut, "println", stradd(val("first asign :"), string));
 				
-				assign(string, Value.value("second assing value"));
-				call(systemOut, "println", stradd(Value.value("second asign :"), string));
+				assign(string, val("second assing value"));
+				call(systemOut, "println", stradd(val("second asign :"), string));
 				
 				return_();
 			}

@@ -4,7 +4,7 @@ import cn.wensiqun.asmsupport.client.block.ProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
 
@@ -12,8 +12,8 @@ public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
 
     @Override
     public boolean generate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
-            LocVar encoder, AClass type, Param value) {
-        if(match(type)) {
+            LocVar encoder, IClass type, Param value) {
+        if(match(type, block)) {
             return doGenerate(context, block, encoder, type, value);
         } else if(next != null) {
             return next.generate(context, block, encoder, type, value);
@@ -22,7 +22,7 @@ public abstract class AbstractGeneratorChain implements IValueGeneratorChain {
     }
 
     protected abstract boolean doGenerate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
-            LocVar encoder, AClass type, Param value);
+            LocVar encoder, IClass type, Param value);
     
     @Override
     public final IValueGeneratorChain getNext() {

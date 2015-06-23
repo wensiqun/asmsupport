@@ -8,12 +8,10 @@ import java.lang.reflect.Method;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class TestSerializableWithASMSupport {
    
@@ -22,10 +20,10 @@ public class TestSerializableWithASMSupport {
     	ClassBuilderImpl creator = 
 				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
-    	creator.createField("name", Opcodes.ACC_PRIVATE, AClassFactory.getType(String.class));
+    	creator.createField("name", Opcodes.ACC_PRIVATE, creator.getClassLoader().loadType(String.class));
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
-    			new AClass[]{AClassFactory.getType(String.class)}, new String[]{"name"}, 
+    			new IClass[]{creator.getClassLoader().loadType(String.class)}, new String[]{"name"}, 
     			null, null, new KernelMethodBody(){
 
 					@Override
@@ -39,7 +37,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			AClassFactory.getType(String.class), null,new KernelMethodBody(){
+    			creator.getClassLoader().loadType(String.class), null,new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -51,11 +49,11 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			AClassFactory.getType(String.class), null, new KernelMethodBody(){
+    			creator.getClassLoader().loadType(String.class), null, new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {
-						return_(stradd(Value.value("User [name="), this_().field("name")));
+						return_(stradd(val("User [name="), this_().field("name")));
 					}
     		
     	});

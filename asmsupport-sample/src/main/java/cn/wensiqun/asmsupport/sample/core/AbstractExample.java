@@ -4,15 +4,19 @@ import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public abstract class AbstractExample {
     
+	public static AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+	
 	/**
 	 * system.out global variable
 	 */
-	public static GlobalVariable systemOut = Value.value(System.class).field("out");
+	public static GlobalVariable systemOut = Value.value(classLoader, System.class).field("out");
 	static {
 		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}

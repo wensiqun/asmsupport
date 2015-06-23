@@ -3,12 +3,10 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class LogicalOperatorGenerate extends AbstractExample {
 
@@ -67,7 +65,7 @@ public class LogicalOperatorGenerate extends AbstractExample {
 		/*
 		 * 生成一个main方法，方法内容和willGenerate内容相同
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[] { AClassFactory.getType(String[].class) }, 
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[] { classLoader.getType(String[].class) }, 
 				new String[] { "args" }, null, null, new KernelStaticMethodBody() {
 
 					@Override
@@ -77,16 +75,16 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								"false && true", (false && true), "true && false",
 								(true && false), "true && true", (true && true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
-								Value.value("Conditional AND (&&)"), 
-								Value.value("false && false"), 
-								and(Value.value(false), Value.value(false)), 
-								Value.value("false && true"), 
-								and(Value.value(false), Value.value(true)), 
-								Value.value("true && false"), 
-								and(Value.value(true), Value.value(false)),  
-								Value.value("true && true"), 
-								and(Value.value(true), Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
+								val("Conditional AND (&&)"), 
+								val("false && false"), 
+								and(val(false), val(false)), 
+								val("false && true"), 
+								and(val(false), val(true)), 
+								val("true && false"), 
+								and(val(true), val(false)),  
+								val("true && true"), 
+								and(val(true), val(true))
 								);
 
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
@@ -94,12 +92,12 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								"false || true", (false || true), "true || false",
 								(true || false), "true || true", (true || true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
-								Value.value("Conditional OR (||)"), 
-								Value.value("false || false"),  or(Value.value(false), Value.value(false)), 
-								Value.value("false || true"),  or(Value.value(false), Value.value(true)), 
-								Value.value("true || false"),  or(Value.value(true), Value.value(false)),  
-								Value.value("true || true"),  or(Value.value(true), Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
+								val("Conditional OR (||)"), 
+								val("false || false"),  or(val(false), val(false)), 
+								val("false || true"),  or(val(false), val(true)), 
+								val("true || false"),  or(val(true), val(false)),  
+								val("true || true"),  or(val(true), val(true))
 								);
 						
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
@@ -107,12 +105,12 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								"false & true", (false & true), "true & false", (true & false),
 								"true & true", (true & true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
-								Value.value("Boolean logical AND (&)"), 
-								Value.value("false & false"),  logicalAnd(Value.value(false), Value.value(false)), 
-								Value.value("false & true"),  logicalAnd(Value.value(false), Value.value(true)), 
-								Value.value("true & false"),  logicalAnd(Value.value(true), Value.value(false)),  
-								Value.value("true & true"),  logicalAnd(Value.value(true), Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
+								val("Boolean logical AND (&)"), 
+								val("false & false"),  logicalAnd(val(false), val(false)), 
+								val("false & true"),  logicalAnd(val(false), val(true)), 
+								val("true & false"),  logicalAnd(val(true), val(false)),  
+								val("true & true"),  logicalAnd(val(true), val(true))
 								);
 						
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
@@ -120,12 +118,12 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								(false | false), "false | true", (false | true),
 								"true | false", (true | false), "true | true", (true | true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
-								Value.value("Boolean logical inclusive OR (|)"), 
-								Value.value("false | false"),  logicalOr(Value.value(false), Value.value(false)), 
-								Value.value("false | true"),  logicalOr(Value.value(false), Value.value(true)), 
-								Value.value("true | false"),  logicalOr(Value.value(true), Value.value(false)),  
-								Value.value("true | true"),  logicalOr(Value.value(true), Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
+								val("Boolean logical inclusive OR (|)"), 
+								val("false | false"),  logicalOr(val(false), val(false)), 
+								val("false | true"),  logicalOr(val(false), val(true)), 
+								val("true | false"),  logicalOr(val(true), val(false)),  
+								val("true | true"),  logicalOr(val(true), val(true))
 								);
 						
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n",
@@ -133,21 +131,21 @@ public class LogicalOperatorGenerate extends AbstractExample {
 								(false ^ false), "false ^ true", (false ^ true),
 								"true ^ false", (true ^ false), "true ^ true", (true ^ true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
-								Value.value("Boolean logical exclusive OR (^)"), 
-								Value.value("false ^ false"),  logicalXor(Value.value(false), Value.value(false)), 
-								Value.value("false ^ true"),  logicalXor(Value.value(false), Value.value(true)), 
-								Value.value("true ^ false"),  logicalXor(Value.value(true), Value.value(false)),  
-								Value.value("true ^ true"),  logicalXor(Value.value(true), Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n%s: %b\n%s: %b\n\n"), 
+								val("Boolean logical exclusive OR (^)"), 
+								val("false ^ false"),  logicalXor(val(false), val(false)), 
+								val("false ^ true"),  logicalXor(val(false), val(true)), 
+								val("true ^ false"),  logicalXor(val(true), val(false)),  
+								val("true ^ true"),  logicalXor(val(true), val(true))
 								);
 						
 						/*System.out.printf("%s\n%s: %b\n%s: %b\n", "Logical NOT (!)", "!false",
 								(!false), "!true", (!true));*/
 						call(systemOut, "printf", 
-								Value.value("%s\n%s: %b\n%s: %b\n"), 
-								Value.value("Logical NOT (!)"), 
-								Value.value("!false"),  no(Value.value(false)), 
-								Value.value("!true"),  no(Value.value(true))
+								val("%s\n%s: %b\n%s: %b\n"), 
+								val("Logical NOT (!)"), 
+								val("!false"),  no(val(false)), 
+								val("!true"),  no(val(true))
 								);
 						
 						return_();

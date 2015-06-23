@@ -7,13 +7,13 @@ import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.Child;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.ChildChild;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.Super;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.parent.AbstractClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 public class MainTest {
@@ -27,14 +27,17 @@ public class MainTest {
 	 * @throws IllegalArgumentException 
 	 */
 	public static void main(String[] args) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		
+		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+		
 		ClassBuilderImpl creator = 
 				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
-						AbstractClass.class, null);
+						classLoader.loadType(AbstractClass.class), null);
         
-		final AClass childChild = AClassFactory.getType(ChildChild.class);
+		final IClass childChild = classLoader.loadType(ChildChild.class);
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
-				null, null, AClassFactory.getType(ChildChild.class),
+				null, null, childChild,
 				null, new KernelMethodBody(){
 
 			@Override
@@ -45,7 +48,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceMethod", 
-				null, null, AClassFactory.getType(ChildChild.class),
+				null, null, childChild,
 				null, new KernelMethodBody(){
 
 			@Override
@@ -56,7 +59,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassMethod", 
-				null, null, AClassFactory.getType(ChildChild.class),
+				null, null, childChild,
 				null, new KernelMethodBody(){
 
 			@Override
@@ -67,7 +70,7 @@ public class MainTest {
 		});
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "interfaceReturnTypeIsChild", 
-				null, null, AClassFactory.getType(ChildChild.class),
+				null, null, childChild,
 				null, new KernelMethodBody(){
 
 			@Override

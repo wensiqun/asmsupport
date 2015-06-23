@@ -9,13 +9,12 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 public class CreateClassAndExtend extends AbstractExample {
@@ -28,11 +27,11 @@ public class CreateClassAndExtend extends AbstractExample {
 		final GlobalVariable out = systemOut;
 		
 		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
-		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, AClassFactory.getType(int.class));
+		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, classLoader.getType(int.class));
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new KernelMethodBody(){
 			@Override
 			public void body(LocalVariable... argus) {
-				call(out, "println", Value.value("created by asm"));
+				call(out, "println", val("created by asm"));
 				return_();
 			}
 		});
@@ -44,7 +43,7 @@ public class CreateClassAndExtend extends AbstractExample {
 				assign(age, val(20));
 				this.callOrig();
 				GlobalVariable name = val(getMethodDeclaringClass()).field("name");
-				assign(name, Value.value("wensiqun"));
+				assign(name, val("wensiqun"));
 				call(out, "println", name);
 				return_();
 			}
@@ -54,10 +53,10 @@ public class CreateClassAndExtend extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(out, "println", Value.value("before"));
+				call(out, "println", val("before"));
 				
-				AClass randomClass = AClassFactory.getType(Random.class);
-				LocalVariable random = this.var("random", randomClass, this.new_(randomClass, Value.value(1L)));
+				AClass randomClass = getType(Random.class);
+				LocalVariable random = this.var("random", randomClass, this.new_(randomClass, val(1L)));
 				if_(new KernelIF(call(random, "nextBoolean")){
 					@Override
 					public void body() {
@@ -67,11 +66,11 @@ public class CreateClassAndExtend extends AbstractExample {
 				}).else_(new KernelElse(){
 					@Override
 					public void body() {
-						call(out, "println", Value.value("call self"));
+						call(out, "println", val("call self"));
 					}
 					
 				});
-				call(out, "println", Value.value("after"));
+				call(out, "println", val("after"));
 				return_();
 			}
 			
@@ -81,9 +80,9 @@ public class CreateClassAndExtend extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(out, "println", Value.value("before"));
+				call(out, "println", val("before"));
 				LocalVariable lv = this.var(getOrigReturnType(), callOrig());
-				call(out, "println", Value.value("after"));	
+				call(out, "println", val("after"));	
 				return_(lv);
 			}
 			
@@ -91,9 +90,9 @@ public class CreateClassAndExtend extends AbstractExample {
 		byModifyModifer.setClassOutPutPath(classOutPutPath);
 		Class<?> ByModify = byModifyModifer.startup();
 		
-        ClassBuilderImpl childCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", ByModify, null);
+        ClassBuilderImpl childCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", classLoader.getType(ByModify), null);
 		
-		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 	        @Override

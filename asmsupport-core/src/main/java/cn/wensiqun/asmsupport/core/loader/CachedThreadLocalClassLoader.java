@@ -66,21 +66,27 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	 */
 	@Override
 	public InputStream getResourceAsStream(String name) {
-		BytecodeValue byteArray = classByteMap.get(new BytecodeKey(name));
+		BytecodeKey key = new BytecodeKey(name);
+		BytecodeValue byteArray = classByteMap.get(key);
 		InputStream stream = null;
 		if (byteArray != null) {
 			stream = new ByteArrayInputStream(byteArray.getBytecodes());
 		}
 
 		if (stream == null) {
-			stream = super.getResourceAsStream(name);
+			stream = super.getResourceAsStream(key.getName());
 		}
 
 		if (stream == null) {
-			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(name);
+			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(key.getName());
+		}
+		
+		if(stream == null) {
+			throw new ASMSupportException("Class not found : " + name);
 		}
 		return stream;
 	}
+	
 
 	private static class BytecodeKey {
 

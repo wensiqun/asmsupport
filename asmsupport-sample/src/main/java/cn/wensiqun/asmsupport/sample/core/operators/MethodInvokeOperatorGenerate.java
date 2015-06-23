@@ -4,13 +4,11 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * 这个例子我们将实现方法调用的操作，方法调用主要包括了
@@ -59,14 +57,14 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 这里我们将看到如何生产调用父类方法
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, AClassFactory.getType(String.class), null, new KernelMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "toString", null, null, classLoader.getType(String.class), null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
                 //通常我们将super看作是一个变量所以我们用invoke(Parameterized caller, String methodName, Parameterized... arguments)
                 //方法实现super.xxxx。通过getSuper方法获取super变量
                 MethodInvoker superToString = call(super_(), "toString");
-                return_(stradd(Value.value("description is \""), superToString, Value.value("\"")));
+                return_(stradd(val("description is \""), superToString, val("\"")));
             }
             
         });
@@ -78,7 +76,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          * 
          */
-        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, AClassFactory.getType(String.class), null, new KernelMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC, "description", null, null, classLoader.getType(String.class), null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -98,7 +96,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     return obj.description();
          * }
          */
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, AClassFactory.getType(String.class), null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, classLoader.getType(String.class), null,
                 new KernelStaticMethodBody(){
 
             @Override
@@ -119,7 +117,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-        		"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+        		"main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 
             @Override
@@ -146,7 +144,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
             	 */
             	MethodInvoker getDescriptionInvoker = call(getMethodDeclaringClass(), "getDescription", obj);
             	
-            	call(systemOut, "println", stradd(Value.value("Call static method : "), getDescriptionInvoker));
+            	call(systemOut, "println", stradd(val("Call static method : "), getDescriptionInvoker));
                 
             	return_();
             }

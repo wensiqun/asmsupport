@@ -5,28 +5,26 @@ import java.lang.reflect.Method;
 import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.exception.NoSuchMethod;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 public class MainTest {
 
-	public static void main(String[] args) throws Throwable {
+	public static void main(String[] args) throws Exception {
 		ClassBuilderImpl creator = 
 				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "fixed.Test2054", null, null);
 		creator.setClassOutPutPath(IssuesConstant.classOutPutPath);
         
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+				new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
             	call(val(System.class).field("out"), "println", val("Prepare to build MainObject."));
-                new_(AClassFactory.getType(MyObject.class), Value.value("i'm direct pass argument."));
+                new_(getType(MyObject.class), val("I'm direct pass argument."));
             	return_();
             }
         });
@@ -40,10 +38,12 @@ public class MainTest {
 		try{
 			main(null);
 			Assert.assertTrue(false);
-		}catch(NoSuchMethod e){
-	        Assert.assertTrue(true);
-		}catch(Throwable e){
-			Assert.assertTrue(false);
+		}catch(Exception e){
+			if(e.getMessage().startsWith("No such method")) {
+		        Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
 		}
 	}
 

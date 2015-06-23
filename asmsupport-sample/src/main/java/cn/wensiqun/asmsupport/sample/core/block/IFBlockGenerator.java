@@ -7,12 +7,10 @@ import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * 这里我们将创建如下内容的类
@@ -72,7 +70,7 @@ public class IFBlockGenerator extends AbstractExample{
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, 
 				"ifelse", 
-				new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, 
+				new AClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, 
 				new String[]{"str", "i"}, null, null,
 		        
 				new KernelStaticMethodBody(){
@@ -81,41 +79,41 @@ public class IFBlockGenerator extends AbstractExample{
 						final LocalVariable str = argus[0];
 						final LocalVariable i = argus[1];
 						
-						if_(new KernelIF(call(str, "equals", Value.value("A"))){
+						if_(new KernelIF(call(str, "equals", val("A"))){
 							@Override
 							public void body() {
-								if_(new KernelIF(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, val(0))){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is 'A', i is 0"));
+									    call(systemOut, "println", val("str is 'A', i is 0"));
 									}
 									
 								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is 'A', i is not 0"));
+									    call(systemOut, "println", val("str is 'A', i is not 0"));
 									}
 									
 								});
 							}
-						}).elseif(new KernelElseIF(call(str, "equals", Value.value("B"))){
+						}).elseif(new KernelElseIF(call(str, "equals", val("B"))){
 
 							@Override
 							public void body() {
-								if_(new KernelIF(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, val(0))){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is 'B', i is 0"));
+									    call(systemOut, "println", val("str is 'B', i is 0"));
 									}
 									
 								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is 'B', i is not 0"));
+									    call(systemOut, "println", val("str is 'B', i is not 0"));
 									}
 									
 								});
@@ -125,18 +123,18 @@ public class IFBlockGenerator extends AbstractExample{
 
 							@Override
 							public void body() {
-								if_(new KernelIF(eq(i, Value.value(0))){
+								if_(new KernelIF(eq(i, val(0))){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is unknow, i is 0"));
+									    call(systemOut, "println", val("str is unknow, i is 0"));
 									}
 									
 								}).else_(new KernelElse(){
 
 									@Override
 									public void body() {
-									    call(systemOut, "println", Value.value("str is unknow, i is not 0"));
+									    call(systemOut, "println", val("str is unknow, i is not 0"));
 									}
 								
 								});
@@ -150,16 +148,16 @@ public class IFBlockGenerator extends AbstractExample{
 		);
 		
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
-						call(getMethodDeclaringClass(), "ifelse", Value.value("A"), Value.value(0));
-						call(getMethodDeclaringClass(), "ifelse", Value.value("A"), Value.value(1));
-						call(getMethodDeclaringClass(), "ifelse", Value.value("B"), Value.value(0));
-						call(getMethodDeclaringClass(), "ifelse", Value.value("B"), Value.value(1));
-						call(getMethodDeclaringClass(), "ifelse", Value.value("C"), Value.value(0));
-						call(getMethodDeclaringClass(), "ifelse", Value.value("C"), Value.value(1));
+						call(getMethodDeclaringClass(), "ifelse", val("A"), val(0));
+						call(getMethodDeclaringClass(), "ifelse", val("A"), val(1));
+						call(getMethodDeclaringClass(), "ifelse", val("B"), val(0));
+						call(getMethodDeclaringClass(), "ifelse", val("B"), val(1));
+						call(getMethodDeclaringClass(), "ifelse", val("C"), val(0));
+						call(getMethodDeclaringClass(), "ifelse", val("C"), val(1));
 						return_();
 					}
 			

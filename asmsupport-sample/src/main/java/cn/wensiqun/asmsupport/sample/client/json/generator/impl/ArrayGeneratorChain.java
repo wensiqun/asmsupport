@@ -6,18 +6,19 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.sample.client.json.generator.AbstractGeneratorChain;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class ArrayGeneratorChain extends AbstractGeneratorChain {
 
     @Override
-    public boolean match(AClass type) {
+    public boolean match(IClass type, ClassHolder holder) {
         return type.isArray();
     }
 
     @Override
     protected boolean doGenerate(final GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
-            final LocVar encoder, final AClass type, Param value) {
+            final LocVar encoder, final IClass type, Param value) {
         encoder.call("appendDirect", block.val('['));
         block.for_(new ForEach(value) {
             @Override

@@ -7,12 +7,10 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -68,7 +66,8 @@ public class CreateClass extends AbstractExample {
          *    父类,如果为null则是继承自Object.class
          * 5: interface 实现的接口, 可以是null,类型是Class[]
 		 */
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample", ParentCreateClassExample.class, null);
+		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample", 
+				classLoader.getType(ParentCreateClassExample.class), null);
 		
 		/*
 		 * 这部分是创建一个静态全局 变量。基本和CreateInterface.java中如何创建和赋值是一样的
@@ -78,7 +77,7 @@ public class CreateClass extends AbstractExample {
 		 * private static String staticGlobalVariable;
 		 *
 		 */
-		creator.createField("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, AClassFactory.getType(String.class));
+		creator.createField("staticGlobalVariable", Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, classLoader.getType(String.class));
 		/*
 		 * 对应java代码：
 		 * static{
@@ -89,7 +88,7 @@ public class CreateClass extends AbstractExample {
 		creator.createStaticBlock(new KernelStaticBlockBody(){
 			@Override
 			public void body() {
-				assign(val(getMethodDeclaringClass()).field("staticGlobalVariable"), Value.value("I'm a static global variable at class"));
+				assign(val(getMethodDeclaringClass()).field("staticGlobalVariable"), val("I'm a static global variable at class"));
 				return_();
 			}
 		});
@@ -105,7 +104,7 @@ public class CreateClass extends AbstractExample {
 		 * public int globalVariable;
 		 * 
 		 */
-		creator.createField("globalVariable", Opcodes.ACC_PUBLIC, AClassFactory.getType(int.class));
+		creator.createField("globalVariable", Opcodes.ACC_PUBLIC, classLoader.getType(int.class));
 		
 		/* 
 		 * 创建一个构造方法。对于ClassCreator来说。如果没有创建任何构造方法，将会自动创建一个无参的默认构造函数
@@ -121,7 +120,7 @@ public class CreateClass extends AbstractExample {
 		 * 3.构造参数的方法体
 		 * 4.构造方法的修饰符
 		 */
-		creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{AClassFactory.getType(int.class)}, new String[]{"intVal"}, null, new KernelConstructorBody(){
+		creator.createConstructor(Opcodes.ACC_PUBLIC, new IClass[]{classLoader.getType(int.class)}, new String[]{"intVal"}, null, new KernelConstructorBody(){
 
 			/*
 			 * 这个方法中的内容就是我们创建的构造方法里面需要执行的内容了，他有一个变元参数 argus。
@@ -167,8 +166,8 @@ public class CreateClass extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-				call(systemOut, "println", stradd(Value.value("staticGlobalVariable : "), val(getMethodDeclaringClass()).field("staticGlobalVariable")));
-				call(systemOut, "println", stradd(Value.value("globalVariable : "), this_().field("globalVariable")));
+				call(systemOut, "println", stradd(val("staticGlobalVariable : "), val(getMethodDeclaringClass()).field("staticGlobalVariable")));
+				call(systemOut, "println", stradd(val("globalVariable : "), this_().field("globalVariable")));
 				return_();
 			}
 			
@@ -183,18 +182,18 @@ public class CreateClass extends AbstractExample {
 		 *     new CreateClassExample(1024).commonMethod();
 		 * }
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
-	        	call(new_(getMethodDeclaringClass(), Value.value(1024)), "commonMethod");
+	        	call(new_(getMethodDeclaringClass(), val(1024)), "commonMethod");
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(val("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(val("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
 				
-	        	//invoke(systemOut, "println", append(Value.value("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
+	        	//invoke(systemOut, "println", append(val("COMMON_MIDDLE : "), getMethodOwner().getGlobalVariable("common_middle")));
 				
 			    return_();
 			}

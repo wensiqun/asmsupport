@@ -5,11 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * 这里类中我们主要内容如下:
@@ -45,7 +43,7 @@ public class CreateInterface extends AbstractExample {
 		 * 通过createMethod声明方法
 		 * 
 		 */
-		interfaceCreator.createMethod("test", new AClass[]{AClassFactory.getType(String.class), AClassFactory.getType(int.class)}, AClassFactory.getType(boolean.class), null);
+		interfaceCreator.createMethod("test", new AClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, classLoader.getType(boolean.class), null);
 		
 		/*
 		 * 通过createField创建局部变量，当然这个变量的修饰符是public static final的
@@ -61,7 +59,7 @@ public class CreateInterface extends AbstractExample {
 		 * public static final String globalValue;
 		 * 
 		 */
-		interfaceCreator.createField("globalValue", AClassFactory.getType(String.class));
+		interfaceCreator.createField("globalValue", classLoader.getType(String.class));
 		
 		/*
 		 * 通过createStaticBlock创建static块。
@@ -110,13 +108,13 @@ public class CreateInterface extends AbstractExample {
 				 * 具体如何使用全局变量在以后的例子中有详细的解释。
 				 * 
 				 */
-				assign(val(getMethodDeclaringClass()).field("globalValue"), Value.value("I'm a global variable at Interface"));
+				assign(val(getMethodDeclaringClass()).field("globalValue"), val("I'm a global variable at Interface"));
 				/*
 				 * 这段代码是调用println方法 
 				 * 
 				 * 具体如何调用方法在以后的例子中有详细的解释。
 				 */
-			    call(systemOut, "println", Value.value("I'm in static block at interface"));
+			    call(systemOut, "println", val("I'm in static block at interface"));
 				return_();
 			}
 			

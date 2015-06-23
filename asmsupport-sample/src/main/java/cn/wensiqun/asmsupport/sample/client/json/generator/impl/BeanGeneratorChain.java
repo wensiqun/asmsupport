@@ -7,13 +7,14 @@ import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.sample.client.json.JSONPool;
 import cn.wensiqun.asmsupport.sample.client.json.generator.AbstractGeneratorChain;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 
 public class BeanGeneratorChain extends AbstractGeneratorChain {
 
     @Override
-    public boolean match(AClass type) {
+    public boolean match(IClass type, ClassHolder holder) {
         String typeStr = type.getName();
         if(typeStr.startsWith("java.") ||
                 typeStr.startsWith("javax.") ) {
@@ -24,7 +25,7 @@ public class BeanGeneratorChain extends AbstractGeneratorChain {
 
     @Override
     protected boolean doGenerate(GeneratorContext context, ProgramBlock<? extends KernelProgramBlock> block,
-            LocVar encoder, AClass type, Param value) {
+            LocVar encoder, IClass type, Param value) {
         JSONPool jsonPool = context.getJsonPool();
         if(type instanceof ProductClass) {
             if(jsonPool.getOrRegister(((ProductClass)type).getReallyClass()) != null) {

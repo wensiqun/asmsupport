@@ -30,7 +30,7 @@ public class ContinueMethodTest {
             public void body(LocVar... args) {
             	LocVar strs = args[0];
             	final Var sb = new_(StringBuilder.class).asVar();
-            	for_(new ForEach(strs, String.class) {
+            	for_(new ForEach(strs, getType(String.class)) {
 
 					@Override
 					public void body(final LocVar str) {
@@ -50,7 +50,7 @@ public class ContinueMethodTest {
             	sb.call("append", val("|"));
             	
             	final Var array = strs.call("toArray").asVar();
-            	for_(new ForEach(array, String.class) {
+            	for_(new ForEach(array, getType(String.class)) {
 
 					@Override
 					public void body(final LocVar str) {

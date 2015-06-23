@@ -4,30 +4,32 @@ import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.AbstractFix;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class Main extends AbstractFix {
 
 	public static void main(String[] args) {
 		
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
-				ParentClass.class, null);
+		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 		
-		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, AClassFactory.getType(int.class));
+		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
+				classLoader.loadType(ParentClass.class), null);
+		
+		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, classLoader.loadType(int.class));
 		
 		creator.createStaticBlock(new KernelStaticBlockBody(){
 
 			@Override
 			public void body() {
 				
-				call(systemOut, "println", Value.value("INIT DEFAULT_VALUE"));
+				call(systemOut, "println", val("INIT DEFAULT_VALUE"));
 				
-				assign(val(getMethodDeclaringClass()).field("DEFAULT_VALUE"), Value.value(100));
+				assign(val(getMethodDeclaringClass()).field("DEFAULT_VALUE"), val(100));
 				
 			    return_();
 			}
@@ -35,16 +37,16 @@ public class Main extends AbstractFix {
 		});
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
-				AClassFactory.getType(String[].class)}, 
+				classLoader.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
+	        	call(systemOut, "println", stradd(val("COMMON_PRE : "), val(getMethodDeclaringClass()).field("COMMON_PRE")));
 	        	
-	        	call(systemOut, "println", stradd(Value.value("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
+	        	call(systemOut, "println", stradd(val("COMMON_POST : "), val(getMethodDeclaringClass()).field("COMMON_POST")));
 	        	
 			    return_();
 			}
@@ -59,20 +61,19 @@ public class Main extends AbstractFix {
 			Assert.fail();
 		}
 		
-		final AClass Test65150AClass = AClassFactory.getType(Test65150);
+		final AClass Test65150AClass = classLoader.getType(Test65150);
 		
 		creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
-				AClassFactory.getType(String[].class)}, 
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.loadType(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
 	        	
-	        	call(systemOut, "println", stradd(Value.value("DEFAULT_VALUE : "), val(Test65150AClass).field("DEFAULT_VALUE")));
+	        	call(systemOut, "println", stradd(val("DEFAULT_VALUE : "), val(Test65150AClass).field("DEFAULT_VALUE")));
 	        	
 			    return_();
 			}

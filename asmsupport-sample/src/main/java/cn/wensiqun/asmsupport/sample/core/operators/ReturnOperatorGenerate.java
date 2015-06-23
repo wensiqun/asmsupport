@@ -3,12 +3,10 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
 
 /**
  * return操作对应的就是java代码中的return关键字。分为两种
@@ -26,11 +24,11 @@ public class ReturnOperatorGenerate extends AbstractExample {
 		/* 
 		 * 有返回类型的方法
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, AClassFactory.getType(String.class), null, new KernelStaticMethodBody(){
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "commonMethod", null, null, classLoader.getType(String.class), null, new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				return_(Value.value("I'm from commonMethod"));
+				return_(val("I'm from commonMethod"));
 			}
 		});
 		
@@ -38,7 +36,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 		 * 无返回类型的方法
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 			@Override

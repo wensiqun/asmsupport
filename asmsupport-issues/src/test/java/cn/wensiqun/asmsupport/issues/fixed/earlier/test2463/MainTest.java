@@ -7,31 +7,34 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.issues.Utils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClassFactory;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class MainTest {
 
 	public static void main(String[] args) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		
+		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+		
 		ClassBuilderImpl creator = 
-				new ClassBuilderImpl(Opcodes.V1_6, Opcodes.ACC_PUBLIC , "test.Test2463", AbstractClass.class, null);
+				new ClassBuilderImpl(Opcodes.V1_6, Opcodes.ACC_PUBLIC , "test.Test2463", classLoader.loadType(AbstractClass.class), null, classLoader);
 
 		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         
-		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, AClassFactory.getType(MyObject.class),
+		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, classLoader.loadType(MyObject.class),
 				null, new KernelMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
-		            	return_(new_(AClassFactory.getType(MyObject.class)));
+		            	return_(new_(getType(MyObject.class)));
 					}
 			
 		});
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{AClassFactory.getType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new IClass[]{classLoader.loadType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 
             @Override
