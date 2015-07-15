@@ -14,6 +14,9 @@
  */
 package cn.wensiqun.asmsupport.client.block;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.AddAction;
@@ -87,6 +90,8 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	LocVar[] locVars; 
 	
+	Map<String, LocVar> locVarMap = new HashMap<String, LocVar>();
+	
 	final static LocVar[] EMPTY_LOCAL_VARS = new LocVar[0];
 	
 	public LocVar[] getMethodArguments() {
@@ -130,7 +135,9 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public LocVar var(String name, Class<?> type, Param para) {
-		return new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		locVarMap.put(name, var);
+		return var;
 	}
 
 	@Override
@@ -140,7 +147,9 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public LocVar var(String name, IClass type, Param para) {
-		return new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		locVarMap.put(name, var);
+		return var;
 	}
 
 	@Override
@@ -578,8 +587,8 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	@Override
 	public IClass loadType(String name) {
 		return targetBlock.loadType(name);
-	} 
-
+	}
+	
 	@Override
 	public AClass getType(Class<?> cls) {
 		return targetBlock.getType(cls);
@@ -599,6 +608,16 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public ArrayClass getArrayClass(IClass rootComponent, int dim) {
 		return targetBlock.getArrayClass(rootComponent, dim);
 	}
+    
+    public LocVar getLocVar(String name) {
+    	ProgramBlock<? extends KernelProgramBlock> block = this;
+    	LocVar var = null;
+    	do {
+    		var = block.locVarMap.get(name);
+    		block = block.parent;
+    	} while (var == null && block != null);
+    	return var;
+    }
 	
     LocVar[] internalVar2ClientVar(LocalVariable... pars) {
         if(pars == null) {
@@ -610,5 +629,4 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         }
         return paras;
     }
-    
 }

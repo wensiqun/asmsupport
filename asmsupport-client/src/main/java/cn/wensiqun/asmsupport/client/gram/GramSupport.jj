@@ -13,6 +13,9 @@ import cn.wensiqun.asmsupport.client.block.ProgramBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.param.NumParam;
+import cn.wensiqun.asmsupport.client.def.param.BoolParam;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
 
 public class GramSupport
 {
@@ -925,50 +928,98 @@ TOKEN :
 /*
  * Type, name and expression syntax follows.
  */
-void Type() :
-{}
+IClass Type() :
 {
-  ( PrimitiveType() | Name() ) ( "[" "]" )*
+    int dim = 0;
+    IClass base;
+}
+{
+  (
+    base=PrimitiveType()
+  |    {    base = block.loadType(Name());    }  )
+  (
+    "[" "]"	  {
+	    dim++;	  }
+  )*
+  {
+    if(dim > 0)    {
+      block.getArrayClass(base, dim);    } else    {
+      return base;    }  }
 }
 
-void PrimitiveType() :
+IClass PrimitiveType() :
 {}
 {
   "boolean"
+  {
+    return block.loadType(boolean.class);  }
 |
   "char"
+  {
+    return block.loadType(char.class);
+  }
 |
   "byte"
+  {
+    return block.loadType(byte.class);
+  }
 |
   "short"
+  {
+    return block.loadType(short.class);
+  }
 |
   "int"
+  {
+    return block.loadType(int.class);
+  }
 |
   "long"
+  {
+    return block.loadType(long.class);
+  }
 |
   "float"
+  {
+    return block.loadType(float.class);
+  }
 |
   "double"
+  {
+    return block.loadType(double.class);
+  }
 }
 
-void ResultType() :
+IClass ResultType() :
 {}
 {
   "void"
+  {
+    return block.loadType(void.class);  }
 |
-  Type()
+  {
+    return Type();
+  } 
 }
 
-void Name() :
+String Name() :
 /*
  * A lookahead of 2 is required below since "Name" can be followed
  * by a ".*" when used in the context of an "ImportDeclaration".
  */
-{}
 {
-  <IDENTIFIER>
-  ( LOOKAHEAD(2) "." <IDENTIFIER>
+  StringBuilder name = new StringBuilder();
+  Token token;
+}
+{
+  token = <IDENTIFIER>
+  {
+    name.append(token.image);  }  ( LOOKAHEAD(2) "." token = <IDENTIFIER>
+  {
+    name.append(".").append(token.image);  }
   )*
+  {
+    return name.toString();  }
 }
 
 void BlockStatement() :
@@ -1173,7 +1224,9 @@ void CastExpression() :
 }
 
 Param PrimaryExpression() :
-{}
+{
+    Param owner;
+}
 {
   PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
 }
@@ -1197,7 +1250,7 @@ void PrimaryPrefix() :
   Name()
 }
 
-void PrimarySuffix(Param owner, ) :
+Param PrimarySuffix(Param owner) :
 {}
 {
   LOOKAHEAD(2)
@@ -1252,7 +1305,7 @@ void ArgumentList() :
   Expression() ( "," Expression() )*
 }
 
-void AllocationExpression() :
+Param AllocationExpression() :
 {}
 {
   LOOKAHEAD(2)
@@ -1335,23 +1388,35 @@ void StatementExpression() :
 void BreakStatement() :
 {}
 {
-  "break" [ <IDENTIFIER> ] ";"
+  "break" ";"
+  {
+    block.break_();  }
 }
 
 void ContinueStatement() :
 {}
 {
-  "continue" [ <IDENTIFIER> ] ";"
+  "continue" ";"
+  {
+    block.continue_();
+  }
 }
 
 void ReturnStatement() :
-{}
 {
-  "return" [ Expression() ] ";"
+    Param result = null;
+}
+{
+  "return" [result = Expression()]
+  {
+      if(result == null)      {
+        block.return_();      }
+      else      {
+        block.return_(result);      }  } ";"
 }
 
 void ThrowStatement() :
 {}
 {
-  "throw" Expression() ";"
+  "throw" {block.throw_(Expression());} ";"
 }
