@@ -35,6 +35,6 @@ public abstract class AsmsupportClassLoader extends ClassLoader implements Class
 		return clazz;
 	}
 	
-	public abstract Class<?> doAsmsupportFindClass(String name) throws ClassNotFoundException;
+	protected abstract Class<?> doAsmsupportFindClass(String name) throws ClassNotFoundException;
 
 }
