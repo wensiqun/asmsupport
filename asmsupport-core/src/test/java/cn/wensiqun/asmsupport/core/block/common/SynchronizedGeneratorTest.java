@@ -24,8 +24,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class SynchronizedGeneratorTest extends AbstractExample {
@@ -140,7 +140,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         testSyncThis.invoke(junitTestObj);
     }
     
-    private static Class<?> createThread(AClass synchronizedGeneratorExampleClass, final String name) {
+    private static Class<?> createThread(IClass synchronizedGeneratorExampleClass, final String name) {
     	
     	AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
     	
@@ -150,7 +150,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         
         creator.createField("sgst", Opcodes.ACC_PRIVATE, synchronizedGeneratorExampleClass);
         
-        creator.createConstructor(Opcodes.ACC_PUBLIC, new AClass[]{synchronizedGeneratorExampleClass}, new String[]{"sgst"},  null, new KernelConstructorBody(){
+        creator.createConstructor(Opcodes.ACC_PUBLIC, new IClass[]{synchronizedGeneratorExampleClass}, new String[]{"sgst"},  null, new KernelConstructorBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -187,7 +187,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
         return generate(creator, false);
     }
     
-    private static Class<?> createTestJunit(AClass syncCls, AClass thisThread, AClass lockThread) {
+    private static Class<?> createTestJunit(IClass syncCls, IClass thisThread, IClass lockThread) {
     	ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , 
         		"generated.block.SynchronizedGeneratorExampleTestJunit", 
         		null, null);
@@ -198,7 +198,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
     	return generate(creator, false);
     }
     
-    private static void createTestSyncMethod(ClassBuilderImpl creator, final String name, final AClass syncCls, final AClass threadClass) {
+    private static void createTestSyncMethod(ClassBuilderImpl creator, final String name, final IClass syncCls, final IClass threadClass) {
 
 
         creator.createMethod(Opcodes.ACC_PUBLIC, "testSync" + name, null, null, null, null, new KernelMethodBody(){

@@ -8,7 +8,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.AbstractFix;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class Main extends AbstractFix {
@@ -18,9 +17,9 @@ public class Main extends AbstractFix {
 		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 		
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
-				classLoader.loadType(ParentClass.class), null);
+				classLoader.getType(ParentClass.class), null);
 		
-		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, classLoader.loadType(int.class));
+		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, classLoader.getType(int.class));
 		
 		creator.createStaticBlock(new KernelStaticBlockBody(){
 
@@ -36,7 +35,7 @@ public class Main extends AbstractFix {
 			
 		});
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new AClass[]{
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{
 				classLoader.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
@@ -61,12 +60,12 @@ public class Main extends AbstractFix {
 			Assert.fail();
 		}
 		
-		final AClass Test65150AClass = classLoader.getType(Test65150);
+		final IClass Test65150AClass = classLoader.getType(Test65150);
 		
 		creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.loadType(String[].class)}, 
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 

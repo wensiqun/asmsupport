@@ -8,7 +8,7 @@ import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 这个例子将实现instanceof操作的字节码生产
@@ -101,15 +101,15 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 		 * 生成一个main方法
 		 */
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-				"main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
-				AClass A_AClass = classLoader.getType(A);
-				AClass B_AClass = classLoader.getType(B);
-				AClass C_AClass = classLoader.getType(C);
-				AClass D_AClass = classLoader.getType(D);
+				IClass A_AClass = classLoader.getType(A);
+				IClass B_AClass = classLoader.getType(B);
+				IClass C_AClass = classLoader.getType(C);
+				IClass D_AClass = classLoader.getType(D);
 				
 			    //A a = new A();
 				LocalVariable a = var("a", A_AClass, new_(A_AClass));

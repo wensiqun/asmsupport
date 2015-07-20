@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class DummyTest {
     
@@ -277,7 +277,7 @@ public class DummyTest {
                 LocVar dm = var("dm", getMethodOwner(), new_(getMethodOwner()));
                 final LocVar sb = var("sb", StringBuilder.class, new_(StringBuilder.class));
                 
-                AClass ExceptedInterfaceAClass = getType(ExceptedInterface);
+                IClass ExceptedInterfaceAClass = getType(ExceptedInterface);
                 FieldVar interface_field_list = val(ExceptedInterfaceAClass).field("interface_field_list");
                 
                 call(interface_field_list, "add", val("hello asmsupport."));

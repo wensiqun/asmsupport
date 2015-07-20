@@ -7,7 +7,7 @@ import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 这里类中我们主要内容如下:
@@ -43,7 +43,7 @@ public class CreateInterface extends AbstractExample {
 		 * 通过createMethod声明方法
 		 * 
 		 */
-		interfaceCreator.createMethod("test", new AClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, classLoader.getType(boolean.class), null);
+		interfaceCreator.createMethod("test", new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, classLoader.getType(boolean.class), null);
 		
 		/*
 		 * 通过createField创建局部变量，当然这个变量的修饰符是public static final的

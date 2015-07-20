@@ -182,14 +182,14 @@ public class ProductClass extends MutableClass {
 								String desc, String signature, String[] exceptions) {
 							Type methodType = Type.getMethodType(desc);
 							Type[] argumentTypes = methodType.getArgumentTypes();
-							AClass[] parameterTypes = new AClass[argumentTypes.length];
+							IClass[] parameterTypes = new AClass[argumentTypes.length];
 							for(int i = 0; i<argumentTypes.length; i++) {
 								parameterTypes[i] = classLoader.getType(argumentTypes[i].getDescriptor());
 							}
 							
-							AClass returnClass = classLoader.getType(methodType.getReturnType().getDescriptor());
+							IClass returnClass = classLoader.getType(methodType.getReturnType().getDescriptor());
 							
-							AClass[] exceptionTypes = new AClass[exceptions == null ? 0 : exceptions.length];
+							IClass[] exceptionTypes = new IClass[exceptions == null ? 0 : exceptions.length];
 							for(int i = 0; i<exceptionTypes.length; i++) {
 								exceptionTypes[i] = classLoader.getType(exceptions[i]);
 							}

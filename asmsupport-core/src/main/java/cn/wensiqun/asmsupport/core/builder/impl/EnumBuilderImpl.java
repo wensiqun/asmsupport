@@ -30,7 +30,6 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
@@ -271,7 +270,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     @Override
     protected void beforeCreate() {
 
-        final ArrayClass enumArrayType = asmsupportClassLoader.getArrayClass(sc, 1);
+        final IClass enumArrayType = asmsupportClassLoader.getArrayClass(sc, 1);
 
         // create "publis static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,

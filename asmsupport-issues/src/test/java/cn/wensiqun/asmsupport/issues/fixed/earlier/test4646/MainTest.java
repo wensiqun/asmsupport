@@ -32,9 +32,9 @@ public class MainTest {
 		
 		ClassBuilderImpl creator = 
 				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
-						classLoader.loadType(AbstractClass.class), null);
+						classLoader.getType(AbstractClass.class), null);
         
-		final IClass childChild = classLoader.loadType(ChildChild.class);
+		final IClass childChild = classLoader.getType(ChildChild.class);
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "abstractClassAbstractMethod", 
 				null, null, childChild,

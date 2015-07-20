@@ -13,7 +13,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
@@ -55,7 +54,7 @@ public class CreateClassAndExtend extends AbstractExample {
 			public void body(LocalVariable... argus) {
 				call(out, "println", val("before"));
 				
-				AClass randomClass = getType(Random.class);
+				IClass randomClass = getType(Random.class);
 				LocalVariable random = this.var("random", randomClass, this.new_(randomClass, val(1L)));
 				if_(new KernelIF(call(random, "nextBoolean")){
 					@Override

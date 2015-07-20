@@ -66,8 +66,6 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -580,32 +578,22 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public IClass loadType(Class<?> clazz) {
-		return targetBlock.loadType(clazz);
-	}
-
-	@Override
-	public IClass loadType(String name) {
-		return targetBlock.loadType(name);
-	}
-	
-	@Override
-	public AClass getType(Class<?> cls) {
+	public IClass getType(Class<?> cls) {
 		return targetBlock.getType(cls);
 	}
 
 	@Override
-	public AClass getType(String cls) {
+	public IClass getType(String cls) {
 		return targetBlock.getType(cls);
 	}
 
 	@Override
-	public ArrayClass getArrayClass(Class<?> cls, int dim) {
+	public IClass getArrayClass(Class<?> cls, int dim) {
 		return targetBlock.getArrayClass(cls, dim);
 	}
 
 	@Override
-	public ArrayClass getArrayClass(IClass rootComponent, int dim) {
+	public IClass getArrayClass(IClass rootComponent, int dim) {
 		return targetBlock.getArrayClass(rootComponent, dim);
 	}
     

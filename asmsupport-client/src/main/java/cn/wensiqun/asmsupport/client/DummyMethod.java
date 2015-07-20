@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 public class DummyMethod extends DummyAccessControl<DummyMethod> {
 
     /** The return type of method. */
-    private AClass returnType;
+    private IClass returnType;
     
     /** The name of method */
     private String name;
@@ -195,7 +195,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * 
      * @return
      */
-    public AClass getReturnType() {
+    public IClass getReturnType() {
         return returnType;
     }
     

@@ -24,6 +24,7 @@ import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
@@ -40,7 +41,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     private String name;
 
     /** The the super class */
-    private AClass parent;
+    private IClass parent;
 
     /** Any interfaces in the class */
     private Class<?>[] interfaces;
@@ -217,7 +218,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public AClass getExtends() {
+    public IClass getExtends() {
         return parent;
     }
     

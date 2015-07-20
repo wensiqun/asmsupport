@@ -40,8 +40,8 @@ public abstract class AbstractCrement extends AbstractNumerical {
 		ClassHolder classHolder = block.getClassHolder();
 		IClass resultType = factor.getResultType();
 		if(resultType != null &&
-		   !classHolder.loadType(boolean.class).equals(resultType) &&
-		   !classHolder.loadType(Boolean.class).equals(resultType) &&
+		   !classHolder.getType(boolean.class).equals(resultType) &&
+		   !classHolder.getType(Boolean.class).equals(resultType) &&
 		   (AClassUtils.isPrimitiveWrapAClass(resultType) || 
 		   resultType.isPrimitive())) {
 			this.factor = factor;

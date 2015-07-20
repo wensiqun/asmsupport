@@ -6,6 +6,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
@@ -19,7 +20,7 @@ public class LocalVariableExample extends AbstractExample {
 	public static void main(String[] args){
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 
 					@Override
@@ -48,7 +49,7 @@ public class LocalVariableExample extends AbstractExample {
                            2.通过createArrayVariableWithAllocateDimension方法 
                          ***************************************************************  */
                         
-                        AClass stringArrayType = classLoader.getType(String[][].class);
+                        IClass stringArrayType = classLoader.getType(String[][].class);
                         /*
                          * 创建一个数组局部变量
                          * 同样也有四个变量

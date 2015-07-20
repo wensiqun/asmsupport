@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -179,7 +178,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	}
 
 	@Override
-	public IClass loadType(Class<?> javaClass) {
+	public IClass getType(Class<?> javaClass) {
 		String key = javaClass.getName();
 		IClass clazz = cacheAsmsuportClass.get(key);
 		if(clazz == null) {
@@ -195,9 +194,9 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		}
 		return clazz;
 	}
-
+    
 	@Override
-	public IClass loadType(String possible) {
+	public IClass getType(String possible) {
 		String key = getClassName(possible);
 		IClass clazz = cacheAsmsuportClass.get(key);
 		if(clazz == null) {
@@ -222,16 +221,6 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 			cacheAsmsuportClass.put(key, clazz);
 		}
 		return clazz;
-	}
-
-	@Override
-	public AClass getType(Class<?> cls) {
-		return (AClass) loadType(cls);
-	}
-    
-	@Override
-	public AClass getType(String possible) {
-		return (AClass) loadType(possible);
 	}
 
 	@Override

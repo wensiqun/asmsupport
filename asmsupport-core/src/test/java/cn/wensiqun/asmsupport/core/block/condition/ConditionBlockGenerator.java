@@ -12,7 +12,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class ConditionBlockGenerator extends AbstractExample
 {
@@ -24,7 +24,7 @@ public class ConditionBlockGenerator extends AbstractExample
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ConditionBlockGeneratorExample", null, null);
         
         creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"), 
-        		new AClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"str"}, null, null, new KernelStaticMethodBody(){
+        		new IClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"str"}, null, null, new KernelStaticMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -357,7 +357,7 @@ public class ConditionBlockGenerator extends AbstractExample
             }
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {

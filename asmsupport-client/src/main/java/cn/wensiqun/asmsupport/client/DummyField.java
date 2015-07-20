@@ -16,12 +16,13 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyField extends DummyAccessControl<DummyField> {
     
     /** Field type */
-    private AClass type;
+    private IClass type;
     
     /** Field name */
     private String name;
@@ -243,7 +244,7 @@ public class DummyField extends DummyAccessControl<DummyField> {
 	 * 
 	 * @return
 	 */
-	public AClass getType() {
+	public IClass getType() {
 	    return type;
 	}
 	

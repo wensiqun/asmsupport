@@ -10,7 +10,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class NestedTryCatchBlockGenerator extends AbstractExample
 {
@@ -24,7 +24,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
         final MyList testMethodNames = new MyList();
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.NestedTryCatchBlockGeneratorExample", null, null);
         
-        final AClass runtime = creator.getClassLoader().getType(RuntimeException.class);
+        final IClass runtime = creator.getClassLoader().getType(RuntimeException.class);
         
         creator.createStaticMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("fullTryCatch1"), null, null, null, null,
             new KernelStaticMethodBody(){
@@ -151,7 +151,7 @@ public class NestedTryCatchBlockGenerator extends AbstractExample
         
         
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-        		new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
+        		new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {

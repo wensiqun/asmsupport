@@ -7,7 +7,7 @@ import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public class DoWhileBlockGenerator extends AbstractExample {
 
@@ -99,7 +99,7 @@ public class DoWhileBlockGenerator extends AbstractExample {
 		 });
 	        
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-        		new AClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
+        		new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
             new KernelStaticMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {

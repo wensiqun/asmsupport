@@ -20,11 +20,11 @@ public class MainTest {
 		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 		
 		ClassBuilderImpl creator = 
-				new ClassBuilderImpl(Opcodes.V1_6, Opcodes.ACC_PUBLIC , "test.Test2463", classLoader.loadType(AbstractClass.class), null, classLoader);
+				new ClassBuilderImpl(Opcodes.V1_6, Opcodes.ACC_PUBLIC , "test.Test2463", classLoader.getType(AbstractClass.class), null, classLoader);
 
 		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         
-		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, classLoader.loadType(MyObject.class),
+		creator.createMethod(Opcodes.ACC_PUBLIC, "getMyObject", null, null, classLoader.getType(MyObject.class),
 				null, new KernelMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
@@ -34,7 +34,7 @@ public class MainTest {
 		});
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
-				"main", new IClass[]{classLoader.loadType(String[].class)}, new String[]{"args"}, null, null,
+				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 
             @Override

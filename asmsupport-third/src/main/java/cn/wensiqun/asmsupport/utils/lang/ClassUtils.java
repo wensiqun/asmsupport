@@ -153,7 +153,6 @@ public class ClassUtils {
      * @param nameOrDesc primitive name or description 
      * @return Class java class
      */
-    @Deprecated
     public static Class<?> primitiveToClass(String nameOrDesc) {
         if ("boolean".equals(nameOrDesc) || "Z".equals(nameOrDesc)) {
             return boolean.class;

@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
@@ -21,7 +20,7 @@ public class MethodChooserTest {
 				CachedThreadLocalClassLoader.getInstance(),
 				classLoader.getType(MethodChooserTest.class),
 				classLoader.getType(Child.class), "work",
-				new AClass[] { classLoader.getType(Object.class) }) {
+				new IClass[] { classLoader.getType(Object.class) }) {
 
 			@Override
 			public AMethodMeta firstPhase() {

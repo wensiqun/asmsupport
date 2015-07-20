@@ -20,10 +20,10 @@ public class TestSerializableWithASMSupport {
     	ClassBuilderImpl creator = 
 				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
         
-    	creator.createField("name", Opcodes.ACC_PRIVATE, creator.getClassLoader().loadType(String.class));
+    	creator.createField("name", Opcodes.ACC_PRIVATE, creator.getClassLoader().getType(String.class));
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
-    			new IClass[]{creator.getClassLoader().loadType(String.class)}, new String[]{"name"}, 
+    			new IClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"name"}, 
     			null, null, new KernelMethodBody(){
 
 					@Override
@@ -37,7 +37,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod( Opcodes.ACC_PUBLIC, "getName", 
     			null, null, 
-    			creator.getClassLoader().loadType(String.class), null,new KernelMethodBody(){
+    			creator.getClassLoader().getType(String.class), null,new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {
@@ -49,7 +49,7 @@ public class TestSerializableWithASMSupport {
 
     	creator.createMethod(Opcodes.ACC_PUBLIC, "toString", 
     			null, null, 
-    			creator.getClassLoader().loadType(String.class), null, new KernelMethodBody(){
+    			creator.getClassLoader().getType(String.class), null, new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {

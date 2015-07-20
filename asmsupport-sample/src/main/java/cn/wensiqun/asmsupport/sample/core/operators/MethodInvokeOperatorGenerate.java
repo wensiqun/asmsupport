@@ -8,7 +8,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 这个例子我们将实现方法调用的操作，方法调用主要包括了
@@ -96,7 +96,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     return obj.description();
          * }
          */
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new AClass[]{creator.getCurrentClass()}, new String[]{"obj"}, classLoader.getType(String.class), null,
+        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new IClass[]{creator.getCurrentClass()}, new String[]{"obj"}, classLoader.getType(String.class), null,
                 new KernelStaticMethodBody(){
 
             @Override
@@ -117,7 +117,7 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          * }
          */
         creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
-        		"main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+        		"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
                 new KernelStaticMethodBody(){
 
             @Override

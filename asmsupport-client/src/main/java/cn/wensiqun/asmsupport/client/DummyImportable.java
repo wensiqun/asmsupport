@@ -3,8 +3,6 @@ package cn.wensiqun.asmsupport.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
@@ -38,39 +36,20 @@ public class DummyImportable extends AbstractDummy {
 			this.target = target;
 		}
 
-		public IClass loadType(Class<?> clazz) {
-			return target.loadType(clazz);
-		}
-
-		public IClass loadType(String className) {
-			IClass clazz;
-			//get from import map
-			if(classSimpleNameMap.containsKey(className)) {
-				clazz = target.loadType(classSimpleNameMap.get(className));
-				if(clazz != null) {
-					return clazz;
-				}
-			}
-			clazz = target.loadType(className);
-			if(clazz == null) {
-				if(className.indexOf('.') == -1) {
-					clazz = target.loadType("java.lang." + className);
-				}
-			}
-			return clazz;
-		}
-
-		public AClass getType(Class<?> clazz) {
+		@Override
+		public IClass getType(Class<?> clazz) {
 			return target.getType(clazz);
 		}
 
+		@Override
 		public Class<?> defineClass(String name, byte[] classBytes, IClass itype)
 				throws Exception {
 			return target.defineClass(name, classBytes, itype);
 		}
 
-		public AClass getType(String className) {
-			AClass clazz;
+		@Override
+		public IClass getType(String className) {
+			IClass clazz;
 			//get from import map
 			if(classSimpleNameMap.containsKey(className)) {
 				clazz = target.getType(classSimpleNameMap.get(className));
@@ -87,11 +66,13 @@ public class DummyImportable extends AbstractDummy {
 			return clazz;
 		}
 
-		public ArrayClass getArrayClass(Class<?> root, int dim) {
+		@Override
+		public IClass getArrayClass(Class<?> root, int dim) {
 			return target.getArrayClass(root, dim);
 		}
 
-		public ArrayClass getArrayClass(IClass root, int dim) {
+		@Override
+		public IClass getArrayClass(IClass root, int dim) {
 			return target.getArrayClass(root, dim);
 		}
 

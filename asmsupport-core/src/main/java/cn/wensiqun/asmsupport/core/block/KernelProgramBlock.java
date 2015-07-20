@@ -97,7 +97,6 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -863,33 +862,23 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         return Value.getNullValue(getClassHolder().getType(type));
     }
 
-    @Override
-	public IClass loadType(Class<?> clazz) {
-        return getClassHolder().loadType(clazz);
-	}
-
 	@Override
-	public IClass loadType(String name) {
-        return getClassHolder().loadType(name);
-	}
-
-	@Override
-    public AClass getType(Class<?> cls) {
+    public IClass getType(Class<?> cls) {
         return getClassHolder().getType(cls);
     }
     
     @Override
-	public AClass getType(String className) {
+	public IClass getType(String className) {
         return getClassHolder().getType(className);
 	}
 
 	@Override
-    public ArrayClass getArrayClass(Class<?> cls, int dim) {
+    public IClass getArrayClass(Class<?> cls, int dim) {
         return getClassHolder().getArrayClass(cls, dim);
     }
 
     @Override
-    public ArrayClass getArrayClass(IClass rootComponent, int dim) {
+    public IClass getArrayClass(IClass rootComponent, int dim) {
         return getClassHolder().getArrayClass(rootComponent, dim);
     }
     

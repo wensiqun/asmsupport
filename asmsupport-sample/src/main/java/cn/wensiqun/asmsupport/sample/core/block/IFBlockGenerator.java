@@ -11,6 +11,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 这里我们将创建如下内容的类
@@ -70,7 +71,7 @@ public class IFBlockGenerator extends AbstractExample{
 		
 		creator.createStaticMethod(Opcodes.ACC_PUBLIC, 
 				"ifelse", 
-				new AClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, 
+				new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, 
 				new String[]{"str", "i"}, null, null,
 		        
 				new KernelStaticMethodBody(){
@@ -148,7 +149,7 @@ public class IFBlockGenerator extends AbstractExample{
 		);
 		
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new AClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelStaticMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
