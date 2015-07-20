@@ -38,7 +38,6 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
-import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
 
 public abstract class AbstractClassCreator extends AbstractClassBuilder {
 	
@@ -48,11 +47,11 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
     protected boolean haveInitMethod;
 
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, Class<?>[] interfaces) {
-    	this(version, access, name, superCls, interfaces, CachedThreadLocalClassLoader.getInstance());
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs) {
+    	this(version, access, name, superCls, itfs, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, Class<?>[] interfaces, AsmsupportClassLoader classLoader) {
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs, AsmsupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
@@ -61,21 +60,17 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             throw new ClassException("the super class \"" + superCls.getName()
                     + "\" is an interface");
         }
-        sc = new SemiClass(classLoader, version, access, name, superCls, interfaces);
+        sc = new SemiClass(classLoader, version, access, name, superCls, itfs);
         cw = new ClassWriter(0);
     }
     
 
 	@Override
 	public void create() {
-        String[] interfaceStrs;
-        if(sc.getInterfaces() == null){
-            interfaceStrs = new String[0];
-        }else{
-            interfaceStrs = new String[sc.getInterfaces().length];
-        }
-        for (int i = 0; i < interfaceStrs.length; i++) {
-            interfaceStrs[i] = Type.getInternalName(sc.getInterfaces()[i]);
+        IClass[] itfs = sc.getInterfaces();
+        String[] itfStrs = new String[itfs.length];
+        for (int i = 0; i < itfs.length; i++) {
+        	itfStrs[i] = itfs[i].getType().getInternalName();
         }
         
         if(LOG.isPrintEnabled()){
@@ -85,7 +80,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         // create class
         cw.visit(sc.getVersion(), sc.getModifiers(),
                 sc.getName().replace('.', '/'), null,
-                Type.getInternalName(sc.getSuperclass().getName()), interfaceStrs);
+                Type.getInternalName(sc.getSuperclass().getName()), itfStrs);
 
         //beforeCreate        
         this.beforeCreate();
@@ -177,8 +172,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	List<AMethodMeta> nonAbstractMethods = new ArrayList<AMethodMeta>();
     	allMethodInClass(sc.getSuperclass(), abstractMethods, nonAbstractMethods);
     	
-    	for(Class<?> inter : sc.getInterfaces()){
-        	allMethodInClass(asmsupportClassLoader.getType(inter), abstractMethods, nonAbstractMethods);
+    	for(IClass itf : sc.getInterfaces()){
+        	allMethodInClass(itf, abstractMethods, nonAbstractMethods);
     	}
     	
     	for(int i=0; i<abstractMethods.size();){
@@ -282,8 +277,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
     	allMethodInClass(clazz.getSuperclass(), abstractMethods, nonAbstractMethods);
         
-    	for(Class<?> interfaceClass : clazz.getInterfaces()){
-			allMethodInClass(asmsupportClassLoader.getType(interfaceClass), abstractMethods, nonAbstractMethods);
+    	for(IClass itf : clazz.getInterfaces()){
+			allMethodInClass(itf, abstractMethods, nonAbstractMethods);
     	}
     }
 
@@ -315,7 +310,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     public static class SemiClass extends MutableClass {
 
     	SemiClass(AsmsupportClassLoader classLoader, int version, int access, String name, IClass superCls,
-                Class<?>[] interfaces) {
+                IClass[] interfaces) {
     		super(classLoader);
             this.version = version;
             this.name = name;
@@ -350,7 +345,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         }
 
         @Override
-        public Field getField(final String name) {
+        public Field getField(final String name) throws NoSuchFieldException {
             final LinkedList<Field> found = new LinkedList<Field>();
             for(Field gv : getFields()){
                 if(gv.getName().equals(name)){
@@ -360,18 +355,30 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             
             if(found.isEmpty()) {
             	IClass fieldOwner = getSuperclass();
-                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
-                	Field field = fieldOwner.getField(name);
+            	IClass objectType = getClassLoader().getType(Object.class);
+            	while(fieldOwner != null && !fieldOwner.equals(objectType)) {
+					Field field = fieldOwner.getField(name);
                 	if(field != null) {
                 		found.add(field);
                 		break;
                 	}
-                }
+                	fieldOwner = fieldOwner.getSuperclass();
+            	}
             }
             
-            new InterfaceLooper() {
+            for(IClass itf : getInterfaces()) {
+				try {
+					Field field = itf.getField(name);
+	            	if(field != null) {
+	            		found.add(field);
+	            	}
+				} catch (NoSuchFieldException e) {
+				}
+            }
+            
+            /*new InterfaceLooper() {
                 @Override
-                protected boolean process(Class<?> inter) {
+                protected boolean process(IClass inter) {
                     try {
                         java.lang.reflect.Field f = inter.getDeclaredField(name);
                         found.add(new Field(SemiClass.this,
@@ -382,10 +389,10 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
                         return false;
                     }
                 }
-            }.loop(getInterfaces());
+            }.loop(getInterfaces());*/
             
             if(found.size() == 0) {
-                throw new ASMSupportException("Not found field " + name);
+                throw new NoSuchFieldException("Not found field " + name);
             } else if(found.size() == 1) {
                 return found.getFirst();
             } 

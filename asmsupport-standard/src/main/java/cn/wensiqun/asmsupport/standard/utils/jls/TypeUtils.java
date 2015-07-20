@@ -124,38 +124,28 @@ public abstract class TypeUtils {
 	 */
 	public static IClass[] directSuperAmongClassAndInterfaceType(IClass subType) {
 		if (subType.isInterface()) {
-		    IClass[] superTypes;
-            Class<?>[] interfaces = subType.getInterfaces();
-            if (interfaces != null && interfaces.length > 0) {
-                superTypes = new IClass[interfaces.length];
-                for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = subType.getClassLoader().getType(interfaces[i]);
-                }
+            IClass[] itfs = subType.getInterfaces();
+            if (itfs.length > 0) {
+                return itfs;
             } else {
-                superTypes = new IClass[] { subType.getClassLoader().getType(Object.class) };
+                return new IClass[] { subType.getClassLoader().getType(Object.class) };
             }
-            return superTypes;
 		} else {
 			IClass superType = subType.getSuperclass();
-            Class<?>[] intefaces = subType.getInterfaces();
-            if(superType == null && intefaces.length == 0) {
-            	return null;
-            } else if (superType != null && intefaces.length == 0) {
-            	return new IClass[]{superType};
-            } else if (superType == null && intefaces.length > 0) {
-                IClass[] superTypes = new IClass[intefaces.length];
-            	for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = subType.getClassLoader().getType(intefaces[i]);
-                }
-            	return superTypes;
+            IClass[] itfs = subType.getInterfaces();
+            IClass[] superTypes;
+            if(superType == null) {
+            	superTypes = new IClass[itfs.length];
             } else {
-            	IClass[] superTypes = new IClass[intefaces.length + 1];
-                superTypes[0] = superType;
-                for (int i = 1; i < superTypes.length; i++) {
-                    superTypes[i] = subType.getClassLoader().getType(intefaces[i - 1]);
-                }
-                return superTypes;
+            	superTypes = new IClass[itfs.length + 1];
+            	superTypes[0] = superType;
             }
+            
+            if(itfs.length > 0){
+                System.arraycopy(itfs, 0, superTypes, 1, itfs.length);
+            }
+            
+            return superTypes;
 		}
 	}
 	

@@ -40,7 +40,7 @@ public class DummyInterface extends AbstractDummy {
     private String name;
 
     /** Any interfaces in the class */
-    private Class<?>[] interfaces;
+    private IClass[] interfaces;
     
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -206,21 +206,38 @@ public class DummyInterface extends AbstractDummy {
      * @param interfaces
      * @return
      */
-    public DummyInterface extends_(Class<?>... interfaces) {
+    public DummyInterface extends_(IClass... interfaces) {
         this.interfaces = interfaces;
         return this;
     }
+    
+    /**
+     * Set the interfaces 
+     * 
+     * @param itfs
+     * @return
+     */
+    public DummyInterface extends_(Class<?>... itfs) {
+    	if(itfs != null) {
+    		this.interfaces = new IClass[itfs.length];
+    		for(int i=0; i<itfs.length; i++) {
+    			this.interfaces[i] = getClassLoader().getType(itfs[i]);
+    		}
+    	}
+    	return this;
+    }
+    
     
     /**
      * Get the interfaces.
      * 
      * @return
      */
-    public Class<?>[] getExtends() {
+    public IClass[] getExtends() {
         if(interfaces == null) {
-            return new Class[0];
+            return new IClass[0];
         }
-        Class<?>[] copy = new Class[interfaces.length];
+        IClass[] copy = new IClass[interfaces.length];
         System.arraycopy(interfaces, 0, copy, 0, copy.length);
         return copy;
     }

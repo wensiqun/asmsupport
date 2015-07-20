@@ -40,14 +40,14 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 
 	
 	public ClassBuilderImpl(int version, int access, String name,
-			IClass superCls, Class<?>[] interfaces) {
-        super(version, access, name, superCls, interfaces, CachedThreadLocalClassLoader.getInstance());
+			IClass superCls, IClass[] itfs) {
+        super(version, access, name, superCls, itfs, CachedThreadLocalClassLoader.getInstance());
     }
 	
 	
     public ClassBuilderImpl(int version, int access, String name,
-    		IClass superCls, Class<?>[] interfaces, AsmsupportClassLoader classLoader) {
-        super(version, access, name, superCls, interfaces, classLoader);
+    		IClass superCls, IClass[] itfs, AsmsupportClassLoader classLoader) {
+        super(version, access, name, superCls, itfs, classLoader);
     }
     
 

@@ -9,18 +9,25 @@ import java.lang.reflect.Method;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class TestSerializableWithASMSupport {
    
     public static void main(String[] args) throws Exception{
 
-    	ClassBuilderImpl creator = 
-				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test31533", null, new Class<?>[]{Serializable.class});
-        
-    	creator.createField("name", Opcodes.ACC_PRIVATE, creator.getClassLoader().getType(String.class));
+    	AsmsupportClassLoader classloader = CachedThreadLocalClassLoader.getInstance();
+
+		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5,
+				Opcodes.ACC_PUBLIC, "bug.fixed.Test31533", null,
+				new IClass[] { classloader.getType(Serializable.class) },
+				classloader);
+
+		creator.createField("name", Opcodes.ACC_PRIVATE,
+				classloader.getType(String.class));
 		
     	creator.createMethod(Opcodes.ACC_PUBLIC, "setName", 
     			new IClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"name"}, 

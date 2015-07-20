@@ -55,7 +55,11 @@ public class ProductClass extends MutableClass {
         if(cls.getSuperclass() != null) {
             this.superClass = classLoader.getType(cls.getSuperclass());
         }
-        this.interfaces = cls.getInterfaces();
+        Class<?>[] itfs = cls.getInterfaces();
+        this.interfaces = new IClass[itfs.length];
+        for(int i = 0; i<itfs.length; i++) {
+        	interfaces[i] = classLoader.getType(itfs[i]);
+        }
         reallyClass = cls;
         type = Type.getType(cls);
     }
@@ -70,7 +74,7 @@ public class ProductClass extends MutableClass {
     }
 
     @Override
-    public Field getField(final String name) {
+    public Field getField(final String name) throws NoSuchFieldException {
         
         final LinkedList<Field> found = new LinkedList<Field>();
         
@@ -82,8 +86,9 @@ public class ProductClass extends MutableClass {
         
         if(found.isEmpty()) {
             Class<?> fieldOwner = reallyClass;
-            for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
-                try {
+        	IClass objectType = getClassLoader().getType(Object.class);
+            while(fieldOwner != null && !fieldOwner.equals(objectType)) {
+            	try {
                     java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
                     found.add(new Field(this,
                     		classLoader.getType(fieldOwner),
@@ -91,6 +96,7 @@ public class ProductClass extends MutableClass {
                     break;
                 } catch (NoSuchFieldException e) {
                 }
+            	fieldOwner = fieldOwner.getSuperclass();
             }
         }
         
@@ -110,7 +116,7 @@ public class ProductClass extends MutableClass {
         }.loop(reallyClass.getInterfaces());
         
         if(found.size() == 0) {
-            throw new ASMSupportException("Not found field " + name);
+            throw new NoSuchFieldException("Not found field " + name);
         } else if(found.size() == 1) {
             return found.getFirst();
         } 

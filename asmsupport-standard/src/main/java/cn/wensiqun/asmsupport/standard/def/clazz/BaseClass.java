@@ -42,7 +42,7 @@ public abstract class BaseClass implements IClass {
 
     protected IClass superClass;
 
-    protected Class<?>[] interfaces;
+    protected IClass[] interfaces;
     
     protected Type type;
     
@@ -81,11 +81,13 @@ public abstract class BaseClass implements IClass {
     }
 
     @Override
-    public Class<?>[] getInterfaces() {
+    public final IClass[] getInterfaces() {
     	if(interfaces == null){
-    		interfaces = new Class[0];
+    		interfaces = new IClass[0];
     	}
-        return interfaces;
+    	IClass[] copy = new IClass[interfaces.length];
+    	System.arraycopy(interfaces, 0, copy, 0, interfaces.length);
+        return copy;
     }
 
     @Override
@@ -218,10 +220,10 @@ public abstract class BaseClass implements IClass {
 	}
 
 	@Override
-	public Field getField(String name) {
+	public Field getField(String name) throws NoSuchFieldException {
         throw new UnsupportedOperationException();
 	}
-
+	
 	@Override
 	public Collection<AMethodMeta> getDeclaredConstructors() {
         throw new UnsupportedOperationException();

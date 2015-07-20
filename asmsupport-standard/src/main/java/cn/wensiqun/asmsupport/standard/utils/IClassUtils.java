@@ -256,13 +256,12 @@ public class IClassUtils {
      * @return List<Class<?>> all interface list
      */
     public static List<IClass> getAllInterfaces(IClass aclass) {
-        Class<?>[] interfaces = aclass.getInterfaces();
+        IClass[] itfs = aclass.getInterfaces();
         IClass superClass = aclass.getSuperclass();
         List<IClass> interfaceColl = new ArrayList<IClass>();
-        for (Class<?> inter : interfaces) {
-        	IClass interAClass = aclass.getClassLoader().getType(inter);
-        	interfaceColl.add(interAClass);
-            getAllInterfaces(interfaceColl, interAClass);
+        for (IClass itf : itfs) {
+        	interfaceColl.add(itf);
+            getAllInterfaces(interfaceColl, itf);
         }
         getAllInterfaces(interfaceColl, superClass);
         return interfaceColl;
@@ -286,25 +285,25 @@ public class IClassUtils {
     /**
      * Get all interface from a class and put the found classes to a list.
      * 
-     * @param interfaceColl
+     * @param itfList
      * @param clazz
      */
-    public static void getAllInterfaces(List<IClass> interfaceColl, IClass clazz) {
+    public static void getAllInterfaces(List<IClass> itfList, IClass clazz) {
         if (clazz == null || Object.class.getName().endsWith(clazz.getName())) {
             return;
         }
 
         // get interface from super class
-        getAllInterfaces(interfaceColl, clazz.getSuperclass());
+        getAllInterfaces(itfList, clazz.getSuperclass());
 
-        Class<?>[] interfaces = clazz.getInterfaces();
-        if (ArrayUtils.isNotEmpty(interfaces)) {
-            for (Class<?> inter : interfaces) {
-                if (!interfaceColl.contains(inter)) {
-                    interfaceColl.add(clazz.getClassLoader().getType(inter));
+        IClass[] itfs = clazz.getInterfaces();
+        if (ArrayUtils.isNotEmpty(itfs)) {
+            for (IClass itf : itfs) {
+                if (!itfList.contains(itf)) {
+                    itfList.add(itf);
                 }
                 // get interface from current interface
-                getAllInterfaces(interfaceColl, clazz.getClassLoader().getType(inter));
+                getAllInterfaces(itfList, itf);
             }
         }
 

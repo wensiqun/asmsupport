@@ -89,7 +89,7 @@ public interface IClass {
      * 
      * @return all interface
      */
-    Class<?>[] getInterfaces();
+    IClass[] getInterfaces();
 
     /**
      * Get the class description, the description is the same to {@link Type#getDescriptor()},
@@ -100,12 +100,35 @@ public interface IClass {
     String getDescription();
     
     /**
-     * Get all field of current class, it's possible contain static and non-static field.
+     * This method will return all field that's declared in current class or super class or interface.
      * 
      * @param name
      * @return
      */
-    Field getField(String name);
+    Field getField(String name) throws NoSuchFieldException ;
+    
+    /*
+     * Returns an collection of {@code Field} objects reflecting all the fields
+     * declared by the class or interface represented by this
+     * {@code Class} object. This includes public, protected, default
+     * (package) access, and private fields, but excludes inherited fields.
+     * The elements in the array returned are not sorted and are not in any
+     * particular order.  This method returns an array of length 0 if the class
+     * or interface declares no fields, or if this {@code Class} object
+     * represents a primitive type, an array class, or void.
+     */
+    //Collection<Field> getDeclaredFields();
+    
+    /*
+     * Returns a {@code Field} object that reflects the specified declared
+     * field of the class or interface represented by this {@code Class}
+     * object. The {@code name} parameter is a {@code String} that
+     * specifies the simple name of the desired field.  Note that this method
+     * will not reflect the {@code length} field of an array class.
+     * @param name
+     * @return
+     */
+    //Field getDeclaredField(String name);
     
     /**
      * Returns an array of <code>Constructor</code> objects reflecting all the

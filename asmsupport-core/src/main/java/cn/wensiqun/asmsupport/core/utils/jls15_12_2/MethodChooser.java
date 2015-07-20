@@ -260,11 +260,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		}
 		
 		fetchMatchMethod(potentially, where.getSuperclass(), name);
-		ClassHolder holder = where.getClassLoader();
-		Class<?>[] interfaces = where.getInterfaces();
-		if(ArrayUtils.isNotEmpty(interfaces)){
-			for(Class<?> inter : interfaces){
-				fetchMatchMethod(potentially, holder.getType(inter), name);
+		IClass[] itfs = where.getInterfaces();
+		if(ArrayUtils.isNotEmpty(itfs)){
+			for(IClass itf : itfs){
+				fetchMatchMethod(potentially, itf, name);
 			}
 		}
 		

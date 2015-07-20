@@ -30,8 +30,8 @@ import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 public class InterfaceBuilderImpl extends AbstractClassCreator {
 
 
-	public InterfaceBuilderImpl(int version, String name, Class<?>[] interfaces) {
-		this(version, name, interfaces, CachedThreadLocalClassLoader.getInstance());
+	public InterfaceBuilderImpl(int version, String name, IClass[] itfs) {
+		this(version, name, itfs, CachedThreadLocalClassLoader.getInstance());
 	}
 	
 	/**
@@ -39,10 +39,10 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
 	 * 
 	 * @param version JDK version.  
 	 * @param name Interface qualified name.
-	 * @param interfaces super interfaces.
+	 * @param itfs super interfaces.
 	 */
-	public InterfaceBuilderImpl(int version, String name, Class<?>[] interfaces, AsmsupportClassLoader classLoader) {
-		super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + Opcodes.ACC_INTERFACE, name, null, interfaces, classLoader);
+	public InterfaceBuilderImpl(int version, String name, IClass[] itfs, AsmsupportClassLoader classLoader) {
+		super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + Opcodes.ACC_INTERFACE, name, null, itfs, classLoader);
 	}
 	
 	/**

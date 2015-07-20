@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 /**
@@ -47,7 +46,7 @@ public class ArrayClass extends BaseClass {
     	version = elementType.getVersion();
         mod = elementType.getModifiers();
         superClass = classLoader.getType(Object.class);
-        interfaces = new Class[]{Cloneable.class, Serializable.class};
+        interfaces = new IClass[]{classLoader.getType(Cloneable.class), classLoader.getType(Serializable.class)};
         
         this.elementType = elementType;
         this.dim = dim;
@@ -83,11 +82,6 @@ public class ArrayClass extends BaseClass {
     }
 
     @Override
-    public Field getField(String name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isPrimitive() {
         return false;
     }
@@ -114,9 +108,8 @@ public class ArrayClass extends BaseClass {
         }
         return sb.toString();
     }
-
     
-    
+	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<AMethodMeta> getDeclaredMethods() {
 		return Collections.EMPTY_LIST;

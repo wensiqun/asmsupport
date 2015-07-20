@@ -148,7 +148,7 @@ public class DummyTest {
         });
         excIter.newMethod("method1").return_(String.class).throws_(IllegalArgumentException.class);
         excIter.newMethod("method2").return_(String.class);
-        
+
         final Class<?> ExceptedInterface = excIter.build();
         
         

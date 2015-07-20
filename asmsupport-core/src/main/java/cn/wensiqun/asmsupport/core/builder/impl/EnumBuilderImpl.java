@@ -57,23 +57,23 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * 
      * @param version
      * @param name
-     * @param interfaces
+     * @param itfs
      */
-    public EnumBuilderImpl(int version, String name, Class<?>[] interfaces) {
-        this(version, name, interfaces, CachedThreadLocalClassLoader.getInstance());
+    public EnumBuilderImpl(int version, String name, IClass[] itfs) {
+        this(version, name, itfs, CachedThreadLocalClassLoader.getInstance());
     }
     
     /**
      * 
      * @param version
      * @param name
-     * @param interfaces
+     * @param itfs
      * @param asmsupportClassLoader
      */
-    public EnumBuilderImpl(int version, String name, Class<?>[] interfaces, AsmsupportClassLoader asmsupportClassLoader) {
+    public EnumBuilderImpl(int version, String name, IClass[] itfs, AsmsupportClassLoader asmsupportClassLoader) {
         super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, 
         		asmsupportClassLoader.getType(Enum.class),
-                interfaces, asmsupportClassLoader);
+                itfs, asmsupportClassLoader);
         enumConstantNameList = new ArrayList<String>();
     }
 

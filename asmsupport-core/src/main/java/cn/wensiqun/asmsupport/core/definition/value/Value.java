@@ -605,12 +605,16 @@ public class Value implements IValue {
     @Override
     public GlobalVariable field(String name) {
         if(value != null && value instanceof IClass) {
-            Field field = ((IClass)value).getField(name);
-            if(ModifierUtils.isStatic(field.getModifiers())) {
-                return new StaticGlobalVariable((IClass)value, field);
-            } else {
-                throw new ASMSupportException("No such field " + name);
-            }
+			try {
+				Field field = ((IClass)value).getField(name);
+	            if(ModifierUtils.isStatic(field.getModifiers())) {
+	                return new StaticGlobalVariable((IClass)value, field);
+	            } else {
+	                throw new ASMSupportException("No such field " + name);
+	            }
+			} catch (NoSuchFieldException e) {
+				throw new ASMSupportException(e);
+			}
         }
         return null;
     }
