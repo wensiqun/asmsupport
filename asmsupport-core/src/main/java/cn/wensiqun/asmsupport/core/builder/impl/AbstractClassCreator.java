@@ -85,7 +85,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         // create class
         cw.visit(sc.getVersion(), sc.getModifiers(),
                 sc.getName().replace('.', '/'), null,
-                Type.getInternalName(sc.getSuperClass().getName()), interfaceStrs);
+                Type.getInternalName(sc.getSuperclass().getName()), interfaceStrs);
 
         //beforeCreate        
         this.beforeCreate();
@@ -175,7 +175,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	
     	List<AMethodMeta> abstractMethods = new ArrayList<AMethodMeta>();
     	List<AMethodMeta> nonAbstractMethods = new ArrayList<AMethodMeta>();
-    	allMethodInClass(sc.getSuperClass(), abstractMethods, nonAbstractMethods);
+    	allMethodInClass(sc.getSuperclass(), abstractMethods, nonAbstractMethods);
     	
     	for(Class<?> inter : sc.getInterfaces()){
         	allMethodInClass(asmsupportClassLoader.getType(inter), abstractMethods, nonAbstractMethods);
@@ -280,7 +280,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         	}
         }
 
-    	allMethodInClass(clazz.getSuperClass(), abstractMethods, nonAbstractMethods);
+    	allMethodInClass(clazz.getSuperclass(), abstractMethods, nonAbstractMethods);
         
     	for(Class<?> interfaceClass : clazz.getInterfaces()){
 			allMethodInClass(asmsupportClassLoader.getType(interfaceClass), abstractMethods, nonAbstractMethods);
@@ -359,8 +359,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             }
             
             if(found.isEmpty()) {
-            	IClass fieldOwner = getSuperClass();
-                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperClass()){
+            	IClass fieldOwner = getSuperclass();
+                for(;!fieldOwner.equals(Object.class); fieldOwner = fieldOwner.getSuperclass()){
                 	Field field = fieldOwner.getField(name);
                 	if(field != null) {
                 		found.add(field);

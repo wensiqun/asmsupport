@@ -38,9 +38,9 @@ public class SuperVariable extends ImplicitVariable{
     
     public SuperVariable(IClass aclass) {
         this.globalVariableMeta = new Field(
-        		aclass.getSuperClass(), 
-        		aclass.getSuperClass(), 
-        		aclass.getSuperClass(), 
+        		aclass.getSuperclass(), 
+        		aclass.getSuperclass(), 
+        		aclass.getSuperclass(), 
                 Opcodes.ACC_FINAL, AsmsupportConstant.SUPER);
     }
 

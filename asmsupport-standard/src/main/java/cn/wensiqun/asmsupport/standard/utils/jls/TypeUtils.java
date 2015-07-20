@@ -136,7 +136,7 @@ public abstract class TypeUtils {
             }
             return superTypes;
 		} else {
-			IClass superType = subType.getSuperClass();
+			IClass superType = subType.getSuperclass();
             Class<?>[] intefaces = subType.getInterfaces();
             if(superType == null && intefaces.length == 0) {
             	return null;

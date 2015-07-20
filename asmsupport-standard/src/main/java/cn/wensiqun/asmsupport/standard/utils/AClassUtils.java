@@ -260,7 +260,7 @@ public class AClassUtils {
      */
     public static List<IClass> getAllInterfaces(IClass aclass) {
         Class<?>[] interfaces = aclass.getInterfaces();
-        IClass superClass = aclass.getSuperClass();
+        IClass superClass = aclass.getSuperclass();
         List<IClass> interfaceColl = new ArrayList<IClass>();
         for (Class<?> inter : interfaces) {
         	IClass interAClass = aclass.getClassLoader().getType(inter);
@@ -298,7 +298,7 @@ public class AClassUtils {
         }
 
         // get interface from super class
-        getAllInterfaces(interfaceColl, clazz.getSuperClass());
+        getAllInterfaces(interfaceColl, clazz.getSuperclass());
 
         Class<?>[] interfaces = clazz.getInterfaces();
         if (ArrayUtils.isNotEmpty(interfaces)) {

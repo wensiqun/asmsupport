@@ -76,7 +76,7 @@ public abstract class AClass implements IClass {
     }
 
     @Override
-    public IClass getSuperClass() {
+    public IClass getSuperclass() {
         return superClass;
     }
 

@@ -35,7 +35,7 @@ public class MethodUtils {
      * @param overrideMethod the override method
      */
     public static AMethodMeta getOverriddenMethod(AMethodMeta entity) {
-        IClass superClass = entity.getActuallyOwner().getSuperClass();
+        IClass superClass = entity.getActuallyOwner().getSuperclass();
         String methodName = entity.getName();
         IClass[] argClasses = entity.getArgClasses() == null ? new IClass[0] : entity.getArgClasses();
 
@@ -48,7 +48,7 @@ public class MethodUtils {
                     return method;
                 }
         	}
-            superClass = superClass.getSuperClass();
+            superClass = superClass.getSuperclass();
         }
         return null;
     }

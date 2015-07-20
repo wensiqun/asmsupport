@@ -215,7 +215,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	                for(AMethodMeta method : directCallClass.getDeclaredMethods()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
-	                fetchMatchMethod(tempPotentially, directCallClass.getSuperClass(), name);
+	                fetchMatchMethod(tempPotentially, directCallClass.getSuperclass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
 	            if(AsmsupportConstant.INIT.equals(name)){
@@ -259,7 +259,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			potentially.add(me.getActuallyOwner(), me);
 		}
 		
-		fetchMatchMethod(potentially, where.getSuperClass(), name);
+		fetchMatchMethod(potentially, where.getSuperclass(), name);
 		ClassHolder holder = where.getClassLoader();
 		Class<?>[] interfaces = where.getInterfaces();
 		if(ArrayUtils.isNotEmpty(interfaces)){

@@ -82,8 +82,7 @@ public interface IClass {
      * @return Class super class
      * rename to getSuperclass
      */
-    @Deprecated
-    IClass getSuperClass();
+    IClass getSuperclass();
 
     /**
      * Get all interfaces

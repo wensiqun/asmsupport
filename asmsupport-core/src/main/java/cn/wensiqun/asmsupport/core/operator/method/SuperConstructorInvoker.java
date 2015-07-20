@@ -32,7 +32,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(KernelProgramBlock block, IClass aclass, KernelParam[] arguments) {
-        super(block, aclass.getSuperClass(), AsmsupportConstant.INIT, arguments);
+        super(block, aclass.getSuperclass(), AsmsupportConstant.INIT, arguments);
     }
 
     @Override
