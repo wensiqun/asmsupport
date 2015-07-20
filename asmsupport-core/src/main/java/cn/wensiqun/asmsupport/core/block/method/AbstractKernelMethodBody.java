@@ -68,14 +68,14 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     protected void init() {
         AMethod method = getMethod();
         AMethodMeta meta = method.getMeta();
-        if (!ModifierUtils.isStatic(meta.getModifier())) {
+        if (!ModifierUtils.isStatic(meta.getModifiers())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
                     String.class, Type.class, Type.class }, getExecutor(), AsmsupportConstant.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());
         }
 
-        String[] argNames = meta.getArgNames();
-        IClass[] argClsses = meta.getArgClasses();
+        String[] argNames = meta.getParameterNames();
+        IClass[] argClsses = meta.getParameterTypes();
         argments = new LocalVariable[argNames.length];
         for (int i = 0; i < argNames.length; i++) {
             ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], getScope(), argClsses[i].getType(),

@@ -261,7 +261,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	}
         
         for(AMethodMeta method : clazz.getDeclaredMethods()){
-    		if(ModifierUtils.isAbstract(method.getModifier())){
+    		if(ModifierUtils.isAbstract(method.getModifiers())){
     			if(!containMethod(abstractMethods, method)){
     				abstractMethods.add(method);
     			}

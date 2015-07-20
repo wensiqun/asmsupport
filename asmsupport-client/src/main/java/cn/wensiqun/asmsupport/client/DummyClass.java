@@ -23,7 +23,6 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
@@ -208,7 +207,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         return this;
     }
     
-    public DummyClass extends_(AClass parent) {
+    public DummyClass extends_(IClass parent) {
     	this.parent = parent;
     	return this;
     }
@@ -297,7 +296,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
      * 
      * @return
      */
-    public DummyField newField(AClass type, String name) {
+    public DummyField newField(IClass type, String name) {
         DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);

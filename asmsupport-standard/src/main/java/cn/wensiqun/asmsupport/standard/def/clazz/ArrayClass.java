@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ArrayClass extends AClass {
+public class ArrayClass extends BaseClass {
 	
     private IClass elementType;
 

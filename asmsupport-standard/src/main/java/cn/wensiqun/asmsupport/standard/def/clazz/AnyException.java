@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
  * @author sqwen
  *
  */
-public class AnyException extends AClass {
+public class AnyException extends BaseClass {
 
     public AnyException(AsmsupportClassLoader holder) {
     	super(holder);

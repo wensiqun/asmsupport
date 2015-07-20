@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
@@ -140,7 +140,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     	//When call ArrayValue(ProgramBlock block, ArrayClass arrayCls, Parameterized... allocateDims)
     	if(allocateDims != null){
             for(KernelParam dim : allocateDims){
-                int order = AClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
+                int order = IClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
                 if(order > block.getType(int.class).getCastOrder() ||
                    order <= block.getType(boolean.class).getCastOrder()){
                     throw new RuntimeException("the allcate dim number must be byte, char, short or int type!");
@@ -153,7 +153,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
         new EachValue(values){
             @Override
             void process(KernelParam para) {
-				if(!AClassUtils.checkAssignable(para.getResultType(), rootComp)) {
+				if(!IClassUtils.checkAssignable(para.getResultType(), rootComp)) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + para.getResultType() + " to " + rootComp + "");
 				}
             }

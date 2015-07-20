@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * Represent a static global variable
@@ -53,7 +53,7 @@ public class StaticGlobalVariable extends GlobalVariable {
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        if (!AClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
+        if (!IClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
                 meta.getModifiers())) {
             throw new IllegalArgumentException("Cannot access field " + meta.getDeclaringClass() + "#"
                     + meta.getName() + " from " + block.getMethodDeclaringClass());

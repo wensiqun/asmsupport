@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.AbstractArithme
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * Represent a numerical operation
@@ -67,7 +67,7 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
         if (!factorCls.isPrimitive()) {
             LOG.print("unbox " + factorCls);
             insnHelper.unbox(factorCls.getType());
-            factorPrimitiveAClass = AClassUtils.getPrimitiveAClass(factorCls);
+            factorPrimitiveAClass = IClassUtils.getPrimitiveAClass(factorCls);
         }
 
         // cast if needs

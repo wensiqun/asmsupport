@@ -1,9 +1,8 @@
 package cn.wensiqun.asmsupport.standard.utils.jls15_12_2;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 
 /**
@@ -117,7 +116,7 @@ public class ConversionsPromotionsUtils {
      * @param to
      * @return
      */
-    public static boolean checkNarrowingPrimitiveConversion(AClass from, AClass to) {
+    public static boolean checkNarrowingPrimitiveConversion(IClass from, IClass to) {
         int fromSort = from.getType().getSort();
         int toSort = from.getType().getSort();
         if(fromSort == Type.BYTE || fromSort == Type.BOOLEAN || toSort == Type.BOOLEAN) {
@@ -189,7 +188,7 @@ public class ConversionsPromotionsUtils {
      * @param to
      * @return
      */
-    public static boolean checkWideningAndNarrowingPrimitiveConversion(AClass from, AClass to) {
+    public static boolean checkWideningAndNarrowingPrimitiveConversion(IClass from, IClass to) {
         return from.getType().getSort() == Type.BYTE && to.getType().getSort() == Type.CHAR;
     }
     
@@ -235,7 +234,7 @@ public class ConversionsPromotionsUtils {
      * @return
      */
     public static boolean checkBoxingConversion(IClass s, IClass t) {
-        return s.isPrimitive() && t.equals(AClassUtils.getPrimitiveWrapAClass(s));
+        return s.isPrimitive() && t.equals(IClassUtils.getPrimitiveWrapAClass(s));
     }
     
     /**
@@ -261,7 +260,7 @@ public class ConversionsPromotionsUtils {
      * @return
      */
     public static boolean checkUnboxingConversion(IClass s, IClass t) {
-        return t.isPrimitive() && s.equals(AClassUtils.getPrimitiveWrapAClass(t));
+        return t.isPrimitive() && s.equals(IClassUtils.getPrimitiveWrapAClass(t));
     }
     
     public static boolean checkMethodInvocatioConversion(IClass s, IClass t) {

@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
-public abstract class MutableClass extends AClass {
+public abstract class MutableClass extends BaseClass {
     
     /**
      * store bridge method.
@@ -163,7 +163,7 @@ public abstract class MutableClass extends AClass {
     }
 
     protected String getMethodCacheKey (AMethodMeta meta) {
-    	return getMethodCacheKey(meta.getName(), meta.getArgClasses());
+    	return getMethodCacheKey(meta.getName(), meta.getParameterTypes());
     }
 
     protected String getMethodCacheKey (String name, IClass... parameterTypes) {

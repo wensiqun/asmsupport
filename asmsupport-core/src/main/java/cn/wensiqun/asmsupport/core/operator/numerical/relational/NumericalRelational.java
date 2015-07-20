@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * 
@@ -37,8 +37,8 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     @Override
     protected void verifyArgument() {
-    	IClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-    	IClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+    	IClass ftrCls1 = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass ftrCls2 = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         checkFactorForNumerical(ftrCls1);
         checkFactorForNumerical(ftrCls2);
     }
@@ -68,7 +68,7 @@ public abstract class NumericalRelational extends AbstractRelational {
         if (!factorCls.isPrimitive()) {
             LOG.print("unbox " + factorCls);
             insnHelper.unbox(factorCls.getType());
-            factorPrimitiveAClass = AClassUtils.getPrimitiveAClass(factorCls);
+            factorPrimitiveAClass = IClassUtils.getPrimitiveAClass(factorCls);
         }
 
         // cast if needs

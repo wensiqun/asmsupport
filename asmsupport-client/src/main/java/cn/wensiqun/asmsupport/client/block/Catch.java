@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.block.exception.ICatch;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<LocVar, Catch, Finally> {
 
@@ -27,7 +27,7 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
 	 * 
 	 * @param exceptionType exception type
 	 */
-    public Catch(AClass exceptionType) {
+    public Catch(IClass exceptionType) {
         targetBlock = new KernelCatch(exceptionType) {
 
             @Override

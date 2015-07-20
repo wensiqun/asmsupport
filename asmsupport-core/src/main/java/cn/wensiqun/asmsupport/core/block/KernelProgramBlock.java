@@ -603,7 +603,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public MethodInvoker call(String methodName, KernelParam... args) {
-    	if(ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+    	if(ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
             return call(getMethodDeclaringClass(), methodName, args);
     	} else {
             return call(this_(), methodName, args);
@@ -732,7 +732,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final ThisVariable this_() {
-        if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+        if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
         return getMethod().getThisVariable();
@@ -745,7 +745,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final SuperVariable super_() {
-        if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+        if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"super\" keyword in static block");
         }
         return getMethod().getSuperVariable();
@@ -761,7 +761,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
                 originalMethodName = AsmsupportConstant.INIT_PROXY;
             }
             originalMethodName += AsmsupportConstant.METHOD_PROXY_SUFFIX;
-            if (ModifierUtils.isStatic(getMethod().getMeta().getModifier())) {
+            if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
                 return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {
                 return call(this_(), originalMethodName, getMethodArguments());

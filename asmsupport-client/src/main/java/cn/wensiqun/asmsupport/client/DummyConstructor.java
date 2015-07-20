@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
@@ -56,7 +56,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @return
      */
     public DummyConstructor argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
+        this.argTypes = IClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
 	
@@ -109,7 +109,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
      * @return
      */
     public DummyConstructor throws_(Class<?>... exceptionTypes){
-        this.exceptionTypes = AClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
+        this.exceptionTypes = IClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
         return this;
     }
 	

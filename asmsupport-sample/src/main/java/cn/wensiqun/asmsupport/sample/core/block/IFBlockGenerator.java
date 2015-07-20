@@ -10,7 +10,6 @@ import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**

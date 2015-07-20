@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
@@ -274,7 +274,7 @@ public class DummyInterface extends AbstractDummy {
      * 
      * @return
      */
-    public DummyField newField(AClass type, String name) {
+    public DummyField newField(IClass type, String name) {
         DummyField field = new DummyField(getClassLoader()); 
         fieldDummies.add(field);
         field.type(type).name(name);

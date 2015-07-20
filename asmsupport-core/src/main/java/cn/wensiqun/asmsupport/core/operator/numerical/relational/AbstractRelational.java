@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * 
@@ -63,8 +63,8 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     protected void initAdditionalProperties() {
         //replace Value object
-    	IClass ftrCls1 = AClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-    	IClass ftrCls2 = AClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+    	IClass ftrCls1 = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass ftrCls2 = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         
         if(ftrCls1.getCastOrder() > ftrCls2.getCastOrder()){
             targetClass = ftrCls1;

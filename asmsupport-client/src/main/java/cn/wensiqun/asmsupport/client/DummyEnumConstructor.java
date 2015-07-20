@@ -15,9 +15,8 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyEnumConstructor extends AbstractDummy {
@@ -41,7 +40,7 @@ public class DummyEnumConstructor extends AbstractDummy {
      * @param argus
      * @return
      */
-    public DummyEnumConstructor argTypes(AClass... argus){
+    public DummyEnumConstructor argTypes(IClass... argus){
         argTypes = argus;
         return this;
     }
@@ -53,7 +52,7 @@ public class DummyEnumConstructor extends AbstractDummy {
      * @return
      */
     public DummyEnumConstructor argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
+        this.argTypes = IClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
 	

@@ -7,7 +7,7 @@ public interface ClassHolder {
 	IClass loadType(String name);*/
 	
 	/**
-	 * Get {@link AClass} according the specify {@link Class}, 
+	 * Get {@link BaseClass} according the specify {@link Class}, 
 	 * but must return {@link AnyException} object if the specify 
 	 * class is {@link AnyException}
 	 * 

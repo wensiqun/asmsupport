@@ -20,7 +20,7 @@ import java.util.List;
 
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * 
@@ -37,14 +37,14 @@ public class MethodUtils {
     public static AMethodMeta getOverriddenMethod(AMethodMeta entity) {
         IClass superClass = entity.getActuallyOwner().getSuperclass();
         String methodName = entity.getName();
-        IClass[] argClasses = entity.getArgClasses() == null ? new IClass[0] : entity.getArgClasses();
+        IClass[] argClasses = entity.getParameterTypes() == null ? new IClass[0] : entity.getParameterTypes();
 
         for (; superClass != null && !Object.class.equals(superClass);) {
         	AMethodMeta method = superClass.getDeclaredMethod(methodName, argClasses);
         	if(method != null) {
         		IClass callerOwner = entity.getActuallyOwner();
         		IClass calledOwner = method.getActuallyOwner();
-                if (AClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifier())) {
+                if (IClassUtils.visible(callerOwner, calledOwner, calledOwner, method.getModifiers())) {
                     return method;
                 }
         	}
@@ -61,9 +61,9 @@ public class MethodUtils {
     //??????????????????????????
     public static AMethodMeta[] getImplementedMethod(AMethodMeta entity) {
         String methodName = entity.getName();
-        IClass[] argClasses = entity.getArgClasses() == null ? new IClass[0] : entity.getArgClasses();
+        IClass[] argClasses = entity.getParameterTypes() == null ? new IClass[0] : entity.getParameterTypes();
         List<AMethodMeta> foundList = new ArrayList<AMethodMeta>();
-        List<IClass> interfaces = AClassUtils.getAllInterfaces(entity.getActuallyOwner());
+        List<IClass> interfaces = IClassUtils.getAllInterfaces(entity.getActuallyOwner());
         for (IClass inter : interfaces) {
         	AMethodMeta method = inter.getDeclaredMethod(methodName, argClasses);
             if (method != null && !containsSameSignature(foundList, method)) {
@@ -106,8 +106,8 @@ public class MethodUtils {
      */
     public static boolean methodEqualWithoutOwner(AMethodMeta me, AMethodMeta method) {
         if (me.getName().equals(method.getName())) {
-        	IClass[] mePara = me.getArgClasses();
-        	IClass[] methodPara = method.getArgClasses();
+        	IClass[] mePara = me.getParameterTypes();
+        	IClass[] methodPara = method.getParameterTypes();
             if (mePara.length == methodPara.length) {
                 for (int i = 0, len = mePara.length; i < len; i++) {
                     if (!mePara[i].getName().equals(methodPara[i].getName())) {

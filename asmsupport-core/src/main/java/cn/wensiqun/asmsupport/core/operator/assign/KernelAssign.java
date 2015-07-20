@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * Represent variable assign operation.
@@ -49,7 +49,7 @@ public abstract class KernelAssign extends AbstractParamOperator {
 
 	@Override
 	protected void verifyArgument() {
-		if(!AClassUtils.checkAssignable(value.getResultType(), var.getResultType())) {
+		if(!IClassUtils.checkAssignable(value.getResultType(), var.getResultType())) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + var.getResultType() + "");
 		}
 	}

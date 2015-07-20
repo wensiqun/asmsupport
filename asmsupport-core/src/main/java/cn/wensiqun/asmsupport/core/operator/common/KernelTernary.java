@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 
 /**
@@ -76,8 +76,8 @@ public class KernelTernary extends AbstractParamOperator {
     }
 
     private boolean checkExpression(IClass expCls1, IClass expCls2){
-    	IClass expPrimCls1 = AClassUtils.getPrimitiveAClass(expCls1);
-    	IClass expPrimCls2 = AClassUtils.getPrimitiveAClass(expCls2);
+    	IClass expPrimCls1 = IClassUtils.getPrimitiveAClass(expCls1);
+    	IClass expPrimCls2 = IClassUtils.getPrimitiveAClass(expCls2);
         
         if(expPrimCls1.equals(expPrimCls2)){
             resultClass = expPrimCls1;

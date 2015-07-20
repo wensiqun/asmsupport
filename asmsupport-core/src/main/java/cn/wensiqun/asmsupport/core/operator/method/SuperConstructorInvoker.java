@@ -46,7 +46,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
         for(int i=0; i<argTypes.length; i++){
             argTypes[i] = arguments[i].getResultType();
         }
-        insnHelper.invokeConstructor(getActuallyOwner().getType(), mtdEntity.getArgTypes());
+        insnHelper.invokeConstructor(getActuallyOwner().getType(), mtdEntity.getParameterAsmTypes());
     }
 
     @Override

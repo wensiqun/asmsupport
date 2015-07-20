@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public abstract class AClass implements IClass {
+public abstract class BaseClass implements IClass {
 	
 	protected AsmsupportClassLoader classLoader;
 	
@@ -48,7 +48,7 @@ public abstract class AClass implements IClass {
     
     protected String pkg;
     
-    public AClass(AsmsupportClassLoader classLoader) {
+    public BaseClass(AsmsupportClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
@@ -94,8 +94,8 @@ public abstract class AClass implements IClass {
             return true;
         }
         
-        if(obj instanceof AClass){
-            if(name.equals(((AClass)obj).name)){
+        if(obj instanceof BaseClass){
+            if(name.equals(((BaseClass)obj).name)){
                 return true;
             }
         }else{

@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -38,7 +38,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     
     protected final void checkFactor(IClass ftrCls){
         if(ftrCls.isPrimitive() ||
-           AClassUtils.isPrimitiveWrapAClass(ftrCls)){
+           IClassUtils.isPrimitiveWrapAClass(ftrCls)){
            if(ftrCls.equals(block.getClassHolder().getType(boolean.class)) ||
               ftrCls.equals(block.getClassHolder().getType(float.class)) ||
               ftrCls.equals(block.getClassHolder().getType(double.class)) ||

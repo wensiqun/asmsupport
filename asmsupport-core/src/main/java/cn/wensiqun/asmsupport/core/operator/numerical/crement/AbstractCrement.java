@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 public abstract class AbstractCrement extends AbstractNumerical {
 
@@ -42,7 +42,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 		if(resultType != null &&
 		   !classHolder.getType(boolean.class).equals(resultType) &&
 		   !classHolder.getType(Boolean.class).equals(resultType) &&
-		   (AClassUtils.isPrimitiveWrapAClass(resultType) || 
+		   (IClassUtils.isPrimitiveWrapAClass(resultType) || 
 		   resultType.isPrimitive())) {
 			this.factor = factor;
 		} else {
@@ -73,7 +73,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	@Override
 	protected void verifyArgument() {
 		IClass fatCls = factor.getResultType();
-		if (!AClassUtils.isArithmetical(fatCls)) {
+		if (!IClassUtils.isArithmetical(fatCls)) {
 			throw new ArithmeticException(
 					"cannot execute arithmetic operator whit " + fatCls);
 		}
@@ -105,7 +105,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 				factor.loadToStack(block);
 			}
 		} else {
-			IClass primitiveClass = AClassUtils.getPrimitiveAClass(targetClass);
+			IClass primitiveClass = IClassUtils.getPrimitiveAClass(targetClass);
 			Type primitiveType = primitiveClass.getType();
 
 			// factor load to stack

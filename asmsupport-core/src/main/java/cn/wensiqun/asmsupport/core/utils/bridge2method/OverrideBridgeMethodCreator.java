@@ -101,16 +101,16 @@ public class OverrideBridgeMethodCreator {
     private MethodBuilderImpl createBridgeMethodCreator(AMethodMeta method, AMethodMeta overriden){
     	final String name = method.getName();
     	
-    	IClass[] argClasses = method.getArgClasses();
+    	IClass[] argClasses = method.getParameterTypes();
     	
-    	String[] argNames = method.getArgNames();
+    	String[] argNames = method.getParameterNames();
     	
     	IClass returnClass = overriden.getReturnClass();
     	
     	IClass[] exceptions = method.getExceptions();
     	
     	//remove abstract flag first and then add bridge flag.
-    	int access = (overriden.getModifier() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
+    	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
     	return MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
                 returnClass, exceptions, access, new KernelMethodBody(){

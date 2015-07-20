@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 
 public class DummyInterfaceMethod extends AbstractDummy {
@@ -108,7 +108,7 @@ public class DummyInterfaceMethod extends AbstractDummy {
      * @return
      */
     public DummyInterfaceMethod argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
+        this.argTypes = IClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
 
@@ -163,7 +163,7 @@ public class DummyInterfaceMethod extends AbstractDummy {
      * @return
      */
     public DummyInterfaceMethod throws_(Class<?>... exceptionTypes){
-        this.exceptionTypes = AClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
+        this.exceptionTypes = IClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
         return this;
     }
     

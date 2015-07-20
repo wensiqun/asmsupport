@@ -41,7 +41,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
@@ -96,7 +96,7 @@ public class ClassModifier extends AbstractClassBuilder {
 						argCls, 
 						defaultArgNames, 
 						asmsupportClassLoader.getType(void.class), 
-						AClassUtils.convertToAClass(asmsupportClassLoader, constructor.getExceptionTypes()),
+						IClassUtils.convertToAClass(asmsupportClassLoader, constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{
 				Method method = clazz.getDeclaredMethod(name, argClasses);
@@ -104,7 +104,7 @@ public class ClassModifier extends AbstractClassBuilder {
 						argCls, 
 						defaultArgNames, 
 						asmsupportClassLoader.getType(method.getReturnType()), 
-						AClassUtils.convertToAClass(asmsupportClassLoader, method.getExceptionTypes()),
+						IClassUtils.convertToAClass(asmsupportClassLoader, method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}
 			
@@ -307,7 +307,7 @@ public class ClassModifier extends AbstractClassBuilder {
 	        
 	        if(modifyConstructorBodies != null){
 	            for(KernelModifiedMethodBody mbfm : modifyConstructorBodies){
-	                 Type[] argumentTypes = mbfm.getMethod().getMeta().getArgTypes();
+	                 Type[] argumentTypes = mbfm.getMethod().getMeta().getParameterAsmTypes();
 	                 String desc = Type.getMethodDescriptor(Type.VOID_TYPE, argumentTypes);
 	                 mbfm.setSuperConstructorOperators(superConstructorMap.get(desc));
 	            }

@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.client.def.behavior;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -25,7 +25,7 @@ public interface ObjectBehavior extends CommonBehavior {
     /**
      * Checkcast current object to specify type.
      */
-    ObjectBehavior cast(AClass type);
+    ObjectBehavior cast(IClass type);
     
     /**
      * Do an instanceof operator from current object.
@@ -35,6 +35,6 @@ public interface ObjectBehavior extends CommonBehavior {
     /**
      * Do an instanceof operator from current object.
      */
-    BoolBehavior instanceof_(AClass type);
+    BoolBehavior instanceof_(IClass type);
     
 }

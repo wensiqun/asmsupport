@@ -43,7 +43,7 @@ import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
 import cn.wensiqun.asmsupport.client.def.behavior.UncertainBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * If asmsupport can't know what's the parameter type, use this parameter
@@ -68,7 +68,7 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
     }
 
     @Override
-    public UncertainParam cast(AClass type) {
+    public UncertainParam cast(IClass type) {
         return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
     }
 
@@ -78,7 +78,7 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
     }
 
     @Override
-    public BoolParam instanceof_(AClass type) {
+    public BoolParam instanceof_(IClass type) {
         return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
     }
 

@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.client.def.behavior.ObjectBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -40,10 +40,10 @@ public class ObjectParam extends CommonParam implements ObjectBehavior {
 
     @Override
     public UncertainParam call(String methodName, Param... arguments) {
-    	if(target instanceof Value && ((Value)target).getValue() instanceof AClass) {
+    	if(target instanceof Value && ((Value)target).getValue() instanceof IClass) {
     		return new UncertainParam(cursor, 
     				cursor.getPointer().call(
-    						(AClass)((Value)target).getValue(), 
+    						(IClass)((Value)target).getValue(), 
     						methodName, ParamPostern.getTarget(arguments)));
     	}
         return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
@@ -55,7 +55,7 @@ public class ObjectParam extends CommonParam implements ObjectBehavior {
     }
 
     @Override
-    public UncertainParam cast(AClass type) {
+    public UncertainParam cast(IClass type) {
         return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
     }
 
@@ -65,7 +65,7 @@ public class ObjectParam extends CommonParam implements ObjectBehavior {
     }
 
     @Override
-    public BoolParam instanceof_(AClass type) {
+    public BoolParam instanceof_(IClass type) {
         return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
     }
 

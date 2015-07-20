@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.standard.def.var.meta;
 
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
@@ -70,7 +69,7 @@ public class Field extends VarMeta {
 
     /**
      * <p>
-     * Returns the <code>{@link AClass}</code> object representing the class or interface
+     * Returns the <code>{@link IClass}</code> object representing the class or interface
      * that declares the field represented by this <code>{@link Field}</code> object.
      * For example :
      * </p>

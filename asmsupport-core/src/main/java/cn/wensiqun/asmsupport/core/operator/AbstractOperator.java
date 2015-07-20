@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * 
@@ -170,18 +170,18 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                 insnHelper.cast(original.getType(), target.getType());
 
                 return;
-            } else if (original.isPrimitive() && AClassUtils.isPrimitiveWrapAClass(target)) {
-                Type targetPrimitiveType = AClassUtils.getPrimitiveAClass(target).getType();
+            } else if (original.isPrimitive() && IClassUtils.isPrimitiveWrapAClass(target)) {
+                Type targetPrimitiveType = IClassUtils.getPrimitiveAClass(target).getType();
 
                 insnHelper.cast(original.getType(), targetPrimitiveType);
 
                 insnHelper.box(targetPrimitiveType);
 
                 return;
-            } else if (AClassUtils.isPrimitiveWrapAClass(original) && target.isPrimitive()) {
+            } else if (IClassUtils.isPrimitiveWrapAClass(original) && target.isPrimitive()) {
                 insnHelper.unbox(original.getType());
 
-                Type originalPrimitiveType = AClassUtils.getPrimitiveAClass(original).getType();
+                Type originalPrimitiveType = IClassUtils.getPrimitiveAClass(original).getType();
 
                 insnHelper.cast(originalPrimitiveType, target.getType());
 
@@ -199,13 +199,13 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
                     return;
                 }
             } else if (original.isPrimitive()
-                    && (AClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
+                    && (IClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
                             .equals(block.getClassHolder().getType(Object.class)))) {
                 insnHelper.box(original.getType());
                 return;
-            } else if (AClassUtils.isPrimitiveWrapAClass(original)
+            } else if (IClassUtils.isPrimitiveWrapAClass(original)
                     && target.isPrimitive()
-                    && original.equals(AClassUtils.getPrimitiveWrapAClass(target))) {
+                    && original.equals(IClassUtils.getPrimitiveWrapAClass(target))) {
                 Type primType = InstructionHelper.getUnBoxedType(original.getType());
                 insnHelper.unbox(original.getType());
                 insnHelper.cast(primType, target.getType());

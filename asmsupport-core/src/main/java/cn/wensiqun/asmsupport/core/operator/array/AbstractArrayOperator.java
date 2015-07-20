@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
@@ -65,7 +65,7 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
 			for(KernelParam par : parDims){
-				if(!AClassUtils.checkAssignable(par.getResultType(), block.getType(int.class))) {
+				if(!IClassUtils.checkAssignable(par.getResultType(), block.getType(int.class))) {
 					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + block.getType(int.class) + "");
 				}
 			}

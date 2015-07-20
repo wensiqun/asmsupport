@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
@@ -113,15 +113,15 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				//1.check name
 				//2.check accessible
 				if(!name.equals(value.getName()) ||
-				   !AClassUtils.visible(whereCall, directCallClass, value.getActuallyOwner(), value.getModifier())){
+				   !IClassUtils.visible(whereCall, directCallClass, value.getActuallyOwner(), value.getModifiers())){
 				    return;	
 				}
 				
-				int entityLength = ArrayUtils.getLength(value.getArgClasses());
+				int entityLength = ArrayUtils.getLength(value.getParameterTypes());
 				int argumentLength = ArrayUtils.getLength(argumentTypes);
 				
 				//check arity of method
-				if(ModifierUtils.isVarargs(value.getModifier())){
+				if(ModifierUtils.isVarargs(value.getModifiers())){
 					if(argumentLength < entityLength - 1){
 						return;
 					}
@@ -185,8 +185,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					return false;
 				}
 				
-				IClass[] childArgs = child.getArgClasses();
-				IClass[] superArgs = super_.getArgClasses();
+				IClass[] childArgs = child.getParameterTypes();
+				IClass[] superArgs = super_.getParameterTypes();
 				if(ArrayUtils.isSameLength(childArgs, superArgs)){
 					if(ArrayUtils.isEmpty(childArgs) && ArrayUtils.isEmpty(superArgs)){
 						return true;
@@ -295,11 +295,11 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			
 			private void filter(IClass key, AMethodMeta entity){
 				
-				if(ModifierUtils.isVarargs(entity.getModifier())){
+				if(ModifierUtils.isVarargs(entity.getModifiers())){
 					return;
 				}
 				
-				IClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getParameterTypes();
 				
 				if(ArrayUtils.getLength(argumentTypes) != ArrayUtils.getLength(potentialMethodArgs)) {
                     return;
@@ -330,10 +330,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 			private void filter(IClass key, AMethodMeta entity){
-				if(ModifierUtils.isVarargs(entity.getModifier())){
+				if(ModifierUtils.isVarargs(entity.getModifiers())){
 					return;
 				}
-				IClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getParameterTypes();
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
 					IClass actuallyArg = argumentTypes[i];
 					IClass potentialArg = potentialMethodArgs[i];
@@ -360,11 +360,11 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 			private void filter(IClass key, AMethodMeta entity){
-				if(!ModifierUtils.isVarargs(entity.getModifier())){
+				if(!ModifierUtils.isVarargs(entity.getModifiers())){
 					return;
 				}
 				
-				IClass[] potentialMethodArgs = entity.getArgClasses();
+				IClass[] potentialMethodArgs = entity.getParameterTypes();
 				int potentialArgumentLength = ArrayUtils.getLength(potentialMethodArgs);
 				for(int i=0; i < potentialArgumentLength - 1 ; i++){
 					IClass actuallyArg = argumentTypes[i];
@@ -426,7 +426,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
             //in order to third phase choose.
             Set<AMethodMeta> newMost = new HashSet<AMethodMeta>();
             for(AMethodMeta m : most){
-                if(!ModifierUtils.isVarargs(m.getModifier())) {
+                if(!ModifierUtils.isVarargs(m.getModifiers())) {
                     newMost.add(m);
                 }
             }
@@ -447,7 +447,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	private AMethodMeta[] mostSpecificMethod(AMethodMeta method1, AMethodMeta method2){
 		
 		//fixed-arity method compare;
-		if(!ModifierUtils.isVarargs(method1.getModifier()) && !ModifierUtils.isVarargs(method2.getModifier())){
+		if(!ModifierUtils.isVarargs(method1.getModifiers()) && !ModifierUtils.isVarargs(method2.getModifiers())){
 			if(mostSpecificFixedArityMethod(method1, method2)){
 				return new AMethodMeta[]{method1};
 			}else if(mostSpecificFixedArityMethod(method2, method1)){
@@ -455,7 +455,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}else{
 				return new AMethodMeta[]{method1, method2};
 			}
-		}else if(ModifierUtils.isVarargs(method1.getModifier()) && ModifierUtils.isVarargs(method2.getModifier())){
+		}else if(ModifierUtils.isVarargs(method1.getModifiers()) && ModifierUtils.isVarargs(method2.getModifiers())){
 			if(mostSpecificVarargMethod(method1, method2)){
 				return new AMethodMeta[]{method1};
 			}else if(mostSpecificVarargMethod(method2, method1)){
@@ -475,8 +475,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @return
 	 */
 	private boolean mostSpecificFixedArityMethod(AMethodMeta method1, AMethodMeta method2){
-		IClass[] t = method1.getArgClasses();
-		IClass[] u = method2.getArgClasses();
+		IClass[] t = method1.getParameterTypes();
+		IClass[] u = method2.getParameterTypes();
 		int n = ArrayUtils.getLength(t);
 		if(n > 0){
 			for(int j=0; j<n; j++){
@@ -499,8 +499,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	 * @return
 	 */
 	private boolean mostSpecificVarargMethod(AMethodMeta m1, AMethodMeta m2){
-		IClass[] t = m1.getArgClasses();
-		IClass[] u = m2.getArgClasses();
+		IClass[] t = m1.getParameterTypes();
+		IClass[] u = m2.getParameterTypes();
 		
 		int n;
 		int k;

@@ -4,11 +4,10 @@ import cn.wensiqun.asmsupport.client.block.ProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.sample.client.json.generator.AbstractGeneratorChain;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 public class BaseGeneratorChain extends AbstractGeneratorChain {
 
@@ -16,7 +15,7 @@ public class BaseGeneratorChain extends AbstractGeneratorChain {
     public boolean match(IClass type, ClassHolder holder) {
         return type.isPrimitive() ||
                type.isChildOrEqual(holder.getType(CharSequence.class)) || 
-               AClassUtils.isPrimitiveWrapAClass(type);
+               IClassUtils.isPrimitiveWrapAClass(type);
     }
 
     @Override

@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -76,10 +76,10 @@ public class KernelArrayStore extends AbstractArrayOperator {
     @Override
 	protected void verifyArgument() {
 		super.verifyArgument();
-		if(!AClassUtils.checkAssignable(value.getResultType(), storeClass)) {
+		if(!IClassUtils.checkAssignable(value.getResultType(), storeClass)) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + storeClass + "");
 		}
-		if(!AClassUtils.checkAssignable(lastDim.getResultType(), block.getType(int.class))) {
+		if(!IClassUtils.checkAssignable(lastDim.getResultType(), block.getType(int.class))) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getResultType() + " to " + block.getType(int.class) + "");
 		}
 	}

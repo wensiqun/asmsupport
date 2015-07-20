@@ -81,18 +81,18 @@ public class CommonMethodInvoker extends MethodInvoker {
             argumentsToStack();
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
-                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes(), true);
+                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes(), true);
             }else{
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VarMeta ve = ((IVariable)callObjReference).getMeta();
                 	 if(ve.getName().equals(AsmsupportConstant.SUPER)){
-                         insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                         insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
                      }else {
-                         insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                         insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
                      }
                 }else{
-                	insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getArgTypes());
+                	insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
                 }
             }
             if(!isSaveReference()){

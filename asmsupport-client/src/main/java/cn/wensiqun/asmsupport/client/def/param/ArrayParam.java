@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
 import cn.wensiqun.asmsupport.client.def.behavior.ArrayBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
 /**
@@ -66,7 +66,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
     }
 
     @Override
-    public UncertainParam cast(AClass type) {
+    public UncertainParam cast(IClass type) {
         return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
     }
 
@@ -76,7 +76,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
     }
 
     @Override
-    public BoolParam instanceof_(AClass type) {
+    public BoolParam instanceof_(IClass type) {
         return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
     }
     

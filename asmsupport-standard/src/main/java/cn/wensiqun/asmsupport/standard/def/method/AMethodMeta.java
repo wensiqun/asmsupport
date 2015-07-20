@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 
@@ -142,7 +142,7 @@ public class AMethodMeta implements Cloneable {
         }
 
         Class<?>[] exceptionTypes = m.getExceptionTypes();
-        IClass[] exceptionAclasses = AClassUtils.convertToAClass(classHolder, exceptionTypes);
+        IClass[] exceptionAclasses = IClassUtils.convertToAClass(classHolder, exceptionTypes);
         
         AMethodMeta me = new AMethodMeta(
         		classHolder, m.getName(), owner,
@@ -191,17 +191,15 @@ public class AMethodMeta implements Cloneable {
         return owner;
     }
 
-    public Type[] getArgTypes() {
+    public Type[] getParameterAsmTypes() {
         return argTypes;
     }
 
-    //getParameterTypes
-    @Deprecated
-    public IClass[] getArgClasses() {
+    public IClass[] getParameterTypes() {
         return argClasses;
     }
 
-    public String[] getArgNames() {
+    public String[] getParameterNames() {
         return argNames;
     }
 
@@ -209,8 +207,7 @@ public class AMethodMeta implements Cloneable {
         return returnType;
     }
 
-    @Deprecated
-    public int getModifier() {
+    public int getModifiers() {
         return modifier;
     }
 

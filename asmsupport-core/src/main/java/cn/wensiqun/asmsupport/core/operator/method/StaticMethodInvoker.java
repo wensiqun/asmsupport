@@ -43,7 +43,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     @Override
 	protected void initAdditionalProperties() {
 		super.initAdditionalProperties();
-		if(!ModifierUtils.isStatic(mtdEntity.getModifier())){
+		if(!ModifierUtils.isStatic(mtdEntity.getModifiers())){
 			throw new IllegalArgumentException("\"" + mtdEntity.toString() + "\" is not a static method ");
 		}
 	}
@@ -52,7 +52,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     public void doExecute() {
         argumentsToStack();
         LOG.print("invoke static method : " + name);
-        insnHelper.invokeStatic(methodOwner.getType(), name, getReturnType(), mtdEntity.getArgTypes());
+        insnHelper.invokeStatic(methodOwner.getType(), name, getReturnType(), mtdEntity.getParameterAsmTypes());
         if(!isSaveReference()){
             if(!getReturnType().equals(Type.VOID_TYPE)){
                 insnHelper.pop();

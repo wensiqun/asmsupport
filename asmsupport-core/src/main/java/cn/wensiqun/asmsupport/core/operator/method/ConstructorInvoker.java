@@ -60,7 +60,7 @@ public class ConstructorInvoker extends MethodInvoker {
         }
         argumentsToStack();
         LOG.print("call the constrcutor");
-        insnHelper.invokeConstructor(methodOwner.getType(), mtdEntity.getArgTypes());
+        insnHelper.invokeConstructor(methodOwner.getType(), mtdEntity.getParameterAsmTypes());
     }
 
     @Override

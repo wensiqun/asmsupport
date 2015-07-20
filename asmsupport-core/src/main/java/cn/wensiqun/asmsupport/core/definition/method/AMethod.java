@@ -93,7 +93,7 @@ public class AMethod {
         CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
         this.insnHelper = new CommonInstructionHelper(this);
 
-        if (!ModifierUtils.isAbstract(meta.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
             if (methodBody != null) {
                 this.methodBody = methodBody;
                 this.methodBody.setScope(new Scope(this.locals, null));
@@ -130,7 +130,7 @@ public class AMethod {
      */
     private void createMethodVisitor() {
 
-        if (!ModifierUtils.isAbstract(meta.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
             for (Executable exe : getMethodBody().getQueue()) {
                 if (exe instanceof AbstractKernelBlock) {
                     getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
@@ -144,7 +144,7 @@ public class AMethod {
             exceptions[i++] = te.getType().getInternalName();
         }
 
-        MethodVisitor mv = classVisitor.visitMethod(meta.getModifier(), meta.getName(), meta.getDescription(), null,
+        MethodVisitor mv = classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
                 exceptions);
 
         insnHelper.setMv(new StackLocalMethodVisitor(mv, stack));
@@ -156,7 +156,7 @@ public class AMethod {
      */
     public void startup() {
         createMethodVisitor();
-        if (!ModifierUtils.isAbstract(meta.getModifier())) {
+        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
             this.methodBody.execute();
             this.methodBody.endMethodBody();
         }

@@ -90,7 +90,7 @@ public class MethodBuilderImpl implements IMethodBuilder {
 		method = new AMethod(meta, context.getClassVisitor(), context.getClassLoader(), methodBody, mtdCrtMode);
 		if(method.getMeta().getName().equals(AsmsupportConstant.INIT)){
 			owner.addConstructor(meta);
-		}else if(ModifierUtils.isBridge(method.getMeta().getModifier())){
+		}else if(ModifierUtils.isBridge(method.getMeta().getModifiers())){
 			owner.getBridgeMethod().add(meta);
 		}else{
 			owner.addDeclaredMethod(meta);

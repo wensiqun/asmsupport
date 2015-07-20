@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -31,7 +30,7 @@ import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 /**
  * The AClass Helper
  */
-public class AClassUtils {
+public class IClassUtils {
     
     /**
      * Check the specify type is primitive wrap type.
@@ -254,8 +253,6 @@ public class AClassUtils {
     }
 
     /**
-     * Get all interface from an {@link AClass}
-     * 
      * @return List<Class<?>> all interface list
      */
     public static List<IClass> getAllInterfaces(IClass aclass) {
@@ -272,7 +269,7 @@ public class AClassUtils {
     }
 
     /**
-     * Convert {@link Class} list to {@link AClass} list
+     * Convert {@link Class} list to {@link IClass} list
      */
     public static IClass[] convertToAClass(ClassHolder classHoler, Class<?>[] classes) {
         if (classes == null) {

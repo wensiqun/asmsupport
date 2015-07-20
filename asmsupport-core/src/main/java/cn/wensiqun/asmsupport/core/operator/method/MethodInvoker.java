@@ -34,7 +34,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -77,7 +77,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
                 ((IVariable) argu).availableFor(this);
             }
             argu.loadToStack(block);
-            cast(argu.getResultType(), mtdEntity.getArgClasses()[i]);
+            cast(argu.getResultType(), mtdEntity.getParameterTypes()[i]);
         }
     }
     
@@ -86,7 +86,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             insnHelper.cast(from.getType(), to.getType());
         }else if(from.isPrimitive()){
             insnHelper.box(from.getType());
-        }else if(AClassUtils.isPrimitiveWrapAClass(from) && to.isPrimitive()){
+        }else if(IClassUtils.isPrimitiveWrapAClass(from) && to.isPrimitive()){
             Type primType = InstructionHelper.getUnBoxedType(from.getType());
             insnHelper.unbox(from.getType());
             insnHelper.cast(primType, to.getType());
@@ -113,19 +113,19 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             }
         }
         
-        if(ModifierUtils.isVarargs(mtdEntity.getModifier())){
+        if(ModifierUtils.isVarargs(mtdEntity.getModifiers())){
             
-        	IClass[] foundMethodArgTypes = mtdEntity.getArgClasses();
+        	IClass[] foundMethodArgTypes = mtdEntity.getParameterTypes();
         	
         	if(ArrayUtils.getLength(foundMethodArgTypes) != ArrayUtils.getLength(arguments) ||
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
         		
-        		int fixedArgsLen = mtdEntity.getArgClasses().length - 1;
+        		int fixedArgsLen = mtdEntity.getParameterTypes().length - 1;
                 KernelParam[] fixedArgs = new KernelParam[fixedArgsLen];
                 System.arraycopy(arguments, 0, fixedArgs, 0, fixedArgsLen);
 
                 KernelArrayValue variableVarifyArauments;
-                ArrayClass arrayClass = (ArrayClass)mtdEntity.getArgClasses()[mtdEntity.getArgClasses().length - 1];
+                ArrayClass arrayClass = (ArrayClass)mtdEntity.getParameterTypes()[mtdEntity.getParameterTypes().length - 1];
                 variableVarifyArauments = block.newarray(arrayClass, 
                        (KernelParam[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
                 variableVarifyArauments.asArgument();
@@ -195,7 +195,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
      * @return
      */
     public int getModifiers() {
-        return this.mtdEntity.getModifier();
+        return this.mtdEntity.getModifiers();
     }
 
     @Override

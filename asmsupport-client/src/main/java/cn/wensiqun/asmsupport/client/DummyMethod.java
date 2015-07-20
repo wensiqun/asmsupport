@@ -16,10 +16,9 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.AClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AClassUtils;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 public class DummyMethod extends DummyAccessControl<DummyMethod> {
 
@@ -174,7 +173,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @param ret
      * @return
      */
-    public DummyMethod return_(AClass ret) {
+    public DummyMethod return_(IClass ret) {
         this.returnType = ret;
         return this;
     }
@@ -237,7 +236,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod argTypes(Class<?>... argus){
-        this.argTypes = AClassUtils.convertToAClass(getClassLoader(), argus);
+        this.argTypes = IClassUtils.convertToAClass(getClassLoader(), argus);
         return this;
     }
     
@@ -290,7 +289,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
      * @return
      */
     public DummyMethod throws_(Class<?>... exceptionTypes){
-        this.exceptionTypes = AClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
+        this.exceptionTypes = IClassUtils.convertToAClass(getClassLoader(), exceptionTypes);
         return this;
     }
     
