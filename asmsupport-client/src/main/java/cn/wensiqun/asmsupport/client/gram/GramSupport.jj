@@ -16,7 +16,8 @@ import cn.wensiqun.asmsupport.client.def.param.NumParam;
 import cn.wensiqun.asmsupport.client.def.param.BoolParam;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class GramSupport
 {
@@ -28,33 +29,54 @@ public class GramSupport
   
   public static void main(String args []) throws ParseException
   {
-    /*GramSupport parser;
-    if (args.length == 0) {
-      System.out.println("Java Parser Version 1.1:  Reading from standard input . . .");
-      parser = new GramSupport(System.in);
-    } else if (args.length == 1) {
-      System.out.println("Java Parser Version 1.1:  Reading from file " + args[0] + " . . .");
-      try {
-        parser = new GramSupport(new java.io.FileInputStream(args[0]));
-      } catch (java.io.FileNotFoundException e) {
-        System.out.println("Java Parser Version 1.1:  File " + args[0] + " not found.");
-        return;
-      }
-    } else {
-      System.out.println("Java Parser Version 1.1:  Usage is one of:");
-      System.out.println("         java GramSupport < inputfile");
-      System.out.println("OR");
-      System.out.println("         java GramSupport inputfile");
-      return;
-    }
-    try {
-      parser.BlockStatement();
-      System.out.println("Java Parser Version 1.1:  Java program parsed successfully.");
-    } catch (ParseException e) {
-      System.out.println(e.getMessage());
-      System.out.println("Java Parser Version 1.1:  Encountered errors during parse.");
-    }*/
   }
+
+  static class ParamWrapper {
+
+	private Param single;
+
+    /**
+     * The Param array
+     */	
+	private Object array;
+	
+	public void setSingle(Param single) {
+		if(array == null) {
+			this.single = single;
+		} else {
+			throw new ASMSupportException("The field 'array' has alread not null.");
+		}
+	}
+	
+	public void setArray(Object array) {
+		if(single == null) {
+			this.array = array;
+		} else {
+			throw new ASMSupportException("The field 'single' has alread not null.");
+		}
+	}
+	
+	public <T> T get() {
+		if(single != null) {
+			return (T) single;
+		} else {
+			return (T) array;
+		}
+	}
+		
+	}
+
+  static class IdenDim  {
+    String iden;
+    int dim;  }
+
+  static class ParamDim  {
+    Param param;
+    int dim;  }
+
+  static class DeclaratorMeta  {
+    IdenDim id;
+    ParamWrapper val;  }
 }
 
 PARSER_END(GramSupport)
@@ -937,14 +959,14 @@ IClass Type() :
 {
   (
     base=PrimitiveType()
-  |    {    base = block.loadType(Name());    }  )
+  |    {    base = block.getType(Name());    }  )
   (
     "[" "]"	  {
 	    dim++;	  }
   )*
   {
     if(dim > 0)    {
-      block.getArrayClass(base, dim);    } else    {
+      block.getArrayType(base, dim);    } else    {
       return base;    }  }
 }
 
@@ -953,41 +975,41 @@ IClass PrimitiveType() :
 {
   "boolean"
   {
-    return block.loadType(boolean.class);  }
+    return block.getType(boolean.class);  }
 |
   "char"
   {
-    return block.loadType(char.class);
+    return block.getType(char.class);
   }
 |
   "byte"
   {
-    return block.loadType(byte.class);
+    return block.getType(byte.class);
   }
 |
   "short"
   {
-    return block.loadType(short.class);
+    return block.getType(short.class);
   }
 |
   "int"
   {
-    return block.loadType(int.class);
+    return block.getType(int.class);
   }
 |
   "long"
   {
-    return block.loadType(long.class);
+    return block.getType(long.class);
   }
 |
   "float"
   {
-    return block.loadType(float.class);
+    return block.getType(float.class);
   }
 |
   "double"
   {
-    return block.loadType(double.class);
+    return block.getType(double.class);
   }
 }
 
@@ -996,7 +1018,7 @@ IClass ResultType() :
 {
   "void"
   {
-    return block.loadType(void.class);  }
+    return block.getType(void.class);  }
 |
   {
     return Type();
@@ -1032,30 +1054,76 @@ void BlockStatement() :
   Statement()
 }
 
-void VariableDeclarator() :
-{}
+DeclaratorMeta VariableDeclarator() :
 {
-  VariableDeclaratorId() [ "=" VariableInitializer() ]
+  DeclaratorMeta meta = new DeclaratorMeta();
+  IdenDim id;
+  ParamWrpper val;
+}
+{
+  id = VariableDeclaratorId() [ "=" val = VariableInitializer() ]
+  {
+    meta.id = id;
+    meta.val = val;
+    return meta;  }
 }
 
-void VariableDeclaratorId() :
-{}
+IdenDim VariableDeclaratorId() :
 {
-  <IDENTIFIER> ( "[" "]" )*
+  Token token;
+  IdenDim idenDim = new IdenDim();
+}
+{
+  token = <IDENTIFIER> ( "[" "]" { idenDim.dim++; } )*
+  {
+    idenDim.iden = token.image;
+    return idenDim;  }
 }
 
-void VariableInitializer() :
-{}
+ParamWrapper VariableInitializer() :
 {
-  ArrayInitializer()
-|
-  Expression()
+  ParamWrapper result = new ParamWrapper();
+  Object current;}
+{
+  (
+  current = ArrayInitializer()
+  {
+    result.setArray(current);
+  }
+  |
+  current = Expression()
+  {
+    result.setSingle((Param)current);
+  }
+  )
+  {
+    return result;  }
 }
 
-void ArrayInitializer() :
-{}
+Object ArrayInitializer() :
 {
-  "{" [ VariableInitializer() ( LOOKAHEAD(2) "," VariableInitializer() )* ] [ "," ] "}"
+  List<Object> array = new ArrayList<Object>();
+  ParamWrapper element; 
+}
+{
+  "{"
+  [
+    element = VariableInitializer()
+    {
+      array.add(element.get());
+    }
+    (
+      LOOKAHEAD(2) ","
+      element = VariableInitializer()
+      {
+        array.add(element.get());
+      }
+    )*
+  ]
+  [ "," ]
+  "}"
+  {
+    return array.toArray(new Object[array.size()]);  }
 }
 
 Param Expression() :
@@ -1272,12 +1340,14 @@ Param PrimaryExpression() :
   PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
 }
 
-void PrimaryPrefix() :
+Param PrimaryPrefix() :
 {}
 {
   Literal()
 |
   "this"
+  {
+    return block.this_();  }
 |
   "super" "." <IDENTIFIER>
 |
@@ -1334,29 +1404,55 @@ void NullLiteral() :
   "null"
 }
 
-void Arguments() :
-{}
+Param[] Arguments() :
 {
-  "(" [ ArgumentList() ] ")"
+    Param[] args = null;
+}
+{
+  ("("
+   [ args = ArgumentList() ]
+   ")"
+  )
+  {
+    if(args == null)    {
+      return new Param[0];    }
+    return args;  }
 }
 
-void ArgumentList() :
-{}
+Param[] ArgumentList() :
 {
-  Expression() ( "," Expression() )*
+    List<Param> args = new ArrayList<Param>();
+    Param cur;
+}
+{
+(    
+  cur = Expression()
+  {
+    args.add(cur);  }
+  (
+    "," cur = Expression()    {
+      args.add(cur);    }
+  )*
+){
+  return args.toArray(new Param[args.size()]);}
 }
 
 Param AllocationExpression() :
-{}
+{
+    IClass type;
+}
 {
   LOOKAHEAD(2)
-  "new" PrimitiveType() ArrayDimsAndInits()
+  "new" type = PrimitiveType() ArrayDimsAndInits()
+  {
+      }
 |
   "new" Name()
     (
       ArrayDimsAndInits()
     |
-      Arguments()
+      Arguments()      {
+              }
     )
 }
 
@@ -1374,9 +1470,38 @@ void ArrayDimsAndInits() :
 }
 
 void LocalVariableDeclaration() :
-{}
 {
-  [ "final" ] Type() VariableDeclarator() ( "," VariableDeclarator() )*
+    IClass type;
+    List<DeclaratorMeta> metaes;
+    DeclaratorMeta meta;
+    boolean isFinal = false;
+}
+{
+  [ "final" {isFinal = true;}]
+  type = Type()
+  meta = VariableDeclarator()  {
+    metaes.add(meta);  }
+  ( "," meta = VariableDeclarator()
+  {
+    metaes.add(meta);  }
+  )*
+  {
+    for(DeclaratorMeta m : metaes)    {
+      //Get finally type
+      IdenDim id = m.idenDim;
+      if(id.dim > 0)      {
+        if(type.isArray())        {
+          type = block.getArrayType(type.getRootComponentClass(), id.dim + type.getDimension());        } else        {
+          type = block.getArrayType(type, id.dim);        }      }
+      Object value = meta.val;
+      if(value == null)      {
+        return block.var(id.iden, type, block.null_(type));      }
+      if(type.isArray())      {
+              }
+      else      {
+        return block.var(id.iden, type, );
+      }
+    }  }
 }
 /*
  * Statement syntax follows.

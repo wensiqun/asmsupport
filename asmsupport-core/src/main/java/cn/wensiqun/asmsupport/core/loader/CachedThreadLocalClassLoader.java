@@ -185,7 +185,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 			if(AnyException.class.equals(javaClass)) {
 				clazz = new AnyException(this);
 			} else if(javaClass.isArray()){
-				clazz = getArrayClass(ClassUtils.getRootComponentType(javaClass), 
+				clazz = getArrayType(ClassUtils.getRootComponentType(javaClass), 
 						Type.getType(javaClass).getDimensions());
 			}else{
 				clazz = new ProductClass(javaClass, this);
@@ -212,7 +212,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 					}
 				}
 				if(reflexClazz.isArray()){
-					clazz = getArrayClass(ClassUtils.getRootComponentType(reflexClazz), 
+					clazz = getArrayType(ClassUtils.getRootComponentType(reflexClazz), 
 							Type.getType(reflexClazz).getDimensions());
 				}else{
 					clazz = new ProductClass(reflexClazz, this);
@@ -224,12 +224,12 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	}
 
 	@Override
-	public ArrayClass getArrayClass(Class<?> root, int dim) {
-		return getArrayClass(getType(root), dim);
+	public ArrayClass getArrayType(Class<?> root, int dim) {
+		return getArrayType(getType(root), dim);
 	}
 
 	@Override
-	public ArrayClass getArrayClass(IClass root, int dim) {
+	public ArrayClass getArrayType(IClass root, int dim) {
 		if(root.isArray()){
             throw new ASMSupportException("The class " + root + " has already an array class");
         }

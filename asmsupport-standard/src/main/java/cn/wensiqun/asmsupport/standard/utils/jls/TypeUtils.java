@@ -183,7 +183,7 @@ public abstract class TypeUtils {
             if (basicElementSuperTypes != null) {
                 superTypes = new IClass[basicElementSuperTypes.length];
                 for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = subType.getClassLoader().getArrayClass(basicElementSuperTypes[i], arrayType.getDimension());
+                    superTypes[i] = subType.getClassLoader().getArrayType(basicElementSuperTypes[i], arrayType.getDimension());
                 }
             } else {
                 superTypes = new IClass[2];

@@ -588,13 +588,13 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public IClass getArrayClass(Class<?> cls, int dim) {
-		return targetBlock.getArrayClass(cls, dim);
+	public IClass getArrayType(Class<?> cls, int dim) {
+		return targetBlock.getArrayType(cls, dim);
 	}
 
 	@Override
-	public IClass getArrayClass(IClass rootComponent, int dim) {
-		return targetBlock.getArrayClass(rootComponent, dim);
+	public IClass getArrayType(IClass rootComponent, int dim) {
+		return targetBlock.getArrayType(rootComponent, dim);
 	}
     
     public LocVar getLocVar(String name) {

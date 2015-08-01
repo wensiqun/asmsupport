@@ -67,13 +67,13 @@ public class DummyImportable extends AbstractDummy {
 		}
 
 		@Override
-		public IClass getArrayClass(Class<?> root, int dim) {
-			return target.getArrayClass(root, dim);
+		public IClass getArrayType(Class<?> root, int dim) {
+			return target.getArrayType(root, dim);
 		}
 
 		@Override
-		public IClass getArrayClass(IClass root, int dim) {
-			return target.getArrayClass(root, dim);
+		public IClass getArrayType(IClass root, int dim) {
+			return target.getArrayType(root, dim);
 		}
 
 		@Override

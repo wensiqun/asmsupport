@@ -18,8 +18,8 @@ public interface ClassHolder {
 	
 	IClass getType(String className);
 	
-	IClass getArrayClass(Class<?> root, int dim);
+	IClass getArrayType(Class<?> root, int dim);
 
-	IClass getArrayClass(IClass root, int dim);
+	IClass getArrayType(IClass root, int dim);
 	
 }

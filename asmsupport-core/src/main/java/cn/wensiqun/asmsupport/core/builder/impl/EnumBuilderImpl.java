@@ -248,7 +248,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if (existEnumConstant) {
             // create implicit global variable ENUM$VALUES for enum type
             createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
-                    + Opcodes.ACC_SYNTHETIC, asmsupportClassLoader.getArrayClass(sc, 1));
+                    + Opcodes.ACC_SYNTHETIC, asmsupportClassLoader.getArrayType(sc, 1));
 
         }
         existedStaticBlock = true;
@@ -270,7 +270,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     @Override
     protected void beforeCreate() {
 
-        final IClass enumArrayType = asmsupportClassLoader.getArrayClass(sc, 1);
+        final IClass enumArrayType = asmsupportClassLoader.getArrayType(sc, 1);
 
         // create "publis static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,

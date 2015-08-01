@@ -873,13 +873,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 	}
 
 	@Override
-    public IClass getArrayClass(Class<?> cls, int dim) {
-        return getClassHolder().getArrayClass(cls, dim);
+    public IClass getArrayType(Class<?> cls, int dim) {
+        return getClassHolder().getArrayType(cls, dim);
     }
 
     @Override
-    public IClass getArrayClass(IClass rootComponent, int dim) {
-        return getClassHolder().getArrayClass(rootComponent, dim);
+    public IClass getArrayType(IClass rootComponent, int dim) {
+        return getClassHolder().getArrayType(rootComponent, dim);
     }
     
     /**

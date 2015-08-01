@@ -102,7 +102,7 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 		
 		GlobalVariable gv = val(getMethodDeclaringClass()).field("ENUM$VALUES");
 		
-		KernelArrayValue av = newarray(getClassHolder().getArrayClass(getMethodDeclaringClass(), 1), values);
+		KernelArrayValue av = newarray(getClassHolder().getArrayType(getMethodDeclaringClass(), 1), values);
 		assign(gv, av);
 	}
 	
