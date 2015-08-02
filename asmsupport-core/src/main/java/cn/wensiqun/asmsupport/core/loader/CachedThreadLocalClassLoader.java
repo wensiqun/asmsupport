@@ -16,12 +16,15 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
-	
+
 	private static ThreadLocal<CachedThreadLocalClassLoader> threadLocalClassLoader = new ThreadLocal<CachedThreadLocalClassLoader>();
-	
+
 	private volatile Map<BytecodeKey, BytecodeValue> classByteMap = new ConcurrentHashMap<BytecodeKey, BytecodeValue>();
-	
-	private volatile Map<String, IClass> cacheAsmsuportClass = new ConcurrentHashMap<String, IClass>(); 
+
+	/**
+	 * Key : description
+	 */
+	private volatile Map<String, IClass> cacheAsmsuportClass = new ConcurrentHashMap<String, IClass>();
 
 	private CachedThreadLocalClassLoader() {
 	}
@@ -30,18 +33,23 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		super(parent);
 	}
 
-	public Class<?> defineClass(String name, byte[] classBytes, IClass itype) throws Exception {
+	public Class<?> defineClass(String name, byte[] classBytes, IClass itype)
+			throws Exception {
 		BytecodeKey bytecodeKey = new BytecodeKey(name);
-		if(!classByteMap.containsKey(bytecodeKey)) {
+		if (!classByteMap.containsKey(bytecodeKey)) {
 			Class<?> clazz;
 			if (getParent().getResource(bytecodeKey.getName()) == null) {
-				Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class });
+				Method method = ClassLoader.class.getDeclaredMethod(
+						"defineClass", new Class[] { String.class,
+								byte[].class, int.class, int.class });
 				boolean originalAccessible = method.isAccessible();
 				method.setAccessible(true);
-				clazz = (Class<?>) method.invoke(getParent(), new Object[] { name, classBytes, 0, classBytes.length });
+				clazz = (Class<?>) method.invoke(getParent(), new Object[] {
+						name, classBytes, 0, classBytes.length });
 				method.setAccessible(originalAccessible);
 			} else {
-				clazz = super.defineClass(name, classBytes, 0, classBytes.length);
+				clazz = super.defineClass(name, classBytes, 0,
+						classBytes.length);
 			}
 			cacheAsmsuportClass.put(name, itype);
 			classByteMap.put(bytecodeKey, new BytecodeValue(classBytes, clazz));
@@ -51,15 +59,15 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	}
 
 	@Override
-	public Class<?> doAsmsupportFindClass(String name) throws ClassNotFoundException {
+	public Class<?> doAsmsupportFindClass(String name)
+			throws ClassNotFoundException {
 		BytecodeValue bv = classByteMap.get(new BytecodeKey(name));
-		if(bv != null) {
+		if (bv != null) {
 			return bv.getClazz();
 		}
 		return null;
 	}
 
-	
 	/**
 	 * format like : a/b/c/D.class
 	 */
@@ -77,15 +85,15 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		}
 
 		if (stream == null) {
-			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(key.getName());
+			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(
+					key.getName());
 		}
-		
-		if(stream == null) {
+
+		if (stream == null) {
 			throw new ASMSupportException("Class not found : " + name);
 		}
 		return stream;
 	}
-	
 
 	private static class BytecodeKey {
 
@@ -104,13 +112,15 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		 * @param name
 		 */
 		private BytecodeKey(String name) {
-			if(name.endsWith(".class")) {
-				this.name = name.substring(0, name.length() - 6).replace('.', '/') + ".class";
+			if (name.endsWith(".class")) {
+				this.name = name.substring(0, name.length() - 6).replace('.',
+						'/')
+						+ ".class";
 			} else {
 				this.name = translateClassNameToResource(name);
 			}
 		}
-		
+
 		private String translateClassNameToResource(String classQualifiedName) {
 			return classQualifiedName.replace('.', '/') + ".class";
 		}
@@ -140,13 +150,13 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 				return false;
 			return true;
 		}
-		
+
 	}
-	
+
 	private static class BytecodeValue {
-		
+
 		private byte[] bytecodes;
-		
+
 		private Class<?> clazz;
 
 		public BytecodeValue(byte[] bytecodes, Class<?> clazz) {
@@ -161,17 +171,18 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		public Class<?> getClazz() {
 			return clazz;
 		}
-		
+
 	}
 
 	public static CachedThreadLocalClassLoader getInstance() {
 		return getInstance(null);
 	}
-	
+
 	public static CachedThreadLocalClassLoader getInstance(ClassLoader parent) {
 		CachedThreadLocalClassLoader ctcl = threadLocalClassLoader.get();
-		if(ctcl == null) {
-			ctcl = parent == null ? new CachedThreadLocalClassLoader() : new CachedThreadLocalClassLoader(parent);
+		if (ctcl == null) {
+			ctcl = parent == null ? new CachedThreadLocalClassLoader()
+					: new CachedThreadLocalClassLoader(parent);
 			threadLocalClassLoader.set(ctcl);
 		}
 		return ctcl;
@@ -181,44 +192,46 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	public IClass getType(Class<?> javaClass) {
 		String key = javaClass.getName();
 		IClass clazz = cacheAsmsuportClass.get(key);
-		if(clazz == null) {
-			if(AnyException.class.equals(javaClass)) {
+		if (clazz == null) {
+			if (AnyException.class.equals(javaClass)) {
 				clazz = new AnyException(this);
-			} else if(javaClass.isArray()){
-				clazz = getArrayType(ClassUtils.getRootComponentType(javaClass), 
-						Type.getType(javaClass).getDimensions());
-			}else{
+			} else if (javaClass.isArray()) {
+				clazz = getArrayType(
+						ClassUtils.getRootComponentType(javaClass), Type
+								.getType(javaClass).getDimensions());
+			} else {
 				clazz = new ProductClass(javaClass, this);
 			}
 			cacheAsmsuportClass.put(key, clazz);
 		}
 		return clazz;
 	}
-    
+
 	@Override
 	public IClass getType(String possible) {
-		String key = getClassName(possible);
-		IClass clazz = cacheAsmsuportClass.get(key);
-		if(clazz == null) {
-			if("ANY_EXCEPTION".equals(key)) {
+		String desc = getDescription(possible);
+		IClass clazz = cacheAsmsuportClass.get(desc);
+		if (clazz == null) {
+			if ("E".equals(desc)) {
 				clazz = new AnyException(this);
 			} else {
-				Class<?> reflexClazz = ClassUtils.primitiveToClass(key);
-				if(reflexClazz == null) {
+				Class<?> reflexClazz = ClassUtils.primitiveToClass(desc);
+				if (reflexClazz == null) {
 					try {
-						reflexClazz = loadClass(key);
+						reflexClazz = loadClass(desc);
 					} catch (ClassNotFoundException e) {
 						throw new ASMSupportException(e);
 					}
 				}
-				if(reflexClazz.isArray()){
-					clazz = getArrayType(ClassUtils.getRootComponentType(reflexClazz), 
-							Type.getType(reflexClazz).getDimensions());
-				}else{
+				if (reflexClazz.isArray()) {
+					clazz = getArrayType(
+							ClassUtils.getRootComponentType(reflexClazz), Type
+									.getType(reflexClazz).getDimensions());
+				} else {
 					clazz = new ProductClass(reflexClazz, this);
 				}
 			}
-			cacheAsmsuportClass.put(key, clazz);
+			cacheAsmsuportClass.put(desc, clazz);
 		}
 		return clazz;
 	}
@@ -230,46 +243,123 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 
 	@Override
 	public ArrayClass getArrayType(IClass root, int dim) {
-		if(root.isArray()){
-            throw new ASMSupportException("The class " + root + " has already an array class");
-        }
-        String nameKey = getArrayClassKey(root, dim);
-		ArrayClass arrayClass = (ArrayClass) cacheAsmsuportClass.get(nameKey.toString());
-        if(arrayClass == null) {
-        	StringBuilder arrayClassDesc = new StringBuilder();
-            int tmpDim = dim;
-            while(tmpDim-- > 0){
-            	arrayClassDesc.append("[");
-            }
-            arrayClassDesc.append(root.getDescription());
-            arrayClass = new ArrayClass(root, dim, this);
-            cacheAsmsuportClass.put(nameKey, arrayClass);
-        }
+		String nameKey = getDescription(root, dim);
+		ArrayClass arrayClass = (ArrayClass) cacheAsmsuportClass.get(nameKey
+				.toString());
+		if (arrayClass == null) {
+			StringBuilder arrayClassDesc = new StringBuilder();
+			int tmpDim = dim;
+			while (tmpDim-- > 0) {
+				arrayClassDesc.append("[");
+			}
+			arrayClassDesc.append(root.getDescription());
+			arrayClass = new ArrayClass(root, dim, this);
+			cacheAsmsuportClass.put(nameKey, arrayClass);
+		}
 		return arrayClass;
 	}
+
+	private String getDescription(IClass root, int dim) {
+		StringBuilder nameKey = new StringBuilder();
+		while (dim-- > 0) {
+			nameKey.append('[');
+		}
+		if (root.isPrimitive()) {
+			nameKey.append(root.getDescription());
+		} else {
+			nameKey.append(root.getDescription());
+		}
+		return nameKey.toString();
+	}
+
+	/**
+	 * The possible may be a class name, description.
+	 * 
+	 * <ul>
+	 *     <li>Primitive type name : int</li>
+	 *     <li>Primitive type description : I</li>
+	 *     <li>Primitive array type name : [I</li>
+	 *     <li>Primitive array type description : [I</li>
+	 *     <li>Primitive array declared type name : int[][]</li>
+	 *     <li>Object type name : java.lang.Object</li>
+	 *     <li>Object type description : Ljava/lang/Object;</li>
+	 *     <li>Object array type name : [Ljava.lang.Object;</li>
+	 *     <li>Object array type description : [Ljava/lang/Object;</li>
+	 *     <li>Object array declared type name : java.lang.Object[][]</li>
+	 * </ul>
+	 * 
+	 * @param possible
+	 * @return
+	 */
+	private String getDescription(String possible) {
+		if (possible.endsWith(";") || "V".equals(possible)
+				|| "Z".equals(possible) || "C".equals(possible)
+				|| "B".equals(possible) || "S".equals(possible)
+				|| "I".equals(possible) || "F".equals(possible)
+				|| "J".equals(possible) || "D".equals(possible)
+				|| "E".equals(possible)) {
+			return possible;
+		}
+
+		if ("void".equals(possible)) {
+			return "V";
+		}
+
+		if ("boolean".equals(possible)) {
+			return "Z";
+		}
+
+		if ("char".equals(possible)) {
+			return "C";
+		}
+
+		if ("byte".equals(possible)) {
+			return "B";
+		}
+
+		if ("short".equals(possible)) {
+			return "S";
+		}
+
+		if ("int".equals(possible)) {
+			return "I";
+		}
+
+		if ("float".equals(possible)) {
+			return "F";
+		}
+
+		if ("long".equals(possible)) {
+			return "J";
+		}
+
+		if ("double".equals(possible)) {
+			return "D";
+		}
+
+		if ("ANY_EXCEPTION".equals(possible)) {
+			return "E";
+		}
+
+		if (possible.startsWith("[")) {
+			return possible.replace('.', '/');
+		}
+
+		if (possible.endsWith("]")) {
+			int splitIdx = possible.indexOf('[');
+			String componentDesc = getDescription(possible.substring(0,
+					splitIdx));
+			String dimension = possible.substring(splitIdx).replace("]", "");
+			return dimension + componentDesc;
+		}
+
+		return "L" + possible.replace('.', '/') + ";";
+	}
 	
-    private String getArrayClassKey(IClass root, int dim) {
-    	StringBuilder nameKey = new StringBuilder();
-    	while(dim-- > 0) {
-    		nameKey.append('[');
-    	}
-    	if(root.isPrimitive()) {
-    		nameKey.append(root.getDescription());
-    	} else {
-    		nameKey.append('L').append(root.getName());
-    	}
-    	return nameKey.toString();
-    }
-    
-    private String getClassName(String possible) {
-    	if (possible.contains("/")) {
-			//for exampe : Ljava/lang/Object; -> java.lang.Object
-    		possible = possible.replace('/', '.');
-    		if(possible.startsWith("L")) {
-    			possible = possible.substring(1, possible.length() - 1);
-    		}
-    	}
-    	return possible;
-    }
-    
+	public static void main(String... args) {
+		/*CachedThreadLocalClassLoader cc = new CachedThreadLocalClassLoader();
+		System.out.println(cc.getDescription("int[][]"));
+		System.out.println(Type.getDescriptor(String[][].class));*/
+	}
+
 }

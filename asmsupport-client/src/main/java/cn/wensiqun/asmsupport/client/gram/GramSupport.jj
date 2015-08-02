@@ -30,53 +30,6 @@ public class GramSupport
   public static void main(String args []) throws ParseException
   {
   }
-
-  static class ParamWrapper {
-
-	private Param single;
-
-    /**
-     * The Param array
-     */	
-	private Object array;
-	
-	public void setSingle(Param single) {
-		if(array == null) {
-			this.single = single;
-		} else {
-			throw new ASMSupportException("The field 'array' has alread not null.");
-		}
-	}
-	
-	public void setArray(Object array) {
-		if(single == null) {
-			this.array = array;
-		} else {
-			throw new ASMSupportException("The field 'single' has alread not null.");
-		}
-	}
-	
-	public <T> T get() {
-		if(single != null) {
-			return (T) single;
-		} else {
-			return (T) array;
-		}
-	}
-		
-	}
-
-  static class IdenDim  {
-    String iden;
-    int dim;  }
-
-  static class ParamDim  {
-    Param param;
-    int dim;  }
-
-  static class DeclaratorMeta  {
-    IdenDim id;
-    ParamWrapper val;  }
 }
 
 PARSER_END(GramSupport)
@@ -1014,14 +967,17 @@ IClass PrimitiveType() :
 }
 
 IClass ResultType() :
-{}
+{
+  IClass type;
+}
 {
   "void"
   {
     return block.getType(void.class);  }
 |
+  type = Type()
   {
-    return Type();
+    return type;
   } 
 }
 
@@ -1055,29 +1011,30 @@ void BlockStatement() :
 }
 
 DeclaratorMeta VariableDeclarator() :
-{
-  DeclaratorMeta meta = new DeclaratorMeta();
-  IdenDim id;
-  ParamWrpper val;
+{  DeclaratorMeta meta = new DeclaratorMeta();  IdentifyWrapper id;  ParamWrapper val;
 }
 {
-  id = VariableDeclaratorId() [ "=" val = VariableInitializer() ]
+  id = VariableDeclaratorId()
   {
-    meta.id = id;
-    meta.val = val;
-    return meta;  }
+    meta.id = id;  }
+  [
+  "=" val = VariableInitializer()  {
+    meta.val = val;  }
+  ]
+  {
+    return meta;   }
 }
 
-IdenDim VariableDeclaratorId() :
+IdentifyWrapper VariableDeclaratorId() :
 {
   Token token;
-  IdenDim idenDim = new IdenDim();
+  IdentifyWrapper idenWrap = new IdentifyWrapper();
 }
 {
-  token = <IDENTIFIER> ( "[" "]" { idenDim.dim++; } )*
+  token = <IDENTIFIER> ( "[" "]" { idenWrap.dim++; } )*
   {
-    idenDim.iden = token.image;
-    return idenDim;  }
+    idenWrap.iden = token.image;
+    return idenWrap;  }
 }
 
 ParamWrapper VariableInitializer() :
@@ -1136,7 +1093,9 @@ Param Expression() :
  * a primary expression.  Consider adding a semantic predicate to work
  * around this.
  */
-{}
+{
+
+}
 {
   ConditionalExpression()
   [ 
@@ -1144,82 +1103,240 @@ Param Expression() :
   ]
 }
 
-void AssignmentOperator() :
-{}
+String AssignmentOperator() :
 {
-  "=" | "*=" | "/=" | "%=" | "+=" | "-=" | "<<=" | ">>=" | ">>>=" | "&=" | "^=" | "|="
+  Token token;
+}
+{
+(  token = "="| token = "*="| token = "/="| token = "%="| token = "+="| token = "-="| token = "<<="| token = ">>="| token = ">>>="| token = "&="| token = "^="| token = "|="
+)
+{  return token.image;
+}
 }
 
-void ConditionalExpression() :
-{}
+Param ConditionalExpression() :
 {
-  ConditionalOrExpression() [ "?" Expression() ":" ConditionalExpression() ]
+  Param left;
+  Param trueResult;
+  Param falseResult;
+}
+{
+  left = ConditionalOrExpression()
+  [ "?" trueResult = Expression() ":" falseResult = ConditionalExpression()
+  {
+    left = block.ternary(left, trueResult, falseResult);  }
+  ]
+  {
+    return left;  }
 }
 
-void ConditionalOrExpression() :
-{}
+Param ConditionalOrExpression() :
 {
-  ConditionalAndExpression() ( "||" ConditionalAndExpression() )*
+  Param left;
+  Param right;
+}
+{
+  left = ConditionalAndExpression()
+  ( "||" right = ConditionalAndExpression()  {
+    left = block.or(left, right);  }
+  )*
+  {
+    return left;  }
 }
 
-void ConditionalAndExpression() :
-{}
+Param ConditionalAndExpression() :
 {
-  InclusiveOrExpression() ( "&&" InclusiveOrExpression() )*
+  Param left;
+  Param right;
+}
+{
+  left = InclusiveOrExpression()
+  ( "&&" right = InclusiveOrExpression()
+  {
+    left = block.and(left, right);
+  }
+  )*
+  {
+    return left;
+  }
 }
 
-void InclusiveOrExpression() :
-{}
+Param InclusiveOrExpression() :
 {
-  ExclusiveOrExpression() ( "|" ExclusiveOrExpression() )*
+  Param left;
+  Param right;
+}
+{
+  left = ExclusiveOrExpression()
+  ( "|" right = ExclusiveOrExpression()
+  {    left = block.bor(left, right);
+  }
+  )*
+  {
+    return left;  }
 }
 
-void ExclusiveOrExpression() :
-{}
+Param ExclusiveOrExpression() :
 {
-  AndExpression() ( "^" AndExpression() )*
+  Param left;
+  Param right;
+}
+{
+  left = AndExpression()
+  ( "^" right = AndExpression()
+  {
+    left = block.bxor(left, right);
+  }
+  )*
+  {    return left;
+  }
 }
 
-void AndExpression() :
-{}
+Param AndExpression() :
 {
-  EqualityExpression() ( "&" EqualityExpression() )*
+  Param left;
+  Param right;
+}
+{
+  left = EqualityExpression()
+  ( "&" right = EqualityExpression()
+  {
+    left = block.band(left, right);
+  }
+  )*
+  {
+    return left;  }
 }
 
-void EqualityExpression() :
-{}
+Param EqualityExpression() :
 {
-  InstanceOfExpression() ( ( "==" | "!=" ) InstanceOfExpression() )*
+  Param left;
+  Param right;
+  Token symbol;
+}
+{
+  left = InstanceOfExpression()
+  ( ( symbol = "==" | symbol= "!=" ) right = InstanceOfExpression()
+  {
+    if("==".equals(symbol.image))    {
+      left = block.eq(left, right);    }
+    else    {
+      left = block.ne(left, right);    }
+  }  )*
+  {
+    return left;  }
 }
 
-void InstanceOfExpression() :
-{}
+Param InstanceOfExpression() :
 {
-  RelationalExpression() [ "instanceof" Type() ]
+  Param left;
+  IClass type;
+}
+{
+  left = RelationalExpression()
+  [ "instanceof" type = Type()
+  {
+    return block.instanceof_(left, type);  }
+  ]
+  {
+    return left;  }
 }
 
-void RelationalExpression() :
-{}
+Param RelationalExpression() :
 {
-  ShiftExpression() ( ( "<" | ">" | "<=" | ">=" ) ShiftExpression() )*
+  Param left;
+  Param right;
+  Token symbol;
+}
+{
+  left = ShiftExpression()
+  ( ( symbol = "<" | symbol = ">" | symbol = "<=" | symbol = ">=" ) right = ShiftExpression()
+  {
+    if("<".equals(symbol.image))    {
+      left = block.lt(left, right);    }
+    else if (">".equals(symbol.image))    {
+      left = block.gt(left, right);    }
+    else if ("<=".equals(symbol.image))
+    {
+      left = block.le(left, right);
+    }
+    else    {
+      left = block.ge(left, right);    }  }
+  )*
+  {
+    return left;  }
 }
 
-void ShiftExpression() :
-{}
+Param ShiftExpression() :
 {
-  AdditiveExpression() ( ( "<<" | ">>" | ">>>" ) AdditiveExpression() )*
+  Param left;
+  Param right;
+  Token symbol;
+}
+{
+  left =  AdditiveExpression()
+  ( ( symbol = "<<" | symbol = ">>" | symbol =  ">>>" ) right = AdditiveExpression()
+  {
+    if("<<".equals(symbol.image))    {
+      left = block.shl(left, right);    }
+    else if (">>".equals(symbol.image))    {
+      left = block.shr(left, right);    }
+    else
+    {
+      left = block.ushr(left, right);
+    }  }
+  )*
+  {    return left;
+  }
 }
 
-void AdditiveExpression() :
-{}
+Param AdditiveExpression() :
 {
-  MultiplicativeExpression() ( ( "+" | "-" ) MultiplicativeExpression() )*
+  Param left;
+  Param right;
+  Token symbol;
+}
+{
+  left = MultiplicativeExpression()
+  ( ( symbol = "+" | symbol = "-" ) right = MultiplicativeExpression()
+  {
+    if("+".equals(symbol.image))
+    {
+      left = block.add(left, right);
+    }
+    else
+    {
+      left = block.sub(left, right);
+    }  }
+  )*
+  {
+    return left;
+  }
 }
 
-void MultiplicativeExpression() :
-{}
+Param MultiplicativeExpression() :
 {
-  UnaryExpression() ( ( "*" | "/" | "%" ) UnaryExpression() )*
+  Param left;
+  Param right;
+  Token symbol;
+}
+{
+  left =  UnaryExpression()
+  ( ( symbol = "*" | symbol = "/" | symbol = "%" ) right = UnaryExpression()
+  {    if("*".equals(symbol.image))
+    {
+      left = block.mul(left, right);
+    }
+    else if("/".equals(symbol.image))
+    {
+      left = block.div(left, right);
+    }
+    else    {
+      left = block.mod(left, right);    }
+  }
+  )*
+  {    return left;
+  }
 }
 
 Param UnaryExpression() :
@@ -1341,24 +1458,48 @@ Param PrimaryExpression() :
 }
 
 Param PrimaryPrefix() :
-{}
 {
-  Literal()
+  Param param;
+  String name;
+  IClass type;
+  Token token;
+}
+{
+  param = Literal()
+  {
+    return param;  }
 |
   "this"
   {
     return block.this_();  }
 |
-  "super" "." <IDENTIFIER>
+  "super" "." token = <IDENTIFIER>
+  {
+    return block.super_().field(token.image);  }
 |
-  "(" Expression() ")"
+  "(" param = Expression() ")"
+  {
+    return param;  }
 |
   AllocationExpression()
 |
   LOOKAHEAD( ResultType() "." "class" )
-  ResultType() "." "class"
+  type = ResultType() "." "class"
+  {
+    return block.val(type);  }
 |
-  Name()
+  name = Name()
+  {
+    int dotIdx = name.lastIndexOf('.');
+    if(dotIdx > 0)    {
+      String clazz = name.substring(0, dotIdx);
+      return block.val(block.getType(clazz))
+             .field(name.substring(dotIdx + 1, name.length()));    }
+    else    {
+      Param var = block.getLocVar(name);
+      if(var == null)      {
+        var = block.field(name);      }
+      return var;    }  }
 }
 
 Param PrimarySuffix(Param owner) :
@@ -1374,34 +1515,70 @@ Param PrimarySuffix(Param owner) :
   Arguments()
 }
 
-void Literal() :
-{}
+Param Literal() :
 {
-  <INTEGER_LITERAL>
+  Param val;
+  Token token;
+}
+{
+  token = <INTEGER_LITERAL>
+  {
+    String valueStr = token.image;
+    boolean isLong = valueStr.endsWith("L") || valueStr.endsWith("l");
+    if(isLong)    {
+      valueStr = valueStr.substring(0, valueStr.length() - 1);    }
+    if(valueStr.startsWith("0x") || valueStr.startsWith("0X"))    {
+      valueStr = valueStr.substring(2);
+      return isLong ? block.val(Long.valueOf(valueStr, 16)) :
+                      block.val(Integer.valueOf(valueStr, 16));    }
+    else if (valueStr.startsWith("0"))    {
+      valueStr = valueStr.substring(1);
+      return isLong ? block.val(Long.valueOf(valueStr, 8)) :
+                      block.val(Integer.valueOf(valueStr, 8));
+    } else     {
+      return isLong ? block.val(Long.valueOf(valueStr)) :
+                      block.val(Integer.valueOf(valueStr));    }
+  }
 |
-  <FLOATING_POINT_LITERAL>
+  token = <FLOATING_POINT_LITERAL>
+  {
+    String valueStr = token.image;
+    return block.val(Double.parseDouble(valueStr));
+  }
 |
-  <CHARACTER_LITERAL>
+  token = <CHARACTER_LITERAL>  {
+    return block.val(token.image.charAt(1));  }
 |
-  <STRING_LITERAL>
+  token = <STRING_LITERAL>
+  {
+    return block.val(token.image.substring(1, token.image.length() - 1));
+  }
 |
-  BooleanLiteral()
+  val = BooleanLiteral()
+  {
+    return val;  }
 |
-  NullLiteral()
+  val = NullLiteral()  {
+    return val;  }
 }
 
-void BooleanLiteral() :
+Param BooleanLiteral() :
 {}
 {
-  "true"
+  "true"  {
+    return block.val(true);  }
 |
   "false"
+  {
+    return block.val(false);
+  }
 }
 
-void NullLiteral() :
+Param NullLiteral() :
 {}
 {
-  "null"
+  "null"  {
+    return new NullFlag();  }
 }
 
 Param[] Arguments() :
@@ -1460,19 +1637,38 @@ Param AllocationExpression() :
  * The third LOOKAHEAD specification below is to parse to PrimarySuffix
  * if there is an expression between the "[...]".
  */
-void ArrayDimsAndInits() :
-{}
+ParamWrapper ArrayDimsAndInits() :
+{
+  Param param;
+}
 {
   LOOKAHEAD(2)
-  ( LOOKAHEAD(2) "[" Expression() "]" )+ ( LOOKAHEAD(2) "[" "]" )*
+  (  {
+    List<Param> dimensions = new ArrayList<Param>();
+  }
+  ( LOOKAHEAD(2) "[" param = Expression() "]"    {
+      dimensions.add(param);    }
+  )+ ( LOOKAHEAD(2) "[" "]" )*
+  {
+    ParamWrapper wrapper = new ParamWrapper();
+    wrapper.setDimensions(dimensions.toArray(new Param[dimensions.size()]));
+    return wrapper;  }
+  )
 |
-  ( "[" "]" )+ ArrayInitializer()
+  {
+    Object arrayValue;  }
+  ( "[" "]" )+ arrayValue = ArrayInitializer()
+  {
+    ParamWrapper wrapper = new ParamWrapper();
+    wrapper.setArray(arrayValue);
+    return wrapper;
+  }
 }
 
 void LocalVariableDeclaration() :
 {
     IClass type;
-    List<DeclaratorMeta> metaes;
+    List<DeclaratorMeta> metaes = new ArrayList<DeclaratorMeta>();
     DeclaratorMeta meta;
     boolean isFinal = false;
 }
@@ -1486,21 +1682,16 @@ void LocalVariableDeclaration() :
     metaes.add(meta);  }
   )*
   {
-    for(DeclaratorMeta m : metaes)    {
+    for(DeclaratorMeta m : metaes)    { 
       //Get finally type
-      IdenDim id = m.idenDim;
-      if(id.dim > 0)      {
-        if(type.isArray())        {
-          type = block.getArrayType(type.getRootComponentClass(), id.dim + type.getDimension());        } else        {
-          type = block.getArrayType(type, id.dim);        }      }
-      Object value = meta.val;
-      if(value == null)      {
-        return block.var(id.iden, type, block.null_(type));      }
-      if(type.isArray())      {
-              }
+      IdentifyWrapper idenWrap = m.id;
+      ParamWrapper value = m.val;
+      IClass actullyType = idenWrap.determineType(block, type);
+      
+      if(actullyType.isArray())      {
+        block.var(idenWrap.iden, actullyType, value.getArray(block, actullyType));      }
       else      {
-        return block.var(id.iden, type, );
-      }
+        block.var(idenWrap.iden, actullyType, value.get());      }
     }  }
 }
 /*

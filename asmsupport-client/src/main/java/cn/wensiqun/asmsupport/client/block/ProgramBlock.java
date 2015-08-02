@@ -201,8 +201,8 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	}
 
 	@Override
-	public ArrayParam makeArray(IClass aClass, Param... allocateDims) {
-		return new ArrayParam(cursor, targetBlock.makeArray(aClass, ParamPostern.getTarget(allocateDims)));
+	public ArrayParam makeArray(IClass aClass, Param... dimensions) {
+		return new ArrayParam(cursor, targetBlock.makeArray(aClass, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
