@@ -15,6 +15,7 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.param.NumParam;
 import cn.wensiqun.asmsupport.client.def.param.BoolParam;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import java.util.ArrayList;
 import java.util.List;
@@ -1094,13 +1095,61 @@ Param Expression() :
  * around this.
  */
 {
-
+Param var;
+String symbol = null;
+Param val = null;
 }
 {
-  ConditionalExpression()
+  var = ConditionalExpression()
   [ 
-    AssignmentOperator() Expression()
+    symbol = AssignmentOperator() val = Expression()
   ]
+  {
+    if("=".equals(symbol))    {
+      block.assign((Var)var, val);    }
+    else if ("*=".equals(symbol))    {
+      block.assign((Var)var, block.mul(var, val));    }
+    else if ("/=".equals(symbol))
+    {
+      block.assign((Var)var, block.div(var, val));
+    }
+    else if ("%=".equals(symbol))
+    {
+      block.assign((Var)var, block.mod(var, val));
+    }
+    else if ("+=".equals(symbol))
+    {
+      block.assign((Var)var, block.add(var, val));
+    }
+    else if ("-=".equals(symbol))
+    {
+      block.assign((Var)var, block.sub(var, val));
+    }
+    else if ("<<=".equals(symbol))
+    {
+      block.assign((Var)var, block.shl(var, val));
+    }
+    else if (">>=".equals(symbol))
+    {
+      block.assign((Var)var, block.shr(var, val));
+    }
+    else if (">>>=".equals(symbol))
+    {
+      block.assign((Var)var, block.ushr(var, val));
+    }
+    else if ("&=".equals(symbol))
+    {
+      block.assign((Var)var, block.band(var, val));
+    }
+    else if ("^=".equals(symbol))
+    {
+      block.assign((Var)var, block.bxor(var, val));
+    }
+    else if ("|=".equals(symbol))
+    {
+      block.assign((Var)var, block.bor(var, val));
+    }
+    return var;  }
 }
 
 String AssignmentOperator() :
@@ -1451,14 +1500,17 @@ UncertainParam CastExpression() :
 
 Param PrimaryExpression() :
 {
-    Param owner;
+   PrimaryData data;
 }
 {
-  PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
+  data = PrimaryPrefix()
+  ( LOOKAHEAD(2) data = PrimarySuffix(data))*  {
+    return owner.getOwner();  }
 }
 
-Param PrimaryPrefix() :
+PrimaryData PrimaryPrefix() :
 {
+  PrimaryData data = new PrimaryData();
   Param param;
   String name;
   IClass type;
@@ -1467,63 +1519,81 @@ Param PrimaryPrefix() :
 {
   param = Literal()
   {
-    return param;  }
+    data.setOwner(param);
+    return data;  }
 |
   "this"
   {
-    return block.this_();  }
+    data.setOwner(block.this_());
+    return data;  }
 |
   "super" "." token = <IDENTIFIER>
   {
-    return block.super_().field(token.image);  }
+    data.setSuperFieldOrMethod(token.image);
+    return data;
+  }
 |
   "(" param = Expression() ")"
   {
-    return param;  }
+    data.setOwner(param);
+    return data;  }
 |
-  AllocationExpression()
+  param = AllocationExpression()
+  {
+    data.setOwner(param);
+    return data;  }
 |
   LOOKAHEAD( ResultType() "." "class" )
   type = ResultType() "." "class"
   {
-    return block.val(type);  }
+    data.setOwner(param);
+    return data;  }
 |
   name = Name()
   {
-    int dotIdx = name.lastIndexOf('.');
-    if(dotIdx > 0)    {
-      String clazz = name.substring(0, dotIdx);
-      return block.val(block.getType(clazz))
-             .field(name.substring(dotIdx + 1, name.length()));    }
-    else    {
-      Param var = block.getLocVar(name);
-      if(var == null)      {
-        var = block.field(name);      }
-      return var;    }  }
+    data.setFieldOrMethod(token.image);
+    return data;
+  }
 }
 
-Param PrimarySuffix(Param owner) :
-{}
+PrimaryData PrimarySuffix(PrimaryData owner) :
+{
+Param param;
+Token token;
+Param[] params;
+PrimaryData retVal = new PrimaryData();
+}
 {
   LOOKAHEAD(2)
-  "." AllocationExpression()
+  "." param = AllocationExpression()
+  {
+    return null;  }
 |
-  "[" Expression() "]"
+  "[" param = Expression() "]"
+  {
+    
+  }
 |
-  "." <IDENTIFIER>
+  "." token = <IDENTIFIER>
+  {
+    retVal.setIdentifier(token.image);
+  }
 |
-  Arguments()
+  params = Arguments()
+  {
+    return block.call(owner, );  }
 }
 
 Param Literal() :
 {
   Param val;
   Token token;
+  String valueStr;
 }
 {
   token = <INTEGER_LITERAL>
   {
-    String valueStr = token.image;
+    valueStr = token.image;
     boolean isLong = valueStr.endsWith("L") || valueStr.endsWith("l");
     if(isLong)    {
       valueStr = valueStr.substring(0, valueStr.length() - 1);    }
@@ -1535,14 +1605,15 @@ Param Literal() :
       valueStr = valueStr.substring(1);
       return isLong ? block.val(Long.valueOf(valueStr, 8)) :
                       block.val(Integer.valueOf(valueStr, 8));
-    } else     {
+    }
+    else     {
       return isLong ? block.val(Long.valueOf(valueStr)) :
                       block.val(Integer.valueOf(valueStr));    }
   }
 |
   token = <FLOATING_POINT_LITERAL>
   {
-    String valueStr = token.image;
+    valueStr = token.image;
     return block.val(Double.parseDouble(valueStr));
   }
 |
@@ -1616,20 +1687,25 @@ Param[] ArgumentList() :
 
 Param AllocationExpression() :
 {
-    IClass type;
+IClass type;
+String typeStr;
+ParamWrapper paramWrapper = null;
+Param[] args;
 }
 {
   LOOKAHEAD(2)
-  "new" type = PrimitiveType() ArrayDimsAndInits()
+  "new" type = PrimitiveType() paramWrapper = ArrayDimsAndInits()
   {
-      }
+    return paramWrapper.getArray(block, type);  }
 |
-  "new" Name()
+  "new" typeStr = Name()
     (
-      ArrayDimsAndInits()
+      paramWrapper = ArrayDimsAndInits()
+      {
+        return paramWrapper.getArray(block, block.getType(typeStr));      }
     |
-      Arguments()      {
-              }
+      args = Arguments()      {
+        return block.new_(block.getType(typeStr), args);      }
     )
 }
 
