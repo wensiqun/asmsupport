@@ -32,69 +32,105 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	private CachedThreadLocalClassLoader(ClassLoader parent) {
 		super(parent);
 	}
+	
+    public Class<?> defineClass(String name, byte[] classBytes, IClass itype) throws Exception {
+        BytecodeKey bytecodeKey = new BytecodeKey(name);
+        if(!classByteMap.containsKey(bytecodeKey)) {
+        	Class<?> clazz;
+        	ClassLoader refCl = getReferenceClassLoader();
+            if (refCl != null && refCl.getResource(bytecodeKey.getName()) == null) {
+                Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class });
+                boolean originalAccessible = method.isAccessible();
+                method.setAccessible(true);
+                clazz = (Class<?>) method.invoke(getParent(), new Object[] { name, classBytes, 0, classBytes.length });
+                method.setAccessible(originalAccessible);
+            } else {
+                clazz = defineClass(name, classBytes, 0, classBytes.length);
+            }
+            cacheAsmsuportClass.put(name, itype);
+            classByteMap.put(bytecodeKey, new BytecodeValue(classBytes, clazz));
+            return clazz;
+        }
+        throw new ASMSupportException("The class " + name + "has alread exist.");
+    }
 
-	public Class<?> defineClass(String name, byte[] classBytes, IClass itype)
-			throws Exception {
-		BytecodeKey bytecodeKey = new BytecodeKey(name);
-		if (!classByteMap.containsKey(bytecodeKey)) {
-			Class<?> clazz;
-			if (getParent().getResource(bytecodeKey.getName()) == null) {
-				Method method = ClassLoader.class.getDeclaredMethod(
-						"defineClass", new Class[] { String.class,
-								byte[].class, int.class, int.class });
-				boolean originalAccessible = method.isAccessible();
-				method.setAccessible(true);
-				clazz = (Class<?>) method.invoke(getParent(), new Object[] {
-						name, classBytes, 0, classBytes.length });
-				method.setAccessible(originalAccessible);
-			} else {
-				clazz = super.defineClass(name, classBytes, 0,
-						classBytes.length);
-			}
-			cacheAsmsuportClass.put(name, itype);
-			classByteMap.put(bytecodeKey, new BytecodeValue(classBytes, clazz));
-			return clazz;
-		}
-		throw new ASMSupportException("The class " + name + "has alread exist.");
+    
+    @Override
+    public InputStream getResourceAsStream(String name) {
+        BytecodeKey key = new BytecodeKey(name);
+        BytecodeValue byteArray = classByteMap.get(key);
+        InputStream stream = null;
+        if (byteArray != null) {
+            stream = new ByteArrayInputStream(byteArray.getBytecodes());
+        }
+        
+        if(stream == null && getReferenceClassLoader() != null) {
+        	stream = getReferenceClassLoader().getResourceAsStream(key.getName());
+        }
+
+        if (stream == null) {
+            stream = super.getResourceAsStream(key.getName());
+        }
+
+        if (stream == null) {
+            stream = ClassLoader.getSystemClassLoader().getResourceAsStream(key.getName());
+        }
+        
+        if(stream == null) {
+        	stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(key.getName());
+        }
+        
+        if(stream == null) {
+            throw new ASMSupportException("Class not found : " + name);
+        }
+        
+        return stream;
+    }
+    
+    @Override
+	public Class<?> loadClass(String name) throws ClassNotFoundException {
+    	if(name.startsWith("[")) {
+            return Class.forName(name);
+        }
+    	
+    	BytecodeValue bv = classByteMap.get(new BytecodeKey(name));
+    	Class<?> clazz = bv == null ? null : bv.getClazz(); 
+    	
+    	if(clazz == null && getReferenceClassLoader() != null) {
+    		try {
+                clazz = getReferenceClassLoader().loadClass(name);
+    		} catch (ClassNotFoundException e) {
+    		}
+    	}
+    	
+    	if(clazz == null) {
+    		try {
+                clazz = super.loadClass(name);
+    		} catch (ClassNotFoundException e) {
+    		}
+        }
+    	
+    	if(clazz == null) {
+    		try {
+    			clazz = ClassLoader.getSystemClassLoader().loadClass(name);
+    		} catch (ClassNotFoundException e) {
+    		}
+        }
+    	
+    	if(clazz == null) {
+    		try {
+    			clazz = Thread.currentThread().getContextClassLoader().loadClass(name);
+    		} catch (ClassNotFoundException e) {
+    		}
+        }
+    	
+    	if(clazz == null) {
+    		throw new ClassNotFoundException(name);
+    	}
+    	
+    	return clazz;
 	}
-
-	@Override
-	public Class<?> doAsmsupportFindClass(String name)
-			throws ClassNotFoundException {
-		BytecodeValue bv = classByteMap.get(new BytecodeKey(name));
-		if (bv != null) {
-			return bv.getClazz();
-		}
-		return null;
-	}
-
-	/**
-	 * format like : a/b/c/D.class
-	 */
-	@Override
-	public InputStream getResourceAsStream(String name) {
-		BytecodeKey key = new BytecodeKey(name);
-		BytecodeValue byteArray = classByteMap.get(key);
-		InputStream stream = null;
-		if (byteArray != null) {
-			stream = new ByteArrayInputStream(byteArray.getBytecodes());
-		}
-
-		if (stream == null) {
-			stream = super.getResourceAsStream(key.getName());
-		}
-
-		if (stream == null) {
-			stream = ClassLoader.getSystemClassLoader().getResourceAsStream(
-					key.getName());
-		}
-
-		if (stream == null) {
-			throw new ASMSupportException("Class not found : " + name);
-		}
-		return stream;
-	}
-
+    
 	private static class BytecodeKey {
 
 		/**

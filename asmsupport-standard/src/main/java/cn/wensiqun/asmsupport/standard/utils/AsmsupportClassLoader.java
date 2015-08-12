@@ -4,6 +4,8 @@ import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 public abstract class AsmsupportClassLoader extends ClassLoader implements ClassHolder {
+	
+	private ClassLoader referenceClassLoader;
 
 	public AsmsupportClassLoader() {
 	}
@@ -22,19 +24,8 @@ public abstract class AsmsupportClassLoader extends ClassLoader implements Class
 	 */
 	public abstract Class<?> defineClass(String name, byte[] classBytes, IClass itype) throws Exception;
 
-	
-	@Override
-	public Class<?> findClass(String name) throws ClassNotFoundException {
-		if(name.startsWith("[")) {
-			return Class.forName(name);
-		}
-		Class<?> clazz = doAsmsupportFindClass(name);
-		if(clazz == null) {
-			clazz = super.findClass(name);
-		}
-		return clazz;
+	public ClassLoader getReferenceClassLoader() {
+		return referenceClassLoader;
 	}
 	
-	protected abstract Class<?> doAsmsupportFindClass(String name) throws ClassNotFoundException;
-
 }
