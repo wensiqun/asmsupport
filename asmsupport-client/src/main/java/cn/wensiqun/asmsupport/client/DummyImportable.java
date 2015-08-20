@@ -42,12 +42,6 @@ public class DummyImportable extends AbstractDummy {
 		}
 
 		@Override
-		public Class<?> defineClass(String name, byte[] classBytes, IClass itype)
-				throws Exception {
-			return target.defineClass(name, classBytes, itype);
-		}
-
-		@Override
 		public IClass getType(String className) {
 			IClass clazz;
 			//get from import map
@@ -76,12 +70,6 @@ public class DummyImportable extends AbstractDummy {
 			return target.getArrayType(root, dim);
 		}
 
-		@Override
-		public Class<?> doAsmsupportFindClass(String name)
-				throws ClassNotFoundException {
-			throw new UnsupportedOperationException("Never called.");
-		}
-
 		private String getSimpleName(String name) {
 			if(name.indexOf('.') > 0) {
 				return name.substring(name.lastIndexOf('.') + 1);
@@ -96,6 +84,18 @@ public class DummyImportable extends AbstractDummy {
 						"' of class '" + qualifierName + "' has already imported." + " It's exist class name is '" + classSimpleNameMap.get(simpleName) + "'");
 			}
 			classSimpleNameMap.put(simpleName, qualifierName);
+		}
+
+		@Override
+		public Class<?> defineClass(String name, byte[] classBytes)
+				throws Exception {
+			return target.defineClass(name, classBytes);
+		}
+
+		@Override
+		protected Class<?> afterDefineClass(Class<?> result, IClass itype)
+				throws Exception {
+			throw new UnsupportedOperationException("Never called.");
 		}
 	}
 }

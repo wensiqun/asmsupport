@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.wensiqun.asmsupport.core.utils.CommonUtils;
+import cn.wensiqun.asmsupport.core.utils.log.Log;
+import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.AnyException;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
@@ -17,6 +20,8 @@ import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
 
 public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 
+	private static final Log LOG = LogFactory.getLog(CachedThreadLocalClassLoader.class);
+	
 	private static ThreadLocal<CachedThreadLocalClassLoader> threadLocalClassLoader = new ThreadLocal<CachedThreadLocalClassLoader>();
 
 	private volatile Map<BytecodeKey, BytecodeValue> classByteMap = new ConcurrentHashMap<BytecodeKey, BytecodeValue>();
@@ -33,25 +38,46 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		super(parent);
 	}
 	
-    public Class<?> defineClass(String name, byte[] classBytes, IClass itype) throws Exception {
-        BytecodeKey bytecodeKey = new BytecodeKey(name);
+	@Override
+	public Class<?> defineClass(String name, byte[] classBytes)
+			throws Exception {
+		BytecodeKey bytecodeKey = new BytecodeKey(name);
         if(!classByteMap.containsKey(bytecodeKey)) {
-        	Class<?> clazz;
+        	Class<?> clazz = null;
         	ClassLoader refCl = getReferenceClassLoader();
-            if (refCl != null && refCl.getResource(bytecodeKey.getName()) == null) {
-                Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class });
-                boolean originalAccessible = method.isAccessible();
-                method.setAccessible(true);
-                clazz = (Class<?>) method.invoke(getParent(), new Object[] { name, classBytes, 0, classBytes.length });
-                method.setAccessible(originalAccessible);
-            } else {
-                clazz = defineClass(name, classBytes, 0, classBytes.length);
-            }
-            cacheAsmsuportClass.put(name, itype);
+        	if(refCl == null) {
+        		refCl = Thread.currentThread().getContextClassLoader();
+        	}
+        	try {
+                if (refCl.getResource(bytecodeKey.getName()) == null) {
+                    Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class });
+                    boolean originalAccessible = method.isAccessible();
+                    method.setAccessible(true);
+                    clazz = (Class<?>) method.invoke(refCl, new Object[] { name, classBytes, 0, classBytes.length });
+                    method.setAccessible(originalAccessible);
+                } else {
+            		if(LOG.isPrintEnabled()) {
+            			LOG.print("The class " + name + " has alread exist in classloader '" + refCl + "', define it to asmsupport classloader instead of.");
+            		}
+                }
+        	} catch (SecurityException e) {
+        		if(LOG.isPrintEnabled()) {
+        			LOG.print("Defineclass to classloader '" + refCl + "' error cause by " + e.getMessage() + " define it to asmsupport classloader instead of.");
+        		}
+        	}
+        	if(clazz == null) {
+        		clazz = defineClass(name, classBytes, 0, classBytes.length);
+        	}
             classByteMap.put(bytecodeKey, new BytecodeValue(classBytes, clazz));
             return clazz;
         }
-        throw new ASMSupportException("The class " + name + "has alread exist.");
+        throw new ASMSupportException("The class " + name + " has alread defined.");
+	}
+
+	@Override
+    public Class<?> afterDefineClass(Class<?> result, IClass itype) throws Exception {
+        cacheAsmsuportClass.put(itype.getDescription(), itype);
+        return result;
     }
 
     
@@ -245,7 +271,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 
 	@Override
 	public IClass getType(String possible) {
-		String desc = getDescription(possible);
+		String desc = CommonUtils.getDescription(possible);
 		IClass clazz = cacheAsmsuportClass.get(desc);
 		if (clazz == null) {
 			if ("E".equals(desc)) {
@@ -254,7 +280,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 				Class<?> reflexClazz = ClassUtils.primitiveToClass(desc);
 				if (reflexClazz == null) {
 					try {
-						reflexClazz = loadClass(desc);
+						reflexClazz = loadClass(CommonUtils.getClassname(possible));
 					} catch (ClassNotFoundException e) {
 						throw new ASMSupportException(e);
 					}
@@ -308,94 +334,5 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 		return nameKey.toString();
 	}
 
-	/**
-	 * The possible may be a class name, description.
-	 * 
-	 * <ul>
-	 *     <li>Primitive type name : int</li>
-	 *     <li>Primitive type description : I</li>
-	 *     <li>Primitive array type name : [I</li>
-	 *     <li>Primitive array type description : [I</li>
-	 *     <li>Primitive array declared type name : int[][]</li>
-	 *     <li>Object type name : java.lang.Object</li>
-	 *     <li>Object type description : Ljava/lang/Object;</li>
-	 *     <li>Object array type name : [Ljava.lang.Object;</li>
-	 *     <li>Object array type description : [Ljava/lang/Object;</li>
-	 *     <li>Object array declared type name : java.lang.Object[][]</li>
-	 * </ul>
-	 * 
-	 * @param possible
-	 * @return
-	 */
-	private String getDescription(String possible) {
-		if (possible.endsWith(";") || "V".equals(possible)
-				|| "Z".equals(possible) || "C".equals(possible)
-				|| "B".equals(possible) || "S".equals(possible)
-				|| "I".equals(possible) || "F".equals(possible)
-				|| "J".equals(possible) || "D".equals(possible)
-				|| "E".equals(possible)) {
-			return possible;
-		}
-
-		if ("void".equals(possible)) {
-			return "V";
-		}
-
-		if ("boolean".equals(possible)) {
-			return "Z";
-		}
-
-		if ("char".equals(possible)) {
-			return "C";
-		}
-
-		if ("byte".equals(possible)) {
-			return "B";
-		}
-
-		if ("short".equals(possible)) {
-			return "S";
-		}
-
-		if ("int".equals(possible)) {
-			return "I";
-		}
-
-		if ("float".equals(possible)) {
-			return "F";
-		}
-
-		if ("long".equals(possible)) {
-			return "J";
-		}
-
-		if ("double".equals(possible)) {
-			return "D";
-		}
-
-		if ("ANY_EXCEPTION".equals(possible)) {
-			return "E";
-		}
-
-		if (possible.startsWith("[")) {
-			return possible.replace('.', '/');
-		}
-
-		if (possible.endsWith("]")) {
-			int splitIdx = possible.indexOf('[');
-			String componentDesc = getDescription(possible.substring(0,
-					splitIdx));
-			String dimension = possible.substring(splitIdx).replace("]", "");
-			return dimension + componentDesc;
-		}
-
-		return "L" + possible.replace('.', '/') + ";";
-	}
-	
-	public static void main(String... args) {
-		/*CachedThreadLocalClassLoader cc = new CachedThreadLocalClassLoader();
-		System.out.println(cc.getDescription("int[][]"));
-		System.out.println(Type.getDescriptor(String[][].class));*/
-	}
 
 }

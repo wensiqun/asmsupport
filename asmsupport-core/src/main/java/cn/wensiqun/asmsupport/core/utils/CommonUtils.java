@@ -125,4 +125,154 @@ public class CommonUtils {
         }
     }
     
+	/**
+	 * The possible may be a class name, description.
+	 * 
+	 * <ul>
+	 *     <li>Primitive type name : int</li>
+	 *     <li>Primitive type description : I</li>
+	 *     <li>Primitive array type name : [I</li>
+	 *     <li>Primitive array type description : [I</li>
+	 *     <li>Primitive array declared type name : int[][]</li>
+	 *     <li>Object type name : java.lang.Object</li>
+	 *     <li>Object type description : Ljava/lang/Object;</li>
+	 *     <li>Object type internal name : java/lang/Object</li>
+	 *     <li>Object array type name : [Ljava.lang.Object;</li>
+	 *     <li>Object array type description : [Ljava/lang/Object;</li>
+	 *     <li>Object array declared type name : java.lang.Object[][]</li>
+	 * </ul>
+	 * 
+	 * @param possible
+	 * @return
+	 */
+    public static String getClassname(String possible) {
+    	if ("V".equals(possible)) {
+			return "void";
+		}
+		if ("Z".equals(possible)) {
+			return "boolean";
+		}
+		if ("C".equals(possible)) {
+			return "char";
+		}
+		if ("B".equals(possible)) {
+			return "byte";
+		}
+		if ("S".equals(possible)) {
+			return "short";
+		}
+		if ("I".equals(possible)) {
+			return "int";
+		}
+		if ("F".equals(possible)) {
+			return "float";
+		}
+		if ("J".equals(possible)) {
+			return "long";
+		}
+		if ("D".equals(possible)) {
+			return "double";
+		}
+		if ("E".equals(possible)) {
+			return "ANY_EXCEPTION";
+		}
+		if(possible.startsWith("[")) {
+			return possible.replace('/', '.');
+		}
+		if(possible.endsWith(";")) {
+			return possible.substring(1, possible.length() - 1).replace('/', '.');
+		}
+		if(possible.endsWith("[]")) {
+			String elementType = getDescription(possible.substring(0, possible.indexOf('['))).replace('/', '.');
+			String dims = possible.substring(possible.indexOf('[')).replace("]", "");
+			return dims + elementType;
+		}
+		return possible.replace('/', '.');
+    }
+    
+	/**
+	 * The possible may be a class name, description.
+	 * 
+	 * <ul>
+	 *     <li>Primitive type name : int</li>
+	 *     <li>Primitive type description : I</li>
+	 *     <li>Primitive array type name : [I</li>
+	 *     <li>Primitive array type description : [I</li>
+	 *     <li>Primitive array declared type name : int[][]</li>
+	 *     <li>Object type name : java.lang.Object</li>
+	 *     <li>Object type description : Ljava/lang/Object;</li>
+	 *     <li>Object type internal name : java/lang/Object</li>
+	 *     <li>Object array type name : [Ljava.lang.Object;</li>
+	 *     <li>Object array type description : [Ljava/lang/Object;</li>
+	 *     <li>Object array declared type name : java.lang.Object[][]</li>
+	 * </ul>
+	 * 
+	 * @param possible
+	 * @return
+	 */
+	public static String getDescription(String possible) {
+		if (possible.endsWith(";") || "V".equals(possible)
+				|| "Z".equals(possible) || "C".equals(possible)
+				|| "B".equals(possible) || "S".equals(possible)
+				|| "I".equals(possible) || "F".equals(possible)
+				|| "J".equals(possible) || "D".equals(possible)
+				|| "E".equals(possible)) {
+			return possible;
+		}
+
+		if ("void".equals(possible)) {
+			return "V";
+		}
+
+		if ("boolean".equals(possible)) {
+			return "Z";
+		}
+
+		if ("char".equals(possible)) {
+			return "C";
+		}
+
+		if ("byte".equals(possible)) {
+			return "B";
+		}
+
+		if ("short".equals(possible)) {
+			return "S";
+		}
+
+		if ("int".equals(possible)) {
+			return "I";
+		}
+
+		if ("float".equals(possible)) {
+			return "F";
+		}
+
+		if ("long".equals(possible)) {
+			return "J";
+		}
+
+		if ("double".equals(possible)) {
+			return "D";
+		}
+
+		if ("ANY_EXCEPTION".equals(possible)) {
+			return "E";
+		}
+
+		if (possible.startsWith("[")) {
+			return possible.replace('.', '/');
+		}
+
+		if (possible.endsWith("]")) {
+			int splitIdx = possible.indexOf('[');
+			String componentDesc = getDescription(possible.substring(0,
+					splitIdx));
+			String dimension = possible.substring(splitIdx).replace("]", "");
+			return dimension + componentDesc;
+		}
+
+		return "L" + possible.replace('.', '/') + ";";
+	}
+    
 }
