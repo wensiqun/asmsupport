@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -271,7 +270,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 
 	@Override
 	public IClass getType(String possible) {
-		String desc = CommonUtils.getDescription(possible);
+		String desc = ClassUtils.getDescription(possible);
 		IClass clazz = cacheAsmsuportClass.get(desc);
 		if (clazz == null) {
 			if ("E".equals(desc)) {
@@ -280,7 +279,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 				Class<?> reflexClazz = ClassUtils.primitiveToClass(desc);
 				if (reflexClazz == null) {
 					try {
-						reflexClazz = loadClass(CommonUtils.getClassname(possible));
+						reflexClazz = loadClass(ClassUtils.getClassname(possible));
 					} catch (ClassNotFoundException e) {
 						throw new ASMSupportException(e);
 					}
