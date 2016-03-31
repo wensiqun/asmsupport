@@ -2,6 +2,9 @@ package cn.wensiqun.asmsupport.core.loader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +31,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	/**
 	 * Key : description
 	 */
-	private volatile Map<String, IClass> cacheAsmsuportClass = new ConcurrentHashMap<String, IClass>();
+	private volatile Map<String, Reference<IClass>> cacheAsmsuportClass = new ConcurrentHashMap<String, Reference<IClass>>();
 
 	private CachedThreadLocalClassLoader() {
 	}
@@ -75,7 +78,7 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 
 	@Override
     public Class<?> afterDefineClass(Class<?> result, IClass itype) throws Exception {
-        cacheAsmsuportClass.put(itype.getDescription(), itype);
+        cacheAsmsuportClass.put(itype.getDescription(), new SoftReference<IClass>(itype));
         return result;
     }
 
@@ -252,8 +255,9 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	@Override
 	public IClass getType(Class<?> javaClass) {
 		String key = javaClass.getName();
-		IClass clazz = cacheAsmsuportClass.get(key);
-		if (clazz == null) {
+		Reference<IClass> ref = cacheAsmsuportClass.get(key);
+		if (ref == null || ref.get() == null) {
+			IClass clazz;
 			if (AnyException.class.equals(javaClass)) {
 				clazz = new AnyException(this);
 			} else if (javaClass.isArray()) {
@@ -263,16 +267,18 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 			} else {
 				clazz = new ProductClass(javaClass, this);
 			}
-			cacheAsmsuportClass.put(key, clazz);
+			ref = new WeakReference<IClass>(clazz);
+			cacheAsmsuportClass.put(key, new WeakReference<IClass>(clazz));
 		}
-		return clazz;
+		return ref.get();
 	}
 
 	@Override
 	public IClass getType(String possible) {
 		String desc = ClassUtils.getDescription(possible);
-		IClass clazz = cacheAsmsuportClass.get(desc);
-		if (clazz == null) {
+		Reference<IClass> ref = cacheAsmsuportClass.get(desc);
+		if (ref == null || ref.get() == null) {
+			IClass clazz;
 			if ("E".equals(desc)) {
 				clazz = new AnyException(this);
 			} else {
@@ -292,9 +298,10 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 					clazz = new ProductClass(reflexClazz, this);
 				}
 			}
-			cacheAsmsuportClass.put(desc, clazz);
+			ref = new WeakReference<IClass>(clazz); 
+			cacheAsmsuportClass.put(desc, ref);
 		}
-		return clazz;
+		return ref.get();
 	}
 
 	@Override
@@ -305,19 +312,19 @@ public class CachedThreadLocalClassLoader extends AsmsupportClassLoader {
 	@Override
 	public ArrayClass getArrayType(IClass root, int dim) {
 		String nameKey = getDescription(root, dim);
-		ArrayClass arrayClass = (ArrayClass) cacheAsmsuportClass.get(nameKey
-				.toString());
-		if (arrayClass == null) {
+		Reference<IClass> ref = cacheAsmsuportClass.get(nameKey.toString());
+		if (ref == null || ref.get() == null) {
 			StringBuilder arrayClassDesc = new StringBuilder();
 			int tmpDim = dim;
 			while (tmpDim-- > 0) {
 				arrayClassDesc.append("[");
 			}
 			arrayClassDesc.append(root.getDescription());
-			arrayClass = new ArrayClass(root, dim, this);
-			cacheAsmsuportClass.put(nameKey, arrayClass);
+			ArrayClass arrayClass = new ArrayClass(root, dim, this);
+			ref = new WeakReference<IClass>(arrayClass);
+			cacheAsmsuportClass.put(nameKey, ref);
 		}
-		return arrayClass;
+		return (ArrayClass) ref.get();
 	}
 
 	private String getDescription(IClass root, int dim) {

@@ -1,11 +1,11 @@
-package cn.wensiqun.asmsupport.client.gram;
+package cn.wensiqun.asmsupport.client.gram.util;
 
 import cn.wensiqun.asmsupport.client.block.ProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
-class ParamWrapper {
+public class ParamWrapper {
 
 	private Param single;
 

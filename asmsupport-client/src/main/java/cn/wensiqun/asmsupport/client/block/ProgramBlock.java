@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client.block;
 
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,11 +63,14 @@ import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Super;
 import cn.wensiqun.asmsupport.client.def.var.This;
 import cn.wensiqun.asmsupport.client.def.var.Var;
+import cn.wensiqun.asmsupport.client.gram.GramSupport;
+import cn.wensiqun.asmsupport.client.gram.ParseException;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 /**
@@ -617,4 +621,14 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         }
         return paras;
     }
+
+	public void compile(String statement) {
+		GramSupport gramSupport = new GramSupport(new StringReader(statement));
+		gramSupport.setBlock(this);
+		try {
+			gramSupport.BlockStatement();
+		} catch (ParseException e) {
+			throw new ASMSupportException(e);
+		}
+	}
 }

@@ -10,12 +10,15 @@ PARSER_BEGIN(GramSupport)
 package cn.wensiqun.asmsupport.client.gram;
 
 import cn.wensiqun.asmsupport.client.block.ProgramBlock;
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.param.NumParam;
-import cn.wensiqun.asmsupport.client.def.param.BoolParam;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.Var;
+import cn.wensiqun.asmsupport.client.gram.util.DeclaratorMeta;
+import cn.wensiqun.asmsupport.client.gram.util.IdentifyWrapper;
+import cn.wensiqun.asmsupport.client.gram.util.NullFlag;
+import cn.wensiqun.asmsupport.client.gram.util.ParamWrapper;
+import cn.wensiqun.asmsupport.client.gram.util.PrimaryData;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +28,14 @@ public class GramSupport
 
   private ProgramBlock block;
 
-  public GramSupport(ProgramBlock block)  {
-    this.block = block;  }
-  
-  public static void main(String args []) throws ParseException
+  public void setBlock(ProgramBlock block)
   {
+    this.block = block;
+  }
+
+  public void execute(String expression) throws ParseException
+  {
+    this.BlockStatement();
   }
 }
 
@@ -1505,7 +1511,7 @@ Param PrimaryExpression() :
 {
   data = PrimaryPrefix()
   ( LOOKAHEAD(2) data = PrimarySuffix(data))*  {
-    return owner.getOwner();  }
+    return data.getValue();  }
 }
 
 PrimaryData PrimaryPrefix() :
@@ -1519,48 +1525,48 @@ PrimaryData PrimaryPrefix() :
 {
   param = Literal()
   {
-    data.setOwner(param);
+    data.setLetter(param);
     return data;  }
 |
   "this"
   {
-    data.setOwner(block.this_());
+    data.setThis(block.this_());
     return data;  }
 |
   "super" "." token = <IDENTIFIER>
   {
-    data.setSuperFieldOrMethod(token.image);
+    data.setSuperMember(token.image);
     return data;
   }
 |
   "(" param = Expression() ")"
   {
-    data.setOwner(param);
+    data.setExpression(param);
     return data;  }
 |
   param = AllocationExpression()
   {
-    data.setOwner(param);
+    data.setAllocation(param);
     return data;  }
 |
   LOOKAHEAD( ResultType() "." "class" )
   type = ResultType() "." "class"
   {
-    data.setOwner(param);
+    data.setResultType(type);
     return data;  }
 |
   name = Name()
   {
-    data.setFieldOrMethod(token.image);
+    data.setName(name);
     return data;
   }
 }
 
-PrimaryData PrimarySuffix(PrimaryData owner) :
+PrimaryData PrimarySuffix(PrimaryData prefix) :
 {
 Param param;
 Token token;
-Param[] params;
+Param[] args;
 PrimaryData retVal = new PrimaryData();
 }
 {
@@ -1571,17 +1577,17 @@ PrimaryData retVal = new PrimaryData();
 |
   "[" param = Expression() "]"
   {
-    
+    return prefix.arrayLoad(block, param);
   }
 |
   "." token = <IDENTIFIER>
   {
-    retVal.setIdentifier(token.image);
+    return prefix.field(block, token.image);
   }
 |
-  params = Arguments()
+  args = Arguments()
   {
-    return block.call(owner, );  }
+    return prefix.call(block, args);  }
 }
 
 Param Literal() :

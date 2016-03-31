@@ -240,7 +240,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
 
     /**
      * 
-     * @param mb
+     * @param body
      */
     public void createStaticBlock(final KernelEnumStaticBlockBody body) {
         checkStaticBlock();

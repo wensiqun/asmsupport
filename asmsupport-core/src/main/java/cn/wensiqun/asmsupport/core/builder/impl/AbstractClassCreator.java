@@ -14,10 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
@@ -38,6 +34,10 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class AbstractClassCreator extends AbstractClassBuilder {
 	
@@ -61,7 +61,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
                     + "\" is an interface");
         }
         sc = new SemiClass(classLoader, version, access, name, superCls, itfs);
-        cw = new ClassWriter(0);
+        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     }
     
 

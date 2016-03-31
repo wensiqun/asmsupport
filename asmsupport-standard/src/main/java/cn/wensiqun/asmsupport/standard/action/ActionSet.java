@@ -192,7 +192,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      * Corresponding to continue statement in loop.
      * 
      */
-    public void continue_();
+    void continue_();
 
     /**
      * Throw an exception.
@@ -209,13 +209,13 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      * 
      * @param exception
      */
-    public void throw_(_P exception);
+    void throw_(_P exception);
 
     /**
      * Corresponding to return statement with no return value.
      * 
      */
-    public void return_();
+    void return_();
 
     /**
      * Corresponding to return statement with return value.
@@ -224,5 +224,8 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      *            return value.
      * 
      */
-    public void return_(_P parame);
+    void return_(_P parame);
+    
+    
+    //void compile(String statement);
 }

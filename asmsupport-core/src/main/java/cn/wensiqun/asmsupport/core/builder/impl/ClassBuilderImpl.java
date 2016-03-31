@@ -70,7 +70,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @param name
      * @param modifiers
      * @param type
-     * @param value The initial value, this value is only support static field, 
+     * @param val The initial value, this value is only support static field,
      *              otherwise will ignored.This parameter, which may be null 
      *              if the field does not have an initial value, 
      *              must be an Integer, a Float, a Long, a Double or a 
@@ -129,7 +129,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * 
      * @param access          the method modifiers
      * @param name            the method name
-     * @param argClasses      the method argument type list
+     * @param argTypes        the method argument type list
      * @param argNames        the method arguments name list
      * @param returnClass     the method return class
      * @param exceptions      throw exceptions for this method

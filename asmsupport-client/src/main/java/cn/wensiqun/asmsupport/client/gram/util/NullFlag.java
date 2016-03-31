@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.client.gram;
+package cn.wensiqun.asmsupport.client.gram.util;
 
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
