@@ -14,64 +14,20 @@
  */
 package cn.wensiqun.asmsupport.client.block;
 
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.def.action.AddAction;
-import cn.wensiqun.asmsupport.client.def.action.AndAction;
-import cn.wensiqun.asmsupport.client.def.action.ArrayLengthAction;
-import cn.wensiqun.asmsupport.client.def.action.BandAction;
-import cn.wensiqun.asmsupport.client.def.action.BorAction;
-import cn.wensiqun.asmsupport.client.def.action.BxorAction;
-import cn.wensiqun.asmsupport.client.def.action.DivAction;
-import cn.wensiqun.asmsupport.client.def.action.EqualAction;
-import cn.wensiqun.asmsupport.client.def.action.GreaterEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.GreaterThanAction;
-import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
-import cn.wensiqun.asmsupport.client.def.action.LessEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.LessThanAction;
-import cn.wensiqun.asmsupport.client.def.action.LogicAndAction;
-import cn.wensiqun.asmsupport.client.def.action.LogicOrAction;
-import cn.wensiqun.asmsupport.client.def.action.LogicXorAction;
-import cn.wensiqun.asmsupport.client.def.action.ModAction;
-import cn.wensiqun.asmsupport.client.def.action.MulAction;
-import cn.wensiqun.asmsupport.client.def.action.NegAction;
-import cn.wensiqun.asmsupport.client.def.action.NotAction;
-import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.OrAction;
-import cn.wensiqun.asmsupport.client.def.action.PostDecAction;
-import cn.wensiqun.asmsupport.client.def.action.PostIncAction;
-import cn.wensiqun.asmsupport.client.def.action.PreDecAction;
-import cn.wensiqun.asmsupport.client.def.action.PreIncAction;
-import cn.wensiqun.asmsupport.client.def.action.ReverseAction;
-import cn.wensiqun.asmsupport.client.def.action.ShiftLeftAction;
-import cn.wensiqun.asmsupport.client.def.action.ShiftRightAction;
-import cn.wensiqun.asmsupport.client.def.action.SubAction;
-import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
-import cn.wensiqun.asmsupport.client.def.param.ArrayParam;
-import cn.wensiqun.asmsupport.client.def.param.BoolParam;
-import cn.wensiqun.asmsupport.client.def.param.DummyParam;
-import cn.wensiqun.asmsupport.client.def.param.NullParam;
-import cn.wensiqun.asmsupport.client.def.param.NumParam;
-import cn.wensiqun.asmsupport.client.def.param.ObjectParam;
-import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
-import cn.wensiqun.asmsupport.client.def.var.FieldVar;
-import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.client.def.var.Super;
-import cn.wensiqun.asmsupport.client.def.var.This;
-import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.client.gram.GramSupport;
-import cn.wensiqun.asmsupport.client.gram.ParseException;
+import cn.wensiqun.asmsupport.client.def.action.*;
+import cn.wensiqun.asmsupport.client.def.param.*;
+import cn.wensiqun.asmsupport.client.def.var.*;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A wrapper of {@link KernelProgramBlock}
@@ -622,7 +578,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         return paras;
     }
 
-	public void compile(String statement) {
+	/*public void compile(String statement) {
 		GramSupport gramSupport = new GramSupport(new StringReader(statement));
 		gramSupport.setBlock(this);
 		try {
@@ -630,5 +586,5 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 		} catch (ParseException e) {
 			throw new ASMSupportException(e);
 		}
-	}
+	}*/
 }
