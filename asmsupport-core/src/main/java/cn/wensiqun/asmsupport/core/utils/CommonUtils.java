@@ -29,7 +29,7 @@ public class CommonUtils {
 
     public static final Pattern JAVA_CLASS_NAME_PART_PATTERN = Pattern.compile("([A-Za-z_$]+[a-zA-Z0-9_$]*)");
 	
-    public static final Set<String> JAVA_KEYWORDS = new TreeSet<String>(Arrays.asList(
+    public static final Set<String> JAVA_KEYWORDS = new TreeSet<>(Arrays.asList(
 	    "abstract",     "assert",        "boolean",      "break",           "byte",
 	    "case",         "catch",         "char",         "class",           "const",
 	    "continue",     "default",       "do",           "double",          "else",
@@ -42,19 +42,21 @@ public class CommonUtils {
 	    "throw",        "throws",        "transient",    "true",            "try",
 	    "void",         "volatile",      "while"
     ));
+
+    private CommonUtils(){}
     
     /**
      * Get system jdk version for bytecode indication, 
      * current only support jdk1.6- cause asmsupport 
-     * dosn't support frame.
+     * dons't support frame.
      * 
      * @return
      */
-    public static int getSystemJDKVersion() {
+    public static int getJDKVersion() {
         String str = System.getProperty("java.version");
-        /*if(str.startsWith("1.7")) {
+        if(str.startsWith("1.7")) {
             return Opcodes.V1_7;
-        }*/
+        }
         if(str.startsWith("1.6")) {
             return Opcodes.V1_6;
         }

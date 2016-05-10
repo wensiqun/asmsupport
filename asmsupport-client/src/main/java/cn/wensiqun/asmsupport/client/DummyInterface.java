@@ -31,7 +31,7 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 public class DummyInterface extends AbstractDummy {
 
     /** Version of Class File Format */
-    private int javaVersion = CommonUtils.getSystemJDKVersion();
+    private int javaVersion = CommonUtils.getJDKVersion();
 
     /** Package name of class */
     private String packageName = StringUtils.EMPTY;

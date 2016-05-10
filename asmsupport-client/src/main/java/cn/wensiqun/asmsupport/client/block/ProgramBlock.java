@@ -48,7 +48,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	LocVar[] locVars; 
 	
-	Map<String, LocVar> locVarMap = new HashMap<String, LocVar>();
+	Map<String, LocVar> locVarMap = new HashMap<>();
 	
 	final static LocVar[] EMPTY_LOCAL_VARS = new LocVar[0];
 	
