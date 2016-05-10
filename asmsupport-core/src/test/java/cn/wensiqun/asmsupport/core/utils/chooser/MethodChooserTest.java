@@ -9,12 +9,12 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class MethodChooserTest {
 
 	public static void main(String... args) throws ClassNotFoundException {
-		AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+		ASMSupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 
 		MethodChooser am = new MethodChooser(
 				CachedThreadLocalClassLoader.getInstance(),

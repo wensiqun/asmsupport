@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
@@ -44,11 +44,11 @@ public class ProductClass extends MutableClass {
     
     private volatile boolean searchedInClass = false;
     
-    protected ProductClass(AsmsupportClassLoader classLoader){
+    protected ProductClass(ASMSupportClassLoader classLoader){
     	super(classLoader);
     }
     
-    public ProductClass(Class<?> cls, AsmsupportClassLoader classLoader) {
+    public ProductClass(Class<?> cls, ASMSupportClassLoader classLoader) {
     	super(classLoader);
         this.name = cls.getName();
         this.mod = cls.getModifiers();
@@ -216,7 +216,7 @@ public class ProductClass extends MutableClass {
 						}
 					};
 					try {
-			    		AsmsupportClassLoader classLoader = ProductClass.this.getClassLoader();
+			    		ASMSupportClassLoader classLoader = ProductClass.this.getClassLoader();
 			    		InputStream in = classLoader.getResourceAsStream(reallyClass.getName().replace('.', '/') + ".class");
 			    		if (in != null) {
 			                try {

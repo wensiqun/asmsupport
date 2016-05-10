@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 
 /**
@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
  */
 public class AnyException extends BaseClass {
 
-    public AnyException(AsmsupportClassLoader holder) {
+    public AnyException(ASMSupportClassLoader holder) {
     	super(holder);
     	type = Type.ANY_EXP_TYPE;
     }

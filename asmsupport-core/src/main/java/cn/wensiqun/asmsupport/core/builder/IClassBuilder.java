@@ -20,7 +20,7 @@ package cn.wensiqun.asmsupport.core.builder;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 
 /**
@@ -86,7 +86,7 @@ public interface IClassBuilder {
      * 
      * @return
      */
-    AsmsupportClassLoader getClassLoader();
+    ASMSupportClassLoader getClassLoader();
     
     /**
      * 

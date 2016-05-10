@@ -14,8 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import java.util.LinkedList;
-
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
@@ -23,9 +21,11 @@ import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+import java.util.LinkedList;
 
 public class DummyModifiedClass extends AbstractDummy {
 
@@ -41,25 +41,25 @@ public class DummyModifiedClass extends AbstractDummy {
     private String logFilePath;
 
     /** All constructors */
-    private LinkedList<DummyConstructor> constructorDummies = new LinkedList<DummyConstructor>();
+    private LinkedList<DummyConstructor> constructorDummies = new LinkedList<>();
     
     /** All fields */
-    private LinkedList<DummyField> fieldDummies = new LinkedList<DummyField>();
+    private LinkedList<DummyField> fieldDummies = new LinkedList<>();
     
     /** All methods */
-    private LinkedList<DummyMethod> methodDummies = new LinkedList<DummyMethod>();
+    private LinkedList<DummyMethod> methodDummies = new LinkedList<>();
     
     /** class static block */
     private StaticBlockBody staticBlock;
     
     /** All modify methods */
-    private LinkedList<DummyModifiedMethod> modifyDummies = new LinkedList<DummyModifiedMethod>();
+    private LinkedList<DummyModifiedMethod> modifyDummies = new LinkedList<>();
     
     public DummyModifiedClass(Class<?> original) {
     	this(original, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public DummyModifiedClass(Class<?> original, AsmsupportClassLoader classLoader) {
+    public DummyModifiedClass(Class<?> original, ASMSupportClassLoader classLoader) {
     	super(classLoader);
         this.original = original;
     }

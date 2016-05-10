@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
@@ -68,12 +68,12 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @param version
      * @param name
      * @param interfaces
-     * @param asmsupportClassLoader
+     * @param ASMSupportClassLoader
      */
-    public EnumBuilderImpl(int version, String name, IClass[] interfaces, AsmsupportClassLoader asmsupportClassLoader) {
+    public EnumBuilderImpl(int version, String name, IClass[] interfaces, ASMSupportClassLoader ASMSupportClassLoader) {
         super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, 
-        		asmsupportClassLoader.getType(Enum.class),
-                interfaces, asmsupportClassLoader);
+        		ASMSupportClassLoader.getType(Enum.class),
+                interfaces, ASMSupportClassLoader);
         enumConstantNameList = new ArrayList<String>();
     }
 
@@ -228,8 +228,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         System.arraycopy(argNames, 0, enumArgNames, 2, argNames.length);
 
         IClass[] enumArgClasses = new IClass[argClasses.length + 2];
-        enumArgClasses[0] = asmsupportClassLoader.getType(String.class);
-        enumArgClasses[1] = asmsupportClassLoader.getType(int.class);
+        enumArgClasses[0] = ASMSupportClassLoader.getType(String.class);
+        enumArgClasses[1] = ASMSupportClassLoader.getType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
         methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.INIT, enumArgClasses, enumArgNames, null, null,
@@ -247,7 +247,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if (existEnumConstant) {
             // create implicit global variable ENUM$VALUES for enum type
             createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
-                    + Opcodes.ACC_SYNTHETIC, asmsupportClassLoader.getArrayType(sc, 1));
+                    + Opcodes.ACC_SYNTHETIC, ASMSupportClassLoader.getArrayType(sc, 1));
 
         }
         existedStaticBlock = true;
@@ -269,7 +269,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     @Override
     protected void beforeCreate() {
 
-        final IClass enumArrayType = asmsupportClassLoader.getArrayType(sc, 1);
+        final IClass enumArrayType = ASMSupportClassLoader.getArrayType(sc, 1);
 
         // create "public static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
@@ -289,7 +289,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
                         KernelParam copyLen = arrayLength(copy);
 
                         // System
-                        IClass systemClass = asmsupportClassLoader.getType(System.class);
+                        IClass systemClass = ASMSupportClassLoader.getType(System.class);
 
                         // zero value
                         Value zero = val(0);
@@ -303,7 +303,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
                 });
 
         // create "public static Enum valueOf(java.lang.String)" method
-        this.createStaticMethod("valueOf", new IClass[] { asmsupportClassLoader.getType(String.class) }, new String[] { "name" }, sc, null,
+        this.createStaticMethod("valueOf", new IClass[] { ASMSupportClassLoader.getType(String.class) }, new String[] { "name" }, sc, null,
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelStaticMethodBody() {
 
                     @Override

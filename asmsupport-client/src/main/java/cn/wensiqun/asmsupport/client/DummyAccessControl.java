@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 abstract class DummyAccessControl<T extends DummyAccessControl<?>> extends AbstractDummy {
 
@@ -25,7 +25,7 @@ abstract class DummyAccessControl<T extends DummyAccessControl<?>> extends Abstr
      */
     protected int modifiers;
     
-    DummyAccessControl(AsmsupportClassLoader classLoader) {
+    DummyAccessControl(ASMSupportClassLoader classLoader) {
 		super(classLoader);
 	}
     

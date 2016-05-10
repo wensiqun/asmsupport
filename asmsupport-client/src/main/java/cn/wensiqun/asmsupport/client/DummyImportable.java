@@ -5,14 +5,14 @@ import java.util.Map;
 
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class DummyImportable extends AbstractDummy {
 
 	
 	private SimpleClassNameClassLoader simpleClassNameClassLoader;
 	
-	DummyImportable(AsmsupportClassLoader classLoader) {
+	DummyImportable(ASMSupportClassLoader classLoader) {
 		super(new SimpleClassNameClassLoader(classLoader));
 		simpleClassNameClassLoader = (SimpleClassNameClassLoader) this.getClassLoader();
 	}
@@ -21,9 +21,9 @@ public class DummyImportable extends AbstractDummy {
 		simpleClassNameClassLoader.importClass(className);
 	}
 	
-	private static class SimpleClassNameClassLoader extends AsmsupportClassLoader {
+	private static class SimpleClassNameClassLoader extends ASMSupportClassLoader {
 		
-		private AsmsupportClassLoader target;
+		private ASMSupportClassLoader target;
 		
 		/**
 		 * Key : simpleName
@@ -31,7 +31,7 @@ public class DummyImportable extends AbstractDummy {
 		 */
 		private Map<String, String> classSimpleNameMap = new HashMap<String, String>();
 		
-		public SimpleClassNameClassLoader(AsmsupportClassLoader target) {
+		public SimpleClassNameClassLoader(ASMSupportClassLoader target) {
 			super();
 			this.target = target;
 		}

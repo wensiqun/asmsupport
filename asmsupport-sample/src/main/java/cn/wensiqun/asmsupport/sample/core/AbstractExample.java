@@ -7,11 +7,11 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public abstract class AbstractExample {
     
-	public static AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+	public static ASMSupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 	
 	/**
 	 * system.out global variable

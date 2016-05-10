@@ -1,16 +1,16 @@
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public abstract class AbstractDummy {
 
-	private AsmsupportClassLoader classLoader;
+	private ASMSupportClassLoader classLoader;
 	
-	AbstractDummy (AsmsupportClassLoader classLoader) {
+	AbstractDummy (ASMSupportClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
-	public final AsmsupportClassLoader getClassLoader() {
+	public final ASMSupportClassLoader getClassLoader() {
 		return classLoader;
 	}
 	

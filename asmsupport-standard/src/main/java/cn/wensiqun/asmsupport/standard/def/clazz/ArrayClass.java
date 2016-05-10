@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 /**
  * Indicate Array Class
@@ -41,7 +41,7 @@ public class ArrayClass extends BaseClass {
      * @param elementType
      * @param dim
      */
-    public ArrayClass(IClass elementType, int dim, AsmsupportClassLoader classLoader) {
+    public ArrayClass(IClass elementType, int dim, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	version = elementType.getVersion();
         mod = elementType.getModifiers();

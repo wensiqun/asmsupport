@@ -29,9 +29,16 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
 
     private IClass exceptionType;
 
+    public KernelCatch(Class exceptionType) {
+        if (exceptionType == null) {
+            throw new ASMSupportException("Missing catch exception type.");
+        }
+        this.exceptionType = getType(exceptionType);
+    }
+
     public KernelCatch(IClass exceptionType) {
         if (exceptionType == null) {
-            throw new ASMSupportException("missing catch exception type.");
+            throw new ASMSupportException("Missing catch exception type.");
         }
         this.exceptionType = exceptionType;
     }

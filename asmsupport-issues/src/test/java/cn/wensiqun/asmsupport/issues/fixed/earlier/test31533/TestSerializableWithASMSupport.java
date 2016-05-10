@@ -13,13 +13,13 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class TestSerializableWithASMSupport {
    
     public static void main(String[] args) throws Exception{
 
-    	AsmsupportClassLoader classloader = CachedThreadLocalClassLoader.getInstance();
+    	ASMSupportClassLoader classloader = CachedThreadLocalClassLoader.getInstance();
 
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5,
 				Opcodes.ACC_PUBLIC, "bug.fixed.Test31533", null,

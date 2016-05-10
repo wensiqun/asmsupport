@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
 
@@ -34,7 +34,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
     /** The constructor body.*/
     private ConstructorBody body;
 
-    DummyConstructor(AsmsupportClassLoader classLoader) {
+    DummyConstructor(ASMSupportClassLoader classLoader) {
 		super(classLoader);
 	}
     

@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class DummyEnumConstructor extends AbstractDummy {
 
@@ -30,7 +30,7 @@ public class DummyEnumConstructor extends AbstractDummy {
     /** The constructor body.*/
     private EnumConstructorBody body;
     
-    DummyEnumConstructor(AsmsupportClassLoader classLoader) {
+    DummyEnumConstructor(ASMSupportClassLoader classLoader) {
     	super(classLoader);
     }
     

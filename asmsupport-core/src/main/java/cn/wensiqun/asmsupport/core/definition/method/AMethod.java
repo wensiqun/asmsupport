@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
@@ -80,9 +80,9 @@ public class AMethod {
 
     private ClassVisitor classVisitor;
     
-    private AsmsupportClassLoader classLoader;
+    private ASMSupportClassLoader classLoader;
     
-    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, AsmsupportClassLoader classLoader, AbstractKernelMethodBody methodBody, int mode) {
+    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractKernelMethodBody methodBody, int mode) {
         this.classVisitor = classVisitor;
         this.classLoader = classLoader;
         this.meta = meta;
@@ -255,7 +255,7 @@ public class AMethod {
         return thisVariable;
     }
 
-	public AsmsupportClassLoader getClassLoader() {
+	public ASMSupportClassLoader getClassLoader() {
 		return classLoader;
 	}
 

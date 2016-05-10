@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
@@ -41,7 +41,7 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
 	 * @param name Interface qualified name.
 	 * @param itfs super interfaces.
 	 */
-	public InterfaceBuilderImpl(int version, String name, IClass[] itfs, AsmsupportClassLoader classLoader) {
+	public InterfaceBuilderImpl(int version, String name, IClass[] itfs, ASMSupportClassLoader classLoader) {
 		super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + Opcodes.ACC_INTERFACE, name, null, itfs, classLoader);
 	}
 	

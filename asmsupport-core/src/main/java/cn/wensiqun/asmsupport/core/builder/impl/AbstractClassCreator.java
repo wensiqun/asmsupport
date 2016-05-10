@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	this(version, access, name, superCls, itfs, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs, AsmsupportClassLoader classLoader) {
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
@@ -309,8 +309,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     
     public static class SemiClass extends MutableClass {
 
-    	SemiClass(AsmsupportClassLoader classLoader, int version, int access, String name, IClass superCls,
-                IClass[] interfaces) {
+    	SemiClass(ASMSupportClassLoader classLoader, int version, int access, String name, IClass superCls,
+				  IClass[] interfaces) {
     		super(classLoader);
             this.version = version;
             this.name = name;

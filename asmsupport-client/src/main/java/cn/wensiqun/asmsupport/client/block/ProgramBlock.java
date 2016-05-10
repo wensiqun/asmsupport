@@ -453,9 +453,9 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	    tryClient.cursor = cursor;
 	    tryClient.parent = this;
         cursor.setPointer(tryClient.targetBlock);
-        
+
 		targetBlock.try_(tryClient.targetBlock);
-		
+
         cursor.setPointer(targetBlock);
 		return tryClient;
 	}
@@ -578,13 +578,4 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         return paras;
     }
 
-	/*public void compile(String statement) {
-		GramSupport gramSupport = new GramSupport(new StringReader(statement));
-		gramSupport.setBlock(this);
-		try {
-			gramSupport.BlockStatement();
-		} catch (ParseException e) {
-			throw new ASMSupportException(e);
-		}
-	}*/
 }

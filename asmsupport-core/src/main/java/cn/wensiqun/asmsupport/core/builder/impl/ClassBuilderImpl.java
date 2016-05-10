@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
@@ -46,7 +46,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 	
 	
     public ClassBuilderImpl(int version, int access, String name,
-    		IClass superCls, IClass[] itfs, AsmsupportClassLoader classLoader) {
+    		IClass superCls, IClass[] itfs, ASMSupportClassLoader classLoader) {
         super(version, access, name, superCls, itfs, classLoader);
     }
     

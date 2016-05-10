@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 
 public class DummyMethod extends DummyAccessControl<DummyMethod> {
@@ -40,7 +40,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
     /** The method body */
     private MethodBody body;
     
-    DummyMethod(AsmsupportClassLoader classLoader) {
+    DummyMethod(ASMSupportClassLoader classLoader) {
     	super(classLoader);
     }
     

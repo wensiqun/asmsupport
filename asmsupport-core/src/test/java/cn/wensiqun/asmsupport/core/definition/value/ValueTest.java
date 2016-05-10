@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class ValueTest
 {
 
     @Test
     public void testGetConvert(){
-    	AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+    	ASMSupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
         Value value = Value.value(classLoader, 1);
         Value newValue = value.getConvert(classLoader.getType(double.class));
         Assert.assertEquals(Type.DOUBLE_TYPE, newValue.getType());
@@ -23,7 +23,7 @@ public class ValueTest
     @Test
     public void testNumberCompare()
     {
-    	AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+    	ASMSupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
         Value[] values = new Value[14];
         
         values[0] = Value.value(classLoader, (byte)1);

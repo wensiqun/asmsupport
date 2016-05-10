@@ -14,13 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import cn.wensiqun.asmsupport.core.asm.adapter.ClassModifierClassAdapter;
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
@@ -41,9 +34,16 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class ClassModifier extends AbstractClassBuilder {
@@ -60,7 +60,7 @@ public class ClassModifier extends AbstractClassBuilder {
 		this(clazz, CachedThreadLocalClassLoader.getInstance());
 	}
 	
-	public ClassModifier(Class<?> clazz, AsmsupportClassLoader classLoader) {
+	public ClassModifier(Class<?> clazz, ASMSupportClassLoader classLoader) {
 		super(classLoader);
 		if(!clazz.isArray()){
 			this.productClass = (ProductClass) classLoader.getType(clazz);
@@ -77,14 +77,14 @@ public class ClassModifier extends AbstractClassBuilder {
 		IClass[] argCls = new IClass[argClasses.length];
 		String[] defaultArgNames = new String[argClasses.length];
 		for(int i=0; i<argCls.length; i++){
-			argCls[i] = asmsupportClassLoader.getType(argClasses[i]);
+			argCls[i] = ASMSupportClassLoader.getType(argClasses[i]);
 			defaultArgNames[i] = "arg" + i;
 		}
 		try {
 			
 			MethodBuilderImpl methodCreator;
 			if(name.equals(AsmsupportConstant.CLINIT)){
-				methodCreator = MethodBuilderImpl.methodCreatorForModify(name, argCls, defaultArgNames, asmsupportClassLoader.getType(void.class), null, Opcodes.ACC_STATIC, mb);
+				methodCreator = MethodBuilderImpl.methodCreatorForModify(name, argCls, defaultArgNames, ASMSupportClassLoader.getType(void.class), null, Opcodes.ACC_STATIC, mb);
 			}else if(name.equals(AsmsupportConstant.INIT)){
 				if(modifyConstructorBodies == null){
 					modifyConstructorBodies = new ArrayList<KernelModifiedMethodBody>();
@@ -95,16 +95,16 @@ public class ClassModifier extends AbstractClassBuilder {
 				methodCreator = MethodBuilderImpl.methodCreatorForModify(AsmsupportConstant.INIT, 
 						argCls, 
 						defaultArgNames, 
-						asmsupportClassLoader.getType(void.class), 
-						IClassUtils.convertToAClass(asmsupportClassLoader, constructor.getExceptionTypes()),
+						ASMSupportClassLoader.getType(void.class),
+						IClassUtils.convertToAClass(ASMSupportClassLoader, constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{
 				Method method = clazz.getDeclaredMethod(name, argClasses);
 				methodCreator = MethodBuilderImpl.methodCreatorForModify(name, 
 						argCls, 
 						defaultArgNames, 
-						asmsupportClassLoader.getType(method.getReturnType()), 
-						IClassUtils.convertToAClass(asmsupportClassLoader, method.getExceptionTypes()),
+						ASMSupportClassLoader.getType(method.getReturnType()),
+						IClassUtils.convertToAClass(ASMSupportClassLoader, method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}
 			
@@ -154,7 +154,7 @@ public class ClassModifier extends AbstractClassBuilder {
     /**
      * 
      * @param name
-     * @param arguments
+     * @param argClasses
      * @param argNames
      * @param returnClass
      * @param exceptions
@@ -244,39 +244,9 @@ public class ClassModifier extends AbstractClassBuilder {
         return fc;
     }
 
-	/*private void modify(Map<String, List<VisitXInsnAdapter>> superConstructorMap){
-        
-        if(LOG.isPrintEnabled()){
-            LOG.print("Start modify class : " + productClass.getReallyClass());
-        }
-        
-        // create field
-        for (IFieldBuilder ifc : fieldCreators) {
-            ifc.create(this);
-        }
-
-        // create method
-        for (IMethodBuilder imc : methodCreaters) {
-            imc.create(this);
-        }
-        
-        // modify method
-        for (IMethodBuilder imc : methodModifiers) {
-            imc.create(this);
-        }
-
-        if(modifyConstructorBodies != null){
-            for(KernelModifiedMethodBody mbfm : modifyConstructorBodies){
-                 Type[] argumentTypes = mbfm.getMethod().getMeta().getArgTypes();
-                 String desc = Type.getMethodDescriptor(Type.VOID_TYPE, argumentTypes);
-                 mbfm.setSuperConstructorOperators(superConstructorMap.get(desc));
-            }
-        }
-    }*/
-
 	@Override
 	public void create() {
-		InputStream is = asmsupportClassLoader.getResourceAsStream(productClass.getName());
+		InputStream is = ASMSupportClassLoader.getResourceAsStream(productClass.getName());
 		try {
 			//modify class
 			ClassReader cr = new ClassReader(is);

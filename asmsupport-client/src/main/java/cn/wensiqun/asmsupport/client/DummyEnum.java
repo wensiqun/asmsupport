@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyEnum extends AbstractDummy {
@@ -59,7 +59,7 @@ public class DummyEnum extends AbstractDummy {
     private LinkedList<DummyMethod> methodDummies = new LinkedList<DummyMethod>();
 
     /** Specify the classloader */
-    private AsmsupportClassLoader classLoader;
+    private ASMSupportClassLoader classLoader;
 
     /** What's the class generate path of the class, use this for debug normally */
     private String classOutPutPath;
@@ -78,7 +78,7 @@ public class DummyEnum extends AbstractDummy {
     	this(qualifiedName, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public DummyEnum(String qualifiedName, AsmsupportClassLoader classLoader) {
+    public DummyEnum(String qualifiedName, ASMSupportClassLoader classLoader) {
     	super(classLoader);
         if(classLoader == null) {
         	throw new ASMSupportException("Class loader must be not null");
@@ -191,7 +191,7 @@ public class DummyEnum extends AbstractDummy {
      * @param cl
      * @return
      */
-    public DummyEnum setClassLoader(AsmsupportClassLoader cl) {
+    public DummyEnum setClassLoader(ASMSupportClassLoader cl) {
         this.classLoader = cl;
         return this;
     }

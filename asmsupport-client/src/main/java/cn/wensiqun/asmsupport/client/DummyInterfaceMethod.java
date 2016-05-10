@@ -17,7 +17,7 @@ package cn.wensiqun.asmsupport.client;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class DummyInterfaceMethod extends AbstractDummy {
 
@@ -35,7 +35,7 @@ public class DummyInterfaceMethod extends AbstractDummy {
     
     private boolean varargs = false;
     
-    DummyInterfaceMethod(AsmsupportClassLoader classLoader) {
+    DummyInterfaceMethod(ASMSupportClassLoader classLoader) {
     	super(classLoader);
     }
     

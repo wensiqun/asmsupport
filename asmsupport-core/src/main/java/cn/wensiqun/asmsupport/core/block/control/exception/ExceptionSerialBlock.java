@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
@@ -35,10 +32,13 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExceptionSerialBlock extends SerialBlock {
     private KernelTry tryBlock;
 
-    private List<KernelCatch> catchs;
+    private List<KernelCatch> catches;
 
     private ImplicitCatch implicitCatch;
 
@@ -46,7 +46,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
     private List<Label> anyCatchRange;
 
-    private List<ExceptionTableEntry> tryCatchInfoes;
+    private List<ExceptionTableEntry> tryCatchInfos;
 
     public ExceptionSerialBlock(KernelProgramBlock parent, KernelTry tryBlock) {
         super(parent);
@@ -57,10 +57,10 @@ public class ExceptionSerialBlock extends SerialBlock {
 
     @Override
     public void prepare() {
-        if (CollectionUtils.isEmpty(catchs) && finallyBlock == null) {
+        if (CollectionUtils.isEmpty(catches) && finallyBlock == null) {
             throw new ASMSupportException(
                     "Syntax error, insert \"Finally\" block or \"Catch\" block to complete Try Block.");
-        } else if (CollectionUtils.isNotEmpty(catchs) && finallyBlock == null) {
+        } else if (CollectionUtils.isNotEmpty(catches) && finallyBlock == null) {
             tryBlock.prepare();
 
             if (!tryBlock.isFinish()) {
@@ -68,14 +68,14 @@ public class ExceptionSerialBlock extends SerialBlock {
                         tryBlock, getSerialEnd());
             }
 
-            for (KernelCatch c : catchs) {
+            for (KernelCatch c : catches) {
                 c.prepare();
                 if (!c.isFinish()) {
                     OperatorFactory.newOperator(GOTO.class, new Class[] { KernelProgramBlock.class, Label.class }, c,
                             getSerialEnd());
                 }
             }
-        } else if (CollectionUtils.isEmpty(catchs) && finallyBlock != null) {
+        } else if (CollectionUtils.isEmpty(catches) && finallyBlock != null) {
             addAnyExceptionCatchRange(tryBlock.getStart());
 
             tryBlock.prepare();
@@ -106,7 +106,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             // insert finally for BreakStack operator in try block.
             insertFinallyBeforeReturn(tryBlock);
 
-            for (KernelCatch c : catchs) {
+            for (KernelCatch c : catches) {
                 c.prepare();
 
                 // insert finally for BreakStack operator in try block.
@@ -134,7 +134,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
             }
 
-            addAnyExceptionCatchRange(catchs.get(catchs.size() - 1).getEnd());
+            addAnyExceptionCatchRange(catches.get(catches.size() - 1).getEnd());
 
             implicitCatch.prepare();
 
@@ -142,7 +142,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
 
         /*
-         * implicitCatch and finallyBlock is not null if finallyBlock is null
+         * Implicit catch and finally block is not null if finally block is null
          */
         if (finallyBlock != null) {
             // build Exception Table(just for any type)
@@ -154,8 +154,8 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
 
         // for exception table
-        if (CollectionUtils.isNotEmpty(tryCatchInfoes)) {
-            for (ExceptionTableEntry info : tryCatchInfoes) {
+        if (CollectionUtils.isNotEmpty(tryCatchInfos)) {
+            for (ExceptionTableEntry info : tryCatchInfos) {
                 targetParent.getMethod().getMethodBody().addExceptionTableEntry(info);
             }
         }
@@ -165,8 +165,8 @@ public class ExceptionSerialBlock extends SerialBlock {
     public void execute() {
         tryBlock.execute();
 
-        if (CollectionUtils.isNotEmpty(catchs)) {
-            for (KernelCatch c : catchs) {
+        if (CollectionUtils.isNotEmpty(catches)) {
+            for (KernelCatch c : catches) {
                 c.execute();
             }
         }
@@ -178,11 +178,11 @@ public class ExceptionSerialBlock extends SerialBlock {
     }
 
     void appendEpisode(KernelCatch catchBlock) {
-        if (catchs == null) {
-            catchs = new ArrayList<KernelCatch>();
+        if (catches == null) {
+            catches = new ArrayList<>();
             getQueue().addAfter(tryBlock, catchBlock);
         } else {
-            KernelCatch previous = catchs.get(catchs.size() - 1);
+            KernelCatch previous = catches.get(catches.size() - 1);
             IClass exceptionType = catchBlock.getExceptionType();
 
             if (exceptionType != null && exceptionType.isChildOrEqual(previous.getExceptionType())) {
@@ -194,9 +194,9 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
 
         initEpisode(catchBlock);
-        catchs.add(catchBlock);
+        catches.add(catchBlock);
 
-        // add Exception Table:
+        // Add Exception Table:
         addTreCatchInfo(tryBlock.getStart(), tryBlock.getEnd(), catchBlock.getStart(), catchBlock.getExceptionType());
     }
 
@@ -216,8 +216,7 @@ public class ExceptionSerialBlock extends SerialBlock {
     }
 
     /**
-     * 
-     * 
+     *
      * @param block
      */
     private void insertFinallyBeforeReturn(AbstractKernelBlock block) {
@@ -236,7 +235,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
             breakBlock.setFinish(false);
 
-            // dosen't detected previous whether serial block.
+            // dons't detected previous whether serial block.
             OperatorFactory.newOperator(Marker.class, false, new Class[] { KernelProgramBlock.class, Label.class },
                     breakBlock, startLbl);
 
@@ -245,13 +244,13 @@ public class ExceptionSerialBlock extends SerialBlock {
 
             {
                 // *hard to understand*
-                // append the b to end of the list
+                // append the block to end of the list
                 breakBlock.getQueue().add(ret);
 
                 // if already returned in inserted finally code
                 // remove only the break stack operator
                 if (breakBlock.isFinish()) {
-                    // remove only brk node
+                    // remove only break node
                     breakBlock.getQueue().remove(ret);
                 } else {
                     breakBlock.setFinish(true);
@@ -265,7 +264,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
     private List<KernelReturn> fetchAllBreakStack(AbstractKernelBlock block, List<KernelReturn> container) {
         if (container == null) {
-            container = new ArrayList<KernelReturn>();
+            container = new ArrayList<>();
         }
         for (ByteCodeExecutor executor : block.getQueue()) {
             if (executor instanceof KernelReturn) {
@@ -278,15 +277,15 @@ public class ExceptionSerialBlock extends SerialBlock {
     }
 
     private void addTreCatchInfo(Label start, Label end, Label handler, IClass type) {
-        if (tryCatchInfoes == null) {
-            tryCatchInfoes = new ArrayList<ExceptionTableEntry>();
+        if (tryCatchInfos == null) {
+            tryCatchInfos = new ArrayList<>();
         }
-        tryCatchInfoes.add(new ExceptionTableEntry(start, end, handler, type.getType()));
+        tryCatchInfos.add(new ExceptionTableEntry(start, end, handler, type.getType()));
     }
 
     public void addAnyExceptionCatchRange(Label label) {
         if (anyCatchRange == null)
-            anyCatchRange = new ArrayList<Label>();
+            anyCatchRange = new ArrayList<>();
         anyCatchRange.add(label);
     }
 
@@ -340,7 +339,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         if (finallyBlock != null) {
             return finallyBlock.getEnd();
         } else {
-            return catchs.get(catchs.size() - 1).getEnd();
+            return catches.get(catches.size() - 1).getEnd();
         }
     }
 

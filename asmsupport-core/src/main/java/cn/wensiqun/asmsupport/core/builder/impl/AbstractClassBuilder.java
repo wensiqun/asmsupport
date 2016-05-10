@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 
@@ -45,14 +45,14 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 	
     protected ClassWriter cw;
 
-    protected AsmsupportClassLoader asmsupportClassLoader;
+    protected ASMSupportClassLoader ASMSupportClassLoader;
     
     /**
      * 
-     * @param asmsupportClassLoader
+     * @param ASMSupportClassLoader
      */
-	public AbstractClassBuilder(AsmsupportClassLoader asmsupportClassLoader) {
-		this.asmsupportClassLoader = asmsupportClassLoader;
+	public AbstractClassBuilder(ASMSupportClassLoader ASMSupportClassLoader) {
+		this.ASMSupportClassLoader = ASMSupportClassLoader;
 	}
 
 	protected void checkStaticBlock(){
@@ -63,7 +63,7 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
     
     protected Class<?> loadClass(String name, byte[] b) {
         try {
-        	return asmsupportClassLoader.defineClass(name, b, getCurrentClass());
+        	return ASMSupportClassLoader.defineClass(name, b, getCurrentClass());
         } catch (Exception e) {
             throw new ASMSupportException("Error on define class " + name, e);
         }
@@ -84,8 +84,8 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 	}
 	
 	@Override
-	public AsmsupportClassLoader getClassLoader() {
-		return asmsupportClassLoader;
+	public ASMSupportClassLoader getClassLoader() {
+		return ASMSupportClassLoader;
 	}
 	
 	

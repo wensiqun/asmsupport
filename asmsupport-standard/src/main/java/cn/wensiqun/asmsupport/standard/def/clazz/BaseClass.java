@@ -20,7 +20,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 
 
@@ -32,7 +32,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
  */
 public abstract class BaseClass implements IClass {
 	
-	protected AsmsupportClassLoader classLoader;
+	protected ASMSupportClassLoader classLoader;
 	
     protected String name;
 
@@ -48,7 +48,7 @@ public abstract class BaseClass implements IClass {
     
     protected String pkg;
     
-    public BaseClass(AsmsupportClassLoader classLoader) {
+    public BaseClass(ASMSupportClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
@@ -160,7 +160,7 @@ public abstract class BaseClass implements IClass {
 
     
     @Override
-	public AsmsupportClassLoader getClassLoader() {
+	public ASMSupportClassLoader getClassLoader() {
 		return classLoader;
 	}
 

@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class SynchronizedGeneratorTest extends AbstractExample {
 
@@ -142,7 +142,7 @@ public class SynchronizedGeneratorTest extends AbstractExample {
     
     private static Class<?> createThread(IClass synchronizedGeneratorExampleClass, final String name) {
     	
-    	AsmsupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
+    	ASMSupportClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
     	
         ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , 
         		"generated.block.Sync" + name + "ThreadExample", 

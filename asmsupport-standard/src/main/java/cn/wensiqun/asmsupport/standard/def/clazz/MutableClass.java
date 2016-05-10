@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 
 
@@ -58,7 +58,7 @@ public abstract class MutableClass extends BaseClass {
     //available only create enum class
     private int enumNum;
 
-	public MutableClass(AsmsupportClassLoader classLoader) {
+	public MutableClass(ASMSupportClassLoader classLoader) {
 		super(classLoader);
 	}
 

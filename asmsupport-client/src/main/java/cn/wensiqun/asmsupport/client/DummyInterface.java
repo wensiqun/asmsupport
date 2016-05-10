@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 public class DummyInterface extends AbstractDummy {
@@ -70,7 +70,7 @@ public class DummyInterface extends AbstractDummy {
     	this(null, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public DummyInterface(AsmsupportClassLoader classLoader) {
+    public DummyInterface(ASMSupportClassLoader classLoader) {
     	this(null, classLoader);
     }
     
@@ -83,7 +83,7 @@ public class DummyInterface extends AbstractDummy {
      * 
      * @param qualifiedName
      */
-    public DummyInterface(String qualifiedName, AsmsupportClassLoader classLoader) {
+    public DummyInterface(String qualifiedName, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	if(classLoader == null) {
         	throw new ASMSupportException("Class loader must be not null");

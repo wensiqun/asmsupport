@@ -29,7 +29,6 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
 	 */
     public Catch(IClass exceptionType) {
         targetBlock = new KernelCatch(exceptionType) {
-
             @Override
             public void body(LocalVariable e) {
                 Catch.this.body(new LocVar(cursor, e));
@@ -43,8 +42,7 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
      * @param exceptionType exception type
      */
     public Catch(Class<?> exceptionType) {
-        targetBlock = new KernelCatch(getType(exceptionType)) {
-
+        targetBlock = new KernelCatch(exceptionType) {
             @Override
             public void body(LocalVariable e) {
                 Catch.this.body(new LocVar(cursor, e));

@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 public class DummyField extends DummyAccessControl<DummyField> {
     
@@ -28,11 +28,11 @@ public class DummyField extends DummyAccessControl<DummyField> {
 
     private Object value;
     
-    DummyField(AsmsupportClassLoader classLoader) {
+    DummyField(ASMSupportClassLoader classLoader) {
     	this(null, null, classLoader);
     }
     
-    DummyField(IClass type, String name, AsmsupportClassLoader classLoader) {
+    DummyField(IClass type, String name, ASMSupportClassLoader classLoader) {
     	super(classLoader);
         this.type = type;
         this.name = name;

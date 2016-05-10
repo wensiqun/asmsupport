@@ -1049,7 +1049,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * Remove exception type from current exception container.
      * 
-     * @param exception
+     * @param exceptionType
      */
     public void removeException(IClass exceptionType) {
         if (throwExceptions != null) {

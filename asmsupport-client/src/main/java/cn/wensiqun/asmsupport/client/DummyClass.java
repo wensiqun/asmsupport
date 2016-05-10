@@ -14,8 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import java.util.LinkedList;
-
 import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
@@ -25,8 +23,10 @@ import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
+import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+import java.util.LinkedList;
 
 public class DummyClass extends DummyAccessControl<DummyClass> {
 
@@ -70,7 +70,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     	this(null, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public DummyClass(AsmsupportClassLoader classLoader) {
+    public DummyClass(ASMSupportClassLoader classLoader) {
     	this(null, classLoader);
     }
     
@@ -78,7 +78,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         this(qualifiedName, CachedThreadLocalClassLoader.getInstance());
     }
     
-    public DummyClass(String qualifiedName, AsmsupportClassLoader classLoader) {
+    public DummyClass(String qualifiedName, ASMSupportClassLoader classLoader) {
     	super(classLoader);
         if(classLoader == null) {
         	throw new ASMSupportException("Class loader must be not null");
