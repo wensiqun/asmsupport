@@ -28,32 +28,32 @@ public interface CreateBlockAction<IF_TYPE, While_TYPE, DoWhile_TYPE, ForEach_TY
     /**
      * Create an if program block
      */
-    public IF_TYPE if_(IF_TYPE ifBlock);
+    IF_TYPE if_(IF_TYPE ifBlock);
     
     /**
      * Create a while program block
      */
-    public While_TYPE while_(While_TYPE whileLoop);
+    While_TYPE while_(While_TYPE whileLoop);
     
     /**
      * Create a do...while program block
      */
-    public DoWhile_TYPE dowhile(DoWhile_TYPE doWhile);
+    DoWhile_TYPE dowhile(DoWhile_TYPE doWhile);
     
     /**
      * Create a for each program block
      */
-    public ForEach_TYPE for_(final ForEach_TYPE forEach);
+    ForEach_TYPE for_(final ForEach_TYPE forEach);
     
     
     /**
      * Create a try program block
      */
-    public Try_TYPE try_(final Try_TYPE tryPara);
+    Try_TYPE try_(final Try_TYPE tryPara);
     
     /**
      * Create synchronized block.
      */
-    public Synchronized_TYPE sync(Synchronized_TYPE sync);
+    Synchronized_TYPE sync(Synchronized_TYPE sync);
 	
 }

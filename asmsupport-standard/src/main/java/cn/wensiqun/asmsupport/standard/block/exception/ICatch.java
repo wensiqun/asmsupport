@@ -35,7 +35,7 @@ public interface ICatch<_Var extends ILocVar, _Catch extends IBody, _Finally ext
 	 * @param catchBlock
 	 * @return {@link _Catch}
 	 */
-	public _Catch catch_(_Catch catchBlock);
+	_Catch catch_(_Catch catchBlock);
 	
 	/**
 	 * Create an finally block from current block
@@ -43,6 +43,6 @@ public interface ICatch<_Var extends ILocVar, _Catch extends IBody, _Finally ext
 	 * @param finallyBlock
 	 * @return {@link _Finally}
 	 */
-    public _Finally finally_(_Finally finallyBlock);
+    _Finally finally_(_Finally finallyBlock);
 	
 }

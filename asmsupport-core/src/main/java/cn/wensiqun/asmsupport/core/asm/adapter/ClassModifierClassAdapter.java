@@ -14,12 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
@@ -32,6 +26,8 @@ import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
+
+import java.util.*;
 
 
 /**
@@ -47,11 +43,11 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 
     private Map<String, List<VisitXInsnAdapter>> superConstructorMap;
 	
-	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifier classModifer) {
+	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifier classModifier) {
 		super(cv);
 		this.needModify = new LinkedList<IMethodBuilder>();
-		if (classModifer.getMethodModifiers() != null) {
-			CollectionUtils.addAll(this.needModify, classModifer.getMethodModifiers().iterator());
+		if (classModifier.getMethodModifiers() != null) {
+			CollectionUtils.addAll(this.needModify, classModifier.getMethodModifiers().iterator());
 		}
 	}
 	
@@ -67,7 +63,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 	}
 
     /**
-     * rename the invokecation. like:
+     * rename the invocation. like:
      * we will modify method "a". and other method "b" will call method "a",
      * so we change method b to follow:
      * b(){

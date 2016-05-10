@@ -23,7 +23,7 @@ asmsupport是一个字节码操作类库，它能够让程序员非常简单的�
     
     <dependency>
         <groupId>cn.wensiqun</groupId>
-        <artifactId>asmsupport</artifactId>
+        <artifactId>asmsupport-client</artifactId>
         <version>x.x.x</version>
     </dependency>
     
@@ -49,7 +49,7 @@ ASMSupport使用的是GNU Lesser General Public License (LGPL)许可。
            .newMethod("main").public_().static_().argTypes(String[].class)
            .body(new MethodBody(){
 					public void body(LocalVariable... args) {
-						getType(System.class).field("out").call("println", val("Hello ASMSupport."))
+						val(System.class).field("out").call("println", val("Hello ASMSupport."))
 						return_();
 					}
            });

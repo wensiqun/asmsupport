@@ -25,7 +25,7 @@ The asmsupport is a java class byte code operate library, it make easier to writ
     
     <dependency>
         <groupId>cn.wensiqun</groupId>
-        <artifactId>asmsupport</artifactId>
+        <artifactId>asmsupport-client</artifactId>
         <version>x.x.x</version>
     </dependency>
     

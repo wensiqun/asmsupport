@@ -4,38 +4,37 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 public interface AsmsupportConstant {
 	
-	public final static String CLASS_QUALIFIED_NAME_REGEX = "^[\\p{L} .'-]+$";
+	String CLASS_QUALIFIED_NAME_REGEX = "^[\\p{L} .'-]+$";
 	
-	public final static String CLINIT = "<clinit>";
-	public final static String CLINIT_PROXY = "&clinit&";
+	String CLINIT = "<clinit>";
+	String CLINIT_PROXY = "&clinit&";
 
-	public final static String INIT = "<init>";
-	public final static String INIT_PROXY = "&init&";
-	public final static String SUPER = "super";
-	public final static String THIS = "this";
-	public final static String METHOD_PROXY_SUFFIX = "@original";
-	public final static String CLASS_PROXY_SUFFIX = "";
-	public final static String STRING_EMPTY = "";
+	String INIT = "<init>";
+	String INIT_PROXY = "&init&";
+	String SUPER = "super";
+	String THIS = "this";
+	String METHOD_PROXY_SUFFIX = "@original";
+	String CLASS_PROXY_SUFFIX = "";
 
-	public final static int METHOD_CREATE_MODE_ADD = 0;
-	public final static int METHOD_CREATE_MODE_MODIFY = 1;
+	int METHOD_CREATE_MODE_ADD = 0;
+	int METHOD_CREATE_MODE_MODIFY = 1;
 
-	public final static int ASM_VERSION = Opcodes.ASM5;
+	int ASM_VERSION = Opcodes.ASM5;
 
-	public final static String ACCESS_TOKEN_PUBLIC = "public";
+	String ACCESS_TOKEN_PUBLIC = "public";
 
-	public final static String ACCESS_TOKEN_PRIVATE = "private";
+	String ACCESS_TOKEN_PRIVATE = "private";
 
-	public final static String ACCESS_TOKEN_PROTECTED = "protected";
+	String ACCESS_TOKEN_PROTECTED = "protected";
 
-	public final static String ACCESS_TOKEN_STATIC = "static";
+	String ACCESS_TOKEN_STATIC = "static";
 
-	public final static String ACCESS_TOKEN_FINAL = "final";
+	String ACCESS_TOKEN_FINAL = "final";
 
-	public final static String ACCESS_TOKEN_SYNCHRONIZED = "synchronized";
+	String ACCESS_TOKEN_SYNCHRONIZED = "synchronized";
 
-	public final static String ACCESS_TOKEN_VOLATILE = "volatile";
+	String ACCESS_TOKEN_VOLATILE = "volatile";
 
-	public final static String ACCESS_TOKEN_ABSTRACT = "abstract";
+	String ACCESS_TOKEN_ABSTRACT = "abstract";
 	
 }

@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
@@ -36,6 +33,9 @@ import cn.wensiqun.asmsupport.standard.utils.AsmsupportClassLoader;
 import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -67,13 +67,13 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * 
      * @param version
      * @param name
-     * @param itfs
+     * @param interfaces
      * @param asmsupportClassLoader
      */
-    public EnumBuilderImpl(int version, String name, IClass[] itfs, AsmsupportClassLoader asmsupportClassLoader) {
+    public EnumBuilderImpl(int version, String name, IClass[] interfaces, AsmsupportClassLoader asmsupportClassLoader) {
         super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, 
         		asmsupportClassLoader.getType(Enum.class),
-                itfs, asmsupportClassLoader);
+                interfaces, asmsupportClassLoader);
         enumConstantNameList = new ArrayList<String>();
     }
 
@@ -154,7 +154,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     /**
      * 
      * @param name
-     * @param arguments
+     * @param argClasses
      * @param argNames
      * @param returnClass
      * @param exceptions
@@ -194,10 +194,9 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     /**
      * create constructor;
      * 
-     * @param arguments
+     * @param argClasses
      * @param argNames
      * @param mb
-     * @param access
      */
     public void createConstructor(IClass[] argClasses, String[] argNames, KernelEnumConstructorBody mb) {
 
@@ -272,7 +271,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
 
         final IClass enumArrayType = asmsupportClassLoader.getArrayType(sc, 1);
 
-        // create "publis static Enum[] values()" method
+        // create "public static Enum[] values()" method
         createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
                 new KernelStaticMethodBody() {
 

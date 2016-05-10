@@ -32,6 +32,6 @@ public interface IModifiedMethodBody<_Var extends ILocVar> extends MultiLocVarBo
      * 
      * @return
      */
-    public IClass getOrigReturnType();
+    IClass getOrigReturnType();
     
 }

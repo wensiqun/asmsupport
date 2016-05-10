@@ -137,6 +137,11 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -166,6 +171,7 @@
 		<module>asmsupport-standard</module>
 		<module>asmsupport-core</module>
 		<module>asmsupport-client</module>
+		<module>asmsupport-grammar</module>
 		<module>asmsupport-issues</module>
 		<module>asmsupport-sample</module>
 	</modules>

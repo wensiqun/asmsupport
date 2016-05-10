@@ -788,13 +788,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * run return statement with return value
      * 
-     * @param parame
+     * @param param
      *            return value
      */
     @Override
-    public final void return_(KernelParam parame) {
+    public final void return_(KernelParam param) {
         OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { KernelProgramBlock.class,
-                KernelParam.class }, getExecutor(), parame);
+                KernelParam.class }, getExecutor(), param);
     }
 
     @Override

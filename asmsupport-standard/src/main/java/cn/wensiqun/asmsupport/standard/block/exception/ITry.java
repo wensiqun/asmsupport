@@ -33,7 +33,7 @@ public interface ITry<_Catch extends IBody, _Finally extends IBody> extends Comm
 	 * @param catchBlock
 	 * @return {@link _Catch}
 	 */
-	public _Catch catch_(_Catch catchBlock);
+	_Catch catch_(_Catch catchBlock);
     
 	/**
 	 * Create an finally block from current block
@@ -41,6 +41,6 @@ public interface ITry<_Catch extends IBody, _Finally extends IBody> extends Comm
 	 * @param finallyBlock
 	 * @return {@link _Finally}
 	 */
-    public _Finally finally_(_Finally finallyBlock);
+    _Finally finally_(_Finally finallyBlock);
 	
 }

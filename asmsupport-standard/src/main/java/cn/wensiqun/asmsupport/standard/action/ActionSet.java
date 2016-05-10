@@ -77,7 +77,7 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
      * </p>
      * 
      * 
-     * @param obj
+     * @param factor
      *            original object
      * @param to
      *            the type need to check cast.
@@ -173,9 +173,9 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
 
     /**
      * Generate the instanceof instruction, the method is same as
-     * {@link #instanceof_(_P, AClass)}
+     * {@link #instanceof_(_P, IClass)}
      * 
-     * @see #instanceof_(_P, AClass)
+     * @see #instanceof_(_P, IClass)
      * @param obj
      * @param type
      * @return
@@ -220,12 +220,10 @@ CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
     /**
      * Corresponding to return statement with return value.
      * 
-     * @param parame
+     * @param param
      *            return value.
      * 
      */
-    void return_(_P parame);
-    
-    
-    //void compile(String statement);
+    void return_(_P param);
+
 }

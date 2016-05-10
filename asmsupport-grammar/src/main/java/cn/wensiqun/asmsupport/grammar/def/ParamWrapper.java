@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.client.gram.util;
+package cn.wensiqun.asmsupport.grammar.def;
 
 import cn.wensiqun.asmsupport.client.block.ProgramBlock;
 import cn.wensiqun.asmsupport.client.def.Param;

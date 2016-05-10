@@ -39,7 +39,6 @@ public interface CrementAction<_P extends IParam> {
      * Generate seem like operator : i--
      * 
      * @param crement
-     * @return {@link PreposeIncrement}
      */
     _P postdec(_P crement);
     
@@ -48,7 +47,6 @@ public interface CrementAction<_P extends IParam> {
      * Generate seem like operator : ++i
      * 
      * @param crement
-     * @return {@link PreposeIncrement}
      */
     _P preinc(_P crement);
     
@@ -57,7 +55,6 @@ public interface CrementAction<_P extends IParam> {
      * Generate seem like operator : i++
      * 
      * @param crement
-     * @return {@link PostposeIncrement}
      */
     _P postinc(_P crement);
     

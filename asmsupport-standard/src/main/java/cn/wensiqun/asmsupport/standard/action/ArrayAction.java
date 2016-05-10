@@ -51,7 +51,7 @@ public interface ArrayAction<_P extends IParam> {
 	_P makeArray(final IClass arraytype, final _P... allocateDims);
 	
 	/**
-	 * Same to {@link #makeArray(AClass, _P...)}
+	 * Same to {@link #makeArray(IClass, _P...)}
 	 * 
 	 * 
 	 * @param arraytype
@@ -78,19 +78,18 @@ public interface ArrayAction<_P extends IParam> {
      *     {val("00"), val("01")},
      *     {val("10"), val("11")}
      * };
-     * newarray(AClassFactory.getType(String[][].class), values);
+     * newarray(IClassFactory.getType(String[][].class), values);
      * </pre>
 	 * 
 	 * @param arraytype array type you want to make. must be an array type
 	 * @param arrayobject the array value that you want to assign.
 	 * @return {@link _P}
-	 * @see ActionSet#arrayvar(String, AClass, _P, _P...)
-	 * @see #makeArray(AClass, _P...)
+	 * @see #makeArray(IClass, _P...)
 	 */
 	_P newarray(IClass arraytype, final Object arrayobject);
 	
 	/**
-	 * It's seem like {@link #newarray(AClass, Object)}
+	 * It's seem like {@link #newarray(IClass, Object)}
 	 * 
 	 * @param type
 	 * @param arrayObject

@@ -51,7 +51,7 @@ asmsupport是在asm的基础上做的一封装，使用asmsupport将最大限度
       .body_(new MethodBody(){
         @Override
         public void body(LocVar... args) {
-            call_(defType(System.class).field("out"), "println", stradd(val("Hello : "), args[0]));
+            call_(val(System.class).field("out"), "println", stradd(val("Hello : "), args[0]));
             return_();
         }
       }

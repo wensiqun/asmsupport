@@ -118,7 +118,7 @@ public interface ValueAction<_P extends IParam> {
     /**
      * Get {@code null} val
      * 
-     * @param val
+     * @param type
      * @return {@link _P}
      */
     _P null_(IClass type);
@@ -126,7 +126,7 @@ public interface ValueAction<_P extends IParam> {
     /**
      * Get {@code null} val
      * 
-     * @param val
+     * @param type
      * @return {@link _P}
      */
     _P null_(Class<?> type);

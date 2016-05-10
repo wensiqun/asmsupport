@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.client.gram.util;
+package cn.wensiqun.asmsupport.grammar.def;
 
 public class DeclaratorMeta {
 	

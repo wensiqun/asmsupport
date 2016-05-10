@@ -98,7 +98,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
     _P call(IClass owner, String methodName, _P... arguments);
     
     /**
-     * Invoke static method. the method is similar method {@link #call(AClass, String, _P...)}
+     * Invoke static method. the method is similar method {@link #call(IClass, String, _P...)}
      * 
      * @param owner
      * @param name
@@ -137,7 +137,7 @@ public interface MethodInvokeAction<_P extends IParam, _Field extends IFieldVar>
      * @param owner
      * @param arguments
      * @return
-     * @see #new_(AClass, _P...)
+     * @see #new_(IClass, _P...)
      */
     _P new_(Class<?> owner, _P... arguments);
     
