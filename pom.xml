@@ -174,5 +174,6 @@
 		<module>asmsupport-grammar</module>
 		<module>asmsupport-issues</module>
 		<module>asmsupport-sample</module>
+		<module>asmsupport-lesson</module>
 	</modules>
 </project>
