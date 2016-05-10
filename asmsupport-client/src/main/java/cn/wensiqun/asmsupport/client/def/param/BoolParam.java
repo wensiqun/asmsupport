@@ -112,7 +112,7 @@ public class BoolParam extends PriorityParam implements BoolBehavior {
     }
 
 	@Override
-	public BoolParam assign(Var var) {
+	public BoolParam assignTo(Var var) {
         priorityStack.pushAction(new AssignAction(cursor, var), this);
         return this;
 	}

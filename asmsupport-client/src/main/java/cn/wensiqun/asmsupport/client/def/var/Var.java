@@ -1,6 +1,7 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
 import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
+import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -37,4 +38,7 @@ public abstract class Var extends UncertainParam implements IVar {
         return getPreciseTarget().getModifiers();
     }
 
+    public CommonBehavior assign(CommonBehavior param) {
+        return param.assignTo(this);
+    }
 }

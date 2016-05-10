@@ -55,7 +55,7 @@ public interface CommonBehavior {
      * @param var the variable
      * @return {@link UncertainBehavior} 
      */
-    CommonBehavior assign(Var var);
+    CommonBehavior assignTo(Var var);
     
     /**
      * Use current behavior as an anonymous variable, and

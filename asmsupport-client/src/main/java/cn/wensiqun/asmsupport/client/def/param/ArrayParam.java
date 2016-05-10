@@ -81,7 +81,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
     }
     
     @Override
-	public ArrayParam assign(Var var) {
+	public ArrayParam assignTo(Var var) {
     	return new ArrayParam(cursor, 
     			ParamPostern.getTarget(new AssignAction(cursor, var).doAction(var)));
 	}

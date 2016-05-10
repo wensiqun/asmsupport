@@ -13,7 +13,7 @@ import org.junit.Test;
 public class Lesson1 {
     static final String LESSON = "Lesson1";
     static final String PACKAGE = "lesson1";
-    static final String OUTPUT_PATH = ".";
+    static final String OUTPUT_PATH = "./target/asmsupport-generated";
     /**
      * 创建一个默认访问域的类Test1test1
      */

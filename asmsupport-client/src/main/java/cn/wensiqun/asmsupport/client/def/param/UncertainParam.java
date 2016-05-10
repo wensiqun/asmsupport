@@ -225,7 +225,7 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
     }
     
     @Override
-	public UncertainParam assign(Var var) {
+	public UncertainParam assignTo(Var var) {
 		return new UncertainParam(cursor, 
 				ParamPostern.getTarget(new AssignAction(cursor, var).doAction(this)));
 	}

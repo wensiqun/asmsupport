@@ -152,7 +152,7 @@ public class NumParam extends PriorityParam implements NumBehavior {
     }
 
 	@Override
-	public NumParam assign(Var var) {
+	public NumParam assignTo(Var var) {
         priorityStack.pushAction(new AssignAction(cursor, var), this);
         return this;
 	}
