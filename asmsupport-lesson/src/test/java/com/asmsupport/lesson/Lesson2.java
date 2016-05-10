@@ -5,12 +5,14 @@ import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.client.def.var.This;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Created by woate on 2016/5/10.
  * 这节课讲解如何创建接口
  */
+@Ignore
 public class Lesson2 {
     static final String LESSON = "Lesson2";
     static final String PACKAGE = "lesson2";
@@ -47,7 +49,7 @@ public class Lesson2 {
         dc.newStaticBlock(new StaticBlockBody() {
             @Override
             public void body() {
-                GlobalVariable FIELD = 
+                GlobalVariable FIELD =
                 assign(FIELD, call(String.class, "valueOf", val(100)));
                 return_();
             }
