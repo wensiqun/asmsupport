@@ -2,6 +2,8 @@ package com.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
+import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import org.junit.Test;
 
 /**
@@ -47,10 +49,10 @@ public class Lesson1 {
         dc.newStaticBlock(new StaticBlockBody() {
             @Override
             public void body() {
-//                Field out = getType(System.class).getField("out");
-//                call(out.getDeclaringClass(), "println", val("Hello ASMSupport"));
-//
-//                return_();
+                GlobalVariable out = val(System.class).field("out");
+                call(out, "println", val("Hello ASMSupport"));
+
+                return_();
             }
         });
         Class cls = dc.build();
