@@ -53,17 +53,17 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
                                                                         // endLbl);
         } else {
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getResultType().getType());
-            insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
+            instructionHelper.unbox(condition.getResultType().getType());
+            instructionHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
 
-        insnHelper.mark(posLbl);
+        instructionHelper.mark(posLbl);
         for (ByteCodeExecutor exe : getQueue()) {
             exe.execute();
         }
 
         if (nextBranch != null) {
-            insnHelper.goTo(getSerialEnd());
+            instructionHelper.goTo(getSerialEnd());
         }
 
     }

@@ -31,7 +31,7 @@ public class VisitMultiANewArrayInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute() {
-        block.getInsnHelper().getMv().visitMultiANewArrayInsn(desc, dims);
+        block.getInstructionHelper().getMv().visitMultiANewArrayInsn(desc, dims);
 	}
 
 }

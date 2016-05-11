@@ -31,7 +31,7 @@ public class VisitVarInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute() {
-        block.getInsnHelper().getMv().visitVarInsn(opcode, var);
+        block.getInstructionHelper().getMv().visitVarInsn(opcode, var);
 	}
 
 }

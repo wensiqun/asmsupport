@@ -41,7 +41,7 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
     private Operator operatorSymbol;
     
     protected AbstractOperator(KernelProgramBlock block, Operator operatorSymbol) {
-        this.insnHelper = block.getInsnHelper();
+        this.insnHelper = block.getInstructionHelper();
         this.block = block;
         this.operatorSymbol = operatorSymbol;
         // addQueue();

@@ -43,7 +43,7 @@ public class ThisVariable extends ImplicitVariable {
     
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        block.getInsnHelper().loadThis();
+        block.getInstructionHelper().loadThis();
     }
 
     @Override

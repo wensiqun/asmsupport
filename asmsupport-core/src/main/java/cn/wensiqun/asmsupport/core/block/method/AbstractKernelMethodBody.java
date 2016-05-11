@@ -104,7 +104,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         for (ExceptionTableEntry tci : exceptionTable) {
             if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
                 Type type = tci.getException();
-                insnHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(), 
+                instructionHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(),
                 		(type == null || type == Type.ANY_EXP_TYPE) ? null : type);
             }
         }
@@ -118,7 +118,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         declarationVariable(getScope());
         int s = getMethod().getStack().getMaxSize();
         int l = getScope().getLocals().getSize();
-        insnHelper.maxs(s, l);
+        instructionHelper.maxs(s, l);
     }
 
     /**
@@ -135,7 +135,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
                 if (slv.isAnonymous()) {
                     continue;
                 }
-                insnHelper.declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
+                instructionHelper.declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
                         slv.getSpecifiedStartLabel(), parent.getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;

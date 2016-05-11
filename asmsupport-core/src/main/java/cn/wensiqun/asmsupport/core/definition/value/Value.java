@@ -498,49 +498,49 @@ public class Value implements IValue {
     @Override
     public void loadToStack(KernelProgramBlock block) {
         if (value == null) {
-            block.getInsnHelper().push(this.getType());
+            block.getInstructionHelper().push(this.getType());
             return;
         }
 
         if (this.cls.getName().equals(int.class.getName())) {
 
-            block.getInsnHelper().push((Integer) value);
+            block.getInstructionHelper().push((Integer) value);
 
         } else if (this.cls.getName().equals(short.class.getName())) {
 
-            block.getInsnHelper().push((Short) value);
+            block.getInstructionHelper().push((Short) value);
 
         } else if (this.cls.getName().equals(byte.class.getName())) {
 
-            block.getInsnHelper().push((Byte) value);
+            block.getInstructionHelper().push((Byte) value);
 
         } else if (this.cls.getName().equals(boolean.class.getName())) {
 
-            block.getInsnHelper().push((Boolean) value);
+            block.getInstructionHelper().push((Boolean) value);
 
         } else if (this.cls.getName().equals(long.class.getName())) {
 
-            block.getInsnHelper().push((Long) value);
+            block.getInstructionHelper().push((Long) value);
 
         } else if (this.cls.getName().equals(double.class.getName())) {
 
-            block.getInsnHelper().push((Double) value);
+            block.getInstructionHelper().push((Double) value);
 
         } else if (this.cls.getName().equals(char.class.getName())) {
 
-            block.getInsnHelper().push((Character) value);
+            block.getInstructionHelper().push((Character) value);
 
         } else if (this.cls.getName().equals(float.class.getName())) {
 
-            block.getInsnHelper().push((Float) value);
+            block.getInstructionHelper().push((Float) value);
 
         } else if (this.cls.getName().equals(String.class.getName())) {
 
-            block.getInsnHelper().push(value.toString());
+            block.getInstructionHelper().push(value.toString());
 
         } else if (this.cls.getName().equals(Class.class.getName())) {
 
-            block.getInsnHelper().pushClass(((IClass) value).getType());
+            block.getInstructionHelper().pushClass(((IClass) value).getType());
 
         }
     }

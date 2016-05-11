@@ -74,7 +74,7 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 	}
 
 	protected void getValue(){
-        InstructionHelper ih = block.getInsnHelper();
+        InstructionHelper ih = block.getInstructionHelper();
         IClass cls = arrayReference.getResultType();
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");

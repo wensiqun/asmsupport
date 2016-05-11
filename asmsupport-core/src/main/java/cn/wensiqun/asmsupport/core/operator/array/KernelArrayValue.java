@@ -168,7 +168,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     }
     
     private void loopArray(IClass acls, Object arrayOrElement){
-        InstructionHelper ih = block.getInsnHelper();
+        InstructionHelper ih = block.getInstructionHelper();
         if(arrayOrElement.getClass().isArray()){
             int len = Array.getLength(arrayOrElement);
             ih.push(len);
@@ -202,7 +202,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
             if(LOG.isPrintEnabled()) { 
                 LOG.print("start new a array!");
             }
-            InstructionHelper ih = block.getInsnHelper();
+            InstructionHelper ih = block.getInstructionHelper();
             if(allocateDims == null || allocateDims.length == 0){
                 ih.push(arrayCls.getType());
                 ih.checkCast(arrayCls.getType());

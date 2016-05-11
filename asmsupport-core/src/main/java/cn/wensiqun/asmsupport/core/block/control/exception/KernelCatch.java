@@ -54,7 +54,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
     @Override
     protected void doExecute() {
         // the exception variable already exists at the top of the statck.
-        insnHelper.getMv().getStack().push(exceptionType.getType());
+        instructionHelper.getMv().getStack().push(exceptionType.getType());
 
         for (ByteCodeExecutor exe : getQueue()) {
             exe.execute();

@@ -97,7 +97,7 @@ public class AMethod {
             if (methodBody != null) {
                 this.methodBody = methodBody;
                 this.methodBody.setScope(new Scope(this.locals, null));
-                this.methodBody.setInsnHelper(insnHelper);
+                this.methodBody.setInstructionHelper(insnHelper);
             } else {
                 throw new ASMSupportException("Error while create method '" + meta.getName()
                         + "', cause by not found method body and it not abstract method.");

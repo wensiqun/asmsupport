@@ -123,7 +123,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     private Scope scope;
 
-    protected InstructionHelper insnHelper;
+    protected InstructionHelper instructionHelper;
 
     private ThrowExceptionContainer throwExceptions;
     
@@ -173,9 +173,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final void execute() {
-        getInsnHelper().mark(scope.getStart());
+        getInstructionHelper().mark(scope.getStart());
         doExecute();
-        getInsnHelper().mark(scope.getEnd());
+        getInstructionHelper().mark(scope.getEnd());
     }
 
     /**
@@ -955,14 +955,14 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * Set {@link InstructionHelper}
      * 
-     * @param insnHelper
+     * @param instructionHelper
      */
-    public void setInsnHelper(InstructionHelper insnHelper) {
-        this.insnHelper = insnHelper;
+    public void setInstructionHelper(InstructionHelper instructionHelper) {
+        this.instructionHelper = instructionHelper;
     }
 
     public ClassHolder getClassHolder() {
-    	return insnHelper.getMethod().getClassLoader();
+    	return instructionHelper.getMethod().getClassLoader();
     }
     
     /**
@@ -970,8 +970,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * 
      * @return
      */
-    public InstructionHelper getInsnHelper() {
-        return insnHelper;
+    public InstructionHelper getInstructionHelper() {
+        return instructionHelper;
     }
 
     /**
@@ -985,7 +985,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     public void setParent(KernelProgramBlock block) {
         parent = block;
-        setInsnHelper(block.insnHelper);
+        setInstructionHelper(block.instructionHelper);
         setScope(new Scope(getMethod().getLocals(), block.getScope()));
     }
 
@@ -995,7 +995,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * @return
      */
     public AMethod getMethod() {
-        return insnHelper.getMethod();
+        return instructionHelper.getMethod();
     }
 
     /**

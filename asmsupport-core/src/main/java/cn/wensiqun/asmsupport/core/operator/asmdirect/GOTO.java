@@ -52,7 +52,7 @@ public class GOTO extends ASMDirect {
     
     @Override
     protected void doExecute() {
-        block.getInsnHelper().goTo(to);
+        block.getInstructionHelper().goTo(to);
     }
 
 

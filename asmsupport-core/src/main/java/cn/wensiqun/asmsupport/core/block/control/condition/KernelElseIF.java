@@ -48,22 +48,22 @@ public abstract class KernelElseIF extends ConditionBranchBlock implements IElse
     @Override
     protected void doExecute() {
         Label posLbl = new Label();
-        insnHelper.nop();
+        instructionHelper.nop();
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());
         } else {
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getResultType().getType());
-            insnHelper.ifZCmp(InstructionHelper.EQ, getEnd());
+            instructionHelper.unbox(condition.getResultType().getType());
+            instructionHelper.ifZCmp(InstructionHelper.EQ, getEnd());
         }
 
-        insnHelper.mark(posLbl);
+        instructionHelper.mark(posLbl);
         for (Executable exe : getQueue()) {
             exe.execute();
         }
 
         if (nextBranch != null) {
-            insnHelper.goTo(getSerialEnd());
+            instructionHelper.goTo(getSerialEnd());
         }
     }
 

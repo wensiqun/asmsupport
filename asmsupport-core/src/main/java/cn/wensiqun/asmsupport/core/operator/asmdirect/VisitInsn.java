@@ -29,7 +29,7 @@ public class VisitInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute() {
-        block.getInsnHelper().getMv().visitInsn(opcode);
+        block.getInstructionHelper().getMv().visitInsn(opcode);
 	}
 
 }

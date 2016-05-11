@@ -51,7 +51,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
-        InstructionHelper ih = block.getInsnHelper();
+        InstructionHelper ih = block.getInstructionHelper();
         if(LOG.isPrintEnabled()) {
             LOG.print("start get length of array");
         }

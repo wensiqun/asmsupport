@@ -316,7 +316,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         @Override
         public void doExecute() {
-            insnHelper.getMv().getStack().push(Type.ANY_EXP_TYPE);
+            instructionHelper.getMv().getStack().push(Type.ANY_EXP_TYPE);
             for (ByteCodeExecutor exe : getQueue()) {
                 exe.execute();
             }

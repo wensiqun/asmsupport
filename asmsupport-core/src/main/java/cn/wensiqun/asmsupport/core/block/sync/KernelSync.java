@@ -83,8 +83,8 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		for (Executable e : getQueue()) {
 			if(e.equals(flag1)){
 				//e.execute();
-				insnHelper.monitorEnter();
-				insnHelper.mark(monitorenter);
+				instructionHelper.monitorEnter();
+				instructionHelper.mark(monitorenter);
 				continue;
 			}else if(e instanceof KernelReturn){
 				returnInsn = e;
@@ -95,20 +95,20 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		}
 
 		dupSynArgument.loadToStack(this);
-		insnHelper.monitorExit();
-		insnHelper.mark(monitorexit);
-		insnHelper.goTo(returnLbl);
+		instructionHelper.monitorExit();
+		instructionHelper.mark(monitorexit);
+		instructionHelper.goTo(returnLbl);
 		
         //for exception
-		insnHelper.nop();
-		insnHelper.mark(excetpionStart);
+		instructionHelper.nop();
+		instructionHelper.mark(excetpionStart);
 		dupSynArgument.loadToStack(this);
-		insnHelper.monitorExit();
-		insnHelper.getMv().getStack().push(getClassHolder().getType(Throwable.class).getType());
-		insnHelper.mark(excetpionEnd);
-		insnHelper.throwException();
+		instructionHelper.monitorExit();
+		instructionHelper.getMv().getStack().push(getClassHolder().getType(Throwable.class).getType());
+		instructionHelper.mark(excetpionEnd);
+		instructionHelper.throwException();
 		
-		insnHelper.mark(returnLbl);
+		instructionHelper.mark(returnLbl);
 		if(returnInsn != null){
 			returnInsn.execute();
 		}

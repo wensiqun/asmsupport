@@ -49,19 +49,19 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
 
     @Override
     public void doExecute() {
-        insnHelper.mark(contentStart);
+        instructionHelper.mark(contentStart);
         for (Executable exe : getQueue()) {
             exe.execute();
         }
 
-        insnHelper.mark(conditionLbl);
+        instructionHelper.mark(conditionLbl);
 
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
         } else {
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getResultType().getType());
-            insnHelper.ifZCmp(InstructionHelper.NE, contentStart);
+            instructionHelper.unbox(condition.getResultType().getType());
+            instructionHelper.ifZCmp(InstructionHelper.NE, contentStart);
         }
     }
 

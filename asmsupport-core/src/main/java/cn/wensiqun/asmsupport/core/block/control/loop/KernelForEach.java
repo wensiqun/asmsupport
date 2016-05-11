@@ -78,10 +78,10 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
         	((Jumpable) condition).jumpPositive(null, startLbl, getEnd());
         }else{
             condition.loadToStack(this);
-            insnHelper.unbox(condition.getResultType().getType());
-            insnHelper.ifZCmp(InstructionHelper.NE, startLbl);
+            instructionHelper.unbox(condition.getResultType().getType());
+            instructionHelper.ifZCmp(InstructionHelper.NE, startLbl);
         }
-        insnHelper.mark(endLbl);
+        instructionHelper.mark(endLbl);
     }
     
     @Override

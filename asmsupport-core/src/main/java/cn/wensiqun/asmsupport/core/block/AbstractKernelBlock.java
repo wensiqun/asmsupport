@@ -22,7 +22,7 @@ public abstract class AbstractKernelBlock extends ByteCodeExecutor implements Cl
     private CommonLinkedList<ByteCodeExecutor> queue;
     
 	public AbstractKernelBlock() {
-		this.queue = new CommonLinkedList<ByteCodeExecutor>();
+		this.queue = new CommonLinkedList<>();
 	}
 
 	public CommonLinkedList<ByteCodeExecutor> getQueue() {

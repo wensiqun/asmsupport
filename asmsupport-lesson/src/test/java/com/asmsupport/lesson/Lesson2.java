@@ -2,9 +2,7 @@ package com.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyInterface;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.client.def.var.This;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
+import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -49,7 +47,7 @@ public class Lesson2 {
         dc.newStaticBlock(new StaticBlockBody() {
             @Override
             public void body() {
-                GlobalVariable FIELD =
+                FieldVar FIELD = val(getMethodOwner()).field("ASM_NAME");
                 assign(FIELD, call(String.class, "valueOf", val(100)));
                 return_();
             }

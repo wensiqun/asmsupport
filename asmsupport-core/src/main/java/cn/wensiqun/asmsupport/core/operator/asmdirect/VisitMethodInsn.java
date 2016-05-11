@@ -38,7 +38,7 @@ public class VisitMethodInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute() {
-        block.getInsnHelper().getMv().visitMethodInsn(opcode, owner, name, desc, itf);
+        block.getInstructionHelper().getMv().visitMethodInsn(opcode, owner, name, desc, itf);
 	}
 
 }

@@ -90,7 +90,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
 	        LOG.print("start get value for store array");
 	    }
         getValue();
-        InstructionHelper ih = block.getInsnHelper();
+        InstructionHelper ih = block.getInstructionHelper();
         LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
         autoCast(lastDim.getResultType(), block.getType(int.class), false);
