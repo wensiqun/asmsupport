@@ -25,13 +25,13 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 public class BlockPostern {
 
 	/**
-	 * Get targetBlock from block.
+	 * Get kernelBlock from block.
 	 * 
 	 * @param block
 	 * @return
 	 */
     public static <B extends KernelProgramBlock, D extends ProgramBlock<B>> B getTarget(D block) {
-        return block.targetBlock;
+        return block.kernelBlock;
     }
     
 }

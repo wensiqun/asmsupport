@@ -14,15 +14,13 @@
  */
 package cn.wensiqun.asmsupport.core.block.method;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
+import cn.wensiqun.asmsupport.core.utils.common.BlockStack;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -37,21 +35,26 @@ import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
 
     private static final Log LOG = LogFactory.getLog(AbstractKernelMethodBody.class);
 
     private List<ExceptionTableEntry> exceptionTable;
 
-    protected LocalVariable[] argments;
+    protected LocalVariable[] arguments;
+
+    protected BlockStack stack;
 
     public AbstractKernelMethodBody() {
-        super();
-        exceptionTable = new ArrayList<ExceptionTableEntry>();
+        exceptionTable = new ArrayList<>();
+        this.stack = new BlockStack();
     }
 
     public LocalVariable[] getMethodArguments() {
-        return argments;
+        return arguments;
     }
 
     @Override
@@ -75,17 +78,17 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         }
 
         String[] argNames = meta.getParameterNames();
-        IClass[] argClsses = meta.getParameterTypes();
-        argments = new LocalVariable[argNames.length];
+        IClass[] argumentClasses = meta.getParameterTypes();
+        arguments = new LocalVariable[argNames.length];
         for (int i = 0; i < argNames.length; i++) {
-            ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], getScope(), argClsses[i].getType(),
-                    argClsses[i].getType());
-            VarMeta lve = new VarMeta(argNames[i], 0, argClsses[i]);
+            ScopeLogicVariable slv = new ScopeLogicVariable(argNames[i], getScope(), argumentClasses[i].getType(),
+                    argumentClasses[i].getType());
+            VarMeta lve = new VarMeta(argNames[i], 0, argumentClasses[i]);
             LocalVariable lv = new LocalVariable(lve);
             lv.setScopeLogicVar(slv);
-            argments[i] = lv;
+            arguments[i] = lv;
         }
-        method.setParameters(argments);
+        method.setParameters(arguments);
     }
 
     @Override
@@ -152,4 +155,8 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         exceptionTable.add(info);
     }
 
+    @Override
+    public BlockStack getBlockTracker() {
+        return stack;
+    }
 }

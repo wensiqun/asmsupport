@@ -20,18 +20,11 @@ import cn.wensiqun.asmsupport.standard.block.exception.IFinally;
 public abstract class Finally extends ProgramBlock<KernelFinally> implements IFinally {
 
     public Finally() {
-        targetBlock = new KernelFinally() {
+        kernelBlock = new KernelFinally() {
 
             @Override
             public void body() {
                 Finally.this.body();
-            }
-
-            @Override
-            public void prepare() {
-                cursor.push(this);
-                super.prepare();
-                cursor.pop();
             }
 
         };

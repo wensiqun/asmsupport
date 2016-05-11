@@ -22,6 +22,7 @@ import cn.wensiqun.asmsupport.client.def.var.*;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
@@ -40,9 +41,7 @@ public class ProgramBlock<B extends KernelProgramBlock> implements ActionSet<
 Param, Var, FieldVar,
 IF, While, DoWhile, ForEach, Try, Sync> {
 
-	B targetBlock;
-
-	KernelProgramBlockCursor cursor;
+	B kernelBlock;
 	
 	ProgramBlock<? extends KernelProgramBlock> parent;
 	
@@ -54,11 +53,11 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	public LocVar[] getMethodArguments() {
 		if(locVars == null) {
-			LocalVariable[] localVariables = targetBlock.getMethodArguments();
+			LocalVariable[] localVariables = getRuntimeBlock().getMethodArguments();
 			if(ArrayUtils.isNotEmpty(localVariables)) {
 				locVars = new LocVar[localVariables.length];
 				for(int i = 0; i<locVars.length; i++) {
-					locVars[i] = new LocVar(this.cursor, localVariables[i]);
+					locVars[i] = new LocVar(this.getBlockTracker(), localVariables[i]);
 				}
 			} else {
 				locVars = EMPTY_LOCAL_VARS;
@@ -73,106 +72,106 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 * @return
 	 */
 	public IClass getMethodOwner() {
-		return targetBlock.getMethodDeclaringClass();
+		return getRuntimeBlock().getMethodDeclaringClass();
 	}
 
 	@Override
 	public This this_() {
-		return new This(cursor, targetBlock.this_());
+		return new This(getBlockTracker(), getRuntimeBlock().this_());
 	}
 
 	@Override
 	public FieldVar this_(String name) {
-		return new FieldVar(cursor, targetBlock.this_(name));
+		return new FieldVar(getBlockTracker(), getRuntimeBlock().this_(name));
 	}
 
 	@Override
 	public Super super_() {
-		return new Super(cursor, targetBlock.super_());
+		return new Super(getBlockTracker(), getRuntimeBlock().super_());
 	}
 
 	@Override
 	public LocVar var(String name, Class<?> type, Param para) {
-		LocVar var = new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(getBlockTracker(), getRuntimeBlock().var(name, type, ParamPostern.getTarget(para)));
 		locVarMap.put(name, var);
 		return var;
 	}
 
 	@Override
 	public LocVar var(Class<?> type, Param para) {
-		return new LocVar(cursor, targetBlock.var(type, ParamPostern.getTarget(para)));
+		return new LocVar(getBlockTracker(), getRuntimeBlock().var(type, ParamPostern.getTarget(para)));
 	}
 
 	@Override
 	public LocVar var(String name, IClass type, Param para) {
-		LocVar var = new LocVar(cursor, targetBlock.var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(getBlockTracker(), getRuntimeBlock().var(name, type, ParamPostern.getTarget(para)));
 		locVarMap.put(name, var);
 		return var;
 	}
 
 	@Override
 	public LocVar var(IClass type, Param para) {
-		return new LocVar(cursor, targetBlock.var(type, ParamPostern.getTarget(para)));
+		return new LocVar(getBlockTracker(), getRuntimeBlock().var(type, ParamPostern.getTarget(para)));
 	}
 
 	@Override
 	public FieldVar field(String name) {
-		return new FieldVar(cursor, targetBlock.field(name));
+		return new FieldVar(getBlockTracker(), getRuntimeBlock().field(name));
 	}
 
 	@Override
 	public UncertainParam assign(Var variable, Param val) {
-		return new UncertainParam(cursor, targetBlock.assign((IVariable) ParamPostern.getTarget(variable), ParamPostern.getTarget(val)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().assign((IVariable) ParamPostern.getTarget(variable), ParamPostern.getTarget(val)));
 	}
 
 	@Override
 	public UncertainParam call(Param objRef, String methodName, Param... arguments) {
-		return new UncertainParam(cursor, targetBlock.call(ParamPostern.getTarget(objRef), methodName, ParamPostern.getTarget(arguments)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().getBlockTracker().track().call(ParamPostern.getTarget(objRef), methodName, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam call(String methodName, Param... args) {
-		return new UncertainParam(cursor, targetBlock.call(methodName, ParamPostern.getTarget(args)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().call(methodName, ParamPostern.getTarget(args)));
 	}
 
 	@Override
 	public UncertainParam call(IClass owner, String methodName, Param... arguments) {
-		return new UncertainParam(cursor, targetBlock.call(owner, methodName, ParamPostern.getTarget(arguments)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
 	}
     
 	@Override
     public UncertainParam call(Class<?> owner, String methodName, Param... arguments) {
-    	return new UncertainParam(cursor, targetBlock.call(owner, methodName, ParamPostern.getTarget(arguments)));
+    	return new UncertainParam(getBlockTracker(), getRuntimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
     }
 
 	@Override
 	public UncertainParam new_(Class<?> owner, Param... arguments) {
-		return new UncertainParam(cursor, targetBlock.new_(owner, ParamPostern.getTarget(arguments)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam new_(IClass owner, Param... arguments) {
-		return new UncertainParam(cursor, targetBlock.new_(owner, ParamPostern.getTarget(arguments)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam callOrig() {
-		return new UncertainParam(cursor, targetBlock.callOrig());
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().callOrig());
 	}
 
 	@Override
 	public ArrayParam makeArray(IClass aClass, Param... dimensions) {
-		return new ArrayParam(cursor, targetBlock.makeArray(aClass, ParamPostern.getTarget(dimensions)));
+		return new ArrayParam(getBlockTracker(), getRuntimeBlock().makeArray(aClass, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
 	public ArrayParam makeArray(Class<?> arraytype, Param... dimensions) {
-		return new ArrayParam(cursor, targetBlock.makeArray(arraytype, ParamPostern.getTarget(dimensions)));
+		return new ArrayParam(getBlockTracker(), getRuntimeBlock().makeArray(arraytype, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
 	public ArrayParam newarray(IClass aClass, Object arrayObject) {
-		return new ArrayParam(cursor, targetBlock.newarray(aClass, ParamPostern.getTarget(arrayObject)));
+		return new ArrayParam(getBlockTracker(), getRuntimeBlock().newarray(aClass, ParamPostern.getTarget(arrayObject)));
 	}
 
 	/**
@@ -180,362 +179,356 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 */
 	@Override
 	public ArrayParam newarray(Class<?> type, Object arrayObject) {
-		return new ArrayParam(cursor, targetBlock.newarray(type, ParamPostern.getTarget(arrayObject)));
+		return new ArrayParam(getBlockTracker(), getRuntimeBlock().newarray(type, ParamPostern.getTarget(arrayObject)));
 	}
 
 	@Override
 	public UncertainParam arrayLoad(Param arrayReference, Param pardim, Param... parDims) {
-		return new UncertainParam(cursor, targetBlock.arrayLoad(ParamPostern.getTarget(arrayReference), ParamPostern.getTarget(pardim), ParamPostern.getTarget(parDims)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().arrayLoad(ParamPostern.getTarget(arrayReference), ParamPostern.getTarget(pardim), ParamPostern.getTarget(parDims)));
 	}
 	
 	@Override
 	public UncertainParam arrayStore(Param arrayReference, Param value, Param dim, Param... dims) {
-		return new UncertainParam(cursor, targetBlock.arrayStore(ParamPostern.getTarget(arrayReference), 
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().arrayStore(ParamPostern.getTarget(arrayReference),
 		        ParamPostern.getTarget(value), ParamPostern.getTarget(dim), ParamPostern.getTarget(dims)));
 	}
 
 	@Override
 	public NumParam arrayLength(Param arrayReference, Param... dims) {
 	    Param[] operands = ParamPostern.unionParam(arrayReference, dims);
-		return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length - 1), operands);
+		return new NumParam(getBlockTracker(), new ArrayLengthAction(getBlockTracker(), operands.length - 1), operands);
 	}
 	
 	@Override
 	public NumParam add(Param leftFactor, Param rightFactor) {
-	    return new NumParam(cursor, new AddAction(cursor), leftFactor, rightFactor);
+	    return new NumParam(getBlockTracker(), new AddAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam sub(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new SubAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new SubAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam mul(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new MulAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new MulAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam div(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new DivAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new DivAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam mod(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new ModAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new ModAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam reverse(Param factor) {
-		return new NumParam(cursor, new ReverseAction(cursor), factor);
+		return new NumParam(getBlockTracker(), new ReverseAction(getBlockTracker()), factor);
 	}
 
 	@Override
 	public NumParam band(Param leftFactor, Param rightFactor) {
-		return new NumParam(cursor, new BandAction(cursor), leftFactor, rightFactor);
+		return new NumParam(getBlockTracker(), new BandAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam bor(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new BorAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new BorAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam bxor(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new BxorAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new BxorAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam shl(Param leftFactor, Param rightFactor) {
-		return new NumParam(cursor, new ShiftLeftAction(cursor), leftFactor, rightFactor);
+		return new NumParam(getBlockTracker(), new ShiftLeftAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam shr(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new ShiftRightAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new ShiftRightAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam ushr(Param leftFactor, Param rightFactor) {
-        return new NumParam(cursor, new UnsignedShiftRightAction(cursor), leftFactor, rightFactor);
+        return new NumParam(getBlockTracker(), new UnsignedShiftRightAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam predec(Param crement) {
-        return new NumParam(cursor, new PreDecAction(cursor), crement);
+        return new NumParam(getBlockTracker(), new PreDecAction(getBlockTracker()), crement);
 	}
 
 	@Override
 	public NumParam postdec(Param crement) {
-        return new NumParam(cursor, new PostDecAction(cursor), crement);
+        return new NumParam(getBlockTracker(), new PostDecAction(getBlockTracker()), crement);
 	}
 
 	@Override
 	public NumParam preinc(Param crement) {
-        return new NumParam(cursor, new PreIncAction(cursor), crement);
+        return new NumParam(getBlockTracker(), new PreIncAction(getBlockTracker()), crement);
 	}
 
 	@Override
 	public NumParam postinc(Param crement) {
-        return new NumParam(cursor, new PostIncAction(cursor), crement);
+        return new NumParam(getBlockTracker(), new PostIncAction(getBlockTracker()), crement);
 	}
 
 	@Override
 	public BoolParam gt(Param leftFactor, Param rightFactor) {
-		return new BoolParam(cursor, new GreaterThanAction(cursor), leftFactor, rightFactor);
+		return new BoolParam(getBlockTracker(), new GreaterThanAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam ge(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new GreaterEqualAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new GreaterEqualAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam lt(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new LessThanAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new LessThanAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam le(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new LessEqualAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new LessEqualAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam eq(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new EqualAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new EqualAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam ne(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new NotEqualAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new NotEqualAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalAnd(Param leftFactor, Param rightFactor) {
-		return new BoolParam(cursor, new LogicAndAction(cursor), leftFactor, rightFactor);
+		return new BoolParam(getBlockTracker(), new LogicAndAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalOr(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new LogicOrAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new LogicOrAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalXor(Param leftFactor, Param rightFactor) {
-        return new BoolParam(cursor, new LogicXorAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new LogicXorAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam and(Param leftFactor, Param rightFactor, Param... otherFactor) {
-        return new BoolParam(cursor, new AndAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new AndAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam or(Param leftFactor, Param rightFactor, Param... otherFactor) {
-        return new BoolParam(cursor, new OrAction(cursor), leftFactor, rightFactor);
+        return new BoolParam(getBlockTracker(), new OrAction(getBlockTracker()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam no(Param factor) {
-        return new BoolParam(cursor, new NotAction(cursor), factor);
+        return new BoolParam(getBlockTracker(), new NotAction(getBlockTracker()), factor);
 	}
 
 	@Override
 	public UncertainParam checkcast(Param cc, IClass to) {
-		return new UncertainParam(cursor, targetBlock.checkcast(ParamPostern.getTarget(cc), to));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().checkcast(ParamPostern.getTarget(cc), to));
 	}
 
 	@Override
 	public UncertainParam checkcast(Param cc, Class<?> to) {
-		return new UncertainParam(cursor, targetBlock.checkcast(ParamPostern.getTarget(cc), to));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().checkcast(ParamPostern.getTarget(cc), to));
 	}
 
 	@Override
 	public NumParam neg(Param factor) {
-		return new NumParam(cursor, new NegAction(cursor), factor);
+		return new NumParam(getBlockTracker(), new NegAction(getBlockTracker()), factor);
 	}
 
 	@Override
 	public DummyParam ternary(Param exp1, Param exp2, Param exp3) {
-		return new DummyParam(cursor, targetBlock.ternary(ParamPostern.getTarget(exp1), ParamPostern.getTarget(exp2), ParamPostern.getTarget(exp3)));
+		return new DummyParam(getBlockTracker(), getRuntimeBlock().ternary(ParamPostern.getTarget(exp1), ParamPostern.getTarget(exp2), ParamPostern.getTarget(exp3)));
 	}
 
 	@Override
 	public UncertainParam stradd(Param par1, Param... pars) {
-		return new UncertainParam(cursor, targetBlock.stradd(ParamPostern.getTarget(par1), ParamPostern.getTarget(pars)));
+		return new UncertainParam(getBlockTracker(), getRuntimeBlock().stradd(ParamPostern.getTarget(par1), ParamPostern.getTarget(pars)));
 	}
 
 	@Override
 	public BoolParam instanceof_(Param obj, IClass type) {
-		return new BoolParam(cursor, new InstanceofAction(cursor, type), obj);
+		return new BoolParam(getBlockTracker(), new InstanceofAction(getBlockTracker(), type), obj);
 	}
 
 	@Override
 	public BoolParam instanceof_(Param obj, Class<?> type) {
-        return new BoolParam(cursor, new InstanceofAction(cursor, getType(type)), obj);
+        return new BoolParam(getBlockTracker(), new InstanceofAction(getBlockTracker(), getType(type)), obj);
 	}
 
 	@Override
 	public void break_() {
-		targetBlock.break_();
+		getRuntimeBlock().break_();
 	}
 
 	@Override
 	public void continue_() {
-		targetBlock.continue_();
+		getRuntimeBlock().continue_();
 	}
 
 	@Override
 	public void throw_(Param exception) {
-		targetBlock.throw_(ParamPostern.getTarget(exception));
+		getRuntimeBlock().throw_(ParamPostern.getTarget(exception));
 	}
 
 	@Override
 	public void return_() {
-		targetBlock.return_();
+		getRuntimeBlock().return_();
 	}
 
 	@Override
 	public void return_(Param param) {
-		targetBlock.return_(ParamPostern.getTarget(param));
+		getRuntimeBlock().return_(ParamPostern.getTarget(param));
 	}
 
 	@Override
 	public IF if_(IF ifBlock) {
-	    ifBlock.cursor = cursor;
 	    ifBlock.parent = this;
-		targetBlock.if_(ifBlock.targetBlock);
+		getRuntimeBlock().if_(ifBlock.kernelBlock);
 		return ifBlock;
 	}
 
 	@Override
 	public While while_(While whileLoop) {
-	    whileLoop.cursor = cursor;
 	    whileLoop.parent = this;
-		targetBlock.while_(whileLoop.targetBlock);
+		getRuntimeBlock().while_(whileLoop.kernelBlock);
 		return whileLoop;
 	}
 
 	@Override
 	public DoWhile dowhile(DoWhile doWhile) {
-	    doWhile.cursor = cursor;
 	    doWhile.parent = this;
-		targetBlock.dowhile(doWhile.targetBlock);
+		getRuntimeBlock().dowhile(doWhile.kernelBlock);
 		return doWhile;
 	}
 
 	@Override
 	public ForEach for_(ForEach forEach) {
-	    forEach.cursor = cursor;
 	    forEach.parent = this;
-		targetBlock.for_(forEach.targetBlock);
+		getRuntimeBlock().for_(forEach.kernelBlock);
 		return forEach;
 	}
 
 	@Override
 	public Try try_(Try tryClient) {
-	    tryClient.cursor = cursor;
 	    tryClient.parent = this;
-		targetBlock.try_(tryClient.targetBlock);
+		getRuntimeBlock().try_(tryClient.kernelBlock);
 		return tryClient;
 	}
 
 	@Override
 	public Sync sync(Sync sync) {
-	    sync.cursor = cursor;
 	    sync.parent = this;
-		targetBlock.sync(sync.targetBlock);
+		getRuntimeBlock().sync(sync.kernelBlock);
 		return sync;
 	}
 
 	@Override
 	public NumParam val(Integer val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Short val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Byte val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public DummyParam val(Boolean val) {
-		return new DummyParam(cursor, targetBlock.val(val));
+		return new DummyParam(getBlockTracker(), getRuntimeBlock().val(val));
 	}
 
 	@Override
 	public NumParam val(Long val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Double val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Character val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Float val) {
-		return new NumParam(cursor, new DummyParam(cursor, targetBlock.val(val)));
+		return new NumParam(getBlockTracker(), new DummyParam(getBlockTracker(), getRuntimeBlock().val(val)));
 	}
 
 	@Override
 	public ObjectParam val(IClass val) {
-		return new ObjectParam(cursor, targetBlock.val(val));
+		return new ObjectParam(getBlockTracker(), getRuntimeBlock().val(val));
 	}
 
 	@Override
 	public ObjectParam val(Class<?> val) {
-		return new ObjectParam(cursor, targetBlock.val(val));
+		return new ObjectParam(getBlockTracker(), getRuntimeBlock().val(val));
 	}
 
 	@Override
 	public ObjectParam val(String val) {
-		return new ObjectParam(cursor, targetBlock.val(val));
+		return new ObjectParam(getBlockTracker(), getRuntimeBlock().val(val));
 	}
 
 	@Override
 	public NullParam null_(IClass type) {
-		return new NullParam(cursor, targetBlock.null_(type));
+		return new NullParam(getBlockTracker(), getRuntimeBlock().null_(type));
 	}
 
 	@Override
 	public NullParam null_(Class<?> type) {
-		return new NullParam(cursor, targetBlock.null_(type));
+		return new NullParam(getBlockTracker(), getRuntimeBlock().null_(type));
 	}
 
 	@Override
 	public IClass getType(Class<?> cls) {
-		return targetBlock.getType(cls);
+		return getRuntimeBlock().getType(cls);
 	}
 
 	@Override
 	public IClass getType(String cls) {
-		return targetBlock.getType(cls);
+		return getRuntimeBlock().getType(cls);
 	}
 
 	@Override
 	public IClass getArrayType(Class<?> cls, int dim) {
-		return targetBlock.getArrayType(cls, dim);
+		return getRuntimeBlock().getArrayType(cls, dim);
 	}
 
 	@Override
 	public IClass getArrayType(IClass rootComponent, int dim) {
-		return targetBlock.getArrayType(rootComponent, dim);
+		return getRuntimeBlock().getArrayType(rootComponent, dim);
 	}
 
     public LocVar getLocVar(String name) {
     	ProgramBlock<? extends KernelProgramBlock> block = this;
-    	LocVar var = null;
+    	LocVar var;
     	do {
     		var = block.locVarMap.get(name);
     		block = block.parent;
@@ -549,9 +542,18 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         }
         LocVar[] paras = new LocVar[pars.length];
         for(int i=0; i<pars.length; i++) {
-            paras[i] = new LocVar(cursor, pars[i]);
+            paras[i] = new LocVar(getBlockTracker(), pars[i]);
         }
         return paras;
     }
+
+	private B getRuntimeBlock() {
+		return (B) getBlockTracker().track();
+	}
+
+	public BlockTracker getBlockTracker() {
+		return kernelBlock.getBlockTracker();
+	}
+
 
 }

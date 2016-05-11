@@ -33,18 +33,16 @@ public class ConstructorInvoker extends MethodInvoker {
 
     /**
      * 
-     * @param clazz
+     * @param block
      * @param argumentClasses
      * @param arguments
-     * @param mv
-     * @param dup
      */
-    protected ConstructorInvoker(KernelProgramBlock block, IClass aclass, KernelParam[] arguments) {
-        super(block, aclass, ASMSupportConstant.INIT, arguments);
-        if (aclass.isPrimitive()) {
+    protected ConstructorInvoker(KernelProgramBlock block, IClass argumentClasses, KernelParam[] arguments) {
+        super(block, argumentClasses, ASMSupportConstant.INIT, arguments);
+        if (argumentClasses.isPrimitive()) {
             throw new IllegalArgumentException("Cannot new a primitive class");
-        }else if(aclass.isAbstract()){
-            throw new IllegalArgumentException(aclass.getName() + "is an abstract class cannot new an abstract class");
+        }else if(argumentClasses.isAbstract()){
+            throw new IllegalArgumentException(argumentClasses.getName() + "is an abstract class cannot new an abstract class");
         }
         //default to don't save return result reference of this method.
         setSaveReference(false);

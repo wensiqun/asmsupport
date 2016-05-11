@@ -43,7 +43,7 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
     }
 
     @Override
-    public final void generate() {
+    public void generate() {
         body();
     }
 

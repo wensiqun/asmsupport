@@ -1,20 +1,20 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 public class PreDecAction extends AbstractUnaryAction {
 
-    public PreDecAction(KernelProgramBlockCursor cursor) {
-        super(cursor, Operator.PRE_DEC);
+    public PreDecAction(BlockTracker tracker) {
+        super(tracker, Operator.PRE_DEC);
     }
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.peek().predec(ParamPostern.getTarget(operands[0])));
+        return new DummyParam(tracker, tracker.track().predec(ParamPostern.getTarget(operands[0])));
     }
 
 }

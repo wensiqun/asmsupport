@@ -1,21 +1,21 @@
 
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 public class NegAction extends AbstractUnaryAction {
 
-    public NegAction(KernelProgramBlockCursor cursor) {
-        super(cursor, Operator.NEG);
+    public NegAction(BlockTracker tracker) {
+        super(tracker, Operator.NEG);
     }
 
     @Override
     public Param doAction(Param... operands) {
-       return new DummyParam(cursor, cursor.peek().neg(ParamPostern.getTarget(operands[0])));
+       return new DummyParam(tracker, tracker.track().neg(ParamPostern.getTarget(operands[0])));
     }
 
 }

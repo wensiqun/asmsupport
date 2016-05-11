@@ -1,20 +1,20 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 public class DivAction extends AbstractBinaryAction {
 
-    public DivAction(KernelProgramBlockCursor cursor) {
-        super(cursor, Operator.MUL);
+    public DivAction(BlockTracker tracker) {
+        super(tracker, Operator.MUL);
     }
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.peek().div(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
+        return new DummyParam(tracker, tracker.track().div(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
     }
 
 }

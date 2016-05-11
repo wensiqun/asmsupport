@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
@@ -14,8 +14,8 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  */
 public abstract class AbstractBinaryAction extends OperatorAction {
 
-    public AbstractBinaryAction(KernelProgramBlockCursor cursor, Operator operator) {
-        super(cursor, operator);
+    public AbstractBinaryAction(BlockTracker tracker, Operator operator) {
+        super(tracker, operator);
     }
     
     @Override

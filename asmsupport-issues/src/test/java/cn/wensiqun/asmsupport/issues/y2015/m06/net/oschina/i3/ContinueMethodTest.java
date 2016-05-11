@@ -1,12 +1,5 @@
 package cn.wensiqun.asmsupport.issues.y2015.m06.net.oschina.i3;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyMethod;
 import cn.wensiqun.asmsupport.client.block.ForEach;
@@ -15,6 +8,12 @@ import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContinueMethodTest {
     @Test
@@ -72,7 +71,7 @@ public class ContinueMethodTest {
         });
         Class<?> clazz = dummy.build();
         Method method = clazz.getMethod("getString", List.class);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("Hello,");
         list.add("World");
         list.add("ASMSupport");

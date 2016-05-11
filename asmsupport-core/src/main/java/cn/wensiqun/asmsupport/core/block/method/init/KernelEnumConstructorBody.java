@@ -39,8 +39,8 @@ public abstract class KernelEnumConstructorBody extends AbstractKernelMethodBody
     public final void generateBody() {
         OperatorFactory.newOperator(SuperConstructorInvoker.class, 
         		new Class<?>[]{KernelProgramBlock.class, IClass.class, KernelParam[].class}, 
-        		getExecutor(), getMethodDeclaringClass(), new KernelParam[]{argments[0], argments[1]});
-        body((LocalVariable[]) ArrayUtils.subarray(argments, 2, argments.length));
+        		getExecutor(), getMethodDeclaringClass(), new KernelParam[]{arguments[0], arguments[1]});
+        body((LocalVariable[]) ArrayUtils.subarray(arguments, 2, arguments.length));
     }
     
 

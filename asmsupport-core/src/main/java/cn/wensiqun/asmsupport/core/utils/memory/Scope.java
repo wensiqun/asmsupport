@@ -17,15 +17,10 @@
  */
 package cn.wensiqun.asmsupport.core.utils.memory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
-
-
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represent a scope, the scope could be contain {@link Scope} and {@link ScopeLogicVariable}

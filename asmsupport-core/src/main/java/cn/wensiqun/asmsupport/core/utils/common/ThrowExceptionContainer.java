@@ -14,13 +14,9 @@
  */
 package cn.wensiqun.asmsupport.core.utils.common;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.util.*;
 
 /**
  * The exception container. 
@@ -34,7 +30,7 @@ public class ThrowExceptionContainer implements Set<IClass> {
 
 	public ThrowExceptionContainer() {
 		super();
-		exceptionEntryList = new ArrayList<IClass>();
+		exceptionEntryList = new ArrayList<>();
 	}
 
 	@Override

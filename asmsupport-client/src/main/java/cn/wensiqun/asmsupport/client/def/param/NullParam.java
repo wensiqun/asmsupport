@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 
 /**
@@ -26,8 +26,8 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
  */
 public class NullParam extends DummyParam {
 
-	public NullParam(KernelProgramBlockCursor cursor, KernelParam target) {
-		super(cursor, target);
+	public NullParam(BlockTracker tracker, KernelParam target) {
+		super(tracker, target);
 	}
 
 }

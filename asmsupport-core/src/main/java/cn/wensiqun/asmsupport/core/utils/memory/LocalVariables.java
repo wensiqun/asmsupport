@@ -14,11 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.utils.memory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represent a local variables of stack frame in jvm.
@@ -35,7 +35,7 @@ public class LocalVariables implements Printable, Cloneable{
         
         private LocalHistory() {
             super();
-            this.variables = new ArrayList<ScopeLogicVariable>();
+            this.variables = new ArrayList<>();
         }
         
         private ScopeLogicVariable getActiveVariable(){
@@ -59,7 +59,7 @@ public class LocalVariables implements Printable, Cloneable{
     
 	public LocalVariables() {
         super();
-        histories = new ArrayList<LocalHistory>();
+        histories = new ArrayList<>();
         printHelper = new PrintHelper();
         maxPrintSize = -1;
     }

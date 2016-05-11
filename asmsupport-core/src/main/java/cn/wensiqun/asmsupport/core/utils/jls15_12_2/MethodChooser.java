@@ -14,20 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import cn.wensiqun.asmsupport.core.builder.impl.AbstractClassCreator.SemiClass;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.ProductClass;
@@ -46,6 +37,10 @@ import cn.wensiqun.asmsupport.utils.collections.MapLooper;
 import cn.wensiqun.asmsupport.utils.collections.MultiValueMap;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.ClassUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 
 public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
@@ -386,7 +381,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				}
 				
 				if(argumentLength >= potentialArgumentLength){
-					IClass potentialVariableArityType = ((ArrayClass)potentialMethodArgs[potentialArgumentLength - 1]).getRootComponentClass();
+					IClass potentialVariableArityType = potentialMethodArgs[potentialArgumentLength - 1].getRootComponentClass();
 					for(int i = potentialArgumentLength - 1; i<argumentLength ; i++){
 						IClass variableArityType = argumentTypes[i];
 						if(!TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) && 
@@ -408,10 +403,10 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		Set<AMethodMeta> most = null;
 		for(AMethodMeta e : entities){
 			if(CollectionUtils.isEmpty(most)){
-				most = new HashSet<AMethodMeta>();
+				most = new HashSet<>();
 				most.add(e);
 			}else{
-				Set<AMethodMeta> newMost = new HashSet<AMethodMeta>();
+				Set<AMethodMeta> newMost = new HashSet<>();
 				for(AMethodMeta mostE : most){
 					CollectionUtils.addAll(newMost, mostSpecificMethod(mostE, e));
 				}
@@ -421,9 +416,9 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		
 		int mostLen = most == null ? 0 : most.size();
         if(mostLen > 1) {
-            //first remove varargs method and readd to potentially
+            //first remove varargs method and re add to potentially
             //in order to third phase choose.
-            Set<AMethodMeta> newMost = new HashSet<AMethodMeta>();
+            Set<AMethodMeta> newMost = new HashSet<>();
             for(AMethodMeta m : most){
                 if(!ModifierUtils.isVarargs(m.getModifiers())) {
                     newMost.add(m);
@@ -542,7 +537,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
      * According to a method name to find all method meta information 
      * from a class(whit out super class) 
      * 
-     * @param clazz the method owner
+     * @param owner the method owner
      * @param methodName the method name
      * @return a list of {@link AMethodMeta}
      * @throws IOException

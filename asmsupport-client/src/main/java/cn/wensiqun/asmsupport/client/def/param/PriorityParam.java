@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
@@ -23,6 +22,7 @@ import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
@@ -36,17 +36,17 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 public abstract class PriorityParam extends Param implements CommonBehavior {
 
     protected KernelParam target; 
-    protected KernelProgramBlockCursor cursor;
+    protected BlockTracker tracker;
     protected PriorityStack priorityStack;
     
-    protected PriorityParam(KernelProgramBlockCursor cursor, Param result) {
-    	this.cursor = cursor;
+    protected PriorityParam(BlockTracker tracker, Param result) {
+    	this.tracker = tracker;
     	priorityStack = new PriorityStack();
     	priorityStack.operandStack.push(result);
     }
     
-    public PriorityParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
-    	this.cursor = cursor;
+    public PriorityParam(BlockTracker tracker, OperatorAction action, Param... operands) {
+    	this.tracker = tracker;
     	priorityStack = new PriorityStack();
     	priorityStack.pushAction(action, operands);
     }
@@ -67,12 +67,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 
     @Override
     public final FieldVar field(String name) {
-        return new FieldVar(cursor, getTarget().field(name));
+        return new FieldVar(tracker, getTarget().field(name));
     }
     
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(cursor, cursor.peek().stradd(target, ParamPostern.getTarget(param)));
+        return new ObjectParam(tracker, tracker.track().stradd(target, ParamPostern.getTarget(param)));
     }
 
 	@Override
@@ -82,12 +82,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 	
 	@Override
 	public LocVar asVar(IClass type) {
-		return new LocVar(cursor, cursor.peek().var(type, getTarget()));
+		return new LocVar(tracker, tracker.track().var(type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(Class<?> type) {
-		return new LocVar(cursor, cursor.peek().var(type, getTarget()));
+		return new LocVar(tracker, tracker.track().var(type, getTarget()));
 	}
 
 	@Override
@@ -97,12 +97,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 
 	@Override
 	public LocVar asVar(String varName, IClass type) {
-		return new LocVar(cursor, cursor.peek().var(varName, type, getTarget()));
+		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(String varName, Class<?> type) {
-		return new LocVar(cursor, cursor.peek().var(varName, type, getTarget()));
+		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
 	}
 
 	static class PriorityStack {
@@ -120,8 +120,8 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
         	    }
         	}
         	symbolStack.push(action);
-    		for(Param oper : operand) {
-    			operandStack.push(oper);
+    		for(Param param : operand) {
+    			operandStack.push(param);
     		}
         }
         

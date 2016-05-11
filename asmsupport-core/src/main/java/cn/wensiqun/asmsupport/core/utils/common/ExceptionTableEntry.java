@@ -41,13 +41,13 @@ public class ExceptionTableEntry {
 	
     private Label start;
     private Label end;
-    private Label hander;
+    private Label handler;
     private Type exception;
 
     public ExceptionTableEntry(Label start, Label end, Label handler, Type exception) {
         this.start = start;
         this.end = end;
-        this.hander = handler;
+        this.handler = handler;
         this.exception = exception;
     }
 
@@ -69,7 +69,7 @@ public class ExceptionTableEntry {
      * Get exception handler position
      */
     public Label getHandler() {
-        return hander;
+        return handler;
     }
 
     /**

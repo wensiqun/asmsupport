@@ -21,17 +21,10 @@ import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 public abstract class While extends ProgramBlock<KernelWhile> implements IWhile {
     
 	public While(KernelParam condition) {
-		targetBlock = new KernelWhile(condition) {
+		kernelBlock = new KernelWhile(condition) {
 			@Override
 			public void body() {
 				While.this.body();
-			}
-
-			@Override
-			public void prepare() {
-				cursor.push(this);
-				super.prepare();
-				cursor.pop();
 			}
 		};
 	}

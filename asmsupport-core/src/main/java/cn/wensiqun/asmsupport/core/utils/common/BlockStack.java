@@ -1,32 +1,29 @@
-package cn.wensiqun.asmsupport.client.block;
+package cn.wensiqun.asmsupport.core.utils.common;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 
 /**
- * The {@link KernelProgramBlock} cursor, this class 
- * 
- * @author WSQ
- *
+ * Created by sqwen on 2016/5/11.
  */
-public class KernelProgramBlockCursor {
+public class BlockStack implements BlockTracker {
 
     private ArrayStack<KernelProgramBlock> stack = new ArrayStack<>();
 
-    public KernelProgramBlockCursor(KernelProgramBlock pointer) {
-        stack.push(pointer);
+    public BlockStack() {
     }
 
     public void push(KernelProgramBlock pointer) {
         stack.push(pointer);
     }
 
-    public KernelProgramBlock peek() {
+    @Override
+    public KernelProgramBlock track() {
         return stack.peek();
     }
 
     public KernelProgramBlock pop() {
         return stack.pop();
     }
-    
+
 }

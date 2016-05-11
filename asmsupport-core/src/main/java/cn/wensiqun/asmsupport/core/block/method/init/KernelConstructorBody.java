@@ -42,7 +42,7 @@ public abstract class KernelConstructorBody extends AbstractKernelMethodBody imp
 
     @Override
     public final void generateBody() {
-        body(argments);
+        body(arguments);
         if(!calledSuper) {
             calledSuper = true;
             MethodInvoker superCall = supercall(UnreachableCodeCheckSkipableSuperConstructorInvoker.class);

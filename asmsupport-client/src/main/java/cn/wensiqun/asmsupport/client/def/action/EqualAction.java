@@ -1,20 +1,20 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 public class EqualAction extends AbstractBinaryAction {
 
-    public EqualAction(KernelProgramBlockCursor cursor) {
-        super(cursor, Operator.EQUAL_TO);
+    public EqualAction(BlockTracker tracker) {
+        super(tracker, Operator.EQUAL_TO);
     }
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.peek().eq(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
+        return new DummyParam(tracker, tracker.track().eq(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
     }
 
 }

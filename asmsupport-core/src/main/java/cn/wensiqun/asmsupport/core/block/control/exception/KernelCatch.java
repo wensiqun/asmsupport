@@ -27,13 +27,13 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> implements
         ICatch<LocalVariable, KernelCatch, KernelFinally> {
 
-    private IClass exceptionType;
+    private Object exceptionType;
 
     public KernelCatch(Class exceptionType) {
         if (exceptionType == null) {
             throw new ASMSupportException("Missing catch exception type.");
         }
-        this.exceptionType = getType(exceptionType);
+        this.exceptionType = exceptionType;
     }
 
     public KernelCatch(IClass exceptionType) {
@@ -45,7 +45,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
 
     @Override
     public void generate() {
-        LocalVariable exception = getLocalAnonymousVariableModel(exceptionType);
+        LocalVariable exception = getLocalAnonymousVariableModel(getExceptionType());
         OperatorFactory.newOperator(Store.class, new Class[] { KernelProgramBlock.class, LocalVariable.class },
                 getExecutor(), exception);
         body(exception);
@@ -54,7 +54,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
     @Override
     protected void doExecute() {
         // the exception variable already exists at the top of the statck.
-        instructionHelper.getMv().getStack().push(exceptionType.getType());
+        instructionHelper.getMv().getStack().push(getExceptionType().getType());
 
         for (ByteCodeExecutor exe : getQueue()) {
             exe.execute();
@@ -84,7 +84,9 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
     }
 
     IClass getExceptionType() {
-        return exceptionType;
+        if(exceptionType instanceof IClass)
+            return (IClass)exceptionType;
+        return (IClass) (exceptionType = getType((Class)exceptionType));
     }
 
 }

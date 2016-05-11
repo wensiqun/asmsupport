@@ -29,7 +29,7 @@ public abstract class KernelMethodBody extends AbstractKernelMethodBody implemen
     
 	@Override
     public void generateBody() {
-		body(argments);
+		body(arguments);
     }
 
 }

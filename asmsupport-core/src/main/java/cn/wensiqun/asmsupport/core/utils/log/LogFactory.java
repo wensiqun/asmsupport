@@ -15,7 +15,7 @@ import java.util.logging.StreamHandler;
  */
 public class LogFactory {
 	
-    public final static ThreadLocal<LogFactory> LOG_FACTORY_LOCAL = new ThreadLocal<LogFactory>();
+    public final static ThreadLocal<LogFactory> LOG_FACTORY_LOCAL = new ThreadLocal<>();
 
     private StreamHandler handler;
     

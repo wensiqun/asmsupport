@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 
@@ -14,8 +14,8 @@ import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
  */
 public class FieldVar extends Var implements IFieldVar {
 
-    public FieldVar(KernelProgramBlockCursor cursor, GlobalVariable target) {
-        super(cursor, target);
+    public FieldVar(BlockTracker tracker, GlobalVariable target) {
+        super(tracker, target);
     }
 
     private GlobalVariable getPreciseTarget() {

@@ -1,8 +1,8 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 
 /**
@@ -13,12 +13,12 @@ import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
  */
 public abstract class OperatorAction {
 
-    protected KernelProgramBlockCursor cursor;
+    protected BlockTracker tracker;
 
     private Operator operator;
 
-    public OperatorAction(KernelProgramBlockCursor cursor, Operator operator) {
-        this.cursor = cursor;
+    public OperatorAction(BlockTracker tracker, Operator operator) {
+        this.tracker = tracker;
         this.operator = operator;
     }
 

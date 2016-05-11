@@ -14,10 +14,10 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
@@ -30,16 +30,16 @@ public class DummyParam extends Param {
 
     protected KernelParam target;
     
-    protected KernelProgramBlockCursor cursor;
+    protected BlockTracker tracker;
     
-    public DummyParam(KernelProgramBlockCursor cursor, KernelParam target) {
-        this.cursor = cursor;
+    public DummyParam(BlockTracker tracker, KernelParam target) {
+        this.tracker = tracker;
         this.target = target;
     }
 
     @Override
     public final FieldVar field(String name) {
-        return new FieldVar(cursor, target.field(name));
+        return new FieldVar(tracker, target.field(name));
     }
     
     @Override

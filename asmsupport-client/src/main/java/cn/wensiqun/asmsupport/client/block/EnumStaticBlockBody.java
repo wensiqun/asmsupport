@@ -25,7 +25,7 @@ public abstract class EnumStaticBlockBody extends ProgramBlock<KernelEnumStaticB
         IEnumStaticBlockBody<Param, LocVar> {
 
     public EnumStaticBlockBody() {
-        targetBlock = new KernelEnumStaticBlockBody() {
+        kernelBlock = new KernelEnumStaticBlockBody() {
 
             @Override
             public void body(LocalVariable... argus) {
@@ -37,19 +37,12 @@ public abstract class EnumStaticBlockBody extends ProgramBlock<KernelEnumStaticB
                 EnumStaticBlockBody.this.constructEnumConsts();
             }
 
-            @Override
-            public void prepare() {
-                cursor.push(this);
-                super.prepare();
-                cursor.pop();
-            }
         };
-        cursor = new KernelProgramBlockCursor(targetBlock);
     }
 
     @Override
     public void constructEnumConst(String name, Param... argus) {
-        targetBlock.constructEnumConst(name, ParamPostern.getTarget(argus));
+        kernelBlock.constructEnumConst(name, ParamPostern.getTarget(argus));
     }
 
 }

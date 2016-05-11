@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
@@ -15,8 +15,8 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  */
 public abstract class Var extends UncertainParam implements IVar {
 
-    public Var(KernelProgramBlockCursor cursor, IVariable target) {
-        super(cursor, target);
+    public Var(BlockTracker tracker, IVariable target) {
+        super(tracker, target);
     }
 
     private IVariable getPreciseTarget() {

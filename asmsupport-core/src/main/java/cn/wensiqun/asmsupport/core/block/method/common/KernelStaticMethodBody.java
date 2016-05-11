@@ -22,7 +22,7 @@ public abstract class KernelStaticMethodBody extends AbstractKernelMethodBody im
     
 	@Override
     public final void generateBody() {
-	    body(argments);
+	    body(arguments);
     }
 	
 

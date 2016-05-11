@@ -30,13 +30,7 @@ import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.*;
 import cn.wensiqun.asmsupport.core.exception.MethodInvokeException;
 import cn.wensiqun.asmsupport.core.exception.VerifyErrorException;
 import cn.wensiqun.asmsupport.core.operator.BlockEndFlag;
@@ -49,47 +43,23 @@ import cn.wensiqun.asmsupport.core.operator.assign.KernelAssign;
 import cn.wensiqun.asmsupport.core.operator.assign.LocalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.assign.NonStaticGlobalVariableAssigner;
 import cn.wensiqun.asmsupport.core.operator.assign.StaticGlobalVariableAssigner;
-import cn.wensiqun.asmsupport.core.operator.common.KernelCast;
-import cn.wensiqun.asmsupport.core.operator.common.KernelInstanceof;
-import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
-import cn.wensiqun.asmsupport.core.operator.common.KernelStrAdd;
-import cn.wensiqun.asmsupport.core.operator.common.KernelTernary;
-import cn.wensiqun.asmsupport.core.operator.common.KernelThrow;
-import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalOr;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelLogicalXor;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelNot;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitAnd;
-import cn.wensiqun.asmsupport.core.operator.logical.KernelShortCircuitOr;
+import cn.wensiqun.asmsupport.core.operator.common.*;
+import cn.wensiqun.asmsupport.core.operator.logical.*;
 import cn.wensiqun.asmsupport.core.operator.method.CommonMethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.ConstructorInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.method.StaticMethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelDiv;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelMod;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelMul;
-import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelSub;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitAnd;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitOr;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelBitXor;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelReverse;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelShiftLeft;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelShiftRight;
-import cn.wensiqun.asmsupport.core.operator.numerical.bit.KernelUnsignedShiftRight;
+import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.*;
+import cn.wensiqun.asmsupport.core.operator.numerical.bit.*;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPostDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPostIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.KernelNeg;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelGreaterEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelGreaterThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessEqual;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelLessThan;
-import cn.wensiqun.asmsupport.core.operator.numerical.relational.KernelNotEqual;
+import cn.wensiqun.asmsupport.core.operator.numerical.relational.*;
+import cn.wensiqun.asmsupport.core.utils.common.BlockStack;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
@@ -138,7 +108,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 		try {
 			KernelProgramBlock clone = (KernelProgramBlock) clone();
 	        clone.setExecutor(targetBlock);
-	        clone.generate();
+	        clone.wrapperGenerate();
 	        // just trigger if the last is SerialBlock in the queue of cloneTo
 	        OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { KernelProgramBlock.class }, targetBlock);
 		} catch (CloneNotSupportedException e) {
@@ -154,6 +124,16 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     /**
+     * Make some logic around the {@link #generate()}
+     */
+    protected void wrapperGenerate() {
+        BlockStack stack = (BlockStack) getBlockTracker();
+        stack.push(executor);
+        generate();
+        stack.pop();
+    }
+
+    /**
      * The specify the program block code you want to generate here.
      * In this method we just build a execute queue, but generate 
      * java bytecode instruction in method {@link #execute()}
@@ -166,7 +146,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         init();
         scope.getStart().setName(this.getClass().toString() + " start");
         scope.getEnd().setName(this.getClass().toString() + " end");
-        generate();
+        wrapperGenerate();
         // just trigger if the last is SerialBlock in the queue
         OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { KernelProgramBlock.class }, getExecutor());
     }
@@ -1074,5 +1054,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     public int hashCode() {
         return scope.hashCode();
     }
-    
+
+    public BlockTracker getBlockTracker() {
+        return parent.getBlockTracker();
+    }
 }

@@ -14,29 +14,11 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.action.AddAction;
-import cn.wensiqun.asmsupport.client.def.action.AssignAction;
-import cn.wensiqun.asmsupport.client.def.action.BandAction;
-import cn.wensiqun.asmsupport.client.def.action.BorAction;
-import cn.wensiqun.asmsupport.client.def.action.BxorAction;
-import cn.wensiqun.asmsupport.client.def.action.DivAction;
-import cn.wensiqun.asmsupport.client.def.action.EqualAction;
-import cn.wensiqun.asmsupport.client.def.action.GreaterEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.GreaterThanAction;
-import cn.wensiqun.asmsupport.client.def.action.LessEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.LessThanAction;
-import cn.wensiqun.asmsupport.client.def.action.ModAction;
-import cn.wensiqun.asmsupport.client.def.action.MulAction;
-import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
-import cn.wensiqun.asmsupport.client.def.action.ShiftLeftAction;
-import cn.wensiqun.asmsupport.client.def.action.ShiftRightAction;
-import cn.wensiqun.asmsupport.client.def.action.SubAction;
-import cn.wensiqun.asmsupport.client.def.action.UnsignedShiftRightAction;
+import cn.wensiqun.asmsupport.client.def.action.*;
 import cn.wensiqun.asmsupport.client.def.behavior.NumBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 
 /**
@@ -47,113 +29,113 @@ import cn.wensiqun.asmsupport.client.def.var.Var;
  */
 public class NumParam extends PriorityParam implements NumBehavior {
 
-	public NumParam(KernelProgramBlockCursor cursor, Param param) {
-        super(cursor, param);
+	public NumParam(BlockTracker tracker, Param param) {
+        super(tracker, param);
     }
 
-    public NumParam(KernelProgramBlockCursor cursor, OperatorAction action, Param... operands) {
-        super(cursor, action, operands);
+    public NumParam(BlockTracker tracker, OperatorAction action, Param... operands) {
+        super(tracker, action, operands);
     }
     
     @Override
     public NumParam add(Param para) {
-        priorityStack.pushAction(new AddAction(cursor), para);
+        priorityStack.pushAction(new AddAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam sub(Param para) {
-        priorityStack.pushAction(new SubAction(cursor), para);
+        priorityStack.pushAction(new SubAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam mul(Param para) {
-        priorityStack.pushAction(new MulAction(cursor), para);
+        priorityStack.pushAction(new MulAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam div(Param para) {
-        priorityStack.pushAction(new DivAction(cursor), para);
+        priorityStack.pushAction(new DivAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam mod(Param para) {
-        priorityStack.pushAction(new ModAction(cursor), para);
+        priorityStack.pushAction(new ModAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam band(Param para) {
-        priorityStack.pushAction(new BandAction(cursor), para);
+        priorityStack.pushAction(new BandAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam bor(Param para) {
-        priorityStack.pushAction(new BorAction(cursor), para);
+        priorityStack.pushAction(new BorAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam bxor(Param para) {
-        priorityStack.pushAction(new BxorAction(cursor), para);
+        priorityStack.pushAction(new BxorAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam shl(Param para) {
-        priorityStack.pushAction(new ShiftLeftAction(cursor), para);
+        priorityStack.pushAction(new ShiftLeftAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam shr(Param para) {
-        priorityStack.pushAction(new ShiftRightAction(cursor), para);
+        priorityStack.pushAction(new ShiftRightAction(tracker), para);
         return this;
     }
 
     @Override
     public NumParam ushr(Param para) {
-        priorityStack.pushAction(new UnsignedShiftRightAction(cursor), para);
+        priorityStack.pushAction(new UnsignedShiftRightAction(tracker), para);
         return this;
     }
 
     @Override
     public BoolParam gt(Param para) {
-        return new BoolParam(cursor, new GreaterThanAction(cursor), this, para);
+        return new BoolParam(tracker, new GreaterThanAction(tracker), this, para);
     }
 
     @Override
     public BoolParam ge(Param para) {
-        return new BoolParam(cursor, new GreaterEqualAction(cursor), this, para);
+        return new BoolParam(tracker, new GreaterEqualAction(tracker), this, para);
     }
 
     @Override
     public BoolParam lt(Param para) {
-        return new BoolParam(cursor, new LessThanAction(cursor), this, para);
+        return new BoolParam(tracker, new LessThanAction(tracker), this, para);
     }
 
     @Override
     public BoolParam le(Param para) {
-        return new BoolParam(cursor, new LessEqualAction(cursor), this, para);
+        return new BoolParam(tracker, new LessEqualAction(tracker), this, para);
     }
 
     @Override
     public BoolParam eq(Param para) {
-        return new BoolParam(cursor, new EqualAction(cursor), this, para);
+        return new BoolParam(tracker, new EqualAction(tracker), this, para);
     }
 
     @Override
     public BoolParam ne(Param para) {
-        return new BoolParam(cursor, new NotEqualAction(cursor), this, para);
+        return new BoolParam(tracker, new NotEqualAction(tracker), this, para);
     }
 
 	@Override
 	public NumParam assignTo(Var var) {
-        priorityStack.pushAction(new AssignAction(cursor, var), this);
+        priorityStack.pushAction(new AssignAction(tracker, var), this);
         return this;
 	}
 

@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
-import cn.wensiqun.asmsupport.client.block.KernelProgramBlockCursor;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.ArrayLengthAction;
@@ -23,6 +22,7 @@ import cn.wensiqun.asmsupport.client.def.action.InstanceofAction;
 import cn.wensiqun.asmsupport.client.def.behavior.ArrayBehavior;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
+import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
@@ -34,56 +34,56 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  */
 public class ArrayParam extends CommonParam implements ArrayBehavior{
 
-    public ArrayParam(KernelProgramBlockCursor cursor, KernelParam arrayReference) {
-        super(cursor, arrayReference);
+    public ArrayParam(BlockTracker tracker, KernelParam arrayReference) {
+        super(tracker, arrayReference);
     }
 
     @Override
     public UncertainParam load(Param firstDim, Param... dims) {
-        return new UncertainParam(cursor, cursor.peek().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(tracker, tracker.track().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
     }
 
     @Override
     public NumParam length(Param... dims) {
-        Param[] operands = ParamPostern.unionParam(new DummyParam(cursor, target), dims);
-        return new NumParam(cursor, new ArrayLengthAction(cursor, operands.length - 1), operands);
+        Param[] operands = ParamPostern.unionParam(new DummyParam(tracker, target), dims);
+        return new NumParam(tracker, new ArrayLengthAction(tracker, operands.length - 1), operands);
     }
 
     @Override
     public UncertainParam store(Param value, Param firstDim, Param... dims) {
-        return new UncertainParam(cursor, cursor.peek().arrayStore(target, ParamPostern.getTarget(value),
+        return new UncertainParam(tracker, tracker.track().arrayStore(target, ParamPostern.getTarget(value),
                 ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
     }
 
     @Override
     public UncertainParam call(String methodName, Param... arguments) {
-        return new UncertainParam(cursor, cursor.peek().call(target, methodName, ParamPostern.getTarget(arguments)));
+        return new UncertainParam(tracker, tracker.track().call(target, methodName, ParamPostern.getTarget(arguments)));
     }
 
     @Override
     public UncertainParam cast(Class<?> type) {
-        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
+        return new UncertainParam(tracker, tracker.track().checkcast(target, type));
     }
 
     @Override
     public UncertainParam cast(IClass type) {
-        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
+        return new UncertainParam(tracker, tracker.track().checkcast(target, type));
     }
 
     @Override
     public BoolParam instanceof_(Class<?> type) {
-        return new BoolParam(cursor, new InstanceofAction(cursor, cursor.peek().getType(type)), this);
+        return new BoolParam(tracker, new InstanceofAction(tracker, tracker.track().getType(type)), this);
     }
 
     @Override
     public BoolParam instanceof_(IClass type) {
-        return new BoolParam(cursor, new InstanceofAction(cursor, type), this);
+        return new BoolParam(tracker, new InstanceofAction(tracker, type), this);
     }
     
     @Override
 	public ArrayParam assignTo(Var var) {
-    	return new ArrayParam(cursor, 
-    			ParamPostern.getTarget(new AssignAction(cursor, var).doAction(var)));
+    	return new ArrayParam(tracker,
+    			ParamPostern.getTarget(new AssignAction(tracker, var).doAction(var)));
 	}
 
 }
