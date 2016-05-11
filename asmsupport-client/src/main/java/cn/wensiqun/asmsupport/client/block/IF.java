@@ -27,6 +27,13 @@ public abstract class IF extends ProgramBlock<KernelIF> implements IIF<ElseIF, E
 			public void body() {
 				IF.this.body();
 			}
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 		};
 	}
 	
@@ -34,12 +41,7 @@ public abstract class IF extends ProgramBlock<KernelIF> implements IIF<ElseIF, E
 	public ElseIF elseif(ElseIF elseif) {
 	    elseif.cursor = cursor;
 	    elseif.parent = parent;
-        cursor.setPointer(elseif.targetBlock);
-        
 		targetBlock.elseif(elseif.targetBlock);
-		
-		cursor.setPointer(parent.targetBlock);
-		
 		return elseif;
 	}
 	
@@ -47,12 +49,7 @@ public abstract class IF extends ProgramBlock<KernelIF> implements IIF<ElseIF, E
 	public Else else_(Else els) {
 	    els.cursor = cursor;
 	    els.parent = parent;
-        cursor.setPointer(els.targetBlock);
-        
 		targetBlock.else_(els.targetBlock);
-        
-        cursor.setPointer(parent.targetBlock);
-        
 		return els;
 	}
 }

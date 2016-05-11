@@ -14,7 +14,7 @@ public class LogicOrAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().logicalOr(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().logicalOr(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

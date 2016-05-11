@@ -31,6 +31,13 @@ public abstract class ModifiedMethodBody extends ProgramBlock<KernelModifiedMeth
                 ModifiedMethodBody.this.body(internalVar2ClientVar(args));
             }
 
+            @Override
+            public void prepare() {
+                cursor.push(this);
+                super.prepare();
+                cursor.pop();
+            }
+
         };
         cursor = new KernelProgramBlockCursor(targetBlock);
     }

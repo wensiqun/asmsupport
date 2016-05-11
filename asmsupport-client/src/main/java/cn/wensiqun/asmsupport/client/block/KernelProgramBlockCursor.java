@@ -1,6 +1,7 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 
 /**
  * The {@link KernelProgramBlock} cursor, this class 
@@ -10,18 +11,22 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
  */
 public class KernelProgramBlockCursor {
 
-    private KernelProgramBlock pointer;
+    private ArrayStack<KernelProgramBlock> stack = new ArrayStack<>();
 
     public KernelProgramBlockCursor(KernelProgramBlock pointer) {
-        this.pointer = pointer;
+        stack.push(pointer);
     }
 
-    public KernelProgramBlock getPointer() {
-        return pointer;
+    public void push(KernelProgramBlock pointer) {
+        stack.push(pointer);
     }
 
-    void setPointer(KernelProgramBlock pointer) {
-        this.pointer = pointer;
+    public KernelProgramBlock peek() {
+        return stack.peek();
+    }
+
+    public KernelProgramBlock pop() {
+        return stack.pop();
     }
     
 }

@@ -14,7 +14,7 @@ public class EqualAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().eq(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
+        return new DummyParam(cursor, cursor.peek().eq(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
     }
 
 }

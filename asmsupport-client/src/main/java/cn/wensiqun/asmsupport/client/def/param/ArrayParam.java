@@ -40,7 +40,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
 
     @Override
     public UncertainParam load(Param firstDim, Param... dims) {
-        return new UncertainParam(cursor, cursor.getPointer().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(cursor, cursor.peek().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
     }
 
     @Override
@@ -51,28 +51,28 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
 
     @Override
     public UncertainParam store(Param value, Param firstDim, Param... dims) {
-        return new UncertainParam(cursor, cursor.getPointer().arrayStore(target, ParamPostern.getTarget(value), 
+        return new UncertainParam(cursor, cursor.peek().arrayStore(target, ParamPostern.getTarget(value),
                 ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
     }
 
     @Override
     public UncertainParam call(String methodName, Param... arguments) {
-        return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
+        return new UncertainParam(cursor, cursor.peek().call(target, methodName, ParamPostern.getTarget(arguments)));
     }
 
     @Override
     public UncertainParam cast(Class<?> type) {
-        return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
+        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
     }
 
     @Override
     public UncertainParam cast(IClass type) {
-        return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
+        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
     }
 
     @Override
     public BoolParam instanceof_(Class<?> type) {
-        return new BoolParam(cursor, new InstanceofAction(cursor, cursor.getPointer().getType(type)), this);
+        return new BoolParam(cursor, new InstanceofAction(cursor, cursor.peek().getType(type)), this);
     }
 
     @Override

@@ -25,6 +25,13 @@ public abstract class StaticBlockBody extends ProgramBlock<KernelStaticBlockBody
             public void body() {
                 StaticBlockBody.this.body();
             }
+
+            @Override
+            public void prepare() {
+                cursor.push(this);
+                super.prepare();
+                cursor.pop();
+            }
         };
         cursor = new KernelProgramBlockCursor(targetBlock);
     }

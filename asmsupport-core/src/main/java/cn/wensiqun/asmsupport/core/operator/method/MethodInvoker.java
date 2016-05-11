@@ -35,7 +35,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 public abstract class MethodInvoker extends AbstractParamOperator {
@@ -103,7 +103,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         argumentClassList.toArray(argumentClasses);
         
     	AMethod currentMethod = block.getMethod();
-        if(currentMethod.getMode() == AsmsupportConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(AsmsupportConstant.METHOD_PROXY_SUFFIX)){
+        if(currentMethod.getMode() == ASMSupportConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASMSupportConstant.METHOD_PROXY_SUFFIX)){
         	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
             mtdEntity.setName(name);
         }else{
@@ -177,7 +177,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     }
 
     public final IClass getReturnClass() {
-        if(name.equals(AsmsupportConstant.INIT)){
+        if(name.equals(ASMSupportConstant.INIT)){
             return methodOwner;
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();

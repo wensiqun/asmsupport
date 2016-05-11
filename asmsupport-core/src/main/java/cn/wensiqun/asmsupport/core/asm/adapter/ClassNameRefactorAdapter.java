@@ -18,7 +18,7 @@ package cn.wensiqun.asmsupport.core.asm.adapter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 
@@ -39,7 +39,7 @@ public class ClassNameRefactorAdapter extends ClassAdapter {
 	@Override
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
-		jvmProxyClassName = name + AsmsupportConstant.CLASS_PROXY_SUFFIX;
+		jvmProxyClassName = name + ASMSupportConstant.CLASS_PROXY_SUFFIX;
 		originalName = name;
 		super.visit(version, access, jvmProxyClassName, signature, superName, interfaces);
 	}

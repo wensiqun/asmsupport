@@ -14,7 +14,7 @@ public class GreaterEqualAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().ge(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
+        return new DummyParam(cursor, cursor.peek().ge(ParamPostern.getTarget(operands[0]), ParamPostern.getTarget(operands[1])));
     }
 
 }

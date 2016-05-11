@@ -30,6 +30,13 @@ public abstract class StaticMethodBody extends ProgramBlock<KernelStaticMethodBo
                 StaticMethodBody.this.body(internalVar2ClientVar(args));
             }
 
+            @Override
+            public void prepare() {
+                cursor.push(this);
+                super.prepare();
+                cursor.pop();
+            }
+
         };
         cursor = new KernelProgramBlockCursor(targetBlock);
     }

@@ -38,7 +38,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;
@@ -207,7 +207,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		try {
         	ClassHolder holder = directCallClass.getClassLoader();
 		    if(directCallClass instanceof SemiClass){
-	            if(AsmsupportConstant.INIT.equals(name)){
+	            if(ASMSupportConstant.INIT.equals(name)){
 	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
@@ -218,7 +218,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	                fetchMatchMethod(tempPotentially, directCallClass.getSuperclass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
-	            if(AsmsupportConstant.INIT.equals(name)){
+	            if(ASMSupportConstant.INIT.equals(name)){
 	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }

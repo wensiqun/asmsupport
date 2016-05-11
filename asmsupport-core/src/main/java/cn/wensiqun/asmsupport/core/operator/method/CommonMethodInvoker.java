@@ -23,7 +23,7 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 /**
  * Represent a method call.
@@ -86,7 +86,7 @@ public class CommonMethodInvoker extends MethodInvoker {
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VarMeta ve = ((IVariable)callObjReference).getMeta();
-                	 if(ve.getName().equals(AsmsupportConstant.SUPER)){
+                	 if(ve.getName().equals(ASMSupportConstant.SUPER)){
                          insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
                      }else {
                          insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());

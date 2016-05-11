@@ -14,7 +14,7 @@ public class NotEqualAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().ne(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().ne(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

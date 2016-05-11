@@ -14,7 +14,7 @@ public class BxorAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().bxor(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().bxor(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

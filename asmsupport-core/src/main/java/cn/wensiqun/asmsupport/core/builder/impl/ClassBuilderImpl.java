@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 
 /**
@@ -97,9 +97,9 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @return
      */
 	public IMethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
-		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.INIT, argTypes, argNames,
+		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.INIT, argTypes, argNames,
                 null, exceptions, access, body);
-        methodCreaters.add(creator);
+        methodCreators.add(creator);
         haveInitMethod = true;
         return creator;
 	}
@@ -120,7 +120,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 			IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
         IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-        methodCreaters.add(creator);
+        methodCreators.add(creator);
         return creator;
 	}
 
@@ -143,7 +143,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
     	}
 		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-		methodCreaters.add(creator);
+		methodCreators.add(creator);
 		return creator;
 	}
 
@@ -166,7 +166,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
     	}
 		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-        methodCreaters.add(creator);
+        methodCreators.add(creator);
         return creator;
 	}
 
@@ -179,9 +179,9 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 	public IMethodBuilder createStaticBlock(KernelStaticBlockBody block) {
     	checkStaticBlock();
     	existedStaticBlock = true;
-    	IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.CLINIT, null, null, null, null,
+    	IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null,
                 Opcodes.ACC_STATIC, block);
-    	methodCreaters.add(0, creator);
+    	methodCreators.add(0, creator);
     	return creator;
 	}
 

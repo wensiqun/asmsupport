@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 /**
@@ -53,7 +53,7 @@ public class AMethod {
     private Stack stack;
 
     /** 0 : indicate add, 1 : indicate modif*/
-    private int mode = AsmsupportConstant.METHOD_CREATE_MODE_ADD;
+    private int mode = ASMSupportConstant.METHOD_CREATE_MODE_ADD;
 
     /** The local vairable container of current method*/
     private LocalVariables locals;

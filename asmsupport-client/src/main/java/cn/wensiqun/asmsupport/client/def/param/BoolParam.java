@@ -88,27 +88,27 @@ public class BoolParam extends PriorityParam implements BoolBehavior {
 
     @Override
     public BoolParam and(boolean param) {
-        return and(new DummyParam(cursor, cursor.getPointer().val(param)));
+        return and(new DummyParam(cursor, cursor.peek().val(param)));
     }
 
     @Override
     public BoolParam or(boolean param) {
-        return or(new DummyParam(cursor, cursor.getPointer().val(param)));
+        return or(new DummyParam(cursor, cursor.peek().val(param)));
     }
 
     @Override
     public BoolParam logicAnd(boolean param) {
-        return logicAnd(new DummyParam(cursor, cursor.getPointer().val(param)));
+        return logicAnd(new DummyParam(cursor, cursor.peek().val(param)));
     }
 
     @Override
     public BoolParam logicOr(boolean param) {
-        return logicOr(new DummyParam(cursor, cursor.getPointer().val(param)));
+        return logicOr(new DummyParam(cursor, cursor.peek().val(param)));
     }
 
     @Override
     public BoolParam logicXor(boolean param) {
-        return logicXor(new DummyParam(cursor, cursor.getPointer().val(param)));
+        return logicXor(new DummyParam(cursor, cursor.peek().val(param)));
     }
 
 	@Override

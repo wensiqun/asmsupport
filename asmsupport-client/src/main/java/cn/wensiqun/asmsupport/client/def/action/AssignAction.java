@@ -20,7 +20,7 @@ public class AssignAction extends AbstractUnaryAction {
 	@Override
 	public Param doAction(Param... operands) {
 		return new DummyParam(cursor, 
-				cursor.getPointer().assign((IVariable)ParamPostern.getTarget(variable), 
+				cursor.peek().assign((IVariable)ParamPostern.getTarget(variable),
 						ParamPostern.getTarget(operands[0])));
 	}
 

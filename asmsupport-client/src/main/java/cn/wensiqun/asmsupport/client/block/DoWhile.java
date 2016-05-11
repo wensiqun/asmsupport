@@ -26,6 +26,13 @@ public abstract class DoWhile extends ProgramBlock<KernelDoWhile> implements IDo
 			public void body() {
 				DoWhile.this.body();
 			}
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 		};
 	}
 }

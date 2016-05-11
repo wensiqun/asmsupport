@@ -17,7 +17,6 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
-import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -47,11 +46,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
     protected boolean haveInitMethod;
 
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs) {
-    	this(version, access, name, superCls, itfs, CachedThreadLocalClassLoader.getInstance());
-    }
-    
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] itfs, ASMSupportClassLoader classLoader) {
+    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
@@ -60,17 +55,17 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             throw new ClassException("the super class \"" + superCls.getName()
                     + "\" is an interface");
         }
-        sc = new SemiClass(classLoader, version, access, name, superCls, itfs);
+        sc = new SemiClass(classLoader, version, access, name, superCls, interfaces);
         cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     }
     
 
 	@Override
 	public void create() {
-        IClass[] itfs = sc.getInterfaces();
-        String[] itfStrs = new String[itfs.length];
-        for (int i = 0; i < itfs.length; i++) {
-        	itfStrs[i] = itfs[i].getType().getInternalName();
+        IClass[] interfaces = sc.getInterfaces();
+        String[] interfaceStrings = new String[interfaces.length];
+        for (int i = 0; i < interfaces.length; i++) {
+        	interfaceStrings[i] = interfaces[i].getType().getInternalName();
         }
         
         if(LOG.isPrintEnabled()){
@@ -80,7 +75,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         // create class
         cw.visit(sc.getVersion(), sc.getModifiers(),
                 sc.getName().replace('.', '/'), null,
-                Type.getInternalName(sc.getSuperclass().getName()), itfStrs);
+                Type.getInternalName(sc.getSuperclass().getName()), interfaceStrings);
 
         //beforeCreate        
         this.beforeCreate();
@@ -94,7 +89,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         }
 
         // create method
-        for (IMethodBuilder imc : methodCreaters) {
+        for (IMethodBuilder imc : methodCreators) {
             imc.create(this);
         }
 	}
@@ -110,7 +105,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             ifc.prepare();
         }
 
-        for (IMethodBuilder imc : methodCreaters) {
+        for (IMethodBuilder imc : methodCreators) {
             imc.prepare();
         }
 	}
@@ -122,7 +117,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
             ifc.execute();
         }
 
-        for (IMethodBuilder imc : methodCreaters) {
+        for (IMethodBuilder imc : methodCreators) {
             imc.execute();
         }
         return cw.toByteArray();
@@ -301,7 +296,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     		for(MethodBuilderImpl mc : creatorList){
     			mc.create(this);
     		}
-    		this.methodCreaters.addAll(creatorList);
+    		this.methodCreators.addAll(creatorList);
     	}
     }
     

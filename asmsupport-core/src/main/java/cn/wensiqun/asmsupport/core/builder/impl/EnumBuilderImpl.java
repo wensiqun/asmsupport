@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -147,7 +147,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      */
     public final void createMethodForDummy(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
             IClass[] exceptions, int access, KernelMethodBody mb) {
-        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
+        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
 
@@ -167,7 +167,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if ((access & Opcodes.ACC_STATIC) != 0) {
             access -= Opcodes.ACC_STATIC;
         }
-        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
+        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
 
@@ -187,7 +187,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if ((access & Opcodes.ACC_STATIC) == 0) {
             access += Opcodes.ACC_STATIC;
         }
-        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
+        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
 
@@ -232,7 +232,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         enumArgClasses[1] = ASMSupportClassLoader.getType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
-        methodCreaters.add(MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.INIT, enumArgClasses, enumArgNames, null, null,
+        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.INIT, enumArgClasses, enumArgNames, null, null,
                 Opcodes.ACC_PRIVATE, mb));
         haveInitMethod = true;
     }
@@ -251,8 +251,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
 
         }
         existedStaticBlock = true;
-        methodCreaters.add(0,
-                MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
+        methodCreators.add(0,
+                MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
     }
 
     @Override

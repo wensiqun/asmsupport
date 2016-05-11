@@ -19,7 +19,7 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 /**
  * Call constructor opertion
@@ -32,7 +32,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     private static final Log LOG = LogFactory.getLog(SuperConstructorInvoker.class);
     
     protected SuperConstructorInvoker(KernelProgramBlock block, IClass aclass, KernelParam[] arguments) {
-        super(block, aclass.getSuperclass(), AsmsupportConstant.INIT, arguments);
+        super(block, aclass.getSuperclass(), ASMSupportConstant.INIT, arguments);
     }
 
     @Override

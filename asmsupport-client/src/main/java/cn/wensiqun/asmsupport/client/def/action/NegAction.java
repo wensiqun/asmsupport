@@ -15,7 +15,7 @@ public class NegAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-       return new DummyParam(cursor, cursor.getPointer().neg(ParamPostern.getTarget(operands[0])));
+       return new DummyParam(cursor, cursor.peek().neg(ParamPostern.getTarget(operands[0])));
     }
 
 }

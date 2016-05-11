@@ -14,6 +14,6 @@ public class PreIncAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().preinc(ParamPostern.getTarget(operands[0])));
+        return new DummyParam(cursor, cursor.peek().preinc(ParamPostern.getTarget(operands[0])));
     }
 }

@@ -30,6 +30,13 @@ public abstract class EnumConstructorBody extends ProgramBlock<KernelEnumConstru
                 EnumConstructorBody.this.body(internalVar2ClientVar(args));
             }
 
+            @Override
+            public void prepare() {
+                cursor.push(this);
+                super.prepare();
+                cursor.pop();
+            }
+
         };
         cursor = new KernelProgramBlockCursor(targetBlock);
     }

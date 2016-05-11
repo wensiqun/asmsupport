@@ -31,6 +31,13 @@ public abstract class ConstructorBody extends ProgramBlock<KernelConstructorBody
 			public void body(LocalVariable... args) {
 				ConstructorBody.this.body(internalVar2ClientVar(args));
 			}
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 			
 		};
 		cursor = new KernelProgramBlockCursor(targetBlock);

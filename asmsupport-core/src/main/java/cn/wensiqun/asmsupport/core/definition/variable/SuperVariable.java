@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 
 /**
@@ -41,7 +41,7 @@ public class SuperVariable extends ImplicitVariable{
         		aclass.getSuperclass(), 
         		aclass.getSuperclass(), 
         		aclass.getSuperclass(), 
-                Opcodes.ACC_FINAL, AsmsupportConstant.SUPER);
+                Opcodes.ACC_FINAL, ASMSupportConstant.SUPER);
     }
 
     @Override

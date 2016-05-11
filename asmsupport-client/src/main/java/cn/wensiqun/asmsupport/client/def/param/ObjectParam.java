@@ -42,26 +42,26 @@ public class ObjectParam extends CommonParam implements ObjectBehavior {
     public UncertainParam call(String methodName, Param... arguments) {
     	if(target instanceof Value && ((Value)target).getValue() instanceof IClass) {
     		return new UncertainParam(cursor, 
-    				cursor.getPointer().call(
+    				cursor.peek().call(
     						(IClass)((Value)target).getValue(), 
     						methodName, ParamPostern.getTarget(arguments)));
     	}
-        return new UncertainParam(cursor, cursor.getPointer().call(target, methodName, ParamPostern.getTarget(arguments)));
+        return new UncertainParam(cursor, cursor.peek().call(target, methodName, ParamPostern.getTarget(arguments)));
     }
 
     @Override
     public UncertainParam cast(Class<?> type) {
-        return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
+        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
     }
 
     @Override
     public UncertainParam cast(IClass type) {
-        return new UncertainParam(cursor, cursor.getPointer().checkcast(target, type));
+        return new UncertainParam(cursor, cursor.peek().checkcast(target, type));
     }
 
     @Override
     public BoolParam instanceof_(Class<?> type) {
-        return new BoolParam(cursor, new InstanceofAction(cursor, cursor.getPointer().getType(type)), this);
+        return new BoolParam(cursor, new InstanceofAction(cursor, cursor.peek().getType(type)), this);
     }
 
     @Override

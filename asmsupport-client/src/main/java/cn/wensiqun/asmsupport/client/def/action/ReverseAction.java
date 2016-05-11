@@ -15,7 +15,7 @@ public class ReverseAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-       return new DummyParam(cursor, cursor.getPointer().reverse(ParamPostern.getTarget(operands[0])));
+       return new DummyParam(cursor, cursor.peek().reverse(ParamPostern.getTarget(operands[0])));
     }
 
 }

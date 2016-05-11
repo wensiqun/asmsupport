@@ -404,11 +404,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public IF if_(IF ifBlock) {
 	    ifBlock.cursor = cursor;
 	    ifBlock.parent = this;
-        cursor.setPointer(ifBlock.targetBlock);
-        
 		targetBlock.if_(ifBlock.targetBlock);
-		
-        cursor.setPointer(targetBlock);
 		return ifBlock;
 	}
 
@@ -416,11 +412,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public While while_(While whileLoop) {
 	    whileLoop.cursor = cursor;
 	    whileLoop.parent = this;
-        cursor.setPointer(whileLoop.targetBlock);
-        
 		targetBlock.while_(whileLoop.targetBlock);
-		
-        cursor.setPointer(targetBlock);
 		return whileLoop;
 	}
 
@@ -428,11 +420,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public DoWhile dowhile(DoWhile doWhile) {
 	    doWhile.cursor = cursor;
 	    doWhile.parent = this;
-        cursor.setPointer(doWhile.targetBlock);
-        
 		targetBlock.dowhile(doWhile.targetBlock);
-		
-        cursor.setPointer(targetBlock);
 		return doWhile;
 	}
 
@@ -440,11 +428,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public ForEach for_(ForEach forEach) {
 	    forEach.cursor = cursor;
 	    forEach.parent = this;
-        cursor.setPointer(forEach.targetBlock);
-        
 		targetBlock.for_(forEach.targetBlock);
-		
-        cursor.setPointer(targetBlock);
 		return forEach;
 	}
 
@@ -452,11 +436,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public Try try_(Try tryClient) {
 	    tryClient.cursor = cursor;
 	    tryClient.parent = this;
-        cursor.setPointer(tryClient.targetBlock);
-
 		targetBlock.try_(tryClient.targetBlock);
-
-        cursor.setPointer(targetBlock);
 		return tryClient;
 	}
 
@@ -464,11 +444,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public Sync sync(Sync sync) {
 	    sync.cursor = cursor;
 	    sync.parent = this;
-	    cursor.setPointer(sync.targetBlock);
-	    
 		targetBlock.sync(sync.targetBlock);
-		
-		cursor.setPointer(targetBlock);
 		return sync;
 	}
 
@@ -556,7 +532,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	public IClass getArrayType(IClass rootComponent, int dim) {
 		return targetBlock.getArrayType(rootComponent, dim);
 	}
-    
+
     public LocVar getLocVar(String name) {
     	ProgramBlock<? extends KernelProgramBlock> block = this;
     	LocVar var = null;

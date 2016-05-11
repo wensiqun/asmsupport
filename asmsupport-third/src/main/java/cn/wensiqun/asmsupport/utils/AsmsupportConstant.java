@@ -2,7 +2,9 @@ package cn.wensiqun.asmsupport.utils;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
-public interface AsmsupportConstant {
+import java.util.UUID;
+
+public interface ASMSupportConstant {
 	
 	String CLASS_QUALIFIED_NAME_REGEX = "^[\\p{L} .'-]+$";
 	
@@ -13,7 +15,7 @@ public interface AsmsupportConstant {
 	String INIT_PROXY = "&init&";
 	String SUPER = "super";
 	String THIS = "this";
-	String METHOD_PROXY_SUFFIX = "@original";
+	String METHOD_PROXY_SUFFIX = "@original_" + UUID.randomUUID().toString().replace('-', '$');
 	String CLASS_PROXY_SUFFIX = "";
 
 	int METHOD_CREATE_MODE_ADD = 0;

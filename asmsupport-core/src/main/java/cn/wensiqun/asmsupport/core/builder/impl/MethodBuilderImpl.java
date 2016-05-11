@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 /**
  * 
@@ -49,14 +49,14 @@ public class MethodBuilderImpl implements IMethodBuilder {
 	public static MethodBuilderImpl methodCreatorForModify(String name, IClass[] arguments, String[] argNames,
 			IClass returnClass, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodBuilderImpl mc = new MethodBuilderImpl(name, arguments, argNames, returnClass, exceptions, access, mb);
-		mc.setMethodCreateMode(AsmsupportConstant.METHOD_CREATE_MODE_MODIFY);
+		mc.setMethodCreateMode(ASMSupportConstant.METHOD_CREATE_MODE_MODIFY);
 		return mc;
 	}
 	
 	public static MethodBuilderImpl methodCreatorForAdd(String name, IClass[] arguments, String[] argNames,
 			IClass returnClass, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
 		MethodBuilderImpl mc = new MethodBuilderImpl(name, arguments, argNames, returnClass, exceptions, access, mb);
-		mc.setMethodCreateMode(AsmsupportConstant.METHOD_CREATE_MODE_ADD);
+		mc.setMethodCreateMode(ASMSupportConstant.METHOD_CREATE_MODE_ADD);
 		return mc;
 	}
 	
@@ -88,7 +88,7 @@ public class MethodBuilderImpl implements IMethodBuilder {
 		MutableClass owner = context.getCurrentClass();
 		meta = new AMethodMeta(context.getClassLoader(), name, owner, owner, arguments, argNames, returnClass, exceptions, access);
 		method = new AMethod(meta, context.getClassVisitor(), context.getClassLoader(), methodBody, mtdCrtMode);
-		if(method.getMeta().getName().equals(AsmsupportConstant.INIT)){
+		if(method.getMeta().getName().equals(ASMSupportConstant.INIT)){
 			owner.addConstructor(meta);
 		}else if(ModifierUtils.isBridge(method.getMeta().getModifiers())){
 			owner.getBridgeMethod().add(meta);

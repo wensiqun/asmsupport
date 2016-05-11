@@ -14,7 +14,7 @@ public class BandAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().band(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().band(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

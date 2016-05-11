@@ -26,6 +26,13 @@ public abstract class While extends ProgramBlock<KernelWhile> implements IWhile 
 			public void body() {
 				While.this.body();
 			}
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 		};
 	}
 	

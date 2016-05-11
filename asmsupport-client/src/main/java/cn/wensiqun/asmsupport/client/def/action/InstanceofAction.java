@@ -18,7 +18,7 @@ public class InstanceofAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().instanceof_(ParamPostern.getTarget(operands[0]), type));
+        return new DummyParam(cursor, cursor.peek().instanceof_(ParamPostern.getTarget(operands[0]), type));
     }
 
 }

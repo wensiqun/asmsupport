@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
 import java.util.LinkedList;
@@ -175,7 +175,7 @@ public class DummyModifiedClass extends AbstractDummy {
      * @return
      */
     public DummyModifiedClass modifyConstructor(Class<?>[] argTypes, ModifiedMethodBody body) {
-        return this.modify(AsmsupportConstant.INIT, argTypes, body);
+        return this.modify(ASMSupportConstant.INIT, argTypes, body);
     }
     
     /**
@@ -185,7 +185,7 @@ public class DummyModifiedClass extends AbstractDummy {
      * @return
      */
     public DummyModifiedClass modifyStaticBlock(ModifiedMethodBody body) {
-        return this.modify(AsmsupportConstant.CLINIT, null, body);
+        return this.modify(ASMSupportConstant.CLINIT, null, body);
     }
 
     /**

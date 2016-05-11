@@ -14,7 +14,7 @@ public class ShiftLeftAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().shl(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().shl(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

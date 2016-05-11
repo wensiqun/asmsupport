@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
@@ -30,12 +27,15 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class AbstractClassBuilder implements IClassBuilder{
 	
     private static final Log LOG = LogFactory.getLog(AbstractClassBuilder.class);
 
-    protected List<IMethodBuilder> methodCreaters = new ArrayList<IMethodBuilder>();
+    protected List<IMethodBuilder> methodCreators = new ArrayList<IMethodBuilder>();
 
     protected List<IFieldBuilder> fieldCreators = new ArrayList<IFieldBuilder>();
 

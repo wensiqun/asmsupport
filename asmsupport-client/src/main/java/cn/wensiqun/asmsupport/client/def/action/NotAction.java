@@ -15,7 +15,7 @@ public class NotAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-       return new DummyParam(cursor, cursor.getPointer().no(ParamPostern.getTarget(operands[0])));
+       return new DummyParam(cursor, cursor.peek().no(ParamPostern.getTarget(operands[0])));
     }
 
 }

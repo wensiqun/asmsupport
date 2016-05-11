@@ -14,7 +14,7 @@ public class OrAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().or(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().or(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

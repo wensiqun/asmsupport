@@ -14,7 +14,7 @@ public class ModAction extends AbstractBinaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().mod(ParamPostern.getTarget(operands[0]), 
+        return new DummyParam(cursor, cursor.peek().mod(ParamPostern.getTarget(operands[0]),
                 ParamPostern.getTarget(operands[1])));
     }
 

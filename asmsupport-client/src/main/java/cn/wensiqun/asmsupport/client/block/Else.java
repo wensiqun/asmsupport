@@ -25,6 +25,13 @@ public abstract class Else extends ProgramBlock<KernelElse> implements IElse  {
 			public void body() {
 				Else.this.body();
 			}
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 		};
 	}
 	

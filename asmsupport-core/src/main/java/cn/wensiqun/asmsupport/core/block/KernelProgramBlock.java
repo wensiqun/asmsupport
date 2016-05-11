@@ -103,7 +103,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
@@ -753,14 +753,14 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final MethodInvoker callOrig() {
-        if (getMethod().getMode() == AsmsupportConstant.METHOD_CREATE_MODE_MODIFY) {
+        if (getMethod().getMode() == ASMSupportConstant.METHOD_CREATE_MODE_MODIFY) {
             String originalMethodName = getMethod().getMeta().getName();
-            if (originalMethodName.equals(AsmsupportConstant.CLINIT)) {
-                originalMethodName = AsmsupportConstant.CLINIT_PROXY;
-            } else if (originalMethodName.equals(AsmsupportConstant.INIT)) {
-                originalMethodName = AsmsupportConstant.INIT_PROXY;
+            if (originalMethodName.equals(ASMSupportConstant.CLINIT)) {
+                originalMethodName = ASMSupportConstant.CLINIT_PROXY;
+            } else if (originalMethodName.equals(ASMSupportConstant.INIT)) {
+                originalMethodName = ASMSupportConstant.INIT_PROXY;
             }
-            originalMethodName += AsmsupportConstant.METHOD_PROXY_SUFFIX;
+            originalMethodName += ASMSupportConstant.METHOD_PROXY_SUFFIX;
             if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
                 return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {

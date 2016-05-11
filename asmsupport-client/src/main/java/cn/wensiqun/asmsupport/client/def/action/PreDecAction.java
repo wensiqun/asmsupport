@@ -14,7 +14,7 @@ public class PreDecAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().predec(ParamPostern.getTarget(operands[0])));
+        return new DummyParam(cursor, cursor.peek().predec(ParamPostern.getTarget(operands[0])));
     }
 
 }

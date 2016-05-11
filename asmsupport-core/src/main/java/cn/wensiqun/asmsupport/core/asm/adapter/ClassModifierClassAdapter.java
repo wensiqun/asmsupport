@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
@@ -82,7 +82,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		public void visitMethodInsn(final int opcode, 
 				final String owner, final String name, final String desc, boolean itf){
 			if(owner.equals(classInternalName) && isModified(name, desc)){
-				super.visitMethodInsn(opcode, owner, name + AsmsupportConstant.METHOD_PROXY_SUFFIX, desc, itf);
+				super.visitMethodInsn(opcode, owner, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, itf);
 			}else{
 				super.visitMethodInsn(opcode, owner, name, desc, itf);
 			}
@@ -111,14 +111,14 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 				access += Opcodes.ACC_PRIVATE;
 			}
 			
-			if (name.equals(AsmsupportConstant.INIT)) {
-				name = AsmsupportConstant.INIT_PROXY;
-				methodVisitor = new ConstructorVisitor(super.visitMethod(access, name + AsmsupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions), desc);
+			if (name.equals(ASMSupportConstant.INIT)) {
+				name = ASMSupportConstant.INIT_PROXY;
+				methodVisitor = new ConstructorVisitor(super.visitMethod(access, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions), desc);
 			}else{
-				if (name.equals(AsmsupportConstant.CLINIT)) {
-					name = AsmsupportConstant.CLINIT_PROXY;
+				if (name.equals(ASMSupportConstant.CLINIT)) {
+					name = ASMSupportConstant.CLINIT_PROXY;
 				}
-				methodVisitor =super.visitMethod(access, name + AsmsupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions);
+				methodVisitor =super.visitMethod(access, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions);
 			}
 		}
 		

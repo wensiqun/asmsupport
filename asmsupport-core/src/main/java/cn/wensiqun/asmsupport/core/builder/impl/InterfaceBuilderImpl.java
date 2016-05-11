@@ -24,7 +24,7 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 
 public class InterfaceBuilderImpl extends AbstractClassCreator {
@@ -70,7 +70,7 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
 		for(int i=0; i<argNames.length; i++){
 			argNames[i] = "arg" + i;
 		}
-        methodCreaters.add(
+        methodCreators.add(
         		MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
                 returnClass, exceptions, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + (isVarargs ? Opcodes.ACC_VARARGS : 0), null));
     }
@@ -134,7 +134,7 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
     public InterfaceBuilderImpl createStaticBlock(KernelStaticBlockBody clinitb) {
     	checkStaticBlock();
     	existedStaticBlock = true;
-        methodCreaters.add(0,  MethodBuilderImpl.methodCreatorForAdd(AsmsupportConstant.CLINIT, null, null, null, null,
+        methodCreators.add(0,  MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null,
                 Opcodes.ACC_STATIC, clinitb));
         return this;
     }

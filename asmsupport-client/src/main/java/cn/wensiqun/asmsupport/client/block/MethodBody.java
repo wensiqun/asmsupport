@@ -29,6 +29,13 @@ public abstract class MethodBody extends ProgramBlock<KernelMethodBody> implemen
                 MethodBody.this.body(internalVar2ClientVar(args));
             }
 
+            @Override
+            public void prepare() {
+                cursor.push(this);
+                super.prepare();
+                cursor.pop();
+            }
+
         };
         cursor = new KernelProgramBlockCursor(targetBlock);
     }

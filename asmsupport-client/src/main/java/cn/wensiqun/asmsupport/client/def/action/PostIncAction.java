@@ -14,7 +14,7 @@ public class PostIncAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(cursor, cursor.getPointer().postinc(ParamPostern.getTarget(operands[0])));
+        return new DummyParam(cursor, cursor.peek().postinc(ParamPostern.getTarget(operands[0])));
     }
 
 }

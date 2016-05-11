@@ -15,16 +15,16 @@
 package cn.wensiqun.asmsupport.utils.asm;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.FieldVisitor;
-import cn.wensiqun.asmsupport.utils.AsmsupportConstant;
+import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
 
 public class FieldAdapter extends FieldVisitor {
 
 	public FieldAdapter() {
-		super(AsmsupportConstant.ASM_VERSION);
+		super(ASMSupportConstant.ASM_VERSION);
 	}
 
 	public FieldAdapter(FieldVisitor fv) {
-		super(AsmsupportConstant.ASM_VERSION, fv);
+		super(ASMSupportConstant.ASM_VERSION, fv);
 	}
 
 }

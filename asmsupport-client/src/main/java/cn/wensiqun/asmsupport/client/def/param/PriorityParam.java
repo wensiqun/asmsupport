@@ -72,7 +72,7 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
     
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(cursor, cursor.getPointer().stradd(target, ParamPostern.getTarget(param)));
+        return new ObjectParam(cursor, cursor.peek().stradd(target, ParamPostern.getTarget(param)));
     }
 
 	@Override
@@ -82,12 +82,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 	
 	@Override
 	public LocVar asVar(IClass type) {
-		return new LocVar(cursor, cursor.getPointer().var(type, getTarget()));
+		return new LocVar(cursor, cursor.peek().var(type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(Class<?> type) {
-		return new LocVar(cursor, cursor.getPointer().var(type, getTarget()));
+		return new LocVar(cursor, cursor.peek().var(type, getTarget()));
 	}
 
 	@Override
@@ -97,12 +97,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 
 	@Override
 	public LocVar asVar(String varName, IClass type) {
-		return new LocVar(cursor, cursor.getPointer().var(varName, type, getTarget()));
+		return new LocVar(cursor, cursor.peek().var(varName, type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(String varName, Class<?> type) {
-		return new LocVar(cursor, cursor.getPointer().var(varName, type, getTarget()));
+		return new LocVar(cursor, cursor.peek().var(varName, type, getTarget()));
 	}
 
 	static class PriorityStack {

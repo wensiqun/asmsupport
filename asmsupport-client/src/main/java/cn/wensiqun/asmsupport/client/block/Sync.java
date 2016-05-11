@@ -30,7 +30,13 @@ public abstract class Sync extends ProgramBlock<KernelSync> implements ISynchron
 			public void body(KernelParam e) {
 				Sync.this.body(new DummyParam(cursor, e));
 			}
-			
+
+			@Override
+			public void prepare() {
+				cursor.push(this);
+				super.prepare();
+				cursor.pop();
+			}
 		};
 	}
 
