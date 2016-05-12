@@ -28,6 +28,14 @@
 		<url>git@github.com:wensiqun/asmsupport.git</url>
 		<tag>HEAD</tag>
 	</scm>
+    <issueManagement>
+        <system>GitHub Issue Management</system>
+        <url>https://github.com/wensiqun/asmsupport/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/wensiqun/asmsupport/</url>
+    </ciManagement>
 
 	<developers>
 		<developer>
@@ -158,6 +166,30 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.1.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.5.201505241946</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/org/apache/**/*.*</exclude>
+                        <exclude>**/org/objectweb/**/*.*</exclude>
+                    </excludes>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>
