@@ -171,8 +171,6 @@ public class CachedThreadLocalClassLoader extends ASMSupportClassLoader {
 
         /**
          * name format like : a/b/c/D.class
-         *
-         * @param name
          */
         private BytecodeKey(String name) {
             if (name.endsWith(".class")) {
@@ -222,16 +220,16 @@ public class CachedThreadLocalClassLoader extends ASMSupportClassLoader {
 
         private Class<?> clazz;
 
-        public BytecodeValue(byte[] bytes, Class<?> clazz) {
+        private BytecodeValue(byte[] bytes, Class<?> clazz) {
             this.bytes = bytes;
             this.clazz = clazz;
         }
 
-        public byte[] getBytes() {
+        private byte[] getBytes() {
             return bytes;
         }
 
-        public Class<?> getClazz() {
+        private Class<?> getClazz() {
             return clazz;
         }
 
@@ -315,14 +313,8 @@ public class CachedThreadLocalClassLoader extends ASMSupportClassLoader {
     @Override
     public ArrayClass getArrayType(IClass root, int dim) {
         String nameKey = getDescription(root, dim);
-        Reference<IClass> ref = cacheASMSupportClass.get(nameKey.toString());
+        Reference<IClass> ref = cacheASMSupportClass.get(nameKey);
         if (ref == null || ref.get() == null) {
-            StringBuilder arrayClassDesc = new StringBuilder();
-            int tmpDim = dim;
-            while (tmpDim-- > 0) {
-                arrayClassDesc.append("[");
-            }
-            arrayClassDesc.append(root.getDescription());
             ArrayClass arrayClass = new ArrayClass(root, dim, this);
             ref = new WeakReference<IClass>(arrayClass);
             cacheASMSupportClass.put(nameKey, ref);
