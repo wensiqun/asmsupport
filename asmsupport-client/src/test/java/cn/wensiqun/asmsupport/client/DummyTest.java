@@ -1,25 +1,18 @@
 package cn.wensiqun.asmsupport.client;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-
-import cn.wensiqun.asmsupport.client.block.ConstructorBody;
-import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
-import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
-import cn.wensiqun.asmsupport.client.block.ForEach;
-import cn.wensiqun.asmsupport.client.block.MethodBody;
-import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
+import cn.wensiqun.asmsupport.client.block.*;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import junit.framework.Assert;
+import org.junit.Test;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DummyTest {
     
@@ -27,7 +20,7 @@ public class DummyTest {
     // The following class we will  
     // excepted to generated.
     //##################################
-    public static interface ExceptedInterface {
+    public interface ExceptedInterface {
         
         String interface_field_string = "ExceptedInterface\n";
         
