@@ -1,12 +1,10 @@
 package com.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyEnum;
-import cn.wensiqun.asmsupport.client.DummyInterface;
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
-import cn.wensiqun.asmsupport.client.block.MethodBody;
+import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.client.def.var.This;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -35,6 +33,7 @@ public class Lesson3 {
         DummyEnum dc = new DummyEnum().package_(PACKAGE).name(LESSON + "test2").setClassOutPutPath(OUTPUT_PATH);
         dc.newField(String.class, "name");
         dc.newField(int.class, "size");
+        dc.newEnum("Monday");
         dc.newConstructor().argTypes(String.class, int.class).argNames("name", "size").body(new EnumConstructorBody() {
             @Override
             public void body(LocVar... args) {
@@ -45,7 +44,17 @@ public class Lesson3 {
                 return_();
             }
         });
-        dc.newEnum("Monday");
+        dc.newStaticBlock(new EnumStaticBlockBody() {
+            @Override
+            public void constructEnumConsts() {
+                constructEnumConst("Monday", val("Monday Name Here"), val(10));
+            }
+
+            @Override
+            public void body(LocVar... args) {
+                //Undo other codes.
+            }
+        });
         //TODO 这里怎么使用构造函数呢？？？
         Class cls = dc.build();
     }

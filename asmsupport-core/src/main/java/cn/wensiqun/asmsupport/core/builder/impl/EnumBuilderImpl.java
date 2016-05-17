@@ -44,8 +44,6 @@ import java.util.List;
  */
 public class EnumBuilderImpl extends AbstractClassCreator {
 
-    private boolean existEnumConstant;
-
     private boolean existField;
 
     private boolean existNoArgumentsConstructor;
@@ -111,9 +109,6 @@ public class EnumBuilderImpl extends AbstractClassCreator {
      * @return
      */
     public IFieldBuilder createField(String name, int modifiers, IClass type, Object value) {
-        if (!existEnumConstant) {
-            throw new ASMSupportException("first field must be an enum object of current enum type " + sc.getName());
-        }
         FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
         fieldCreators.add(fc);
         existField = !ModifierUtils.isEnum(modifiers);
@@ -129,7 +124,6 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         if (existField) {
             throw new ASMSupportException("declare enum constant must before other field");
         }
-        existEnumConstant = true;
         sc.setEnumNum(sc.getEnumNum() + 1);
         enumConstantNameList.add(name);
         createField(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL + Opcodes.ACC_ENUM, sc);
@@ -223,8 +217,8 @@ public class EnumBuilderImpl extends AbstractClassCreator {
         }
 
         String[] enumArgNames = new String[argNames.length + 2];
-        enumArgNames[0] = "name";
-        enumArgNames[1] = "ordinal";
+        enumArgNames[0] = "@name";
+        enumArgNames[1] = "@ordinal";
         System.arraycopy(argNames, 0, enumArgNames, 2, argNames.length);
 
         IClass[] enumArgClasses = new IClass[argClasses.length + 2];
@@ -244,12 +238,9 @@ public class EnumBuilderImpl extends AbstractClassCreator {
     public void createStaticBlock(final KernelEnumStaticBlockBody body) {
         checkStaticBlock();
         body.setEnumNameList(enumConstantNameList);
-        if (existEnumConstant) {
-            // create implicit global variable ENUM$VALUES for enum type
-            createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
-                    + Opcodes.ACC_SYNTHETIC, ASMSupportClassLoader.getArrayType(sc, 1));
-
-        }
+        // create implicit global variable ENUM$VALUES for enum type
+        createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
+                + Opcodes.ACC_SYNTHETIC, ASMSupportClassLoader.getArrayType(sc, 1));
         existedStaticBlock = true;
         methodCreators.add(0,
                 MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
@@ -285,7 +276,7 @@ public class EnumBuilderImpl extends AbstractClassCreator {
                         KernelArrayLength al = arrayLength(values);
                         LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
 
-                        // get lengt operator for tmpValues;
+                        // get length operator for tmpValues;
                         KernelParam copyLen = arrayLength(copy);
 
                         // System
