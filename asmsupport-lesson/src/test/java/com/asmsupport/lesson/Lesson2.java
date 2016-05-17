@@ -49,6 +49,8 @@ public class Lesson2 {
             public void body() {
                 FieldVar FIELD = val(getMethodOwner()).field("ASM_NAME");
                 assign(FIELD, call(String.class, "valueOf", val(100)));
+                FieldVar FIELD1 = val(getMethodOwner()).field("ASM_COUNT");
+                assign(FIELD1, val(100));
                 return_();
             }
         });
