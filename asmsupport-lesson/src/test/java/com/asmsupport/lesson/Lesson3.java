@@ -12,7 +12,6 @@ import org.junit.Test;
  * Created by woate on 2016/5/16.
  * 这节课讲解如何创建枚举
  */
-@Ignore
 public class Lesson3 {
     static final String LESSON = "Lesson3";
     static final String PACKAGE = "lesson3";
@@ -32,13 +31,14 @@ public class Lesson3 {
     public void test2(){
         DummyEnum dc = new DummyEnum().package_(PACKAGE).name(LESSON + "test2").setClassOutPutPath(OUTPUT_PATH);
         dc.newField(String.class, "name");
-        dc.newField(int.class, "size");
-        dc.newEnum("Monday");
-        dc.newConstructor().argTypes(String.class, int.class).argNames("name", "size").body(new EnumConstructorBody() {
+        dc.newField(int.class, "code");
+        dc.newEnum("FIRST");
+        dc.newEnum("SECOND");
+        dc.newConstructor().argTypes(String.class, int.class).argNames("name", "code").body(new EnumConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 FieldVar name = this_().field("name");
-                FieldVar size = this_().field("size");
+                FieldVar size = this_().field("code");
                 assign(name, args[0]);
                 assign(size, args[1]);
                 return_();
@@ -47,7 +47,8 @@ public class Lesson3 {
         dc.newStaticBlock(new EnumStaticBlockBody() {
             @Override
             public void constructEnumConsts() {
-                constructEnumConst("Monday", val("Monday Name Here"), val(10));
+                constructEnumConst("FIRST", val("Monday Name Here"), val(10));
+                constructEnumConst("SECOND", val("Monday Name Here1"), val(11));
             }
 
             @Override
