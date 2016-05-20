@@ -65,7 +65,7 @@ public class Lesson4 {
         dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
-                if_(new IF(call(args[0], "equals", val("this"))) {
+                if_(new IF(call(args[0], "equals", val("test"))) {
                     @Override
                     public void body() {
                         FieldVar out = val(System.class).field("out");
@@ -102,7 +102,7 @@ public class Lesson4 {
         dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
-                if_(new IF(call(args[0], "equals", val("this"))) {
+                if_(new IF(call(args[0], "equals", val("test"))) {
                     @Override
                     public void body() {
                         FieldVar out = val(System.class).field("out");
@@ -110,6 +110,7 @@ public class Lesson4 {
                         out.call("println",val("1"));
                         out.call("println", val("2"));
                         out.call("println", val("3"));
+                        return_();
                     }
                 }).elseif(new ElseIF(call(args[0], "equals", val("demo"))) {
                     @Override
@@ -121,10 +122,47 @@ public class Lesson4 {
                     public void body() {
                         FieldVar out = val(System.class).field("out");
                         out.call("println", val("error"));
+                        return_();
                     }
                 });
+                return_();
             }
         });
         Class cls = dc.build();
     }
+
+
+
+//    /**
+//     * 创建一个循环结构输出1-10
+//     */
+//    @Test
+//    public void test4(){
+//        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test4").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+//        dc.newConstructor().body(new ConstructorBody() {
+//            @Override
+//            public void body(LocVar... args) {
+//                return_();
+//            }
+//        });
+//        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+//            @Override
+//            public void body(final LocVar... args) {
+//                final LocVar i = var("i", int.class, val(0));
+//                //i<= 10;
+//                //while(i <= 10){...}
+//                while_(new While(le(i, val(10))) {
+//                    @Override
+//                    public void body() {
+//                        //System.out.println(i)
+//                        FieldVar out = val(System.class).field("out");
+//                        out.call("println", i);
+//                        //++i;
+//                        preinc(i);
+//                    }
+//                });
+//            }
+//        });
+//        Class cls = dc.build();
+//    }
 }
