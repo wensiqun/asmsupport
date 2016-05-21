@@ -4,15 +4,21 @@ import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyEnum;
 import cn.wensiqun.asmsupport.client.block.*;
 import cn.wensiqun.asmsupport.client.def.Param;
+import cn.wensiqun.asmsupport.client.def.param.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
+import cn.wensiqun.asmsupport.core.definition.value.IValue;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by woate on 2016/5/16.
@@ -55,7 +61,7 @@ public class Lesson4 {
         try {
             Object obj = cls.newInstance();
             Method fun = cls.getMethod("fun", String.class);
-            fun.invoke(obj, "test");
+            fun.invoke(obj, "this");
             fun.invoke(obj, "demo");
             fun.invoke(obj, "demo1");
         } catch (Exception e) {
@@ -200,5 +206,45 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
+    }
+
+
+    /**
+     * 创建一个循环结构输出1-10
+     */
+    @Test
+    public void test5(){
+        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test5").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().body(new ConstructorBody() {
+            @Override
+            public void body(LocVar... args) {
+                return_();
+            }
+        });
+        dc.newMethod("fun").argTypes(List.class).argNames("list").return_(void.class).body(new MethodBody() {
+            @Override
+            public void body(final LocVar... args) {
+//                DummyParam list1 = new_(ArrayList.class);
+//                final LocVar list = var("list", List.class, list1);
+                for_(new ForEach(args[0]) {
+                    @Override
+                    public void body(LocVar e) {
+                        FieldVar out = val(System.class).field("out");
+                        out.call("println", e);
+                    }
+                });
+                return_();
+            }
+        });
+        Class cls = dc.build();
+        //测试使用新创建的类
+        try {
+            Object obj = cls.newInstance();
+            Method fun = cls.getMethod("fun", List.class);
+            List<String> list = Arrays.asList("1","2","3");
+            fun.invoke(obj, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
