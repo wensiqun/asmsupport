@@ -74,7 +74,7 @@ public class Lesson4 {
      */
     @Test
     public void test2() throws Exception {
-        DummyClass dc = new DummyClass().package_(PACKAGE).public_().name(LESSON + "test2").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        DummyClass dc = new DummyClass().public_().package_(PACKAGE).name(LESSON + "test2").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
         dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
@@ -122,7 +122,7 @@ public class Lesson4 {
      */
     @Test
     public void test3(){
-        DummyClass dc = new DummyClass().package_(PACKAGE).public_().name(LESSON + "test3").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        DummyClass dc = new DummyClass().public_().package_(PACKAGE).name(LESSON + "test3").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
         dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
@@ -180,16 +180,18 @@ public class Lesson4 {
      */
     @Test
     public void test4(){
-        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test4").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-        dc.newConstructor().body(new ConstructorBody() {
+        DummyClass dc = new DummyClass().public_().package_(PACKAGE).name(LESSON + "test4").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
             }
         });
-        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+        dc.newMethod("fun").public_().argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
+                final FieldVar out = val(System.class).field("out");
+                out.call("println", args[0]);
                 final LocVar i = var("i", int.class, val(0));
                 //i<= 10;
                 //while(i <= 10){...}
@@ -197,15 +199,23 @@ public class Lesson4 {
                     @Override
                     public void body() {
                         //System.out.println(i)
-                        FieldVar out = val(System.class).field("out");
                         out.call("println", i);
-                        //++i;
-                        preinc(i);
+                        //i++;
+                        postdec(i);
+
                     }
                 });
             }
         });
         Class cls = dc.build();
+        //测试使用新创建的类
+        try {
+            Object obj = cls.newInstance();
+            Method fun = cls.getMethod("fun", String.class);
+            fun.invoke(obj, "test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -214,14 +224,14 @@ public class Lesson4 {
      */
     @Test
     public void test5(){
-        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test5").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-        dc.newConstructor().body(new ConstructorBody() {
+        DummyClass dc = new DummyClass().public_().package_(PACKAGE).name(LESSON + "test5").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
             }
         });
-        dc.newMethod("fun").argTypes(List.class).argNames("list").return_(void.class).body(new MethodBody() {
+        dc.newMethod("fun").public_().argTypes(List.class).argNames("list").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
 //                DummyParam list1 = new_(ArrayList.class);
