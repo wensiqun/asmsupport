@@ -27,14 +27,14 @@ public class Lesson4 {
      */
     @Test
     public void test1()throws Exception {
-        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test1").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-        dc.newConstructor().body(new ConstructorBody() {
+        DummyClass dc = new DummyClass().package_(PACKAGE).public_().name(LESSON + "test1").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
             }
         });
-        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+        dc.newMethod("fun").public_().argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
                 if_(new IF(call(args[0], "equals", val("this"))) {
@@ -47,6 +47,7 @@ public class Lesson4 {
                         out.call("println", val("3"));
                     }
                 });
+                return_();
             }
         });
         Class cls = dc.build();
@@ -67,14 +68,14 @@ public class Lesson4 {
      */
     @Test
     public void test2() throws Exception {
-        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test2").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-        dc.newConstructor().body(new ConstructorBody() {
+        DummyClass dc = new DummyClass().package_(PACKAGE).public_().name(LESSON + "test2").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
             }
         });
-        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+        dc.newMethod("fun").public_().argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
                 if_(new IF(call(args[0], "equals", val("test"))) {
@@ -93,6 +94,7 @@ public class Lesson4 {
                         out.call("println", val("error"));
                     }
                 });
+                return_();
             }
         });
         Class cls = dc.build();
