@@ -26,7 +26,7 @@ public class Lesson4 {
      * 创建一个判断输入字符串是否为test,如果为test，输出内容和1，2，3
      */
     @Test
-    public void test1(){
+    public void test1()throws Exception {
         DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test1").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
         dc.newConstructor().body(new ConstructorBody() {
             @Override
@@ -50,13 +50,15 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
+        Object instance =  cls.newInstance();
+        cls.getMethod("fun", new Class[]{String.class}).invoke(instance, "this");
     }
 
     /**
      * 创建一个判断输入字符串是否为test,如果为test，输出内容和1，2，3，如果不是，则输出错误
      */
     @Test
-    public void test2(){
+    public void test2() throws Exception {
         DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test2").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
         dc.newConstructor().body(new ConstructorBody() {
             @Override
@@ -86,6 +88,8 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
+       Object instance =  cls.newInstance();
+       cls.getMethod("fun", new Class[]{String.class}).invoke(instance, "this");
     }
 
 
