@@ -50,8 +50,16 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
-        Object instance =  cls.newInstance();
-        cls.getMethod("fun", new Class[]{String.class}).invoke(instance, "this");
+        //测试使用新创建的类
+        try {
+            Object obj = cls.newInstance();
+            Method fun = cls.getMethod("fun", String.class);
+            fun.invoke(obj, "test");
+            fun.invoke(obj, "demo");
+            fun.invoke(obj, "demo1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -88,8 +96,16 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
-       Object instance =  cls.newInstance();
-       cls.getMethod("fun", new Class[]{String.class}).invoke(instance, "this");
+        //测试使用新创建的类
+        try {
+            Object obj = cls.newInstance();
+            Method fun = cls.getMethod("fun", String.class);
+            fun.invoke(obj, "test");
+            fun.invoke(obj, "demo");
+            fun.invoke(obj, "demo1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -121,6 +137,8 @@ public class Lesson4 {
                 }).elseif(new ElseIF(call(args[0], "equals", val("demo"))) {
                     @Override
                     public void body() {
+                        FieldVar out = val(System.class).field("out");
+                        out.call("println", args[0]);
                         return_();
                     }
                 }).else_(new Else() {
@@ -140,7 +158,8 @@ public class Lesson4 {
             Object obj = cls.newInstance();
             Method fun = cls.getMethod("fun", String.class);
             fun.invoke(obj, "test");
-            fun.invoke(obj, "demo2");
+            fun.invoke(obj, "demo");
+            fun.invoke(obj, "demo1");
         } catch (Exception e) {
             e.printStackTrace();
         }
