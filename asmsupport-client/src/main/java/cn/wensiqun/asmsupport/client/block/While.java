@@ -14,14 +14,16 @@
  */
 package cn.wensiqun.asmsupport.client.block;
 
+import cn.wensiqun.asmsupport.client.def.Param;
+import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 
 public abstract class While extends ProgramBlock<KernelWhile> implements IWhile {
     
-	public While(KernelParam condition) {
-		kernelBlock = new KernelWhile(condition) {
+	public While(Param condition) {
+		kernelBlock = new KernelWhile(ParamPostern.getTarget(condition)) {
 			@Override
 			public void body() {
 				While.this.body();

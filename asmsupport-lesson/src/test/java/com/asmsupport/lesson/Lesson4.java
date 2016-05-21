@@ -12,6 +12,8 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import org.junit.Test;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by woate on 2016/5/16.
  * 这节课讲解如何创建逻辑
@@ -92,14 +94,14 @@ public class Lesson4 {
      */
     @Test
     public void test3(){
-        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test3").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-        dc.newConstructor().body(new ConstructorBody() {
+        DummyClass dc = new DummyClass().package_(PACKAGE).public_().name(LESSON + "test3").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
             }
         });
-        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+        dc.newMethod("fun").public_().argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
                 if_(new IF(call(args[0], "equals", val("test"))) {
@@ -129,40 +131,49 @@ public class Lesson4 {
             }
         });
         Class cls = dc.build();
+        //测试使用新创建的类
+        try {
+            Object obj = cls.newInstance();
+            Method fun = cls.getMethod("fun", String.class);
+            fun.invoke(obj, "test");
+            fun.invoke(obj, "demo2");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
 
-//    /**
-//     * 创建一个循环结构输出1-10
-//     */
-//    @Test
-//    public void test4(){
-//        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test4").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
-//        dc.newConstructor().body(new ConstructorBody() {
-//            @Override
-//            public void body(LocVar... args) {
-//                return_();
-//            }
-//        });
-//        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
-//            @Override
-//            public void body(final LocVar... args) {
-//                final LocVar i = var("i", int.class, val(0));
-//                //i<= 10;
-//                //while(i <= 10){...}
-//                while_(new While(le(i, val(10))) {
-//                    @Override
-//                    public void body() {
-//                        //System.out.println(i)
-//                        FieldVar out = val(System.class).field("out");
-//                        out.call("println", i);
-//                        //++i;
-//                        preinc(i);
-//                    }
-//                });
-//            }
-//        });
-//        Class cls = dc.build();
-//    }
+    /**
+     * 创建一个循环结构输出1-10
+     */
+    @Test
+    public void test4(){
+        DummyClass dc = new DummyClass().package_(PACKAGE).name(LESSON + "test4").setJavaVersion(Opcodes.V1_7).setClassOutPutPath(OUTPUT_PATH);
+        dc.newConstructor().body(new ConstructorBody() {
+            @Override
+            public void body(LocVar... args) {
+                return_();
+            }
+        });
+        dc.newMethod("fun").argTypes(String.class).argNames("name").return_(void.class).body(new MethodBody() {
+            @Override
+            public void body(final LocVar... args) {
+                final LocVar i = var("i", int.class, val(0));
+                //i<= 10;
+                //while(i <= 10){...}
+                while_(new While(le(i, val(10))) {
+                    @Override
+                    public void body() {
+                        //System.out.println(i)
+                        FieldVar out = val(System.class).field("out");
+                        out.call("println", i);
+                        //++i;
+                        preinc(i);
+                    }
+                });
+            }
+        });
+        Class cls = dc.build();
+    }
 }
