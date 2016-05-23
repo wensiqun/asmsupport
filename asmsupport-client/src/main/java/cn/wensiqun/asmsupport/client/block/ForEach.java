@@ -25,25 +25,25 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 public abstract class ForEach extends ProgramBlock<KernelForEach> implements IForEach<LocVar> {
 
     public ForEach(Param iteratorVar) {
-        kernelBlock = new KernelForEach(ParamPostern.getTarget(iteratorVar)) {
+        setKernelBlock(new KernelForEach(ParamPostern.getTarget(iteratorVar)) {
 
             @Override
             public void body(LocalVariable e) {
                 ForEach.this.body(new LocVar(getBlockTracker(), e));
             }
 
-        };
+        });
     }
 
     public ForEach(Param iteratorVar, IClass elementType) {
-        kernelBlock = new KernelForEach(ParamPostern.getTarget(iteratorVar), elementType) {
+        setKernelBlock(new KernelForEach(ParamPostern.getTarget(iteratorVar), elementType) {
 
             @Override
             public void body(LocalVariable e) {
                 ForEach.this.body(new LocVar(getBlockTracker(), e));
             }
 
-        };
+        });
     }
 
 }

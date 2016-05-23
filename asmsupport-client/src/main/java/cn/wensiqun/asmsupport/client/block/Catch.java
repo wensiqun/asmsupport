@@ -28,13 +28,13 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
 	 * @param exceptionType exception type
 	 */
     public Catch(IClass exceptionType) {
-        kernelBlock = new KernelCatch(exceptionType) {
+        setKernelBlock(new KernelCatch(exceptionType) {
             @Override
             public void body(LocalVariable e) {
                 Catch.this.body(new LocVar(getBlockTracker(), e));
             }
 
-        };
+        });
     }
     
     /**
@@ -43,27 +43,27 @@ public abstract class Catch extends ProgramBlock<KernelCatch> implements ICatch<
      * @param exceptionType exception type
      */
     public Catch(Class<?> exceptionType) {
-        kernelBlock = new KernelCatch(exceptionType) {
+        setKernelBlock(new KernelCatch(exceptionType) {
 
             @Override
             public void body(LocalVariable e) {
                 Catch.this.body(new LocVar(getBlockTracker(), e));
             }
 
-        };
+        });
     }
 
     @Override
     public Catch catch_(Catch catchBlock) {
         catchBlock.parent = parent;
-        kernelBlock.catch_(catchBlock.kernelBlock);
+        getDelegate().catch_(catchBlock.getDelegate());
         return catchBlock;
     }
 
     @Override
     public Finally finally_(Finally finallyClient) {
         finallyClient.parent = parent;
-        kernelBlock.finally_(finallyClient.kernelBlock);
+        getDelegate().finally_(finallyClient.getDelegate());
         return finallyClient;
     }
 

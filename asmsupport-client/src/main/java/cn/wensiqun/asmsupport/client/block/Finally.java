@@ -20,14 +20,14 @@ import cn.wensiqun.asmsupport.standard.block.exception.IFinally;
 public abstract class Finally extends ProgramBlock<KernelFinally> implements IFinally {
 
     public Finally() {
-        kernelBlock = new KernelFinally() {
+        setKernelBlock(new KernelFinally() {
 
             @Override
             public void body() {
                 Finally.this.body();
             }
 
-        };
+        });
     }
 
 }

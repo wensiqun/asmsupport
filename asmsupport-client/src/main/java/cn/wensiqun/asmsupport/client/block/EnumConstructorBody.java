@@ -23,13 +23,13 @@ public abstract class EnumConstructorBody extends ProgramBlock<KernelEnumConstru
         IEnumConstructorBody<LocVar> {
 
     public EnumConstructorBody() {
-        kernelBlock = new KernelEnumConstructorBody() {
+        setKernelBlock(new KernelEnumConstructorBody() {
 
             @Override
             public void body(LocalVariable... args) {
                 EnumConstructorBody.this.body(internalVar2ClientVar(args));
             }
 
-        };
+        });
     }
 }

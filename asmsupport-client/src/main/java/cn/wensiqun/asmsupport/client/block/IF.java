@@ -22,25 +22,25 @@ import cn.wensiqun.asmsupport.standard.block.branch.IIF;
 public abstract class IF extends ProgramBlock<KernelIF> implements IIF<ElseIF, Else> {
 
     public IF(Param condition) {
-        kernelBlock = new KernelIF(ParamPostern.getTarget(condition)) {
+        setKernelBlock(new KernelIF(ParamPostern.getTarget(condition)) {
             @Override
             public void body() {
                 IF.this.body();
             }
-        };
+        });
     }
 
     @Override
     public ElseIF elseif(ElseIF elseif) {
         elseif.parent = parent;
-        kernelBlock.elseif(elseif.kernelBlock);
+        getDelegate().elseif(elseif.getDelegate());
         return elseif;
     }
 
     @Override
     public Else else_(Else els) {
         els.parent = parent;
-        kernelBlock.else_(els.kernelBlock);
+        getDelegate().else_(els.getDelegate());
         return els;
     }
 }

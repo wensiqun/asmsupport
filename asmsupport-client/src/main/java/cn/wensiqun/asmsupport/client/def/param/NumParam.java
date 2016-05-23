@@ -39,103 +39,103 @@ public class NumParam extends PriorityParam implements NumBehavior {
     
     @Override
     public NumParam add(Param para) {
-        priorityStack.pushAction(new AddAction(tracker), para);
+        priorityStack.pushAction(new AddAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam sub(Param para) {
-        priorityStack.pushAction(new SubAction(tracker), para);
+        priorityStack.pushAction(new SubAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam mul(Param para) {
-        priorityStack.pushAction(new MulAction(tracker), para);
+        priorityStack.pushAction(new MulAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam div(Param para) {
-        priorityStack.pushAction(new DivAction(tracker), para);
+        priorityStack.pushAction(new DivAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam mod(Param para) {
-        priorityStack.pushAction(new ModAction(tracker), para);
+        priorityStack.pushAction(new ModAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam band(Param para) {
-        priorityStack.pushAction(new BandAction(tracker), para);
+        priorityStack.pushAction(new BandAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam bor(Param para) {
-        priorityStack.pushAction(new BorAction(tracker), para);
+        priorityStack.pushAction(new BorAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam bxor(Param para) {
-        priorityStack.pushAction(new BxorAction(tracker), para);
+        priorityStack.pushAction(new BxorAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam shl(Param para) {
-        priorityStack.pushAction(new ShiftLeftAction(tracker), para);
+        priorityStack.pushAction(new ShiftLeftAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam shr(Param para) {
-        priorityStack.pushAction(new ShiftRightAction(tracker), para);
+        priorityStack.pushAction(new ShiftRightAction(clientBridge), para);
         return this;
     }
 
     @Override
     public NumParam ushr(Param para) {
-        priorityStack.pushAction(new UnsignedShiftRightAction(tracker), para);
+        priorityStack.pushAction(new UnsignedShiftRightAction(clientBridge), para);
         return this;
     }
 
     @Override
     public BoolParam gt(Param para) {
-        return new BoolParam(tracker, new GreaterThanAction(tracker), this, para);
+        return new BoolParam(clientBridge, new GreaterThanAction(clientBridge), this, para);
     }
 
     @Override
     public BoolParam ge(Param para) {
-        return new BoolParam(tracker, new GreaterEqualAction(tracker), this, para);
+        return new BoolParam(clientBridge, new GreaterEqualAction(clientBridge), this, para);
     }
 
     @Override
     public BoolParam lt(Param para) {
-        return new BoolParam(tracker, new LessThanAction(tracker), this, para);
+        return new BoolParam(clientBridge, new LessThanAction(clientBridge), this, para);
     }
 
     @Override
     public BoolParam le(Param para) {
-        return new BoolParam(tracker, new LessEqualAction(tracker), this, para);
+        return new BoolParam(clientBridge, new LessEqualAction(clientBridge), this, para);
     }
 
     @Override
     public BoolParam eq(Param para) {
-        return new BoolParam(tracker, new EqualAction(tracker), this, para);
+        return new BoolParam(clientBridge, new EqualAction(clientBridge), this, para);
     }
 
     @Override
     public BoolParam ne(Param para) {
-        return new BoolParam(tracker, new NotEqualAction(tracker), this, para);
+        return new BoolParam(clientBridge, new NotEqualAction(clientBridge), this, para);
     }
 
 	@Override
 	public NumParam assignTo(Var var) {
-        priorityStack.pushAction(new AssignAction(tracker, var), this);
+        priorityStack.pushAction(new AssignAction(clientBridge, var), this);
         return this;
 	}
 

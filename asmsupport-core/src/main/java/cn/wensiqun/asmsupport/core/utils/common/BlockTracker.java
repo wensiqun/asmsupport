@@ -7,6 +7,10 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
  */
 public interface BlockTracker {
 
+    /**
+     * Get the current {@link KernelProgramBlock} at generate time.
+     * @return
+     */
     KernelProgramBlock track();
 
 }

@@ -20,27 +20,27 @@ import cn.wensiqun.asmsupport.standard.block.exception.ITry;
 public abstract class Try extends ProgramBlock<KernelTry> implements ITry<Catch, Finally> {
 
     public Try() {
-        kernelBlock = new KernelTry() {
+        setKernelBlock(new KernelTry() {
 
             @Override
             public void body() {
                 Try.this.body();
             }
 
-        };
+        });
     }
 
     @Override
     public Catch catch_(Catch catchBlock) {
         catchBlock.parent = parent;
-        kernelBlock.catch_(catchBlock.kernelBlock);
+        getDelegate().catch_(catchBlock.getDelegate());
         return catchBlock;
     }
 
     @Override
     public Finally finally_(Finally finallyClient) {
         finallyClient.parent = parent;
-        kernelBlock.finally_(finallyClient.kernelBlock);
+        getDelegate().finally_(finallyClient.getDelegate());
         return finallyClient;
     }
 

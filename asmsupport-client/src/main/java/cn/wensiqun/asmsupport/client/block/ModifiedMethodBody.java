@@ -24,19 +24,19 @@ public abstract class ModifiedMethodBody extends ProgramBlock<KernelModifiedMeth
         IModifiedMethodBody<LocVar> {
 
     public ModifiedMethodBody() {
-        kernelBlock = new KernelModifiedMethodBody() {
+        setKernelBlock(new KernelModifiedMethodBody() {
 
             @Override
             public void body(LocalVariable... args) {
                 ModifiedMethodBody.this.body(internalVar2ClientVar(args));
             }
 
-        };
+        });
     }
 
     @Override
     public IClass getOrigReturnType() {
-        return kernelBlock.getOrigReturnType();
+        return getDelegate().getOrigReturnType();
     }
 
 }

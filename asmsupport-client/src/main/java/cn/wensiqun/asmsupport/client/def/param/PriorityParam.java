@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.client.def.param;
 
+import cn.wensiqun.asmsupport.client.ClientBridge;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
@@ -21,9 +22,7 @@ import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 
@@ -35,20 +34,17 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  */
 public abstract class PriorityParam extends Param implements CommonBehavior {
 
-    protected KernelParam target; 
-    protected BlockTracker tracker;
-    protected PriorityStack priorityStack;
+    protected ClientBridge clientBridge;
+    protected ClientBridge.PriorityStack priorityStack;
     
     protected PriorityParam(BlockTracker tracker, Param result) {
-    	this.tracker = tracker;
-    	priorityStack = new PriorityStack();
-    	priorityStack.operandStack.push(result);
+    	this.clientBridge = (ClientBridge)tracker;
+    	priorityStack = clientBridge.build(result);
     }
     
     public PriorityParam(BlockTracker tracker, OperatorAction action, Param... operands) {
-    	this.tracker = tracker;
-    	priorityStack = new PriorityStack();
-    	priorityStack.pushAction(action, operands);
+    	this.clientBridge = (ClientBridge)tracker;
+    	priorityStack = clientBridge.build(action, operands);
     }
     
     @Override
@@ -58,21 +54,17 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 
     @Override
     public KernelParam getTarget() {
-    	if(target == null) {
-    		priorityStack.marriageAction(Operator.MIN_PRIORITY);
-    		target = ParamPostern.getTarget(priorityStack.operandStack.pop());
-    	}
-        return target;
+        return priorityStack.execute();
     }
 
     @Override
     public final FieldVar field(String name) {
-        return new FieldVar(tracker, getTarget().field(name));
+        return new FieldVar(clientBridge, getTarget().field(name));
     }
     
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(tracker, tracker.track().stradd(target, ParamPostern.getTarget(param)));
+        return new ObjectParam(clientBridge, clientBridge.track().stradd(getTarget(), ParamPostern.getTarget(param)));
     }
 
 	@Override
@@ -82,12 +74,12 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 	
 	@Override
 	public LocVar asVar(IClass type) {
-		return new LocVar(tracker, tracker.track().var(type, getTarget()));
+		return new LocVar(clientBridge, clientBridge.track().var(type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(Class<?> type) {
-		return new LocVar(tracker, tracker.track().var(type, getTarget()));
+		return new LocVar(clientBridge, clientBridge.track().var(type, getTarget()));
 	}
 
 	@Override
@@ -97,40 +89,11 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
 
 	@Override
 	public LocVar asVar(String varName, IClass type) {
-		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
+		return new LocVar(clientBridge, clientBridge.track().var(varName, type, getTarget()));
 	}
 
 	@Override
 	public LocVar asVar(String varName, Class<?> type) {
-		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
+		return new LocVar(clientBridge, clientBridge.track().var(varName, type, getTarget()));
 	}
-
-	static class PriorityStack {
-        
-    	ArrayStack<OperatorAction> symbolStack = new ArrayStack<OperatorAction>();
-        ArrayStack<Param> operandStack = new ArrayStack<Param>();
-        
-        void pushAction(OperatorAction action, Param... operand) {
-        	if(!symbolStack.isEmpty()) {
-        	    int cmpVal = action.getOperator().compare(symbolStack.peek().getOperator());
-        	    if(cmpVal < 0) {
-                    marriageAction(action.getOperator());
-        	    } else if (cmpVal == 0){
-        	        operandStack.push(symbolStack.pop().doAction(operandStack));
-        	    }
-        	}
-        	symbolStack.push(action);
-    		for(Param param : operand) {
-    			operandStack.push(param);
-    		}
-        }
-        
-        void marriageAction(Operator operator) {
-        	while(!symbolStack.isEmpty() && 
-        		   symbolStack.peek().getOperator().compare(operator) >= 0) {
-        		operandStack.push(symbolStack.pop().doAction(operandStack));
-        	}
-        }
-        
-    }
 }

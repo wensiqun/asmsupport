@@ -23,14 +23,14 @@ public abstract class StaticMethodBody extends ProgramBlock<KernelStaticMethodBo
         IStaticMethodBody<LocVar> {
 
     public StaticMethodBody() {
-        kernelBlock = new KernelStaticMethodBody() {
+        setKernelBlock(new KernelStaticMethodBody() {
 
             @Override
             public void body(LocalVariable... args) {
                 StaticMethodBody.this.body(internalVar2ClientVar(args));
             }
 
-        };
+        });
     }
 
 }

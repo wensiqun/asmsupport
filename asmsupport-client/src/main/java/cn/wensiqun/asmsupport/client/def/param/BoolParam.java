@@ -34,74 +34,74 @@ public class BoolParam extends PriorityParam implements BoolBehavior {
 
     @Override
     public BoolParam eq(Param para) {
-        priorityStack.pushAction(new EqualAction(tracker), para);
+        priorityStack.pushAction(new EqualAction(clientBridge), para);
         return this;
     }
 
     @Override
     public BoolParam ne(Param para) {
-        priorityStack.pushAction(new NotEqualAction(tracker), para);
+        priorityStack.pushAction(new NotEqualAction(clientBridge), para);
         return this;
     }
 
     @Override
     public BoolParam and(Param param) {
-        priorityStack.pushAction(new AndAction(tracker), param);
+        priorityStack.pushAction(new AndAction(clientBridge), param);
         return this;
     }
 
     @Override
     public BoolParam or(Param param) {
-        priorityStack.pushAction(new OrAction(tracker), param);
+        priorityStack.pushAction(new OrAction(clientBridge), param);
         return this;
     }
 
     @Override
     public BoolParam logicAnd(Param param) {
-        priorityStack.pushAction(new LogicAndAction(tracker), param);
+        priorityStack.pushAction(new LogicAndAction(clientBridge), param);
         return this;
     }
 
     @Override
     public BoolParam logicOr(Param param) {
-        priorityStack.pushAction(new LogicOrAction(tracker), param);
+        priorityStack.pushAction(new LogicOrAction(clientBridge), param);
         return this;
     }
 
     @Override
     public BoolParam logicXor(Param param) {
-        priorityStack.pushAction(new LogicXorAction(tracker), param);
+        priorityStack.pushAction(new LogicXorAction(clientBridge), param);
         return this;
     }
 
     @Override
     public BoolParam and(boolean param) {
-        return and(new DummyParam(tracker, tracker.track().val(param)));
+        return and(new DummyParam(clientBridge, clientBridge.track().val(param)));
     }
 
     @Override
     public BoolParam or(boolean param) {
-        return or(new DummyParam(tracker, tracker.track().val(param)));
+        return or(new DummyParam(clientBridge, clientBridge.track().val(param)));
     }
 
     @Override
     public BoolParam logicAnd(boolean param) {
-        return logicAnd(new DummyParam(tracker, tracker.track().val(param)));
+        return logicAnd(new DummyParam(clientBridge, clientBridge.track().val(param)));
     }
 
     @Override
     public BoolParam logicOr(boolean param) {
-        return logicOr(new DummyParam(tracker, tracker.track().val(param)));
+        return logicOr(new DummyParam(clientBridge, clientBridge.track().val(param)));
     }
 
     @Override
     public BoolParam logicXor(boolean param) {
-        return logicXor(new DummyParam(tracker, tracker.track().val(param)));
+        return logicXor(new DummyParam(clientBridge, clientBridge.track().val(param)));
     }
 
 	@Override
 	public BoolParam assignTo(Var var) {
-        priorityStack.pushAction(new AssignAction(tracker, var), this);
+        priorityStack.pushAction(new AssignAction(clientBridge, var), this);
         return this;
 	}
 

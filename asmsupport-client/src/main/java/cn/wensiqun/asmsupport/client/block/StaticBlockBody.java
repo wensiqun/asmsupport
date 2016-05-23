@@ -20,13 +20,13 @@ import cn.wensiqun.asmsupport.standard.block.method.IStaticBlockBody;
 public abstract class StaticBlockBody extends ProgramBlock<KernelStaticBlockBody> implements IStaticBlockBody {
 
     public StaticBlockBody() {
-        kernelBlock = new KernelStaticBlockBody() {
+        setKernelBlock(new KernelStaticBlockBody() {
             @Override
             public void body() {
                 StaticBlockBody.this.body();
             }
 
-        };
+        });
     }
 
 }

@@ -20,12 +20,12 @@ import cn.wensiqun.asmsupport.standard.block.branch.IElse;
 public abstract class Else extends ProgramBlock<KernelElse> implements IElse  {
 
 	public Else() {
-		kernelBlock = new KernelElse() {
+		setKernelBlock(new KernelElse() {
 			@Override
 			public void body() {
 				Else.this.body();
 			}
-		};
+		});
 	}
 	
 }

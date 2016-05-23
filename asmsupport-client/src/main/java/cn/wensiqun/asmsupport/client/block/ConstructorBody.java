@@ -25,18 +25,18 @@ import cn.wensiqun.asmsupport.standard.block.method.IConstructorBody;
 public abstract class ConstructorBody extends ProgramBlock<KernelConstructorBody> implements IConstructorBody<Param, LocVar> {
 
 	public ConstructorBody() {
-		kernelBlock = new KernelConstructorBody(){
+		setKernelBlock(new KernelConstructorBody(){
 
 			@Override
 			public void body(LocalVariable... args) {
 				ConstructorBody.this.body(internalVar2ClientVar(args));
 			}
 			
-		};
+		});
 	}
 
 	@Override
 	public UncertainParam supercall(Param... arguments) {
-    	return new UncertainParam(getBlockTracker(), kernelBlock.supercall(ParamPostern.getTarget(arguments)));
+    	return new UncertainParam(getClientBridge(), getDelegate().supercall(ParamPostern.getTarget(arguments)));
 	}
 }

@@ -21,11 +21,11 @@ import cn.wensiqun.asmsupport.standard.block.loop.IDoWhile;
 public abstract class DoWhile extends ProgramBlock<KernelDoWhile> implements IDoWhile {
     
 	public DoWhile(KernelParam condition) {
-		kernelBlock = new KernelDoWhile(condition) {
+		setKernelBlock(new KernelDoWhile(condition) {
 			@Override
 			public void body() {
 				DoWhile.this.body();
 			}
-		};
+		});
 	}
 }

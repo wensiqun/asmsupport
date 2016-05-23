@@ -24,14 +24,14 @@ import cn.wensiqun.asmsupport.standard.block.sync.ISynchronized;
 public abstract class Sync extends ProgramBlock<KernelSync> implements ISynchronized<Param> {
 
     public Sync(Param lock) {
-        kernelBlock = new KernelSync(ParamPostern.getTarget(lock)) {
+        setKernelBlock(new KernelSync(ParamPostern.getTarget(lock)) {
 
             @Override
             public void body(KernelParam e) {
                 Sync.this.body(new DummyParam(getBlockTracker(), e));
             }
 
-        };
+        });
     }
 
 }
