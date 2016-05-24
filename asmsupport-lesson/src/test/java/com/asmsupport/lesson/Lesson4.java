@@ -220,7 +220,7 @@ public class Lesson4 {
 
 
     /**
-     * 创建一个循环结构输出1-10
+     * 创建一个foreach遍历一个列表,如果列表为null输出this is a null，并且返回，否则遍历列表
      */
     @Test
     public void test5(){
@@ -234,8 +234,14 @@ public class Lesson4 {
         dc.newMethod("fun").public_().argTypes(List.class).argNames("list").return_(void.class).body(new MethodBody() {
             @Override
             public void body(final LocVar... args) {
-//                DummyParam list1 = new_(ArrayList.class);
-//                final LocVar list = var("list", List.class, list1);
+                if_(new IF(eq(args[0], null_(List.class))) {
+                    @Override
+                    public void body() {
+                        FieldVar out = val(System.class).field("out");
+                        out.call("println", val("this is a null"));
+                        return_();
+                    }
+                });
                 for_(new ForEach(args[0]) {
                     @Override
                     public void body(LocVar e) {
