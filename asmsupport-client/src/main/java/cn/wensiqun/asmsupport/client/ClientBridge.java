@@ -47,8 +47,8 @@ public class ClientBridge<B extends KernelProgramBlock> implements BlockTracker 
     public static class PriorityStack {
 
         private ArrayStack<OperatorAction> symbolStack = new ArrayStack<>();
+
         private ArrayStack<Param> operandStack = new ArrayStack<>();
-        private KernelParam result;
 
         private PriorityStack(){}
 
@@ -68,11 +68,8 @@ public class ClientBridge<B extends KernelProgramBlock> implements BlockTracker 
         }
 
         public KernelParam execute() {
-            if(result == null) {
-                marriageAction(Operator.MIN_PRIORITY);
-                result = ParamPostern.getTarget(operandStack.pop());
-            }
-            return result;
+            marriageAction(Operator.MIN_PRIORITY);
+            return ParamPostern.getTarget(operandStack.peek());
         }
 
         private void marriageAction(Operator operator) {
