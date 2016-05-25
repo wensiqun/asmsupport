@@ -1,4 +1,4 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 /**
  * Created by woate on 2016/5/16.

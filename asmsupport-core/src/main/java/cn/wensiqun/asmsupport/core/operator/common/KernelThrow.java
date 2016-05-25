@@ -61,11 +61,6 @@ public class KernelThrow extends BreakStack {
     }
 
     @Override
-    protected void checkCrement() {
-        // Do nothing
-    }
-
-    @Override
     protected void checkAsArgument() {
         exception.asArgument();
     }

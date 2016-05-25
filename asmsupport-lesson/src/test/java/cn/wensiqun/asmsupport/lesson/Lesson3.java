@@ -1,11 +1,10 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyEnum;
 import cn.wensiqun.asmsupport.client.block.EnumConstructorBody;
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

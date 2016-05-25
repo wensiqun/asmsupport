@@ -48,11 +48,6 @@ public class KernelInstanceof extends AbstractParamOperator {
     }
 
     @Override
-    protected void checkCrement() {
-        //Do nothing here
-    }
-
-    @Override
     protected void checkAsArgument() {
         obj.asArgument();
     }

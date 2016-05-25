@@ -70,7 +70,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * <li><b>startPrepare</b></li>
      * <li>initAdditionalProperties</li>
      * <li>verifyArgument</li>
-     * <li>checkCrement</li>
      * <li>endingPrepare</li>
      * </ol>
      */
@@ -83,7 +82,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * <li>startPrepare</li>
      * <li><b>initAdditionalProperties</b></li>
      * <li>verifyArgument</li>
-     * <li>checkCrement</li>
      * <li>endingPrepare</li>
      * </ol>
      */
@@ -96,7 +94,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * <li>startPrepare</li>
      * <li>initAdditionalProperties</li>
      * <li><b>verifyArgument</b></li>
-     * <li>checkCrement</li>
      * <li>endingPrepare</li>
      * </ol>
      */
@@ -109,20 +106,6 @@ public abstract class AbstractOperator extends ByteCodeExecutor {
      * <li>startPrepare</li>
      * <li>initAdditionalProperties</li>
      * <li>verifyArgument</li>
-     * <li><b>checkCrement</b></li>
-     * <li>endingPrepare</li>
-     * </ol>
-     */
-    protected void checkCrement() {
-    }
-
-    /**
-     * Template for {@link #prepare()} method. <h4>Order :</h4>
-     * <ol>
-     * <li>startPrepare</li>
-     * <li>initAdditionalProperties</li>
-     * <li>verifyArgument</li>
-     * <li>checkCrement</li>
      * <li><b>endingPrepare</b></li>
      * </ol>
      */

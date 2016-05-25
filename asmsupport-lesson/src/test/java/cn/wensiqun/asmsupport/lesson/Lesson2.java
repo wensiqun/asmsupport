@@ -1,16 +1,14 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyInterface;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Created by woate on 2016/5/10.
  * 这节课讲解如何创建接口
  */
-@Ignore
 public class Lesson2 {
     static final String LESSON = "Lesson2";
     static final String PACKAGE = "lesson2";

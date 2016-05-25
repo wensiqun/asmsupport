@@ -1,20 +1,16 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
-import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import org.junit.Test;
 
 /**
  * Created by woate on 2016/5/9.
  * 这节课讲解如何创建类
  */
-//@Ignore
 public class Lesson1 {
     static final String LESSON = "Lesson1";
     static final String PACKAGE = "lesson1";

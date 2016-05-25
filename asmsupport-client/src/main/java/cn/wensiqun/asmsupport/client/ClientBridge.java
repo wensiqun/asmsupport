@@ -29,12 +29,23 @@ public class ClientBridge<B extends KernelProgramBlock> implements BlockTracker 
         return delegate;
     }
 
+    /**
+     * Build a {@PriorityStack} with a special {@OperatorAction} and related operands.
+     * @param action
+     * @param operands
+     * @return
+     */
     public PriorityStack build(OperatorAction action, Param... operands) {
         PriorityStack priorityStack = new PriorityStack();
         priorityStack.pushAction(action, operands);
         return priorityStack;
     }
 
+    /**
+     *
+     * @param operand
+     * @return
+     */
     public PriorityStack build(Param operand) {
         PriorityStack priorityStack = new PriorityStack();
         priorityStack.operandStack.push(operand);

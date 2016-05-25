@@ -57,11 +57,6 @@ public class KernelStrAdd extends AbstractParamOperator {
     }
 
     @Override
-    protected void checkCrement() {
-        // Do nothing
-    }
-
-    @Override
     protected void checkAsArgument() {
         // Do nothing
     }

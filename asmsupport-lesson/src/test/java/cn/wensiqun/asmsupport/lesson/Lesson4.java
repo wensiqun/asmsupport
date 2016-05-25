@@ -1,22 +1,13 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyClass;
-import cn.wensiqun.asmsupport.client.DummyEnum;
 import cn.wensiqun.asmsupport.client.block.*;
-import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.param.DummyParam;
-import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.definition.value.IValue;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -201,10 +192,11 @@ public class Lesson4 {
                         //System.out.println(i)
                         out.call("println", i);
                         //i++;
-                        postdec(i);
+                        postinc(i);
 
                     }
                 });
+                return_();
             }
         });
         Class cls = dc.build();

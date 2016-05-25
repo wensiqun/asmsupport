@@ -1,4 +1,4 @@
-package com.asmsupport.lesson;
+package cn.wensiqun.asmsupport.lesson;
 
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.DummyInterface;
@@ -29,7 +29,7 @@ public class Lesson5 {
         Class interfaceCls = di.build();
         DummyClass dc = new DummyClass().public_().package_(PACKAGE).name(LESSON + "test1Impl").setClassOutPutPath(OUTPUT_PATH);
         dc.implements_(interfaceCls);
-        dc.newConstructor().body(new ConstructorBody() {
+        dc.newConstructor().public_().body(new ConstructorBody() {
             @Override
             public void body(LocVar... args) {
                 return_();
@@ -41,6 +41,7 @@ public class Lesson5 {
                 FieldVar out = val(System.class).field("out");
                 out.call("println", args[0]);
                 out.call("println", val("fun1 called"));
+                return_();
             }
         });
         Class implCls = dc.build();

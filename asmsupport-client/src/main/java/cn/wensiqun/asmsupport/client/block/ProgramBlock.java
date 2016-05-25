@@ -262,22 +262,26 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public NumParam predec(Param crement) {
-        return new NumParam(getClientBridge(), new PreDecAction(getClientBridge()), crement);
+		return new NumParam(getClientBridge(),
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().predec(ParamPostern.getTarget(crement))));
 	}
 
 	@Override
 	public NumParam postdec(Param crement) {
-        return new NumParam(getClientBridge(), new PostDecAction(getClientBridge()), crement);
+		return new NumParam(getClientBridge(),
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().postdec(ParamPostern.getTarget(crement))));
 	}
 
 	@Override
 	public NumParam preinc(Param crement) {
-        return new NumParam(getClientBridge(), new PreIncAction(getClientBridge()), crement);
+		return new NumParam(getClientBridge(),
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().preinc(ParamPostern.getTarget(crement))));
 	}
 
 	@Override
 	public NumParam postinc(Param crement) {
-        return new NumParam(getClientBridge(), new PostIncAction(getClientBridge()), crement);
+		return new NumParam(getClientBridge(),
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().postinc(ParamPostern.getTarget(crement))));
 	}
 
 	@Override
