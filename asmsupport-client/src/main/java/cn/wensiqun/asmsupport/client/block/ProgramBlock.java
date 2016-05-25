@@ -93,26 +93,26 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public LocVar var(String name, Class<?> type, Param para) {
-		LocVar var = new LocVar(getClientBridge(), getGenerateTimeBlock().var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(getClientBridge(), getGenerateTimeBlock().var(name, type, para.getTarget()));
 		locVarMap.put(name, var);
 		return var;
 	}
 
 	@Override
 	public LocVar var(Class<?> type, Param para) {
-		return new LocVar(getClientBridge(), getGenerateTimeBlock().var(type, ParamPostern.getTarget(para)));
+		return new LocVar(getClientBridge(), getGenerateTimeBlock().var(type, para.getTarget()));
 	}
 
 	@Override
 	public LocVar var(String name, IClass type, Param para) {
-		LocVar var = new LocVar(getClientBridge(), getGenerateTimeBlock().var(name, type, ParamPostern.getTarget(para)));
+		LocVar var = new LocVar(getClientBridge(), getGenerateTimeBlock().var(name, type, para.getTarget()));
 		locVarMap.put(name, var);
 		return var;
 	}
 
 	@Override
 	public LocVar var(IClass type, Param para) {
-		return new LocVar(getClientBridge(), getGenerateTimeBlock().var(type, ParamPostern.getTarget(para)));
+		return new LocVar(getClientBridge(), getGenerateTimeBlock().var(type, para.getTarget()));
 	}
 
 	@Override
@@ -122,12 +122,12 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public UncertainParam assign(Var variable, Param val) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().assign((IVariable) ParamPostern.getTarget(variable), ParamPostern.getTarget(val)));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().assign((IVariable) ParamPostern.getTarget(variable), val.getTarget()));
 	}
 
 	@Override
 	public UncertainParam call(Param objRef, String methodName, Param... arguments) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().getBlockTracker().track().call(ParamPostern.getTarget(objRef), methodName, ParamPostern.getTarget(arguments)));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().getBlockTracker().track().call(objRef.getTarget(), methodName, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
@@ -185,13 +185,13 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public UncertainParam arrayLoad(Param arrayReference, Param pardim, Param... parDims) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayLoad(ParamPostern.getTarget(arrayReference), ParamPostern.getTarget(pardim), ParamPostern.getTarget(parDims)));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayLoad(arrayReference.getTarget(), pardim.getTarget(), ParamPostern.getTarget(parDims)));
 	}
 	
 	@Override
 	public UncertainParam arrayStore(Param arrayReference, Param value, Param dim, Param... dims) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayStore(ParamPostern.getTarget(arrayReference),
-		        ParamPostern.getTarget(value), ParamPostern.getTarget(dim), ParamPostern.getTarget(dims)));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayStore(arrayReference.getTarget(),
+				value.getTarget(), dim.getTarget(), ParamPostern.getTarget(dims)));
 	}
 
 	@Override
@@ -263,25 +263,25 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	@Override
 	public NumParam predec(Param crement) {
 		return new NumParam(getClientBridge(),
-				new DummyParam(getClientBridge(), getGenerateTimeBlock().predec(ParamPostern.getTarget(crement))));
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().predec(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam postdec(Param crement) {
 		return new NumParam(getClientBridge(),
-				new DummyParam(getClientBridge(), getGenerateTimeBlock().postdec(ParamPostern.getTarget(crement))));
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().postdec(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam preinc(Param crement) {
 		return new NumParam(getClientBridge(),
-				new DummyParam(getClientBridge(), getGenerateTimeBlock().preinc(ParamPostern.getTarget(crement))));
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().preinc(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam postinc(Param crement) {
 		return new NumParam(getClientBridge(),
-				new DummyParam(getClientBridge(), getGenerateTimeBlock().postinc(ParamPostern.getTarget(crement))));
+				new DummyParam(getClientBridge(), getGenerateTimeBlock().postinc(crement.getTarget())));
 	}
 
 	@Override
@@ -346,12 +346,12 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public UncertainParam checkcast(Param cc, IClass to) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(ParamPostern.getTarget(cc), to));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
 	}
 
 	@Override
 	public UncertainParam checkcast(Param cc, Class<?> to) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(ParamPostern.getTarget(cc), to));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
 	}
 
 	@Override
@@ -361,12 +361,12 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public DummyParam ternary(Param exp1, Param exp2, Param exp3) {
-		return new DummyParam(getClientBridge(), getGenerateTimeBlock().ternary(ParamPostern.getTarget(exp1), ParamPostern.getTarget(exp2), ParamPostern.getTarget(exp3)));
+		return new DummyParam(getClientBridge(), getGenerateTimeBlock().ternary(exp1.getTarget(), exp2.getTarget(), exp3.getTarget()));
 	}
 
 	@Override
 	public UncertainParam stradd(Param par1, Param... pars) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().stradd(ParamPostern.getTarget(par1), ParamPostern.getTarget(pars)));
+		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().stradd(par1.getTarget(), ParamPostern.getTarget(pars)));
 	}
 
 	@Override
@@ -391,7 +391,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public void throw_(Param exception) {
-		getGenerateTimeBlock().throw_(ParamPostern.getTarget(exception));
+		getGenerateTimeBlock().throw_(exception.getTarget());
 	}
 
 	@Override
@@ -401,7 +401,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public void return_(Param param) {
-		getGenerateTimeBlock().return_(ParamPostern.getTarget(param));
+		getGenerateTimeBlock().return_(param.getTarget());
 	}
 
 	@Override

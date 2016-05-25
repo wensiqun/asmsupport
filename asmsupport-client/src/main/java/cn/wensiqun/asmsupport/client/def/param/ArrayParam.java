@@ -40,7 +40,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
 
     @Override
     public UncertainParam load(Param firstDim, Param... dims) {
-        return new UncertainParam(tracker, tracker.track().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(tracker, tracker.track().arrayLoad(target, firstDim.getTarget(), ParamPostern.getTarget(dims)));
     }
 
     @Override
@@ -51,8 +51,8 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
 
     @Override
     public UncertainParam store(Param value, Param firstDim, Param... dims) {
-        return new UncertainParam(tracker, tracker.track().arrayStore(target, ParamPostern.getTarget(value),
-                ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(tracker, tracker.track().arrayStore(target, value.getTarget(),
+                firstDim.getTarget(), ParamPostern.getTarget(dims)));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ArrayParam extends CommonParam implements ArrayBehavior{
     @Override
 	public ArrayParam assignTo(Var var) {
     	return new ArrayParam(tracker,
-    			ParamPostern.getTarget(new AssignAction(tracker, var).doAction(var)));
+                new AssignAction(tracker, var).doAction(var).getTarget());
 	}
 
 }

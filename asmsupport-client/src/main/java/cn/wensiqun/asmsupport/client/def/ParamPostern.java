@@ -1,14 +1,14 @@
 package cn.wensiqun.asmsupport.client.def;
 
-import java.lang.reflect.Array;
-
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
+
+import java.lang.reflect.Array;
 
 public class ParamPostern {
 
-    public static KernelParam getTarget(Param param) {
+    /*public static KernelParam getTarget(Param param) {
         return param.getTarget();
-    }
+    }*/
     
     public static KernelParam[] getTarget(Param[] params) {
         if(params == null) {

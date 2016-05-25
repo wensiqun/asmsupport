@@ -1,7 +1,6 @@
 package cn.wensiqun.asmsupport.client.def.action;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
@@ -18,7 +17,7 @@ public class InstanceofAction extends AbstractUnaryAction {
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(tracker, tracker.track().instanceof_(ParamPostern.getTarget(operands[0]), type));
+        return new DummyParam(tracker, tracker.track().instanceof_(operands[0].getTarget(), type));
     }
 
 }

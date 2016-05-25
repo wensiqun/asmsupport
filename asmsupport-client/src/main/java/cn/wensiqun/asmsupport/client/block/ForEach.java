@@ -15,7 +15,6 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -25,7 +24,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 public abstract class ForEach extends ProgramBlock<KernelForEach> implements IForEach<LocVar> {
 
     public ForEach(Param iteratorVar) {
-        setKernelBlock(new KernelForEach(ParamPostern.getTarget(iteratorVar)) {
+        setKernelBlock(new KernelForEach(iteratorVar.getTarget()) {
 
             @Override
             public void body(LocalVariable e) {
@@ -36,7 +35,7 @@ public abstract class ForEach extends ProgramBlock<KernelForEach> implements IFo
     }
 
     public ForEach(Param iteratorVar, IClass elementType) {
-        setKernelBlock(new KernelForEach(ParamPostern.getTarget(iteratorVar), elementType) {
+        setKernelBlock(new KernelForEach(iteratorVar.getTarget(), elementType) {
 
             @Override
             public void body(LocalVariable e) {

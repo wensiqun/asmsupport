@@ -21,7 +21,7 @@ public class AssignAction extends AbstractUnaryAction {
 	public Param doAction(Param... operands) {
 		return new DummyParam(tracker,
 				tracker.track().assign((IVariable)ParamPostern.getTarget(variable),
-						ParamPostern.getTarget(operands[0])));
+						operands[0].getTarget()));
 	}
 
 }

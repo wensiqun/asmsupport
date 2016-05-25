@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  * @author WSQ
  *
  */
-public class DummyParam extends Param {
+public class DummyParam implements Param {
 
     protected KernelParam target;
     
@@ -48,7 +48,7 @@ public class DummyParam extends Param {
     }
 
     @Override
-    protected KernelParam getTarget() {
+    public KernelParam getTarget() {
         return target;
     }
 

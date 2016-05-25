@@ -3,8 +3,8 @@ package cn.wensiqun.asmsupport.client.def;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.def.IParam;
 
-public abstract class Param implements IParam {
+public interface Param extends IParam {
 
-    protected abstract KernelParam getTarget();
+    KernelParam getTarget();
     
 }

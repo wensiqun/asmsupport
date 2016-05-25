@@ -16,7 +16,6 @@ package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.ClientBridge;
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
@@ -32,7 +31,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  * @author WSQ
  *
  */
-public abstract class PriorityParam extends Param implements CommonBehavior {
+public abstract class PriorityParam implements Param, CommonBehavior {
 
     protected ClientBridge clientBridge;
     protected ClientBridge.PriorityStack priorityStack;
@@ -64,7 +63,7 @@ public abstract class PriorityParam extends Param implements CommonBehavior {
     
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(clientBridge, clientBridge.track().stradd(getTarget(), ParamPostern.getTarget(param)));
+        return new ObjectParam(clientBridge, clientBridge.track().stradd(getTarget(), param.getTarget()));
     }
 
 	@Override

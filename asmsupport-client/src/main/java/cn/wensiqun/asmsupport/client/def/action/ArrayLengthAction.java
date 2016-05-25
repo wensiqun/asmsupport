@@ -28,12 +28,12 @@ public class ArrayLengthAction extends OperatorAction {
         for(int i=0; i<dimSize; i++) {
             dims[dimSize - i - 1] = operands.pop();
         }
-        return new DummyParam(tracker, tracker.track().arrayLength(ParamPostern.getTarget(operands.pop()), ParamPostern.getTarget(dims)));
+        return new DummyParam(tracker, tracker.track().arrayLength(operands.pop().getTarget(), ParamPostern.getTarget(dims)));
     }
 
     @Override
     public Param doAction(Param... operands) {
-        return new DummyParam(tracker, tracker.track().arrayLength(ParamPostern.getTarget(operands[0]),
+        return new DummyParam(tracker, tracker.track().arrayLength(operands[0].getTarget(),
                 ParamPostern.getTarget(operands, 1)));
     }
 

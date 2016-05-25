@@ -8,16 +8,15 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 /**
  * This action indicate the operator have two operand.
- * 
- * @author WSQ
  *
+ * @author WSQ
  */
 public abstract class AbstractBinaryAction extends OperatorAction {
 
     public AbstractBinaryAction(BlockTracker tracker, Operator operator) {
         super(tracker, operator);
     }
-    
+
     @Override
     public final Param doAction(ArrayStack<Param> operands) {
         try {
@@ -28,5 +27,4 @@ public abstract class AbstractBinaryAction extends OperatorAction {
             throw new ASMSupportException("Error while do operator : '" + getOperator().getSymbol() + "'", e);
         }
     }
-
 }

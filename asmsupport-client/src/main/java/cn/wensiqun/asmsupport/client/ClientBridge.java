@@ -1,7 +1,6 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -80,7 +79,7 @@ public class ClientBridge<B extends KernelProgramBlock> implements BlockTracker 
 
         public KernelParam execute() {
             marriageAction(Operator.MIN_PRIORITY);
-            return ParamPostern.getTarget(operandStack.peek());
+            return operandStack.peek().getTarget();
         }
 
         private void marriageAction(Operator operator) {

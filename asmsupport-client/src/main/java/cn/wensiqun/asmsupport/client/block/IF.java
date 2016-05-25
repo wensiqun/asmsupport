@@ -15,14 +15,13 @@
 package cn.wensiqun.asmsupport.client.block;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.standard.block.branch.IIF;
 
 public abstract class IF extends ProgramBlock<KernelIF> implements IIF<ElseIF, Else> {
 
     public IF(Param condition) {
-        setKernelBlock(new KernelIF(ParamPostern.getTarget(condition)) {
+        setKernelBlock(new KernelIF(condition.getTarget()) {
             @Override
             public void body() {
                 IF.this.body();

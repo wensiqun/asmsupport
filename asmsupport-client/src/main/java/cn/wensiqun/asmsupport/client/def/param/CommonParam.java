@@ -1,7 +1,6 @@
 package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.EqualAction;
 import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
 import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
@@ -28,7 +27,7 @@ public abstract class CommonParam extends DummyParam implements CommonBehavior {
 
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(tracker, tracker.track().stradd(target, ParamPostern.getTarget(param)));
+        return new ObjectParam(tracker, tracker.track().stradd(target, param.getTarget()));
     }
     
 	@Override

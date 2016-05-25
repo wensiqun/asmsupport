@@ -187,7 +187,7 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
 
     @Override
     public UncertainParam load(Param firstDim, Param... dims) {
-        return new UncertainParam(tracker, tracker.track().arrayLoad(target, ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(tracker, tracker.track().arrayLoad(target, firstDim.getTarget(), ParamPostern.getTarget(dims)));
     }
 
     @Override
@@ -198,13 +198,13 @@ public class UncertainParam extends CommonParam implements UncertainBehavior {
 
     @Override
     public UncertainParam store(Param value, Param firstDim, Param... dims) {
-        return new UncertainParam(tracker, tracker.track().arrayStore(target, ParamPostern.getTarget(value),
-                ParamPostern.getTarget(firstDim), ParamPostern.getTarget(dims)));
+        return new UncertainParam(tracker, tracker.track().arrayStore(target, value.getTarget(),
+                firstDim.getTarget(), ParamPostern.getTarget(dims)));
     }
     
     @Override
 	public UncertainParam assignTo(Var var) {
 		return new UncertainParam(tracker,
-				ParamPostern.getTarget(new AssignAction(tracker, var).doAction(this)));
+                new AssignAction(tracker, var).doAction(this).getTarget());
 	}
 }
