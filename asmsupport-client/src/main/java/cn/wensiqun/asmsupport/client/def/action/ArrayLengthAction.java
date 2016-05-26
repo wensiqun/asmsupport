@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.client.def.action;
 
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
-import cn.wensiqun.asmsupport.client.def.param.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.basic.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;

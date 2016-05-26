@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.client.def.var;
 
-import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
-import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
+import cn.wensiqun.asmsupport.client.def.param.CommonParam;
+import cn.wensiqun.asmsupport.client.def.param.impl.UncertainParamImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -13,7 +13,7 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  * @author sqwen
  *
  */
-public abstract class Var extends UncertainParam implements IVar {
+public abstract class Var extends UncertainParamImpl implements IVar {
 
     public Var(BlockTracker tracker, IVariable target) {
         super(tracker, target);
@@ -38,7 +38,7 @@ public abstract class Var extends UncertainParam implements IVar {
         return getPreciseTarget().getModifiers();
     }
 
-    public CommonBehavior assign(CommonBehavior param) {
+    public CommonParam assign(CommonParam param) {
         return param.assignTo(this);
     }
 }

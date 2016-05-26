@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.*;
-import cn.wensiqun.asmsupport.client.def.param.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.ObjectParam;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.client.def.var.Var;
@@ -301,8 +301,8 @@ public class DummyTest {
                 
                 call(dm, "appendString1", sb);
                 call(dm, "appendString2", sb);
-                
-                DummyParam ExceptedEnumAClass = val(getType(ExceptedEnum));
+
+                ObjectParam ExceptedEnumAClass = val(getType(ExceptedEnum));
                 sb.call("append", ExceptedEnumAClass.field("ENUM1").call("getEnumName"))
                 .call("append", val("\n"))
                 .call("append", ExceptedEnumAClass.field("ENUM2"));

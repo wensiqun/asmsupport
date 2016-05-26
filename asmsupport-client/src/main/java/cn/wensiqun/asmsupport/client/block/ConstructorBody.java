@@ -17,6 +17,7 @@ package cn.wensiqun.asmsupport.client.block;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
+import cn.wensiqun.asmsupport.client.def.param.impl.UncertainParamImpl;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -37,6 +38,6 @@ public abstract class ConstructorBody extends ProgramBlock<KernelConstructorBody
 
 	@Override
 	public UncertainParam supercall(Param... arguments) {
-    	return new UncertainParam(getClientBridge(), getDelegate().supercall(ParamPostern.getTarget(arguments)));
+    	return new UncertainParamImpl(getClientBridge(), getDelegate().supercall(ParamPostern.getTarget(arguments)));
 	}
 }

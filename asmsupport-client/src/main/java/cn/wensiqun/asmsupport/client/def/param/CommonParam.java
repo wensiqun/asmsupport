@@ -1,63 +1,123 @@
 package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.action.EqualAction;
-import cn.wensiqun.asmsupport.client.def.action.NotEqualAction;
-import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
-public abstract class CommonParam extends DummyParam implements CommonBehavior {
 
-	public CommonParam(BlockTracker tracker, KernelParam target) {
-		super(tracker, target);
-	}
-	
-	@Override
-    public final BoolParam eq(Param para) {
-        return new BoolParam(tracker, new EqualAction(tracker), this, para);
-    }
+/**
+ * 
+ * Define a behavior, the behavior is similar to XXXAction interface in standard modules.
+ * There have a different between behavior and action, The Param support chain call,
+ * and action support nested call. for example :
+ * 
+ * <p>
+ * nested call :
+ * <pre>
+ * call(call(stringBuilder, "append", val("Hello")), "append", val("ASMSupport"));
+ * </pre>
+ * chain call :
+ * <pre>
+ * stringBuilder.call("append", val("Hello")).call("append", val("ASMSupport"));
+ * </pre>
+ * </p>
+ * 
+ * @author WSQ
+ *
+ */
+public interface CommonParam extends Param {
 
-    @Override
-    public final BoolParam ne(Param para) {
-        return new BoolParam(tracker, new NotEqualAction(tracker), this, para);
-    }
+	/**
+	 * Generate expression : ==
+	 * 
+	 * @return {@link BoolParam}
+	 */
+    BoolParam eq(Param para);
 
-    @Override
-    public final ObjectParam stradd(Param param) {
-        return new ObjectParam(tracker, tracker.track().stradd(target, param.getTarget()));
-    }
+    /**
+	 * Generate expression : !=
+	 * 
+	 * @return {@link BoolParam}
+	 */
+    BoolParam ne(Param para);
     
-	@Override
-	public LocVar asVar() {
-		return new LocVar(tracker, tracker.track().var(getResultType(), getTarget()));
-	}
-	
-	@Override
-	public LocVar asVar(IClass type) {
-		return new LocVar(tracker, tracker.track().var(type, getTarget()));
-	}
+    /**
+     * Generate string add operator : +
+     * 
+	 * @return {@link ObjectParam}
+     */
+    ObjectParam stradd(Param param);
+    
+    /**
+     * Assign the result of current behavior to specify variable
+     * 
+     * @param var the variable
+     * @return {@link UncertainParam} 
+     */
+    CommonParam assignTo(Var var);
+    
+    /**
+     * Use current behavior as an anonymous variable, and
+     * use the result of current behavior as the variable
+     * type. the method is equivalent of 
+     * '<code>asVar(currentParamResultType)</code>'
+     * 
+     * @return {@link LocVar}
+     */
+    LocVar asVar();
+    
+    /**
+     * 
+     * Use current behavior as an anonymous variable, and specify 
+     * a type that's a sub type of result of current behavior
+     * 
+     * @param type
+     * @return {@link LocVar}
+     */
+    LocVar asVar(IClass type);
+    
+    /**
+     * 
+     * Use current behavior as an anonymous variable, and specify 
+     * a type that's a sub type of result of current behavior
+     * 
+     * @param type
+     * @return {@link LocVar}
+     */
+    LocVar asVar(Class<?> type);
 
-	@Override
-	public LocVar asVar(Class<?> type) {
-		return new LocVar(tracker, tracker.track().var(type, getTarget()));
-	}
-
-	@Override
-	public LocVar asVar(String varName) {
-		return asVar(varName, getResultType());
-	}
-
-	@Override
-	public LocVar asVar(String varName, IClass type) {
-		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
-	}
-
-	@Override
-	public LocVar asVar(String varName, Class<?> type) {
-		return new LocVar(tracker, tracker.track().var(varName, type, getTarget()));
-	}
-	
+    /**
+     * 
+     * Use current behavior as an variable, and specify a variable
+     * name, and use the result tyoe of current behavior as variable
+     * type. the method is equivalent of '<code>asVar(varName, currentParamResultType)</code>'
+     * 
+     * @param varName
+     * @return {@link LocVar}
+     */
+    LocVar asVar(String varName);
+    
+    /**
+     * Use current behavior as an variable, and specify a variable
+     * name, and the type is a sub type of result of current 
+     * behavior
+     * 
+     * @param varName variable name
+     * @param type variable type
+     * @return {@link LocVar}
+     */
+    LocVar asVar(String varName, IClass type);
+    
+    /**
+     * Use current behavior as an variable, and specify a variable
+     * name, and the type is a sub type of result of current 
+     * behavior
+     * 
+     * @param varName variable name
+     * @param type variable type
+     * @return {@link LocVar}
+     */
+    LocVar asVar(String varName, Class<?> type);
+    
 }

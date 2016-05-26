@@ -19,6 +19,9 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.action.*;
 import cn.wensiqun.asmsupport.client.def.param.*;
+import cn.wensiqun.asmsupport.client.def.param.basic.DummyParam;
+import cn.wensiqun.asmsupport.client.def.param.basic.NullParam;
+import cn.wensiqun.asmsupport.client.def.param.impl.*;
 import cn.wensiqun.asmsupport.client.def.var.*;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -122,57 +125,57 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public UncertainParam assign(Var variable, Param val) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().assign((IVariable) ParamPostern.getTarget(variable), val.getTarget()));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().assign((IVariable) ParamPostern.getTarget(variable), val.getTarget()));
 	}
 
 	@Override
 	public UncertainParam call(Param objRef, String methodName, Param... arguments) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().getBlockTracker().track().call(objRef.getTarget(), methodName, ParamPostern.getTarget(arguments)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().getBlockTracker().track().call(objRef.getTarget(), methodName, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam call(String methodName, Param... args) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().call(methodName, ParamPostern.getTarget(args)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().call(methodName, ParamPostern.getTarget(args)));
 	}
 
 	@Override
 	public UncertainParam call(IClass owner, String methodName, Param... arguments) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
 	}
     
 	@Override
     public UncertainParam call(Class<?> owner, String methodName, Param... arguments) {
-    	return new UncertainParam(getClientBridge(), getGenerateTimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
+    	return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().call(owner, methodName, ParamPostern.getTarget(arguments)));
     }
 
 	@Override
 	public UncertainParam new_(Class<?> owner, Param... arguments) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam new_(IClass owner, Param... arguments) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().new_(owner, ParamPostern.getTarget(arguments)));
 	}
 
 	@Override
 	public UncertainParam callOrig() {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().callOrig());
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().callOrig());
 	}
 
 	@Override
 	public ArrayParam makeArray(IClass aClass, Param... dimensions) {
-		return new ArrayParam(getClientBridge(), getGenerateTimeBlock().makeArray(aClass, ParamPostern.getTarget(dimensions)));
+		return new ArrayParamImpl(getClientBridge(), getGenerateTimeBlock().makeArray(aClass, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
 	public ArrayParam makeArray(Class<?> arraytype, Param... dimensions) {
-		return new ArrayParam(getClientBridge(), getGenerateTimeBlock().makeArray(arraytype, ParamPostern.getTarget(dimensions)));
+		return new ArrayParamImpl(getClientBridge(), getGenerateTimeBlock().makeArray(arraytype, ParamPostern.getTarget(dimensions)));
 	}
 
 	@Override
 	public ArrayParam newarray(IClass aClass, Object arrayObject) {
-		return new ArrayParam(getClientBridge(), getGenerateTimeBlock().newarray(aClass, ParamPostern.getTarget(arrayObject)));
+		return new ArrayParamImpl(getClientBridge(), getGenerateTimeBlock().newarray(aClass, ParamPostern.getTarget(arrayObject)));
 	}
 
 	/**
@@ -180,183 +183,183 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 */
 	@Override
 	public ArrayParam newarray(Class<?> type, Object arrayObject) {
-		return new ArrayParam(getClientBridge(), getGenerateTimeBlock().newarray(type, ParamPostern.getTarget(arrayObject)));
+		return new ArrayParamImpl(getClientBridge(), getGenerateTimeBlock().newarray(type, ParamPostern.getTarget(arrayObject)));
 	}
 
 	@Override
 	public UncertainParam arrayLoad(Param arrayReference, Param pardim, Param... parDims) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayLoad(arrayReference.getTarget(), pardim.getTarget(), ParamPostern.getTarget(parDims)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().arrayLoad(arrayReference.getTarget(), pardim.getTarget(), ParamPostern.getTarget(parDims)));
 	}
 	
 	@Override
 	public UncertainParam arrayStore(Param arrayReference, Param value, Param dim, Param... dims) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().arrayStore(arrayReference.getTarget(),
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().arrayStore(arrayReference.getTarget(),
 				value.getTarget(), dim.getTarget(), ParamPostern.getTarget(dims)));
 	}
 
 	@Override
 	public NumParam arrayLength(Param arrayReference, Param... dims) {
 	    Param[] operands = ParamPostern.unionParam(arrayReference, dims);
-		return new NumParam(getClientBridge(), new ArrayLengthAction(getClientBridge(), operands.length - 1), operands);
+		return new NumParamImpl(getClientBridge(), new ArrayLengthAction(getClientBridge(), operands.length - 1), operands);
 	}
 	
 	@Override
 	public NumParam add(Param leftFactor, Param rightFactor) {
-	    return new NumParam(getClientBridge(), new AddAction(getClientBridge()), leftFactor, rightFactor);
+	    return new NumParamImpl(getClientBridge(), new AddAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam sub(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new SubAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new SubAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam mul(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new MulAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new MulAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam div(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new DivAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new DivAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam mod(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new ModAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new ModAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam reverse(Param factor) {
-		return new NumParam(getClientBridge(), new ReverseAction(getClientBridge()), factor);
+		return new NumParamImpl(getClientBridge(), new ReverseAction(getClientBridge()), factor);
 	}
 
 	@Override
 	public NumParam band(Param leftFactor, Param rightFactor) {
-		return new NumParam(getClientBridge(), new BandAction(getClientBridge()), leftFactor, rightFactor);
+		return new NumParamImpl(getClientBridge(), new BandAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam bor(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new BorAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new BorAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam bxor(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new BxorAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new BxorAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam shl(Param leftFactor, Param rightFactor) {
-		return new NumParam(getClientBridge(), new ShiftLeftAction(getClientBridge()), leftFactor, rightFactor);
+		return new NumParamImpl(getClientBridge(), new ShiftLeftAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam shr(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new ShiftRightAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new ShiftRightAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam ushr(Param leftFactor, Param rightFactor) {
-        return new NumParam(getClientBridge(), new UnsignedShiftRightAction(getClientBridge()), leftFactor, rightFactor);
+        return new NumParamImpl(getClientBridge(), new UnsignedShiftRightAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public NumParam predec(Param crement) {
-		return new NumParam(getClientBridge(),
+		return new NumParamImpl(getClientBridge(),
 				new DummyParam(getClientBridge(), getGenerateTimeBlock().predec(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam postdec(Param crement) {
-		return new NumParam(getClientBridge(),
+		return new NumParamImpl(getClientBridge(),
 				new DummyParam(getClientBridge(), getGenerateTimeBlock().postdec(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam preinc(Param crement) {
-		return new NumParam(getClientBridge(),
+		return new NumParamImpl(getClientBridge(),
 				new DummyParam(getClientBridge(), getGenerateTimeBlock().preinc(crement.getTarget())));
 	}
 
 	@Override
 	public NumParam postinc(Param crement) {
-		return new NumParam(getClientBridge(),
+		return new NumParamImpl(getClientBridge(),
 				new DummyParam(getClientBridge(), getGenerateTimeBlock().postinc(crement.getTarget())));
 	}
 
 	@Override
 	public BoolParam gt(Param leftFactor, Param rightFactor) {
-		return new BoolParam(getClientBridge(), new GreaterThanAction(getClientBridge()), leftFactor, rightFactor);
+		return new BoolParamImpl(getClientBridge(), new GreaterThanAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam ge(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new GreaterEqualAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new GreaterEqualAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam lt(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new LessThanAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new LessThanAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam le(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new LessEqualAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new LessEqualAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam eq(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new EqualAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new EqualAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam ne(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new NotEqualAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new NotEqualAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalAnd(Param leftFactor, Param rightFactor) {
-		return new BoolParam(getClientBridge(), new LogicAndAction(getClientBridge()), leftFactor, rightFactor);
+		return new BoolParamImpl(getClientBridge(), new LogicAndAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalOr(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new LogicOrAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new LogicOrAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam logicalXor(Param leftFactor, Param rightFactor) {
-        return new BoolParam(getClientBridge(), new LogicXorAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new LogicXorAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam and(Param leftFactor, Param rightFactor, Param... otherFactor) {
-        return new BoolParam(getClientBridge(), new AndAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new AndAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam or(Param leftFactor, Param rightFactor, Param... otherFactor) {
-        return new BoolParam(getClientBridge(), new OrAction(getClientBridge()), leftFactor, rightFactor);
+        return new BoolParamImpl(getClientBridge(), new OrAction(getClientBridge()), leftFactor, rightFactor);
 	}
 
 	@Override
 	public BoolParam no(Param factor) {
-        return new BoolParam(getClientBridge(), new NotAction(getClientBridge()), factor);
+        return new BoolParamImpl(getClientBridge(), new NotAction(getClientBridge()), factor);
 	}
 
 	@Override
 	public UncertainParam checkcast(Param cc, IClass to) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
 	}
 
 	@Override
 	public UncertainParam checkcast(Param cc, Class<?> to) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
 	}
 
 	@Override
 	public NumParam neg(Param factor) {
-		return new NumParam(getClientBridge(), new NegAction(getClientBridge()), factor);
+		return new NumParamImpl(getClientBridge(), new NegAction(getClientBridge()), factor);
 	}
 
 	@Override
@@ -366,17 +369,17 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public UncertainParam stradd(Param par1, Param... pars) {
-		return new UncertainParam(getClientBridge(), getGenerateTimeBlock().stradd(par1.getTarget(), ParamPostern.getTarget(pars)));
+		return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().stradd(par1.getTarget(), ParamPostern.getTarget(pars)));
 	}
 
 	@Override
 	public BoolParam instanceof_(Param obj, IClass type) {
-		return new BoolParam(getClientBridge(), new InstanceofAction(getClientBridge(), type), obj);
+		return new BoolParamImpl(getClientBridge(), new InstanceofAction(getClientBridge(), type), obj);
 	}
 
 	@Override
 	public BoolParam instanceof_(Param obj, Class<?> type) {
-        return new BoolParam(getClientBridge(), new InstanceofAction(getClientBridge(), getType(type)), obj);
+        return new BoolParamImpl(getClientBridge(), new InstanceofAction(getClientBridge(), getType(type)), obj);
 	}
 
 	@Override
@@ -448,17 +451,17 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public NumParam val(Integer val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Short val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Byte val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
@@ -468,37 +471,37 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 
 	@Override
 	public NumParam val(Long val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Double val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Character val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public NumParam val(Float val) {
-		return new NumParam(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
+		return new NumParamImpl(getClientBridge(), new DummyParam(getClientBridge(), getGenerateTimeBlock().val(val)));
 	}
 
 	@Override
 	public ObjectParam val(IClass val) {
-		return new ObjectParam(getClientBridge(), getGenerateTimeBlock().val(val));
+		return new ObjectParamImpl(getClientBridge(), getGenerateTimeBlock().val(val));
 	}
 
 	@Override
 	public ObjectParam val(Class<?> val) {
-		return new ObjectParam(getClientBridge(), getGenerateTimeBlock().val(val));
+		return new ObjectParamImpl(getClientBridge(), getGenerateTimeBlock().val(val));
 	}
 
 	@Override
 	public ObjectParam val(String val) {
-		return new ObjectParam(getClientBridge(), getGenerateTimeBlock().val(val));
+		return new ObjectParamImpl(getClientBridge(), getGenerateTimeBlock().val(val));
 	}
 
 	@Override

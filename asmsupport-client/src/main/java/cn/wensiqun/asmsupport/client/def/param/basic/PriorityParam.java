@@ -12,12 +12,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.client.def.param;
+package cn.wensiqun.asmsupport.client.def.param.basic;
 
 import cn.wensiqun.asmsupport.client.ClientBridge;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.action.OperatorAction;
-import cn.wensiqun.asmsupport.client.def.behavior.CommonBehavior;
+import cn.wensiqun.asmsupport.client.def.param.CommonParam;
+import cn.wensiqun.asmsupport.client.def.param.ObjectParam;
+import cn.wensiqun.asmsupport.client.def.param.impl.ObjectParamImpl;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -31,7 +33,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  * @author WSQ
  *
  */
-public abstract class PriorityParam implements Param, CommonBehavior {
+public abstract class PriorityParam implements CommonParam {
 
     protected ClientBridge clientBridge;
     protected ClientBridge.PriorityStack priorityStack;
@@ -63,7 +65,7 @@ public abstract class PriorityParam implements Param, CommonBehavior {
     
     @Override
     public final ObjectParam stradd(Param param) {
-        return new ObjectParam(clientBridge, clientBridge.track().stradd(getTarget(), param.getTarget()));
+        return new ObjectParamImpl(clientBridge, clientBridge.track().stradd(getTarget(), param.getTarget()));
     }
 
 	@Override

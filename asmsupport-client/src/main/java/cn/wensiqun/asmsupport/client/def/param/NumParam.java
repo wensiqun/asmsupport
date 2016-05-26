@@ -1,142 +1,95 @@
-/**    
- *  Asmsupport is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package cn.wensiqun.asmsupport.client.def.param;
 
 import cn.wensiqun.asmsupport.client.def.Param;
-import cn.wensiqun.asmsupport.client.def.action.*;
-import cn.wensiqun.asmsupport.client.def.behavior.NumBehavior;
-import cn.wensiqun.asmsupport.client.def.var.Var;
-import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 
 
 /**
- * Indicate a number parameter
+ * 
+ * All operators about number.
  * 
  * @author WSQ
  *
  */
-public class NumParam extends PriorityParam implements NumBehavior {
+public interface NumParam extends CommonParam {
 
-	public NumParam(BlockTracker tracker, Param param) {
-        super(tracker, param);
-    }
-
-    public NumParam(BlockTracker tracker, OperatorAction action, Param... operands) {
-        super(tracker, action, operands);
-    }
+	
+	/**
+	 * Add a parameter to current number behavior
+	 */
+    NumParam add(Param para);
     
-    @Override
-    public NumParam add(Param para) {
-        priorityStack.pushAction(new AddAction(clientBridge), para);
-        return this;
-    }
+    /**
+	 * Sub a parameter to current number behavior
+	 */
+    NumParam sub(Param para);
+    
+    /**
+     * Do a multiplication between current number and argument
+     */
+    NumParam mul(Param para);
+    
+    /**
+     * Do a division between current number and argument
+     */
+    NumParam div(Param para);
+    
+    /**
+     * Do a modular arithmetic between current number and argument
+     */
+    NumParam mod(Param para);
+    
+    /**
+     * Do a bit and between current number and argument
+     * 
+     */
+    NumParam band(Param para);
+    
+    /**
+     * Do a bit or between current number and argument
+     */
+    NumParam bor(Param para);
+    
+    /**
+     * Do a bit xor between current number and argument
+     */
+    NumParam bxor(Param para);
 
-    @Override
-    public NumParam sub(Param para) {
-        priorityStack.pushAction(new SubAction(clientBridge), para);
-        return this;
-    }
+    /**
+     * Do a shift left between current number and argument
+     */
+    NumParam shl(Param para);
 
-    @Override
-    public NumParam mul(Param para) {
-        priorityStack.pushAction(new MulAction(clientBridge), para);
-        return this;
-    }
+    /**
+     * Do a shift right between current number and argument
+     */
+    NumParam shr(Param para);
 
-    @Override
-    public NumParam div(Param para) {
-        priorityStack.pushAction(new DivAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam mod(Param para) {
-        priorityStack.pushAction(new ModAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam band(Param para) {
-        priorityStack.pushAction(new BandAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam bor(Param para) {
-        priorityStack.pushAction(new BorAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam bxor(Param para) {
-        priorityStack.pushAction(new BxorAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam shl(Param para) {
-        priorityStack.pushAction(new ShiftLeftAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam shr(Param para) {
-        priorityStack.pushAction(new ShiftRightAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public NumParam ushr(Param para) {
-        priorityStack.pushAction(new UnsignedShiftRightAction(clientBridge), para);
-        return this;
-    }
-
-    @Override
-    public BoolParam gt(Param para) {
-        return new BoolParam(clientBridge, new GreaterThanAction(clientBridge), this, para);
-    }
-
-    @Override
-    public BoolParam ge(Param para) {
-        return new BoolParam(clientBridge, new GreaterEqualAction(clientBridge), this, para);
-    }
-
-    @Override
-    public BoolParam lt(Param para) {
-        return new BoolParam(clientBridge, new LessThanAction(clientBridge), this, para);
-    }
-
-    @Override
-    public BoolParam le(Param para) {
-        return new BoolParam(clientBridge, new LessEqualAction(clientBridge), this, para);
-    }
-
-    @Override
-    public BoolParam eq(Param para) {
-        return new BoolParam(clientBridge, new EqualAction(clientBridge), this, para);
-    }
-
-    @Override
-    public BoolParam ne(Param para) {
-        return new BoolParam(clientBridge, new NotEqualAction(clientBridge), this, para);
-    }
-
-	@Override
-	public NumParam assignTo(Var var) {
-        priorityStack.pushAction(new AssignAction(clientBridge, var), this);
-        return this;
-	}
-
+    /**
+     * Do a unassigned shift right between current number and argument
+     */
+    NumParam ushr(Param para);
+    
+    /**
+     * Compare current number with argument, check the current number whether or not 
+     * greater than the passed argument.
+     */
+    BoolParam gt(Param para);
+    
+    /**
+     * Compare current number with argument, check the current number whether or not 
+     * greater equal the passed argument.
+     */
+    BoolParam ge(Param para);
+    
+    /**
+     * Compare current number with argument, check the current number whether or not 
+     * less than the passed argument.
+     */
+    BoolParam lt(Param para);
+    
+    /**
+     * Compare current number with argument, check the current number whether or not 
+     * less equal the passed argument.
+     */
+    BoolParam le(Param para);
 }
