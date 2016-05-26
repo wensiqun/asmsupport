@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/wensiqun/asmsupport/badge.svg?branch=master)](https://coveralls.io/github/wensiqun/asmsupport?branch=master)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/cn.wensiqun/asmsupport/badge.svg)](http://search.maven.org/#search|ga|1|g%3A%22cn.wensiqun%22%20AND%20a%3A%22asmsupport%22)
 [![openhub](https://www.openhub.net/p/asmsupport/widgets/project_thin_badge.gif)](https://www.openhub.net/p/asmsupport)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/91ea7bb3c0f7444a94899e45b9fad662)](https://www.codacy.com/app/wensiqun/asmsupport?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wensiqun/asmsupport&amp;utm_campaign=Badge_Grade)
 [![License (LGPL version 3.0)](https://img.shields.io/badge/license-GNU%20LGPL%20version%203.0-yellow.svg?style=flat-square)](http://opensource.org/licenses/LGPL-3.0)
 
 [中文README](./README_CN.md)

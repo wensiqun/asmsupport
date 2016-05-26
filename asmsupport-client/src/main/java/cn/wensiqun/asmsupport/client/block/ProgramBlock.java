@@ -47,21 +47,6 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	Map<String, LocVar> locVarMap = new HashMap<>();
 	
 	final static LocVar[] EMPTY_LOCAL_VARS = new LocVar[0];
-	
-	public LocVar[] getMethodArguments() {
-		if(locVars == null) {
-			LocalVariable[] localVariables = getGenerateTimeBlock().getMethodArguments();
-			if(ArrayUtils.isNotEmpty(localVariables)) {
-				locVars = new LocVar[localVariables.length];
-				for(int i = 0; i<locVars.length; i++) {
-					locVars[i] = new LocVar(this.getClientBridge(), localVariables[i]);
-				}
-			} else {
-				locVars = EMPTY_LOCAL_VARS;
-			}
-		}
-		return locVars;
-	}
 
 	/**
 	 * get current method owner.
@@ -183,5 +168,20 @@ IF, While, DoWhile, ForEach, Try, Sync> {
         }
         return paras;
     }
+
+	public LocVar[] getMethodArguments() {
+		if(locVars == null) {
+			LocalVariable[] localVariables = getGenerateTimeBlock().getMethodArguments();
+			if(ArrayUtils.isNotEmpty(localVariables)) {
+				locVars = new LocVar[localVariables.length];
+				for(int i = 0; i<locVars.length; i++) {
+					locVars[i] = new LocVar(this.getClientBridge(), localVariables[i]);
+				}
+			} else {
+				locVars = EMPTY_LOCAL_VARS;
+			}
+		}
+		return locVars;
+	}
 
 }

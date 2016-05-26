@@ -27,16 +27,16 @@ public interface IMethodBuilder extends Executable {
     /**
      * Create a method
      */
-    public void create(IClassBuilder cv);
+    void create(IClassBuilder cv);
 	
     /**
      * Get method name.
      */
-    public String getName();
+    String getName();
 
     /**
      * Get the argument types of current method.
      */
-    public IClass[] getArguments();
+    IClass[] getArguments();
     
 }

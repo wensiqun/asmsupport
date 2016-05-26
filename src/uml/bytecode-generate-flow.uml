@@ -1,0 +1,128 @@
+@startuml
+
+actor Developer as Dev
+participant "ClassBuilder" as CB
+participant "FieldBuilder:Executable" as FB
+participant "MethodBuild:Executable" as MB
+participant "MethodBody:Executable" as MBB
+participant "AbstractOperator:Executable" as AO
+
+Dev -> CB : 1. 调用构建一个ClassBuilder\n实例并且调用实例的startup()
+activate CB
+  note right of Dev
+  |在创建ClassBuilder的同时会
+  |创建一个SemiClass对象，这个
+  |对象将会记录当前所创建类的
+  |所有相关信息，这类是对Class
+  |的一种抽象，最终构建一个class
+  |文件就是通过它作为信息的载体。
+  end note
+
+  CB --> CB : 1.1 调用自己的create()
+  activate CB
+    CB -> FB : 1.1.1.a 调用所有FieldBuilder的create()
+    activate FB
+      note over of FB
+      |这一阶段将会把需要创建的域的元信
+      |息加入到SemiClass，比如创建的
+      |域的名字，修饰符等信息
+      end note
+    CB <-- FB
+    deactivate FB
+
+    CB -> MB : 1.1.2.a 调用所有MethodBuilder的create()
+    activate MB
+      note over FB, MB
+      |这一阶段将会把需要创建的方法的元信息
+      |加入到SemiClass，比如创建的域的名字，
+      |修饰符等信息，还有方法体对象，方法体中包
+      |括了构建什么样的字节码逻辑。
+      end note
+    CB <-- MB
+    deactivate MB
+  deactivate CB
+
+  CB --> CB : 1.2 调用自己的prepare()
+  activate CB
+
+    note left
+    |这一阶段将是字节码创建前的准备阶段。
+    |这一阶段将构建出AbstractOperator
+    |的子类的对象，这个对象是对java语法的抽
+    |象，比如KernelAdd对象对应的就是加法
+    |操作，如果我们想生成 a + b,则需要构建
+    |一个这个对象.
+    end note
+
+    CB -> FB : 1.2.1.a 调用所有FieldBuilder的prepare()
+    activate FB
+      note over of FB
+      FieldBuilder的prepare()
+      |将不做任何事情
+      end note
+    CB <-- FB
+    deactivate FB
+
+    CB -> MB : 1.2.2.a 调用所有MethodBuilder的prepare()
+    activate MB
+      MB -> MBB : 1.2.2.a.1 调用方法体的prepare()
+      activate MBB
+        note over of MBB
+        |每一个方法体都有个执行队列，用于存放
+        |当前方法体的操作对象，这些对象可以将
+        |所有操作转换成字节码。调用方法体的
+        |prepare方法实际上就是创建这些
+        |操作对象并且将其结构化的存储在执行
+        |队列中。
+        end note
+      MB <-- MBB
+      deactivate MBB
+    CB <-- MB
+    deactivate MB
+  deactivate CB
+
+  CB --> CB : 1.3 调用自己的execute()
+  activate CB
+
+    note left
+    |这一阶段将才开始真正构建字节码内容
+    end note
+
+    CB -> FB : 1.3.1.a 调用所有FieldBuilder的execute()
+    activate FB
+      note over of FB
+      |将会调用ClassWriter的visitField方法
+      |创建Field
+      end note
+    CB <-- FB
+    deactivate FB
+
+    CB -> MB : 1.3.2.a 调用所有MethodBuilder的execute()
+    activate MB
+      MB -> MBB : 1.3.2.a.1 调用方法体的execute()
+      activate MBB
+        note over of MBB
+        |依次调用执行队列中每个操作
+        |对象的execute()方法
+        end note
+        MBB --> AO : 调用AbstractOperator的execute()
+        activate AO
+          note over of AO
+          |每个操作对象(AbstractOperator实例)
+          |的execute方法底层会调用ASM的
+          |MethodVisitor的visitXXX方法，以此
+          |最终完成class字节码的创建
+          end note
+        MBB <-- AO
+        deactivate AO
+      MB <-- MBB
+      deactivate MBB
+    CB <-- MB
+    deactivate MB
+  deactivate CB
+
+Dev <-- CB : 返回生成的Class
+deactivate CB
+
+
+@enduml

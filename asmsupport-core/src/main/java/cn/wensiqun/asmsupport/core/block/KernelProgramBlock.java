@@ -998,7 +998,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     /**
      * Get current method owner, generally is the SemiClass it's
-     * a class which you want geneate.
+     * a class which you want generate.
      * 
      * @return
      */

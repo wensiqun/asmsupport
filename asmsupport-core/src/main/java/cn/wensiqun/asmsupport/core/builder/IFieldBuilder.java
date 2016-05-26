@@ -28,6 +28,6 @@ public interface IFieldBuilder extends Executable {
      * 
      * @param cv
      */
-    public void create(IClassBuilder cv);
+    void create(IClassBuilder cv);
 	
 }

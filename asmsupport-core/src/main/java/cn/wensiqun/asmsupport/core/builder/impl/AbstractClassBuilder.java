@@ -35,9 +35,9 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 	
     private static final Log LOG = LogFactory.getLog(AbstractClassBuilder.class);
 
-    protected List<IMethodBuilder> methodCreators = new ArrayList<IMethodBuilder>();
+    protected List<IMethodBuilder> methodCreators = new ArrayList<>();
 
-    protected List<IFieldBuilder> fieldCreators = new ArrayList<IFieldBuilder>();
+    protected List<IFieldBuilder> fieldCreators = new ArrayList<>();
 
     protected String classOutPutPath;
 	

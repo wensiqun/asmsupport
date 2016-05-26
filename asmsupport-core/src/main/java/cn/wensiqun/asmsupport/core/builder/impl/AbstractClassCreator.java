@@ -123,20 +123,6 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         return cw.toByteArray();
 	}
 
-	/*@Override
-    public Class<?> startup() {
-		create();
-		prepare();
-		byte[] code = execute();
-        if(!StringUtils.isBlank(classOutPutPath)){
-        	CommonUtils.toLocal(code, classOutPutPath, sc.getName());
-        }
-        if(LOG.isPrintEnabled()){
-        	LOG.print("End create class : " + sc.getName().replace('.', '/'));
-        }
-        return loadClass(sc.getName(), code);
-    }*/
-
     @Override
 	public MutableClass getCurrentClass() {
 		return sc;
@@ -150,7 +136,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     }
     protected abstract void createDefaultConstructor();
 
-    protected void beforeCreate(){};
+    protected void beforeCreate(){}
     
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkUnImplementMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -370,21 +356,6 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 				} catch (NoSuchFieldException e) {
 				}
             }
-            
-            /*new InterfaceLooper() {
-                @Override
-                protected boolean process(IClass inter) {
-                    try {
-                        java.lang.reflect.Field f = inter.getDeclaredField(name);
-                        found.add(new Field(SemiClass.this,
-                        		classLoader.getType(inter),
-                        		classLoader.getType(f.getType()), f.getModifiers(), name));
-                        return true;
-                    } catch (NoSuchFieldException e) {
-                        return false;
-                    }
-                }
-            }.loop(getInterfaces());*/
             
             if(found.size() == 0) {
                 throw new NoSuchFieldException("Not found field " + name);
