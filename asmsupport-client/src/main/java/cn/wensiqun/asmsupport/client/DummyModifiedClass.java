@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
@@ -203,8 +202,8 @@ public class DummyModifiedClass extends AbstractDummy {
         ClassModifier cmi = new ClassModifier(original, getClassLoader()) ;
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
-                cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(), 
-                        BlockPostern.getTarget(dummy.getConstructorBody()));    
+                cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(),
+                        dummy.getConstructorBody().getDelegate());
             } else {
                 throw new ASMSupportException("Not found body...");
             }
@@ -222,15 +221,15 @@ public class DummyModifiedClass extends AbstractDummy {
         
         for(DummyMethod dummy : methodDummies) {
             cmi.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
-                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), BlockPostern.getTarget(dummy.getMethodBody()));
+                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().getDelegate());
         }
         
         if(staticBlock != null) {
-            cmi.createStaticBlock(BlockPostern.getTarget(staticBlock));
+            cmi.createStaticBlock(staticBlock.getDelegate());
         }
         
         for(DummyModifiedMethod dummy : modifyDummies) {
-            cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), BlockPostern.getTarget(dummy.getMethodBody()));
+            cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), dummy.getMethodBody().getDelegate());
         }
         
         cmi.setClassOutPutPath(classOutPutPath);

@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import java.util.LinkedList;
-
-import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
@@ -27,6 +24,8 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+import java.util.LinkedList;
 
 public class DummyInterface extends AbstractDummy {
 
@@ -367,7 +366,7 @@ public class DummyInterface extends AbstractDummy {
         }
         
         if(staticBlock != null) {
-            ici.createStaticBlock(BlockPostern.getTarget(staticBlock));
+            ici.createStaticBlock(staticBlock.getDelegate());
         }
         
         ici.setClassOutPutPath(classOutPutPath);

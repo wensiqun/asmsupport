@@ -14,11 +14,6 @@
  */
 package cn.wensiqun.asmsupport.client;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
-import cn.wensiqun.asmsupport.client.block.BlockPostern;
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.impl.EnumBuilderImpl;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
@@ -28,6 +23,10 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 public class DummyEnum extends AbstractDummy {
 
@@ -355,7 +354,7 @@ public class DummyEnum extends AbstractDummy {
         		
         for(DummyEnumConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
-                eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), BlockPostern.getTarget(dummy.getConstructorBody()));    
+                eci.createConstructor(dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getConstructorBody().getDelegate());
             } else {
                 throw new ASMSupportException("Not found body...");
             }
@@ -380,12 +379,12 @@ public class DummyEnum extends AbstractDummy {
                     dummy.getArgNames(), 
                     dummy.getReturnType(), 
                     dummy.getThrows(), 
-                    dummy.getModifiers(), 
-                    BlockPostern.getTarget(dummy.getMethodBody()));
+                    dummy.getModifiers(),
+                    dummy.getMethodBody().getDelegate());
         }
         
         if(staticBlock != null) {
-            eci.createStaticBlock(BlockPostern.getTarget(staticBlock));
+            eci.createStaticBlock(staticBlock.getDelegate());
         }
         eci.setClassOutPutPath(classOutPutPath);
         return eci.startup();

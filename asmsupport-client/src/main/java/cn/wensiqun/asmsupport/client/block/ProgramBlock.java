@@ -568,7 +568,7 @@ IF, While, DoWhile, ForEach, Try, Sync> {
      * Get the delegate
      * @return
      */
-    B getDelegate() {
+    public B getDelegate() {
         return clientBridge.getDelegate();
     }
 
