@@ -1,10 +1,6 @@
 package cn.wensiqun.asmsupport.issues.fixed.earlier.test2463;
 
-import java.lang.reflect.InvocationTargetException;
-
-import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
@@ -12,6 +8,9 @@ import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.issues.Utils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import junit.framework.Assert;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class MainTest {
 
@@ -33,9 +32,9 @@ public class MainTest {
 			
 		});
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
 				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-                new KernelStaticMethodBody(){
+                new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {

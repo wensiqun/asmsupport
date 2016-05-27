@@ -1,10 +1,5 @@
 package cn.wensiqun.asmsupport.sample.client.json;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.client.block.IF;
@@ -15,19 +10,15 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
 import cn.wensiqun.asmsupport.sample.client.json.generator.IValueGeneratorChain;
 import cn.wensiqun.asmsupport.sample.client.json.generator.IValueGeneratorChain.GeneratorContext;
-import cn.wensiqun.asmsupport.sample.client.json.generator.impl.ArrayGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.generator.impl.BaseGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.generator.impl.BeanGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.generator.impl.IterableGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.generator.impl.MapGeneratorChain;
-import cn.wensiqun.asmsupport.sample.client.json.parser.AbstractParser;
-import cn.wensiqun.asmsupport.sample.client.json.parser.ArrayParser;
-import cn.wensiqun.asmsupport.sample.client.json.parser.BaseParser;
-import cn.wensiqun.asmsupport.sample.client.json.parser.CharSequenceParser;
-import cn.wensiqun.asmsupport.sample.client.json.parser.IterableParser;
-import cn.wensiqun.asmsupport.sample.client.json.parser.MapParser;
+import cn.wensiqun.asmsupport.sample.client.json.generator.impl.*;
+import cn.wensiqun.asmsupport.sample.client.json.parser.*;
 import cn.wensiqun.asmsupport.sample.client.json.utils.ReflectionUtils;
 import cn.wensiqun.asmsupport.sample.client.json.utils.StringEncoder;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class JSONPool {
 
@@ -38,7 +29,7 @@ public class JSONPool {
     private IValueGeneratorChain header;
     
     public JSONPool() {
-        parserMap = new ConcurrentHashMap<Class<?>, AbstractParser>();
+        parserMap = new ConcurrentHashMap<>();
         
         AbstractParser parser = new BaseParser(this);
         parserMap.put(boolean.class, parser);

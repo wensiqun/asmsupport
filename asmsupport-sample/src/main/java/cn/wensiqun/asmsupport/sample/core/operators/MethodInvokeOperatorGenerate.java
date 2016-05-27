@@ -2,7 +2,6 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -96,8 +95,8 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     return obj.description();
          * }
          */
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new IClass[]{creator.getCurrentClass()}, new String[]{"obj"}, classLoader.getType(String.class), null,
-                new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "getDescription", new IClass[]{creator.getCurrentClass()}, new String[]{"obj"}, classLoader.getType(String.class), null,
+                new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {
@@ -116,9 +115,9 @@ public class MethodInvokeOperatorGenerate extends AbstractExample {
          *     System.out.println("Call static method : " + MyObject.getDescription(obj));
          * }
          */
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,  
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
         		"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-                new KernelStaticMethodBody(){
+                new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus) {

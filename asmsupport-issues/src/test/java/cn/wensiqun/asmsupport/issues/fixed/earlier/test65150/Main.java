@@ -1,14 +1,14 @@
 package cn.wensiqun.asmsupport.issues.fixed.earlier.test65150;
 
-import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.AbstractFix;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import junit.framework.Assert;
 
 public class Main extends AbstractFix {
 
@@ -35,10 +35,10 @@ public class Main extends AbstractFix {
 			
 		});
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{
+		creator.createMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{
 				classLoader.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+				new KernelMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {
@@ -65,9 +65,9 @@ public class Main extends AbstractFix {
 		creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
 				null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, 
+		creator.createMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)},
 				new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+				new KernelMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

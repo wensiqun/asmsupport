@@ -1,9 +1,9 @@
 package cn.wensiqun.asmsupport.sample.client.json.demo;
 
+import cn.wensiqun.asmsupport.sample.client.json.JSONPool;
+
 import java.io.IOException;
 import java.util.HashMap;
-
-import cn.wensiqun.asmsupport.sample.client.json.JSONPool;
 
 public class Runner {
 
@@ -21,7 +21,7 @@ public class Runner {
         china.getInfos().put("capital", city);
         china.getInfos().put("region-count", 32);
 
-        System.out.println("Country infos is          : " + pool.getJson(china.getInfos()));
+        System.out.println("Country info is          : " + pool.getJson(china.getInfos()));
         System.out.println("Country json is           : " + pool.getJson(china));
         
         Geo geo = new Geo();

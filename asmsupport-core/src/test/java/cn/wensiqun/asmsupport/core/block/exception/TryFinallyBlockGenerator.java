@@ -5,7 +5,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelFinally;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
@@ -23,7 +23,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
 
         final IClass runtime = creator.getClassLoader().getType(RuntimeException.class);
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryFinally"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryFinally"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -49,7 +49,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             }
         });
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -96,7 +96,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryFinally_TryError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryFinally_TryError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -129,7 +129,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerTryError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerTryError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -175,7 +175,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerFinallyError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerFinallyError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -221,7 +221,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterTryError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterTryError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -267,7 +267,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterFinallyError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterFinallyError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -313,7 +313,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerBothError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerBothError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -360,7 +360,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterBothError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_OutterBothError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -407,7 +407,7 @@ public class TryFinallyBlockGenerator extends AbstractExample
             
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerBothOuterFinallyError"), null, null, null, null,  new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("nestedTryFinally_InnerBothOuterFinallyError"), null, null, null, null,  new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -456,9 +456,9 @@ public class TryFinallyBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
         		new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
-             new KernelStaticMethodBody(){
+             new KernelMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                     for(String name : testMethodNames)

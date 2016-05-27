@@ -1,13 +1,13 @@
 package cn.wensiqun.asmsupport.sample.core.operators;
 
-import java.util.Random;
-
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.util.Random;
 
 public class RelationalOperatorGenerate extends AbstractExample {
 
@@ -38,9 +38,9 @@ public class RelationalOperatorGenerate extends AbstractExample {
 		 * 生成一个main方法，方法内容和willGenerate内容相同 
 		 * 
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
 				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+				new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {

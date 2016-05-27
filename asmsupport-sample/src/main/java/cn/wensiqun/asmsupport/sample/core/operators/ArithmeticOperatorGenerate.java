@@ -1,8 +1,6 @@
 package cn.wensiqun.asmsupport.sample.core.operators;
 
-import java.util.Random;
-
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
@@ -10,6 +8,8 @@ import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.util.Random;
 
 public class ArithmeticOperatorGenerate extends AbstractExample {
 
@@ -20,7 +20,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
 
 		//printIn方法
-		creator.createStaticMethod(0, "printInt", new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, new String[]{"s", "i"}, null, null, new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_STATIC, "printInt", new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, new String[]{"s", "i"}, null, null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -31,7 +31,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 		});
 		
 		//printIn方法
-		creator.createStaticMethod(0, "printFloat", new IClass[]{classLoader.getType(String.class), classLoader.getType(float.class)}, new String[]{"s", "f"}, null, null, new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_STATIC, "printFloat", new IClass[]{classLoader.getType(String.class), classLoader.getType(float.class)}, new String[]{"s", "f"}, null, null, new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {
@@ -41,8 +41,8 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 			
 		});		
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
-				new IClass[] { classLoader.getType(String[].class) }, new String[] { "args" }, null, null, new KernelStaticMethodBody() {
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", 
+				new IClass[] { classLoader.getType(String[].class) }, new String[] { "args" }, null, null, new KernelMethodBody() {
 
 					@Override
 					public void body(LocalVariable... argus) {

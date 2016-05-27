@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.sample.core.variable;
 
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -18,9 +18,9 @@ public class LocalVariableExample extends AbstractExample {
     
 	public static void main(String[] args){
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.variable.LocalVariableExample", null, null);
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, 
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
 				"main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+				new KernelMethodBody(){
 
 					@Override
 					public void body(LocalVariable... argus) {

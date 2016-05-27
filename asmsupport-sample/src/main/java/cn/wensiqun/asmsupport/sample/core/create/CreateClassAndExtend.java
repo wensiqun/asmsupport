@@ -1,12 +1,9 @@
 package cn.wensiqun.asmsupport.sample.core.create;
 
-import java.util.Random;
-
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -15,6 +12,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+
+import java.util.Random;
 
 public class CreateClassAndExtend extends AbstractExample {
 
@@ -91,8 +90,8 @@ public class CreateClassAndExtend extends AbstractExample {
 		
         ClassBuilderImpl childCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", classLoader.getType(ByModify), null);
 		
-		childCreator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+		childCreator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				new KernelMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

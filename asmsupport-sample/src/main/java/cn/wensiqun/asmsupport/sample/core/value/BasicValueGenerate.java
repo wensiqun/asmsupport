@@ -1,16 +1,16 @@
 package cn.wensiqun.asmsupport.sample.core.value;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicValueGenerate extends AbstractExample {
 
@@ -26,8 +26,8 @@ public class BasicValueGenerate extends AbstractExample {
 		
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.value.BasicValueCreateExample", null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				new KernelMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

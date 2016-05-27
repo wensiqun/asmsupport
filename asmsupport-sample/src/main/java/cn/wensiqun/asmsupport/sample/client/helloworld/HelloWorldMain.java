@@ -24,6 +24,6 @@ public class HelloWorldMain {
         });
         Class<?> FirstCaseClass = dummy.build();
         Method mainMethod = FirstCaseClass.getMethod("main", String[].class);
-        mainMethod.invoke(FirstCaseClass, mainMethod);
+        mainMethod.invoke(FirstCaseClass, new Object[]{null});
     }
 }

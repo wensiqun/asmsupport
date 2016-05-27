@@ -1,16 +1,16 @@
 package cn.wensiqun.asmsupport.sample.core.block;
 
-import java.lang.reflect.InvocationTargetException;
-
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * 这里我们将创建如下内容的类
@@ -68,12 +68,12 @@ public class IFBlockGenerator extends AbstractExample{
 		
 		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.IFBlockGeneratorExample", null, null);
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, 
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
 				"ifelse", 
 				new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, 
 				new String[]{"str", "i"}, null, null,
 		        
-				new KernelStaticMethodBody(){
+				new KernelMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
 						final LocalVariable str = argus[0];
@@ -148,8 +148,8 @@ public class IFBlockGenerator extends AbstractExample{
 		);
 		
 		
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				new KernelMethodBody(){
 					@Override
 					public void body(LocalVariable... argus) {
 						call(getMethodDeclaringClass(), "ifelse", val("A"), val(0));

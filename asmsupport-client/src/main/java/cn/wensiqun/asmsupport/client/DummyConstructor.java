@@ -88,8 +88,7 @@ public class DummyConstructor extends DummyAccessControl<DummyConstructor> {
     
     /**
      * Get argument names.
-     * 
-     * @param argNames
+     *
      * @return
      */
     public String[] getArgumentNames(){

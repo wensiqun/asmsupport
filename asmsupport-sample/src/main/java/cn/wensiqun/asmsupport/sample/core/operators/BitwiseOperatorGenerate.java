@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.sample.core.operators;
 
 
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -45,8 +45,8 @@ public class BitwiseOperatorGenerate extends AbstractExample {
 		/*
 		 * 生成一个main方法，方法内容和main1内容相同
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				new KernelMethodBody(){
 
 			@Override
 			public void body(LocalVariable... argus) {

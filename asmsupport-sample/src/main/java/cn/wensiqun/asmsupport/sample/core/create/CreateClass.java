@@ -1,16 +1,15 @@
 package cn.wensiqun.asmsupport.sample.core.create;
 
-import java.lang.reflect.InvocationTargetException;
-
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -182,8 +181,8 @@ public class CreateClass extends AbstractExample {
 		 *     new CreateClassExample(1024).commonMethod();
 		 * }
 		 */
-		creator.createStaticMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
-				new KernelStaticMethodBody(){
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
+				new KernelMethodBody(){
 
 	        @Override
 			public void body(LocalVariable... argus) {

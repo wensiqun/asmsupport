@@ -4,7 +4,7 @@ import cn.wensiqun.asmsupport.core.AbstractExample;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
@@ -23,7 +23,7 @@ public class TryCatchBlockGenerator extends AbstractExample
 
         final IClass runtime = creator.getClassLoader().getType(RuntimeException.class);
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "runtimeException", null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "runtimeException", null, null, null, null, new KernelMethodBody(){
         	
             @Override
             public void body(LocalVariable... argus)
@@ -32,7 +32,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         });
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "exception", null, null, null, new IClass[]{creator.getClassLoader().getType(Exception.class)}, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "exception", null, null, null, new IClass[]{creator.getClassLoader().getType(Exception.class)}, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -42,7 +42,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_errorBeforePrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_errorBeforePrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -70,7 +70,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_errorAfterPrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_errorAfterPrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -98,7 +98,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -126,7 +126,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -154,7 +154,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionBeforePrintInTry_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionBeforePrintInTry_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -183,7 +183,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionBeforePrintInTry_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionBeforePrintInTry_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -212,7 +212,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });        
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionAfterPrintInTry_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionAfterPrintInTry_runtimeExceptionBeforePrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -241,7 +241,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionAfterPrintInTry_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatch_exceptionAfterPrintInTry_runtimeExceptionAfterPrintInCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -270,7 +270,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -306,7 +306,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -342,7 +342,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -378,7 +378,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -414,7 +414,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -450,7 +450,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -486,7 +486,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -522,7 +522,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -558,44 +558,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
         
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getMethodDeclaringClass(), "exception");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getMethodDeclaringClass(), "runtimeException");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                    }
-                    
-                });
-                return_();
-            }
-        });
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -614,6 +577,43 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
+                        call(getMethodDeclaringClass(), "runtimeException");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                    }
+                    
+                });
+                return_();
+            }
+        });
+        
+
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getMethodDeclaringClass(), "exception");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
                         call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
                         call(getMethodDeclaringClass(), "runtimeException");
                     }
@@ -632,7 +632,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -669,7 +669,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         });
 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -705,7 +705,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         }); 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -741,7 +741,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         }); 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -777,7 +777,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         }); 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -813,7 +813,7 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         }); 
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -832,82 +832,6 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                });
-                return_();
-            }
-        }); 
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getMethodDeclaringClass(), "exception");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getMethodDeclaringClass(), "runtimeException");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getMethodDeclaringClass(), "runtimeException");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                    }
-                    
-                });
-                return_();
-            }
-        }); 
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getMethodDeclaringClass(), "exception");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getMethodDeclaringClass(), "runtimeException");
                         call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
                     }
                     
@@ -926,7 +850,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         }); 
         
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -938,82 +862,6 @@ public class TryCatchBlockGenerator extends AbstractExample
                     {
                         call(getMethodDeclaringClass(), "exception");
                         call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getMethodDeclaringClass(), "runtimeException");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                    }
-                    
-                });
-                return_();
-            }
-        }); 
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getMethodDeclaringClass(), "exception");
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                });
-                return_();
-            }
-        }); 
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                        call(getMethodDeclaringClass(), "exception");
                     }
                     
                 }).catch_(new KernelCatch(runtime){
@@ -1040,7 +888,121 @@ public class TryCatchBlockGenerator extends AbstractExample
         }); 
         
 
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeBeforePrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getMethodDeclaringClass(), "exception");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getMethodDeclaringClass(), "runtimeException");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                });
+                return_();
+            }
+        }); 
+        
+
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getMethodDeclaringClass(), "exception");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getMethodDeclaringClass(), "runtimeException");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                    }
+                    
+                });
+                return_();
+            }
+        }); 
+        
+
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionBeforePrintInTry_runtimeAfterPrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getMethodDeclaringClass(), "exception");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                });
+                return_();
+            }
+        }); 
+        
+
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -1068,44 +1030,6 @@ public class TryCatchBlockGenerator extends AbstractExample
                     @Override
                     public void body(LocalVariable e)
                     {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                });
-                return_();
-            }
-        }); 
-        
-
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
-
-            @Override
-            public void body(LocalVariable... argus)
-            {
-                try_(new KernelTry(){
-
-                    @Override
-                    public void body()
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
-                        call(getMethodDeclaringClass(), "exception");
-                    }
-                    
-                }).catch_(new KernelCatch(runtime){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
-                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
-                        call(getMethodDeclaringClass(), "runtimeException");
-                    }
-                    
-                }).catch_(new KernelCatch(getType(Exception.class)){
-
-                    @Override
-                    public void body(LocalVariable e)
-                    {
                         call(getMethodDeclaringClass(), "runtimeException");
                         call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
                     }
@@ -1116,9 +1040,7 @@ public class TryCatchBlockGenerator extends AbstractExample
         }); 
         
 
-        
-        
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelStaticMethodBody(){
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeBeforePrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
 
             @Override
             public void body(LocalVariable... argus)
@@ -1155,11 +1077,89 @@ public class TryCatchBlockGenerator extends AbstractExample
             }
         }); 
         
+
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch_runtimeBeforePrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                        call(getMethodDeclaringClass(), "exception");
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getMethodDeclaringClass(), "runtimeException");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                    }
+                    
+                });
+                return_();
+            }
+        }); 
+        
+
+        
+        
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, testMethodNames.put("tryCatchTwo_exceptionAfterPrintInTry_runtimeAfterPrintInExceptionCatch_runtimeAfterPrintInRuntimeCatch"), null, null, null, null, new KernelMethodBody(){
+
+            @Override
+            public void body(LocalVariable... argus)
+            {
+                try_(new KernelTry(){
+
+                    @Override
+                    public void body()
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    try"));
+                        call(getMethodDeclaringClass(), "exception");
+                    }
+                    
+                }).catch_(new KernelCatch(runtime){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getMethodDeclaringClass(), "runtimeException");
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    runtime exception"));
+                    }
+                    
+                }).catch_(new KernelCatch(getType(Exception.class)){
+
+                    @Override
+                    public void body(LocalVariable e)
+                    {
+                        call(getType(TesterStatics.class), "actuallyPrintln", val("    exception"));
+                        call(getMethodDeclaringClass(), "runtimeException");
+                    }
+                    
+                });
+                return_();
+            }
+        }); 
         
         
         
-        creator.createStaticMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
-             new KernelStaticMethodBody(){
+        
+        creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{creator.getClassLoader().getType(String[].class)}, new String[]{"args"}, null, null,
+             new KernelMethodBody(){
                 @Override
                 public void body(LocalVariable... argus) {
                     for(String name : testMethodNames)

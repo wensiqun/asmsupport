@@ -118,9 +118,9 @@ public abstract class MutableClass extends BaseClass {
      * @param method
      */
     public void addDeclaredMethod(AMethodMeta method) {
-    	AMethodMeta previours = declaredMethods.putIfAbsent(getMethodCacheKey(method), method);
-    	if(previours != null) {
-    		throw new ASMSupportException("The method " + method.getMethodString() + " has alread exist, override it right now!");
+    	AMethodMeta previous = declaredMethods.putIfAbsent(getMethodCacheKey(method), method);
+    	if(previous != null) {
+    		throw new ASMSupportException("The method " + method.getMethodString() + " has already exist, override it right now!");
     	}
     } 
     
