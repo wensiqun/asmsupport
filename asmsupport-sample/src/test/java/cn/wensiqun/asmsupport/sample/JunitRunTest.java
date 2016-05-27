@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import cn.wensiqun.asmsupport.sample.core.CoreRunner;
 
-public class JunitRun {
+public class JunitRunTest {
 
     @Test
     public void test() throws Exception {

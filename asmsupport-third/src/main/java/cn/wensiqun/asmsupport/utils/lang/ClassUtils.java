@@ -134,8 +134,8 @@ public class ClassUtils {
         if ("boolean".equals(nameOrDesc) || "Z".equals(nameOrDesc)) {
             return boolean.class;
         }
-        if ("int".equals(nameOrDesc) || "B".equals(nameOrDesc)) {
-            return int.class;
+        if ("byte".equals(nameOrDesc) || "B".equals(nameOrDesc)) {
+            return byte.class;
         }
         if ("char".equals(nameOrDesc) || "C".equals(nameOrDesc)) {
             return char.class;
