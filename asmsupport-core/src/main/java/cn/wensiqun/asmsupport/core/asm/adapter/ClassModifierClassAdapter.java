@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
@@ -38,14 +38,14 @@ import java.util.*;
  */
 public class ClassModifierClassAdapter extends ClassAdapter {
 
-	private List<IMethodBuilder> needModify;
+	private List<MethodBuilder> needModify;
 	private String classInternalName;
 
     private Map<String, List<VisitXInsnAdapter>> superConstructorMap;
 	
 	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifier classModifier) {
 		super(cv);
-		this.needModify = new LinkedList<IMethodBuilder>();
+		this.needModify = new LinkedList<MethodBuilder>();
 		if (classModifier.getMethodModifiers() != null) {
 			CollectionUtils.addAll(this.needModify, classModifier.getMethodModifiers().iterator());
 		}
@@ -82,7 +82,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		public void visitMethodInsn(final int opcode, 
 				final String owner, final String name, final String desc, boolean itf){
 			if(owner.equals(classInternalName) && isModified(name, desc)){
-				super.visitMethodInsn(opcode, owner, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, itf);
+				super.visitMethodInsn(opcode, owner, name + ASConstants.METHOD_PROXY_SUFFIX, desc, itf);
 			}else{
 				super.visitMethodInsn(opcode, owner, name, desc, itf);
 			}
@@ -111,14 +111,14 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 				access += Opcodes.ACC_PRIVATE;
 			}
 			
-			if (name.equals(ASMSupportConstant.INIT)) {
-				name = ASMSupportConstant.INIT_PROXY;
-				methodVisitor = new ConstructorVisitor(super.visitMethod(access, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions), desc);
+			if (name.equals(ASConstants.INIT)) {
+				name = ASConstants.INIT_PROXY;
+				methodVisitor = new ConstructorVisitor(super.visitMethod(access, name + ASConstants.METHOD_PROXY_SUFFIX, desc, signature, exceptions), desc);
 			}else{
-				if (name.equals(ASMSupportConstant.CLINIT)) {
-					name = ASMSupportConstant.CLINIT_PROXY;
+				if (name.equals(ASConstants.CLINIT)) {
+					name = ASConstants.CLINIT_PROXY;
 				}
-				methodVisitor =super.visitMethod(access, name + ASMSupportConstant.METHOD_PROXY_SUFFIX, desc, signature, exceptions);
+				methodVisitor =super.visitMethod(access, name + ASConstants.METHOD_PROXY_SUFFIX, desc, signature, exceptions);
 			}
 		}
 		
@@ -126,8 +126,8 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 	}
 
 	private boolean isModified(String name, String desc) {
-		IMethodBuilder imm = null;
-		for (IMethodBuilder m : needModify) {
+		MethodBuilder imm = null;
+		for (MethodBuilder m : needModify) {
 			if (methodEqual(m, name, desc)) {
 				imm = m;
 				break;
@@ -139,7 +139,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		return false;
 	}
 
-	private boolean methodEqual(IMethodBuilder mm, String name, String desc) {
+	private boolean methodEqual(MethodBuilder mm, String name, String desc) {
 		if (!mm.getName().equals(name)) {
 			return false;
 		}

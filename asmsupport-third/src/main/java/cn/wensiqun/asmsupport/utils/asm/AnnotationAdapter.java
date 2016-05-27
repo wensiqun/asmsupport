@@ -15,16 +15,16 @@
 package cn.wensiqun.asmsupport.utils.asm;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.AnnotationVisitor;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 public class AnnotationAdapter extends AnnotationVisitor {
 
 	public AnnotationAdapter(AnnotationVisitor av) {
-		super(ASMSupportConstant.ASM_VERSION, av);
+		super(ASConstants.ASM_VERSION, av);
 	}
 
 	public AnnotationAdapter() {
-		super(ASMSupportConstant.ASM_VERSION);
+		super(ASConstants.ASM_VERSION);
 	}
 
 	

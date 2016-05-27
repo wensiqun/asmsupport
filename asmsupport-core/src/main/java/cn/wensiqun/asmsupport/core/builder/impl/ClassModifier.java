@@ -21,8 +21,8 @@ import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -50,11 +50,13 @@ public class ClassModifier extends AbstractClassBuilder {
 	
     private static final Log LOG = LogFactory.getLog(ClassModifier.class);
 	
-    protected List<IMethodBuilder> methodModifiers = new ArrayList<>();
+    protected List<MethodBuilder> methodModifiers = new ArrayList<>();
     
     private List<KernelModifiedMethodBody> modifyConstructorBodies;
     
 	private ProductClass productClass;
+
+	private int clinitNum = 0;
 	
 	public ClassModifier(Class<?> clazz) {
 		this(clazz, CachedThreadLocalClassLoader.getInstance());
@@ -77,34 +79,34 @@ public class ClassModifier extends AbstractClassBuilder {
 		IClass[] argCls = new IClass[argClasses.length];
 		String[] defaultArgNames = new String[argClasses.length];
 		for(int i=0; i<argCls.length; i++){
-			argCls[i] = ASMSupportClassLoader.getType(argClasses[i]);
+			argCls[i] = classLoader.getType(argClasses[i]);
 			defaultArgNames[i] = "arg" + i;
 		}
 		try {
 			
-			MethodBuilderImpl methodCreator;
-			if(name.equals(ASMSupportConstant.CLINIT)){
-				methodCreator = MethodBuilderImpl.methodCreatorForModify(name, argCls, defaultArgNames, ASMSupportClassLoader.getType(void.class), null, Opcodes.ACC_STATIC, mb);
-			}else if(name.equals(ASMSupportConstant.INIT)){
+			DefaultMethodBuilder methodCreator;
+			if(name.equals(ASConstants.CLINIT)){
+				methodCreator = DefaultMethodBuilder.buildForModify(name, argCls, defaultArgNames, classLoader.getType(void.class), null, Opcodes.ACC_STATIC, mb);
+			}else if(name.equals(ASConstants.INIT)){
 				if(modifyConstructorBodies == null){
 					modifyConstructorBodies = new ArrayList<>();
 				}
 				modifyConstructorBodies.add(mb);
 				
 				Constructor<?> constructor = clazz.getDeclaredConstructor(argClasses);
-				methodCreator = MethodBuilderImpl.methodCreatorForModify(ASMSupportConstant.INIT,
+				methodCreator = DefaultMethodBuilder.buildForModify(ASConstants.INIT,
 						argCls, 
 						defaultArgNames, 
-						ASMSupportClassLoader.getType(void.class),
-						IClassUtils.convertToAClass(ASMSupportClassLoader, constructor.getExceptionTypes()),
+						classLoader.getType(void.class),
+						IClassUtils.convertToAClass(classLoader, constructor.getExceptionTypes()),
 						constructor.getModifiers(), mb);
 			}else{
 				Method method = clazz.getDeclaredMethod(name, argClasses);
-				methodCreator = MethodBuilderImpl.methodCreatorForModify(name, 
+				methodCreator = DefaultMethodBuilder.buildForModify(name,
 						argCls, 
 						defaultArgNames, 
-						ASMSupportClassLoader.getType(method.getReturnType()),
-						IClassUtils.convertToAClass(ASMSupportClassLoader, method.getExceptionTypes()),
+						classLoader.getType(method.getReturnType()),
+						IClassUtils.convertToAClass(classLoader, method.getExceptionTypes()),
 						method.getModifiers(), mb);
 			}
 			
@@ -124,10 +126,10 @@ public class ClassModifier extends AbstractClassBuilder {
 	 * @param body
 	 * @return
 	 */
-    public IMethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
-        IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.INIT, argTypes, argNames,
+    public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
+        MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
                 null, exceptions, access, body);
-        methodCreators.add(creator);
+        methodBuilders.add(creator);
         return creator;
     }
 	
@@ -143,11 +145,11 @@ public class ClassModifier extends AbstractClassBuilder {
      * @param body
      * @return
      */
-    public IMethodBuilder createMethodForDummy(int access, String name, IClass[] argTypes, String[] argNames,
-    		IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
-        IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
+    public MethodBuilder createMethodForDummy(int access, String name, IClass[] argTypes, String[] argNames,
+											  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
+        MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-        methodCreators.add(creator);
+        methodBuilders.add(creator);
         return creator;
     }
 	
@@ -168,7 +170,7 @@ public class ClassModifier extends AbstractClassBuilder {
     	if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
     	}
-        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
+        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
                 returnClass, exceptions, access, mb));
     }
     
@@ -189,24 +191,28 @@ public class ClassModifier extends AbstractClassBuilder {
     	if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
     	}
-        methodCreators.add(MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
+        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
                 returnClass, exceptions, access, mb));
     }
-    
-    protected void checkStaticBlock(){
-    	if(productClass.existStaticInitBlock()){
-        	existedStaticBlock = true;
-    	}
-    	super.checkStaticBlock();
+
+	/**
+	 * Create static block of class.
+	 *
+	 * @param block
+     */
+    public void createStaticBlock(KernelStaticBlockBody block){
+		if(productClass.existStaticInitBlock()) {
+			throw new IllegalArgumentException("The static block(<clinit>) has already exist, call modifyMethod to change it.");
+		}
+		DefaultMethodBuilder creator;
+		if(clinitNum > 0) {
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), block);
+		} else {
+			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
+					Opcodes.ACC_STATIC, block);
+		}
+		methodBuilders.add(clinitNum++, creator);
     }
-    
-    public void createStaticBlock(KernelStaticBlockBody mb){
-    	checkStaticBlock();
-    	existedStaticBlock = true;
-        methodCreators.add(0, MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null,
-                Opcodes.ACC_STATIC, mb));
-    }
-    
     
     /**
      * 
@@ -217,7 +223,7 @@ public class ClassModifier extends AbstractClassBuilder {
      * @param type      the field type
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, IClass type) {
+    public FieldBuilder createField(String name, int modifiers, IClass type) {
         return createField(name, modifiers, type, null);
     }
     
@@ -238,15 +244,15 @@ public class ClassModifier extends AbstractClassBuilder {
      *              through bytecode instructions in constructors or methods.
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, IClass type, Object value) {
+    public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
         FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
-        fieldCreators.add(fc);
+        fieldBuilders.add(fc);
         return fc;
     }
 
 	@Override
 	public void create() {
-		InputStream is = ASMSupportClassLoader.getResourceAsStream(productClass.getName());
+		InputStream is = classLoader.getResourceAsStream(productClass.getName());
 		try {
 			//modify class
 			ClassReader cr = new ClassReader(is);
@@ -259,17 +265,17 @@ public class ClassModifier extends AbstractClassBuilder {
 	        }
 	        
 	        // create field
-	        for (IFieldBuilder ifc : fieldCreators) {
+	        for (FieldBuilder ifc : fieldBuilders) {
 	            ifc.create(this);
 	        }
 
 	        // create method
-	        for (IMethodBuilder imc : methodCreators) {
+	        for (MethodBuilder imc : methodBuilders) {
 	            imc.create(this);
 	        }
 	        
 	        // modify method
-	        for (IMethodBuilder imc : methodModifiers) {
+	        for (MethodBuilder imc : methodModifiers) {
 	            imc.create(this);
 	        }
 
@@ -289,15 +295,15 @@ public class ClassModifier extends AbstractClassBuilder {
 
 	@Override
 	public void prepare() {
-		for (IFieldBuilder ifc : fieldCreators) {
+		for (FieldBuilder ifc : fieldBuilders) {
 			ifc.prepare();
 		}
 
-		for (IMethodBuilder imc : methodCreators) {
+		for (MethodBuilder imc : methodBuilders) {
 			imc.prepare();
 		}
 
-		for (IMethodBuilder imc : methodModifiers) {
+		for (MethodBuilder imc : methodModifiers) {
 			imc.prepare();
 		}
 
@@ -306,15 +312,15 @@ public class ClassModifier extends AbstractClassBuilder {
 	@Override
 	public byte[] execute() {
 	       
-        for (IFieldBuilder ifc : fieldCreators) {
+        for (FieldBuilder ifc : fieldBuilders) {
             ifc.execute();
         }
 
-        for (IMethodBuilder imc : methodCreators) {
+        for (MethodBuilder imc : methodBuilders) {
             imc.execute();
         }
         
-        for (IMethodBuilder imc : methodModifiers) {
+        for (MethodBuilder imc : methodModifiers) {
             imc.execute();
         }
 
@@ -324,46 +330,13 @@ public class ClassModifier extends AbstractClassBuilder {
 		
 		return cw.toByteArray();
 	}
-	
-    /*@Override
-    public Class<?> startup() {
-    	InputStream is = asmsupportClassLoader.loadClassResource(productClass.getName());
-    	try {
-			//modify class
-			ClassReader cr = new ClassReader(is);
-			cw = new ClassWriter(0);
-			ClassVisitor cv = new ClassModifierClassAdapter(cw, this);
-			cr.accept(cv, 0);
-			modifiedClassBytes = cw.toByteArray();
-			
-		} catch (Exception e) {
-			throw new ASMSupportException(e.getMessage(), e);
-		}
-    	
-    	
-        ClassModifierClassLoader loader = new ClassModifierClassLoader(this);
-        
-        try {
-            loader.loadClass(productClass.getName());
-            String proxyClassName = productClass.getName();
-            byte[] modifiedBytes = loader.getModifiedClassBytes();
-            if(!StringUtils.isBlank(getClassOutPutPath())){
-            	CommonUtils.toLocal(modifiedBytes, getClassOutPutPath(), proxyClassName);
-            }
-            return loadClass(proxyClassName, modifiedBytes);
-        } catch (ClassNotFoundException e) {
-            throw new ASMSupportException("Class Not Found Exception");
-        } finally{
-            //cleanCach();
-        }
-    }*/
     
 	@Override
 	public ProductClass getCurrentClass() {
 		return productClass;
 	}
 
-	public List<IMethodBuilder> getMethodModifiers() {
+	public List<MethodBuilder> getMethodModifiers() {
 		return methodModifiers;
 	}
 

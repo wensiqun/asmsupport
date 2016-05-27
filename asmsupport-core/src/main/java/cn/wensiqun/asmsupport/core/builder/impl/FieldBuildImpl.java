@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
@@ -27,14 +27,14 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class FieldBuildImpl implements IFieldBuilder {
+public class FieldBuildImpl implements FieldBuilder {
     
     private String name;
     private int modifiers;
     private IClass type;
 
     private Field fe;
-    private IClassBuilder context;
+    private ClassBuilder context;
     private Object value;
     
     /**
@@ -67,7 +67,7 @@ public class FieldBuildImpl implements IFieldBuilder {
     }
 
     @Override
-    public void create(IClassBuilder cv) {
+    public void create(ClassBuilder cv) {
     	this.context = cv;
     	MutableClass owner = cv.getCurrentClass();
         owner.addField(fe = new Field(owner, owner, type, modifiers, name));

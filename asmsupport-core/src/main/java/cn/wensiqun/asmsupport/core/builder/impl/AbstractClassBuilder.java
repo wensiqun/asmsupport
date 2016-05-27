@@ -14,9 +14,9 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -31,39 +31,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class AbstractClassBuilder implements IClassBuilder{
+public abstract class AbstractClassBuilder implements ClassBuilder {
 	
     private static final Log LOG = LogFactory.getLog(AbstractClassBuilder.class);
 
-    protected List<IMethodBuilder> methodCreators = new ArrayList<>();
+    protected List<MethodBuilder> methodBuilders = new ArrayList<>();
 
-    protected List<IFieldBuilder> fieldCreators = new ArrayList<>();
+    protected List<FieldBuilder> fieldBuilders = new ArrayList<>();
 
     protected String classOutPutPath;
 	
-    protected boolean existedStaticBlock = false;
-	
     protected ClassWriter cw;
 
-    protected ASMSupportClassLoader ASMSupportClassLoader;
+    protected ASMSupportClassLoader classLoader;
     
     /**
      * 
      * @param ASMSupportClassLoader
      */
 	public AbstractClassBuilder(ASMSupportClassLoader ASMSupportClassLoader) {
-		this.ASMSupportClassLoader = ASMSupportClassLoader;
+		this.classLoader = ASMSupportClassLoader;
 	}
 
-	protected void checkStaticBlock(){
-    	if(existedStaticBlock){
-    		throw new UnsupportedOperationException("the static block has alreay exist this method!");
-    	}
-    }
+	//protected abstract boolean existCLInit();
     
     protected Class<?> loadClass(String name, byte[] b) {
         try {
-        	return ASMSupportClassLoader.defineClass(name, b, getCurrentClass());
+        	return classLoader.defineClass(name, b, getCurrentClass());
         } catch (Exception e) {
             throw new ASMSupportException("Error on define class " + name, e);
         }
@@ -85,7 +79,7 @@ public abstract class AbstractClassBuilder implements IClassBuilder{
 	
 	@Override
 	public ASMSupportClassLoader getClassLoader() {
-		return ASMSupportClassLoader;
+		return classLoader;
 	}
 	
 	

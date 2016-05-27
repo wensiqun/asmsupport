@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.standard.utils.reflect.ModifierUtils;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
 
@@ -203,9 +203,9 @@ public class ProductClass extends MutableClass {
 							AMethodMeta meta = new AMethodMeta(classLoader, name, ProductClass.this, ProductClass.this,
 									parameterTypes, null, returnClass, exceptionTypes, access);
 							
-							if(name.equals(ASMSupportConstant.CLINIT)){
+							if(name.equals(ASConstants.CLINIT)){
 								ProductClass.this.addClinitMethod(meta);
-							} else if (name.equals(ASMSupportConstant.INIT)) {
+							} else if (name.equals(ASConstants.INIT)) {
 								ProductClass.this.addConstructor(meta);
 							} else if (ModifierUtils.isBridge(access)){
 								ProductClass.this.getBridgeMethod().add(meta);

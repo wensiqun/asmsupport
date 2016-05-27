@@ -14,11 +14,9 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -35,8 +33,11 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MethodInvoker extends AbstractParamOperator {
 
@@ -103,7 +104,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         argumentClassList.toArray(argumentClasses);
         
     	AMethod currentMethod = block.getMethod();
-        if(currentMethod.getMode() == ASMSupportConstant.METHOD_CREATE_MODE_MODIFY && name.endsWith(ASMSupportConstant.METHOD_PROXY_SUFFIX)){
+        if(currentMethod.getMode() == MethodBuilder.MODE_MODIFY && name.endsWith(ASConstants.METHOD_PROXY_SUFFIX)){
         	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
             mtdEntity.setName(name);
         }else{
@@ -177,7 +178,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     }
 
     public final IClass getReturnClass() {
-        if(name.equals(ASMSupportConstant.INIT)){
+        if(name.equals(ASConstants.INIT)){
             return methodOwner;
         }else if(mtdEntity != null){
             return mtdEntity.getReturnClass();

@@ -865,7 +865,7 @@ class MethodWriter extends MethodVisitor {
                 case Opcodes.GETFIELD:
                     size = stackSize + (c == 'D' || c == 'J' ? 1 : 0);
                     break;
-                // case Constants.PUTFIELD:
+                // case ASConstants.PUTFIELD:
                 default:
                     size = stackSize + (c == 'D' || c == 'J' ? -3 : -2);
                     break;

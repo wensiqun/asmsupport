@@ -27,6 +27,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -73,7 +74,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
@@ -733,14 +734,14 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final MethodInvoker callOrig() {
-        if (getMethod().getMode() == ASMSupportConstant.METHOD_CREATE_MODE_MODIFY) {
+        if (getMethod().getMode() == MethodBuilder.MODE_MODIFY) {
             String originalMethodName = getMethod().getMeta().getName();
-            if (originalMethodName.equals(ASMSupportConstant.CLINIT)) {
-                originalMethodName = ASMSupportConstant.CLINIT_PROXY;
-            } else if (originalMethodName.equals(ASMSupportConstant.INIT)) {
-                originalMethodName = ASMSupportConstant.INIT_PROXY;
+            if (originalMethodName.equals(ASConstants.CLINIT)) {
+                originalMethodName = ASConstants.CLINIT_PROXY;
+            } else if (originalMethodName.equals(ASConstants.INIT)) {
+                originalMethodName = ASConstants.INIT_PROXY;
             }
-            originalMethodName += ASMSupportConstant.METHOD_PROXY_SUFFIX;
+            originalMethodName += ASConstants.METHOD_PROXY_SUFFIX;
             if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
                 return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {

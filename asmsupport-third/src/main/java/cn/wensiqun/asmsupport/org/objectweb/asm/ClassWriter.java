@@ -526,18 +526,18 @@ public class ClassWriter extends ClassVisitor {
         // code to generate the above string
         //
         // // SBYTE_INSN instructions
-        // b[Constants.NEWARRAY] = SBYTE_INSN;
-        // b[Constants.BIPUSH] = SBYTE_INSN;
+        // b[ASConstants.NEWARRAY] = SBYTE_INSN;
+        // b[ASConstants.BIPUSH] = SBYTE_INSN;
         //
         // // SHORT_INSN instructions
-        // b[Constants.SIPUSH] = SHORT_INSN;
+        // b[ASConstants.SIPUSH] = SHORT_INSN;
         //
         // // (IMPL)VAR_INSN instructions
-        // b[Constants.RET] = VAR_INSN;
-        // for (i = Constants.ILOAD; i <= Constants.ALOAD; ++i) {
+        // b[ASConstants.RET] = VAR_INSN;
+        // for (i = ASConstants.ILOAD; i <= ASConstants.ALOAD; ++i) {
         // b[i] = VAR_INSN;
         // }
-        // for (i = Constants.ISTORE; i <= Constants.ASTORE; ++i) {
+        // for (i = ASConstants.ISTORE; i <= ASConstants.ASTORE; ++i) {
         // b[i] = VAR_INSN;
         // }
         // for (i = 26; i <= 45; ++i) { // ILOAD_0 to ALOAD_3
@@ -548,24 +548,24 @@ public class ClassWriter extends ClassVisitor {
         // }
         //
         // // TYPE_INSN instructions
-        // b[Constants.NEW] = TYPE_INSN;
-        // b[Constants.ANEWARRAY] = TYPE_INSN;
-        // b[Constants.CHECKCAST] = TYPE_INSN;
-        // b[Constants.INSTANCEOF] = TYPE_INSN;
+        // b[ASConstants.NEW] = TYPE_INSN;
+        // b[ASConstants.ANEWARRAY] = TYPE_INSN;
+        // b[ASConstants.CHECKCAST] = TYPE_INSN;
+        // b[ASConstants.INSTANCEOF] = TYPE_INSN;
         //
         // // (Set)FIELDORMETH_INSN instructions
-        // for (i = Constants.GETSTATIC; i <= Constants.INVOKESTATIC; ++i) {
+        // for (i = ASConstants.GETSTATIC; i <= ASConstants.INVOKESTATIC; ++i) {
         // b[i] = FIELDORMETH_INSN;
         // }
-        // b[Constants.INVOKEINTERFACE] = ITFMETH_INSN;
-        // b[Constants.INVOKEDYNAMIC] = INDYMETH_INSN;
+        // b[ASConstants.INVOKEINTERFACE] = ITFMETH_INSN;
+        // b[ASConstants.INVOKEDYNAMIC] = INDYMETH_INSN;
         //
         // // LABEL(W)_INSN instructions
-        // for (i = Constants.IFEQ; i <= Constants.JSR; ++i) {
+        // for (i = ASConstants.IFEQ; i <= ASConstants.JSR; ++i) {
         // b[i] = LABEL_INSN;
         // }
-        // b[Constants.IFNULL] = LABEL_INSN;
-        // b[Constants.IFNONNULL] = LABEL_INSN;
+        // b[ASConstants.IFNULL] = LABEL_INSN;
+        // b[ASConstants.IFNONNULL] = LABEL_INSN;
         // b[200] = LABELW_INSN; // GOTO_W
         // b[201] = LABELW_INSN; // JSR_W
         // // temporary opcodes used internally by ASM - see Label and
@@ -575,15 +575,15 @@ public class ClassWriter extends ClassVisitor {
         // }
         //
         // // LDC(_W) instructions
-        // b[Constants.LDC] = LDC_INSN;
+        // b[ASConstants.LDC] = LDC_INSN;
         // b[19] = LDCW_INSN; // LDC_W
         // b[20] = LDCW_INSN; // LDC2_W
         //
         // // special instructions
-        // b[Constants.IINC] = IINC_INSN;
-        // b[Constants.TABLESWITCH] = TABL_INSN;
-        // b[Constants.LOOKUPSWITCH] = LOOK_INSN;
-        // b[Constants.MULTIANEWARRAY] = MANA_INSN;
+        // b[ASConstants.IINC] = IINC_INSN;
+        // b[ASConstants.TABLESWITCH] = TABL_INSN;
+        // b[ASConstants.LOOKUPSWITCH] = LOOK_INSN;
+        // b[ASConstants.MULTIANEWARRAY] = MANA_INSN;
         // b[196] = WIDE_INSN; // WIDE
         //
         // for (i = 0; i < b.length; ++i) {

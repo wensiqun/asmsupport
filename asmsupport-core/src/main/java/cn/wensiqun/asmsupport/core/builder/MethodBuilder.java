@@ -22,12 +22,18 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface IMethodBuilder extends Executable {
-    
+public interface MethodBuilder extends Executable {
+
+    int MODE_ADD = 0;
+
+    int MODE_MODIFY = 1;
+
+    int MODE_DELEGATE = 2;
+
     /**
      * Create a method
      */
-    void create(IClassBuilder cv);
+    void create(ClassBuilder classBuilder);
 	
     /**
      * Get method name.
@@ -38,5 +44,11 @@ public interface IMethodBuilder extends Executable {
      * Get the argument types of current method.
      */
     IClass[] getArguments();
-    
+
+    /**
+     *
+     * @return
+     */
+    IClass getReturnType();
+
 }

@@ -4,7 +4,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
 import java.util.UUID;
 
-public interface ASMSupportConstant {
+public interface ASConstants {
 	
 	String CLASS_QUALIFIED_NAME_REGEX = "^[\\p{L} .'-]+$";
 	
@@ -17,9 +17,6 @@ public interface ASMSupportConstant {
 	String THIS = "this";
 	String METHOD_PROXY_SUFFIX = "@original_" + UUID.randomUUID().toString().replace('-', '$');
 	String CLASS_PROXY_SUFFIX = "";
-
-	int METHOD_CREATE_MODE_ADD = 0;
-	int METHOD_CREATE_MODE_MODIFY = 1;
 
 	int ASM_VERSION = Opcodes.ASM5;
 

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
-import cn.wensiqun.asmsupport.core.builder.impl.AbstractClassCreator.SemiClass;
+import cn.wensiqun.asmsupport.core.builder.impl.ClassCreator.SemiClass;
 import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;
@@ -202,7 +202,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		try {
         	ClassHolder holder = directCallClass.getClassLoader();
 		    if(directCallClass instanceof SemiClass){
-	            if(ASMSupportConstant.INIT.equals(name)){
+	            if(ASConstants.INIT.equals(name)){
 	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }
@@ -213,7 +213,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	                fetchMatchMethod(tempPotentially, directCallClass.getSuperclass(), name);
 	            }
 	        }else if(directCallClass instanceof ProductClass){
-	            if(ASMSupportConstant.INIT.equals(name)){
+	            if(ASConstants.INIT.equals(name)){
 	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
 	                    tempPotentially.add(directCallClass, method);
 	                }

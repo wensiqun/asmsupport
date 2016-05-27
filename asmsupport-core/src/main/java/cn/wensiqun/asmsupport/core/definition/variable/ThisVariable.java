@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 /**
  * Represent the {@code this} keyword variable.
@@ -38,7 +38,7 @@ public class ThisVariable extends ImplicitVariable {
     
     
     public ThisVariable(IClass aclass) {
-        this.globalVariableMeta = new Field(aclass, aclass, aclass, Opcodes.ACC_FINAL, ASMSupportConstant.THIS);
+        this.globalVariableMeta = new Field(aclass, aclass, aclass, Opcodes.ACC_FINAL, ASConstants.THIS);
     }
     
     @Override

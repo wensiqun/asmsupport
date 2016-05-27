@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.MethodBuilderImpl;
+import cn.wensiqun.asmsupport.core.builder.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -40,8 +40,8 @@ public class OverrideBridgeMethodCreator {
 		this.validateMethod = validateMethod;
 	}
 
-	public List<MethodBuilderImpl> getList(){
-		List<MethodBuilderImpl> creatorList = new ArrayList<MethodBuilderImpl>();
+	public List<DefaultMethodBuilder> getList(){
+		List<DefaultMethodBuilder> creatorList = new ArrayList<DefaultMethodBuilder>();
 		List<AMethodMeta> parentMethods = foundParentMethod();
 		for(AMethodMeta method : parentMethods){
 			if(needBridge(validateMethod, method)){
@@ -98,7 +98,7 @@ public class OverrideBridgeMethodCreator {
      * @param method the overide method
      * @param overriden the super method
      */
-    private MethodBuilderImpl createBridgeMethodCreator(AMethodMeta method, AMethodMeta overriden){
+    private DefaultMethodBuilder createBridgeMethodCreator(AMethodMeta method, AMethodMeta overriden){
     	final String name = method.getName();
     	
     	IClass[] argClasses = method.getParameterTypes();
@@ -112,7 +112,7 @@ public class OverrideBridgeMethodCreator {
     	//remove abstract flag first and then add bridge flag.
     	int access = (overriden.getModifiers() & ~Opcodes.ACC_ABSTRACT) + Opcodes.ACC_BRIDGE;
 
-    	return MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
+    	return DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
                 returnClass, exceptions, access, new KernelMethodBody(){
 
 					@Override

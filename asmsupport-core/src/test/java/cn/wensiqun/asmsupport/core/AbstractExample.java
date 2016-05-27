@@ -1,6 +1,6 @@
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.builder.IClassBuilder;
+import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -18,12 +18,12 @@ public abstract class AbstractExample {
 				.field("out");
 		LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory());
 	}
-	public static Class<?> generate(IClassBuilder creator){
+	public static Class<?> generate(ClassBuilder creator){
 		return generate(creator, true);
 	}
 	
 
-	public static Class<?> generate(IClassBuilder creator, boolean callMain){
+	public static Class<?> generate(ClassBuilder creator, boolean callMain){
 		//_这是Class的输出路径。主要为了调试作用。我们通过asmsupport生成的class将获输出到这个路径
 		//你可以通过反编译软件看看我们生成的结果
 		creator.setClassOutPutPath(".//target//asmsupport-test-generated");

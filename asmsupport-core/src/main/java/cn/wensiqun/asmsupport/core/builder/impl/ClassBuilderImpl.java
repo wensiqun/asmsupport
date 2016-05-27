@@ -19,14 +19,14 @@ import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 
 /**
@@ -36,8 +36,9 @@ import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ClassBuilderImpl extends AbstractClassCreator {
+public class ClassBuilderImpl extends ClassCreator {
 
+	private int clinitNum = 0;
 	
 	public ClassBuilderImpl(int version, int access, String name,
 			IClass superCls, IClass[] itfs) {
@@ -60,7 +61,7 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @param type      the field type
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, IClass type) {
+    public FieldBuilder createField(String name, int modifiers, IClass type) {
         return createField(name, modifiers, type, null);
     }
     
@@ -80,9 +81,9 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      *              through bytecode instructions in constructors or methods. 
      * @return
      */
-    public IFieldBuilder createField(String name, int modifiers, IClass type, Object val) {
-        IFieldBuilder fc = new FieldBuildImpl(name, modifiers, type, val);
-        fieldCreators.add(fc);
+    public FieldBuilder createField(String name, int modifiers, IClass type, Object val) {
+        FieldBuilder fc = new FieldBuildImpl(name, modifiers, type, val);
+        fieldBuilders.add(fc);
         return fc;
     }
 
@@ -96,10 +97,10 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @param body
      * @return
      */
-	public IMethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
-		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.INIT, argTypes, argNames,
+	public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
+		MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
                 null, exceptions, access, body);
-        methodCreators.add(creator);
+        methodBuilders.add(creator);
         haveInitMethod = true;
         return creator;
 	}
@@ -116,11 +117,11 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 	 * @param body
 	 * @return
 	 */
-	public IMethodBuilder createMethodForDummy(int access, String name, IClass[] argTypes, String[] argNames,
-			IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
-        IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
+	public MethodBuilder createMethodForDummy(int access, String name, IClass[] argTypes, String[] argNames,
+											  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
+        MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-        methodCreators.add(creator);
+        methodBuilders.add(creator);
         return creator;
 	}
 
@@ -136,14 +137,14 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @param body            method body that is method logic implementation
      * @return
      */
-	public IMethodBuilder createMethod(int access, String name, IClass[] argTypes, String[] argNames,
-			IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
+	public MethodBuilder createMethod(int access, String name, IClass[] argTypes, String[] argNames,
+									  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
 		if((access & Opcodes.ACC_STATIC) != 0){
     		access -= Opcodes.ACC_STATIC;
     	}
-		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
+		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-		methodCreators.add(creator);
+		methodBuilders.add(creator);
 		return creator;
 	}
 
@@ -159,14 +160,14 @@ public class ClassBuilderImpl extends AbstractClassCreator {
      * @param body            method body that is method logic implementation
      * @return
      */
-	public IMethodBuilder createStaticMethod(int access, String name, IClass[] argTypes, String[] argNames,
-			IClass returnClass, IClass[] exceptions, KernelStaticMethodBody body) {
+	public MethodBuilder createStaticMethod(int access, String name, IClass[] argTypes, String[] argNames,
+											IClass returnClass, IClass[] exceptions, KernelStaticMethodBody body) {
 		if((access & Opcodes.ACC_STATIC) == 0){
     		access += Opcodes.ACC_STATIC;
     	}
-		IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(name, argTypes, argNames,
+		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-        methodCreators.add(creator);
+        methodBuilders.add(creator);
         return creator;
 	}
 
@@ -176,12 +177,15 @@ public class ClassBuilderImpl extends AbstractClassCreator {
 	 * @param block
 	 * @return
 	 */
-	public IMethodBuilder createStaticBlock(KernelStaticBlockBody block) {
-    	checkStaticBlock();
-    	existedStaticBlock = true;
-    	IMethodBuilder creator = MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null,
-                Opcodes.ACC_STATIC, block);
-    	methodCreators.add(0, creator);
+	public MethodBuilder createStaticBlock(KernelStaticBlockBody block) {
+		DefaultMethodBuilder creator;
+		if(clinitNum > 0) {
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), block);
+		} else {
+			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
+					Opcodes.ACC_STATIC, block);
+		}
+		methodBuilders.add(clinitNum++, creator);
     	return creator;
 	}
 

@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.method.clinit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -28,6 +25,9 @@ import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.block.method.IEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -45,7 +45,7 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 
 	@Override
 	protected void init() {
-		enumArgumentsList = new ArrayList<EnumConstructorInfo>(3);
+		enumArgumentsList = new ArrayList<>(3);
 		return;
 	}
 	
@@ -78,30 +78,26 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 		constructEnumConsts();
 		
 		if(getMethodDeclaringClass().getEnumNum() != enumArgumentsList.size()){
-			throw new ASMSupportException("exist unassign enum constant!");
+			throw new ASMSupportException("exist unassigned enum constant!");
 		}
 		
 		KernelParam[] values = new KernelParam[getMethodDeclaringClass().getEnumNum()];
 		GlobalVariable enumConstant;
 		int i = 0;
-		for(EnumConstructorInfo enumArgu : enumArgumentsList){
-			enumConstant = val(getMethodDeclaringClass()).field(enumArgu.name);
-			
+		for(EnumConstructorInfo enumArg : enumArgumentsList){
+			enumConstant = val(getMethodDeclaringClass()).field(enumArg.name);
 			values[i] = enumConstant;
-			String enumName = enumArgu.name;
-			KernelParam[] otherArgus = enumArgu.argus;
+			String enumName = enumArg.name;
+			KernelParam[] otherArgus = enumArg.argus;
 	        KernelParam[] enumArgus = new KernelParam[otherArgus.length + 2];
 	        enumArgus[0] = Value.value(getClassHolder(), enumName);
 	        enumArgus[1] = Value.value(getClassHolder(), i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
-	        
 	        MethodInvoker mi = new_(getMethodDeclaringClass(), enumArgus);
 	        assign(enumConstant, mi);
 	        i++;
 		}
-		
 		GlobalVariable gv = val(getMethodDeclaringClass()).field("ENUM$VALUES");
-		
 		KernelArrayValue av = newarray(getClassHolder().getArrayType(getMethodDeclaringClass(), 1), values);
 		assign(gv, av);
 	}

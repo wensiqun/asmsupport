@@ -26,7 +26,7 @@ import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 
 public abstract class MutableClass extends BaseClass {
@@ -83,7 +83,7 @@ public abstract class MutableClass extends BaseClass {
      * @param clinit
      */
     public void addClinitMethod(AMethodMeta clinit) {
-    	if(!ASMSupportConstant.CLINIT.equals(clinit.getName())) {
+    	if(!ASConstants.CLINIT.equals(clinit.getName())) {
 		    throw new ASMSupportException("The static block name must be <clinit> in byte code layer.");
 	    }
     	if(clinitMethod == null) {
@@ -102,7 +102,7 @@ public abstract class MutableClass extends BaseClass {
      * @param constructor
      */
     public void addConstructor(AMethodMeta constructor) {
-    	if(!ASMSupportConstant.INIT.equals(constructor.getName())) {
+    	if(!ASConstants.INIT.equals(constructor.getName())) {
     		throw new ASMSupportException("The constructor name must be <init> in byte code layer.");
     	}
     	AMethodMeta previours = constructors.putIfAbsent(getMethodCacheKey(constructor), constructor);
@@ -131,7 +131,7 @@ public abstract class MutableClass extends BaseClass {
     
     @Override
 	public AMethodMeta getDeclaredConstructor(IClass... parameterTypes) {
-    	return declaredMethods.get(getMethodCacheKey(ASMSupportConstant.CLINIT, parameterTypes));
+    	return declaredMethods.get(getMethodCacheKey(ASConstants.CLINIT, parameterTypes));
 	}
 
 	@Override

@@ -15,16 +15,16 @@
 package cn.wensiqun.asmsupport.utils.asm;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 public class ClassAdapter extends ClassVisitor {
 
 	public ClassAdapter(ClassVisitor cv) {
-		super(ASMSupportConstant.ASM_VERSION, cv);
+		super(ASConstants.ASM_VERSION, cv);
 	}
 
 	public ClassAdapter() {
-		super(ASMSupportConstant.ASM_VERSION);
+		super(ASConstants.ASM_VERSION);
 	}
 
 }

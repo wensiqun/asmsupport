@@ -15,16 +15,16 @@
 package cn.wensiqun.asmsupport.utils.asm;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 public class MethodAdapter extends MethodVisitor {
 
 	public MethodAdapter(MethodVisitor mv) {
-		super(ASMSupportConstant.ASM_VERSION, mv);
+		super(ASConstants.ASM_VERSION, mv);
 	}
 
 	public MethodAdapter() {
-		super(ASMSupportConstant.ASM_VERSION);
+		super(ASConstants.ASM_VERSION);
 	}
 
 	

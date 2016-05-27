@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         AMethodMeta meta = method.getMeta();
         if (!ModifierUtils.isStatic(meta.getModifiers())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
-                    String.class, Type.class, Type.class }, getExecutor(), ASMSupportConstant.THIS, meta.getOwner().getType(),
+                    String.class, Type.class, Type.class }, getExecutor(), ASConstants.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());
         }
 

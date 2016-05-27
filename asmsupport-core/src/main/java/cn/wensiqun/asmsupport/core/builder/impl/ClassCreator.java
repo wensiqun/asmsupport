@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.IMethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
@@ -38,15 +38,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractClassCreator extends AbstractClassBuilder {
+public abstract class ClassCreator extends AbstractClassBuilder {
 	
-    private static final Log LOG = LogFactory.getLog(AbstractClassCreator.class);
+    private static final Log LOG = LogFactory.getLog(ClassCreator.class);
 
     protected SemiClass sc;
 
     protected boolean haveInitMethod;
 
-    public AbstractClassCreator(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
+    public ClassCreator(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
@@ -84,12 +84,12 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
         checkOrCreateDefaultConstructor();
         
         // create field
-        for (IFieldBuilder ifc : fieldCreators) {
+        for (FieldBuilder ifc : fieldBuilders) {
             ifc.create(this);
         }
 
         // create method
-        for (IMethodBuilder imc : methodCreators) {
+        for (MethodBuilder imc : methodBuilders) {
             imc.create(this);
         }
 	}
@@ -97,15 +97,15 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
 	@Override
 	public void prepare() {
-        checkOverriedAndCreateBridgeMethod();
+        rebuildOverrideBridge();
         
         checkUnImplementMethod();
 
-        for (IFieldBuilder ifc : fieldCreators) {
+        for (FieldBuilder ifc : fieldBuilders) {
             ifc.prepare();
         }
 
-        for (IMethodBuilder imc : methodCreators) {
+        for (MethodBuilder imc : methodBuilders) {
             imc.prepare();
         }
 	}
@@ -113,11 +113,11 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 
 	@Override
 	public byte[] execute() {
-        for (IFieldBuilder ifc : fieldCreators) {
+        for (FieldBuilder ifc : fieldBuilders) {
             ifc.execute();
         }
 
-        for (IMethodBuilder imc : methodCreators) {
+        for (MethodBuilder imc : methodBuilders) {
             imc.execute();
         }
         return cw.toByteArray();
@@ -127,8 +127,8 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
 	public MutableClass getCurrentClass() {
 		return sc;
 	}
-    
-    
+
+
     private void checkOrCreateDefaultConstructor(){
         if (!haveInitMethod) {
             createDefaultConstructor();
@@ -137,13 +137,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     protected abstract void createDefaultConstructor();
 
     protected void beforeCreate(){}
-    
-    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkUnImplementMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-    
-    /**
-     * 
-     */
     private void checkUnImplementMethod() {
     	if(sc.isAbstract() || sc.isInterface()){
     		return;
@@ -206,13 +200,7 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	}
     	
     }
-    
-    /**
-     * 
-     * @param methods
-     * @param method
-     * @return
-     */
+
     private boolean containMethod(List<AMethodMeta> methods, AMethodMeta method){
     	if(CollectionUtils.isNotEmpty(methods)){
     		for(AMethodMeta m : methods){
@@ -263,30 +251,22 @@ public abstract class AbstractClassCreator extends AbstractClassBuilder {
     	}
     }
 
-    
-   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>End checkUnImplementMethod>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    
-    
-
-    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Start checkOverriedAndCreateBridgeMethod<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     /**
      * Check if the created method is override, than check the return type, 
      * throw exception or make it to bridge if return type if different to 
      * parent
      * 
      */
-    private void checkOverriedAndCreateBridgeMethod(){
+    private void rebuildOverrideBridge(){
     	for(AMethodMeta validateMethod : sc.getDeclaredMethods()){
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
-    		List<MethodBuilderImpl> creatorList = obmc.getList();
-    		for(MethodBuilderImpl mc : creatorList){
+    		List<DefaultMethodBuilder> creatorList = obmc.getList();
+    		for(DefaultMethodBuilder mc : creatorList){
     			mc.create(this);
     		}
-    		this.methodCreators.addAll(creatorList);
+    		this.methodBuilders.addAll(creatorList);
     	}
     }
-    
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>End checkOverriedAndCreateBridgeMethod>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public static class SemiClass extends MutableClass {
 

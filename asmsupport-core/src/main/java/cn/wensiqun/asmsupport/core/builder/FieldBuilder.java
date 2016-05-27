@@ -21,13 +21,13 @@ import cn.wensiqun.asmsupport.core.Executable;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface IFieldBuilder extends Executable {
+public interface FieldBuilder extends Executable {
     
     /**
      * Create a field.
      * 
      * @param cv
      */
-    void create(IClassBuilder cv);
+    void create(ClassBuilder cv);
 	
 }

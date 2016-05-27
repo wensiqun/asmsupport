@@ -29,7 +29,7 @@ import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface IClassBuilder {
+public interface ClassBuilder {
     
     /**
      * First phase, asmsupport will create all of meta information such 

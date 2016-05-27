@@ -19,16 +19,17 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.IFieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.ASMSupportConstant;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
 
-public class InterfaceBuilderImpl extends AbstractClassCreator {
+public class InterfaceBuilderImpl extends ClassCreator {
 
+	private int clinitNum = 0;
 
 	public InterfaceBuilderImpl(int version, String name, IClass[] itfs) {
 		this(version, name, itfs, CachedThreadLocalClassLoader.getInstance());
@@ -70,8 +71,8 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
 		for(int i=0; i<argNames.length; i++){
 			argNames[i] = "arg" + i;
 		}
-        methodCreators.add(
-        		MethodBuilderImpl.methodCreatorForAdd(name, argClasses, argNames,
+        methodBuilders.add(
+        		DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
                 returnClass, exceptions, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + (isVarargs ? Opcodes.ACC_VARARGS : 0), null));
     }
 	
@@ -90,7 +91,7 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
 	 * @param type
 	 * @return
 	 */
-	public IFieldBuilder createField(String name, IClass type) {
+	public FieldBuilder createField(String name, IClass type) {
 	    return createField(name, type, null);
 	}
     
@@ -116,9 +117,9 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
      *              ignored for non static fields, which must be initialized 
      *              through bytecode instructions in constructors or methods.
 	 */
-    public IFieldBuilder createField(String name, IClass type, Object value){
+    public FieldBuilder createField(String name, IClass type, Object value){
     	FieldBuildImpl fc = new FieldBuildImpl(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, type, value);
-        fieldCreators.add(fc);
+        fieldBuilders.add(fc);
         return fc;
     }
 	
@@ -129,14 +130,18 @@ public class InterfaceBuilderImpl extends AbstractClassCreator {
      *     this is different write java code. we can write any java cod
      * </p>
      * 
-     * @param mb Method Body
+     * @param body Method Body
      */
-    public InterfaceBuilderImpl createStaticBlock(KernelStaticBlockBody clinitb) {
-    	checkStaticBlock();
-    	existedStaticBlock = true;
-        methodCreators.add(0,  MethodBuilderImpl.methodCreatorForAdd(ASMSupportConstant.CLINIT, null, null, null, null,
-                Opcodes.ACC_STATIC, clinitb));
-        return this;
+    public InterfaceBuilderImpl createStaticBlock(KernelStaticBlockBody body) {
+		DefaultMethodBuilder creator;
+		if(clinitNum > 0) {
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), body);
+		} else {
+			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
+					Opcodes.ACC_STATIC, body);
+		}
+		methodBuilders.add(clinitNum++, creator);
+		return this;
     }
 	
 	@Override
