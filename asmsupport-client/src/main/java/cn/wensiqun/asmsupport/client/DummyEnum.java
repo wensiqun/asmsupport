@@ -375,7 +375,7 @@ public class DummyEnum extends AbstractDummy {
         }
         
         for(DummyMethod dummy : methodDummies) {
-            eci.createMethodForDummy(dummy.getName(), dummy.getArgTypes(),
+            eci.createMethod(dummy.getName(), dummy.getArgTypes(),
                     dummy.getArgNames(), 
                     dummy.getReturnType(), 
                     dummy.getThrows(), 

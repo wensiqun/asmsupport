@@ -19,7 +19,6 @@ import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
@@ -133,26 +132,6 @@ public class ClassModifier extends AbstractClassBuilder {
         return creator;
     }
 	
-	/**
-     * Crate method for dummy call, remove static check that different to {@link #createMethod} method
-     * 
-     * @param access
-     * @param name
-     * @param argTypes
-     * @param argNames
-     * @param returnClass
-     * @param exceptions
-     * @param body
-     * @return
-     */
-    public MethodBuilder createMethodForDummy(int access, String name, IClass[] argTypes, String[] argNames,
-											  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
-        MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
-                returnClass, exceptions, access, body);
-        methodBuilders.add(creator);
-        return creator;
-    }
-	
     /**
      * 
      * @param name
@@ -164,35 +143,13 @@ public class ClassModifier extends AbstractClassBuilder {
      * @param mb
      * @return
      */
-    public final void createMethod(String name, IClass[] argClasses,
+    public final MethodBuilder createMethod(String name, IClass[] argClasses,
             String[] argNames, IClass returnClass, IClass[] exceptions,
             int access, KernelMethodBody mb) {
-    	if((access & Opcodes.ACC_STATIC) != 0){
-    		access -= Opcodes.ACC_STATIC;
-    	}
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
-                returnClass, exceptions, access, mb));
-    }
-    
-    /**
-     * 
-     * @param name
-     * @param argClasses
-     * @param argNames
-     * @param returnClass
-     * @param exceptions
-     * @param access
-     * @param mb
-     * @return
-     */
-    public void createStaticMethod(String name, IClass[] argClasses,
-            String[] argNames, IClass returnClass, IClass[] exceptions,
-            int access, KernelStaticMethodBody mb) {
-    	if((access & Opcodes.ACC_STATIC) == 0){
-    		access += Opcodes.ACC_STATIC;
-    	}
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
-                returnClass, exceptions, access, mb));
+		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
+				returnClass, exceptions, access, mb);
+        methodBuilders.add(creator);
+		return creator;
     }
 
 	/**

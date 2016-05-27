@@ -16,7 +16,6 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.block.method.common.KernelStaticMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelEnumConstructorBody;
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -139,49 +138,10 @@ public class EnumBuilderImpl extends ClassCreator {
      * @param exceptions
      * @param access
      * @param mb
-     */
-    public final void createMethodForDummy(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
-            IClass[] exceptions, int access, KernelMethodBody mb) {
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
-                access, mb));
-    }
-
-    /**
-     * 
-     * @param name
-     * @param argClasses
-     * @param argNames
-     * @param returnClass
-     * @param exceptions
-     * @param access
-     * @param mb
      * @return
      */
     public final void createMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
             IClass[] exceptions, int access, KernelMethodBody mb) {
-        if ((access & Opcodes.ACC_STATIC) != 0) {
-            access -= Opcodes.ACC_STATIC;
-        }
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
-                access, mb));
-    }
-
-    /**
-     * 
-     * @param name
-     * @param argClasses
-     * @param argNames
-     * @param returnClass
-     * @param exceptions
-     * @param access
-     * @param mb
-     * @return
-     */
-    public void createStaticMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
-            IClass[] exceptions, int access, KernelStaticMethodBody mb) {
-        if ((access & Opcodes.ACC_STATIC) == 0) {
-            access += Opcodes.ACC_STATIC;
-        }
         methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
@@ -262,7 +222,7 @@ public class EnumBuilderImpl extends ClassCreator {
         final IClass enumArrayType = classLoader.getArrayType(sc, 1);
 
         // create "public static Enum[] values()" method
-        createStaticMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelStaticMethodBody() {
+        createMethod("values", null, null, enumArrayType, null, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelMethodBody() {
             @Override
             public void body(LocalVariable... argus) {
                 IClass owner = getMethodDeclaringClass();
@@ -271,7 +231,8 @@ public class EnumBuilderImpl extends ClassCreator {
 
                 // get length operator
                 KernelArrayLength al = arrayLength(values);
-                LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));//arrayvar2dim("", enumArrayType, true, al);
+                //arrayvar2dim("", enumArrayType, true, al);
+                LocalVariable copy = var(enumArrayType, makeArray(enumArrayType, al));
 
                 // get length operator for tmpValues;
                 KernelParam copyLen = arrayLength(copy);
@@ -291,8 +252,8 @@ public class EnumBuilderImpl extends ClassCreator {
         });
 
         // create "public static Enum valueOf(java.lang.String)" method
-        this.createStaticMethod("valueOf", new IClass[] { classLoader.getType(String.class) }, new String[] { "name" }, sc, null,
-                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelStaticMethodBody() {
+        this.createMethod("valueOf", new IClass[] { classLoader.getType(String.class) }, new String[] { "name" }, sc, null,
+                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, new KernelMethodBody() {
 
                     @Override
                     public void body(LocalVariable... argus) {

@@ -220,8 +220,9 @@ public class DummyModifiedClass extends AbstractDummy {
         }
         
         for(DummyMethod dummy : methodDummies) {
-            cmi.createMethodForDummy(dummy.getModifiers(), dummy.getName(), dummy.getArgTypes(),
-                    dummy.getArgNames(), dummy.getReturnType(), dummy.getThrows(), dummy.getMethodBody().getDelegate());
+            cmi.createMethod(dummy.getName(), dummy.getArgTypes(), dummy.getArgNames(),
+                    dummy.getReturnType(), dummy.getThrows(), dummy.getModifiers(),
+                    dummy.getMethodBody().getDelegate());
         }
         
         if(staticBlock != null) {
