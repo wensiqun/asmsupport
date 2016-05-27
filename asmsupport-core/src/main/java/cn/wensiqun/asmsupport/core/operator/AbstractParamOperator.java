@@ -5,10 +5,10 @@ import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 public abstract class AbstractParamOperator extends AbstractOperator implements KernelParam{
 
@@ -23,7 +23,7 @@ public abstract class AbstractParamOperator extends AbstractOperator implements 
         }
 		try {
 			Field field = getResultType().getField(name);
-	        if(ModifierUtils.isStatic(field.getModifiers())){
+	        if(Modifiers.isStatic(field.getModifiers())){
 	            return new StaticGlobalVariable(field.getDeclaringClass(), field);
 	        } else {
 	            return new NonStaticGlobalVariable(this, field);

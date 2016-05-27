@@ -17,11 +17,11 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
@@ -41,7 +41,7 @@ public abstract class AbstractVariable implements IVariable {
         }
 		try {
 			Field field = getMeta().getType().getField(name);
-	        if(ModifierUtils.isStatic(field.getModifiers())){
+	        if(Modifiers.isStatic(field.getModifiers())){
 	            return new StaticGlobalVariable(field.getDeclaringClass(), field);
 	        } else {
 	            return new NonStaticGlobalVariable(this, field);

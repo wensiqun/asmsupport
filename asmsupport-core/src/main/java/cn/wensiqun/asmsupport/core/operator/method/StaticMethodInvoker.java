@@ -18,9 +18,9 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 /**
  * Represent a static method call
@@ -43,7 +43,7 @@ public class StaticMethodInvoker extends MethodInvoker {
     @Override
 	protected void initAdditionalProperties() {
 		super.initAdditionalProperties();
-		if(!ModifierUtils.isStatic(mtdEntity.getModifiers())){
+		if(!Modifiers.isStatic(mtdEntity.getModifiers())){
 			throw new IllegalArgumentException("\"" + mtdEntity.toString() + "\" is not a static method ");
 		}
 	}

@@ -28,7 +28,6 @@ import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -36,6 +35,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 /**
@@ -91,7 +91,7 @@ public class AMethod {
         CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
         this.insnHelper = new CommonInstructionHelper(this);
 
-        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
+        if (!Modifiers.isAbstract(meta.getModifiers())) {
             if (methodBody != null) {
                 this.methodBody = methodBody;
                 this.methodBody.setScope(new Scope(this.locals, null));
@@ -128,7 +128,7 @@ public class AMethod {
      */
     private void createMethodVisitor() {
 
-        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
+        if (!Modifiers.isAbstract(meta.getModifiers())) {
             for (Executable exe : getMethodBody().getQueue()) {
                 if (exe instanceof AbstractKernelBlock) {
                     getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
@@ -154,7 +154,7 @@ public class AMethod {
      */
     public void startup() {
         createMethodVisitor();
-        if (!ModifierUtils.isAbstract(meta.getModifiers())) {
+        if (!Modifiers.isAbstract(meta.getModifiers())) {
             this.methodBody.execute();
             this.methodBody.endMethodBody();
         }

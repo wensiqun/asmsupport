@@ -70,7 +70,7 @@ public interface ClassBuilder {
 
 	
     /**
-     * get class visitor
+     * Get {@ClassVisitor}
      * 
      * @return
      */

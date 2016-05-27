@@ -21,10 +21,10 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.block.method.IEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +62,11 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 
 	@Override
 	public void constructEnumConst(String name, KernelParam... argus) {
-        if(!ModifierUtils.isEnum(getMethodDeclaringClass().getModifiers())){
+        if(!Modifiers.isEnum(getMethodDeclaringClass().getModifiers())){
         	throw new IllegalArgumentException("cannot create an enum constant cause by current class is not enum type");
         }
         IFieldVar constant = val(getMethodDeclaringClass()).field(name);
-        if(!ModifierUtils.isEnum(constant.getModifiers())){
+        if(!Modifiers.isEnum(constant.getModifiers())){
         	throw new IllegalArgumentException("cannot new an enum instant assign to non-enum type variable");
         }
         enumArgumentsList.add(new EnumConstructorInfo(name, argus));

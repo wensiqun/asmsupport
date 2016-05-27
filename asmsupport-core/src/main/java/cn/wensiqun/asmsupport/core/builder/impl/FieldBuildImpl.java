@@ -16,11 +16,11 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 
 import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 /**
  * 
@@ -80,7 +80,7 @@ public class FieldBuildImpl implements FieldBuilder {
 
     @Override
     public void execute() {
-        if(value != null && !ModifierUtils.isStatic(modifiers)) {
+        if(value != null && !Modifiers.isStatic(modifiers)) {
             throw new ASMSupportException("The initial value '" + value + "' of field '" + name + 
                     "' is invaild, cause by the field is not static, and the initial value only support static field.");
         }

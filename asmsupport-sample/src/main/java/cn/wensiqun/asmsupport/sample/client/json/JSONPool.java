@@ -6,7 +6,6 @@ import cn.wensiqun.asmsupport.client.block.IF;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
 import cn.wensiqun.asmsupport.sample.client.json.generator.IValueGeneratorChain;
 import cn.wensiqun.asmsupport.sample.client.json.generator.IValueGeneratorChain.GeneratorContext;
@@ -14,6 +13,7 @@ import cn.wensiqun.asmsupport.sample.client.json.generator.impl.*;
 import cn.wensiqun.asmsupport.sample.client.json.parser.*;
 import cn.wensiqun.asmsupport.sample.client.json.utils.ReflectionUtils;
 import cn.wensiqun.asmsupport.sample.client.json.utils.StringEncoder;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -149,7 +149,7 @@ public class JSONPool {
                     final String name = f.getName();
                     final Class<?> fieldType = f.getType();
                     
-                    if(ModifierUtils.isStatic(f.getModifiers())) {
+                    if(Modifiers.isStatic(f.getModifiers())) {
                        System.out.println("Warning : field '" + name + "' is static, pass it.");
                        continue;
                     }

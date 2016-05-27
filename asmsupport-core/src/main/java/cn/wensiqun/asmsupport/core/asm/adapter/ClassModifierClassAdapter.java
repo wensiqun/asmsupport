@@ -16,12 +16,12 @@ package cn.wensiqun.asmsupport.core.asm.adapter;
 
 import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
@@ -97,15 +97,15 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 		if (!isModified(name, desc)) {
 			methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 		} else {
-			if(ModifierUtils.isFinal(access)){
+			if(Modifiers.isFinal(access)){
 				throw new InternalError("method [" + name + "] is final cannot modifier.");
 			}
 			
 			// set method to private
-			if (!ModifierUtils.isPrivate(access)) {
-				if (ModifierUtils.isProtected(access)) {
+			if (!Modifiers.isPrivate(access)) {
+				if (Modifiers.isProtected(access)) {
 					access -= Opcodes.ACC_PROTECTED;
-				} else if (ModifierUtils.isPublic(access)) {
+				} else if (Modifiers.isPublic(access)) {
 					access -= Opcodes.ACC_PUBLIC;
 				}
 				access += Opcodes.ACC_PRIVATE;

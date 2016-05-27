@@ -18,10 +18,10 @@ import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 
 /**
@@ -88,7 +88,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
 
 	@Override
 	public void prepare() {
-		if(!ModifierUtils.isAbstract(access)){
+		if(!Modifiers.isAbstract(access)){
 			method.getMethodBody().prepare();
 		}
 	}
@@ -110,7 +110,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
 		method = new AMethod(meta, classBuilder.getClassVisitor(), classBuilder.getClassLoader(), methodBody, buildMode);
 		if(method.getMeta().getName().equals(ASConstants.INIT)){
 			owner.addConstructor(meta);
-		}else if(ModifierUtils.isBridge(method.getMeta().getModifiers())){
+		}else if(Modifiers.isBridge(method.getMeta().getModifiers())){
 			owner.getBridgeMethod().add(meta);
 		}else{
 			owner.addDeclaredMethod(meta);

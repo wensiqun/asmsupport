@@ -15,7 +15,6 @@
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
 import cn.wensiqun.asmsupport.core.builder.impl.ClassCreator.SemiClass;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -29,6 +28,7 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
@@ -116,7 +116,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				int argumentLength = ArrayUtils.getLength(argumentTypes);
 				
 				//check arity of method
-				if(ModifierUtils.isVarargs(value.getModifiers())){
+				if(Modifiers.isVarargs(value.getModifiers())){
 					if(argumentLength < entityLength - 1){
 						return;
 					}
@@ -289,7 +289,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			
 			private void filter(IClass key, AMethodMeta entity){
 				
-				if(ModifierUtils.isVarargs(entity.getModifiers())){
+				if(Modifiers.isVarargs(entity.getModifiers())){
 					return;
 				}
 				
@@ -324,7 +324,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 			private void filter(IClass key, AMethodMeta entity){
-				if(ModifierUtils.isVarargs(entity.getModifiers())){
+				if(Modifiers.isVarargs(entity.getModifiers())){
 					return;
 				}
 				IClass[] potentialMethodArgs = entity.getParameterTypes();
@@ -354,7 +354,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}
 			
 			private void filter(IClass key, AMethodMeta entity){
-				if(!ModifierUtils.isVarargs(entity.getModifiers())){
+				if(!Modifiers.isVarargs(entity.getModifiers())){
 					return;
 				}
 				
@@ -420,7 +420,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
             //in order to third phase choose.
             Set<AMethodMeta> newMost = new HashSet<>();
             for(AMethodMeta m : most){
-                if(!ModifierUtils.isVarargs(m.getModifiers())) {
+                if(!Modifiers.isVarargs(m.getModifiers())) {
                     newMost.add(m);
                 }
             }
@@ -441,7 +441,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	private AMethodMeta[] mostSpecificMethod(AMethodMeta method1, AMethodMeta method2){
 		
 		//fixed-arity method compare;
-		if(!ModifierUtils.isVarargs(method1.getModifiers()) && !ModifierUtils.isVarargs(method2.getModifiers())){
+		if(!Modifiers.isVarargs(method1.getModifiers()) && !Modifiers.isVarargs(method2.getModifiers())){
 			if(mostSpecificFixedArityMethod(method1, method2)){
 				return new AMethodMeta[]{method1};
 			}else if(mostSpecificFixedArityMethod(method2, method1)){
@@ -449,7 +449,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 			}else{
 				return new AMethodMeta[]{method1, method2};
 			}
-		}else if(ModifierUtils.isVarargs(method1.getModifiers()) && ModifierUtils.isVarargs(method2.getModifiers())){
+		}else if(Modifiers.isVarargs(method1.getModifiers()) && Modifiers.isVarargs(method2.getModifiers())){
 			if(mostSpecificVarargMethod(method1, method2)){
 				return new AMethodMeta[]{method1};
 			}else if(mostSpecificVarargMethod(method2, method1)){

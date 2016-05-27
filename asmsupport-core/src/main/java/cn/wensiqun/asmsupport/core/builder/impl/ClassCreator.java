@@ -22,7 +22,6 @@ import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreat
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -32,6 +31,7 @@ import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -225,7 +225,7 @@ public abstract class ClassCreator extends AbstractClassBuilder {
     	}
         
         for(AMethodMeta method : clazz.getDeclaredMethods()){
-    		if(ModifierUtils.isAbstract(method.getModifiers())){
+    		if(Modifiers.isAbstract(method.getModifiers())){
     			if(!containMethod(abstractMethods, method)){
     				abstractMethods.add(method);
     			}
@@ -279,7 +279,7 @@ public abstract class ClassCreator extends AbstractClassBuilder {
             this.superClass = superCls;
             this.interfaces = interfaces;
 
-            if(!ModifierUtils.isInterface(mod)){
+            if(!Modifiers.isInterface(mod)){
                 this.mod += Opcodes.ACC_SUPER;
             }
         }

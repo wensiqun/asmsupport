@@ -64,7 +64,6 @@ import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
@@ -74,6 +73,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
@@ -584,7 +584,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public MethodInvoker call(String methodName, KernelParam... args) {
-    	if(ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
+    	if(Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
             return call(getMethodDeclaringClass(), methodName, args);
     	} else {
             return call(this_(), methodName, args);
@@ -713,7 +713,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final ThisVariable this_() {
-        if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
+        if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
         return getMethod().getThisVariable();
@@ -726,7 +726,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final SuperVariable super_() {
-        if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
+        if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"super\" keyword in static block");
         }
         return getMethod().getSuperVariable();
@@ -742,7 +742,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
                 originalMethodName = ASConstants.INIT_PROXY;
             }
             originalMethodName += ASConstants.METHOD_PROXY_SUFFIX;
-            if (ModifierUtils.isStatic(getMethod().getMeta().getModifiers())) {
+            if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
                 return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
             } else {
                 return call(this_(), originalMethodName, getMethodArguments());

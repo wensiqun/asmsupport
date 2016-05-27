@@ -15,27 +15,17 @@
 /**
  * 
  */
-package cn.wensiqun.asmsupport.standard.utils.reflect;
-
-import java.lang.reflect.Modifier;
+package cn.wensiqun.asmsupport.utils;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 
-
-
-
+import java.lang.reflect.Modifier;
 
 /**
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ModifierUtils extends Modifier {
-    
-    public static boolean isDefault(int mod){
-        return !Modifier.isPrivate(mod) && 
-           !Modifier.isProtected(mod) && 
-           !Modifier.isProtected(mod);
-    }
+public class Modifiers extends Modifier {
     
     public static boolean isEnum(int mod){
         return (mod & Opcodes.ACC_ENUM) != 0;	

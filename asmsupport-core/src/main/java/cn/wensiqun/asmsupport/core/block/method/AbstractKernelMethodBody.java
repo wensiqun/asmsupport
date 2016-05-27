@@ -27,12 +27,12 @@ import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeComponent;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     protected void init() {
         AMethod method = getMethod();
         AMethodMeta meta = method.getMeta();
-        if (!ModifierUtils.isStatic(meta.getModifiers())) {
+        if (!Modifiers.isStatic(meta.getModifiers())) {
             OperatorFactory.newOperator(LocalVariableCreator.class, new Class<?>[] { KernelProgramBlock.class,
                     String.class, Type.class, Type.class }, getExecutor(), ASConstants.THIS, meta.getOwner().getType(),
                     method.getMeta().getOwner().getType());

@@ -26,13 +26,13 @@ import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
 import cn.wensiqun.asmsupport.core.utils.jls15_12_2.MethodChooser;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -114,7 +114,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             }
         }
         
-        if(ModifierUtils.isVarargs(mtdEntity.getModifiers())){
+        if(Modifiers.isVarargs(mtdEntity.getModifiers())){
             
         	IClass[] foundMethodArgTypes = mtdEntity.getParameterTypes();
         	

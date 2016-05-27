@@ -24,11 +24,11 @@ import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
@@ -111,7 +111,7 @@ public class EnumBuilderImpl extends ClassCreator {
     public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
         FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
         fieldBuilders.add(fc);
-        existField = !ModifierUtils.isEnum(modifiers);
+        existField = !Modifiers.isEnum(modifiers);
         return fc;
     }
 

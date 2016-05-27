@@ -17,17 +17,17 @@
  */
 package cn.wensiqun.asmsupport.core.definition.value;
 
-import java.lang.reflect.Modifier;
-
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+import cn.wensiqun.asmsupport.utils.Modifiers;
+
+import java.lang.reflect.Modifier;
 
 /**
  * Represent a basic value(Can store in constant pool.), such as {@code String}, {@code Class} and all of primitive type,
@@ -607,7 +607,7 @@ public class Value implements IValue {
         if(value != null && value instanceof IClass) {
 			try {
 				Field field = ((IClass)value).getField(name);
-	            if(ModifierUtils.isStatic(field.getModifiers())) {
+	            if(Modifiers.isStatic(field.getModifiers())) {
 	                return new StaticGlobalVariable((IClass)value, field);
 	            } else {
 	                throw new ASMSupportException("No such field " + name);

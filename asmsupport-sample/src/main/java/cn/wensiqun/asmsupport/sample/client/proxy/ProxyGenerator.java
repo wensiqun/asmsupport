@@ -1,22 +1,22 @@
 package cn.wensiqun.asmsupport.sample.client.proxy;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import cn.wensiqun.asmsupport.client.DummyClass;
 import cn.wensiqun.asmsupport.client.block.ConstructorBody;
 import cn.wensiqun.asmsupport.client.block.IF;
 import cn.wensiqun.asmsupport.client.block.MethodBody;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.var.LocVar;
-import cn.wensiqun.asmsupport.core.utils.reflect.ModifierUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.SampleConstant;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ProxyGenerator {
 
@@ -157,8 +157,8 @@ public class ProxyGenerator {
 	
 	private void doCommonOverride(DummyClass proxy, final Method method) {
 		int modifier = method.getModifiers();
-		if(ModifierUtils.isNative(modifier) ||
-		   ModifierUtils.isFinal(modifier)) {
+		if(Modifiers.isNative(modifier) ||
+		   Modifiers.isFinal(modifier)) {
 			return;
 		}
 		
