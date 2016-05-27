@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
+import cn.wensiqun.asmsupport.core.builder.SemiClass;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
@@ -23,19 +24,15 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
-import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ClassCreator extends AbstractClassBuilder {
@@ -61,7 +58,7 @@ public abstract class ClassCreator extends AbstractClassBuilder {
     
 
 	@Override
-	public void create() {
+	public final void create() {
         IClass[] interfaces = sc.getInterfaces();
         String[] interfaceStrings = new String[interfaces.length];
         for (int i = 0; i < interfaces.length; i++) {
@@ -84,40 +81,41 @@ public abstract class ClassCreator extends AbstractClassBuilder {
         checkOrCreateDefaultConstructor();
         
         // create field
-        for (FieldBuilder ifc : fieldBuilders) {
+        for (FieldBuilder ifc : fields) {
             ifc.create(this);
         }
 
         // create method
-        for (MethodBuilder imc : methodBuilders) {
+        for (MethodBuilder imc : methods) {
             imc.create(this);
         }
 	}
 
 
 	@Override
-	public void prepare() {
+	public final void prepare() {
+
         rebuildOverrideBridge();
         
         checkUnImplementMethod();
 
-        for (FieldBuilder ifc : fieldBuilders) {
+        for (FieldBuilder ifc : fields) {
             ifc.prepare();
         }
 
-        for (MethodBuilder imc : methodBuilders) {
+        for (MethodBuilder imc : methods) {
             imc.prepare();
         }
 	}
 
 
 	@Override
-	public byte[] execute() {
-        for (FieldBuilder ifc : fieldBuilders) {
+	public final byte[] execute() {
+        for (FieldBuilder ifc : fields) {
             ifc.execute();
         }
 
-        for (MethodBuilder imc : methodBuilders) {
+        for (MethodBuilder imc : methods) {
             imc.execute();
         }
         return cw.toByteArray();
@@ -127,7 +125,6 @@ public abstract class ClassCreator extends AbstractClassBuilder {
 	public MutableClass getCurrentClass() {
 		return sc;
 	}
-
 
     private void checkOrCreateDefaultConstructor(){
         if (!haveInitMethod) {
@@ -264,91 +261,7 @@ public abstract class ClassCreator extends AbstractClassBuilder {
     		for(DefaultMethodBuilder mc : creatorList){
     			mc.create(this);
     		}
-    		this.methodBuilders.addAll(creatorList);
+    		this.methods.addAll(creatorList);
     	}
-    }
-    
-    public static class SemiClass extends MutableClass {
-
-    	SemiClass(ASMSupportClassLoader classLoader, int version, int access, String name, IClass superCls,
-				  IClass[] interfaces) {
-    		super(classLoader);
-            this.version = version;
-            this.name = name;
-            this.mod = access;
-            this.superClass = superCls;
-            this.interfaces = interfaces;
-
-            if(!Modifiers.isInterface(mod)){
-                this.mod += Opcodes.ACC_SUPER;
-            }
-        }
-
-        @Override
-        public String getDescription() {
-            return new StringBuilder("L").append(getName().replace(".", "/"))
-                    .append(";").toString();
-        }
-        
-        @Override
-        public boolean isPrimitive() {
-            return false;
-        }
-
-        @Override
-        public boolean isArray() {
-            return false;
-        }
-
-        @Override
-        public int getDimension() {
-            return -1;
-        }
-
-        @Override
-        public Field getField(final String name) throws NoSuchFieldException {
-            final LinkedList<Field> found = new LinkedList<Field>();
-            for(Field gv : getFields()){
-                if(gv.getName().equals(name)){
-                    found.add(gv);
-                }
-            }
-            
-            if(found.isEmpty()) {
-            	IClass fieldOwner = getSuperclass();
-            	IClass objectType = getClassLoader().getType(Object.class);
-            	while(fieldOwner != null && !fieldOwner.equals(objectType)) {
-					Field field = fieldOwner.getField(name);
-                	if(field != null) {
-                		found.add(field);
-                		break;
-                	}
-                	fieldOwner = fieldOwner.getSuperclass();
-            	}
-            }
-            
-            for(IClass itf : getInterfaces()) {
-				try {
-					Field field = itf.getField(name);
-	            	if(field != null) {
-	            		found.add(field);
-	            	}
-				} catch (NoSuchFieldException e) {
-				}
-            }
-            
-            if(found.size() == 0) {
-                throw new NoSuchFieldException("Not found field " + name);
-            } else if(found.size() == 1) {
-                return found.getFirst();
-            } 
-
-            StringBuilder errorSuffix = new StringBuilder();
-            for(Field field : found) {
-                errorSuffix.append(field.getDeclaringClass()).append(',');
-            }
-            throw new ASMSupportException("The field '" + name + "' is ambiguous, found it in class [" + errorSuffix + "]");
-        }
-
     }
 }

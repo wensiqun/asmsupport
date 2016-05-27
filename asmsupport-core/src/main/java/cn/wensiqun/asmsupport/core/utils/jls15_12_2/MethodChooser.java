@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
-import cn.wensiqun.asmsupport.core.builder.impl.ClassCreator.SemiClass;
+import cn.wensiqun.asmsupport.core.builder.SemiClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -28,8 +28,8 @@ import cn.wensiqun.asmsupport.standard.utils.jls.TypeUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.ConversionsPromotionsUtils;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature;
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;

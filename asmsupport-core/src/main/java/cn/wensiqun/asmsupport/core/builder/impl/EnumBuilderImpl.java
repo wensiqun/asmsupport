@@ -110,7 +110,7 @@ public class EnumBuilderImpl extends ClassCreator {
      */
     public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
         FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
-        fieldBuilders.add(fc);
+        fields.add(fc);
         existField = !Modifiers.isEnum(modifiers);
         return fc;
     }
@@ -142,7 +142,7 @@ public class EnumBuilderImpl extends ClassCreator {
      */
     public final void createMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
             IClass[] exceptions, int access, KernelMethodBody mb) {
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
+        methods.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
                 access, mb));
     }
 
@@ -187,7 +187,7 @@ public class EnumBuilderImpl extends ClassCreator {
         enumArgClasses[1] = classLoader.getType(int.class);
         System.arraycopy(argClasses, 0, enumArgClasses, 2, argClasses.length);
 
-        methodBuilders.add(DefaultMethodBuilder.buildForNew(ASConstants.INIT, enumArgClasses, enumArgNames, null, null,
+        methods.add(DefaultMethodBuilder.buildForNew(ASConstants.INIT, enumArgClasses, enumArgNames, null, null,
                 Opcodes.ACC_PRIVATE, mb));
         haveInitMethod = true;
     }
@@ -201,7 +201,7 @@ public class EnumBuilderImpl extends ClassCreator {
         // create implicit global variable ENUM$VALUES for enum type
         createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
                 + Opcodes.ACC_SYNTHETIC, classLoader.getArrayType(sc, 1));
-        methodBuilders.add(0,
+        methods.add(0,
                 DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null, Opcodes.ACC_STATIC, body));
     }
 

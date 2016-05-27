@@ -82,7 +82,7 @@ public class ClassBuilderImpl extends ClassCreator {
      */
     public FieldBuilder createField(String name, int modifiers, IClass type, Object val) {
         FieldBuilder fc = new FieldBuildImpl(name, modifiers, type, val);
-        fieldBuilders.add(fc);
+        fields.add(fc);
         return fc;
     }
 
@@ -99,7 +99,7 @@ public class ClassBuilderImpl extends ClassCreator {
 	public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
 		MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
                 null, exceptions, access, body);
-        methodBuilders.add(creator);
+        methods.add(creator);
         haveInitMethod = true;
         return creator;
 	}
@@ -120,7 +120,7 @@ public class ClassBuilderImpl extends ClassCreator {
 									  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
 		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
                 returnClass, exceptions, access, body);
-		methodBuilders.add(creator);
+		methods.add(creator);
 		return creator;
 	}
 
@@ -133,12 +133,12 @@ public class ClassBuilderImpl extends ClassCreator {
 	public MethodBuilder createStaticBlock(KernelStaticBlockBody block) {
 		DefaultMethodBuilder creator;
 		if(clinitNum > 0) {
-			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), block);
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methods.get(0), block);
 		} else {
 			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
 					Opcodes.ACC_STATIC, block);
 		}
-		methodBuilders.add(clinitNum++, creator);
+		methods.add(clinitNum++, creator);
     	return creator;
 	}
 

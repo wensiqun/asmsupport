@@ -362,7 +362,7 @@ public class DummyInterface extends AbstractDummy {
         }
         
         for(DummyInterfaceMethod dummy : methodDummies) {
-            ici.createMethod(dummy.getName(), dummy.getArgTypes(), dummy.getReturnType(), dummy.getThrows(), dummy.isVarargs());
+            ici.declareMethod(dummy.getName(), dummy.getArgTypes(), dummy.getReturnType(), dummy.getThrows(), dummy.isVarargs());
         }
         
         if(staticBlock != null) {

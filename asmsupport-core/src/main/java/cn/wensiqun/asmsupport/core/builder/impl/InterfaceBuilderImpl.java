@@ -20,6 +20,7 @@ package cn.wensiqun.asmsupport.core.builder.impl;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.builder.MethodDeclarable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -27,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 
 
-public class InterfaceBuilderImpl extends ClassCreator {
+public class InterfaceBuilderImpl extends ClassCreator implements MethodDeclarable {
 
 	private int clinitNum = 0;
 
@@ -54,24 +55,18 @@ public class InterfaceBuilderImpl extends ClassCreator {
 	 * @param returnClass
 	 * @param exceptions
 	 */
-	public void createMethod(String name, IClass[] argClasses, IClass returnClass, IClass[] exceptions) {
-		this.createMethod(name, argClasses, returnClass, exceptions, false);
+	@Override
+	public void declareMethod(String name, IClass[] argClasses, IClass returnClass, IClass[] exceptions) {
+		this.declareMethod(name, argClasses, returnClass, exceptions, false);
     }
-	
-	/**
-	 * declare an interface method
-	 * 
-	 * @param name method name
-	 * @param argClasses method argument types
-	 * @param returnClass method return type, if null than indicate void
-	 * @param exceptions what exception you want explicit throw.
-	 */
-	public void createMethod(String name, IClass[] argClasses, IClass returnClass, IClass[] exceptions, boolean isVarargs) {
+
+	@Override
+	public void declareMethod(String name, IClass[] argClasses, IClass returnClass, IClass[] exceptions, boolean isVarargs) {
 		String[] argNames = new String[argClasses.length];
 		for(int i=0; i<argNames.length; i++){
 			argNames[i] = "arg" + i;
 		}
-        methodBuilders.add(
+        methods.add(
         		DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
                 returnClass, exceptions, Opcodes.ACC_PUBLIC + Opcodes.ACC_ABSTRACT + (isVarargs ? Opcodes.ACC_VARARGS : 0), null));
     }
@@ -119,7 +114,7 @@ public class InterfaceBuilderImpl extends ClassCreator {
 	 */
     public FieldBuilder createField(String name, IClass type, Object value){
     	FieldBuildImpl fc = new FieldBuildImpl(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, type, value);
-        fieldBuilders.add(fc);
+        fields.add(fc);
         return fc;
     }
 	
@@ -135,12 +130,12 @@ public class InterfaceBuilderImpl extends ClassCreator {
     public InterfaceBuilderImpl createStaticBlock(KernelStaticBlockBody body) {
 		DefaultMethodBuilder creator;
 		if(clinitNum > 0) {
-			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), body);
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methods.get(0), body);
 		} else {
 			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
 					Opcodes.ACC_STATIC, body);
 		}
-		methodBuilders.add(clinitNum++, creator);
+		methods.add(clinitNum++, creator);
 		return this;
     }
 	

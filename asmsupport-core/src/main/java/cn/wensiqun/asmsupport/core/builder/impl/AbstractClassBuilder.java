@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.builder.impl;
 
+import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
 import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
 import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
@@ -35,9 +36,9 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
 	
     private static final Log LOG = LogFactory.getLog(AbstractClassBuilder.class);
 
-    protected List<MethodBuilder> methodBuilders = new ArrayList<>();
+    protected List<MethodBuilder> methods = new ArrayList<>();
 
-    protected List<FieldBuilder> fieldBuilders = new ArrayList<>();
+    protected List<FieldBuilder> fields = new ArrayList<>();
 
     protected String classOutPutPath;
 	
@@ -47,13 +48,11 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
     
     /**
      * 
-     * @param ASMSupportClassLoader
+     * @param classLoader
      */
-	public AbstractClassBuilder(ASMSupportClassLoader ASMSupportClassLoader) {
-		this.classLoader = ASMSupportClassLoader;
+	public AbstractClassBuilder(ASMSupportClassLoader classLoader) {
+		this.classLoader = classLoader;
 	}
-
-	//protected abstract boolean existCLInit();
     
     protected Class<?> loadClass(String name, byte[] b) {
         try {
@@ -67,10 +66,6 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
     public final ClassVisitor getClassVisitor() {
         return cw;
     }
-
-	public String getClassOutPutPath() {
-		return classOutPutPath;
-	}
 
 	@Override
 	public void setClassOutPutPath(String classOutPutPath) {
@@ -102,6 +97,26 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
         }
         return loadClass(currentClass.getName(), code);
     }
-	
+
+    /**
+     * Create a method
+     *
+     * @param name
+     * @param argClasses
+     * @param argNames
+     * @param returnClass
+     * @param exceptions
+     * @param access
+     * @param mb
+     * @return
+     */
+    protected final MethodBuilder createMethodInternal(
+            String name, IClass[] argClasses, String[] argNames, IClass returnClass,
+            IClass[] exceptions, int access, KernelMethodBody mb) {
+        DefaultMethodBuilder methodBuilder = DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
+                access, mb);
+        methods.add(methodBuilder);
+        return methodBuilder;
+    }
 
 }

@@ -128,7 +128,7 @@ public class ClassModifier extends AbstractClassBuilder {
     public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
         MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
                 null, exceptions, access, body);
-        methodBuilders.add(creator);
+        methods.add(creator);
         return creator;
     }
 	
@@ -148,7 +148,7 @@ public class ClassModifier extends AbstractClassBuilder {
             int access, KernelMethodBody mb) {
 		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
 				returnClass, exceptions, access, mb);
-        methodBuilders.add(creator);
+        methods.add(creator);
 		return creator;
     }
 
@@ -163,12 +163,12 @@ public class ClassModifier extends AbstractClassBuilder {
 		}
 		DefaultMethodBuilder creator;
 		if(clinitNum > 0) {
-			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methodBuilders.get(0), block);
+			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methods.get(0), block);
 		} else {
 			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
 					Opcodes.ACC_STATIC, block);
 		}
-		methodBuilders.add(clinitNum++, creator);
+		methods.add(clinitNum++, creator);
     }
     
     /**
@@ -203,7 +203,7 @@ public class ClassModifier extends AbstractClassBuilder {
      */
     public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
         FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
-        fieldBuilders.add(fc);
+        fields.add(fc);
         return fc;
     }
 
@@ -222,12 +222,12 @@ public class ClassModifier extends AbstractClassBuilder {
 	        }
 	        
 	        // create field
-	        for (FieldBuilder ifc : fieldBuilders) {
+	        for (FieldBuilder ifc : fields) {
 	            ifc.create(this);
 	        }
 
 	        // create method
-	        for (MethodBuilder imc : methodBuilders) {
+	        for (MethodBuilder imc : methods) {
 	            imc.create(this);
 	        }
 	        
@@ -252,11 +252,11 @@ public class ClassModifier extends AbstractClassBuilder {
 
 	@Override
 	public void prepare() {
-		for (FieldBuilder ifc : fieldBuilders) {
+		for (FieldBuilder ifc : fields) {
 			ifc.prepare();
 		}
 
-		for (MethodBuilder imc : methodBuilders) {
+		for (MethodBuilder imc : methods) {
 			imc.prepare();
 		}
 
@@ -269,11 +269,11 @@ public class ClassModifier extends AbstractClassBuilder {
 	@Override
 	public byte[] execute() {
 	       
-        for (FieldBuilder ifc : fieldBuilders) {
+        for (FieldBuilder ifc : fields) {
             ifc.execute();
         }
 
-        for (MethodBuilder imc : methodBuilders) {
+        for (MethodBuilder imc : methods) {
             imc.execute();
         }
         
