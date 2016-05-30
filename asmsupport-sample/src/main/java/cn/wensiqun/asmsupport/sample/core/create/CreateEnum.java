@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.sample.core.create;
 
 import java.lang.reflect.InvocationTargetException;
 
-import cn.wensiqun.asmsupport.core.builder.impl.EnumBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.EnumResolver;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 
@@ -25,7 +25,7 @@ public class CreateEnum extends AbstractExample {
 		 * 枚举类型只允许是public的。
 		 * 
 		 */
-		EnumBuilderImpl enumCreator = new EnumBuilderImpl(Opcodes.V1_6, "generated.create.CreateEnumExample", null);
+		EnumResolver enumCreator = new EnumResolver(Opcodes.V1_6, "generated.create.CreateEnumExample", null);
 		
 		/*
 		 * 创建每个枚举类别

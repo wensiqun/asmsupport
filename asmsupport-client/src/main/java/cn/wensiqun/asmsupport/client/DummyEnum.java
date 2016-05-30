@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.EnumStaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.impl.EnumBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.EnumResolver;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -343,12 +343,12 @@ public class DummyEnum extends AbstractDummy {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        EnumBuilderImpl eci; 
+        EnumResolver eci;
         if(this.classLoader == null) {
-        	eci = new EnumBuilderImpl(javaVersion, 
+        	eci = new EnumResolver(javaVersion,
             		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces);
         } else {
-        	eci = new EnumBuilderImpl(javaVersion, 
+        	eci = new EnumResolver(javaVersion,
             		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, classLoader);
         }
         		
@@ -386,7 +386,7 @@ public class DummyEnum extends AbstractDummy {
         if(staticBlock != null) {
             eci.createStaticBlock(staticBlock.getDelegate());
         }
-        eci.setClassOutPutPath(classOutPutPath);
-        return eci.startup();
+        eci.setClassOutputPath(classOutPutPath);
+        return eci.resolve();
     }
 }

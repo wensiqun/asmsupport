@@ -4,7 +4,7 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
@@ -74,28 +74,28 @@ public class InstanceofOperatorGenerate extends AbstractExample {
 
 	public static void main(String[] args) {
         //create class A
-		ClassBuilderImpl ACreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
+		ClassResolver ACreator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "A", null, null);
 		ACreator.createField("i", 0, classLoader.getType(int.class));
 		ACreator.createField("j", 0, classLoader.getType(int.class));
-		final Class A = ACreator.startup();
+		final Class A = ACreator.resolve();
 		
         //create class B
-		ClassBuilderImpl BCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
+		ClassResolver BCreator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "B", null, null);
 		BCreator.createField("i", 0, classLoader.getType(int.class));
 		BCreator.createField("j", 0, classLoader.getType(int.class));
-		final Class B = BCreator.startup();
+		final Class B = BCreator.resolve();
 		
 		//create class C
-		ClassBuilderImpl CCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", classLoader.getType(A), null);
+		ClassResolver CCreator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "C", classLoader.getType(A), null);
 		CCreator.createField("k", 0, classLoader.getType(int.class));
-		final Class C = CCreator.startup();
+		final Class C = CCreator.resolve();
 
 		//create class D
-		ClassBuilderImpl DCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", classLoader.getType(A), null);
+		ClassResolver DCreator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "D", classLoader.getType(A), null);
 		DCreator.createField("k", 0, classLoader.getType(int.class));
-		final Class D = DCreator.startup();
+		final Class D = DCreator.resolve();
 		
-        ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
+        ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.InstanceofOperatorGenerateExample", null, null);
 		
 		/*
 		 * 生成一个main方法

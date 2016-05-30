@@ -23,13 +23,13 @@ public abstract class ASMSupportClassLoader extends ClassLoader implements Class
      * @return
      * @throws Exception
      */
-    public Class<?> defineClass(String name, byte[] classBytes, IClass itype) throws Exception {
+    public Class<?> defineClass(String name, byte[] classBytes, IClass type) throws Exception {
     	Class<?> result = defineClass(name, classBytes);
-    	afterDefineClass(result, itype);
+    	afterDefineClass(result, type);
     	return result;
     }
 
-    protected abstract Class<?> afterDefineClass(Class<?> result, IClass itype) throws Exception;
+    protected abstract Class<?> afterDefineClass(Class<?> result, IClass type) throws Exception;
     
     public abstract Class<?> defineClass(String name, byte[] classBytes) throws Exception;
 

@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -378,7 +378,7 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
         
-        ClassBuilderImpl cci = new ClassBuilderImpl(javaVersion, modifiers, 
+        ClassResolver cci = new ClassResolver(javaVersion, modifiers,
         		StringUtils.isBlank(packageName) ? name : packageName + "." + name, 
         				parent, interfaces, getClassLoader());
         
@@ -410,8 +410,8 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
             cci.createStaticBlock(staticBlock.getDelegate());
         }
         
-        cci.setClassOutPutPath(classOutPutPath);
-        return cci.startup();
+        cci.setClassOutputPath(classOutPutPath);
+        return cci.resolve();
     }
 
 }

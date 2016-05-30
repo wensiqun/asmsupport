@@ -5,7 +5,7 @@ import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelElseIF;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
@@ -21,7 +21,7 @@ public class ConditionBlockGenerator extends AbstractExample
     {
         
         final MyList testMethodNames = new MyList();
-        ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ConditionBlockGeneratorExample", null, null);
+        ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.ConditionBlockGeneratorExample", null, null);
         
         creator.createMethod(Opcodes.ACC_PRIVATE + Opcodes.ACC_STATIC, testMethodNames.put("test"),
         		new IClass[]{creator.getClassLoader().getType(String.class)}, new String[]{"str"}, null, null, new KernelMethodBody(){

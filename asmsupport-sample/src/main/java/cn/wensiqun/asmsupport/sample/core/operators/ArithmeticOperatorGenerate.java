@@ -1,7 +1,7 @@
 package cn.wensiqun.asmsupport.sample.core.operators;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.MethodInvoker;
 import cn.wensiqun.asmsupport.core.operator.numerical.arithmetic.KernelAdd;
@@ -17,7 +17,7 @@ public class ArithmeticOperatorGenerate extends AbstractExample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC, "generated.operators.ArithmeticOperatorGenerateExample", null, null);
 
 		//printIn方法
 		creator.createMethod(Opcodes.ACC_STATIC, "printInt", new IClass[]{classLoader.getType(String.class), classLoader.getType(int.class)}, new String[]{"s", "i"}, null, null, new KernelMethodBody(){

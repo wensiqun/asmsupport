@@ -12,43 +12,32 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder;
+package cn.wensiqun.asmsupport.core.build;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface MethodBuilder extends Executable {
-
-    int MODE_ADD = 0;
-
-    int MODE_MODIFY = 1;
-
-    int MODE_DELEGATE = 2;
-
+public interface FieldBuilder extends Executable {
+    
     /**
-     * Create a method
+     * Create a field.
+     * 
+     * @param cv
      */
-    void create(ClassBuilder classBuilder);
-	
+    void create(BytecodeResolver cv);
+
     /**
      * Get method name.
      */
     String getName();
 
     /**
-     * Get the argument types of current method.
-     */
-    IClass[] getArguments();
-
-    /**
-     *
+     * Get the modifiers of the field you want to build.
      * @return
      */
-    IClass getReturnType();
-
+    int getModifiers();
 }

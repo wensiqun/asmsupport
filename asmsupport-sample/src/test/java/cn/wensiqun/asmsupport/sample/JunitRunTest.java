@@ -1,8 +1,7 @@
 package cn.wensiqun.asmsupport.sample;
 
-import org.junit.Test;
-
 import cn.wensiqun.asmsupport.sample.core.CoreRunner;
+import org.junit.Test;
 
 public class JunitRunTest {
 

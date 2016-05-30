@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import junit.framework.Assert;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.fixed.earlier.test4646.entity.Child;
@@ -30,8 +30,8 @@ public class MainTest {
 		
 		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 		
-		ClassBuilderImpl creator = 
-				new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646", 
+		ClassResolver creator =
+				new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.Test4646",
 						classLoader.getType(AbstractClass.class), null);
         
 		final IClass childChild = classLoader.getType(ChildChild.class);
@@ -80,7 +80,7 @@ public class MainTest {
 					
 		});
 		
-		Class<?> cls = creator.startup();
+		Class<?> cls = creator.resolve();
 		Method[] methods = cls.getMethods();
 		int count = 0;
 		for(Method m : methods){

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.IssuesConstant;
@@ -21,7 +21,7 @@ public class TestSerializableWithASMSupport {
 
     	ASMSupportClassLoader classloader = CachedThreadLocalClassLoader.getInstance();
 
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5,
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5,
 				Opcodes.ACC_PUBLIC, "bug.fixed.Test31533", null,
 				new IClass[] { classloader.getType(Serializable.class) },
 				classloader);
@@ -65,8 +65,8 @@ public class TestSerializableWithASMSupport {
     		
     	});
     	
-		creator.setClassOutPutPath(IssuesConstant.classOutPutPath);
-		Class<?> cls = creator.startup();
+		creator.setClassOutputPath(IssuesConstant.classOutPutPath);
+		Class<?> cls = creator.resolve();
 		
 		
     	Object user = cls.newInstance();

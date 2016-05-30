@@ -268,8 +268,7 @@ public class DummyMethod extends DummyAccessControl<DummyMethod> {
     
     /**
      * Get argument names.
-     * 
-     * @param argNames
+     *
      * @return
      */
     public String[] getArgNames(){

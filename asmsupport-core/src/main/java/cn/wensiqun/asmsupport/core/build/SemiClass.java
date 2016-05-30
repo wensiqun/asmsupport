@@ -1,4 +1,4 @@
-package cn.wensiqun.asmsupport.core.builder;
+package cn.wensiqun.asmsupport.core.build;
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;

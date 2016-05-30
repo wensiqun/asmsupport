@@ -12,12 +12,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.resolver;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelEnumStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelEnumConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -26,11 +28,8 @@ import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayLength;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
-import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 import java.util.ArrayList;
@@ -41,15 +40,11 @@ import java.util.List;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class EnumBuilderImpl extends ClassCreator {
+public class EnumResolver extends ClassBuildResolver {
 
-    private boolean existField;
+    private boolean existDefaultConstructor;
 
-    private boolean existNoArgumentsConstructor;
-
-    private int clinitNum = 0;
-
-    List<String> enumConstantNameList;
+    private List<String> enumConstants;
 
     /**
      * 
@@ -57,7 +52,7 @@ public class EnumBuilderImpl extends ClassCreator {
      * @param name
      * @param interfaces
      */
-    public EnumBuilderImpl(int version, String name, IClass[] interfaces) {
+    public EnumResolver(int version, String name, IClass[] interfaces) {
         this(version, name, interfaces, CachedThreadLocalClassLoader.getInstance());
     }
     
@@ -68,11 +63,22 @@ public class EnumBuilderImpl extends ClassCreator {
      * @param interfaces
      * @param ASMSupportClassLoader
      */
-    public EnumBuilderImpl(int version, String name, IClass[] interfaces, ASMSupportClassLoader ASMSupportClassLoader) {
+    public EnumResolver(int version, String name, IClass[] interfaces, ASMSupportClassLoader ASMSupportClassLoader) {
         super(version, Opcodes.ACC_PUBLIC + Opcodes.ACC_FINAL + Opcodes.ACC_SUPER + Opcodes.ACC_ENUM, name, 
         		ASMSupportClassLoader.getType(Enum.class),
                 interfaces, ASMSupportClassLoader);
-        enumConstantNameList = new ArrayList<>();
+        enumConstants = new ArrayList<>();
+    }
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public void createEnumConstant(String name) {
+        sc.setEnumNum(sc.getEnumNum() + 1);
+        enumConstants.add(name);
+        createField(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL + Opcodes.ACC_ENUM, sc);
     }
 
     /**
@@ -109,24 +115,7 @@ public class EnumBuilderImpl extends ClassCreator {
      * @return
      */
     public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
-        FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
-        fields.add(fc);
-        existField = !Modifiers.isEnum(modifiers);
-        return fc;
-    }
-
-    /**
-     * 
-     * @param name
-     * @return
-     */
-    public void createEnumConstant(String name) {
-        if (existField) {
-            throw new ASMSupportException("declare enum constant must before other field");
-        }
-        sc.setEnumNum(sc.getEnumNum() + 1);
-        enumConstantNameList.add(name);
-        createField(name, Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL + Opcodes.ACC_ENUM, sc);
+        return createFieldInternal(name, modifiers, type, value);
     }
 
     /**
@@ -140,14 +129,14 @@ public class EnumBuilderImpl extends ClassCreator {
      * @param mb
      * @return
      */
-    public final void createMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
-            IClass[] exceptions, int access, KernelMethodBody mb) {
-        methods.add(DefaultMethodBuilder.buildForNew(name, argClasses, argNames, returnClass, exceptions,
-                access, mb));
+    public final MethodBuilder createMethod(String name, IClass[] argClasses, String[] argNames, IClass returnClass,
+                                            IClass[] exceptions, int access, KernelMethodBody mb) {
+        return createMethodInternal(name, argClasses, argNames, returnClass,
+                exceptions, access, mb);
     }
 
     /**
-     * create constructor;
+     * Create constructor;
      * 
      * @param argClasses
      * @param argNames
@@ -170,11 +159,11 @@ public class EnumBuilderImpl extends ClassCreator {
         }
 
         if (argNames.length != argClasses.length) {
-            throw new IllegalArgumentException("Different arugment class number and argument name number");
+            throw new IllegalArgumentException("Different argument type number and argument name number");
         }
 
         if (argNames.length == 0) {
-            existNoArgumentsConstructor = true;
+            existDefaultConstructor = true;
         }
 
         String[] enumArgNames = new String[argNames.length + 2];
@@ -189,7 +178,6 @@ public class EnumBuilderImpl extends ClassCreator {
 
         methods.add(DefaultMethodBuilder.buildForNew(ASConstants.INIT, enumArgClasses, enumArgNames, null, null,
                 Opcodes.ACC_PRIVATE, mb));
-        haveInitMethod = true;
     }
 
     /**
@@ -197,7 +185,7 @@ public class EnumBuilderImpl extends ClassCreator {
      * @param body
      */
     public void createStaticBlock(final KernelEnumStaticBlockBody body) {
-        body.setEnumNameList(enumConstantNameList);
+        body.setEnumNameList(enumConstants);
         // create implicit global variable ENUM$VALUES for enum type
         createField("ENUM$VALUES", Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL + Opcodes.ACC_STATIC
                 + Opcodes.ACC_SYNTHETIC, classLoader.getArrayType(sc, 1));
@@ -213,7 +201,15 @@ public class EnumBuilderImpl extends ClassCreator {
                 return_();
             }
         });
-        createDefaultStaticBlock();
+        boolean existClinit = false;
+        for(MethodBuilder m : methods) {
+            if(ASConstants.CLINIT.equals(m.getName())) {
+                existClinit = true;
+            }
+        }
+        if(!existClinit && existDefaultConstructor) {
+            createDefaultStaticBlock();
+        }
     }
 
     @Override
@@ -267,25 +263,18 @@ public class EnumBuilderImpl extends ClassCreator {
     }
 
     private void createDefaultStaticBlock() {
-        if (clinitNum == 0 && !CollectionUtils.isEmpty(enumConstantNameList) && existNoArgumentsConstructor) {
-            createStaticBlock(new KernelEnumStaticBlockBody() {
-
-                {
-                    enumNameList = enumConstantNameList;
+        createStaticBlock(new KernelEnumStaticBlockBody() {
+            @Override
+            public void constructEnumConsts() {
+                for (String name : enumConstants) {
+                    constructEnumConst(name);
                 }
+            }
 
-                @Override
-                public void constructEnumConsts() {
-                    for (String name : enumNameList) {
-                        constructEnumConst(name);
-                    }
-                }
-
-                @Override
-                public void body(LocalVariable... argus) {
-                    return_();
-                }
-            });
-        }
+            @Override
+            public void body(LocalVariable... argus) {
+                return_();
+            }
+        });
     }
 }

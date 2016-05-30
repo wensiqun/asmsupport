@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.sample.core.operators;
 
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
@@ -19,7 +19,7 @@ public class ReturnOperatorGenerate extends AbstractExample {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.ReturnOperatorGenerateExample", null, null);
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.operators.ReturnOperatorGenerateExample", null, null);
 		
 		/* 
 		 * 有返回类型的方法

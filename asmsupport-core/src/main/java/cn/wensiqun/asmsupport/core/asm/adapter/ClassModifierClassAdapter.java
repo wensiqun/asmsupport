@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.asm.adapter;
 
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassModifyResolver;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -43,11 +43,11 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 
     private Map<String, List<VisitXInsnAdapter>> superConstructorMap;
 	
-	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifier classModifier) {
+	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifyResolver resolver) {
 		super(cv);
 		this.needModify = new LinkedList<MethodBuilder>();
-		if (classModifier.getMethodModifiers() != null) {
-			CollectionUtils.addAll(this.needModify, classModifier.getMethodModifiers().iterator());
+		if (resolver.getMethodModifiers() != null) {
+			CollectionUtils.addAll(this.needModify, resolver.getMethodModifiers().iterator());
 		}
 	}
 	

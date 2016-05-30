@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.ModifiedMethodBody;
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassModifyResolver;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -199,7 +199,7 @@ public class DummyModifiedClass extends AbstractDummy {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        ClassModifier cmi = new ClassModifier(original, getClassLoader()) ;
+        ClassModifyResolver cmi = new ClassModifyResolver(original, getClassLoader()) ;
         for(DummyConstructor dummy : constructorDummies) {
             if(dummy.getConstructorBody() != null) {
                 cmi.createConstructor(dummy.getModifiers(), dummy.getArgumentTypes(), dummy.getArgumentNames(), dummy.getThrows(),
@@ -233,7 +233,7 @@ public class DummyModifiedClass extends AbstractDummy {
             cmi.modifyMethod(dummy.getName(), dummy.getArgumentTypes(), dummy.getMethodBody().getDelegate());
         }
         
-        cmi.setClassOutPutPath(classOutPutPath);
-        return cmi.startup();
+        cmi.setClassOutputPath(classOutPutPath);
+        return cmi.resolve();
     }
 }

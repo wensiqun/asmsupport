@@ -12,11 +12,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.impl;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
@@ -101,13 +101,13 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	}
 
 	@Override
-	public void create(ClassBuilder classBuilder){
+	public void create(BytecodeResolver resolver){
         if(buildMode == MODE_DELEGATE) {
             return;
         }
-		MutableClass owner = classBuilder.getCurrentClass();
-		meta = new AMethodMeta(classBuilder.getClassLoader(), name, owner, owner, arguments, argNames, returnType, exceptions, access);
-		method = new AMethod(meta, classBuilder.getClassVisitor(), classBuilder.getClassLoader(), methodBody, buildMode);
+		MutableClass owner = resolver.getCurrentClass();
+		meta = new AMethodMeta(resolver.getClassLoader(), name, owner, owner, arguments, argNames, returnType, exceptions, access);
+		method = new AMethod(meta, resolver.getClassVisitor(), resolver.getClassLoader(), methodBody, buildMode);
 		if(method.getMeta().getName().equals(ASConstants.INIT)){
 			owner.addConstructor(meta);
 		}else if(Modifiers.isBridge(method.getMeta().getModifiers())){
@@ -120,6 +120,11 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public int getModifiers() {
+		return access;
 	}
 
 	@Override

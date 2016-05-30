@@ -15,7 +15,7 @@
 /**1
  * 
  */
-package cn.wensiqun.asmsupport.core.builder;
+package cn.wensiqun.asmsupport.core.build;
 
 
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
@@ -24,12 +24,12 @@ import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 
 
 /**
- * The class create or modify context
+ * The resolver for create/modify class
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface ClassBuilder {
+public interface BytecodeResolver {
     
     /**
      * First phase, asmsupport will create all of meta information such 
@@ -53,31 +53,35 @@ public interface ClassBuilder {
     byte[] execute();
 
 	/**
-	 * Start create/modify class, this method will integrate the three phase. and get the
+	 * Start create/modify class, this method will integrate those three phase({@link #create()}, {@link #prepare()}, {@link #execute()}). and get the
 	 * byte[] as result.
 	 * 
 	 * @return
 	 */
-	byte[] toClassBytes();
+	byte[] toBytes();
     
     /**
-     * Start create/modify class, this method will integrate the three phase. and get the
-	 * class as result.
+     * Call {@link #toBytes()} and translate the {@code byte[]} to {@code Class}
      * 
      * @return
      */
-    Class<?> startup();
+    Class<?> resolve();
 
 	
     /**
-     * Get {@ClassVisitor}
+     * Get {@ClassVisitor} of asm
      * 
      * @return
      */
     ClassVisitor getClassVisitor();
     
     /**
-     * 
+     * Get the operating class.
+     * <ol>
+     *     <li>Get the new class if current operation is build an new class.</li>
+     *     <li>Get the class what's you modify if you are doing a modify class.</li>
+     * </ol>
+     *
      * @return
      */
     MutableClass getCurrentClass();
@@ -89,8 +93,10 @@ public interface ClassBuilder {
     ASMSupportClassLoader getClassLoader();
     
     /**
-     * 
+     * If you want's the generated class save to local,
+     * call this method set the output path.
+     *
      * @param classOutPutPath
      */
-	void setClassOutPutPath(String classOutPutPath);
+	void setClassOutputPath(String classOutPutPath);
 }

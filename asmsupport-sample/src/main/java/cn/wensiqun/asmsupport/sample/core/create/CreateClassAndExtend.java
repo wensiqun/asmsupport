@@ -4,8 +4,8 @@ import cn.wensiqun.asmsupport.core.block.control.condition.KernelElse;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassModifier;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassModifyResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -24,7 +24,7 @@ public class CreateClassAndExtend extends AbstractExample {
         String classOutPutPath = ".//target//asmsupport-test-generated";
 		final GlobalVariable out = systemOut;
 		
-		ClassModifier byModifyModifer = new ClassModifier(ByModify.class);
+		ClassModifyResolver byModifyModifer = new ClassModifyResolver(ByModify.class);
 		byModifyModifer.createField("age", Opcodes.ACC_STATIC + Opcodes.ACC_PRIVATE, classLoader.getType(int.class));
 		byModifyModifer.createMethod("asmcreate", null,null,null,null, Opcodes.ACC_PUBLIC, new KernelMethodBody(){
 			@Override
@@ -85,10 +85,10 @@ public class CreateClassAndExtend extends AbstractExample {
 			}
 			
 		});
-		byModifyModifer.setClassOutPutPath(classOutPutPath);
-		Class<?> ByModify = byModifyModifer.startup();
+		byModifyModifer.setClassOutputPath(classOutPutPath);
+		Class<?> ByModify = byModifyModifer.resolve();
 		
-        ClassBuilderImpl childCreator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", classLoader.getType(ByModify), null);
+        ClassResolver childCreator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassAndExtendExample", classLoader.getType(ByModify), null);
 		
 		childCreator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)}, new String[]{"args"}, null, null,
 				new KernelMethodBody(){
@@ -101,14 +101,14 @@ public class CreateClassAndExtend extends AbstractExample {
 			
 		});
 		
-		childCreator.setClassOutPutPath(classOutPutPath);
+		childCreator.setClassOutputPath(classOutPutPath);
 		
 		//这个就是个开关。前面我们把该创建的方法变量都放到了传送带上了。调用startup
 		//启动传送带，将上面的东西一个个处理给我返回一个我们需要的成品（就是class了）
-		Class<?> cls = childCreator.startup();
+		Class<?> cls = childCreator.resolve();
 		
 		//如果创建的是非枚举类型或者非接口类型则调用main方法
-		if(childCreator instanceof ClassBuilderImpl){
+		if(childCreator instanceof ClassResolver){
 			try {
 				cls.getMethod("main", String[].class).invoke(cls, new Object[]{null});
 			} catch (Exception e) {

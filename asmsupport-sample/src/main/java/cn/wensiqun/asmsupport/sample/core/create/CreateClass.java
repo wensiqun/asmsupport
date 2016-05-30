@@ -3,7 +3,7 @@ package cn.wensiqun.asmsupport.sample.core.create;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
@@ -65,7 +65,7 @@ public class CreateClass extends AbstractExample {
          *    父类,如果为null则是继承自Object.class
          * 5: interface 实现的接口, 可以是null,类型是Class[]
 		 */
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample", 
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.create.CreateClassExample",
 				classLoader.getType(ParentCreateClassExample.class), null);
 		
 		/*

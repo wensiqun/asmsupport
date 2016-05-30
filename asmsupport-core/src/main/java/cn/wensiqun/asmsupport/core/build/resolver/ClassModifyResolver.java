@@ -12,7 +12,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.resolver;
 
 import cn.wensiqun.asmsupport.core.asm.adapter.ClassModifierClassAdapter;
 import cn.wensiqun.asmsupport.core.asm.adapter.VisitXInsnAdapter;
@@ -20,8 +20,9 @@ import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelModifiedMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -45,23 +46,21 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ClassModifier extends AbstractClassBuilder {
+public class ClassModifyResolver extends AbstractBytecodeResolver {
 	
-    private static final Log LOG = LogFactory.getLog(ClassModifier.class);
+    private static final Log LOG = LogFactory.getLog(ClassModifyResolver.class);
 	
     protected List<MethodBuilder> methodModifiers = new ArrayList<>();
     
     private List<KernelModifiedMethodBody> modifyConstructorBodies;
     
 	private ProductClass productClass;
-
-	private int clinitNum = 0;
 	
-	public ClassModifier(Class<?> clazz) {
+	public ClassModifyResolver(Class<?> clazz) {
 		this(clazz, CachedThreadLocalClassLoader.getInstance());
 	}
 	
-	public ClassModifier(Class<?> clazz, ASMSupportClassLoader classLoader) {
+	public ClassModifyResolver(Class<?> clazz, ASMSupportClassLoader classLoader) {
 		super(classLoader);
 		if(!clazz.isArray()){
 			this.productClass = (ProductClass) classLoader.getType(clazz);
@@ -114,7 +113,41 @@ public class ClassModifier extends AbstractClassBuilder {
 			throw new ASMSupportException("No such method " + AMethodMeta.getMethodString(name, argCls) + " in " + productClass);
 		}
 	}
-	
+
+	/**
+	 *
+	 * Create a field with null value.
+	 *
+	 * @param name            the field name
+	 * @param modifiers       the field modifiers
+	 * @param type      the field type
+	 * @return
+	 */
+	public FieldBuilder createField(String name, int modifiers, IClass type) {
+		return createField(name, modifiers, type, null);
+	}
+
+	/**
+	 *
+	 * Create a field with special value.
+	 *
+	 * @param name
+	 * @param modifiers
+	 * @param type
+	 * @param value The initial value, this value is only support static field,
+	 *              otherwise will ignored.This parameter, which may be null
+	 *              if the field does not have an initial value,
+	 *              must be an Integer, a Float, a Long, a Double or a
+	 *              String (for int, float, long or String fields respectively).
+	 *              This parameter is only used for static fields. Its value is
+	 *              ignored for non static fields, which must be initialized
+	 *              through bytecode instructions in constructors or methods.
+	 * @return
+	 */
+	public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
+		return createFieldInternal(name, modifiers, type, value);
+	}
+
 	/**
 	 * Create a constructor.
 	 * 
@@ -126,10 +159,7 @@ public class ClassModifier extends AbstractClassBuilder {
 	 * @return
 	 */
     public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
-        MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
-                null, exceptions, access, body);
-        methods.add(creator);
-        return creator;
+        return createConstructorInternal(access, argTypes, argNames, exceptions, body);
     }
 	
     /**
@@ -143,13 +173,10 @@ public class ClassModifier extends AbstractClassBuilder {
      * @param mb
      * @return
      */
-    public final MethodBuilder createMethod(String name, IClass[] argClasses,
+    public MethodBuilder createMethod(String name, IClass[] argClasses,
             String[] argNames, IClass returnClass, IClass[] exceptions,
             int access, KernelMethodBody mb) {
-		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argClasses, argNames,
-				returnClass, exceptions, access, mb);
-        methods.add(creator);
-		return creator;
+		return createMethodInternal(name, argClasses, argNames, returnClass, exceptions, access, mb);
     }
 
 	/**
@@ -157,54 +184,11 @@ public class ClassModifier extends AbstractClassBuilder {
 	 *
 	 * @param block
      */
-    public void createStaticBlock(KernelStaticBlockBody block){
+    public MethodBuilder createStaticBlock(KernelStaticBlockBody block){
 		if(productClass.existStaticInitBlock()) {
 			throw new IllegalArgumentException("The static block(<clinit>) has already exist, call modifyMethod to change it.");
 		}
-		DefaultMethodBuilder creator;
-		if(clinitNum > 0) {
-			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methods.get(0), block);
-		} else {
-			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
-					Opcodes.ACC_STATIC, block);
-		}
-		methods.add(clinitNum++, creator);
-    }
-    
-    /**
-     * 
-     * Create a field with null value.
-     * 
-     * @param name            the field name
-     * @param modifiers       the field modifiers
-     * @param type      the field type
-     * @return
-     */
-    public FieldBuilder createField(String name, int modifiers, IClass type) {
-        return createField(name, modifiers, type, null);
-    }
-    
-    /**
-     * 
-     * Create a field with special value.
-     * 
-     * @param name
-     * @param modifiers
-     * @param type
-     * @param value The initial value, this value is only support static field, 
-     *              otherwise will ignored.This parameter, which may be null 
-     *              if the field does not have an initial value, 
-     *              must be an Integer, a Float, a Long, a Double or a 
-     *              String (for int, float, long or String fields respectively). 
-     *              This parameter is only used for static fields. Its value is 
-     *              ignored for non static fields, which must be initialized 
-     *              through bytecode instructions in constructors or methods.
-     * @return
-     */
-    public FieldBuilder createField(String name, int modifiers, IClass type, Object value) {
-        FieldBuildImpl fc = new FieldBuildImpl(name, modifiers, type, value);
-        fields.add(fc);
-        return fc;
+		return createStaticBlockInternal(block);
     }
 
 	@Override

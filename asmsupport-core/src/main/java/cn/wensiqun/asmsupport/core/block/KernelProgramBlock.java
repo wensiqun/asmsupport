@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;

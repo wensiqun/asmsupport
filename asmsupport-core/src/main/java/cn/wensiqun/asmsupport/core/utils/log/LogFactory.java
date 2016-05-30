@@ -1,10 +1,6 @@
 package cn.wensiqun.asmsupport.core.utils.log;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.StreamHandler;
+import java.util.logging.*;
 
 
 /**
@@ -32,7 +28,11 @@ public class LogFactory {
     }
 
     public LogFactory() {
-        handler = new ConsoleHandler();
+        handler = new ConsoleHandler() {
+            {
+                setOutputStream(System.out);
+            }
+        };
         handler.setFormatter(new LogFormatter());
     }
     

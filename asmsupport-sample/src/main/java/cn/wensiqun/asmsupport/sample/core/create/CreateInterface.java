@@ -1,13 +1,13 @@
 package cn.wensiqun.asmsupport.sample.core.create;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.InterfaceResolver;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.sample.core.AbstractExample;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * 这里类中我们主要内容如下:
@@ -37,7 +37,7 @@ public class CreateInterface extends AbstractExample {
 		 * 2.接口的全路径名
 		 * 3.接口所继承哪些接口,是一个Class的数组
 		 */
-		InterfaceBuilderImpl interfaceCreator = new InterfaceBuilderImpl(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
+		InterfaceResolver interfaceCreator = new InterfaceResolver(Opcodes.V1_6, "generated.create.CreateInterfaceExample", null);
 		
 		/*
 		 * 通过createMethod声明方法

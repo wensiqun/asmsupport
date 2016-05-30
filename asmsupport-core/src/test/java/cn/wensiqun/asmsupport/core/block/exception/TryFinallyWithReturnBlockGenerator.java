@@ -6,7 +6,7 @@ import cn.wensiqun.asmsupport.core.block.control.exception.KernelCatch;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelFinally;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.MyList;
 import cn.wensiqun.asmsupport.core.utils.TesterStatics;
@@ -19,7 +19,7 @@ public class TryFinallyWithReturnBlockGenerator extends AbstractExample
     {
         
         final MyList testMethodNames = new MyList();
-        ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryFinallyWithReturnBlockGeneratorExample", null, null);
+        ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "generated.block.TryFinallyWithReturnBlockGeneratorExample", null, null);
 
         final IClass runtime = creator.getClassLoader().getType(RuntimeException.class);
         

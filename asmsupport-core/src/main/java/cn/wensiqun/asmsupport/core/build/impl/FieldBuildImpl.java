@@ -12,10 +12,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.impl;
 
-import cn.wensiqun.asmsupport.core.builder.ClassBuilder;
-import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
+import cn.wensiqun.asmsupport.core.build.FieldBuilder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
@@ -34,7 +34,7 @@ public class FieldBuildImpl implements FieldBuilder {
     private IClass type;
 
     private Field fe;
-    private ClassBuilder context;
+    private BytecodeResolver context;
     private Object value;
     
     /**
@@ -67,15 +67,25 @@ public class FieldBuildImpl implements FieldBuilder {
     }
 
     @Override
-    public void create(ClassBuilder cv) {
+    public void create(BytecodeResolver cv) {
     	this.context = cv;
     	MutableClass owner = cv.getCurrentClass();
         owner.addField(fe = new Field(owner, owner, type, modifiers, name));
     }
-    
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getModifiers() {
+        return modifiers;
+    }
+
     @Override
     public void prepare() {
-        //Nothing TO DO
+        //Nothing to do
     }
 
     @Override

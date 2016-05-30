@@ -12,20 +12,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.resolver;
 
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
-import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.ASConstants;
 
 
 /**
@@ -35,18 +34,16 @@ import cn.wensiqun.asmsupport.utils.ASConstants;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class ClassBuilderImpl extends ClassCreator {
-
-	private int clinitNum = 0;
+public class ClassResolver extends ClassBuildResolver {
 	
-	public ClassBuilderImpl(int version, int access, String name,
-			IClass superCls, IClass[] itfs) {
+	public ClassResolver(int version, int access, String name,
+						 IClass superCls, IClass[] itfs) {
         super(version, access, name, superCls, itfs, CachedThreadLocalClassLoader.getInstance());
     }
 	
 	
-    public ClassBuilderImpl(int version, int access, String name,
-    		IClass superCls, IClass[] itfs, ASMSupportClassLoader classLoader) {
+    public ClassResolver(int version, int access, String name,
+						 IClass superCls, IClass[] itfs, ASMSupportClassLoader classLoader) {
         super(version, access, name, superCls, itfs, classLoader);
     }
     
@@ -66,29 +63,20 @@ public class ClassBuilderImpl extends ClassCreator {
     
     /**
      * Create a field with special value
-     * 
+     *
      * @param name
      * @param modifiers
      * @param type
-     * @param val The initial value, this value is only support static field,
-     *              otherwise will ignored.This parameter, which may be null 
-     *              if the field does not have an initial value, 
-     *              must be an Integer, a Float, a Long, a Double or a 
-     *              String (for int, float, long or String fields respectively). 
-     *              This parameter is only used for static fields. Its value is 
-     *              ignored for non static fields, which must be initialized 
-     *              through bytecode instructions in constructors or methods. 
-     * @return
+     * @param initVal
+	 * @see #createFieldInternal(String, int, IClass, Object)
      */
-    public FieldBuilder createField(String name, int modifiers, IClass type, Object val) {
-        FieldBuilder fc = new FieldBuildImpl(name, modifiers, type, val);
-        fields.add(fc);
-        return fc;
+    public FieldBuilder createField(String name, int modifiers, IClass type, Object initVal) {
+        return createFieldInternal(name, modifiers, type, initVal);
     }
 
     /**
      * 
-     * create constructor.
+     * Create a constructor.
      * 
      * @param access
      * @param argTypes
@@ -97,11 +85,7 @@ public class ClassBuilderImpl extends ClassCreator {
      * @return
      */
 	public MethodBuilder createConstructor(int access, IClass[] argTypes, String[] argNames, IClass[] exceptions, KernelConstructorBody body) {
-		MethodBuilder creator = DefaultMethodBuilder.buildForNew(ASConstants.INIT, argTypes, argNames,
-                null, exceptions, access, body);
-        methods.add(creator);
-        haveInitMethod = true;
-        return creator;
+		return createConstructorInternal(access, argTypes, argNames, exceptions, body);
 	}
 
 	/**
@@ -118,10 +102,7 @@ public class ClassBuilderImpl extends ClassCreator {
      */
 	public MethodBuilder createMethod(int access, String name, IClass[] argTypes, String[] argNames,
 									  IClass returnClass, IClass[] exceptions, KernelMethodBody body) {
-		MethodBuilder creator = DefaultMethodBuilder.buildForNew(name, argTypes, argNames,
-                returnClass, exceptions, access, body);
-		methods.add(creator);
-		return creator;
+        return createMethodInternal(name, argTypes, argNames, returnClass, exceptions, access, body);
 	}
 
 	/**
@@ -131,15 +112,7 @@ public class ClassBuilderImpl extends ClassCreator {
 	 * @return
 	 */
 	public MethodBuilder createStaticBlock(KernelStaticBlockBody block) {
-		DefaultMethodBuilder creator;
-		if(clinitNum > 0) {
-			creator = DefaultMethodBuilder.buildForDelegate((DefaultMethodBuilder) methods.get(0), block);
-		} else {
-			creator = DefaultMethodBuilder.buildForNew(ASConstants.CLINIT, null, null, null, null,
-					Opcodes.ACC_STATIC, block);
-		}
-		methods.add(clinitNum++, creator);
-    	return creator;
+		return createStaticBlockInternal(block);
 	}
 
     @Override

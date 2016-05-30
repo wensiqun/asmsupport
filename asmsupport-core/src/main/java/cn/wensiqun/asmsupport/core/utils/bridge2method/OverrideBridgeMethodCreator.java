@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.DefaultMethodBuilder;
+import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.utils.reflect.MethodUtils;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;

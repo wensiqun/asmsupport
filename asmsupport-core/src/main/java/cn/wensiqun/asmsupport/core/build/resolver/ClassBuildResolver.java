@@ -12,11 +12,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.builder.impl;
+package cn.wensiqun.asmsupport.core.build.resolver;
 
-import cn.wensiqun.asmsupport.core.builder.FieldBuilder;
-import cn.wensiqun.asmsupport.core.builder.MethodBuilder;
-import cn.wensiqun.asmsupport.core.builder.SemiClass;
+import cn.wensiqun.asmsupport.core.build.FieldBuilder;
+import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.build.SemiClass;
+import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
@@ -29,21 +30,22 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ClassCreator extends AbstractClassBuilder {
+public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
 	
-    private static final Log LOG = LogFactory.getLog(ClassCreator.class);
+    private static final Log LOG = LogFactory.getLog(ClassBuildResolver.class);
 
     protected SemiClass sc;
 
-    protected boolean haveInitMethod;
+    //protected boolean haveInitMethod;
 
-    public ClassCreator(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
+    public ClassBuildResolver(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
         if (superCls == null) {
@@ -78,7 +80,16 @@ public abstract class ClassCreator extends AbstractClassBuilder {
         this.beforeCreate();
         
         // create default constructor
-        checkOrCreateDefaultConstructor();
+		boolean existInit = false;
+		for(MethodBuilder methodBuilder : methods) {
+			if(ASConstants.INIT.equals(methodBuilder.getName())) {
+				existInit = true;
+				break;
+			}
+		}
+		if (!existInit) {
+			createDefaultConstructor();
+		}
         
         // create field
         for (FieldBuilder ifc : fields) {
@@ -126,13 +137,15 @@ public abstract class ClassCreator extends AbstractClassBuilder {
 		return sc;
 	}
 
-    private void checkOrCreateDefaultConstructor(){
-        if (!haveInitMethod) {
-            createDefaultConstructor();
-        }
-    }
+	/**
+	 * Create a default constructor, if not create any
+	 * constructor.
+	 */
     protected abstract void createDefaultConstructor();
 
+	/**
+	 * Call this method before call {@link #create()}
+	 */
     protected void beforeCreate(){}
 
     private void checkUnImplementMethod() {

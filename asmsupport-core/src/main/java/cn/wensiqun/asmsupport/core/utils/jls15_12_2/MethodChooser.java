@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
-import cn.wensiqun.asmsupport.core.builder.SemiClass;
+import cn.wensiqun.asmsupport.core.build.SemiClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;

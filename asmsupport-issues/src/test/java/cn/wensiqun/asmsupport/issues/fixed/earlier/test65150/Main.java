@@ -2,7 +2,7 @@ package cn.wensiqun.asmsupport.issues.fixed.earlier.test65150;
 
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
-import cn.wensiqun.asmsupport.core.builder.impl.ClassBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.ClassResolver;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.issues.AbstractFix;
@@ -16,7 +16,7 @@ public class Main extends AbstractFix {
 		
 		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
 		
-		ClassBuilderImpl creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150", 
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150",
 				classLoader.getType(ParentClass.class), null);
 		
 		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, classLoader.getType(int.class));
@@ -51,7 +51,7 @@ public class Main extends AbstractFix {
 			}
 			
 		});
-		creator.startup();
+		creator.resolve();
 		Class Test65150 = null;
 		try {
 			Test65150 = Class.forName("bug.fixed.test65150.Test65150");
@@ -62,7 +62,7 @@ public class Main extends AbstractFix {
 		
 		final IClass Test65150AClass = classLoader.getType(Test65150);
 		
-		creator = new ClassBuilderImpl(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT", 
+		creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT",
 				null, null);
 		
 		creator.createMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)},
@@ -80,7 +80,7 @@ public class Main extends AbstractFix {
 		}); 
 		
 
-		creator.startup();
+		creator.resolve();
 		Class Test65150_ALT = null;
 		try {
 			Test65150_ALT = Class.forName("bug.fixed.test65150.Test65150_ALT");

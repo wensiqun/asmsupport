@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.client;
 
 import cn.wensiqun.asmsupport.client.block.StaticBlockBody;
-import cn.wensiqun.asmsupport.core.builder.impl.InterfaceBuilderImpl;
+import cn.wensiqun.asmsupport.core.build.resolver.InterfaceResolver;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -348,7 +348,7 @@ public class DummyInterface extends AbstractDummy {
         } else if(printLog) {
         	LogFactory.LOG_FACTORY_LOCAL.set(new LogFactory()); 
         }
-        InterfaceBuilderImpl ici = new InterfaceBuilderImpl(javaVersion, 
+        InterfaceResolver ici = new InterfaceResolver(javaVersion,
         		StringUtils.isBlank(packageName) ? name : packageName + "." + name, interfaces, getClassLoader());
 
         for(DummyField dummy : fieldDummies) {
@@ -369,7 +369,7 @@ public class DummyInterface extends AbstractDummy {
             ici.createStaticBlock(staticBlock.getDelegate());
         }
         
-        ici.setClassOutPutPath(classOutPutPath);
-        return ici.startup();
+        ici.setClassOutputPath(classOutPutPath);
+        return ici.resolve();
     }
 }
