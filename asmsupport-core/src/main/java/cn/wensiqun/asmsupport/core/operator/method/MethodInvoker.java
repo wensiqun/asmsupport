@@ -70,15 +70,15 @@ public abstract class MethodInvoker extends AbstractParamOperator {
 
     protected void argumentsToStack() {
     	for(int i=0; i<arguments.length; i++){
-            KernelParam argu = arguments[i];
+            KernelParam arg = arguments[i];
             if(LOG.isPrintEnabled()) {
                 LOG.print("push argument to stack");
             }
-            if(argu instanceof IVariable){
-                ((IVariable) argu).availableFor(this);
+            if(arg instanceof IVariable){
+                ((IVariable) arg).availableFor(this);
             }
-            argu.loadToStack(block);
-            cast(argu.getResultType(), mtdEntity.getParameterTypes()[i]);
+            arg.loadToStack(block);
+            cast(arg.getResultType(), mtdEntity.getParameterTypes()[i]);
         }
     }
     

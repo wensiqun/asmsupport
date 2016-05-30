@@ -116,7 +116,7 @@ public class Value implements IValue {
     }
 
     private Value(IClass aclass) {
-        this.cls = aclass.getClassLoader().getType(Class.class);
+        this.cls = aclass.getClassHolder().getType(Class.class);
         setProperites(aclass);
     }
 
@@ -131,7 +131,7 @@ public class Value implements IValue {
      */
     public static Value defaultValue(IClass aclass) {
         
-    	ClassHolder holder = aclass.getClassLoader();
+    	ClassHolder holder = aclass.getClassHolder();
         if (aclass.getName().equals(int.class.getName())) {
             return new Value(holder, 0);
 
@@ -363,7 +363,7 @@ public class Value implements IValue {
      * @return
      */
     public static Value number(IClass type, int val) {
-    	ClassHolder holder = type.getClassLoader();
+    	ClassHolder holder = type.getClassHolder();
         switch (type.getType().getSort()) {
         case Type.CHAR:
             return value(holder, (char) val);
@@ -398,7 +398,7 @@ public class Value implements IValue {
      * @param type
      */
     public Value getConvert(IClass type) {
-        Value newVal = value(type.getClassLoader(), value);
+        Value newVal = value(type.getClassHolder(), value);
         convert(newVal, type);
         return newVal;
     }

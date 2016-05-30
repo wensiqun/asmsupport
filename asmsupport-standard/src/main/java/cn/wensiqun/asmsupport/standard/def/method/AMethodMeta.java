@@ -14,13 +14,10 @@
  */
 package cn.wensiqun.asmsupport.standard.def.method;
 
-import java.lang.reflect.Method;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 
@@ -121,36 +118,14 @@ public class AMethodMeta implements Cloneable {
         }
 
         StringBuilder str = new StringBuilder(name).append("(");
-        for (int i = 0; i < arguments.length; i++) {
-            str.append(arguments[i].getName()).append(", ");
+        for(IClass arg : arguments) {
+            str.append(arg.getName()).append(", ");
         }
         if (arguments.length > 0) {
             str.delete(str.length() - 2, str.length());
         }
         str.append(")");
         return str.toString();
-    }
-
-    @Deprecated
-    public static AMethodMeta methodToMethodEntity(ClassHolder classHolder, IClass owner, Method m) {
-        Class<?>[] argCls = m.getParameterTypes();
-        IClass[] arguments = new IClass[argCls.length];
-        String[] argNames = new String[arguments.length];
-        for (int i = 0; i < arguments.length; i++) {
-            arguments[i] = classHolder.getType(argCls[i]);
-            argNames[i] = "arg" + i;
-        }
-
-        Class<?>[] exceptionTypes = m.getExceptionTypes();
-        IClass[] exceptionAclasses = IClassUtils.convertToAClass(classHolder, exceptionTypes);
-        
-        AMethodMeta me = new AMethodMeta(
-        		classHolder, m.getName(), owner,
-        		classHolder.getType(m.getDeclaringClass()), arguments,
-                argNames, classHolder.getType(m.getReturnType()),
-                exceptionAclasses, m.getModifiers());
-        
-        return me;
     }
     
     @Override

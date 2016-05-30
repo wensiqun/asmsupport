@@ -90,6 +90,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 	/** the actually executor.*/
     private KernelProgramBlock executor = this;
 
+    /**
+     * Use it's in prepare phase.
+     */
     private KernelProgramBlock parent;
 
     private Scope scope;
@@ -189,10 +192,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         return createOnlyVariable(aClass, "anonymous", true);
     }
 
-    protected final LocalVariable getLocalVariableModel(final String name, final IClass aClass) {
-        return createOnlyVariable(aClass, name, false);
-    }
-
     /**
      * the basic create variable method.
      */
@@ -268,7 +267,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     	if(!arraytype.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + arraytype);
     	}
-        return makeArray((ArrayClass) getType(arraytype), dimensions);
+        return makeArray(getType(arraytype), dimensions);
     }
 
     @Override
@@ -593,7 +592,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     protected final void invokeVerify(IClass a) {
         if (a.isInterface()) {
-            throw new MethodInvokeException("the class " + getExecutor().getMethodDeclaringClass()
+            throw new MethodInvokeException("The class " + getExecutor().getMethodDeclaringClass()
                     + " is a interface and interfaces have no static methods");
         }
 
@@ -971,7 +970,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     /**
-     * Geth the method of current block bellow.
+     * Get the method of current block bellow.
      * 
      * @return
      */
@@ -1025,35 +1024,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             throwExceptions = new ThrowExceptionContainer();
         }
         throwExceptions.add(exceptionType);
-    }
-    
-    /**
-     * Remove exception type from current exception container.
-     * 
-     * @param exceptionType
-     */
-    public void removeException(IClass exceptionType) {
-        if (throwExceptions != null) {
-            throwExceptions.remove(exceptionType);
-        }
-    }
-    
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof KernelProgramBlock) {
-            return this.scope == ((KernelProgramBlock) obj).scope;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return scope.hashCode();
     }
 
     public BlockTracker getBlockTracker() {

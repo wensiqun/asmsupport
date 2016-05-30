@@ -14,19 +14,15 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 
 public abstract class MutableClass extends BaseClass {
@@ -158,8 +154,8 @@ public abstract class MutableClass extends BaseClass {
      * add
      * @param field
      */
-    public void addField(Field e) {
-        getFields().add(e);
+    public void addField(Field field) {
+        getFields().add(field);
     }
 
     protected String getMethodCacheKey (AMethodMeta meta) {

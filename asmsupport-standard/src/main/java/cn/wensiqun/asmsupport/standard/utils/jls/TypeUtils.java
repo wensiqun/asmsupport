@@ -1,10 +1,10 @@
 package cn.wensiqun.asmsupport.standard.utils.jls;
 
-import java.io.Serializable;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+
+import java.io.Serializable;
 
 
 /**
@@ -18,8 +18,8 @@ public abstract class TypeUtils {
 	 * <strong>4.10 Subtyping</strong>
 	 * <p>The subtype and supertype relations are binary relations on types.</p>
 	 * <p>check is subtyping</p>
-	 * @param sub
-	 * @param sup
+	 * @param subType
+	 * @param superType
 	 * @return
 	 */
     public static boolean isSubtyping(IClass subType, IClass superType) {
@@ -75,17 +75,17 @@ public abstract class TypeUtils {
 	 * <li>short &gt;1 byte</li>
 	 * </ul>
 	 * 
-	 * @param sub
+	 * @param subType
 	 * @return
 	 */
 	public static IClass directSuperAmongPrimitiveType(IClass subType) {
         switch(subType.getType().getSort()) {
-        case Type.CHAR  : return subType.getClassLoader().getType(int.class);
-        case Type.BYTE  : return subType.getClassLoader().getType(short.class);
-        case Type.SHORT : return subType.getClassLoader().getType(int.class);
-        case Type.INT   : return subType.getClassLoader().getType(long.class);
-        case Type.FLOAT : return subType.getClassLoader().getType(double.class);
-        case Type.LONG  : return subType.getClassLoader().getType(float.class);
+        case Type.CHAR  : return subType.getClassHolder().getType(int.class);
+        case Type.BYTE  : return subType.getClassHolder().getType(short.class);
+        case Type.SHORT : return subType.getClassHolder().getType(int.class);
+        case Type.INT   : return subType.getClassHolder().getType(long.class);
+        case Type.FLOAT : return subType.getClassHolder().getType(double.class);
+        case Type.LONG  : return subType.getClassHolder().getType(float.class);
         default : return null;
         }
 	}
@@ -124,25 +124,25 @@ public abstract class TypeUtils {
 	 */
 	public static IClass[] directSuperAmongClassAndInterfaceType(IClass subType) {
 		if (subType.isInterface()) {
-            IClass[] itfs = subType.getInterfaces();
-            if (itfs.length > 0) {
-                return itfs;
+            IClass[] interfaces = subType.getInterfaces();
+            if (interfaces.length > 0) {
+                return interfaces;
             } else {
-                return new IClass[] { subType.getClassLoader().getType(Object.class) };
+                return new IClass[] { subType.getClassHolder().getType(Object.class) };
             }
 		} else {
 			IClass superType = subType.getSuperclass();
-            IClass[] itfs = subType.getInterfaces();
+            IClass[] interfaces = subType.getInterfaces();
             IClass[] superTypes;
             if(superType == null) {
-            	superTypes = new IClass[itfs.length];
+            	superTypes = new IClass[interfaces.length];
             } else {
-            	superTypes = new IClass[itfs.length + 1];
+            	superTypes = new IClass[interfaces.length + 1];
             	superTypes[0] = superType;
             }
             
-            if(itfs.length > 0){
-                System.arraycopy(itfs, 0, superTypes, 1, itfs.length);
+            if(interfaces.length > 0){
+                System.arraycopy(interfaces, 0, superTypes, 1, interfaces.length);
             }
             
             return superTypes;
@@ -176,19 +176,19 @@ public abstract class TypeUtils {
         IClass[] superTypes;
         if (basicElementType.isPrimitive()) {
             superTypes = new IClass[2];
-            superTypes[0] = subType.getClassLoader().getType(Cloneable.class);
-            superTypes[1] = subType.getClassLoader().getType(Serializable.class);
+            superTypes[0] = subType.getClassHolder().getType(Cloneable.class);
+            superTypes[1] = subType.getClassHolder().getType(Serializable.class);
         } else {
             IClass[] basicElementSuperTypes = directSuperType(basicElementType);
             if (basicElementSuperTypes != null) {
                 superTypes = new IClass[basicElementSuperTypes.length];
                 for (int i = 0; i < superTypes.length; i++) {
-                    superTypes[i] = subType.getClassLoader().getArrayType(basicElementSuperTypes[i], arrayType.getDimension());
+                    superTypes[i] = subType.getClassHolder().getArrayType(basicElementSuperTypes[i], arrayType.getDimension());
                 }
             } else {
                 superTypes = new IClass[2];
-                superTypes[0] = subType.getClassLoader().getType(Cloneable.class);
-                superTypes[1] = subType.getClassLoader().getType(Serializable.class);
+                superTypes[0] = subType.getClassHolder().getType(Cloneable.class);
+                superTypes[1] = subType.getClassHolder().getType(Serializable.class);
             }
         }
         return superTypes;

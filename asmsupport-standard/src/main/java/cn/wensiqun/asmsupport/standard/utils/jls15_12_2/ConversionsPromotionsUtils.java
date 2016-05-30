@@ -203,12 +203,12 @@ public class ConversionsPromotionsUtils {
      * a reference as having some other type in a manner that can be proved correct at 
      * compile time.</p>
      * 
-     * @param from
-     * @param to
+     * @param source
+     * @param target
      * @return
      */
-    public static boolean checkWideningReferenceConversion(IClass s, IClass t) {
-        return s.isChildOrEqual(t);
+    public static boolean checkWideningReferenceConversion(IClass source, IClass target) {
+        return source.isChildOrEqual(target);
     }
     
     /**
@@ -263,7 +263,7 @@ public class ConversionsPromotionsUtils {
         return t.isPrimitive() && s.equals(IClassUtils.getPrimitiveWrapAClass(t));
     }
     
-    public static boolean checkMethodInvocatioConversion(IClass s, IClass t) {
+    public static boolean checkMethodInvocationConversion(IClass s, IClass t) {
     	return checkIdentityConversion(s, t) || 
     		   checkWideningPrimitiveConversion(s, t) ||
     		   checkWideningReferenceConversion(s, t) ||

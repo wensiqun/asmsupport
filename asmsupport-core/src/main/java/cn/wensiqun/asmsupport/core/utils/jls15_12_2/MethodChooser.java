@@ -200,7 +200,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 		};
 		
 		try {
-        	ClassHolder holder = directCallClass.getClassLoader();
+        	ClassHolder holder = directCallClass.getClassHolder();
 		    if(directCallClass instanceof SemiClass){
 	            if(ASConstants.INIT.equals(name)){
 	                for(AMethodMeta method : directCallClass.getDeclaredConstructors()){
@@ -331,7 +331,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 				for(int i=0, len = ArrayUtils.getLength(potentialMethodArgs); i<len; i++){
 					IClass actuallyArg = argumentTypes[i];
 					IClass potentialArg = potentialMethodArgs[i];
-					if(!ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
+					if(!ConversionsPromotionsUtils.checkMethodInvocationConversion(actuallyArg, potentialArg))
 						return;
 				}
 				list.add(entity);
@@ -364,7 +364,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					IClass actuallyArg = argumentTypes[i];
 					IClass potentialArg = potentialMethodArgs[i];
 					if(!TypeUtils.isSubtyping(actuallyArg, potentialArg) && 
-					   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(actuallyArg, potentialArg))
+					   !ConversionsPromotionsUtils.checkMethodInvocationConversion(actuallyArg, potentialArg))
 						return;
 				}
 				
@@ -374,7 +374,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					IClass potentialVariableArityType = potentialMethodArgs[argumentLength - 1];
 					
 					if(TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) || 
-					   ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType)) {
+					   ConversionsPromotionsUtils.checkMethodInvocationConversion(variableArityType, potentialVariableArityType)) {
 						list.add(entity);
 						return;
 					}
@@ -385,7 +385,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 					for(int i = potentialArgumentLength - 1; i<argumentLength ; i++){
 						IClass variableArityType = argumentTypes[i];
 						if(!TypeUtils.isSubtyping(variableArityType, potentialVariableArityType) && 
-						   !ConversionsPromotionsUtils.checkMethodInvocatioConversion(variableArityType, potentialVariableArityType))
+						   !ConversionsPromotionsUtils.checkMethodInvocationConversion(variableArityType, potentialVariableArityType))
 							return;
 					}
 				}
@@ -547,7 +547,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
         InputStream classStream = classLoader.getResourceAsStream(
         		owner.getName().replace('.', '/') + ".class");
         ClassReader cr = new ClassReader(classStream);
-        final ClassHolder holder = owner.getClassLoader();
+        final ClassHolder holder = owner.getClassHolder();
         final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
         cr.accept(new ClassAdapter() {
 

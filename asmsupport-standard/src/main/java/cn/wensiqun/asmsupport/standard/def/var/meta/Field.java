@@ -26,7 +26,7 @@ public class Field extends VarMeta {
     private IClass declaringClass;
 
     /**
-     * @param directOwner The direct owner see {@link #getDirectOwnerType()}
+     * @param directOwnerType The direct owner see {@link #getDirectOwnerType()}
      * @param declaringClass The field see {@link #getDeclaringClass()}
      * @param type Field type see {@link VarMeta#getType()}
      * @param modifiers Field modifiers see {@link VarMeta#getModifiers()}

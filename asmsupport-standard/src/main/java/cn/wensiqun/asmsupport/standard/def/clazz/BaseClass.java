@@ -160,7 +160,7 @@ public abstract class BaseClass implements IClass {
 
     
     @Override
-	public ASMSupportClassLoader getClassLoader() {
+	public ASMSupportClassLoader getClassHolder() {
 		return classLoader;
 	}
 

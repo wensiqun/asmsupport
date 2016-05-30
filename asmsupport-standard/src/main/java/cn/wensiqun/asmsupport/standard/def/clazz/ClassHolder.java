@@ -1,10 +1,6 @@
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
 public interface ClassHolder {
-
-	/*IClass loadType(Class<?> clazz);
-	
-	IClass loadType(String name);*/
 	
 	/**
 	 * Get {@link BaseClass} according the specify {@link Class}, 

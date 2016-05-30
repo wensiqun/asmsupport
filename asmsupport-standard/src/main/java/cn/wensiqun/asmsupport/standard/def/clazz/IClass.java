@@ -14,12 +14,12 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import java.util.Collection;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
+
+import java.util.Collection;
 
 
 /**
@@ -105,30 +105,7 @@ public interface IClass {
      * @param name
      * @return
      */
-    Field getField(String name) throws NoSuchFieldException ;
-    
-    /*
-     * Returns an collection of {@code Field} objects reflecting all the fields
-     * declared by the class or interface represented by this
-     * {@code Class} object. This includes public, protected, default
-     * (package) access, and private fields, but excludes inherited fields.
-     * The elements in the array returned are not sorted and are not in any
-     * particular order.  This method returns an array of length 0 if the class
-     * or interface declares no fields, or if this {@code Class} object
-     * represents a primitive type, an array class, or void.
-     */
-    //Collection<Field> getDeclaredFields();
-    
-    /*
-     * Returns a {@code Field} object that reflects the specified declared
-     * field of the class or interface represented by this {@code Class}
-     * object. The {@code name} parameter is a {@code String} that
-     * specifies the simple name of the desired field.  Note that this method
-     * will not reflect the {@code length} field of an array class.
-     * @param name
-     * @return
-     */
-    //Field getDeclaredField(String name);
+    Field getField(String name) throws NoSuchFieldException;
     
     /**
      * Returns an array of <code>Constructor</code> objects reflecting all the
@@ -244,7 +221,7 @@ public interface IClass {
      * if the class is array type, get the next dim type.
      * 
      */
-    public IClass getNextDimType();
+    IClass getNextDimType();
     
     /**
      * IF current class is array type, than get the basic type, for example : 
@@ -254,8 +231,11 @@ public interface IClass {
      * 
      * The root component class is String in preceding code.
      */
-    public IClass getRootComponentClass();
-    
-    
-    public ClassHolder getClassLoader();
+    IClass getRootComponentClass();
+
+    /**
+     * Get the {@link ClassHolder}
+     * @return
+     */
+    ClassHolder getClassHolder();
 }

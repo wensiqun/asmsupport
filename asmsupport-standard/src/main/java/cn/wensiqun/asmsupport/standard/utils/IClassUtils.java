@@ -17,15 +17,15 @@
  */
 package cn.wensiqun.asmsupport.standard.utils;
 
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The AClass Helper
@@ -35,14 +35,14 @@ public class IClassUtils {
     /**
      * Check the specify type is primitive wrap type.
      * 
-     * @param aclass
+     * @param type
      */
-    public static boolean isPrimitiveWrapAClass(IClass aclass) {
-        if (aclass.getName().equals(Byte.class.getName()) || aclass.getName().equals(Short.class.getName())
-                || aclass.getName().equals(Character.class.getName())
-                || aclass.getName().equals(Integer.class.getName()) || aclass.getName().equals(Long.class.getName())
-                || aclass.getName().equals(Float.class.getName()) || aclass.getName().equals(Double.class.getName())
-                || aclass.getName().equals(Boolean.class.getName())) {
+    public static boolean isPrimitiveWrapAClass(IClass type) {
+        if (type.getName().equals(Byte.class.getName()) || type.getName().equals(Short.class.getName())
+                || type.getName().equals(Character.class.getName())
+                || type.getName().equals(Integer.class.getName()) || type.getName().equals(Long.class.getName())
+                || type.getName().equals(Float.class.getName()) || type.getName().equals(Double.class.getName())
+                || type.getName().equals(Boolean.class.getName())) {
             return true;
         }
         return false;
@@ -52,52 +52,52 @@ public class IClassUtils {
      * Get the primitive type if the argument is wrap type, otherwise
      * return the argument self.
      */
-    public static IClass getPrimitiveAClass(IClass aclass) {
-    	ClassHolder ch = aclass.getClassLoader();
-        if (aclass.equals(ch.getType(Boolean.class))) {
+    public static IClass getPrimitiveAClass(IClass type) {
+    	ClassHolder ch = type.getClassHolder();
+        if (type.equals(ch.getType(Boolean.class))) {
             return ch.getType(boolean.class);
-        } else if (aclass.equals(ch.getType(Byte.class))) {
+        } else if (type.equals(ch.getType(Byte.class))) {
             return ch.getType(byte.class);
-        } else if (aclass.equals(ch.getType(Short.class))) {
+        } else if (type.equals(ch.getType(Short.class))) {
             return ch.getType(short.class);
-        } else if (aclass.equals(ch.getType(Character.class))) {
+        } else if (type.equals(ch.getType(Character.class))) {
             return ch.getType(char.class);
-        } else if (aclass.equals(ch.getType(Integer.class))) {
+        } else if (type.equals(ch.getType(Integer.class))) {
             return ch.getType(int.class);
-        } else if (aclass.equals(ch.getType(Long.class))) {
+        } else if (type.equals(ch.getType(Long.class))) {
             return ch.getType(long.class);
-        } else if (aclass.equals(ch.getType(Float.class))) {
+        } else if (type.equals(ch.getType(Float.class))) {
             return ch.getType(float.class);
-        } else if (aclass.equals(ch.getType(Double.class))) {
+        } else if (type.equals(ch.getType(Double.class))) {
             return ch.getType(double.class);
         }
-        return aclass;
+        return type;
     }
     
     /**
      * Get the primitive wrap type if the argument is primitive type, otherwise
      * return the argument self.
      */
-    public static IClass getPrimitiveWrapAClass(IClass aclass) {
-    	ClassHolder ch = aclass.getClassLoader();
-        if (aclass.equals(ch.getType(boolean.class))) {
+    public static IClass getPrimitiveWrapAClass(IClass type) {
+    	ClassHolder ch = type.getClassHolder();
+        if (type.equals(ch.getType(boolean.class))) {
             return ch.getType(Boolean.class);
-        } else if (aclass.equals(ch.getType(byte.class))) {
+        } else if (type.equals(ch.getType(byte.class))) {
             return ch.getType(Byte.class);
-        } else if (aclass.equals(ch.getType(short.class))) {
+        } else if (type.equals(ch.getType(short.class))) {
             return ch.getType(Short.class);
-        } else if (aclass.equals(ch.getType(char.class))) {
+        } else if (type.equals(ch.getType(char.class))) {
             return ch.getType(Character.class);
-        } else if (aclass.equals(ch.getType(int.class))) {
+        } else if (type.equals(ch.getType(int.class))) {
             return ch.getType(Integer.class);
-        } else if (aclass.equals(ch.getType(long.class))) {
+        } else if (type.equals(ch.getType(long.class))) {
             return ch.getType(Long.class);
-        } else if (aclass.equals(ch.getType(float.class))) {
+        } else if (type.equals(ch.getType(float.class))) {
             return ch.getType(Float.class);
-        } else if (aclass.equals(ch.getType(double.class))) {
+        } else if (type.equals(ch.getType(double.class))) {
             return ch.getType(Double.class);
         }
-        return aclass;
+        return type;
     }
 
     /**
@@ -112,13 +112,13 @@ public class IClassUtils {
                 int typeSort = type.getType().getSort();
                 if (resultType == null || typeSort > resultType.getType().getSort()) {
                     if (typeSort <= Type.INT) {
-                        resultType = type.getClassLoader().getType(int.class);
+                        resultType = type.getClassHolder().getType(int.class);
                     } else {
                         resultType = type;
                     }
                 }
             } else {
-                throw new ASMSupportException(type + " dosn't support arithmetical operator.");
+                throw new ASMSupportException(type + " dons't support arithmetical operator.");
             }
         }
         return resultType;
@@ -127,20 +127,10 @@ public class IClassUtils {
     /**
      * Check the specify whether or not as an arithmetical operation factor.
      */
-    public static boolean isArithmetical(IClass aclass) {
-        if (aclass.isPrimitive() && !aclass.getName().equals(boolean.class.getName())) {
+    public static boolean isArithmetical(IClass type) {
+        if (type.isPrimitive() && !type.getName().equals(boolean.class.getName())) {
             return true;
-        } else if (isPrimitiveWrapAClass(aclass) && !aclass.getName().equals(Boolean.class.getName())) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check the type support unbox or box.
-     */
-    public static boolean boxUnboxable(IClass aclass) {
-        if (aclass.isPrimitive() || isPrimitiveWrapAClass(aclass)) {
+        } else if (isPrimitiveWrapAClass(type) && !type.getName().equals(Boolean.class.getName())) {
             return true;
         }
         return false;
@@ -169,11 +159,9 @@ public class IClassUtils {
      *        the {@code where} is Main.class
      * @param callFrom where the call from, in preceding code {@code sub.call()}, 
      *        the {@code callFrom} is Sub.class
-     * @param declaringClass the method declaring class, in preceding code {@code sub.call()}, 
-     *        the {@code declaringClass} is Super.class
      * @param methodDescription method description
      * @param modifiers the modifier of method
-     * @return
+     * @return boolean
      */
     public static boolean visible(IClass where, IClass callFrom, IClass methodDescription, int modifiers) {
         // 只要是public就可见
@@ -255,11 +243,11 @@ public class IClassUtils {
     /**
      * @return List<Class<?>> all interface list
      */
-    public static List<IClass> getAllInterfaces(IClass aclass) {
-        IClass[] itfs = aclass.getInterfaces();
-        IClass superClass = aclass.getSuperclass();
-        List<IClass> interfaceColl = new ArrayList<IClass>();
-        for (IClass itf : itfs) {
+    public static List<IClass> getAllInterfaces(IClass types) {
+        IClass[] interfaces = types.getInterfaces();
+        IClass superClass = types.getSuperclass();
+        List<IClass> interfaceColl = new ArrayList<>();
+        for (IClass itf : interfaces) {
         	interfaceColl.add(itf);
             getAllInterfaces(interfaceColl, itf);
         }
@@ -270,16 +258,16 @@ public class IClassUtils {
     /**
      * Convert {@link Class} list to {@link IClass} list
      */
-    public static IClass[] convertToAClass(ClassHolder classHoler, Class<?>[] classes) {
+    public static IClass[] convertToAClass(ClassHolder classHolder, Class<?>[] classes) {
         if (classes == null) {
             return new IClass[0];
         }
 
-        IClass[] aclasses = new IClass[classes.length];
+        IClass[] types = new IClass[classes.length];
         for (int i = 0; i < classes.length; i++) {
-            aclasses[i] = classHoler.getType(classes[i]);
+            types[i] = classHolder.getType(classes[i]);
         }
-        return aclasses;
+        return types;
     }
     
     /**
@@ -296,9 +284,9 @@ public class IClassUtils {
         // get interface from super class
         getAllInterfaces(itfList, clazz.getSuperclass());
 
-        IClass[] itfs = clazz.getInterfaces();
-        if (ArrayUtils.isNotEmpty(itfs)) {
-            for (IClass itf : itfs) {
+        IClass[] interfaces = clazz.getInterfaces();
+        if (ArrayUtils.isNotEmpty(interfaces)) {
+            for (IClass itf : interfaces) {
                 if (!itfList.contains(itf)) {
                     itfList.add(itf);
                 }

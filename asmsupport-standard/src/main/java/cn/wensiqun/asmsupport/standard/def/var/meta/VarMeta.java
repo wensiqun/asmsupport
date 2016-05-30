@@ -18,7 +18,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
- * The variable meta informations. 
+ * The variable meta information.
  */
 public class VarMeta {
 

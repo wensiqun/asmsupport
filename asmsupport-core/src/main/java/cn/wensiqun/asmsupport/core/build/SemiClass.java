@@ -58,7 +58,7 @@ public class SemiClass extends MutableClass {
 
         if (found.isEmpty()) {
             IClass fieldOwner = getSuperclass();
-            IClass objectType = getClassLoader().getType(Object.class);
+            IClass objectType = getClassHolder().getType(Object.class);
             while (fieldOwner != null && !fieldOwner.equals(objectType)) {
                 Field field = fieldOwner.getField(name);
                 if (field != null) {

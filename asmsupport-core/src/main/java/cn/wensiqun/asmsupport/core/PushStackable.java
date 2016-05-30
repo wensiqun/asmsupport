@@ -33,5 +33,5 @@ public interface PushStackable {
      * 
      * @param block
      */
-    public void loadToStack(KernelProgramBlock block);
+    void loadToStack(KernelProgramBlock block);
 }

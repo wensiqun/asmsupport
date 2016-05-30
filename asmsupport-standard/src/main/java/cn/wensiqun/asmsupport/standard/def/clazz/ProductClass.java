@@ -14,11 +14,6 @@
  */
 package cn.wensiqun.asmsupport.standard.def.clazz;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.LinkedList;
-
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
@@ -27,10 +22,15 @@ import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.LinkedList;
 
 
 /**
@@ -86,7 +86,7 @@ public class ProductClass extends MutableClass {
         
         if(found.isEmpty()) {
             Class<?> fieldOwner = reallyClass;
-        	IClass objectType = getClassLoader().getType(Object.class);
+        	IClass objectType = getClassHolder().getType(Object.class);
             while(fieldOwner != null && !fieldOwner.equals(objectType)) {
             	try {
                     java.lang.reflect.Field f = fieldOwner.getDeclaredField(name);
@@ -216,7 +216,7 @@ public class ProductClass extends MutableClass {
 						}
 					};
 					try {
-			    		ASMSupportClassLoader classLoader = ProductClass.this.getClassLoader();
+			    		ASMSupportClassLoader classLoader = ProductClass.this.getClassHolder();
 			    		InputStream in = classLoader.getResourceAsStream(reallyClass.getName().replace('.', '/') + ".class");
 			    		if (in != null) {
 			                try {

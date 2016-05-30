@@ -85,7 +85,7 @@ public class ThrowExceptionContainer implements Set<IClass> {
 	public boolean add(IClass e) {
 		assert e != null;
 
-		if (e.isChildOrEqual(e.getClassLoader(	).getType(RuntimeException.class))) {
+		if (e.isChildOrEqual(e.getClassHolder(	).getType(RuntimeException.class))) {
 			return false;
 		}
 
