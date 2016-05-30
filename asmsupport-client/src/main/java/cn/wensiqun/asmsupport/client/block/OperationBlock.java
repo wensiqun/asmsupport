@@ -9,25 +9,17 @@ import cn.wensiqun.asmsupport.client.def.param.basic.DummyParam;
 import cn.wensiqun.asmsupport.client.def.param.basic.NullParam;
 import cn.wensiqun.asmsupport.client.def.param.impl.*;
 import cn.wensiqun.asmsupport.client.def.var.FieldVar;
+import cn.wensiqun.asmsupport.client.def.var.Super;
+import cn.wensiqun.asmsupport.client.def.var.This;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.standard.action.*;
-import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
+import cn.wensiqun.asmsupport.standard.action.OperationSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * Created by sqwen on 2016/5/26.
  */
-public class OperationBlock<B extends KernelProgramBlock> implements
-ClassHolder,
-GenericAction<Param>,
-ValueAction<Param>,
-MethodInvokeAction<Param, FieldVar>,
-ArrayAction<Param>,
-ArithmeticAction<Param>,
-BitwiseAction<Param>,
-CrementAction<Param>,
-RelationalAction<Param>,
-LogicalAction<Param> {
+public class OperationBlock<B extends KernelProgramBlock> implements OperationSet<Param, Var> {
 
     private ClientBridge<B> clientBridge;
 
@@ -251,6 +243,26 @@ LogicalAction<Param> {
     }
 
     @Override
+    public This this_() {
+        return new This(getClientBridge(), getGenerateTimeBlock().this_());
+    }
+
+    @Override
+    public FieldVar this_(String name) {
+        return new FieldVar(getClientBridge(), getGenerateTimeBlock().this_(name));
+    }
+
+    @Override
+    public Super super_() {
+        return new Super(getClientBridge(), getGenerateTimeBlock().super_());
+    }
+
+    @Override
+    public FieldVar field(String name) {
+        return new FieldVar(getClientBridge(), getGenerateTimeBlock().field(name));
+    }
+
+    @Override
     public final UncertainParam checkcast(Param cc, IClass to) {
         return new UncertainParamImpl(getClientBridge(), getGenerateTimeBlock().checkcast(cc.getTarget(), to));
     }
@@ -283,31 +295,6 @@ LogicalAction<Param> {
     @Override
     public final BoolParam instanceof_(Param obj, Class<?> type) {
         return new BoolParamImpl(getClientBridge(), new InstanceofAction(getClientBridge(), getType(type)), obj);
-    }
-
-    @Override
-    public final void break_() {
-        getGenerateTimeBlock().break_();
-    }
-
-    @Override
-    public final void continue_() {
-        getGenerateTimeBlock().continue_();
-    }
-
-    @Override
-    public final void throw_(Param exception) {
-        getGenerateTimeBlock().throw_(exception.getTarget());
-    }
-
-    @Override
-    public final void return_() {
-        getGenerateTimeBlock().return_();
-    }
-
-    @Override
-    public final void return_(Param param) {
-        getGenerateTimeBlock().return_(param.getTarget());
     }
 
     @Override

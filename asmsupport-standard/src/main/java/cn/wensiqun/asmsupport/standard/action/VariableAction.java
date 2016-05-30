@@ -28,36 +28,6 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
  * @param <_V>      The Local Variable generic type
  */
 public interface VariableAction<_P extends IParam, _V extends IVar> {
-
-    /**
-     * 
-     * Get {@code this} keyword as a variable, if current is a static method, will throw
-     * exception while call this method.
-     * 
-     * @return {@link _V}
-     * @see #super_()
-     */
-    _V this_();
-    
-    /**
-     * Get global variable of current class according the passed name. 
-     * this method is equivalence to : 
-     * <pre>
-     *     _this().getGlobalVariable(name);
-     * <pre>
-     * @param name
-     * @return {@link _V}
-     */
-    _V this_(String name);
-    
-    /**
-     * Get {@code super} keyword as a variable, if current is a static method, will throw
-     * exception while call this method.
-     * 
-     * @return {@link _V}
-     * @see #this_()
-     */
-    _V super_();
     
     /**
      * Create a local variable with anonymous
@@ -98,19 +68,6 @@ public interface VariableAction<_P extends IParam, _V extends IVar> {
      * @return {@link _V}
      */
     _V var(String name, IClass type, _P para);
-    
-
-    /**
-     * Get field from current object. the method is same to call following :
-     * 
-     * <pre>
-     * this_().field(name);
-     * </pre>
-     * 
-     * @param name
-     * @return {@link _V}
-     */
-    _V field(String name);
     
 	/**
 	 * assign a value to a variable. for exampel:

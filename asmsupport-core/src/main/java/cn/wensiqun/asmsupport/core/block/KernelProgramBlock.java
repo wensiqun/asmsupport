@@ -84,7 +84,7 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
  * @author wensiqun(at)163.com
  */
 public abstract class KernelProgramBlock extends AbstractKernelBlock implements 
-ActionSet<KernelParam, IVariable, GlobalVariable,
+ActionSet<KernelParam, IVariable,
 KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
 	/** the actually executor.*/

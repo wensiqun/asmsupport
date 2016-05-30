@@ -15,8 +15,6 @@
 package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
-import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
-import cn.wensiqun.asmsupport.standard.def.var.IFieldVar;
 import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
@@ -29,20 +27,53 @@ import cn.wensiqun.asmsupport.standard.def.var.IVar;
 public interface ActionSet<
 _P extends IParam,
 _V extends IVar,
-_F extends IFieldVar, 
 _IF, _While, _DoWhile, _ForEach, _TRY, _SYN>
 extends
-GenericAction<_P>,
-ValueAction<_P>,
-ClassHolder,
-MethodInvokeAction<_P, _F>, 
-ArrayAction<_P>, 
-ArithmeticAction<_P>, 
-BitwiseAction<_P>, 
-CrementAction<_P>,
-RelationalAction<_P>, 
-LogicalAction<_P>,
+OperationSet<_P, _V>,
 VariableAction<_P, _V>,
 CreateBlockAction<_IF, _While, _DoWhile, _ForEach, _TRY, _SYN> {
 
+    /**
+     * Corresponding to break statement in loop.
+     *
+     */
+    void break_();
+
+    /**
+     * Corresponding to continue statement in loop.
+     *
+     */
+    void continue_();
+
+    /**
+     * Throw an exception.
+     *
+     * <p style="border:1px solid;width:500px;padding:10px;">
+     * <b style="color:#FF3300">throw new RuntimeException()</b>
+     * </p>
+     *
+     * Following code is the asmsupport code.
+     * <p style="border:1px solid;width:500px;padding:10px;">
+     * throwException(invokeConstructor(RuntimeException_ACLASS));
+     * </p>
+     *
+     *
+     * @param exception
+     */
+    void throw_(_P exception);
+
+    /**
+     * Corresponding to return statement with no return value.
+     *
+     */
+    void return_();
+
+    /**
+     * Corresponding to return statement with return value.
+     *
+     * @param param
+     *            return value.
+     *
+     */
+    void return_(_P param);
 }

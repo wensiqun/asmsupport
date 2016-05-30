@@ -2,11 +2,55 @@ package cn.wensiqun.asmsupport.standard.action;
 
 import cn.wensiqun.asmsupport.standard.def.IParam;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
+import cn.wensiqun.asmsupport.standard.def.var.IVar;
 
 /**
  * Created by sqwen on 2016/5/26.
  */
-public interface GenericAction<_P extends IParam> {
+public interface GenericAction<_P extends IParam, _V extends IVar> {
+
+    /**
+     *
+     * Get {@code this} keyword as a variable, if current is a static method, will throw
+     * exception while call this method.
+     *
+     * @return {@link _V}
+     * @see #super_()
+     */
+    _V this_();
+
+    /**
+     * Get global variable of current class according the passed name.
+     * this method is equivalence to :
+     * <pre>
+     *     _this().getGlobalVariable(name);
+     * <pre>
+     * @param name
+     * @return {@link _V}
+     */
+    _V this_(String name);
+
+    /**
+     * Get {@code super} keyword as a variable, if current is a static method, will throw
+     * exception while call this method.
+     *
+     * @return {@link _V}
+     * @see #this_()
+     */
+    _V super_();
+
+
+    /**
+     * Get field from current object. the method is same to call following :
+     *
+     * <pre>
+     * this_().field(name);
+     * </pre>
+     *
+     * @param name
+     * @return {@link _V}
+     */
+    _V field(String name);
 
     /**
      * check cast object type, such as following code:
@@ -144,49 +188,5 @@ public interface GenericAction<_P extends IParam> {
      * @return
      */
     _P instanceof_(_P obj, Class<?> type);
-
-    /**
-     * Corresponding to break statement in loop.
-     *
-     */
-    public void break_();
-
-    /**
-     * Corresponding to continue statement in loop.
-     *
-     */
-    void continue_();
-
-    /**
-     * Throw an exception.
-     *
-     * <p style="border:1px solid;width:500px;padding:10px;">
-     * <b style="color:#FF3300">throw new RuntimeException()</b>
-     * </p>
-     *
-     * Following code is the asmsupport code.
-     * <p style="border:1px solid;width:500px;padding:10px;">
-     * throwException(invokeConstructor(RuntimeException_ACLASS));
-     * </p>
-     *
-     *
-     * @param exception
-     */
-    void throw_(_P exception);
-
-    /**
-     * Corresponding to return statement with no return value.
-     *
-     */
-    void return_();
-
-    /**
-     * Corresponding to return statement with return value.
-     *
-     * @param param
-     *            return value.
-     *
-     */
-    void return_(_P param);
 
 }

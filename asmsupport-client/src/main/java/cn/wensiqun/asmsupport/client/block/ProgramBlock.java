@@ -37,8 +37,7 @@ import java.util.Map;
  * @param <B>
  */
 public class ProgramBlock<B extends KernelProgramBlock> extends OperationBlock<B> implements ActionSet<
-Param, Var, FieldVar,
-IF, While, DoWhile, ForEach, Try, Sync> {
+Param, Var, IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	ProgramBlock<? extends KernelProgramBlock> parent;
 	
@@ -55,21 +54,6 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	 */
 	public IClass getMethodOwner() {
 		return getGenerateTimeBlock().getMethodDeclaringClass();
-	}
-
-	@Override
-	public This this_() {
-		return new This(getClientBridge(), getGenerateTimeBlock().this_());
-	}
-
-	@Override
-	public FieldVar this_(String name) {
-		return new FieldVar(getClientBridge(), getGenerateTimeBlock().this_(name));
-	}
-
-	@Override
-	public Super super_() {
-		return new Super(getClientBridge(), getGenerateTimeBlock().super_());
 	}
 
 	@Override
@@ -94,11 +78,6 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	@Override
 	public LocVar var(IClass type, Param para) {
 		return new LocVar(getClientBridge(), getGenerateTimeBlock().var(type, para.getTarget()));
-	}
-
-	@Override
-	public FieldVar field(String name) {
-		return new FieldVar(getClientBridge(), getGenerateTimeBlock().field(name));
 	}
 
 	@Override
@@ -146,6 +125,31 @@ IF, While, DoWhile, ForEach, Try, Sync> {
 	    sync.parent = this;
 		getGenerateTimeBlock().sync(sync.getDelegate());
 		return sync;
+	}
+
+	@Override
+	public final void break_() {
+		getGenerateTimeBlock().break_();
+	}
+
+	@Override
+	public final void continue_() {
+		getGenerateTimeBlock().continue_();
+	}
+
+	@Override
+	public final void throw_(Param exception) {
+		getGenerateTimeBlock().throw_(exception.getTarget());
+	}
+
+	@Override
+	public final void return_() {
+		getGenerateTimeBlock().return_();
+	}
+
+	@Override
+	public final void return_(Param param) {
+		getGenerateTimeBlock().return_(param.getTarget());
 	}
 
     public LocVar getLocVar(String name) {
