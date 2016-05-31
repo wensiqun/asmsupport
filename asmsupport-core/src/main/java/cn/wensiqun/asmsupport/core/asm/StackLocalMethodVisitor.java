@@ -19,15 +19,10 @@ import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.memory.Stack;
 import cn.wensiqun.asmsupport.core.utils.memory.StackableType;
-import cn.wensiqun.asmsupport.org.objectweb.asm.AnnotationVisitor;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Attribute;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
-import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
-import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
+import cn.wensiqun.asmsupport.org.objectweb.asm.*;
+import cn.wensiqun.asmsupport.utils.ASConstants;
 
-public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
+public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
 
     private static final Log LOG = LogFactory.getLog(StackLocalMethodVisitor.class);
     private static final Type OBJECT_TYPE = Type.getType(Object.class);
@@ -54,7 +49,7 @@ public class StackLocalMethodVisitor extends MethodAdapter implements Opcodes {
     }
 
     public StackLocalMethodVisitor(MethodVisitor mv, Stack stack) {
-        super(mv);
+        super(ASConstants.ASM_VERSION, mv);
         this.stack = stack;
     }
 

@@ -21,10 +21,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
-import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
-import cn.wensiqun.asmsupport.utils.asm.MethodAdapter;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 
 import java.util.*;
@@ -36,23 +34,20 @@ import java.util.*;
  * @author
  * 
  */
-public class ClassModifierClassAdapter extends ClassAdapter {
+public class ClassModifierClassAdapter extends ClassVisitor {
 
 	private List<MethodBuilder> needModify;
+
 	private String classInternalName;
 
     private Map<String, List<VisitXInsnAdapter>> superConstructorMap;
 	
 	public ClassModifierClassAdapter(ClassVisitor cv, ClassModifyResolver resolver) {
-		super(cv);
-		this.needModify = new LinkedList<MethodBuilder>();
+		super(ASConstants.ASM_VERSION, cv);
+		this.needModify = new LinkedList<>();
 		if (resolver.getMethodModifiers() != null) {
 			CollectionUtils.addAll(this.needModify, resolver.getMethodModifiers().iterator());
 		}
-	}
-	
-	public List<VisitXInsnAdapter> getSuperConstructorOperators(String desc){
-		return superConstructorMap.get(desc);
 	}
 	
 
@@ -71,11 +66,10 @@ public class ClassModifierClassAdapter extends ClassAdapter {
      * }
      *
      */
-	private class InvocationRenameMethodAdapter extends MethodAdapter{
-
+	private class InvocationRenameMethodAdapter extends MethodVisitor {
     	
-		public InvocationRenameMethodAdapter(MethodVisitor mv) {
-			super(mv);
+		InvocationRenameMethodAdapter(MethodVisitor mv) {
+			super(ASConstants.ASM_VERSION, mv);
 		}
 		
 		@Override
@@ -165,7 +159,7 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 
 	private void addSuperConstructorMap(String constructorDesc, VisitXInsnAdapter operator){
 		if(superConstructorMap == null){
-			superConstructorMap = new HashMap<String, List<VisitXInsnAdapter>>();
+			superConstructorMap = new HashMap<>();
 		}
 		
 		if(superConstructorMap.containsKey(constructorDesc)){
@@ -179,12 +173,12 @@ public class ClassModifierClassAdapter extends ClassAdapter {
 	}
 
 	
-	class ConstructorVisitor extends MethodAdapter {
+	class ConstructorVisitor extends MethodVisitor {
 		private boolean invokedSuper = false;
 		private String constructorDesc;
 		
 		public ConstructorVisitor(MethodVisitor mv, String desc) {
-			super(mv);
+            super(ASConstants.ASM_VERSION, mv);
 			this.constructorDesc = desc;
 		}
 

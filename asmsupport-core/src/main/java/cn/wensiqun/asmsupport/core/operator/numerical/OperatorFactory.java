@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical;
 
-import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
+import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.exception.UnreachableCodeException;
@@ -65,7 +65,7 @@ public abstract class OperatorFactory {
         }
 
         KernelProgramBlock block = (KernelProgramBlock) arguments[0];
-        ByteCodeExecutor last = block.getQueue().getLast();
+        BytecodeExecutor last = block.getQueue().getLast();
         if (checkSerial && last != null && last instanceof ExceptionSerialBlock) {
             last.prepare();
         }

@@ -41,7 +41,7 @@ public abstract class InstructionHelper {
 
     private static final Log LOG = LogFactory.getLog(InstructionHelper.class);
 
-    private static final String CLDESC = "Ljava/lang/Class;";
+    private static final String CLS_DESC = "Ljava/lang/Class;";
 
     /**
      * Constant for the {@link #ifCmp ifCmp} method.
@@ -144,7 +144,7 @@ public abstract class InstructionHelper {
     /**
      * Generates the instruction to push the given value on the stack.
      * 
-     * @param b
+     * @param value
      */
     public void push(final byte value) {
         pushInt(value);
@@ -153,7 +153,7 @@ public abstract class InstructionHelper {
     /**
      * Generates the instruction to push the given value on the stack.
      * 
-     * @param b
+     * @param value
      */
     public void push(final short value) {
         pushInt(value);
@@ -162,7 +162,7 @@ public abstract class InstructionHelper {
     /**
      * Generates the instruction to push the given value on the stack.
      * 
-     * @param b
+     * @param value
      */
     public void push(final char value) {
         pushInt(value);
@@ -246,28 +246,28 @@ public abstract class InstructionHelper {
         } else {
             switch (value.getSort()) {
             case Type.BOOLEAN:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Boolean", "TYPE", CLS_DESC);
                 break;
             case Type.CHAR:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Character", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Character", "TYPE", CLS_DESC);
                 break;
             case Type.BYTE:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Byte", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Byte", "TYPE", CLS_DESC);
                 break;
             case Type.SHORT:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Short", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Short", "TYPE", CLS_DESC);
                 break;
             case Type.INT:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Integer", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Integer", "TYPE", CLS_DESC);
                 break;
             case Type.FLOAT:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Float", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Float", "TYPE", CLS_DESC);
                 break;
             case Type.LONG:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Long", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Long", "TYPE", CLS_DESC);
                 break;
             case Type.DOUBLE:
-                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Double", "TYPE", CLDESC);
+                mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/Double", "TYPE", CLS_DESC);
                 break;
             default:
                 mv.visitLdcInsn(value);
@@ -545,10 +545,7 @@ public abstract class InstructionHelper {
      * Generates the instruction to store the top stack value in a local
      * variable.
      * 
-     * @param type
-     *            the type of the local variable to be stored.
-     * @param index
-     *            an index in the frame's local variables array.
+     * @param var
      */
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
@@ -560,9 +557,9 @@ public abstract class InstructionHelper {
     /**
      * Generates a SWAP instruction.
      */
-    public void swap() {
+    /*public void swap() {
         mv.visitInsn(Opcodes.SWAP);
-    }
+    }*/
 
     /**
      * Generates a DUP instruction.
@@ -581,9 +578,9 @@ public abstract class InstructionHelper {
     /**
      * Generates a DUP_X2 instruction.
      */
-    public void dupX2() {
+    /*public void dupX2() {
         mv.visitInsn(Opcodes.DUP_X2);
-    }
+    }*/
 
     /**
      * Generates a DUP2 instruction.
@@ -667,8 +664,8 @@ public abstract class InstructionHelper {
      * 
      * @param ownerType
      *            the class in which the constructor is defined.
-     * @param method
-     *            the constructor to be invoked.
+     * @param argTypes
+     *            the constructor parameter types.
      */
     public void invokeConstructor(final Type ownerType, final Type[] argTypes) {
         invokeInsn(Opcodes.INVOKESPECIAL, ownerType, "<init>", Type.VOID_TYPE, argTypes, false);
@@ -787,7 +784,7 @@ public abstract class InstructionHelper {
 
     /**
      * 
-     * @param gv
+     * @param var
      */
     public void commonPutField(ExplicitVariable var) {
         if (var instanceof LocalVariable) {
@@ -1103,9 +1100,9 @@ public abstract class InstructionHelper {
      * @param label
      *            where to jump if the condition is <tt>true</tt>.
      */
-    public void ifNull(final Label label) {
+    /*public void ifNull(final Label label) {
         mv.visitJumpInsn(Opcodes.IFNULL, label);
-    }
+    }*/
 
     /**
      * Generates the instruction to jump to the given label if the top stack
@@ -1114,9 +1111,9 @@ public abstract class InstructionHelper {
      * @param label
      *            where to jump if the condition is <tt>true</tt>.
      */
-    public void ifNonNull(final Label label) {
+    /*public void ifNonNull(final Label label) {
         mv.visitJumpInsn(Opcodes.IFNONNULL, label);
-    }
+    }*/
 
     /**
      * Generates the instruction to jump to the given label.

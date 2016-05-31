@@ -25,6 +25,6 @@ import cn.wensiqun.asmsupport.utils.collections.LinkedListNode;
  * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public abstract class ByteCodeExecutor extends LinkedListNode implements Executable{
+public abstract class BytecodeExecutor extends LinkedListNode implements Executable{
 	
 }

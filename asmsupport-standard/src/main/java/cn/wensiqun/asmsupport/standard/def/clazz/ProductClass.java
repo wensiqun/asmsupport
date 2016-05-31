@@ -24,7 +24,6 @@ import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.Modifiers;
-import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.lang.InterfaceLooper;
 
 import java.io.IOException;
@@ -182,7 +181,7 @@ public class ProductClass extends MutableClass {
 		if(!searchedInClass) {
 			synchronized (this) {
 				if(!searchedInClass) {
-					ClassVisitor cv = new ClassAdapter(){
+					ClassVisitor cv = new ClassVisitor(ASConstants.ASM_VERSION){
 						@Override
 						public MethodVisitor visitMethod(int access, String name,
 								String desc, String signature, String[] exceptions) {

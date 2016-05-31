@@ -18,6 +18,6 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 
 public interface VisitXInsnAdapter {
 	
-    public void newVisitXInsnOperator(KernelProgramBlock block);
+    void newVisitXInsnOperator(KernelProgramBlock block);
 
 }

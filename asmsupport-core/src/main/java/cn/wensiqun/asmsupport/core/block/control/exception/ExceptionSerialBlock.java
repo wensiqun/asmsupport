@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
+import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
@@ -266,7 +266,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         if (container == null) {
             container = new ArrayList<>();
         }
-        for (ByteCodeExecutor executor : block.getQueue()) {
+        for (BytecodeExecutor executor : block.getQueue()) {
             if (executor instanceof KernelReturn) {
                 container.add((KernelReturn) executor);
             } else if (executor instanceof AbstractKernelBlock && !(executor instanceof ImplicitCatch)) {
@@ -317,7 +317,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         @Override
         public void doExecute() {
             instructionHelper.getMv().getStack().push(Type.ANY_EXP_TYPE);
-            for (ByteCodeExecutor exe : getQueue()) {
+            for (BytecodeExecutor exe : getQueue()) {
                 exe.execute();
             }
         }

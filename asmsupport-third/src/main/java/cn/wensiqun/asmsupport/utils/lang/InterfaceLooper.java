@@ -16,8 +16,8 @@ package cn.wensiqun.asmsupport.utils.lang;
 
 public abstract class InterfaceLooper {
 
-    public final boolean loop(Class<?>[] clazzs){
-        for(Class<?> clazz : clazzs) {
+    public final boolean loop(Class<?>[] interfaces){
+        for(Class<?> clazz : interfaces) {
             if(clazz.isInterface()) {
                 if(process(clazz)) {
                     return true;
@@ -25,7 +25,7 @@ public abstract class InterfaceLooper {
             }
         }
         
-        for(Class<?> clazz : clazzs) {
+        for(Class<?> clazz : interfaces) {
             if(loop(clazz.getInterfaces())) {
                 return true;
             }

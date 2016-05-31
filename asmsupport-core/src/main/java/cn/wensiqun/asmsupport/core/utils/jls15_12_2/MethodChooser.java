@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.utils.jls15_12_2;
 
 import cn.wensiqun.asmsupport.core.build.SemiClass;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassReader;
+import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
@@ -30,7 +31,6 @@ import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.DetermineMethodSignature
 import cn.wensiqun.asmsupport.standard.utils.jls15_12_2.IMethodChooser;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 import cn.wensiqun.asmsupport.utils.Modifiers;
-import cn.wensiqun.asmsupport.utils.asm.ClassAdapter;
 import cn.wensiqun.asmsupport.utils.collections.CollectionUtils;
 import cn.wensiqun.asmsupport.utils.collections.LinkedMultiValueMap;
 import cn.wensiqun.asmsupport.utils.collections.MapLooper;
@@ -548,8 +548,8 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
         		owner.getName().replace('.', '/') + ".class");
         ClassReader cr = new ClassReader(classStream);
         final ClassHolder holder = owner.getClassHolder();
-        final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
-        cr.accept(new ClassAdapter() {
+        final List<AMethodMeta> list = new ArrayList<>();
+        cr.accept(new ClassVisitor(ASConstants.ASM_VERSION) {
 
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {

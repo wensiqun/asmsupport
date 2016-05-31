@@ -131,7 +131,7 @@ public class TypePath {
      *            {@link #toString()}. May be null or empty.
      * @return the corresponding TypePath object, or null if the path is empty.
      */
-    public static TypePath fromString(final String typePath) {
+    /*public static TypePath fromString(final String typePath) {
         if (typePath == null || typePath.length() == 0) {
             return null;
         }
@@ -157,7 +157,7 @@ public class TypePath {
         }
         out.data[0] = (byte) (out.length / 2);
         return new TypePath(out.data, 0);
-    }
+    }*/
 
     /**
      * Returns a string representation of this type path. {@link #ARRAY_ELEMENT

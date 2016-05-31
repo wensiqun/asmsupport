@@ -8,5 +8,5 @@
 	<artifactId>asmsupport-third</artifactId>
 	<name>asmsupport-third</name>
 	<description>This modules is a set of third open source code, the benefit is to avoid third
-   library confilict when you use asmsupport</description>
+   library conflict when you use asmsupport</description>
 </project>

@@ -30,7 +30,7 @@ public interface LinkedList<E> extends Iterable<E>, Cloneable {
 
     /**
      * 
-     * @param e
+     * @param el
      * @return
      */
     boolean add(E el);

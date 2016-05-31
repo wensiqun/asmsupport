@@ -258,10 +258,10 @@ public class Type {
      * @return the Java type corresponding to the given argument and return
      *         types.
      */
-    public static Type getMethodType(final Type returnType,
+    /*public static Type getMethodType(final Type returnType,
             final Type... argumentTypes) {
         return getType(getMethodDescriptor(returnType, argumentTypes));
-    }
+    }*/
 
     /**
      * Returns the Java type corresponding to the given class.
@@ -531,9 +531,9 @@ public class Type {
      * 
      * @return Returns the type of the elements of this array type.
      */
-    public Type getElementType() {
+    /*public Type getElementType() {
         return getType(buf, off + getDimensions());
-    }
+    }*/
 
     /**
      * Returns the binary name of the class corresponding to this type. This
@@ -541,7 +541,7 @@ public class Type {
      * 
      * @return the binary name of the class corresponding to this type.
      */
-    public String getClassName() {
+    /*public String getClassName() {
         switch (sort) {
         case VOID:
             return "void";
@@ -572,7 +572,7 @@ public class Type {
         default:
             return null;
         }
-    }
+    }*/
 
     /**
      * Returns the internal name of the class corresponding to this object or
@@ -584,25 +584,6 @@ public class Type {
      */
     public String getInternalName() {
         return new String(buf, off, len);
-    }
-    
-    public static void main(String[] args) {
-    	System.out.println(int.class.getName());
-    	System.out.println(Type.getDescriptor(int.class));
-    	System.out.println(Type.getInternalName(int.class));
-    	
-    	System.out.println(int[].class.getName());
-    	System.out.println(Type.getDescriptor(int[].class));
-    	System.out.println(Type.getInternalName(int[].class));
-
-    	
-    	System.out.println(String.class.getName());
-    	System.out.println(Type.getDescriptor(String.class));
-    	System.out.println(Type.getInternalName(String.class));
-    	
-    	System.out.println(String[].class.getName());
-    	System.out.println(Type.getDescriptor(String[].class));
-    	System.out.println(Type.getInternalName(String[].class));
     }
 
     /**
@@ -636,9 +617,9 @@ public class Type {
      *         (argSize is therefore equal to <tt>i &gt;&gt; 2</tt>,
      *         and retSize to <tt>i &amp; 0x03</tt>).
      */
-    public int getArgumentsAndReturnSizes() {
+    /*public int getArgumentsAndReturnSizes() {
         return getArgumentsAndReturnSizes(getDescriptor());
-    }
+    }*/
 
     // ------------------------------------------------------------------------
     // Conversion to type descriptors
@@ -713,9 +694,9 @@ public class Type {
      *            an object or array class.
      * @return the internal name of the given class.
      */
-    public static String getInternalName(final Class<?> c) {
+    /*public static String getInternalName(final Class<?> c) {
         return c.getName().replace('.', '/');
-    }
+    }*/
     
     /**
      * ASMSupport Hacker 

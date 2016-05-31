@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
-import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
+import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -58,7 +58,7 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
         }
 
         instructionHelper.mark(posLbl);
-        for (ByteCodeExecutor exe : getQueue()) {
+        for (BytecodeExecutor exe : getQueue()) {
             exe.execute();
         }
 

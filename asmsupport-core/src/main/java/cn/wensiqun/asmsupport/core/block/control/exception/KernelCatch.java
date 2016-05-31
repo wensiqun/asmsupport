@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.ByteCodeExecutor;
+import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -56,7 +56,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
         // the exception variable already exists at the top of the statck.
         instructionHelper.getMv().getStack().push(getExceptionType().getType());
 
-        for (ByteCodeExecutor exe : getQueue()) {
+        for (BytecodeExecutor exe : getQueue()) {
             exe.execute();
         }
     }

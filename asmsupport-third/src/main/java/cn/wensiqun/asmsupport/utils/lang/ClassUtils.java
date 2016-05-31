@@ -20,12 +20,7 @@ package cn.wensiqun.asmsupport.utils.lang;
  * 
  * @author wensiqun at 163.com(Joe Wen)
  */
-public class ClassUtils { 
-
-    /**
-     * The inner class separator character: <code>'$' == {@value}</code>.
-     */
-    public static final char INNER_CLASS_SEPARATOR_CHAR = '$';
+public class ClassUtils {
     
     /**
      * 
@@ -38,74 +33,6 @@ public class ClassUtils {
         } else {
             return cls;
         }
-    }
-
-    /**
-     * 
-     * @param arrayClass
-     * @return
-     */
-    public static int getDimension(Class<?> arrayClass) {
-        if (arrayClass.isArray()) {
-            return StringUtils.findAllIndexes(arrayClass.getName(), "[").length;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * determine cls1 is super of cls2
-     * 
-     * @param cls1
-     * @param cls2
-     * @return
-     */
-    public static boolean isSuper(Class<?> cls1, Class<?> cls2) {
-        if (cls1.equals(cls2.getSuperclass())) {
-            return true;
-        } else {
-            return isSuper(cls1, cls2.getSuperclass());
-        }
-    }
-
-    public static Class<?> getMethodOwner(Class<?> owner, String name, Class<?> arguments) {
-        for (; !owner.equals(Object.class); owner = owner.getSuperclass()) {
-        }
-        return owner;
-    }
-
-    /**
-     * 
-     * @param owner
-     * @param innerCls
-     * @return
-     */
-    public static boolean isDirectInnerClass(Class<?> owner, Class<?> innerCls) {
-
-        String[] clses = StringUtils.split(innerCls.getName(), INNER_CLASS_SEPARATOR_CHAR);
-
-        if (clses.length > 1) {
-            if (clses[clses.length - 2].equals(owner.getName())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Check a class {@code innerClas} whether or not a inner class of an {@code owner}.
-     */
-    public static boolean isInnerClass(Class<?> owner, Class<?> innerCls) {
-        int ownerIndex = innerCls.getName().indexOf(owner.getName());
-
-        int separatorIndex = innerCls.getName().indexOf(INNER_CLASS_SEPARATOR_CHAR);
-
-        if (ownerIndex >= 0 && separatorIndex > 0 && ownerIndex < separatorIndex) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
