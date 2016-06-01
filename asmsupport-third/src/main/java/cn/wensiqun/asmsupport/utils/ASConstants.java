@@ -14,7 +14,6 @@ public interface ASConstants {
 	String SUPER = "super";
 	String THIS = "this";
 	String METHOD_PROXY_SUFFIX = "@original_" + UUID.randomUUID().toString().replace('-', '$');
-	String CLASS_PROXY_SUFFIX = "";
 
 	int ASM_VERSION = Opcodes.ASM5;
 	

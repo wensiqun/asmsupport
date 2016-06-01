@@ -27,7 +27,7 @@ import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
-import cn.wensiqun.asmsupport.core.utils.memory.Stack;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -49,7 +49,7 @@ public class AMethod {
     private AMethodMeta meta;
 
     /** A stakc of current method */
-    private Stack stack;
+    private OperandStack stack;
 
     private int mode;
 
@@ -86,7 +86,7 @@ public class AMethod {
         this.meta = meta;
         this.mode = mode;
         this.exceptionContainer = new ThrowExceptionContainer();
-        this.stack = new Stack();
+        this.stack = new OperandStack();
         this.locals = new LocalVariables();
         CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
         this.insnHelper = new CommonInstructionHelper(this);
@@ -164,7 +164,7 @@ public class AMethod {
     /**
      * Get the operand stack of current method
      */
-    public Stack getStack() {
+    public OperandStack getStack() {
         return stack;
     }
 

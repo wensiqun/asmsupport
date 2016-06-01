@@ -24,7 +24,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.wensiqun</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>asmsupport-client</artifactId>
             <version>${project.version}</version>
         </dependency>

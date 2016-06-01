@@ -5,7 +5,8 @@ import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.basic.DummyParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
+
+import java.util.Stack;
 
 /**
  * Get array length action
@@ -23,7 +24,7 @@ public class ArrayLengthAction extends OperatorAction {
     }
 
     @Override
-    public Param doAction(ArrayStack<Param> operands) {
+    public Param doAction(Stack<Param> operands) {
         Param[] dims = new Param[dimSize];
         for(int i=0; i<dimSize; i++) {
             dims[dimSize - i - 1] = operands.pop();

@@ -22,7 +22,7 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.core.utils.memory.Stack;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -55,7 +55,7 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitLabel(orEndLbl);
         
-        Stack stack = block.getMethod().getStack();
+        OperandStack stack = block.getMethod().getStack();
         stack.pop();
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);

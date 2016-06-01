@@ -11,7 +11,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cn.wensiqun</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>asmsupport-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>

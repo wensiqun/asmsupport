@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.utils.lang;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 
  * @author wensiqun at 163.com(Joe Wen)
@@ -37,14 +34,14 @@ public class StringUtils {
      */
     public static final int INDEX_NOT_FOUND = -1;
     
-    /**
+    /*
      * Get all indexes
      * 
      * @param str
      * @param searchStr
      * @return
      */
-    public static Integer[] findAllIndexes(String str, String searchStr){
+    /*public static Integer[] findAllIndexes(String str, String searchStr){
         
     	List<Integer> list = new ArrayList<Integer>();
         //int indexes[] = new int[0];
@@ -56,7 +53,7 @@ public class StringUtils {
         }
 
         return list.toArray(new Integer[list.size()]);
-    }
+    }*/
     
 	
 	/**
@@ -74,14 +71,14 @@ public class StringUtils {
 	}
 	
 	
-	/**
+	/*
 	 * 
 	 * @param str
 	 * @param len
 	 * @param chr
 	 * @return
 	 */
-	public static String appendIfBlank(String str, int len, char chr){
+	/*public static String appendIfBlank(String str, int len, char chr){
 		if(str.length() < len){
 			StringBuilder newStr = new StringBuilder(str);
 			int left = len - str.length();
@@ -92,7 +89,7 @@ public class StringUtils {
 		}else{
 			return str;
 		}
-	}
+	}*/
 	
 
     /**

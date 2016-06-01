@@ -3,7 +3,8 @@ package cn.wensiqun.asmsupport.client.def.action;
 import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
+
+import java.util.Stack;
 
 /**
  * A wrapper of an operator 
@@ -38,7 +39,7 @@ public abstract class OperatorAction {
      * @param operands the operands stack.
      * @return {@link Param} the result
      */
-    public abstract Param doAction(ArrayStack<Param> operands);
+    public abstract Param doAction(Stack<Param> operands);
     
     /**
      * Execute a operator, get the related operands from arguments.

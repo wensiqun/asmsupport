@@ -123,9 +123,9 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
     /**
      * 
      * 
-     * @param add
+     * @param orig
      *            null : insert to head
-     * @param after
+     * @param add
      * @return
      */
     private boolean commonAdd(LinkedListNode orig, E add) {
@@ -153,14 +153,14 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
         return true;
     }
 
-    @Override
+   /* @Override
     public E getHead() {
         return (E) head;
-    }
+    }*/
 
     @Override
     public E getLast() {
-        return (E) last;
+        return last;
     }
 
     @Override
@@ -176,11 +176,11 @@ public class CommonLinkedList<E extends LinkedListNode> implements LinkedList<E>
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean moveToLast(E src) {
         move(src, last);
         return true;
-    }
+    }*/
 
     private class Itr implements Iterator<LinkedListNode> {
 

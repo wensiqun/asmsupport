@@ -14,12 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.utils.memory;
 
-import java.util.EmptyStackException;
-
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 /**
  * 
@@ -28,11 +28,11 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class Stack implements Printable, Cloneable {
+public class OperandStack implements Printable, Cloneable {
 
-    private static final Log LOG = LogFactory.getLog(Stack.class);
+    private static final Log LOG = LogFactory.getLog(OperandStack.class);
     
-    private ArrayStack<StackableType> stack;
+    private Stack<OperandType> stack;
     
     /** Stack current size */
     private int size;
@@ -54,8 +54,8 @@ public class Stack implements Printable, Cloneable {
         }
     }
 
-    public Stack() {
-        stack = new ArrayStack<StackableType>();
+    public OperandStack() {
+        stack = new java.util.Stack<>();
         ph = new PrintHelper();
     }
 
@@ -66,8 +66,8 @@ public class Stack implements Printable, Cloneable {
      * @throws EmptyStackException
      *             if the stack is empty
      */
-    public StackableType peek() throws EmptyStackException {
-        return (StackableType) stack.peek();
+    public OperandType peek() throws EmptyStackException {
+        return stack.peek();
     }
 
     /**
@@ -81,26 +81,33 @@ public class Stack implements Printable, Cloneable {
      *             if there are not enough items on the stack to satisfy this
      *             request
      */
-    public StackableType peek(int n) throws EmptyStackException {
-        return (StackableType) stack.peek(n);
+    public OperandType peek(int n) throws EmptyStackException {
+        synchronized (stack) {
+            int m = (stack.size() - n) - 1;
+            if (m < 0) {
+                throw new EmptyStackException();
+            } else {
+                return stack.get(m);
+            }
+        }
     }
 
-    public StackableType pop() throws EmptyStackException {
-        StackableType s = peek();
+    public OperandType pop() throws EmptyStackException {
+        OperandType s = peek();
         pop(1);
         return s;
     }
 
     public void pop(int times) throws EmptyStackException {
         while (times > 0) {
-            StackableType t = (StackableType) stack.pop();
+            OperandType t = stack.pop();
             size -= t.getSize();
             times--;
             valueNumber--;
         }
     }
 
-    public void push(StackableType item) {
+    public void push(OperandType item) {
         valueNumber++;
         stack.push(item);
         size += item.getSize();
@@ -110,7 +117,7 @@ public class Stack implements Printable, Cloneable {
     }
 
     public void push(Type item) {
-        StackableType stype = new StackableType(item);
+        OperandType stype = new OperandType(item);
         push(stype);
     }
 
@@ -122,17 +129,13 @@ public class Stack implements Printable, Cloneable {
         }
     }
 
-    public void insert(int pos, StackableType item) {
+    public void insert(int pos, OperandType item) {
         valueNumber++;
         stack.add(getReallyPosition(pos), item);
         size += item.getSize();
         if (maxSize < size) {
             maxSize = size;
         }
-    }
-
-    public void insert(int i, Type item) {
-        insert(stack.size() - i, new StackableType(item));
     }
 
     private int getReallyPosition(int stackPosition) {
@@ -179,7 +182,7 @@ public class Stack implements Printable, Cloneable {
         int valueIndex = valueNumber;
         int rowIndex = 1;
         for (; rowIndex < size + 1;) {
-            Type t = ((StackableType) stack.get(valueIndex - 1)).getType();
+            Type t = (stack.get(valueIndex - 1)).getType();
             int valueSize = t.getSize();
 
             while (valueSize > 0) {

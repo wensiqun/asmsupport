@@ -22,7 +22,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
-import cn.wensiqun.asmsupport.core.utils.memory.Stack;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -50,7 +50,7 @@ public class KernelNot extends UnaryLogical {
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitLabel(falseLbl);
         
-        Stack stack = block.getMethod().getStack();
+        OperandStack stack = block.getMethod().getStack();
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);
         stack.printState();

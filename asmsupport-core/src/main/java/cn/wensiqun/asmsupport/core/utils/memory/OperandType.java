@@ -18,16 +18,15 @@ package cn.wensiqun.asmsupport.core.utils.memory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 
 /**
- * Represent an element that's should be push to {@link Stack}
+ * Represent an element that's should be push to {@link OperandStack}
  * 
  * @author wensiqun at 163.com(Joe Wen)
  */
-public class StackableType {
+public class OperandType {
     
     private Type type;
 
-    public StackableType(Type type) {
-        super();
+    public OperandType(Type type) {
         this.type = type;
     }
 

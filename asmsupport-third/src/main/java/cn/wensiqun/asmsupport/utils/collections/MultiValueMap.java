@@ -41,12 +41,12 @@ import java.util.Map;
  */
 public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
-	/**
+	/*
 	 * Return the first value for the given key.
 	 * @param key the key
 	 * @return the first value for the specified key, or <code>null</code>
 	 */
-	V getFirst(K key);
+	//V getFirst(K key);
 
 	/**
 	 * Add the given single value to the current list of values for the given key.
@@ -68,10 +68,10 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 	 */
 	void setAll(Map<K, V> values);
 
-	/**
+	/*
 	 * Returns the first values contained in this {@code MultiValueMap}.
 	 * @return a single value representation of this map
 	 */
-	Map<K, V> toSingleValueMap();
+	//Map<K, V> toSingleValueMap();
 
 }

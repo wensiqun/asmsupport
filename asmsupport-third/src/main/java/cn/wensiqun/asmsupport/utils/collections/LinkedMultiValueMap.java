@@ -74,10 +74,10 @@ public class LinkedMultiValueMap<K, V> implements MultiValueMap<K, V>, Serializa
 		values.add(value);
 	}
 
-	public V getFirst(K key) {
+	/*public V getFirst(K key) {
 		List<V> values = this.targetMap.get(key);
 		return (values != null ? values.get(0) : null);
-	}
+	}*/
 
 	public void set(K key, V value) {
 		List<V> values = new LinkedList<V>();
@@ -91,13 +91,13 @@ public class LinkedMultiValueMap<K, V> implements MultiValueMap<K, V>, Serializa
 		}
 	}
 
-	public Map<K, V> toSingleValueMap() {
+	/*public Map<K, V> toSingleValueMap() {
 		LinkedHashMap<K, V> singleValueMap = new LinkedHashMap<K,V>(this.targetMap.size());
 		for (Entry<K, List<V>> entry : targetMap.entrySet()) {
 			singleValueMap.put(entry.getKey(), entry.getValue().get(0));
 		}
 		return singleValueMap;
-	}
+	}*/
 
 
 	// Map implementation

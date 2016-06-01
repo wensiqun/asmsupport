@@ -17,8 +17,8 @@ package cn.wensiqun.asmsupport.core.asm;
 import cn.wensiqun.asmsupport.core.exception.InstructionException;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.core.utils.memory.Stack;
-import cn.wensiqun.asmsupport.core.utils.memory.StackableType;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandType;
 import cn.wensiqun.asmsupport.org.objectweb.asm.*;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 
@@ -27,10 +27,10 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
     private static final Log LOG = LogFactory.getLog(StackLocalMethodVisitor.class);
     private static final Type OBJECT_TYPE = Type.getType(Object.class);
 
-    private Stack stack;
+    private OperandStack stack;
     private Type[] nextPushTypes;
 
-    public Stack getStack() {
+    public OperandStack getStack() {
         return stack;
     }
 
@@ -48,7 +48,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
         this.nextPushTypes = types;
     }
 
-    public StackLocalMethodVisitor(MethodVisitor mv, Stack stack) {
+    public StackLocalMethodVisitor(MethodVisitor mv, OperandStack stack) {
         super(ASConstants.ASM_VERSION, mv);
         this.stack = stack;
     }
@@ -63,7 +63,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
      * @param opcode
      */
     private void stackLocalOperator(int opcode, int popNum) {
-        StackableType top;
+        OperandType top;
         switch (opcode) {
         case NOP:
             if (LOG.isPrintEnabled()) {
@@ -434,7 +434,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
             if (top.getSize() == 1) {
                 setNextPushTypes(top.getType());
             } else {
-                throw new InstructionException("Two word value off the operand stack", DUP, (Stack) stack.clone());
+                throw new InstructionException("Two word value off the operand stack", DUP, (OperandStack) stack.clone());
             }
             break;
         case DUP_X1:
@@ -445,7 +445,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
             if (top.getSize() == 1) {
                 stack.insert(2, top);
             } else {
-                throw new InstructionException("two word value off the operand stack", DUP_X1, (Stack) stack.clone());
+                throw new InstructionException("two word value off the operand stack", DUP_X1, (OperandStack) stack.clone());
             }
             break;
         case DUP_X2:
@@ -456,7 +456,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
             if (top.getSize() == 1) {
                 stack.insert(3, top);
             } else {
-                throw new InstructionException("two word value off the operand stack", DUP_X2, (Stack) stack.clone());
+                throw new InstructionException("two word value off the operand stack", DUP_X2, (OperandStack) stack.clone());
             }
             break;
         case DUP2:
@@ -468,7 +468,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
             } else if (stack.peek().getSize() == 1 && stack.peek(1).getSize() == 1) {
                 setNextPushTypes(stack.peek(1).getType(), stack.peek().getType());
             } else {
-                throw new InstructionException("cannot dup top two from stack", DUP2, (Stack) stack.clone());
+                throw new InstructionException("cannot dup top two from stack", DUP2, (OperandStack) stack.clone());
             }
             break;
         case DUP2_X1:
@@ -481,7 +481,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
                 stack.insert(2, stack.peek(1));
                 stack.insert(2, stack.peek());
             } else {
-                throw new InstructionException("cannot dup top two from stack", DUP2_X1, (Stack) stack.clone());
+                throw new InstructionException("cannot dup top two from stack", DUP2_X1, (OperandStack) stack.clone());
             }
             break;
         case DUP2_X2:
@@ -496,7 +496,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
                 stack.insert(3, stack.peek(1));
                 stack.insert(3, stack.peek());
             } else {
-                throw new InstructionException("cannot dup top two from stack", DUP2_X2, (Stack) stack.clone());
+                throw new InstructionException("cannot dup top two from stack", DUP2_X2, (OperandStack) stack.clone());
             }
             break;
         case SWAP:

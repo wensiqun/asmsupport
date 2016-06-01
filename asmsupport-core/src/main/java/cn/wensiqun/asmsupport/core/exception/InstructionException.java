@@ -14,29 +14,29 @@
  */
 package cn.wensiqun.asmsupport.core.exception;
 
-import cn.wensiqun.asmsupport.core.utils.memory.Stack;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 
 public class InstructionException extends RuntimeException {
 
 	private int insn;
-	private Stack copyOfStack;
+	private OperandStack stackCopy;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2822269556587915571L;
 
-	public InstructionException(String message, int insn, Stack stackCopy) {
+	public InstructionException(String message, int insn, OperandStack stackCopy) {
 		super(message);
 		this.insn = insn;
-		this.copyOfStack = stackCopy;
+		this.stackCopy = stackCopy;
 	}
 
 	public int getInsn() {
 		return insn;
 	}
 
-	public Stack getCopyOfStack() {
-		return copyOfStack;
+	public OperandStack getStackCopy() {
+		return stackCopy;
 	}
 
 }

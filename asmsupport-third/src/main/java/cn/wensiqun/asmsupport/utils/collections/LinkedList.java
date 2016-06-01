@@ -95,21 +95,21 @@ public interface LinkedList<E> extends Iterable<E>, Cloneable {
      */
     boolean move(E src, E desc);
 
-    /**
+    /*
      * move src node to last
      * 
      * @param src
      * @return
      */
-    boolean moveToLast(E src);
+    //boolean moveToLast(E src);
 
     void clear();
 
-    /**
+    /*
      * 
      * @return
      */
-    E getHead();
+    //E getHead();
 
     /**
      * 

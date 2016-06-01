@@ -6,7 +6,8 @@ import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
-import cn.wensiqun.asmsupport.org.apache.commons.collections.ArrayStack;
+
+import java.util.Stack;
 
 /**
  * Created by sqwen on 2016/5/23.
@@ -56,9 +57,9 @@ public class ClientBridge<B extends KernelProgramBlock> implements BlockTracker 
      */
     public static class PriorityStack {
 
-        private ArrayStack<OperatorAction> symbolStack = new ArrayStack<>();
+        private Stack<OperatorAction> symbolStack = new Stack<>();
 
-        private ArrayStack<Param> operandStack = new ArrayStack<>();
+        private Stack<Param> operandStack = new Stack<>();
 
         private PriorityStack(){}
 
