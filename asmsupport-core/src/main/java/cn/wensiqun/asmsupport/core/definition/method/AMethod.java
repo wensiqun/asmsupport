@@ -18,10 +18,7 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
-import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
-import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
+import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
@@ -58,7 +55,7 @@ public class AMethod {
     private Instructions instructions;
 
     /** The method body of current method */
-    private AbstractKernelMethodBody body;
+    private AbstractMethodBody body;
 
     /** A counter indicate the jvm instruction count */
     private int instructionCounter = 0;
@@ -66,22 +63,13 @@ public class AMethod {
     /** Indicate the method that's need to throw in this method  */
     private ThrowExceptionContainer exceptions;
 
-    /** The method of current method */
-    private LocalVariable[] arguments;
-
-    /** super key word  */
-    private SuperVariable superVariable;
-
-    /** this key word */
-    private ThisVariable thisVariable;
-
     /** ASM ClassVisitor. */
     private ClassVisitor classVisitor;
 
     /** ASMSupport Class Loader. */
     private ASMSupportClassLoader classLoader;
     
-    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractKernelMethodBody body, int mode) {
+    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractMethodBody body, int mode) {
         this.classVisitor = classVisitor;
         this.classLoader = classLoader;
         this.meta = meta;
@@ -179,8 +167,11 @@ public class AMethod {
         return ++instructionCounter;
     }
 
-    
-    public AbstractKernelMethodBody getBody() {
+    /**
+     * Get the body of the method
+     * @return
+     */
+    public AbstractMethodBody getBody() {
         return body;
     }
 
@@ -211,42 +202,8 @@ public class AMethod {
         return (MutableClass) meta.getActuallyOwner();
     }
 
-    /**
-     * Get the method argument that's corresponding to current block,
-     * the parameter represent as a {@link LocalVariable}
-     */
-    public LocalVariable[] getParameters() {
-        return arguments;
-    }
-
-    /**
-     * Set the parameters to this method
-     */
-    public void setParameters(LocalVariable[] arguments) {
-        this.arguments = arguments;
-    }
-
     public int getMode() {
         return mode;
-    }
-
-    /**
-     * Get Super Variable.
-     *
-     * @return
-     */
-    public SuperVariable getSuperVariable() {
-    	if(superVariable == null){
-            superVariable = new SuperVariable(meta.getActuallyOwner());
-    	}
-        return superVariable;
-    }
-
-    public ThisVariable getThisVariable() {
-    	if(thisVariable == null){
-            thisVariable = new ThisVariable(meta.getActuallyOwner());
-    	}
-        return thisVariable;
     }
 
 	public ASMSupportClassLoader getClassLoader() {

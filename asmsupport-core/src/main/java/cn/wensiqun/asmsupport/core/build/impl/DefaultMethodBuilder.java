@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.build.impl;
 
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
@@ -37,7 +37,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	private IClass returnType;
 	private IClass[] exceptions;
 	private int access;
-	private AbstractKernelMethodBody methodBody;
+	private AbstractMethodBody methodBody;
 	private AMethodMeta meta;
 	private AMethod method;
 	private int buildMode;
@@ -54,20 +54,20 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	}
 	
 	public static DefaultMethodBuilder buildForModify(String name, IClass[] arguments, String[] argNames,
-                                                      IClass returnType, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
+                                                      IClass returnType, IClass[] exceptions, int access, AbstractMethodBody mb){
 		DefaultMethodBuilder mc = new DefaultMethodBuilder(name, arguments, argNames, returnType, exceptions, access, mb);
 		mc.setMethodBuildMode(MODE_MODIFY);
 		return mc;
 	}
 	
 	public static DefaultMethodBuilder buildForNew(String name, IClass[] arguments, String[] argNames,
-                                                   IClass returnType, IClass[] exceptions, int access, AbstractKernelMethodBody mb){
+                                                   IClass returnType, IClass[] exceptions, int access, AbstractMethodBody mb){
 		DefaultMethodBuilder mc = new DefaultMethodBuilder(name, arguments, argNames, returnType, exceptions, access, mb);
 		mc.setMethodBuildMode(MODE_ADD);
 		return mc;
 	}
 
-    public static DefaultMethodBuilder buildForDelegate(DefaultMethodBuilder delegate, AbstractKernelMethodBody mb){
+    public static DefaultMethodBuilder buildForDelegate(DefaultMethodBuilder delegate, AbstractMethodBody mb){
         DefaultMethodBuilder mc = new DefaultMethodBuilder(delegate.getName(), delegate.getArguments(), null,
                 delegate.getReturnType(), null, 0, mb);
         mc.setMethodBuildMode(MODE_DELEGATE);
@@ -76,7 +76,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
     }
 	
 	private DefaultMethodBuilder(String name, IClass[] arguments, String[] argNames,
-                                 IClass returnType, IClass[] exceptions, int access, AbstractKernelMethodBody mb) {
+                                 IClass returnType, IClass[] exceptions, int access, AbstractMethodBody mb) {
 		this.name = name;
 		this.arguments = arguments;
 		this.argNames = argNames;

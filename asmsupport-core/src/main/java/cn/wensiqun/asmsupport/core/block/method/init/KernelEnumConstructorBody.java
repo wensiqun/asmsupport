@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.block.method.init;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.NoReturnMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.method.SuperConstructorInvoker;
@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public abstract class KernelEnumConstructorBody extends AbstractKernelMethodBody implements IEnumConstructorBody<LocalVariable> {
+public abstract class KernelEnumConstructorBody extends NoReturnMethodBody implements IEnumConstructorBody<LocalVariable> {
     
     @Override
     public final void generateBody() {

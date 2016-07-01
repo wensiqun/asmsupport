@@ -18,13 +18,13 @@ import cn.wensiqun.asmsupport.client.def.Param;
 import cn.wensiqun.asmsupport.client.def.ParamPostern;
 import cn.wensiqun.asmsupport.client.def.param.UncertainParam;
 import cn.wensiqun.asmsupport.client.def.param.impl.UncertainParamImpl;
-import cn.wensiqun.asmsupport.client.def.var.*;
+import cn.wensiqun.asmsupport.client.def.var.LocVar;
+import cn.wensiqun.asmsupport.client.def.var.Var;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
-import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,11 +41,7 @@ Param, Var, IF, While, DoWhile, ForEach, Try, Sync> {
 	
 	ProgramBlock<? extends KernelProgramBlock> parent;
 	
-	LocVar[] locVars; 
-	
 	Map<String, LocVar> locVarMap = new HashMap<>();
-	
-	final static LocVar[] EMPTY_LOCAL_VARS = new LocVar[0];
 
 	/**
 	 * get current method owner.
@@ -151,16 +147,6 @@ Param, Var, IF, While, DoWhile, ForEach, Try, Sync> {
 	public final void return_(Param param) {
 		getGenerateTimeBlock().return_(param.getTarget());
 	}
-
-    public LocVar getLocVar(String name) {
-    	ProgramBlock<? extends KernelProgramBlock> block = this;
-    	LocVar var;
-    	do {
-    		var = block.locVarMap.get(name);
-    		block = block.parent;
-    	} while (var == null && block != null);
-    	return var;
-    }
 	
     LocVar[] internalVar2ClientVar(LocalVariable... pars) {
         if(pars == null) {
@@ -172,20 +158,5 @@ Param, Var, IF, While, DoWhile, ForEach, Try, Sync> {
         }
         return paras;
     }
-
-	public LocVar[] getMethodArguments() {
-		if(locVars == null) {
-			LocalVariable[] localVariables = getGenerateTimeBlock().getMethod().getParameters();
-			if(ArrayUtils.isNotEmpty(localVariables)) {
-				locVars = new LocVar[localVariables.length];
-				for(int i = 0; i<locVars.length; i++) {
-					locVars[i] = new LocVar(this.getClientBridge(), localVariables[i]);
-				}
-			} else {
-				locVars = EMPTY_LOCAL_VARS;
-			}
-		}
-		return locVars;
-	}
 
 }

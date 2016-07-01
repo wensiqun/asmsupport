@@ -68,7 +68,6 @@ public class Lesson1 {
             public void body(LocVar... args) {
                 FieldVar out = val(System.class).field("out");
                 out.call("println", val("Hello ASMSupport"));
-                return_();
             }
         });
         Class cls = dc.build();
@@ -91,7 +90,6 @@ public class Lesson1 {
                         FieldVar out = val(System.class).field("out");
                         out.call("println", name);
                         out.call("println", count);
-                        return_();
                     }
                 });
         Class cls = dc.build();
@@ -119,7 +117,6 @@ public class Lesson1 {
                         FieldVar out = val(System.class).field("out");
                         out.call("println", name);
                         out.call("println", count);
-                        return_();
                     }
                 });
 

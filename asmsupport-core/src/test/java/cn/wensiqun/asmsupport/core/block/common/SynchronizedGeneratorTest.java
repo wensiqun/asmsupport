@@ -69,7 +69,6 @@ public class SynchronizedGeneratorTest extends AbstractExample {
             	supercall(argus);
                 assign(this_().field("lock"), new_(getType(Object.class)));
                 assign(this_().field("list"), new_(getType(ArrayList.class)));
-				return_();
             }
             
         });

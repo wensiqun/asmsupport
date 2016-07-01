@@ -21,7 +21,7 @@ package cn.wensiqun.asmsupport.core.block.sync;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.DUP;
@@ -68,7 +68,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 			throw new IllegalArgumentException(lock + " is not a valid type's argument for the synchronized statement");
 		}
 		lock.asArgument();
-        AbstractKernelMethodBody methodBody = getMethod().getBody();
+        AbstractMethodBody methodBody = getMethod().getBody();
         methodBody.addExceptionTableEntry(monitorenter, monitorexit, excetpionStart, null);
         methodBody.addExceptionTableEntry(excetpionStart, excetpionEnd, excetpionStart, null);
 	}

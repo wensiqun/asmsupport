@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.method.clinit;
 
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.NoReturnMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -32,7 +32,7 @@ import java.util.List;
  * 
  *
  */
-public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody implements IEnumStaticBlockBody<KernelParam, LocalVariable> {
+public abstract class KernelEnumStaticBlockBody extends NoReturnMethodBody implements IEnumStaticBlockBody<KernelParam, LocalVariable> {
 
 	private List<EnumConstructorInfo>  enumArgumentsList;
 	

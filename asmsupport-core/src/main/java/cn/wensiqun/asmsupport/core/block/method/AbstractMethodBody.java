@@ -18,6 +18,8 @@ import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
+import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.operator.common.LocalVariableCreator;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.core.utils.common.BlockStack;
@@ -38,22 +40,33 @@ import cn.wensiqun.asmsupport.utils.ASConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
+public abstract class AbstractMethodBody extends KernelProgramBlock {
 
-    private static final Log LOG = LogFactory.getLog(AbstractKernelMethodBody.class);
+    private static final Log LOG = LogFactory.getLog(AbstractMethodBody.class);
 
-    private List<ExceptionTableEntry> exceptions;
-
+    /** The method of current method */
     protected LocalVariable[] arguments;
+
+    /** super key word  */
+    private SuperVariable superVariable;
+
+    /** this key word */
+    private ThisVariable thisVariable;
 
     protected BlockStack stack;
 
-    public AbstractKernelMethodBody() {
+    private List<ExceptionTableEntry> exceptions;
+
+    public AbstractMethodBody() {
         exceptions = new ArrayList<>();
         this.stack = new BlockStack();
     }
 
-    public LocalVariable[] getMethodArguments() {
+    /**
+     * Get the method argument that's corresponding to current block,
+     * the parameter represent as a {@link LocalVariable}
+     */
+    public LocalVariable[] getArguments() {
         return arguments;
     }
 
@@ -88,11 +101,10 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
             lv.setScopeLogicVar(slv);
             arguments[i] = lv;
         }
-        method.setParameters(arguments);
     }
 
     @Override
-    public final void doExecute() {
+    public void doExecute() {
         AMethod method = getMethod();
         if (LOG.isPrintEnabled()) {
             StringBuilder str = new StringBuilder("Create method: ------------");
@@ -158,5 +170,30 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     @Override
     public BlockStack getBlockTracker() {
         return stack;
+    }
+
+
+
+    /**
+     * Get super keyword variable.
+     *
+     * @return
+     */
+    public SuperVariable getSuperVariable() {
+        if(superVariable == null){
+            superVariable = new SuperVariable(getMethod().getMeta().getActuallyOwner());
+        }
+        return superVariable;
+    }
+
+    /**
+     * Get this keyword variable
+     * @return
+     */
+    public ThisVariable getThisVariable() {
+        if(thisVariable == null){
+            thisVariable = new ThisVariable(getMethod().getMeta().getActuallyOwner());
+        }
+        return thisVariable;
     }
 }

@@ -24,6 +24,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.KernelDoWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
+import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -710,7 +711,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"this\" keyword in static block");
         }
-        return getMethod().getThisVariable();
+        return getMethodBody().getThisVariable();
     }
 
     @Override
@@ -723,7 +724,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
         if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
             throw new ASMSupportException("cannot use \"super\" keyword in static block");
         }
-        return getMethod().getSuperVariable();
+        return getMethodBody().getSuperVariable();
     }
 
     @Override
@@ -736,14 +737,29 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
                 originalMethodName = ASConstants.INIT_PROXY;
             }
             originalMethodName += ASConstants.METHOD_PROXY_SUFFIX;
+
+            //get method arguments
+            LocalVariable[] arguments = getMethodBody().getArguments();
             if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
-                return call(getMethodDeclaringClass(), originalMethodName, getMethod().getParameters());
+                return call(getMethodDeclaringClass(), originalMethodName, arguments);
             } else {
-                return call(this_(), originalMethodName, getMethod().getParameters());
+                return call(this_(), originalMethodName, arguments);
             }
         } else {
             throw new ASMSupportException("This method is new and not modify!");
         }
+    }
+
+    /**
+     * Get parent method body
+     * @return
+     */
+    private AbstractMethodBody getMethodBody() {
+        KernelProgramBlock block = this;
+        while(block.getParent() != null) {
+            block = block.getParent();
+        }
+        return (AbstractMethodBody) block;
     }
 
     /**
@@ -752,9 +768,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * @return
      */
     @Override
-    public final void return_() {
+    public void return_() {
         if (!getMethod().getMeta().getReturnType().equals(Type.VOID_TYPE)) {
-            throw new VerifyErrorException("Do not specify a return type! ");
+            throw new VerifyErrorException("Do not specify a return type!");
         }
         OperatorFactory.newOperator(KernelReturn.class, new Class<?>[] { KernelProgramBlock.class,
                 KernelParam.class }, getExecutor(), null);
@@ -942,7 +958,11 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * @return
      */
     public AMethod getMethod() {
-        return method;
+        if(method == null) {
+            return getExecutor().getMethod();
+        } else {
+            return method;
+        }
     }
 
     /**
@@ -956,7 +976,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     public void setParent(KernelProgramBlock block) {
         parent = block;
-        setMethod(block.method);
+        setMethod(block.getMethod());
         setScope(new Scope(getMethod().getLocals(), block.getScope()));
     }
 

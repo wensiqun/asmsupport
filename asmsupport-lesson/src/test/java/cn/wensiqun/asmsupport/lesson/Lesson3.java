@@ -40,7 +40,6 @@ public class Lesson3 {
                 FieldVar size = this_().field("code");
                 assign(name, args[0]);
                 assign(size, args[1]);
-                return_();
             }
         });
         dc.newStaticBlock(new EnumStaticBlockBody() {

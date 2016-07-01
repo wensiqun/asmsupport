@@ -30,10 +30,6 @@ public class MainTest extends AbstractFix {
 			public void body() {
 				
 				call(systemOut, "println", val("INIT DEFAULT_VALUE"));
-				
-				assign(val(getMethodDeclaringClass()).field("DEFAULT_VALUE"), val(100));
-				
-			    return_();
 			}
 			
 		});
@@ -54,6 +50,16 @@ public class MainTest extends AbstractFix {
 			}
 			
 		});
+
+		creator.createStaticBlock(new KernelStaticBlockBody(){
+
+			@Override
+			public void body() {
+				assign(val(getMethodDeclaringClass()).field("DEFAULT_VALUE"), val(100));
+			}
+
+		});
+
 		creator.resolve();
 		Class Test65150 = null;
 		try {

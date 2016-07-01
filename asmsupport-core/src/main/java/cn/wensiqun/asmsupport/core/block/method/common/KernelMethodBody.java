@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.method.common;
 
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.standard.block.method.IMethodBody;
 
@@ -25,7 +25,7 @@ import cn.wensiqun.asmsupport.standard.block.method.IMethodBody;
  * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public abstract class KernelMethodBody extends AbstractKernelMethodBody implements IMethodBody<LocalVariable> {
+public abstract class KernelMethodBody extends AbstractMethodBody implements IMethodBody<LocalVariable> {
     
 	@Override
     public void generateBody() {

@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.block.method.init;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
+import cn.wensiqun.asmsupport.core.block.method.NoReturnMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.UnreachableCodeCheckSkipable;
@@ -36,7 +36,7 @@ import cn.wensiqun.asmsupport.utils.Modifiers;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public abstract class KernelConstructorBody extends AbstractKernelMethodBody implements IConstructorBody<KernelParam, LocalVariable> {
+public abstract class KernelConstructorBody extends NoReturnMethodBody implements IConstructorBody<KernelParam, LocalVariable> {
 
     private boolean calledSuper = false;
 
