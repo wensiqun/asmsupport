@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.asm;
 
-import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.ExplicitVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
@@ -25,10 +24,12 @@ import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * <p>
@@ -37,9 +38,9 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
  * 
  * @author wensiqun at 163.com(Joe Wen)
  */
-public abstract class InstructionHelper {
+public class Instructions {
 
-    private static final Log LOG = LogFactory.getLog(InstructionHelper.class);
+    private static final Log LOG = LogFactory.getLog(Instructions.class);
 
     private static final String CLS_DESC = "Ljava/lang/Class;";
 
@@ -77,32 +78,28 @@ public abstract class InstructionHelper {
     private boolean castAndbox = true;
 
     private StackLocalMethodVisitor mv;
-    private AMethod method;
-    protected LocalVariables locals;
 
-    public InstructionHelper(MethodVisitor mv, AMethod method) {
-        super();
-        this.mv = new StackLocalMethodVisitor(mv, method.getStack());
-        this.method = method;
-        this.locals = this.method.getLocals();
+    private LocalVariables locals;
+
+    private OperandStack stack;
+
+    public Instructions(LocalVariables locals, OperandStack stack) {
+        this.locals = locals;
+        this.stack = stack;
     }
 
     /**
      * Test use
      */
-    InstructionHelper() {
-    }
-
-    public AMethod getMethod() {
-        return method;
+    Instructions() {
     }
 
     public StackLocalMethodVisitor getMv() {
         return mv;
     }
 
-    public void setMv(StackLocalMethodVisitor mv) {
-        this.mv = mv;
+    public void setMv(MethodVisitor mv) {
+        this.mv = new StackLocalMethodVisitor(mv, stack);
     }
 
     // ------------------------------------------------------------------------
@@ -536,8 +533,8 @@ public abstract class InstructionHelper {
     /**
      * Generates the instruction to load 'this' on the stack.
      */
-    public void loadThis() {
-        getMv().setNextPushTypes(method.getMeta().getOwner().getType());
+    public void loadThis(Type owner) {
+        getMv().setNextPushTypes(owner);
         getMv().visitVarInsn(Opcodes.ALOAD, 0);
     }
 
@@ -1093,7 +1090,7 @@ public abstract class InstructionHelper {
         mv.visitJumpInsn(mode, label);
     }
 
-    /**
+    /*
      * Generates the instruction to jump to the given label if the top stack
      * value is null.
      * 
@@ -1104,7 +1101,7 @@ public abstract class InstructionHelper {
         mv.visitJumpInsn(Opcodes.IFNULL, label);
     }*/
 
-    /**
+    /*
      * Generates the instruction to jump to the given label if the top stack
      * value is not null.
      * 
@@ -1193,8 +1190,7 @@ public abstract class InstructionHelper {
     }
 
     public void maxs(int stack, int locals) {
-        LOG.print("Method : " + method.getMeta().getMethodString() + " Maxs(" + "stack:" + stack + " locals:"
-                + locals + ")");
+        LOG.print("Method : Maxs(" + "stack:" + stack + " locals:" + locals + ")");
         getMv().visitMaxs(stack, locals);
     }
 

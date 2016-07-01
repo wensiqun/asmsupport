@@ -39,19 +39,19 @@ public class SuperConstructorInvoker extends MethodInvoker {
     public void doExecute() {
         LOG.print("call method '"+ name +"' by 'this' key word");
         LOG.print("put 'this' to stack");
-        insnHelper.loadThis();
+        getInstructions().loadThis(block.getMethod().getMeta().getOwner().getType());
         argumentsToStack();
         
         IClass[] argTypes = new IClass[arguments.length];
         for(int i=0; i<argTypes.length; i++){
             argTypes[i] = arguments[i].getResultType();
         }
-        insnHelper.invokeConstructor(getActuallyOwner().getType(), mtdEntity.getParameterAsmTypes());
+        getInstructions().invokeConstructor(getActuallyOwner().getType(), methodMeta.getParameterAsmTypes());
     }
 
     @Override
     public String toString() {
-        return "super." + mtdEntity;
+        return "super." + methodMeta;
     }
 
 }

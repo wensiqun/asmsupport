@@ -34,7 +34,7 @@ public class KernelLogicalXor extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitXor(block.getClassHolder().getType(boolean.class).getType());
+        getInstructions().bitXor(getType(boolean.class).getType());
     }
 
 }

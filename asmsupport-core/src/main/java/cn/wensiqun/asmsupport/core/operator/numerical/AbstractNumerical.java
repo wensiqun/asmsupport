@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical;
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -57,7 +58,7 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
     protected void pushFactorToStack(KernelParam factor) {
 
     	IClass factorCls = factor.getResultType();
-
+        Instructions instructions = getInstructions();
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
         factor.loadToStack(block);
@@ -66,15 +67,15 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
         // unbox if needs
         if (!factorCls.isPrimitive()) {
             LOG.print("unbox " + factorCls);
-            insnHelper.unbox(factorCls.getType());
+            instructions.unbox(factorCls.getType());
             factorPrimitiveAClass = IClassUtils.getPrimitiveAClass(factorCls);
         }
 
         // cast if needs
         if (factorPrimitiveAClass.getCastOrder() < targetClass.getCastOrder()
-                && targetClass.getCastOrder() > block.getClassHolder().getType(int.class).getCastOrder()) {
+                && targetClass.getCastOrder() > getType(int.class).getCastOrder()) {
             LOG.print("cast factor from " + factorCls + " to " + targetClass);
-            insnHelper.cast(factorPrimitiveAClass.getType(), targetClass.getType());
+            instructions.cast(factorPrimitiveAClass.getType(), targetClass.getType());
         }
     }
 

@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -76,7 +77,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         	if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
         	   getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
         	   getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-        		((Value)rightFactor).convert(block.getClassHolder().getType(int.class));
+        		((Value)rightFactor).convert(getType(int.class));
         	} else {
         		((Value)rightFactor).convert(targetClass);	
         	}
@@ -86,6 +87,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected final void factorToStack() {
+        Instructions instructions = getInstructions();
         LOG.print("push the first arithmetic factor to stack");
         leftFactor.loadToStack(block);
         if(LOG.isPrintEnabled()){
@@ -93,8 +95,8 @@ public abstract class BinaryBitwise extends AbstractBitwise {
                 LOG.print("cast arithmetic factor from " + leftFactor.getResultType() + " to " + targetClass);
             }
         }
-        insnHelper.unbox(leftFactor.getResultType().getType());
-        insnHelper.cast(leftFactor.getResultType().getType(), targetClass.getType());    
+        instructions.unbox(leftFactor.getResultType().getType());
+        instructions.cast(leftFactor.getResultType().getType(), targetClass.getType());
         
         if(LOG.isPrintEnabled()) {
             LOG.print("push the second arithmetic factor to stack");	
@@ -106,15 +108,15 @@ public abstract class BinaryBitwise extends AbstractBitwise {
                 LOG.print("cast arithmetic factor from " + rightFactor.getResultType() + " to " + targetClass);
             }
         }
-        
-        insnHelper.unbox(rightFactor.getResultType().getType());
+
+        instructions.unbox(rightFactor.getResultType().getType());
         
         if(getOperatorSymbol().equals(Operator.SHIFT_LEFT) ||
            getOperatorSymbol().equals(Operator.SHIFT_RIGHT) ||
            getOperatorSymbol().equals(Operator.UNSIGNED_SHIFT_RIGHT) ){
-            insnHelper.cast(rightFactor.getResultType().getType(), block.getClassHolder().getType(int.class).getType());
+            instructions.cast(rightFactor.getResultType().getType(), getType(int.class).getType());
         }else{
-            insnHelper.cast(rightFactor.getResultType().getType(), targetClass.getType());
+            instructions.cast(rightFactor.getResultType().getType(), targetClass.getType());
         }
     }
     

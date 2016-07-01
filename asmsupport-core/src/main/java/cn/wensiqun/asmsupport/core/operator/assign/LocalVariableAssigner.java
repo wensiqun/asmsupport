@@ -50,12 +50,12 @@ public class LocalVariableAssigner extends KernelAssign {
         if(LOG.isPrintEnabled()) { 
             LOG.print("store to local variable");
         }
-        insnHelper.storeInsn(var);
+        getInstructions().storeInsn(var);
     }
 
     @Override
     public void execute() {
-        var.setVariableCompileOrder(insnHelper.getMethod().getNextInstructionNumber());
+        var.setVariableCompileOrder(block.getMethod().getNextInstructionNumber());
         super.execute();
     }
 

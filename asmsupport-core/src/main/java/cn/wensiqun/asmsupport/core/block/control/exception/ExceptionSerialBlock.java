@@ -156,7 +156,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         // for exception table
         if (CollectionUtils.isNotEmpty(tryCatchInfos)) {
             for (ExceptionTableEntry info : tryCatchInfos) {
-                targetParent.getMethod().getMethodBody().addExceptionTableEntry(info);
+                targetParent.getMethod().getBody().addExceptionTableEntry(info);
             }
         }
     }
@@ -316,7 +316,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         @Override
         public void doExecute() {
-            instructionHelper.getMv().getStack().push(Type.ANY_EXP_TYPE);
+            getMethod().getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
             for (BytecodeExecutor exe : getQueue()) {
                 exe.execute();
             }

@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -52,7 +51,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
             lastDim = pardim;
         }
         
-        storeClass = arrayReference.getResultType();
+        storeClass = arrayRef.getResultType();
         for(int i=0, length = this.parDims.length + 1; i<length; i++){
             storeClass = (storeClass).getNextDimType();
         }
@@ -89,7 +88,6 @@ public class KernelArrayStore extends AbstractArrayOperator {
 	        LOG.print("start get value for store array");
 	    }
         getValue();
-        InstructionHelper ih = block.getInstructionHelper();
         LOG.print("push the last dim index to stack");
         lastDim.loadToStack(block);
         autoCast(lastDim.getResultType(), block.getType(int.class), false);
@@ -99,7 +97,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
         if(LOG.isPrintEnabled()) { 
             LOG.print("store value to corresponse to index of the array");   
         }
-        ih.arrayStore(storeClass.getType());
+        getInstructions().arrayStore(storeClass.getType());
     }
 
     @Override

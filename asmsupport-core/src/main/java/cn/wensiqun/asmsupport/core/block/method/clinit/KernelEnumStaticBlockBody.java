@@ -16,7 +16,6 @@ package cn.wensiqun.asmsupport.core.block.method.clinit;
 
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
-import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.array.KernelArrayValue;
@@ -90,15 +89,15 @@ public abstract class KernelEnumStaticBlockBody extends AbstractKernelMethodBody
 			String enumName = enumArg.name;
 			KernelParam[] otherArgus = enumArg.argus;
 	        KernelParam[] enumArgus = new KernelParam[otherArgus.length + 2];
-	        enumArgus[0] = Value.value(getClassHolder(), enumName);
-	        enumArgus[1] = Value.value(getClassHolder(), i);
+	        enumArgus[0] = val(enumName);
+	        enumArgus[1] = val(i);
 	        System.arraycopy(otherArgus, 0, enumArgus, 2, otherArgus.length);
 	        MethodInvoker mi = new_(getMethodDeclaringClass(), enumArgus);
 	        assign(enumConstant, mi);
 	        i++;
 		}
 		GlobalVariable gv = val(getMethodDeclaringClass()).field("ENUM$VALUES");
-		KernelArrayValue av = newarray(getClassHolder().getArrayType(getMethodDeclaringClass(), 1), values);
+		KernelArrayValue av = newarray(getArrayType(getMethodDeclaringClass(), 1), values);
 		assign(gv, av);
 	}
 	

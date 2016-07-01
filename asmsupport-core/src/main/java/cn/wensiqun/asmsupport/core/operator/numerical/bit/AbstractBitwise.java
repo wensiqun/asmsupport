@@ -39,12 +39,12 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     protected final void checkFactor(IClass ftrCls){
         if(ftrCls.isPrimitive() ||
            IClassUtils.isPrimitiveWrapAClass(ftrCls)){
-           if(ftrCls.equals(block.getClassHolder().getType(boolean.class)) ||
-              ftrCls.equals(block.getClassHolder().getType(float.class)) ||
-              ftrCls.equals(block.getClassHolder().getType(double.class)) ||
-              ftrCls.equals(block.getClassHolder().getType(Boolean.class)) ||
-              ftrCls.equals(block.getClassHolder().getType(Float.class)) ||
-              ftrCls.equals(block.getClassHolder().getType(Double.class))){
+           if(ftrCls.equals(getType(boolean.class)) ||
+              ftrCls.equals(getType(float.class)) ||
+              ftrCls.equals(getType(double.class)) ||
+              ftrCls.equals(getType(Boolean.class)) ||
+              ftrCls.equals(getType(Float.class)) ||
+              ftrCls.equals(getType(Double.class))){
                throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
            }
         }

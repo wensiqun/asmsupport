@@ -15,10 +15,8 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 
-import java.util.Iterator;
-
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -28,9 +26,10 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.standard.block.loop.IForEach;
-import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+
+import java.util.Iterator;
 
 
 /**
@@ -63,14 +62,14 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
 	protected void init() {
     	IClass type = elements.getResultType();
         if(!type.isArray() &&
-           !type.isChildOrEqual(getClassHolder().getType(Iterable.class))){
+           !type.isChildOrEqual(getType(Iterable.class))){
             throw new ASMSupportException("Can only iterate over an array or an instance of java.lang.Iterable.");
         }
 	}
 
 	@Override
     public void doExecute() {
-    	
+        Instructions instructions = getMethod().getInstructions();
         for(Executable exe : getQueue()){
             exe.execute();
         }
@@ -78,17 +77,17 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
         	((Jumpable) condition).jumpPositive(null, startLbl, getEnd());
         }else{
             condition.loadToStack(this);
-            instructionHelper.unbox(condition.getResultType().getType());
-            instructionHelper.ifZCmp(InstructionHelper.NE, startLbl);
+            instructions.unbox(condition.getResultType().getType());
+            instructions.ifZCmp(Instructions.NE, startLbl);
         }
-        instructionHelper.mark(endLbl);
+        instructions.mark(endLbl);
     }
     
     @Override
     public final void generate() {
         if(elements.getResultType().isArray()){
-            final LocalVariable i = var(getClassHolder().getType(int.class), val(0));
-            final LocalVariable len = var(getClassHolder().getType(int.class), arrayLength(elements));
+            final LocalVariable i = var(getType(int.class), val(0));
+            final LocalVariable len = var(getType(int.class), arrayLength(elements));
             if(!(elements instanceof LocalVariable)) {
                 elements = var(elements.getResultType(), elements);
             }
@@ -101,7 +100,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             		new Class[]{KernelProgramBlock.class, Label.class}, 
             		getExecutor(), startLbl);
             
-            LocalVariable obj = var(((ArrayClass)elements.getResultType()).getNextDimType(), arrayLoad(elements, i) );
+            LocalVariable obj = var(elements.getResultType().getNextDimType(), arrayLoad(elements, i) );
             body(obj);
             
             OperatorFactory.newOperator(Marker.class, 
@@ -116,7 +115,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             
             condition = lt(i, len);
         }else{
-        	final LocalVariable itr = var(getClassHolder().getType(Iterator.class), call(elements, "iterator"));
+        	final LocalVariable itr = var(getType(Iterator.class), call(elements, "iterator"));
         	
             OperatorFactory.newOperator(GOTO.class, 
             		new Class[]{KernelProgramBlock.class, Label.class}, 
@@ -127,7 +126,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
             		getExecutor(), startLbl);
 
             LocalVariable obj = elementType == null ? 
-                                var(getClassHolder().getType(Object.class), call(itr, "next")) :
+                                var(getType(Object.class), call(itr, "next")) :
                                 var(elementType, checkcast(call(itr, "next"), elementType));
             body(obj);
 

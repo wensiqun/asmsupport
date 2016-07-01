@@ -89,7 +89,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	@Override
 	public void prepare() {
 		if(!Modifiers.isAbstract(access)){
-			method.getMethodBody().prepare();
+			methodBody.prepare();
 		}
 	}
 

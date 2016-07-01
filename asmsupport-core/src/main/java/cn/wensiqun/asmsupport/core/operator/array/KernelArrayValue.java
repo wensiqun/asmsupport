@@ -17,9 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import java.lang.reflect.Array;
-
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -30,6 +28,8 @@ import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.lang.reflect.Array;
 
 /**
  * Represent an array operation to make a new array.
@@ -167,28 +167,28 @@ public class KernelArrayValue extends AbstractParamOperator  {
         batchAsArgument(values);
     }
     
-    private void loopArray(IClass acls, Object arrayOrElement){
-        InstructionHelper ih = block.getInstructionHelper();
+    private void loopArray(IClass clazz, Object arrayOrElement){
+        Instructions instructions = getInstructions();
         if(arrayOrElement.getClass().isArray()){
             int len = Array.getLength(arrayOrElement);
-            ih.push(len);
-            IClass nextDimType = acls.getNextDimType();
-            ih.newArray(nextDimType.getType());
+            instructions.push(len);
+            IClass nextDimType = clazz.getNextDimType();
+            instructions.newArray(nextDimType.getType());
             if(len > 0){
-                ih.dup();	
+                instructions.dup();
             }
             for(int i=0; i<len ;i++){
-                ih.push(i);
+                instructions.push(i);
                 loopArray(nextDimType, Array.get(arrayOrElement, i));
-                ih.arrayStore(acls.getType());
+                instructions.arrayStore(clazz.getType());
                 if(i < len - 1){
-                    ih.dup();
+                    instructions.dup();
                 }
             }
         }else{
             ((KernelParam) arrayOrElement).loadToStack(block);
             //auto cast each value for array
-            autoCast(((KernelParam)arrayOrElement).getResultType(), acls, false);
+            autoCast(((KernelParam)arrayOrElement).getResultType(), clazz, false);
         }
     }
 
@@ -202,23 +202,23 @@ public class KernelArrayValue extends AbstractParamOperator  {
             if(LOG.isPrintEnabled()) { 
                 LOG.print("start new a array!");
             }
-            InstructionHelper ih = block.getInstructionHelper();
+            Instructions instructions = getInstructions();
             if(allocateDims == null || allocateDims.length == 0){
-                ih.push(arrayCls.getType());
-                ih.checkCast(arrayCls.getType());
+                instructions.push(arrayCls.getType());
+                instructions.checkCast(arrayCls.getType());
                 return;
             }
             
             if(allocateDims.length == 1){
                 allocateDims[0].loadToStack(block);
-                ih.unbox(allocateDims[0].getResultType().getType());
-                ih.newArray(arrayCls.getNextDimType().getType());
+                instructions.unbox(allocateDims[0].getResultType().getType());
+                instructions.newArray(arrayCls.getNextDimType().getType());
             }else{
                 for(KernelParam allocate : allocateDims){
                     allocate.loadToStack(block);
-                    ih.unbox(allocate.getResultType().getType());
+                    instructions.unbox(allocate.getResultType().getType());
                 }
-                ih.multiANewArrayInsn(arrayCls.getType(), allocateDims.length);
+                instructions.multiANewArrayInsn(arrayCls.getType(), allocateDims.length);
             }
         }else{
             loopArray(arrayCls, values);

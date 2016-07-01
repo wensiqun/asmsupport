@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -35,12 +35,12 @@ public class KernelNotEqual extends AbstractNullCompareRelational {
 
     @Override
     protected void negativeCmp(Label lbl) {
-        this.ifCmp(targetClass.getType(), InstructionHelper.EQ, lbl);
+        this.ifCmp(targetClass.getType(), Instructions.EQ, lbl);
     }
 
 	@Override
 	protected void positiveCmp(Label lbl) {
-        this.ifCmp(targetClass.getType(), InstructionHelper.NE, lbl);
+        this.ifCmp(targetClass.getType(), Instructions.NE, lbl);
 	}
 
 }

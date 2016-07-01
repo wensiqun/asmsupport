@@ -19,6 +19,7 @@ package cn.wensiqun.asmsupport.core.block.sync;
 
 
 import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -64,27 +65,24 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		if (lock.getResultType() == null ||
 		    lock.getResultType().isPrimitive() || 
 		    lock.getResultType().getType().equals(Type.VOID_TYPE)) {
-			throw new IllegalArgumentException(
-					lock
-							+ " is not a valid type's argument for the synchronized statement");
+			throw new IllegalArgumentException(lock + " is not a valid type's argument for the synchronized statement");
 		}
 		lock.asArgument();
-
-        AbstractKernelMethodBody mb = getMethodBody();
-        mb.addExceptionTableEntry(monitorenter, monitorexit, excetpionStart, null);
-        mb.addExceptionTableEntry(excetpionStart, excetpionEnd, excetpionStart, null);
+        AbstractKernelMethodBody methodBody = getMethod().getBody();
+        methodBody.addExceptionTableEntry(monitorenter, monitorexit, excetpionStart, null);
+        methodBody.addExceptionTableEntry(excetpionStart, excetpionEnd, excetpionStart, null);
 	}
 
 	@Override
 	public void doExecute() {
         Executable returnInsn = null;
-        
+		Instructions instructions = getMethod().getInstructions();
 		lock.loadToStack(this);
 		for (Executable e : getQueue()) {
 			if(e.equals(flag1)){
 				//e.execute();
-				instructionHelper.monitorEnter();
-				instructionHelper.mark(monitorenter);
+				instructions.monitorEnter();
+				instructions.mark(monitorenter);
 				continue;
 			}else if(e instanceof KernelReturn){
 				returnInsn = e;
@@ -95,20 +93,20 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		}
 
 		dupSynArgument.loadToStack(this);
-		instructionHelper.monitorExit();
-		instructionHelper.mark(monitorexit);
-		instructionHelper.goTo(returnLbl);
+		instructions.monitorExit();
+		instructions.mark(monitorexit);
+		instructions.goTo(returnLbl);
 		
         //for exception
-		instructionHelper.nop();
-		instructionHelper.mark(excetpionStart);
+		instructions.nop();
+		instructions.mark(excetpionStart);
 		dupSynArgument.loadToStack(this);
-		instructionHelper.monitorExit();
-		instructionHelper.getMv().getStack().push(getClassHolder().getType(Throwable.class).getType());
-		instructionHelper.mark(excetpionEnd);
-		instructionHelper.throwException();
+		instructions.monitorExit();
+		instructions.getMv().getStack().push(getType(Throwable.class).getType());
+		instructions.mark(excetpionEnd);
+		instructions.throwException();
 		
-		instructionHelper.mark(returnLbl);
+		instructions.mark(returnLbl);
 		if(returnInsn != null){
 			returnInsn.execute();
 		}

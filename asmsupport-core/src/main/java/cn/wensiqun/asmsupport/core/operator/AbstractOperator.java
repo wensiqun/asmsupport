@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 import cn.wensiqun.asmsupport.core.BytecodeExecutor;
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -34,14 +34,11 @@ public abstract class AbstractOperator extends BytecodeExecutor {
 
     protected KernelProgramBlock block;
 
-    protected InstructionHelper insnHelper;
-
     private int compileOrder;
     
     private Operator operatorSymbol;
     
     protected AbstractOperator(KernelProgramBlock block, Operator operatorSymbol) {
-        this.insnHelper = block.getInstructionHelper();
         this.block = block;
         this.operatorSymbol = operatorSymbol;
         // addQueue();
@@ -120,7 +117,7 @@ public abstract class AbstractOperator extends BytecodeExecutor {
 
     @Override
     public void execute() {
-        compileOrder = insnHelper.getMethod().getNextInstructionNumber();
+        compileOrder = block.getMethod().getNextInstructionNumber();
         try {
             doExecute();
         } catch (Exception e) {
@@ -134,7 +131,7 @@ public abstract class AbstractOperator extends BytecodeExecutor {
      * <p>
      * Auto cast top element of stack from original type to target type.
      * </p>
-     * 
+     *
      * <strong>support auto cast type :</strong>
      * <ol>
      * <li>primitive type to wrapper type(box)</li>
@@ -142,7 +139,7 @@ public abstract class AbstractOperator extends BytecodeExecutor {
      * <li>low type to high type</li>
      * <li>if enforce is <b>true</b> : allow high type to low type</li>
      * </ol>
-     * 
+     *
      * @param original
      * @param target
      * @param enforce
@@ -150,48 +147,48 @@ public abstract class AbstractOperator extends BytecodeExecutor {
     protected void autoCast(IClass original, IClass target, boolean enforce) {
         if (enforce) {
             if (original.isPrimitive() && target.isPrimitive()) {
-                insnHelper.cast(original.getType(), target.getType());
+                getInstructions().cast(original.getType(), target.getType());
 
                 return;
             } else if (original.isPrimitive() && IClassUtils.isPrimitiveWrapAClass(target)) {
                 Type targetPrimitiveType = IClassUtils.getPrimitiveAClass(target).getType();
 
-                insnHelper.cast(original.getType(), targetPrimitiveType);
+                getInstructions().cast(original.getType(), targetPrimitiveType);
 
-                insnHelper.box(targetPrimitiveType);
+                getInstructions().box(targetPrimitiveType);
 
                 return;
             } else if (IClassUtils.isPrimitiveWrapAClass(original) && target.isPrimitive()) {
-                insnHelper.unbox(original.getType());
+                getInstructions().unbox(original.getType());
 
                 Type originalPrimitiveType = IClassUtils.getPrimitiveAClass(original).getType();
 
-                insnHelper.cast(originalPrimitiveType, target.getType());
+                getInstructions().cast(originalPrimitiveType, target.getType());
 
                 return;
-            } else if (original.isPrimitive() && target.equals(block.getClassHolder().getType(Object.class))) {
-                insnHelper.box(original.getType());
+            } else if (original.isPrimitive() && target.equals(getType(Object.class))) {
+                getInstructions().box(original.getType());
                 return;
             }
         } else {
             if (original.isPrimitive() && target.isPrimitive()) {
-                if (!original.equals(block.getClassHolder().getType(Boolean.class)) && 
-                	!target.equals(block.getClassHolder().getType(Boolean.class)) && 
+                if (!original.equals(getType(Boolean.class)) &&
+                	!target.equals(getType(Boolean.class)) &&
                 	original.getCastOrder() <= target.getCastOrder()) {
-                    insnHelper.cast(original.getType(), target.getType());
+                    getInstructions().cast(original.getType(), target.getType());
                     return;
                 }
             } else if (original.isPrimitive()
                     && (IClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
-                            .equals(block.getClassHolder().getType(Object.class)))) {
-                insnHelper.box(original.getType());
+                            .equals(getType(Object.class)))) {
+                getInstructions().box(original.getType());
                 return;
             } else if (IClassUtils.isPrimitiveWrapAClass(original)
                     && target.isPrimitive()
                     && original.equals(IClassUtils.getPrimitiveWrapAClass(target))) {
-                Type primType = InstructionHelper.getUnBoxedType(original.getType());
-                insnHelper.unbox(original.getType());
-                insnHelper.cast(primType, target.getType());
+                Type primType = Instructions.getUnBoxedType(original.getType());
+                getInstructions().unbox(original.getType());
+                getInstructions().cast(primType, target.getType());
                 return;
             }
         }
@@ -204,5 +201,13 @@ public abstract class AbstractOperator extends BytecodeExecutor {
     public Operator getOperatorSymbol() {
         return operatorSymbol;
     }
-    
+
+    protected IClass getType(Class<?> clazz) {
+        return block.getMethod()
+                .getClassLoader().getType(clazz);
+    }
+
+    protected Instructions getInstructions() {
+        return block.getMethod().getInstructions();
+    }
 }

@@ -52,18 +52,18 @@ public class ConstructorInvoker extends MethodInvoker {
     public void doExecute() {
         LOG.print("new a instance of class :" + this.methodOwner.getName());
         LOG.print("put class reference to stack");
-        insnHelper.newInstance(methodOwner.getType());
+        getInstructions().newInstance(methodOwner.getType());
         if (isSaveReference()) {
-            insnHelper.dup();
+            getInstructions().dup();
         }
         argumentsToStack();
         LOG.print("call the constrcutor");
-        insnHelper.invokeConstructor(methodOwner.getType(), mtdEntity.getParameterAsmTypes());
+        getInstructions().invokeConstructor(methodOwner.getType(), methodMeta.getParameterAsmTypes());
     }
 
     @Override
     public String toString() {
-        return  "new " + methodOwner.getName() + "." + mtdEntity;
+        return  "new " + methodOwner.getName() + "." + methodMeta;
     }
 
 }

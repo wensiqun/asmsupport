@@ -30,7 +30,7 @@ public abstract class KernelWhile extends KernelDoWhile implements IWhile  {
 
 	@Override
 	public void doExecute() {
-		instructionHelper.goTo(conditionLbl);
+        getMethod().getInstructions().goTo(conditionLbl);
 		super.doExecute();
 	}
 

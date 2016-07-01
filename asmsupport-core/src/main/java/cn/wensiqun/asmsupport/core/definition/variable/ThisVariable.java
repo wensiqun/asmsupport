@@ -37,13 +37,13 @@ public class ThisVariable extends ImplicitVariable {
     private Field globalVariableMeta;
     
     
-    public ThisVariable(IClass aclass) {
-        this.globalVariableMeta = new Field(aclass, aclass, aclass, Opcodes.ACC_FINAL, ASConstants.THIS);
+    public ThisVariable(IClass clazz) {
+        this.globalVariableMeta = new Field(clazz, clazz, clazz, Opcodes.ACC_FINAL, ASConstants.THIS);
     }
     
     @Override
     public void loadToStack(KernelProgramBlock block) {
-        block.getInstructionHelper().loadThis();
+        block.getMethod().getInstructions().loadThis(block.getMethod().getMeta().getOwner().getType());
     }
 
     @Override

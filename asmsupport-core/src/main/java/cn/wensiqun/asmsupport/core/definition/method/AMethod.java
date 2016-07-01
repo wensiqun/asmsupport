@@ -15,9 +15,7 @@
 package cn.wensiqun.asmsupport.core.definition.method;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.asm.CommonInstructionHelper;
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
-import cn.wensiqun.asmsupport.core.asm.StackLocalMethodVisitor;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
@@ -26,8 +24,8 @@ import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.ThisVariable;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
-import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
+import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -48,24 +46,25 @@ public class AMethod {
     /** Method Meta */
     private AMethodMeta meta;
 
-    /** A stakc of current method */
+    /** A stack of current method */
     private OperandStack stack;
 
     private int mode;
 
-    /** The local vairable container of current method*/
+    /** The local vairables container of current method*/
     private LocalVariables locals;
 
-    private InstructionHelper insnHelper;
+    /** Operate asm utils. */
+    private Instructions instructions;
 
     /** The method body of current method */
-    private AbstractKernelMethodBody methodBody;
+    private AbstractKernelMethodBody body;
 
     /** A counter indicate the jvm instruction count */
     private int instructionCounter = 0;
 
     /** Indicate the method that's need to throw in this method  */
-    private ThrowExceptionContainer exceptionContainer;
+    private ThrowExceptionContainer exceptions;
 
     /** The method of current method */
     private LocalVariable[] arguments;
@@ -76,26 +75,28 @@ public class AMethod {
     /** this key word */
     private ThisVariable thisVariable;
 
+    /** ASM ClassVisitor. */
     private ClassVisitor classVisitor;
-    
+
+    /** ASMSupport Class Loader. */
     private ASMSupportClassLoader classLoader;
     
-    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractKernelMethodBody methodBody, int mode) {
+    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractKernelMethodBody body, int mode) {
         this.classVisitor = classVisitor;
         this.classLoader = classLoader;
         this.meta = meta;
         this.mode = mode;
-        this.exceptionContainer = new ThrowExceptionContainer();
+        this.exceptions = new ThrowExceptionContainer();
         this.stack = new OperandStack();
         this.locals = new LocalVariables();
-        CollectionUtils.addAll(exceptionContainer, meta.getExceptions());
-        this.insnHelper = new CommonInstructionHelper(this);
+        CollectionUtils.addAll(exceptions, meta.getExceptions());
+        this.instructions = new Instructions(locals, stack);
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            if (methodBody != null) {
-                this.methodBody = methodBody;
-                this.methodBody.setScope(new Scope(this.locals, null));
-                this.methodBody.setInstructionHelper(insnHelper);
+            if (body != null) {
+                this.body = body;
+                this.body.setScope(new Scope(this.locals, null));
+                this.body.setMethod(this);
             } else {
                 throw new ASMSupportException("Error while create method '" + meta.getName()
                         + "', cause by not found method body and it not abstract method.");
@@ -106,19 +107,19 @@ public class AMethod {
     /**
      * Get all exception that's need to throws.
      */
-    private void getThrowExceptionsInProgramBlock(AbstractKernelBlock block) {
+    private void recheckThrows(AbstractKernelBlock block) {
         if (block instanceof KernelProgramBlock) {
             ThrowExceptionContainer blockExceptions = ((KernelProgramBlock) block).getThrowExceptions();
             if (blockExceptions != null) {
                 for (IClass exp : blockExceptions) {
-                    exceptionContainer.add(exp);
+                    exceptions.add(exp);
                 }
             }
         }
 
         for (Executable exe : block.getQueue()) {
             if (exe instanceof AbstractKernelBlock) {
-                getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
+                recheckThrows((AbstractKernelBlock) exe);
             }
         }
     }
@@ -129,24 +130,20 @@ public class AMethod {
     private void createMethodVisitor() {
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            for (Executable exe : getMethodBody().getQueue()) {
+            for (Executable exe : getBody().getQueue()) {
                 if (exe instanceof AbstractKernelBlock) {
-                    getThrowExceptionsInProgramBlock((AbstractKernelBlock) exe);
+                    recheckThrows((AbstractKernelBlock) exe);
                 }
             }
         }
 
-        String[] exceptions = new String[this.exceptionContainer.size()];
+        String[] exceptions = new String[this.exceptions.size()];
         int i = 0;
-        for (IClass te : this.exceptionContainer) {
+        for (IClass te : this.exceptions) {
             exceptions[i++] = te.getType().getInternalName();
         }
-
-        MethodVisitor mv = classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
-                exceptions);
-
-        insnHelper.setMv(new StackLocalMethodVisitor(mv, stack));
-
+        instructions.setMv(classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
+                exceptions));
     }
 
     /**
@@ -155,10 +152,10 @@ public class AMethod {
     public void startup() {
         createMethodVisitor();
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            this.methodBody.execute();
-            this.methodBody.endMethodBody();
+            this.body.execute();
+            this.body.endMethodBody();
         }
-        insnHelper.endMethod();
+        instructions.endMethod();
     }
 
     /**
@@ -183,15 +180,15 @@ public class AMethod {
     }
 
     
-    public AbstractKernelMethodBody getMethodBody() {
-        return methodBody;
+    public AbstractKernelMethodBody getBody() {
+        return body;
     }
 
     /**
      * Get helper
      */
-    public InstructionHelper getInsnHelper() {
-        return insnHelper;
+    public Instructions getInstructions() {
+        return instructions;
     }
 
     /**
@@ -199,13 +196,6 @@ public class AMethod {
      */
     public AMethodMeta getMeta() {
         return meta;
-    }
-
-    /**
-     * Remove a exception type from container
-     */
-    public void removeThrowException(IClass exception) {
-        exceptionContainer.remove(exception);
     }
 
     @Override
@@ -222,7 +212,8 @@ public class AMethod {
     }
 
     /**
-     * Return the parameters, the parameter represent as a {@link LocalVariable}
+     * Get the method argument that's corresponding to current block,
+     * the parameter represent as a {@link LocalVariable}
      */
     public LocalVariable[] getParameters() {
         return arguments;
@@ -239,6 +230,11 @@ public class AMethod {
         return mode;
     }
 
+    /**
+     * Get Super Variable.
+     *
+     * @return
+     */
     public SuperVariable getSuperVariable() {
     	if(superVariable == null){
             superVariable = new SuperVariable(meta.getActuallyOwner());

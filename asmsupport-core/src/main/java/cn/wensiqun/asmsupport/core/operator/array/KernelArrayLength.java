@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -51,7 +50,6 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
-        InstructionHelper ih = block.getInstructionHelper();
         if(LOG.isPrintEnabled()) {
             LOG.print("start get length of array");
         }
@@ -59,7 +57,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
         if(LOG.isPrintEnabled()) {
             LOG.print("got length and push to stack");
         }
-        ih.arrayLength();
+        getInstructions().arrayLength();
     }
 
     @Override
@@ -80,7 +78,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     
     @Override
 	public String toString() {
-		StringBuilder toString = new StringBuilder(arrayReference.toString());
+		StringBuilder toString = new StringBuilder(arrayRef.toString());
 		for(KernelParam p : parDims){
 			toString.append("[").append(p).append("]");
 		}

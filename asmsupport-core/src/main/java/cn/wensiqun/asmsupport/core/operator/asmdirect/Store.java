@@ -33,7 +33,7 @@ public class Store extends ASMDirect {
 
     @Override
     protected void doExecute() {
-        insnHelper.storeInsn(var);
+        getInstructions().storeInsn(var);
     }
 
 }

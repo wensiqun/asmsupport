@@ -34,7 +34,7 @@ public class KernelLogicalOr extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitOr(block.getClassHolder().getType(boolean.class).getType());
+        getInstructions().bitOr(getType(boolean.class).getType());
     }
 
 }

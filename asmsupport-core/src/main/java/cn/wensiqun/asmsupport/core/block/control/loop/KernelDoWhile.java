@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -49,26 +49,27 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
 
     @Override
     public void doExecute() {
-        instructionHelper.mark(contentStart);
+        Instructions instructions = getMethod().getInstructions();
+        instructions.mark(contentStart);
         for (Executable exe : getQueue()) {
             exe.execute();
         }
 
-        instructionHelper.mark(conditionLbl);
+        instructions.mark(conditionLbl);
 
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpPositive(null, contentStart, getEnd());
         } else {
             condition.loadToStack(this);
-            instructionHelper.unbox(condition.getResultType().getType());
-            instructionHelper.ifZCmp(InstructionHelper.NE, contentStart);
+            instructions.unbox(condition.getResultType().getType());
+            instructions.ifZCmp(Instructions.NE, contentStart);
         }
     }
 
     @Override
     protected void init() {
-        if (!condition.getResultType().equals(getClassHolder().getType(Boolean.class))
-                && !condition.getResultType().equals(getClassHolder().getType(boolean.class))) {
+        if (!condition.getResultType().equals(getType(Boolean.class))
+                && !condition.getResultType().equals(getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getResultType());
         }

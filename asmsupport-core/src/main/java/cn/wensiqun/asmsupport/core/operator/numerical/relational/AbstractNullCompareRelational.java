@@ -16,7 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -38,7 +38,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	protected void doExecute() {
         //if those two factories are both null value
 		//direct push true or false
-		MethodVisitor mv = insnHelper.getMv();
+		MethodVisitor mv = getInstructions().getMv();
 		if(isNullValue(leftFactor) && isNullValue(rightFactor)){
 			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
 				//push true to stack
@@ -64,15 +64,15 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
         //check null
         int sort = type.getSort();
         if(sort == Type.OBJECT || sort == Type.ARRAY){
-            MethodVisitor mv = insnHelper.getMv();
+            MethodVisitor mv = getInstructions().getMv();
             switch (mode) {
-                case InstructionHelper.EQ:
+                case Instructions.EQ:
                     if((isNullValue(leftFactor) && !isNullValue(rightFactor)) ||
                        (!isNullValue(leftFactor) && isNullValue(rightFactor))){
                         mv.visitJumpInsn(Opcodes.IFNULL, label);
                         return;
                     }
-                case InstructionHelper.NE:
+                case Instructions.NE:
                     if((isNullValue(leftFactor) && !isNullValue(rightFactor)) ||
                        (!isNullValue(leftFactor) && isNullValue(rightFactor))){
                         mv.visitJumpInsn(Opcodes.IFNONNULL, label);
@@ -80,7 +80,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
                     }
                 }
         }
-        insnHelper.ifCmp(type, mode, label);
+		getInstructions().ifCmp(type, mode, label);
     }
 	
 	@Override

@@ -42,7 +42,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
         this.parDims[0] = pardim;
         System.arraycopy(parDims, 0, this.parDims, 1, parDims.length);
         
-        valueClass = arrayReference.getResultType();
+        valueClass = arrayRef.getResultType();
         for(int i=0; i<this.parDims.length; i++){
             valueClass = ((ArrayClass) valueClass).getNextDimType();
         }
@@ -59,7 +59,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
-        ArrayClass cls = (ArrayClass) arrayReference.getResultType();
+        ArrayClass cls = (ArrayClass) arrayRef.getResultType();
         if(parDims != null && parDims.length > cls.getDimension()){
             throw new ArrayOperatorException(toString() + " dimension not enough!");
         }
@@ -87,7 +87,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
 
 	@Override
 	public String toString() {
-		StringBuilder toString = new StringBuilder(arrayReference.toString());
+		StringBuilder toString = new StringBuilder(arrayRef.toString());
 		for(KernelParam p : parDims){
 			toString.append("[").append(p).append("]");
 		}

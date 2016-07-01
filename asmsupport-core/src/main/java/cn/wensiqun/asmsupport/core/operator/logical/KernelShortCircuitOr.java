@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.logical;
 
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -45,7 +46,7 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
         Label trueLbl = new Label();
         Label orEndLbl = new Label();
         
-        MethodVisitor mv = insnHelper.getMv();
+        MethodVisitor mv = getInstructions().getMv();
 
         jumpPositive(this, trueLbl, orEndLbl);
         
@@ -63,7 +64,8 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
 
     @Override
     public void jumpPositive(KernelParam from, Label posLbl, Label negLbl) {
-        MethodVisitor mv = insnHelper.getMv();
+        Instructions instructions = getInstructions();
+        MethodVisitor mv = instructions.getMv();
         Label rightFactorJudgeLbl = new Label();
         if(leftFactor instanceof KernelShortCircuitAnd) {
             ((Jumpable) leftFactor).jumpPositive(this, posLbl, rightFactorJudgeLbl);
@@ -71,11 +73,11 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
             ((Jumpable) leftFactor).jumpPositive(this, posLbl, negLbl);
         } else {
             leftFactor.loadToStack(block);
-            insnHelper.unbox(leftFactor.getResultType().getType());
+            instructions.unbox(leftFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFNE, posLbl);
         }
 
-        insnHelper.mark(rightFactorJudgeLbl);
+        instructions.mark(rightFactorJudgeLbl);
         
         Label conditionCheckEnd = new Label();
         if(rightFactor instanceof KernelShortCircuitAnd) {
@@ -84,15 +86,16 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
             ((Jumpable) rightFactor).jumpPositive(this, posLbl, negLbl);
         } else {
             rightFactor.loadToStack(block);
-            insnHelper.unbox(rightFactor.getResultType().getType());
+            instructions.unbox(rightFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFNE, posLbl);
         }
-        insnHelper.mark(conditionCheckEnd);
+        instructions.mark(conditionCheckEnd);
     }
 
     @Override
     public void jumpNegative(KernelParam from, Label posLbl, Label negLbl) {
-        MethodVisitor mv = insnHelper.getMv();
+        Instructions instructions = getInstructions();
+        MethodVisitor mv = instructions.getMv();
         Label rightFactorJudgeLbl = new Label();
         Label conditionCheckEnd = new Label();
         
@@ -102,18 +105,18 @@ public class KernelShortCircuitOr extends ConditionOperator implements Jumpable 
             ((Jumpable) leftFactor).jumpPositive(this, posLbl, negLbl);
         } else {
             leftFactor.loadToStack(block);
-            insnHelper.unbox(leftFactor.getResultType().getType());
+            instructions.unbox(leftFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFNE, conditionCheckEnd);
         }
-        insnHelper.mark(rightFactorJudgeLbl);
+        instructions.mark(rightFactorJudgeLbl);
         if(rightFactor instanceof Jumpable) {
             ((Jumpable) rightFactor).jumpNegative(this, posLbl, negLbl);
         } else {
             rightFactor.loadToStack(block);
-            insnHelper.unbox(rightFactor.getResultType().getType());
+            instructions.unbox(rightFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
-        insnHelper.mark(conditionCheckEnd);
+        instructions.mark(conditionCheckEnd);
     }
 
 }

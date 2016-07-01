@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.common;
 
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -58,8 +58,8 @@ public class KernelTernary extends AbstractParamOperator {
     	IClass expCls2 = exp2.getResultType();
     	IClass expCls3 = exp3.getResultType();
         
-        if(!expCls1.equals(block.getClassHolder().getType(boolean.class)) && 
-           !expCls1.equals(block.getClassHolder().getType(Boolean.class))){
+        if(!expCls1.equals(getType(boolean.class)) &&
+           !expCls1.equals(getType(Boolean.class))){
             throw new ASMSupportException("the first expression type of ternary operator must by boolean or Boolean!");
         }
         
@@ -83,8 +83,8 @@ public class KernelTernary extends AbstractParamOperator {
             resultClass = expPrimCls1;
             return true;
         }else if(expPrimCls1.isPrimitive() && expPrimCls2.isPrimitive()){
-            if(expPrimCls1.equals(block.getClassHolder().getType(boolean.class)) || 
-               expPrimCls2.equals(block.getClassHolder().getType(boolean.class))){
+            if(expPrimCls1.equals(getType(boolean.class)) ||
+               expPrimCls2.equals(getType(boolean.class))){
                 return false;
             }else{
                 if(expPrimCls1.getCastOrder() > expPrimCls2.getCastOrder()){
@@ -106,6 +106,7 @@ public class KernelTernary extends AbstractParamOperator {
     
     @Override
     protected void doExecute() {
+        Instructions instructions = getInstructions();
         Label posLbl = new Label();
         Label l1 = new Label();
         Label l2 = new Label();
@@ -114,18 +115,18 @@ public class KernelTernary extends AbstractParamOperator {
         	jmp.jumpNegative(this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
         	exp1.loadToStack(block);
-            insnHelper.unbox(exp1.getResultType().getType());
-            insnHelper.ifZCmp(InstructionHelper.EQ, l1);
+            instructions.unbox(exp1.getResultType().getType());
+            instructions.ifZCmp(Instructions.EQ, l1);
         }
 
-        insnHelper.mark(posLbl);
+        instructions.mark(posLbl);
     	exp2.loadToStack(block);
         block.getMethod().getStack().pop();
-        insnHelper.goTo(l2);
-    	insnHelper.mark(l1);
+        instructions.goTo(l2);
+    	instructions.mark(l1);
     	
         exp3.loadToStack(block);
-        insnHelper.mark(l2);
+        instructions.mark(l2);
     }
     
     @Override

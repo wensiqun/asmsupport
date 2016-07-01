@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.value;
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
@@ -189,8 +190,9 @@ public class Value implements IValue {
     
     /**
      * Get {@code int} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Integer obj) {
@@ -199,8 +201,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code short} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Short obj) {
@@ -209,8 +212,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code byte} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Byte obj) {
@@ -219,8 +223,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code boolean} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Boolean obj) {
@@ -229,8 +234,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code long} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Long obj) {
@@ -239,8 +245,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code double} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Double obj) {
@@ -249,8 +256,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code char} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Character obj) {
@@ -259,8 +267,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code float} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Float obj) {
@@ -269,8 +278,9 @@ public class Value implements IValue {
 
     /**
      * Get {@code class} value
-     * 
-     * @param val
+     *
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, IClass obj) {
@@ -280,7 +290,8 @@ public class Value implements IValue {
     /**
      * Get {@code class} value
      * 
-     * @param val
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, Class<?> obj) {
@@ -290,7 +301,8 @@ public class Value implements IValue {
     /**
      * Get {@code null} value
      * 
-     * @param val
+     * @param holder
+     * @param obj
      * @return
      */
     public static Value value(ClassHolder holder, String obj) {
@@ -453,9 +465,7 @@ public class Value implements IValue {
     }
 
     /**
-     * 
-     * 
-     * @param val
+     * @param comp
      * @return
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -497,50 +507,51 @@ public class Value implements IValue {
 
     @Override
     public void loadToStack(KernelProgramBlock block) {
+        Instructions instructions = block.getMethod().getInstructions();
         if (value == null) {
-            block.getInstructionHelper().push(this.getType());
+            instructions.push(this.getType());
             return;
         }
 
         if (this.cls.getName().equals(int.class.getName())) {
 
-            block.getInstructionHelper().push((Integer) value);
+            instructions.push((Integer) value);
 
         } else if (this.cls.getName().equals(short.class.getName())) {
 
-            block.getInstructionHelper().push((Short) value);
+            instructions.push((Short) value);
 
         } else if (this.cls.getName().equals(byte.class.getName())) {
 
-            block.getInstructionHelper().push((Byte) value);
+            instructions.push((Byte) value);
 
         } else if (this.cls.getName().equals(boolean.class.getName())) {
 
-            block.getInstructionHelper().push((Boolean) value);
+            instructions.push((Boolean) value);
 
         } else if (this.cls.getName().equals(long.class.getName())) {
 
-            block.getInstructionHelper().push((Long) value);
+            instructions.push((Long) value);
 
         } else if (this.cls.getName().equals(double.class.getName())) {
 
-            block.getInstructionHelper().push((Double) value);
+            instructions.push((Double) value);
 
         } else if (this.cls.getName().equals(char.class.getName())) {
 
-            block.getInstructionHelper().push((Character) value);
+            instructions.push((Character) value);
 
         } else if (this.cls.getName().equals(float.class.getName())) {
 
-            block.getInstructionHelper().push((Float) value);
+            instructions.push((Float) value);
 
         } else if (this.cls.getName().equals(String.class.getName())) {
 
-            block.getInstructionHelper().push(value.toString());
+            instructions.push(value.toString());
 
         } else if (this.cls.getName().equals(Class.class.getName())) {
 
-            block.getInstructionHelper().pushClass(((IClass) value).getType());
+            instructions.pushClass(((IClass) value).getType());
 
         }
     }

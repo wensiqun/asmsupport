@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -25,7 +26,6 @@ import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
@@ -37,11 +37,10 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	protected AbstractCrement(KernelProgramBlock block, KernelParam factor,
 			Operator operator) {
 		super(block, operator);
-		ClassHolder classHolder = block.getClassHolder();
 		IClass resultType = factor.getResultType();
 		if(resultType != null &&
-		   !classHolder.getType(boolean.class).equals(resultType) &&
-		   !classHolder.getType(Boolean.class).equals(resultType) &&
+		   !getType(boolean.class).equals(resultType) &&
+		   !getType(Boolean.class).equals(resultType) &&
 		   (IClassUtils.isPrimitiveWrapAClass(resultType) || 
 		   resultType.isPrimitive())) {
 			this.factor = factor;
@@ -86,6 +85,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 	@Override
 	protected void doExecute() {
+		Instructions instructions = getInstructions();
 		Type type = targetClass.getType();
 		boolean asArgument = !block.getQueue().contains(this);
 		boolean isPos = Operator.POS_DEC.equals(getOperatorSymbol())
@@ -98,7 +98,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 				factor.loadToStack(block);
 			}
 
-			insnHelper.iinc(((LocalVariable) factor).getScopeLogicVar()
+			instructions.iinc(((LocalVariable) factor).getScopeLogicVar()
 					.getInitStartPos(), isInc ? 1 : -1);
 
 			if (asArgument && !isPos) {
@@ -112,7 +112,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 			factor.loadToStack(block);
 
 			if (asArgument && isPos)
-				insnHelper.dup(type);
+				instructions.dup(type);
 
 			// unbox
 			autoCast(targetClass, primitiveClass, true);
@@ -122,34 +122,33 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 			// generate xadd/xsub for decrement
 			if (isInc) {
-				insnHelper.add(primitiveType);
+				instructions.add(primitiveType);
 			} else {
-				insnHelper.sub(primitiveType);
+				instructions.sub(primitiveType);
 			}
 
 			// box and cast
 			autoCast(
-					primitiveType.getSort() <= Type.INT ? block.getClassHolder().getType(int.class)
+					primitiveType.getSort() <= Type.INT ? getType(int.class)
 							: primitiveClass, targetClass, true);
 
 			if (asArgument && !isPos)
-				insnHelper.dup(type);
+				instructions.dup(type);
 
-			insnHelper.commonPutField((ExplicitVariable) factor);
+			instructions.commonPutField((ExplicitVariable) factor);
 		}
 	}
 
 	private Value getIncreaseValue() {
 		IClass type = factor.getResultType();
-		ClassHolder holder = block.getClassHolder();
-		if (type.equals(holder.getType(double.class))
-				|| type.equals(holder.getType(Double.class))) {
+		if (type.equals(getType(double.class))
+				|| type.equals(getType(Double.class))) {
 			return block.val(1d);
-		} else if (type.equals(holder.getType(float.class))
-				|| type.equals(holder.getType(Float.class))) {
+		} else if (type.equals(getType(float.class))
+				|| type.equals(getType(Float.class))) {
 			return block.val(1f);
-		} else if (type.equals(holder.getType(long.class))
-				|| type.equals(holder.getType(Long.class))) {
+		} else if (type.equals(getType(long.class))
+				|| type.equals(getType(Long.class))) {
 			return block.val(1L);
 		} else {
 			return block.val(1);

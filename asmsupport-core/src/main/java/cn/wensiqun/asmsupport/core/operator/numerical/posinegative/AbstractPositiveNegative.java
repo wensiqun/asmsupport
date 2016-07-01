@@ -83,7 +83,7 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 	@Override
 	protected void factorToStack() {
 		factor.loadToStack(block);
-		insnHelper.unbox(factor.getResultType().getType());
+		getInstructions().unbox(factor.getResultType().getType());
 	}
 
 }

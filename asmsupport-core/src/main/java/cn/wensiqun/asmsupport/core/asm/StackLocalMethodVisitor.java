@@ -48,7 +48,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
         this.nextPushTypes = types;
     }
 
-    public StackLocalMethodVisitor(MethodVisitor mv, OperandStack stack) {
+    StackLocalMethodVisitor(MethodVisitor mv, OperandStack stack) {
         super(ASConstants.ASM_VERSION, mv);
         this.stack = stack;
     }

@@ -81,7 +81,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     
     protected final void checkFactorForNumerical(IClass ftrCls){
         if(!ftrCls.isPrimitive() || 
-           ftrCls.equals(block.getClassHolder().getType(boolean.class))){
+           ftrCls.equals(getType(boolean.class))){
             throw new ASMSupportException("this operator " + getOperatorSymbol().getSymbol() + " cannot support for type " + ftrCls );
         }
     }
@@ -95,18 +95,18 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     public void execute() {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
-            	LOG.print("run operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() + rightFactor.getResultType());
+            	LOG.print("Run operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() + rightFactor.getResultType());
             }
             super.execute();
         }else{
-            throw new ASMSupportException("the operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() +
+            throw new ASMSupportException("The operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() +
                                           rightFactor.getResultType() + " has not been used by other operator.");
         }
     }
 
     @Override
     public IClass getResultType() {
-        return block.getClassHolder().getType(boolean.class);
+        return getType(boolean.class);
     }
 
     @Override
@@ -128,7 +128,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 		
         negativeCmp(falseLbl);
 
-        MethodVisitor mv = insnHelper.getMv();
+        MethodVisitor mv = getInstructions().getMv();
         
         //push true to stack
         mv.visitInsn(Opcodes.ICONST_0 + 1);

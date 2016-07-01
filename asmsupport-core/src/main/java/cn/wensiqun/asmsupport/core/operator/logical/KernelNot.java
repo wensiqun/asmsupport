@@ -40,7 +40,7 @@ public class KernelNot extends UnaryLogical {
 
     @Override
     protected void executing() {
-        MethodVisitor mv = insnHelper.getMv();
+        MethodVisitor mv = getInstructions().getMv();
         mv.visitJumpInsn(Opcodes.IFEQ, trueLbl);
         
         mv.visitInsn(Opcodes.ICONST_0);

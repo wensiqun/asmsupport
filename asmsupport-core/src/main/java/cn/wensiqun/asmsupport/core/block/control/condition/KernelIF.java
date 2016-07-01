@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
 import cn.wensiqun.asmsupport.core.BytecodeExecutor;
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -32,8 +32,8 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
 
     @Override
     protected void init() {
-        if (!condition.getResultType().equals(getClassHolder().getType(Boolean.class))
-                && !condition.getResultType().equals(getClassHolder().getType(boolean.class))) {
+        if (!condition.getResultType().equals(getType(Boolean.class))
+                && !condition.getResultType().equals(getType(boolean.class))) {
             throw new ASMSupportException("the condition type of if statement must be boolean or Boolean, but was "
                     + condition.getResultType());
         }
@@ -46,24 +46,24 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
 
     @Override
     protected void doExecute() {
+        Instructions instructions = getMethod().getInstructions();
         Label posLbl = new Label();
-
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());// .executeJump(Opcodes.JUMP_NEGATIVE,
                                                                         // endLbl);
         } else {
             condition.loadToStack(this);
-            instructionHelper.unbox(condition.getResultType().getType());
-            instructionHelper.ifZCmp(InstructionHelper.EQ, getEnd());
+            instructions.unbox(condition.getResultType().getType());
+            instructions.ifZCmp(Instructions.EQ, getEnd());
         }
 
-        instructionHelper.mark(posLbl);
+        instructions.mark(posLbl);
         for (BytecodeExecutor exe : getQueue()) {
             exe.execute();
         }
 
         if (nextBranch != null) {
-            instructionHelper.goTo(getSerialEnd());
+            instructions.goTo(getSerialEnd());
         }
 
     }

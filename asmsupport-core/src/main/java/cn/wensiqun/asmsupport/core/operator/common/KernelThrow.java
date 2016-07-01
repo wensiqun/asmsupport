@@ -45,7 +45,7 @@ public class KernelThrow extends BreakStack {
     @Override
     protected void startingPrepare() {
         if (!block.getType(AnyException.class).equals(exception.getResultType())) {
-            block.addException(exception.getResultType());
+            block.throwException(exception.getResultType());
         }
         super.startingPrepare();
     }
@@ -54,7 +54,7 @@ public class KernelThrow extends BreakStack {
     protected void verifyArgument() {
     	IClass type = exception.getResultType();
         if (block.getType(AnyException.class) != type && 
-        	!type.isChildOrEqual(block.getClassHolder().getType(Throwable.class))) {
+        	!type.isChildOrEqual(getType(Throwable.class))) {
             throw new ASMSupportException("No exception of type " + type
                     + " can be thrown; an exception type must be a subclass of Throwable");
         }
@@ -68,7 +68,7 @@ public class KernelThrow extends BreakStack {
     @Override
     protected void breakStackExecuting() {
         exception.loadToStack(block);
-        insnHelper.throwException();
+        getInstructions().throwException();
     }
 
     @Override

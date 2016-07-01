@@ -46,10 +46,10 @@ public abstract class BinaryLogical extends AbstractLogical {
 		IClass ftrCls1 = leftFactor.getResultType();
 		IClass ftrCls2 = rightFactor.getResultType();
         
-		if (!((ftrCls1.equals(block.getClassHolder().getType(boolean.class)) || ftrCls1
-				.equals(block.getClassHolder().getType(Boolean.class))) && (ftrCls2
-				.equals(block.getClassHolder().getType(boolean.class)) || ftrCls2
-				.equals(block.getClassHolder().getType(Boolean.class))))){
+		if (!((ftrCls1.equals(getType(boolean.class)) || ftrCls1
+				.equals(getType(Boolean.class))) && (ftrCls2
+				.equals(getType(boolean.class)) || ftrCls2
+				.equals(getType(Boolean.class))))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}
@@ -76,10 +76,10 @@ public abstract class BinaryLogical extends AbstractLogical {
             LOG.print("Factors to stack");
         }
         leftFactor.loadToStack(block);
-        insnHelper.unbox(leftFactor.getResultType().getType());
+        getInstructions().unbox(leftFactor.getResultType().getType());
         
         rightFactor.loadToStack(block);
-        insnHelper.unbox(rightFactor.getResultType().getType());
+        getInstructions().unbox(rightFactor.getResultType().getType());
     }
 
 }

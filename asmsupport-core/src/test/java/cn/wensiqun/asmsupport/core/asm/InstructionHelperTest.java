@@ -9,7 +9,7 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 public class InstructionHelperTest
 {
 
-    InstructionHelper helper = new InstructionHelper(){};
+    Instructions helper = new Instructions();
     
     @Test
     public void testGetReverseCmp()

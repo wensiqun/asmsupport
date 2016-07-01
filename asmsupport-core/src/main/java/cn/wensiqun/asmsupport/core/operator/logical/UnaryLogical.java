@@ -48,7 +48,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     @Override
 	protected void verifyArgument() {
     	IClass ftrCls = factor.getResultType();
-        if(!(ftrCls.equals(block.getClassHolder().getType(boolean.class)) && !ftrCls.equals(block.getClassHolder().getType(Boolean.class)))){
+        if(!(ftrCls.equals(getType(boolean.class)) && !ftrCls.equals(getType(Boolean.class)))){
             throw new ASMSupportException("the factor type must be boolean or Boolean for logical operator!");
         }
 	}
@@ -72,7 +72,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     protected void factorToStack() {
         LOG.print("factors to stack");
         factor.loadToStack(block);
-        insnHelper.unbox(factor.getResultType().getType());
+        getInstructions().unbox(factor.getResultType().getType());
     }
 
 }

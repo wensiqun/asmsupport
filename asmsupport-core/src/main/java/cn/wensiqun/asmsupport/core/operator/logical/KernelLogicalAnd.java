@@ -34,7 +34,7 @@ public class KernelLogicalAnd extends BinaryLogical {
 
     @Override
     protected void executing() {
-        insnHelper.bitAnd(block.getClassHolder().getType(boolean.class).getType());    
+        getInstructions().bitAnd(getType(boolean.class).getType());
     }
 
 }

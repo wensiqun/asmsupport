@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.block;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
@@ -25,7 +24,6 @@ import cn.wensiqun.asmsupport.core.block.control.loop.KernelDoWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelForEach;
 import cn.wensiqun.asmsupport.core.block.control.loop.KernelWhile;
 import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
-import cn.wensiqun.asmsupport.core.block.method.AbstractKernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -68,13 +66,12 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.action.ActionSet;
 import cn.wensiqun.asmsupport.standard.def.clazz.ArrayClass;
-import cn.wensiqun.asmsupport.standard.def.clazz.ClassHolder;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 import cn.wensiqun.asmsupport.utils.lang.StringUtils;
 
@@ -87,7 +84,7 @@ public abstract class KernelProgramBlock extends AbstractKernelBlock implements
 ActionSet<KernelParam, IVariable,
 KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
-	/** the actually executor.*/
+	/** The actually executor.*/
     private KernelProgramBlock executor = this;
 
     /**
@@ -95,9 +92,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      */
     private KernelProgramBlock parent;
 
-    private Scope scope;
+    private AMethod method;
 
-    protected InstructionHelper instructionHelper;
+    private Scope scope;
 
     private ThrowExceptionContainer throwExceptions;
     
@@ -148,8 +145,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public void prepare() {
         init();
-        scope.getStart().setName(this.getClass().toString() + " start");
-        scope.getEnd().setName(this.getClass().toString() + " end");
         wrapperGenerate();
         // just trigger if the last is SerialBlock in the queue
         OperatorFactory.newOperator(BlockEndFlag.class, new Class[] { KernelProgramBlock.class }, getExecutor());
@@ -157,9 +152,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final void execute() {
-        getInstructionHelper().mark(scope.getStart());
+        getMethod().getInstructions().mark(scope.getStart());
         doExecute();
-        getInstructionHelper().mark(scope.getEnd());
+        getMethod().getInstructions().mark(scope.getEnd());
     }
 
     /**
@@ -207,12 +202,12 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public LocalVariable var(String name, Class<?> type, KernelParam para) {
-        return var(name, getClassHolder().getType(type), false, para);
+        return var(name, getMethod().getClassLoader().getType(type), false, para);
     }
 
     @Override
     public LocalVariable var(Class<?> type, KernelParam para) {
-        return var("", getClassHolder().getType(type), true, para);
+        return var("", getMethod().getClassLoader().getType(type), true, para);
     }
 
     @Override
@@ -327,7 +322,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final KernelCast checkcast(KernelParam cc, Class<?> to) {
-        return checkcast(cc, getClassHolder().getType(to));
+        return checkcast(cc, getMethod().getClassLoader().getType(to));
     }
 
     // *******************************************************************************************//
@@ -622,7 +617,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final MethodInvoker new_(Class<?> owner, KernelParam... arguments) {
-        return this.new_(getClassHolder().getType(owner), arguments);
+        return this.new_(getMethod().getClassLoader().getType(owner), arguments);
     }
 
     // *******************************************************************************************//
@@ -742,9 +737,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             }
             originalMethodName += ASConstants.METHOD_PROXY_SUFFIX;
             if (Modifiers.isStatic(getMethod().getMeta().getModifiers())) {
-                return call(getMethodDeclaringClass(), originalMethodName, getMethodArguments());
+                return call(getMethodDeclaringClass(), originalMethodName, getMethod().getParameters());
             } else {
-                return call(this_(), originalMethodName, getMethodArguments());
+                return call(this_(), originalMethodName, getMethod().getParameters());
             }
         } else {
             throw new ASMSupportException("This method is new and not modify!");
@@ -779,57 +774,57 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public Value val(Integer val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Short val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Byte val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Boolean val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Long val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Double val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Character val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Float val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(IClass val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(Class<?> val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
     public Value val(String val) {
-        return Value.value(getClassHolder(), val);
+        return Value.value(getMethod().getClassLoader(), val);
     }
 
     @Override
@@ -839,27 +834,27 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public Value null_(Class<?> type) {
-        return Value.getNullValue(getClassHolder().getType(type));
+        return Value.getNullValue(getMethod().getClassLoader().getType(type));
     }
 
 	@Override
     public IClass getType(Class<?> cls) {
-        return getClassHolder().getType(cls);
+        return getMethod().getClassLoader().getType(cls);
     }
     
     @Override
 	public IClass getType(String className) {
-        return getClassHolder().getType(className);
+        return getMethod().getClassLoader().getType(className);
 	}
 
 	@Override
     public IClass getArrayType(Class<?> cls, int dim) {
-        return getClassHolder().getArrayType(cls, dim);
+        return getMethod().getClassLoader().getArrayType(cls, dim);
     }
 
     @Override
     public IClass getArrayType(IClass rootComponent, int dim) {
-        return getClassHolder().getArrayType(rootComponent, dim);
+        return getMethod().getClassLoader().getArrayType(rootComponent, dim);
     }
     
     /**
@@ -933,25 +928,21 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     /**
-     * Set {@link InstructionHelper}
+     * Set {@link AMethod}
      * 
-     * @param instructionHelper
+     * @param method
      */
-    public void setInstructionHelper(InstructionHelper instructionHelper) {
-        this.instructionHelper = instructionHelper;
+    public void setMethod(AMethod method) {
+        this.method = method;
     }
 
-    public ClassHolder getClassHolder() {
-    	return instructionHelper.getMethod().getClassLoader();
-    }
-    
     /**
-     * Get the {@link InstructionHelper}
-     * 
+     * Get the method of current block bellow.
+     *
      * @return
      */
-    public InstructionHelper getInstructionHelper() {
-        return instructionHelper;
+    public AMethod getMethod() {
+        return method;
     }
 
     /**
@@ -965,35 +956,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     public void setParent(KernelProgramBlock block) {
         parent = block;
-        setInstructionHelper(block.instructionHelper);
+        setMethod(block.method);
         setScope(new Scope(getMethod().getLocals(), block.getScope()));
-    }
-
-    /**
-     * Get the method of current block bellow.
-     * 
-     * @return
-     */
-    public AMethod getMethod() {
-        return instructionHelper.getMethod();
-    }
-
-    /**
-     * Get the method argument that's corresponding to current block.
-     * 
-     * @return
-     */
-    public LocalVariable[] getMethodArguments() {
-        return getMethod().getParameters();
-    }
-
-    /**
-     * Get the MethodBody that's corresponding to current block.
-     * 
-     * @return
-     */
-    protected AbstractKernelMethodBody getMethodBody() {
-        return getMethod().getMethodBody();
     }
 
     /**
@@ -1017,13 +981,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     /**
      * Add exception it's throw in current method body.
-     * @param exceptionType the exception type.
+     * @param type the exception type.
      */
-    public void addException(IClass exceptionType) {
+    public void throwException(IClass type) {
         if (throwExceptions == null) {
             throwExceptions = new ThrowExceptionContainer();
         }
-        throwExceptions.add(exceptionType);
+        throwExceptions.add(type);
     }
 
     public BlockTracker getBlockTracker() {

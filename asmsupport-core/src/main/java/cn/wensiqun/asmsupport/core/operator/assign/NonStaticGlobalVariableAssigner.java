@@ -14,14 +14,14 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
-import java.lang.reflect.Modifier;
-
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
+
+import java.lang.reflect.Modifier;
 
 /**
  * 
@@ -52,8 +52,8 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
         value.loadToStack(block);
         
         autoCast();
-        
-        insnHelper.putField(var.getOwner().getResultType().getType(), 
+
+        getInstructions().putField(var.getOwner().getResultType().getType(),
                 var.getMeta().getName(),
                 var.getMeta().getType().getType());
     }

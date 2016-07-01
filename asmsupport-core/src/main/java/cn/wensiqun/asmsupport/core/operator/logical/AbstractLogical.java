@@ -40,7 +40,7 @@ public abstract class AbstractLogical extends AbstractParamOperator {
 
     @Override
     public IClass getResultType() {
-        return block.getClassHolder().getType(boolean.class);
+        return getType(boolean.class);
     }
 
     @Override

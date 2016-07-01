@@ -14,8 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import java.lang.reflect.Modifier;
-
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -24,6 +23,8 @@ import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+
+import java.lang.reflect.Modifier;
 
 /**
  * Represent a method call.
@@ -76,28 +77,29 @@ public class CommonMethodInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
+            Instructions instructions = getInstructions();
             LOG.print("put reference to stack");
             callObjReference.loadToStack(block);
             argumentsToStack();
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
-                insnHelper.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes(), true);
+                instructions.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), methodMeta.getParameterAsmTypes(), true);
             }else{
                 LOG.print("invoke class method : " + name);
                 if(callObjReference instanceof IVariable){
                 	 VarMeta ve = ((IVariable)callObjReference).getMeta();
                 	 if(ve.getName().equals(ASConstants.SUPER)){
-                         insnHelper.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
+                         instructions.invokeSuperMethod(callObjReference.getResultType().getType(), this.name, getReturnType(), methodMeta.getParameterAsmTypes());
                      }else {
-                         insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
+                         instructions.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), methodMeta.getParameterAsmTypes());
                      }
                 }else{
-                	insnHelper.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), mtdEntity.getParameterAsmTypes());
+                	instructions.invokeVirtual(callObjReference.getResultType().getType(), this.name, getReturnType(), methodMeta.getParameterAsmTypes());
                 }
             }
             if(!isSaveReference()){
                 if(!getReturnType().equals(Type.VOID_TYPE)){
-                    insnHelper.pop();
+                    instructions.pop();
                 }
             }
         }
@@ -105,6 +107,6 @@ public class CommonMethodInvoker extends MethodInvoker {
 	
     @Override
     public String toString() {
-        return callObjReference + "." + mtdEntity;
+        return callObjReference + "." + methodMeta;
     }
 }

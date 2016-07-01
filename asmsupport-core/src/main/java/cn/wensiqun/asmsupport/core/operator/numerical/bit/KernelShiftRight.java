@@ -33,7 +33,7 @@ public class KernelShiftRight extends BinaryBitwise {
 
     @Override
     public void innerRunExe() {
-        insnHelper.rightShift(targetClass.getType());
+        getInstructions().rightShift(targetClass.getType());
     }
 
 }

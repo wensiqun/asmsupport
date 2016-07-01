@@ -10,13 +10,16 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import junit.framework.Assert;
 
-public class Main extends AbstractFix {
+import java.lang.reflect.Method;
+
+public class MainTest extends AbstractFix {
 
 	public static void main(String[] args) {
 		
 		CachedThreadLocalClassLoader classLoader = CachedThreadLocalClassLoader.getInstance();
-		
-		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150",
+		String Test65150Name = "cn.wensiqun.asmsupport.issues.fixed.earlier.test65150.Test65150";
+        String Test65150_ALT_Name = "cn.wensiqun.asmsupport.issues.fixed.earlier.test65150.Test65150_ALT";
+		ClassResolver creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , Test65150Name,
 				classLoader.getType(ParentClass.class), null);
 		
 		creator.createField("DEFAULT_VALUE", Opcodes.ACC_STATIC, classLoader.getType(int.class));
@@ -35,7 +38,7 @@ public class Main extends AbstractFix {
 			
 		});
 		
-		creator.createMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{
 				classLoader.getType(String[].class)}, 
 				new String[]{"args"}, null, null,
 				new KernelMethodBody(){
@@ -54,18 +57,18 @@ public class Main extends AbstractFix {
 		creator.resolve();
 		Class Test65150 = null;
 		try {
-			Test65150 = Class.forName("bug.fixed.test65150.Test65150");
+			Test65150 = Class.forName(Test65150Name);
 			System.out.println(Test65150);
 		} catch (ClassNotFoundException e) {
 			Assert.fail();
+            e.printStackTrace();
 		}
 		
 		final IClass Test65150AClass = classLoader.getType(Test65150);
-		
-		creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , "bug.fixed.test65150.Test65150_ALT",
+		creator = new ClassResolver(Opcodes.V1_5, Opcodes.ACC_PUBLIC , Test65150_ALT_Name,
 				null, null);
 		
-		creator.createMethod(Opcodes.ACC_PUBLIC, "main", new IClass[]{classLoader.getType(String[].class)},
+		creator.createMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", new IClass[]{classLoader.getType(String[].class)},
 				new String[]{"args"}, null, null,
 				new KernelMethodBody(){
 
@@ -83,16 +86,20 @@ public class Main extends AbstractFix {
 		creator.resolve();
 		Class Test65150_ALT = null;
 		try {
-			Test65150_ALT = Class.forName("bug.fixed.test65150.Test65150_ALT");
+			Test65150_ALT = Class.forName(Test65150_ALT_Name);
 			System.out.println(Test65150_ALT);
 		} catch (ClassNotFoundException e) {
+            e.printStackTrace();
 			Assert.fail();
 		}
 
 		try {
-			Test65150.getMethod("main", String[].class).invoke(Test65150, new Object[]{null});
-			Test65150_ALT.getMethod("main", String[].class).invoke(Test65150_ALT, new Object[]{null});
+			Method method = Test65150.getMethod("main", String[].class);
+            method.invoke(Test65150, new Object[]{null});
+            method = Test65150_ALT.getMethod("main", String[].class);
+            method.invoke(Test65150_ALT, new Object[]{null});
 		} catch (Exception e) {
+            e.printStackTrace();
 			Assert.fail();
 		}
 		

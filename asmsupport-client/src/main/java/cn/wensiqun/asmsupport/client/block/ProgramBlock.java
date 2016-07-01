@@ -175,7 +175,7 @@ Param, Var, IF, While, DoWhile, ForEach, Try, Sync> {
 
 	public LocVar[] getMethodArguments() {
 		if(locVars == null) {
-			LocalVariable[] localVariables = getGenerateTimeBlock().getMethodArguments();
+			LocalVariable[] localVariables = getGenerateTimeBlock().getMethod().getParameters();
 			if(ArrayUtils.isNotEmpty(localVariables)) {
 				locVars = new LocVar[localVariables.length];
 				for(int i = 0; i<locVars.length; i++) {

@@ -41,7 +41,7 @@ public class Marker extends ASMDirect implements UnreachableCodeCheckSkipable {
     @Override
     protected void doExecute() {
     	if(label != null){
-            block.getInstructionHelper().mark(label);
+            getInstructions().mark(label);
     	}
     }
     

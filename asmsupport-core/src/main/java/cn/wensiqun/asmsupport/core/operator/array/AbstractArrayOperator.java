@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
@@ -38,18 +37,18 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 
     private static final Log LOG = LogFactory.getLog(AbstractArrayOperator.class);
     
-    protected KernelParam arrayReference;
+    protected KernelParam arrayRef;
     
     protected KernelParam[] parDims;
     
     protected AbstractArrayOperator(KernelProgramBlock block, KernelParam arrayVar) {
         super(block, Operator.COMMON);
-        this.arrayReference = arrayVar;
+        this.arrayRef = arrayVar;
     }
 
     @Override
 	protected void checkAsArgument() {
-        arrayReference.asArgument();
+        arrayRef.asArgument();
         if(parDims != null){
             for(KernelParam par : parDims){
                 par.asArgument();
@@ -59,8 +58,8 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
     
 	@Override
 	protected void verifyArgument() {
-		if(!(arrayReference.getResultType() instanceof ArrayClass)){
-        	throw new ClassException(toString() + " : the declare class of " + arrayReference.toString() + " is not a array type");
+		if(!(arrayRef.getResultType() instanceof ArrayClass)){
+        	throw new ClassException(toString() + " : the declare class of " + arrayRef.toString() + " is not a array type");
         }
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
@@ -74,18 +73,17 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 	}
 
 	protected void getValue(){
-        InstructionHelper ih = block.getInstructionHelper();
-        IClass cls = arrayReference.getResultType();
+        IClass cls = arrayRef.getResultType();
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");
         }
-        arrayReference.loadToStack(block);
+        arrayRef.loadToStack(block);
         
         for(int i=0; i<parDims.length; i++){
             cls = cls.getNextDimType();
             parDims[i].loadToStack(block);
             autoCast(parDims[i].getResultType(), block.getType(int.class), false);
-            ih.arrayLoad(cls.getType());
+            getInstructions().arrayLoad(cls.getType());
         }
         
     }

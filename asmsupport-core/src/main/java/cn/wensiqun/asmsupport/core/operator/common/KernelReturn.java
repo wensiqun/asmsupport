@@ -70,7 +70,7 @@ public class KernelReturn extends BreakStack {
             if(LOG.isPrintEnabled()) {
                 LOG.print("direct return from method");
             }
-            insnHelper.returnInsn();
+            getInstructions().returnInsn();
         }else{
             returner.loadToStack(block);
             IClass actullyReturnType = returner.getResultType();
@@ -79,7 +79,7 @@ public class KernelReturn extends BreakStack {
             }
             IClass methodReturnType = block.getMethod().getMeta().getReturnClass();
             autoCast(actullyReturnType, methodReturnType, false);
-            insnHelper.returnInsn(methodReturnType.getType());
+            getInstructions().returnInsn(methodReturnType.getType());
         }
     }
 

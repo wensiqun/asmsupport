@@ -33,7 +33,7 @@ public class KernelBitXor extends BinaryBitwise {
 
     @Override
     public void innerRunExe() {
-        insnHelper.bitXor(targetClass.getType());
+        getInstructions().bitXor(targetClass.getType());
     }
 
 }

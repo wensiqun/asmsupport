@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -35,12 +35,12 @@ public class KernelGreaterEqual extends NumericalRelational {
 
     @Override
     protected void negativeCmp(Label lbl) {
-        insnHelper.ifCmp(targetClass.getType(), InstructionHelper.LT, lbl);
+        getInstructions().ifCmp(targetClass.getType(), Instructions.LT, lbl);
     }
 
 	@Override
 	protected void positiveCmp(Label lbl) {
-	    insnHelper.ifCmp(targetClass.getType(), InstructionHelper.GE, lbl);
+        getInstructions().ifCmp(targetClass.getType(), Instructions.GE, lbl);
 	}
 
 }

@@ -31,8 +31,8 @@ public class NonStaticGlobalVariable extends GlobalVariable {
     
     /**
      * 
-     * @param var
-     * @param gve
+     * @param owner
+     * @param meta
      */
     public NonStaticGlobalVariable(KernelParam owner, Field meta){
         super(meta);
@@ -61,7 +61,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
             LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
         }
         owner.loadToStack(block);
-        block.getInstructionHelper().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
+        block.getMethod().getInstructions().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

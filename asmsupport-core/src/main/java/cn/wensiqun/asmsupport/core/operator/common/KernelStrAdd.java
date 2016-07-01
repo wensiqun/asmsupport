@@ -42,7 +42,7 @@ public class KernelStrAdd extends AbstractParamOperator {
         this.paras[0] = par1;
         System.arraycopy(pars, 0, this.paras, 1, pars.length);
         
-        IClass strBlderCls = block.getClassHolder().getType(StringBuilder.class);
+        IClass strBlderCls = getType(StringBuilder.class);
 
         MethodInvoker mi = block.call(block.new_(strBlderCls), "append", par1);
         for(KernelParam par : pars){
@@ -86,7 +86,7 @@ public class KernelStrAdd extends AbstractParamOperator {
 
     @Override
     public IClass getResultType() {
-        return block.getClassHolder().getType(String.class);
+        return getType(String.class);
     }
 
     @Override

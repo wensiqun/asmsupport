@@ -44,7 +44,7 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
         }
         value.loadToStack(block);
         autoCast();
-        insnHelper.putStatic(var.getOwner().getType(), 
+        getInstructions().putStatic(var.getOwner().getType(),
                 var.getMeta().getName(),
                 var.getMeta().getType().getType());
     }

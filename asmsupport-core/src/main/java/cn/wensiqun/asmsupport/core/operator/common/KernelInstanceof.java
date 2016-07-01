@@ -64,7 +64,7 @@ public class KernelInstanceof extends AbstractParamOperator {
     @Override
     protected void doExecute() {
         obj.loadToStack(block);
-        insnHelper.instanceOf(type.getType());
+        getInstructions().instanceOf(type.getType());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class KernelInstanceof extends AbstractParamOperator {
 
     @Override
     public IClass getResultType() {
-        return block.getClassHolder().getType(boolean.class);
+        return getType(boolean.class);
     }
 
     @Override

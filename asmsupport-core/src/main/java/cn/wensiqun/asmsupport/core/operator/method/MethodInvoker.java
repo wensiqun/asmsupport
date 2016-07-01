@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.asm.InstructionHelper;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -52,7 +52,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     private boolean saveReturn;
     
     /** found method entity will be called*/
-    protected AMethodMeta mtdEntity;
+    protected AMethodMeta methodMeta;
     
     /**
      * 
@@ -78,26 +78,27 @@ public abstract class MethodInvoker extends AbstractParamOperator {
                 ((IVariable) arg).availableFor(this);
             }
             arg.loadToStack(block);
-            cast(arg.getResultType(), mtdEntity.getParameterTypes()[i]);
+            cast(arg.getResultType(), methodMeta.getParameterTypes()[i]);
         }
     }
     
     private void cast(IClass from, IClass to){
+        Instructions instructions = getInstructions();
         if(from.isPrimitive() && to.isPrimitive()){
-            insnHelper.cast(from.getType(), to.getType());
+            instructions.cast(from.getType(), to.getType());
         }else if(from.isPrimitive()){
-            insnHelper.box(from.getType());
+            instructions.box(from.getType());
         }else if(IClassUtils.isPrimitiveWrapAClass(from) && to.isPrimitive()){
-            Type primType = InstructionHelper.getUnBoxedType(from.getType());
-            insnHelper.unbox(from.getType());
-            insnHelper.cast(primType, to.getType());
+            Type primType = Instructions.getUnBoxedType(from.getType());
+            instructions.unbox(from.getType());
+            instructions.cast(primType, to.getType());
         }
     }
 
     @Override
     protected void initAdditionalProperties() {
     	IClass[] argumentClasses = new IClass[arguments.length];
-        List<IClass> argumentClassList = new ArrayList<IClass>();
+        List<IClass> argumentClassList = new ArrayList<>();
         for (int i = 0; i < arguments.length; i++) {
             argumentClassList.add(arguments[i].getResultType());
         }
@@ -105,38 +106,38 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         
     	AMethod currentMethod = block.getMethod();
         if(currentMethod.getMode() == MethodBuilder.MODE_MODIFY && name.endsWith(ASConstants.METHOD_PROXY_SUFFIX)){
-        	mtdEntity = (AMethodMeta) currentMethod.getMeta().clone();
-            mtdEntity.setName(name);
+        	methodMeta = (AMethodMeta) currentMethod.getMeta().clone();
+            methodMeta.setName(name);
         }else{
-            mtdEntity = new MethodChooser(block.getMethod().getClassLoader(), block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
-            if(mtdEntity == null){
+            methodMeta = new MethodChooser(block.getMethod().getClassLoader(), block.getMethodDeclaringClass(), methodOwner, name, argumentClasses).chooseMethod();
+            if(methodMeta == null){
                 throw new ASMSupportException("No such method " + AMethodMeta.getMethodString(name, argumentClasses) + " in " + methodOwner);
             }
         }
         
-        if(Modifiers.isVarargs(mtdEntity.getModifiers())){
+        if(Modifiers.isVarargs(methodMeta.getModifiers())){
             
-        	IClass[] foundMethodArgTypes = mtdEntity.getParameterTypes();
+        	IClass[] foundMethodArgTypes = methodMeta.getParameterTypes();
         	
         	if(ArrayUtils.getLength(foundMethodArgTypes) != ArrayUtils.getLength(arguments) ||
         	   !arguments[ArrayUtils.getLength(arguments) - 1].getResultType().isArray()){
         		
-        		int fixedArgsLen = mtdEntity.getParameterTypes().length - 1;
+        		int fixedArgsLen = methodMeta.getParameterTypes().length - 1;
                 KernelParam[] fixedArgs = new KernelParam[fixedArgsLen];
                 System.arraycopy(arguments, 0, fixedArgs, 0, fixedArgsLen);
 
-                KernelArrayValue variableVarifyArauments;
-                ArrayClass arrayClass = (ArrayClass)mtdEntity.getParameterTypes()[mtdEntity.getParameterTypes().length - 1];
-                variableVarifyArauments = block.newarray(arrayClass, 
-                       (KernelParam[]) ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
-                variableVarifyArauments.asArgument();
+                KernelArrayValue variableVerifyArgs;
+                ArrayClass arrayClass = (ArrayClass) methodMeta.getParameterTypes()[methodMeta.getParameterTypes().length - 1];
+                variableVerifyArgs = block.newarray(arrayClass,
+                       ArrayUtils.subarray(arguments, fixedArgsLen , arguments.length));
+                variableVerifyArgs.asArgument();
                 
-                arguments = (KernelParam[]) ArrayUtils.add(fixedArgs, variableVarifyArauments);
+                arguments = ArrayUtils.add(fixedArgs, variableVerifyArgs);
         	}
         }
 
-        for(IClass exception : mtdEntity.getExceptions()){
-    	    block.addException(exception);
+        for(IClass exception : methodMeta.getExceptions()){
+    	    block.throwException(exception);
     	}
         
     }
@@ -180,15 +181,15 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     public final IClass getReturnClass() {
         if(name.equals(ASConstants.INIT)){
             return methodOwner;
-        }else if(mtdEntity != null){
-            return mtdEntity.getReturnClass();
+        }else if(methodMeta != null){
+            return methodMeta.getReturnClass();
         }else{
-            return block.getClassHolder().getType(void.class);
+            return getType(void.class);
         }
     }
     
     protected IClass getActuallyOwner(){
-        return mtdEntity.getActuallyOwner();
+        return methodMeta.getActuallyOwner();
     }
     
     /**
@@ -196,7 +197,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
      * @return
      */
     public int getModifiers() {
-        return this.mtdEntity.getModifiers();
+        return this.methodMeta.getModifiers();
     }
 
     @Override

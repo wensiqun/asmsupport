@@ -42,14 +42,14 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
 
     private static final Log LOG = LogFactory.getLog(AbstractKernelMethodBody.class);
 
-    private List<ExceptionTableEntry> exceptionTable;
+    private List<ExceptionTableEntry> exceptions;
 
     protected LocalVariable[] arguments;
 
     protected BlockStack stack;
 
     public AbstractKernelMethodBody() {
-        exceptionTable = new ArrayList<>();
+        exceptions = new ArrayList<>();
         this.stack = new BlockStack();
     }
 
@@ -95,7 +95,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     public final void doExecute() {
         AMethod method = getMethod();
         if (LOG.isPrintEnabled()) {
-            StringBuilder str = new StringBuilder("create method: ------------");
+            StringBuilder str = new StringBuilder("Create method: ------------");
             str.append(method.getMeta().getMethodString());
             LOG.print(str);
         }
@@ -104,10 +104,10 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
             exe.execute();
         }
 
-        for (ExceptionTableEntry tci : exceptionTable) {
+        for (ExceptionTableEntry tci : exceptions) {
             if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
                 Type type = tci.getException();
-                instructionHelper.tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(),
+                getMethod().getInstructions().tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(),
                 		(type == null || type == Type.ANY_EXP_TYPE) ? null : type);
             }
         }
@@ -121,24 +121,24 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
         declarationVariable(getScope());
         int s = getMethod().getStack().getMaxSize();
         int l = getScope().getLocals().getSize();
-        instructionHelper.maxs(s, l);
+        getMethod().getInstructions().maxs(s, l);
     }
 
     /**
      * local variable declaration.
      */
     private void declarationVariable(Scope parent) {
-        List<ScopeComponent> coms = parent.getComponents();
+        List<ScopeComponent> components = parent.getComponents();
         ScopeComponent com;
-        Scope lastBrotherScope = null;
-        for (int i = 0; i < coms.size(); i++) {
-            com = coms.get(i);
+        Scope lastBrotherScope;
+        for (int i = 0; i < components.size(); i++) {
+            com = components.get(i);
             if (com instanceof ScopeLogicVariable) {
                 ScopeLogicVariable slv = (ScopeLogicVariable) com;
                 if (slv.isAnonymous()) {
                     continue;
                 }
-                instructionHelper.declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
+                getMethod().getInstructions().declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
                         slv.getSpecifiedStartLabel(), parent.getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;
@@ -152,7 +152,7 @@ public abstract class AbstractKernelMethodBody extends KernelProgramBlock {
     }
 
     public void addExceptionTableEntry(ExceptionTableEntry info) {
-        exceptionTable.add(info);
+        exceptions.add(info);
     }
 
     @Override
