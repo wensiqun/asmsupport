@@ -12,27 +12,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.utils.collections;
+package cn.wensiqun.asmsupport.core.utils;
 
 
-public abstract class LinkedListNode implements Cloneable {
+import cn.wensiqun.asmsupport.core.Executable;
 
-    private LinkedListNode next;
+public abstract class InstructionNode implements Cloneable, Executable {
 
-    private LinkedListNode previous;
+    /**
+     * The next node
+     */
+    private InstructionNode next;
+
+    /**
+     * Previous node.
+     */
+    private InstructionNode previous;
 
     public boolean hasNext() {
         return next != null;
     }
 
-    public LinkedListNode next() {
+    public InstructionNode next() {
         return next;
     }
 
-    public LinkedListNode previous() {
+    public InstructionNode previous() {
         return previous;
     }
 
+    /**
+     * Remove current node from tree.
+     */
     void remove() {
         if (previous != null) {
             previous.next = next;
@@ -45,38 +56,46 @@ public abstract class LinkedListNode implements Cloneable {
         next = previous = null;
     }
 
-    void setNext(LinkedListNode subHead) {
-        if (subHead == null) {
-            if (next != null) {
-                next.previous = null;
-                next = null;
+    /**
+     * Set the next
+     * @param next
+     */
+    void setNext(InstructionNode next) {
+        if (next == null) {
+            if (this.next != null) {
+                this.next.previous = null;
+                this.next = null;
             }
         } else {
-            if (next == null) {
-                this.next = subHead;
-                subHead.previous = this;
+            if (this.next == null) {
+                this.next = next;
+                next.previous = this;
             } else {
-                LinkedListNode subLast = subHead;
+                InstructionNode subLast = next;
                 while (subLast.hasNext()) {
                     subLast = subLast.next();
                 }
 
-                subLast.next = next;
-                next.previous = subLast;
+                subLast.next = this.next;
+                this.next.previous = subLast;
 
-                next = subHead;
-                subHead.previous = this;
+                this.next = next;
+                next.previous = this;
             }
         }
         
     }
 
-    void replace(LinkedListNode newly) {
-        previous.next = newly;
-        newly.previous = previous;
+    /**
+     * Replace the newer instead of current node.
+     * @param newer
+     */
+    void replace(InstructionNode newer) {
+        previous.next = newer;
+        newer.previous = previous;
 
-        next.previous = newly;
-        newly.next = next;
+        next.previous = newer;
+        newer.next = next;
 
         previous = next = null;
     }

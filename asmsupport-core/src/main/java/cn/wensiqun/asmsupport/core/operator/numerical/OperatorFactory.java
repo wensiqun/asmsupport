@@ -14,12 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical;
 
-import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.exception.UnreachableCodeException;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.UnreachableCodeCheckSkipable;
+import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
 
@@ -65,7 +65,7 @@ public abstract class OperatorFactory {
         }
 
         KernelProgramBlock block = (KernelProgramBlock) arguments[0];
-        BytecodeExecutor last = block.getQueue().getLast();
+        InstructionNode last = block.getQueue().getTail();
         if (checkSerial && last != null && last instanceof ExceptionSerialBlock) {
             last.prepare();
         }

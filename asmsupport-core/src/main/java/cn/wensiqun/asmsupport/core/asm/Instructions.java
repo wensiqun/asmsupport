@@ -29,7 +29,6 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
-import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
  * <p>
@@ -77,7 +76,7 @@ public class Instructions {
     /** flat that indicate whether or not do check cast, box/unbox and other cast automatically */
     private boolean castAndbox = true;
 
-    private StackLocalMethodVisitor mv;
+    private VirtualMethodVisitor mv;
 
     private LocalVariables locals;
 
@@ -94,12 +93,12 @@ public class Instructions {
     Instructions() {
     }
 
-    public StackLocalMethodVisitor getMv() {
+    public VirtualMethodVisitor getMv() {
         return mv;
     }
 
     public void setMv(MethodVisitor mv) {
-        this.mv = new StackLocalMethodVisitor(mv, stack);
+        this.mv = new VirtualMethodVisitor(mv, stack);
     }
 
     // ------------------------------------------------------------------------

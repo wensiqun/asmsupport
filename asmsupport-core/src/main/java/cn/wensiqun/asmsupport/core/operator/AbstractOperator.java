@@ -17,9 +17,9 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -30,7 +30,7 @@ import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
  * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public abstract class AbstractOperator extends BytecodeExecutor {
+public abstract class AbstractOperator extends InstructionNode {
 
     protected KernelProgramBlock block;
 

@@ -93,8 +93,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      */
     private KernelProgramBlock parent;
 
-    private AMethod method;
-
     private Scope scope;
 
     private ThrowExceptionContainer throwExceptions;
@@ -907,7 +905,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      */
 	public void setFinish(boolean finish) {
 		this.finish = finish;
-	}/**
+	}
+
+    /**
      * Set scope
      * 
      * @param scope
@@ -944,25 +944,12 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     /**
-     * Set {@link AMethod}
-     * 
-     * @param method
-     */
-    public void setMethod(AMethod method) {
-        this.method = method;
-    }
-
-    /**
      * Get the method of current block bellow.
      *
      * @return
      */
     public AMethod getMethod() {
-        if(method == null) {
-            return getExecutor().getMethod();
-        } else {
-            return method;
-        }
+        return getMethodBody().getMethod();
     }
 
     /**
@@ -976,7 +963,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     public void setParent(KernelProgramBlock block) {
         parent = block;
-        setMethod(block.getMethod());
         setScope(new Scope(getMethod().getLocals(), block.getScope()));
     }
 

@@ -57,6 +57,8 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
 
     private List<ExceptionTableEntry> exceptions;
 
+    private AMethod method;
+
     public AbstractMethodBody() {
         exceptions = new ArrayList<>();
         this.stack = new BlockStack();
@@ -196,4 +198,27 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
         }
         return thisVariable;
     }
+
+
+    /**
+     * Set {@link AMethod}
+     *
+     * @param method
+     */
+    public void setMethod(AMethod method) {
+        this.method = method;
+    }
+
+    /**
+     * Get method of the body.
+     * @return
+     */
+    public AMethod getMethod() {
+        if(method == null) {
+            return getExecutor().getMethod();
+        } else {
+            return method;
+        }
+    }
+
 }

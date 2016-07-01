@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
@@ -24,6 +23,7 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
+import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -211,8 +211,8 @@ public class ExceptionSerialBlock extends SerialBlock {
         implicitCatch = new ImplicitCatch();
         implicitCatch.setParent(targetParent);
 
-        getQueue().setLast(implicitCatch);
-        getQueue().setLast(finallyBlock);
+        getQueue().setTail(implicitCatch);
+        getQueue().setTail(finallyBlock);
     }
 
     /**
@@ -266,7 +266,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         if (container == null) {
             container = new ArrayList<>();
         }
-        for (BytecodeExecutor executor : block.getQueue()) {
+        for (InstructionNode executor : block.getQueue()) {
             if (executor instanceof KernelReturn) {
                 container.add((KernelReturn) executor);
             } else if (executor instanceof AbstractKernelBlock && !(executor instanceof ImplicitCatch)) {
@@ -317,8 +317,8 @@ public class ExceptionSerialBlock extends SerialBlock {
         @Override
         public void doExecute() {
             getMethod().getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
-            for (BytecodeExecutor exe : getQueue()) {
-                exe.execute();
+            for (InstructionNode node : getQueue()) {
+                node.execute();
             }
         }
 

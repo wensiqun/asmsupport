@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
+import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.standard.block.exception.ITry;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
@@ -29,8 +29,8 @@ public abstract class KernelTry extends EpisodeBlock<ExceptionSerialBlock> imple
 
     @Override
     protected void doExecute() {
-        for (BytecodeExecutor exe : getQueue()) {
-            exe.execute();
+        for (InstructionNode node : getQueue()) {
+            node.execute();
         }
     }
 

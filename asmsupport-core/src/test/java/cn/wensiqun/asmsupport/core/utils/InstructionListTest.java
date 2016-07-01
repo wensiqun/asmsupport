@@ -1,10 +1,9 @@
-package cn.wensiqun.asmsupport.utils.collections;
+package cn.wensiqun.asmsupport.core.utils;
 
 import junit.framework.Assert;
-
 import org.junit.Test;
 
-public class CommonLinkedListTest {
+public class InstructionListTest {
 
     @Test
     public void test()
@@ -20,42 +19,42 @@ public class CommonLinkedListTest {
         MyNode n8 = new MyNode("8");
         MyNode n9 = new MyNode("9");
         MyNode n10 = new MyNode("10");
-        
-        LinkedList<MyNode> list = new CommonLinkedList<MyNode>();
+
+        InstructionList list = new InstructionList();
         list.add(n3);
         list.add(n7);
         
         StringBuilder sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("37", sb.toString());
         
         n1.setNext(n2);
         list.setHead(n1);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("1237", sb.toString());
         
         n4.setNext(n5);
         list.addAfter(n3, n4);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("123457", sb.toString());
         
         n8.setNext(n9);
-        list.setLast(n8);
+        list.setTail(n8);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("12345789", sb.toString());
         
@@ -64,42 +63,43 @@ public class CommonLinkedListTest {
         
         list.setHead(n0);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("012345789", sb.toString());
         
         list.addAfter(n5, n6);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("0123456789", sb.toString());
         
-        list.setLast(n10);
+        list.setTail(n10);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("012345678910", sb.toString());
-        
-        list.move(n2, n8);
+
+        list.remove(n2);
+        list.addAfter(n8, n2);
+        //list.move(n2, n8);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("013456782910", sb.toString());
-        
 
         list.remove(n8);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("01345672910", sb.toString());
         
@@ -107,14 +107,14 @@ public class CommonLinkedListTest {
         MyNode n11 = new MyNode("_11");
         list.replace(n7, n11);
         sb = new StringBuilder();
-        for(MyNode n : list)
+        for(InstructionNode n : list)
         {
-            sb.append(n.name);
+            sb.append(((MyNode)n).name);
         }
         Assert.assertEquals("013456_112910", sb.toString());
     }
     
-    class MyNode extends LinkedListNode{
+    class MyNode extends InstructionNode {
         
         private String name;
 
@@ -134,7 +134,16 @@ public class CommonLinkedListTest {
         {
             return name;
         }
-        
+
+        @Override
+        public void prepare() {
+
+        }
+
+        @Override
+        public void execute() {
+
+        }
     }
 
 }

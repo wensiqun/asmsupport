@@ -22,9 +22,9 @@ import cn.wensiqun.asmsupport.core.utils.memory.OperandType;
 import cn.wensiqun.asmsupport.org.objectweb.asm.*;
 import cn.wensiqun.asmsupport.utils.ASConstants;
 
-public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
+public class VirtualMethodVisitor extends MethodVisitor implements Opcodes {
 
-    private static final Log LOG = LogFactory.getLog(StackLocalMethodVisitor.class);
+    private static final Log LOG = LogFactory.getLog(VirtualMethodVisitor.class);
     private static final Type OBJECT_TYPE = Type.getType(Object.class);
 
     private OperandStack stack;
@@ -48,7 +48,7 @@ public class StackLocalMethodVisitor extends MethodVisitor implements Opcodes {
         this.nextPushTypes = types;
     }
 
-    StackLocalMethodVisitor(MethodVisitor mv, OperandStack stack) {
+    VirtualMethodVisitor(MethodVisitor mv, OperandStack stack) {
         super(ASConstants.ASM_VERSION, mv);
         this.stack = stack;
     }

@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.BytecodeExecutor;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
+import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.standard.block.exception.IFinally;
 
 public abstract class KernelFinally extends EpisodeBlock<ExceptionSerialBlock> implements IFinally {
@@ -27,8 +27,8 @@ public abstract class KernelFinally extends EpisodeBlock<ExceptionSerialBlock> i
 
     @Override
     protected void doExecute() {
-        for (BytecodeExecutor exe : getQueue()) {
-            exe.execute();
+        for (InstructionNode node : getQueue()) {
+            node.execute();
         }
     }
 
