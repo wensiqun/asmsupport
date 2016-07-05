@@ -58,7 +58,7 @@ public class DUP extends ASMDirect implements KernelParam {
 		if(LOG.isPrintEnabled()){
 			LOG.print("duplicate the top of stack and push it to stack");
 		}
-        getInstructions().dup(type.getType());
+		context.getInstructions().dup(type.getType());
 	}
 
     @Override

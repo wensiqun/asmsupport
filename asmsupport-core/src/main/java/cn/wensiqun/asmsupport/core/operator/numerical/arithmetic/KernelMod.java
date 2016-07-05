@@ -47,7 +47,7 @@ public class KernelMod extends AbstractArithmetic {
         if(LOG.isPrintEnabled()) {
             LOG.print("Execute the sub instruction");
         }
-        getInstructions().rem(targetClass.getType());
+        context.getInstructions().rem(targetClass.getType());
     }
 
 

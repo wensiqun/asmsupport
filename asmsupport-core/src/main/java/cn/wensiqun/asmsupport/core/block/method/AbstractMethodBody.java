@@ -14,9 +14,9 @@
  */
 package cn.wensiqun.asmsupport.core.block.method;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
@@ -35,8 +35,8 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.def.var.meta.VarMeta;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +122,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
         for (ExceptionTableEntry tci : exceptions) {
             if (tci.getEnd().getOffset() - tci.getStart().getOffset() > 0) {
                 Type type = tci.getException();
-                getMethod().getInstructions().tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(),
+                context.getInstructions().tryCatchBlock(tci.getStart(), tci.getEnd(), tci.getHandler(),
                 		(type == null || type == Type.ANY_EXP_TYPE) ? null : type);
             }
         }
@@ -132,17 +132,17 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
     /**
      * Finish method body generated
      */
-    public void endMethodBody() {
-        declarationVariable(getScope());
+    public void endMethodBody(MethodContext context) {
+        declarationVariable(context, getScope());
         int s = getMethod().getStack().getMaxSize();
         int l = getScope().getLocals().getSize();
-        getMethod().getInstructions().maxs(s, l);
+        context.getInstructions().maxs(s, l);
     }
 
     /**
      * local variable declaration.
      */
-    private void declarationVariable(Scope parent) {
+    private void declarationVariable(MethodContext context, Scope parent) {
         List<ScopeComponent> components = parent.getComponents();
         ScopeComponent com;
         Scope lastBrotherScope;
@@ -153,11 +153,11 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
                 if (slv.isAnonymous()) {
                     continue;
                 }
-                getMethod().getInstructions().declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
+                context.getInstructions().declarationVariable(slv.getName(), slv.getType().getDescriptor(), null,
                         slv.getSpecifiedStartLabel(), parent.getEnd(), slv.getInitStartPos());
             } else {
                 lastBrotherScope = (Scope) com;
-                declarationVariable(lastBrotherScope);
+                declarationVariable(context, lastBrotherScope);
             }
         }
     }

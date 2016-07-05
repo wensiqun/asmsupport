@@ -37,7 +37,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	protected void doExecute(MethodContext context) {
         //if those two factories are both null value
 		//direct push true or false
-		MethodVisitor mv = getInstructions().getMv();
+		MethodVisitor mv = context.getInstructions().getMv();
 		KernelProgramBlock block = getParent();
 		if(isNullValue(leftFactor) && isNullValue(rightFactor)){
 			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
@@ -60,11 +60,11 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		}
 	}
 	
-	protected void ifCmp(Type type, int mode, Label label) {
+	protected void ifCmp(MethodContext context, Type type, int mode, Label label) {
         //check null
         int sort = type.getSort();
         if(sort == Type.OBJECT || sort == Type.ARRAY){
-            MethodVisitor mv = getInstructions().getMv();
+            MethodVisitor mv = context.getInstructions().getMv();
             switch (mode) {
                 case Instructions.EQ:
                     if((isNullValue(leftFactor) && !isNullValue(rightFactor)) ||
@@ -80,7 +80,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
                     }
                 }
         }
-		getInstructions().ifCmp(type, mode, label);
+		context.getInstructions().ifCmp(type, mode, label);
     }
 	
 	@Override

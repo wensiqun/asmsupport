@@ -47,7 +47,7 @@ public class KernelMul extends AbstractArithmetic {
         if(LOG.isPrintEnabled()) {
             LOG.print("Execute the sub instruction");
         }
-        getInstructions().mul(targetClass.getType());
+        context.getInstructions().mul(targetClass.getType());
     }
 
 

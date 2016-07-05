@@ -19,6 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -34,13 +35,13 @@ public class KernelLessEqual extends NumericalRelational {
     }
 
     @Override
-    protected void negativeCmp(Label lbl) {
-        getInstructions().ifCmp(targetClass.getType(), Instructions.GT, lbl);
+    protected void negativeCmp(MethodContext context, Label lbl) {
+        context.getInstructions().ifCmp(targetClass.getType(), Instructions.GT, lbl);
     }
 
 	@Override
-	protected void positiveCmp(Label lbl) {
-        getInstructions().ifCmp(targetClass.getType(), Instructions.LE, lbl);
+	protected void positiveCmp(MethodContext context, Label lbl) {
+        context.getInstructions().ifCmp(targetClass.getType(), Instructions.LE, lbl);
 	}
 
 }

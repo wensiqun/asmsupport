@@ -107,7 +107,7 @@ public class KernelTernary extends AbstractParamOperator {
     
     @Override
     protected void doExecute(MethodContext context) {
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         Label posLbl = new Label();
         Label l1 = new Label();
         Label l2 = new Label();

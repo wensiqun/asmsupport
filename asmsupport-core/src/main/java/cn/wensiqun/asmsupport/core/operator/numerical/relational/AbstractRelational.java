@@ -127,9 +127,9 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 	protected void instructionGenerate(MethodContext context){
 		factorsToStack(context);
 		
-        negativeCmp(falseLbl);
+        negativeCmp(context, falseLbl);
 
-        MethodVisitor mv = getInstructions().getMv();
+        MethodVisitor mv = context.getInstructions().getMv();
         
         //push true to stack
         mv.visitInsn(Opcodes.ICONST_0 + 1);
@@ -151,17 +151,17 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     public void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack(context);
-        positiveCmp(posLbl);
+        positiveCmp(context, posLbl);
     }
 
     @Override
     public void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack(context);
-        negativeCmp(negLbl);
+        negativeCmp(context, negLbl);
     }
     
-    protected abstract void negativeCmp(Label lbl);
+    protected abstract void negativeCmp(MethodContext context, Label lbl);
 
-    protected abstract void positiveCmp(Label lbl);
+    protected abstract void positiveCmp(MethodContext context, Label lbl);
     
 }

@@ -148,11 +148,10 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final void execute(MethodContext context) {
-        getMethod()
-                .getInstructions()
+        context.getInstructions()
                     .mark(scope.getStart());
         doExecute(context);
-        getMethod().getInstructions().mark(scope.getEnd());
+        context.getInstructions().mark(scope.getEnd());
     }
 
     /**

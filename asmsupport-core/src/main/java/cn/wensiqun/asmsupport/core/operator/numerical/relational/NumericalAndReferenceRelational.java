@@ -61,7 +61,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     protected void factorsToStack(MethodContext context) {
     	IClass ftrCls1 = leftFactor.getResultType();
     	IClass ftrCls2 = rightFactor.getResultType();
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         KernelProgramBlock block = getParent();
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             

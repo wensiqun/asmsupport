@@ -77,7 +77,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	@Override
 	public void doExecute(MethodContext context) {
         Executable returnInsn = null;
-		Instructions instructions = getMethod().getInstructions();
+		Instructions instructions = context.getInstructions();
 		lock.loadToStack(context);
 		for (Executable e : getChildren()) {
 			if(e.equals(flag1)){

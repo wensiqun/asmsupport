@@ -60,7 +60,7 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
 
     @Override
     public void loadToStack(MethodContext context) {
-        context.getMethod().getInstructions().loadInsn(meta.getType().getType(), scopeLogicVar.getInitStartPos());
+        context.getInstructions().loadInsn(meta.getType().getType(), scopeLogicVar.getInitStartPos());
     }
 
     private class VariableOperatorException extends RuntimeException {

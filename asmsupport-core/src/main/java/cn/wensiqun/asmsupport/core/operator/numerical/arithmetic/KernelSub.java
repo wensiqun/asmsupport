@@ -46,7 +46,7 @@ public class KernelSub extends AbstractArithmetic {
         if(LOG.isPrintEnabled()) {
             LOG.print("Execute the sub instruction");
         }
-        getInstructions().sub(targetClass.getType());
+        context.getInstructions().sub(targetClass.getType());
     }
 
 

@@ -32,7 +32,7 @@ public class VisitIincInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute(MethodContext context) {
-        getInstructions().getMv().visitIincInsn(var, increment);
+		context.getInstructions().getMv().visitIincInsn(var, increment);
 	}
 
 }

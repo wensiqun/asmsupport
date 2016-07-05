@@ -53,10 +53,10 @@ public class StaticMethodInvoker extends MethodInvoker {
     public void doExecute(MethodContext context) {
         argumentsToStack(context);
         LOG.print("invoke static method : " + name);
-        getInstructions().invokeStatic(methodOwner.getType(), name, getReturnType(), methodMeta.getParameterAsmTypes());
+        context.getInstructions().invokeStatic(methodOwner.getType(), name, getReturnType(), methodMeta.getParameterAsmTypes());
         if(!isSaveReference()){
             if(!getReturnType().equals(Type.VOID_TYPE)){
-                getInstructions().pop();
+                context.getInstructions().pop();
             }
         }
     }

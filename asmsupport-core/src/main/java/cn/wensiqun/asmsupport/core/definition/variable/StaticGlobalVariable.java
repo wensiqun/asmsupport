@@ -63,7 +63,7 @@ public class StaticGlobalVariable extends GlobalVariable {
             LOG.print("get field " + meta.getName() + " from class " + meta.getDirectOwnerType().getName()
                     + " and push to stack!");
         }
-        context.getMethod().getInstructions().getStatic(owner.getType(), meta.getName(), meta.getType().getType());
+        context.getInstructions().getStatic(owner.getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

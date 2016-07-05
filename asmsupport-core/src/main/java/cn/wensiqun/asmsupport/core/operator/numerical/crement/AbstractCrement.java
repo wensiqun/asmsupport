@@ -84,7 +84,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 	@Override
 	protected void doExecute(MethodContext context) {
-		Instructions instructions = getInstructions();
+		Instructions instructions = context.getInstructions();
 		Type type = targetClass.getType();
 		KernelProgramBlock block = getParent();
 		boolean asArgument = !block.getChildren().contains(this);
@@ -115,7 +115,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 				instructions.dup(type);
 
 			// unbox
-			autoCast(targetClass, primitiveClass, true);
+			autoCast(context, targetClass, primitiveClass, true);
 
 			// load 1 to stack
 			getIncreaseValue().loadToStack(context);
@@ -128,7 +128,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 			}
 
 			// box and cast
-			autoCast(
+			autoCast(context,
 					primitiveType.getSort() <= Type.INT ? getType(int.class)
 							: primitiveClass, targetClass, true);
 

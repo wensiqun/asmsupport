@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 
@@ -32,8 +33,8 @@ public class KernelShiftLeft extends BinaryBitwise {
     }
 
     @Override
-    public void innerRunExe() {
-        getInstructions().leftShift(targetClass.getType());
+    public void innerRunExe(MethodContext context) {
+        context.getInstructions().leftShift(targetClass.getType());
     }
 
 }

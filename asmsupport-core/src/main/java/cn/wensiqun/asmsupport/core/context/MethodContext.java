@@ -1,5 +1,6 @@
 package cn.wensiqun.asmsupport.core.context;
 
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 
 /**
@@ -9,6 +10,8 @@ public class MethodContext implements Context {
 
     private AMethod method;
 
+    private Instructions instructions;
+
     public AMethod getMethod() {
         return method;
     }
@@ -17,4 +20,11 @@ public class MethodContext implements Context {
         this.method = method;
     }
 
+    public Instructions getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(Instructions instructions) {
+        this.instructions = instructions;
+    }
 }

@@ -71,7 +71,7 @@ public class KernelReturn extends BreakStack {
             if(LOG.isPrintEnabled()) {
                 LOG.print("direct return from method");
             }
-            getInstructions().returnInsn();
+            context.getInstructions().returnInsn();
         }else{
             returner.loadToStack(context);
             IClass actullyReturnType = returner.getResultType();
@@ -79,8 +79,8 @@ public class KernelReturn extends BreakStack {
                 throw new NullPointerException("Return type must be non-null!");
             }
             IClass methodReturnType = getParent().getMethod().getMeta().getReturnClass();
-            autoCast(actullyReturnType, methodReturnType, false);
-            getInstructions().returnInsn(methodReturnType.getType());
+            autoCast(context, actullyReturnType, methodReturnType, false);
+            context.getInstructions().returnInsn(methodReturnType.getType());
         }
     }
 

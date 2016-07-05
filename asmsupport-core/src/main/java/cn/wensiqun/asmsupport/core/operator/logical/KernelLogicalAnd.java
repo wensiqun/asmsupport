@@ -35,7 +35,7 @@ public class KernelLogicalAnd extends BinaryLogical {
 
     @Override
     protected void executing(MethodContext context) {
-        getInstructions().bitAnd(getType(boolean.class).getType());
+        context.getInstructions().bitAnd(getType(boolean.class).getType());
     }
 
 }

@@ -507,7 +507,7 @@ public class Value implements IValue {
 
     @Override
     public void loadToStack(MethodContext context) {
-        Instructions instructions = context.getMethod().getInstructions();
+        Instructions instructions = context.getInstructions();
         if (value == null) {
             instructions.push(this.getType());
             return;

@@ -40,14 +40,14 @@ public class SuperConstructorInvoker extends MethodInvoker {
     public void doExecute(MethodContext context) {
         LOG.print("call method '"+ name +"' by 'this' key word");
         LOG.print("put 'this' to stack");
-        getInstructions().loadThis(getParent().getMethod().getMeta().getOwner().getType());
+        context.getInstructions().loadThis(getParent().getMethod().getMeta().getOwner().getType());
         argumentsToStack(context);
         
         IClass[] argTypes = new IClass[arguments.length];
         for(int i=0; i<argTypes.length; i++){
             argTypes[i] = arguments[i].getResultType();
         }
-        getInstructions().invokeConstructor(getActuallyOwner().getType(), methodMeta.getParameterAsmTypes());
+        context.getInstructions().invokeConstructor(getActuallyOwner().getType(), methodMeta.getParameterAsmTypes());
     }
 
     @Override

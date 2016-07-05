@@ -170,7 +170,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     }
     
     private void loopArray(MethodContext context, IClass clazz, Object arrayOrElement){
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         if(arrayOrElement.getClass().isArray()){
             int len = Array.getLength(arrayOrElement);
             instructions.push(len);
@@ -190,7 +190,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
         }else{
             ((KernelParam) arrayOrElement).loadToStack(context);
             //auto cast each value for array
-            autoCast(((KernelParam)arrayOrElement).getResultType(), clazz, false);
+            autoCast(context, ((KernelParam)arrayOrElement).getResultType(), clazz, false);
         }
     }
 
@@ -204,13 +204,12 @@ public class KernelArrayValue extends AbstractParamOperator  {
             if(LOG.isPrintEnabled()) { 
                 LOG.print("start new a array!");
             }
-            Instructions instructions = getInstructions();
+            Instructions instructions = context.getInstructions();
             if(allocateDims == null || allocateDims.length == 0){
                 instructions.push(arrayCls.getType());
                 instructions.checkCast(arrayCls.getType());
                 return;
             }
-            KernelProgramBlock block = getParent();
             if(allocateDims.length == 1){
                 allocateDims[0].loadToStack(context);
                 instructions.unbox(allocateDims[0].getResultType().getType());

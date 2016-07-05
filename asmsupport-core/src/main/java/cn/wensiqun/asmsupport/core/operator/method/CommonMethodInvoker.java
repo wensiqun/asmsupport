@@ -78,7 +78,7 @@ public class CommonMethodInvoker extends MethodInvoker {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
-            Instructions instructions = getInstructions();
+            Instructions instructions = context.getInstructions();
             LOG.print("put reference to stack");
             callObjReference.loadToStack(context);
             argumentsToStack(context);

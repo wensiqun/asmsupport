@@ -17,9 +17,9 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -142,30 +142,31 @@ public abstract class AbstractOperator extends InstructionNode {
      * @param target
      * @param enforce
      */
-    protected void autoCast(IClass original, IClass target, boolean enforce) {
+    protected void autoCast(MethodContext context, IClass original, IClass target, boolean enforce) {
+        Instructions instructions = context.getInstructions();
         if (enforce) {
             if (original.isPrimitive() && target.isPrimitive()) {
-                getInstructions().cast(original.getType(), target.getType());
+                instructions.cast(original.getType(), target.getType());
 
                 return;
             } else if (original.isPrimitive() && IClassUtils.isPrimitiveWrapAClass(target)) {
                 Type targetPrimitiveType = IClassUtils.getPrimitiveAClass(target).getType();
 
-                getInstructions().cast(original.getType(), targetPrimitiveType);
+                instructions.cast(original.getType(), targetPrimitiveType);
 
-                getInstructions().box(targetPrimitiveType);
+                instructions.box(targetPrimitiveType);
 
                 return;
             } else if (IClassUtils.isPrimitiveWrapAClass(original) && target.isPrimitive()) {
-                getInstructions().unbox(original.getType());
+                instructions.unbox(original.getType());
 
                 Type originalPrimitiveType = IClassUtils.getPrimitiveAClass(original).getType();
 
-                getInstructions().cast(originalPrimitiveType, target.getType());
+                instructions.cast(originalPrimitiveType, target.getType());
 
                 return;
             } else if (original.isPrimitive() && target.equals(getType(Object.class))) {
-                getInstructions().box(original.getType());
+                instructions.box(original.getType());
                 return;
             }
         } else {
@@ -173,20 +174,20 @@ public abstract class AbstractOperator extends InstructionNode {
                 if (!original.equals(getType(Boolean.class)) &&
                 	!target.equals(getType(Boolean.class)) &&
                 	original.getCastOrder() <= target.getCastOrder()) {
-                    getInstructions().cast(original.getType(), target.getType());
+                    instructions.cast(original.getType(), target.getType());
                     return;
                 }
             } else if (original.isPrimitive()
                     && (IClassUtils.getPrimitiveWrapAClass(original).equals(target) || target
                             .equals(getType(Object.class)))) {
-                getInstructions().box(original.getType());
+                instructions.box(original.getType());
                 return;
             } else if (IClassUtils.isPrimitiveWrapAClass(original)
                     && target.isPrimitive()
                     && original.equals(IClassUtils.getPrimitiveWrapAClass(target))) {
                 Type primType = Instructions.getUnBoxedType(original.getType());
-                getInstructions().unbox(original.getType());
-                getInstructions().cast(primType, target.getType());
+                instructions.unbox(original.getType());
+                instructions.cast(primType, target.getType());
                 return;
             }
         }
@@ -205,7 +206,4 @@ public abstract class AbstractOperator extends InstructionNode {
                 .getClassLoader().getType(clazz);
     }
 
-    protected Instructions getInstructions() {
-        return getParent().getMethod().getInstructions();
-    }
 }

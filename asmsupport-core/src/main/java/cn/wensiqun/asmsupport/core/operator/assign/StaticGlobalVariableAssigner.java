@@ -44,8 +44,8 @@ public class StaticGlobalVariableAssigner extends KernelAssign {
             LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
         value.loadToStack(context);
-        autoCast();
-        getInstructions().putStatic(var.getOwner().getType(),
+        autoCast(context);
+        context.getInstructions().putStatic(var.getOwner().getType(),
                 var.getMeta().getName(),
                 var.getMeta().getType().getType());
     }

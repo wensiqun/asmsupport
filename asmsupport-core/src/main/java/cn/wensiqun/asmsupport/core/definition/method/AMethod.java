@@ -14,11 +14,11 @@
  */
 package cn.wensiqun.asmsupport.core.definition.method;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
@@ -52,9 +52,6 @@ public class AMethod {
     /** The local vairables container of current method*/
     private LocalVariables locals;
 
-    /** Operate asm utils. */
-    private Instructions instructions;
-
     /** The method body of current method */
     private AbstractMethodBody body;
 
@@ -79,7 +76,6 @@ public class AMethod {
         this.stack = new OperandStack();
         this.locals = new LocalVariables();
         CollectionUtils.addAll(exceptions, meta.getExceptions());
-        this.instructions = new Instructions(locals, stack);
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
             if (body != null) {
@@ -113,11 +109,12 @@ public class AMethod {
         }
     }
 
-    /**
-     * Create {@link MethodVisitor} for current method
-     */
-    private void createMethodVisitor() {
 
+    /**
+     * Start create/modify method
+     */
+    public void startup() {
+        //Make Method Visitor
         if (!Modifiers.isAbstract(meta.getModifiers())) {
             for (Executable exe : getBody().getChildren()) {
                 if (exe instanceof InstructionBlockNode) {
@@ -125,27 +122,28 @@ public class AMethod {
                 }
             }
         }
-
         String[] exceptions = new String[this.exceptions.size()];
         int i = 0;
         for (IClass te : this.exceptions) {
             exceptions[i++] = te.getType().getInternalName();
         }
-        instructions.setMv(classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
-                exceptions));
-    }
+        MethodVisitor methodVisitor = classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
+                exceptions);
 
-    /**
-     * Start create/modify method
-     */
-    public void startup() {
-        createMethodVisitor();
+        //Make Instructions
+        Instructions instructions = new Instructions(locals, stack, methodVisitor);
+
         if (!Modifiers.isAbstract(meta.getModifiers())) {
+
             MethodContext context = new MethodContext();
+
             context.setMethod(this);
+            context.setInstructions(instructions);
+
             this.body.execute(context);
-            this.body.endMethodBody();
+            this.body.endMethodBody(context);
         }
+
         instructions.endMethod();
     }
 
@@ -176,13 +174,6 @@ public class AMethod {
      */
     public AbstractMethodBody getBody() {
         return body;
-    }
-
-    /**
-     * Get helper
-     */
-    public Instructions getInstructions() {
-        return instructions;
     }
 
     /**

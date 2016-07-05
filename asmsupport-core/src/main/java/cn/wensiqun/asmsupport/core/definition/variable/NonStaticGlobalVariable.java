@@ -61,7 +61,7 @@ public class NonStaticGlobalVariable extends GlobalVariable {
             LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
         }
         owner.loadToStack(context);
-        context.getMethod().getInstructions().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
+        context.getInstructions().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

@@ -49,7 +49,7 @@ public abstract class KernelElseIF extends ConditionBranchBlock implements IElse
     @Override
     protected void doExecute(MethodContext context) {
         Label posLbl = new Label();
-        Instructions instructions = getMethod().getInstructions();
+        Instructions instructions = context.getInstructions();
         instructions.nop();
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpNegative(context, null, posLbl, getEnd());

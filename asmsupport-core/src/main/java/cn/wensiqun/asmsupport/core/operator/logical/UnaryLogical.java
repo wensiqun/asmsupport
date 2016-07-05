@@ -73,7 +73,7 @@ public abstract class UnaryLogical extends AbstractLogical {
     protected void factorToStack(MethodContext context) {
         LOG.print("factors to stack");
         factor.loadToStack(context);
-        getInstructions().unbox(factor.getResultType().getType());
+        context.getInstructions().unbox(factor.getResultType().getType());
     }
 
 }

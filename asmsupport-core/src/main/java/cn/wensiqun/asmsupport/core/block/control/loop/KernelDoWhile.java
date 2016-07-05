@@ -50,7 +50,7 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
 
     @Override
     public void doExecute(MethodContext context) {
-        Instructions instructions = getMethod().getInstructions();
+        Instructions instructions = context.getInstructions();
         instructions.mark(contentStart);
         for (Executable exe : getChildren()) {
             exe.execute(context);

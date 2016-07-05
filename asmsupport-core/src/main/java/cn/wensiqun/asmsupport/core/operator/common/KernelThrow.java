@@ -69,7 +69,7 @@ public class KernelThrow extends BreakStack {
     @Override
     protected void breakStackExecuting(MethodContext context) {
         exception.loadToStack(context);
-        getInstructions().throwException();
+        context.getInstructions().throwException();
     }
 
     @Override

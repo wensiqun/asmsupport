@@ -58,7 +58,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
         if(LOG.isPrintEnabled()) {
             LOG.print("got length and push to stack");
         }
-        getInstructions().arrayLength();
+        context.getInstructions().arrayLength();
     }
 
     @Override

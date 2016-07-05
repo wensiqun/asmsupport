@@ -47,7 +47,7 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
 
     @Override
     protected void doExecute(MethodContext context) {
-        Instructions instructions = getMethod().getInstructions();
+        Instructions instructions = context.getInstructions();
         Label posLbl = new Label();
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpNegative(context, null, posLbl, getEnd());

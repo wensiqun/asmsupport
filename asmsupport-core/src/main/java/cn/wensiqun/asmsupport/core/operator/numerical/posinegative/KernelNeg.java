@@ -40,7 +40,7 @@ public class KernelNeg extends AbstractPositiveNegative {
     public void doExecute(MethodContext context) {
         LOG.print("run the negative operator");
         factorToStack(context);
-        getInstructions().neg(factor.getResultType().getType());
+        context.getInstructions().neg(factor.getResultType().getType());
     }
 
 }

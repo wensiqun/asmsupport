@@ -65,7 +65,7 @@ public class KernelInstanceof extends AbstractParamOperator {
     @Override
     protected void doExecute(MethodContext context) {
         obj.loadToStack(context);
-        getInstructions().instanceOf(type.getType());
+        context.getInstructions().instanceOf(type.getType());
     }
 
     @Override

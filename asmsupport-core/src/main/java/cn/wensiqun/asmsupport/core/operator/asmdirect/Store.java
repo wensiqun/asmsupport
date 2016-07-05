@@ -34,7 +34,7 @@ public class Store extends ASMDirect {
 
     @Override
     protected void doExecute(MethodContext context) {
-        getInstructions().storeInsn(var);
+        context.getInstructions().storeInsn(var);
     }
 
 }

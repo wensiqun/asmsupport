@@ -30,7 +30,7 @@ public class VisitLdcInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute(MethodContext context) {
-        getInstructions().getMv().visitLdcInsn(cts);
+		context.getInstructions().getMv().visitLdcInsn(cts);
 	}
 
 }

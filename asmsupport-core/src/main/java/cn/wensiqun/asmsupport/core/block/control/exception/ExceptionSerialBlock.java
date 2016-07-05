@@ -317,7 +317,7 @@ public class ExceptionSerialBlock extends SerialBlock {
 
         @Override
         public void doExecute(MethodContext context) {
-            getMethod().getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
+            context.getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
             for (InstructionNode node : getChildren()) {
                 node.execute(context);
             }

@@ -80,11 +80,9 @@ public class Instructions {
 
     private LocalVariables locals;
 
-    private OperandStack stack;
-
-    public Instructions(LocalVariables locals, OperandStack stack) {
+    public Instructions(LocalVariables locals, OperandStack stack, MethodVisitor mv) {
         this.locals = locals;
-        this.stack = stack;
+        this.mv = new VirtualMethodVisitor(mv, stack);
     }
 
     /**
@@ -95,10 +93,6 @@ public class Instructions {
 
     public VirtualMethodVisitor getMv() {
         return mv;
-    }
-
-    public void setMv(MethodVisitor mv) {
-        this.mv = new VirtualMethodVisitor(mv, stack);
     }
 
     // ------------------------------------------------------------------------

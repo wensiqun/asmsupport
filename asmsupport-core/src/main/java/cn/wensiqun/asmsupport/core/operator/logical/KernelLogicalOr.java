@@ -35,7 +35,7 @@ public class KernelLogicalOr extends BinaryLogical {
 
     @Override
     protected void executing(MethodContext context) {
-        getInstructions().bitOr(getType(boolean.class).getType());
+        context.getInstructions().bitOr(getType(boolean.class).getType());
     }
 
 }

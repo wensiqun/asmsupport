@@ -47,7 +47,7 @@ public class KernelReverse extends KernelUnaryBitwise {
         if(LOG.isPrintEnabled()) {
             LOG.print("Start invert");
         }
-        getInstructions().inverts(targetClass.getType());
+        context.getInstructions().inverts(targetClass.getType());
     }
 
 }

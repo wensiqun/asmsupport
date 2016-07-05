@@ -59,7 +59,7 @@ public abstract class NumericalRelational extends AbstractRelational {
 
     private void pushFactorToStack(MethodContext context, KernelParam factor) {
     	IClass factorCls = factor.getResultType();
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
 
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");

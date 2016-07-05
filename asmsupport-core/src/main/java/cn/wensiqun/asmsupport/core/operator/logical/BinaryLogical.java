@@ -77,10 +77,10 @@ public abstract class BinaryLogical extends AbstractLogical {
             LOG.print("Factors to stack");
         }
         leftFactor.loadToStack(context);
-        getInstructions().unbox(leftFactor.getResultType().getType());
+        context.getInstructions().unbox(leftFactor.getResultType().getType());
         
         rightFactor.loadToStack(context);
-        getInstructions().unbox(rightFactor.getResultType().getType());
+        context.getInstructions().unbox(rightFactor.getResultType().getType());
     }
 
 }

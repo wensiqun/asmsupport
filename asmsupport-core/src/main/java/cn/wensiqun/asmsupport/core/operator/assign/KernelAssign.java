@@ -63,8 +63,8 @@ public abstract class KernelAssign extends AbstractParamOperator {
 	/**
      * auto cast
      */
-    protected void autoCast(){
-        autoCast(value.getResultType(), var.getResultType(), false);
+    protected void autoCast(MethodContext context){
+        autoCast(context, value.getResultType(), var.getResultType(), false);
     }
     
     

@@ -32,7 +32,7 @@ public class VisitMultiANewArrayInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute(MethodContext context) {
-        getInstructions().getMv().visitMultiANewArrayInsn(desc, dims);
+		context.getInstructions().getMv().visitMultiANewArrayInsn(desc, dims);
 	}
 
 }

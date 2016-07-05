@@ -52,7 +52,7 @@ public abstract class KernelUnaryBitwise extends AbstractBitwise {
     @Override
     protected final void factorToStack(MethodContext context) {
         factor.loadToStack(context);
-        getInstructions().unbox(targetClass.getType());
+        context.getInstructions().unbox(targetClass.getType());
     }
     
     

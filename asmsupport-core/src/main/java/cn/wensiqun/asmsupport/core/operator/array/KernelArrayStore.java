@@ -93,14 +93,14 @@ public class KernelArrayStore extends AbstractArrayOperator {
         LOG.print("push the last dim index to stack");
         KernelProgramBlock block = getParent();
         lastDim.loadToStack(context);
-        autoCast(lastDim.getResultType(), block.getType(int.class), false);
+        autoCast(context, lastDim.getResultType(), block.getType(int.class), false);
         
         value.loadToStack(context);
-        autoCast(value.getResultType(), storeClass, false);
+        autoCast(context, value.getResultType(), storeClass, false);
         if(LOG.isPrintEnabled()) { 
             LOG.print("store value to corresponse to index of the array");   
         }
-        getInstructions().arrayStore(storeClass.getType());
+        context.getInstructions().arrayStore(storeClass.getType());
     }
 
     @Override

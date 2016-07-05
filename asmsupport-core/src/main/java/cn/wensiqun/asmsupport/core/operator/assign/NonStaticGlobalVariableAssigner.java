@@ -53,9 +53,9 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
         
         value.loadToStack(context);
         
-        autoCast();
+        autoCast(context);
 
-        getInstructions().putField(var.getOwner().getResultType().getType(),
+        context.getInstructions().putField(var.getOwner().getResultType().getType(),
                 var.getMeta().getName(),
                 var.getMeta().getType().getType());
     }

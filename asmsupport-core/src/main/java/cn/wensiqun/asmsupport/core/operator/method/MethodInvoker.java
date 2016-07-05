@@ -79,12 +79,12 @@ public abstract class MethodInvoker extends AbstractParamOperator {
                 ((IVariable) arg).availableFor(this);
             }
             arg.loadToStack(context);
-            cast(arg.getResultType(), methodMeta.getParameterTypes()[i]);
+            cast(context, arg.getResultType(), methodMeta.getParameterTypes()[i]);
         }
     }
     
-    private void cast(IClass from, IClass to){
-        Instructions instructions = getInstructions();
+    private void cast(MethodContext context, IClass from, IClass to){
+        Instructions instructions = context.getInstructions();
         if(from.isPrimitive() && to.isPrimitive()){
             instructions.cast(from.getType(), to.getType());
         }else if(from.isPrimitive()){

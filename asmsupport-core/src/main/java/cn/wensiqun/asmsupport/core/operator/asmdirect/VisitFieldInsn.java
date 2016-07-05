@@ -36,7 +36,7 @@ public class VisitFieldInsn extends AbstractOperator {
 
 	@Override
 	protected void doExecute(MethodContext context) {
-        getInstructions().getMv().visitFieldInsn(opcode, owner, name, desc);
+		context.getInstructions().getMv().visitFieldInsn(opcode, owner, name, desc);
 	}
 
 }

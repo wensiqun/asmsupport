@@ -88,7 +88,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
 
     @Override
     protected final void factorToStack(MethodContext context) {
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         LOG.print("push the first arithmetic factor to stack");
         leftFactor.loadToStack(context);
         if(LOG.isPrintEnabled()){
@@ -130,9 +130,9 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(LOG.isPrintEnabled()) {
             LOG.print("execute operator " + getOperatorSymbol());
         }
-        innerRunExe();
+        innerRunExe(context);
     }
 
-    protected abstract void innerRunExe();
+    protected abstract void innerRunExe(MethodContext context);
 
 }

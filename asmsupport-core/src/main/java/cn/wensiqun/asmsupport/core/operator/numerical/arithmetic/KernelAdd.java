@@ -46,7 +46,7 @@ public class KernelAdd extends AbstractArithmetic {
         if(LOG.isPrintEnabled()) {
             LOG.print("execute the add instruction");
         }
-        getInstructions().add(targetClass.getType());
+        context.getInstructions().add(targetClass.getType());
     }
 
 

@@ -20,7 +20,7 @@ public abstract class NoReturnMethodBody extends AbstractMethodBody {
             if(LOG.isPrintEnabled()) {
                 LOG.print("direct return from method");
             }
-            getMethod().getInstructions().returnInsn();
+            context.getInstructions().returnInsn();
         }
     }
 

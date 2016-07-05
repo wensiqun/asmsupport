@@ -47,7 +47,7 @@ public class KernelDiv extends AbstractArithmetic {
         if(LOG.isPrintEnabled()) {
             LOG.print("execute the sub instruction");
         }
-        getInstructions().div(targetClass.getType());
+        context.getInstructions().div(targetClass.getType());
     }
 
 

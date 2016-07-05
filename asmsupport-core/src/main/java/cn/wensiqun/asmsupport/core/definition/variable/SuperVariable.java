@@ -46,7 +46,7 @@ public class SuperVariable extends ImplicitVariable {
 
     @Override
     public void loadToStack(MethodContext context) {
-        context.getMethod().getInstructions().loadThis(context.getMethod().getMeta().getOwner().getType());
+        context.getInstructions().loadThis(context.getMethod().getMeta().getOwner().getType());
     }
 
     @Override

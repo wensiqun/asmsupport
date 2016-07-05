@@ -70,7 +70,7 @@ public class KernelCast extends AbstractParamOperator {
             if(from.getCastOrder() > to.getCastOrder() ||
                (from.equals(block.getType(char.class)) && to.equals(block.getType(short.class))) || 
                (to.equals(block.getType(char.class)) && from.equals(block.getType(short.class)))){
-                getInstructions().cast(from.getType(), to.getType());
+                context.getInstructions().cast(from.getType(), to.getType());
                 return;
             }
         }
@@ -78,7 +78,7 @@ public class KernelCast extends AbstractParamOperator {
         if(LOG.isPrintEnabled()) { 
             LOG.print("checkcast from " + from + " to " + to );
         }
-        getInstructions().checkCast(to.getType());
+        context.getInstructions().checkCast(to.getType());
     }
 
     @Override

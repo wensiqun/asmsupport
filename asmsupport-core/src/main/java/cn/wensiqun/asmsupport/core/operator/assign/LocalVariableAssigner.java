@@ -47,11 +47,11 @@ public class LocalVariableAssigner extends KernelAssign {
             LOG.print("load value to stack");
         }
         value.loadToStack(context);
-        autoCast();
+        autoCast(context);
         if(LOG.isPrintEnabled()) { 
             LOG.print("store to local variable");
         }
-        getInstructions().storeInsn(var);
+        context.getInstructions().storeInsn(var);
     }
 
     @Override

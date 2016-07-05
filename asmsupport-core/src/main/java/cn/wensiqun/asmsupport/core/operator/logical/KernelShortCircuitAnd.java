@@ -47,7 +47,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
     protected void executing(MethodContext context) {
         Label andEndLbl = new Label();
         Label falseLbl = new Label();
-        MethodVisitor mv = getInstructions().getMv();
+        MethodVisitor mv = context.getInstructions().getMv();
 
         jumpNegative(context, this, andEndLbl, falseLbl);
         
@@ -65,7 +65,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
 
     @Override
     public void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         MethodVisitor mv = instructions.getMv();
         Label label4Or = new Label();
         if(leftFactor instanceof KernelShortCircuitOr) {
@@ -91,7 +91,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
 
     @Override
     public void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
-        Instructions instructions = getInstructions();
+        Instructions instructions = context.getInstructions();
         MethodVisitor mv = instructions.getMv();
         Label label4Or = new Label();
         if(leftFactor instanceof KernelShortCircuitOr) {

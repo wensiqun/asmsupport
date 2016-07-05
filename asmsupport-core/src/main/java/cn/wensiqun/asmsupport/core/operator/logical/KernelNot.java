@@ -41,7 +41,7 @@ public class KernelNot extends UnaryLogical {
 
     @Override
     protected void executing(MethodContext context) {
-        MethodVisitor mv = getInstructions().getMv();
+        MethodVisitor mv = context.getInstructions().getMv();
         mv.visitJumpInsn(Opcodes.IFEQ, trueLbl);
         
         mv.visitInsn(Opcodes.ICONST_0);
