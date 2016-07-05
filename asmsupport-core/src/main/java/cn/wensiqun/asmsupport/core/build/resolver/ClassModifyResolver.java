@@ -254,15 +254,15 @@ public class ClassModifyResolver extends AbstractBytecodeResolver {
 	public byte[] execute() {
 	       
         for (FieldBuilder ifc : fields) {
-            ifc.execute();
+            ifc.execute(null);
         }
 
         for (MethodBuilder imc : methods) {
-            imc.execute();
+            imc.execute(null);
         }
         
         for (MethodBuilder imc : methodModifiers) {
-            imc.execute();
+            imc.execute(null);
         }
 
         if(LOG.isPrintEnabled()){

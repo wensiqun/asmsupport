@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -52,18 +52,18 @@ public class StaticGlobalVariable extends GlobalVariable {
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        if (!IClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
+    public void loadToStack(MethodContext context) {
+        if (!IClassUtils.visible(context.getMethod().getDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
                 meta.getModifiers())) {
             throw new IllegalArgumentException("Cannot access field " + meta.getDeclaringClass() + "#"
-                    + meta.getName() + " from " + block.getMethodDeclaringClass());
+                    + meta.getName() + " from " + context.getMethod().getDeclaringClass());
         }
 
         if (LOG.isPrintEnabled()) {
             LOG.print("get field " + meta.getName() + " from class " + meta.getDirectOwnerType().getName()
                     + " and push to stack!");
         }
-        block.getMethod().getInstructions().getStatic(owner.getType(), meta.getName(), meta.getType().getType());
+        context.getMethod().getInstructions().getStatic(owner.getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

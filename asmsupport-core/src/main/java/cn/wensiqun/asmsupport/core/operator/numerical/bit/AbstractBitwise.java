@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.operator.numerical.AbstractNumerical;
@@ -51,8 +52,8 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     }
 
     @Override
-    public final void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public final void loadToStack(MethodContext context) {
+        this.execute(context);
     }
     
     @Override
@@ -62,9 +63,9 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     }
 
     @Override
-    public final void execute() {
+    public final void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new ASMSupportException("the operator " + getOperatorSymbol().getSymbol() + " has not been used by other operator.");
         }

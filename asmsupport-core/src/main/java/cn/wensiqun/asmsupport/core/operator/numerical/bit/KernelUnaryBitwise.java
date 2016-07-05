@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -49,8 +50,8 @@ public abstract class KernelUnaryBitwise extends AbstractBitwise {
     }
     
     @Override
-    protected final void factorToStack() {
-        factor.loadToStack((KernelProgramBlock) getParent());
+    protected final void factorToStack(MethodContext context) {
+        factor.loadToStack(context);
         getInstructions().unbox(targetClass.getType());
     }
     

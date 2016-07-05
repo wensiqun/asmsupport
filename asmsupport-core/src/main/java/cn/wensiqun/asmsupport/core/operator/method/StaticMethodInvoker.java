@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -49,8 +50,8 @@ public class StaticMethodInvoker extends MethodInvoker {
 	}
 
 	@Override
-    public void doExecute() {
-        argumentsToStack();
+    public void doExecute(MethodContext context) {
+        argumentsToStack(context);
         LOG.print("invoke static method : " + name);
         getInstructions().invokeStatic(methodOwner.getType(), name, getReturnType(), methodMeta.getParameterAsmTypes());
         if(!isSaveReference()){

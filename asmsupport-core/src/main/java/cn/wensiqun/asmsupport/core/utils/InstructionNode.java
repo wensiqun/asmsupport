@@ -16,8 +16,9 @@ package cn.wensiqun.asmsupport.core.utils;
 
 
 import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 
-public abstract class InstructionNode implements Cloneable, Executable {
+public abstract class InstructionNode implements Cloneable, Executable<MethodContext> {
 
     /**
      * The next node

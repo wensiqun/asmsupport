@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.common;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -105,42 +106,42 @@ public class KernelTernary extends AbstractParamOperator {
     }
     
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         Instructions instructions = getInstructions();
         Label posLbl = new Label();
         Label l1 = new Label();
         Label l2 = new Label();
     	if(exp1 instanceof Jumpable){
         	Jumpable jmp = (Jumpable) exp1;
-        	jmp.jumpNegative(this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
+        	jmp.jumpNegative(context, this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
-        	exp1.loadToStack(getParent());
+        	exp1.loadToStack(context);
             instructions.unbox(exp1.getResultType().getType());
             instructions.ifZCmp(Instructions.EQ, l1);
         }
 
         instructions.mark(posLbl);
-    	exp2.loadToStack(getParent());
+    	exp2.loadToStack(context);
         getParent().getMethod().getStack().pop();
         instructions.goTo(l2);
     	instructions.mark(l1);
     	
-        exp3.loadToStack(getParent());
+        exp3.loadToStack(context);
         instructions.mark(l2);
     }
     
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new RuntimeException("the logical ternary operator has not been used by other operator.");
         }
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
 
     @Override

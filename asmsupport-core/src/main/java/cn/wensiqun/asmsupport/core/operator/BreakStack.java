@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 
 public abstract class BreakStack extends AbstractOperator {
@@ -39,10 +40,10 @@ public abstract class BreakStack extends AbstractOperator {
 	}
 
     @Override
-	protected final void doExecute() {
-	    breakStackExecuting();
+	protected final void doExecute(MethodContext context) {
+	    breakStackExecuting(context);
 	}
 	
-    protected abstract void breakStackExecuting();
+    protected abstract void breakStackExecuting(MethodContext context);
 
 }

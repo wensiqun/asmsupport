@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -87,17 +88,17 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     }
     
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
 
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
             	LOG.print("Run operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() + rightFactor.getResultType());
             }
-            super.execute();
+            super.execute(context);
         }else{
             throw new ASMSupportException("The operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() +
                                           rightFactor.getResultType() + " has not been used by other operator.");
@@ -115,16 +116,16 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
         getParent().removeChild(this);
     }
 
-    protected abstract void factorsToStack();
+    protected abstract void factorsToStack(MethodContext context);
 
 	@Override
-    protected void doExecute() {
-		instructionGenerate();
+    protected void doExecute(MethodContext context) {
+		instructionGenerate(context);
         defaultStackOperator();
     }
 	
-	protected void instructionGenerate(){
-		factorsToStack();
+	protected void instructionGenerate(MethodContext context){
+		factorsToStack(context);
 		
         negativeCmp(falseLbl);
 
@@ -148,14 +149,14 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 	}
 	
     @Override
-    public void jumpPositive(KernelParam from, Label posLbl, Label negLbl) {
-        factorsToStack();
+    public void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
+        factorsToStack(context);
         positiveCmp(posLbl);
     }
 
     @Override
-    public void jumpNegative(KernelParam from, Label posLbl, Label negLbl) {
-        factorsToStack();
+    public void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
+        factorsToStack(context);
         negativeCmp(negLbl);
     }
     

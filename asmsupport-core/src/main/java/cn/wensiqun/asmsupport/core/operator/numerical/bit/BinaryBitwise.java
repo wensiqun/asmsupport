@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -86,10 +87,10 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     }
 
     @Override
-    protected final void factorToStack() {
+    protected final void factorToStack(MethodContext context) {
         Instructions instructions = getInstructions();
         LOG.print("push the first arithmetic factor to stack");
-        leftFactor.loadToStack(getParent());
+        leftFactor.loadToStack(context);
         if(LOG.isPrintEnabled()){
             if(!leftFactor.getResultType().equals(targetClass)){
                 LOG.print("cast arithmetic factor from " + leftFactor.getResultType() + " to " + targetClass);
@@ -101,7 +102,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(LOG.isPrintEnabled()) {
             LOG.print("push the second arithmetic factor to stack");	
         }
-        rightFactor.loadToStack(getParent());
+        rightFactor.loadToStack(context);
         
         if(LOG.isPrintEnabled()){
             if(!rightFactor.getResultType().equals(targetClass)){
@@ -121,11 +122,11 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     }
     
     @Override
-    public final void doExecute() {
+    public final void doExecute(MethodContext context) {
         if(LOG.isPrintEnabled()) {
             LOG.print("prepare operator " + getOperatorSymbol());
         }
-        factorToStack();
+        factorToStack(context);
         if(LOG.isPrintEnabled()) {
             LOG.print("execute operator " + getOperatorSymbol());
         }

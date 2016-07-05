@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.standard.block.loop.IWhile;
 
@@ -29,9 +30,9 @@ public abstract class KernelWhile extends KernelDoWhile implements IWhile  {
     }
 
 	@Override
-	public void doExecute() {
+	public void doExecute(MethodContext context) {
         getMethod().getInstructions().goTo(conditionLbl);
-		super.doExecute();
+		super.doExecute(context);
 	}
 
 

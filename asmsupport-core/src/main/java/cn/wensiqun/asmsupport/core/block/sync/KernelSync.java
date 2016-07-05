@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.block.sync;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
@@ -74,10 +75,10 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	}
 
 	@Override
-	public void doExecute() {
+	public void doExecute(MethodContext context) {
         Executable returnInsn = null;
 		Instructions instructions = getMethod().getInstructions();
-		lock.loadToStack(this);
+		lock.loadToStack(context);
 		for (Executable e : getChildren()) {
 			if(e.equals(flag1)){
 				//e.execute();
@@ -89,10 +90,10 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 				break;
 			}
 			
-			e.execute();
+			e.execute(context);
 		}
 
-		dupSynArgument.loadToStack(this);
+		dupSynArgument.loadToStack(context);
 		instructions.monitorExit();
 		instructions.mark(monitorexit);
 		instructions.goTo(returnLbl);
@@ -100,7 +101,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
         //for exception
 		instructions.nop();
 		instructions.mark(excetpionStart);
-		dupSynArgument.loadToStack(this);
+		dupSynArgument.loadToStack(context);
 		instructions.monitorExit();
 		instructions.getMv().getStack().push(getType(Throwable.class).getType());
 		instructions.mark(excetpionEnd);
@@ -108,7 +109,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 		
 		instructions.mark(returnLbl);
 		if(returnInsn != null){
-			returnInsn.execute();
+			returnInsn.execute(context);
 		}
 	}
 	

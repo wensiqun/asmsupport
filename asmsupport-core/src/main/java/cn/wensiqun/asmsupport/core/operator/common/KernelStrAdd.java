@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -62,26 +63,26 @@ public class KernelStrAdd extends AbstractParamOperator {
     }
     
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new ASMSupportException("the string append operator has not been used by other operator.");
         }
     }
 
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         if(paras.length == 1){
-            paras[0].loadToStack(getParent());
+            paras[0].loadToStack(context);
         }else{
-            invoker.loadToStack(getParent());
+            invoker.loadToStack(context);
         }
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
 
     @Override

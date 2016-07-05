@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -39,13 +40,13 @@ public class LocalVariableAssigner extends KernelAssign {
     }
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         var.availableFor(this);
         if(LOG.isPrintEnabled()) { 
             LOG.print("start execute assign value to variable '" + var.getMeta().getName() + "' from " + value.getResultType());
             LOG.print("load value to stack");
         }
-        value.loadToStack(getParent());
+        value.loadToStack(context);
         autoCast();
         if(LOG.isPrintEnabled()) { 
             LOG.print("store to local variable");
@@ -54,9 +55,9 @@ public class LocalVariableAssigner extends KernelAssign {
     }
 
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         var.setVariableCompileOrder(getParent().getMethod().getNextInstructionNumber());
-        super.execute();
+        super.execute(context);
     }
 
 }

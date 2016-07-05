@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
@@ -113,16 +114,16 @@ public abstract class AbstractOperator extends InstructionNode {
     }
 
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         compileOrder = getParent().getMethod().getNextInstructionNumber();
         try {
-            doExecute();
+            doExecute(context);
         } catch (Exception e) {
             throw new ASMSupportException("Error while generate bytecode (" + toString() + ")", e);
         }
     }
 
-    protected abstract void doExecute();
+    protected abstract void doExecute(MethodContext context);
 
     /**
      * <p>

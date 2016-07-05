@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -39,14 +40,14 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 	}
 
 	@Override
-	public void loadToStack(KernelProgramBlock block) {
-		this.execute();
+	public void loadToStack(MethodContext context) {
+		this.execute(context);
 	}
 
 	@Override
-	public void execute() {
+	public void execute(MethodContext context) {
 		if (byOtherUsed) {
-			super.execute();
+			super.execute(context);
 		} else {
 			throw new ArithmeticException(
 					"the operator has not been used by other operator.");
@@ -81,8 +82,8 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 	}
 
 	@Override
-	protected void factorToStack() {
-		factor.loadToStack((KernelProgramBlock) getParent());
+	protected void factorToStack(MethodContext context) {
+		factor.loadToStack(context);
 		getInstructions().unbox(factor.getResultType().getType());
 	}
 

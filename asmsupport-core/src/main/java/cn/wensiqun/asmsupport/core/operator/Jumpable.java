@@ -15,6 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -35,11 +36,12 @@ public interface Jumpable {
      * the operator {@code 'if(isTrue()){ ... }'}(here we suppose the method {@code isTrue})
      * return boolean value, then the positive jump is {@code ifne}
      * </p>
+     * @param context
      * @param from
      * @param posLbl
      * @param negLbl
      */
-    void jumpPositive(KernelParam from, Label posLbl, Label negLbl);
+    void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl);
     
     
     /**
@@ -51,10 +53,11 @@ public interface Jumpable {
      * the operator {@code 'if(isTrue()){ ... }'}(here we suppose the method {@code isTrue})
      * return boolean value, then the positive jump is {@code ifeq}
      * </p>
+     * @param context
      * @param from
      * @param posLbl
      * @param negLbl
      */
-    void jumpNegative(KernelParam from, Label posLbl, Label negLbl);
+    void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl);
     
 }

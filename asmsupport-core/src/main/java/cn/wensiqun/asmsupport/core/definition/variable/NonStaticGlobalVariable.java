@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -49,19 +49,19 @@ public class NonStaticGlobalVariable extends GlobalVariable {
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        if(!IClassUtils.visible(block.getMethodDeclaringClass(), meta.getDirectOwnerType(), 
+    public void loadToStack(MethodContext context) {
+        if(!IClassUtils.visible(context.getMethod().getDeclaringClass(), meta.getDirectOwnerType(),
                 meta.getDeclaringClass(), meta.getModifiers())){
             throw new IllegalArgumentException("Cannot access field " +
                     meta.getDeclaringClass() + "#" + meta.getName()
-                    + " from " + block.getMethodDeclaringClass());
+                    + " from " + context.getMethod().getDeclaringClass());
         }
         
         if(LOG.isPrintEnabled()){
             LOG.print("Get field " + meta.getName() + " from variable " + meta.getName() + " and push to stack!");
         }
-        owner.loadToStack(block);
-        block.getMethod().getInstructions().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
+        owner.loadToStack(context);
+        context.getMethod().getInstructions().getField(meta.getDirectOwnerType().getType(), meta.getName(), meta.getType().getType());
     }
 
     @Override

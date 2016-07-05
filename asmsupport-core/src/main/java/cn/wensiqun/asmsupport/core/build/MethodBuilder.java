@@ -15,6 +15,7 @@
 package cn.wensiqun.asmsupport.core.build;
 
 import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 
 /**
@@ -22,7 +23,7 @@ import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface MethodBuilder extends Executable {
+public interface MethodBuilder extends Executable<MethodContext> {
 
     int MODE_ADD = 0;
 

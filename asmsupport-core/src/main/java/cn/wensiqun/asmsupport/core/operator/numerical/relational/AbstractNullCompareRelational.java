@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -33,7 +34,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	}
 
 	@Override
-	protected void doExecute() {
+	protected void doExecute(MethodContext context) {
         //if those two factories are both null value
 		//direct push true or false
 		MethodVisitor mv = getInstructions().getMv();
@@ -51,11 +52,11 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 		        return;
 			}
 		}else if(isNullValue(leftFactor) || isNullValue(rightFactor)){
-			instructionGenerate();
+			instructionGenerate(context);
 	        block.getMethod().getStack().pop();
 	        block.getMethod().getStack().push(Type.INT_TYPE);
 		}else{
-			super.doExecute();
+			super.doExecute(context);
 		}
 	}
 	
@@ -83,14 +84,13 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
     }
 	
 	@Override
-	protected void factorsToStack() {
-		KernelProgramBlock block = getParent();
+	protected void factorsToStack(MethodContext context) {
 		if(isNullValue(leftFactor) && !isNullValue(rightFactor)){
-			rightFactor.loadToStack(block);
+			rightFactor.loadToStack(context);
 		}else if(!isNullValue(leftFactor) && isNullValue(rightFactor)){
-			leftFactor.loadToStack(block);
+			leftFactor.loadToStack(context);
 		}else{
-			super.factorsToStack();
+			super.factorsToStack(context);
 		}
 	}
 

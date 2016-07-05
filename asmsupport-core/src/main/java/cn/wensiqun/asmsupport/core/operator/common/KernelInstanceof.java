@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -53,23 +54,23 @@ public class KernelInstanceof extends AbstractParamOperator {
     }
 
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new ASMSupportException("the instanceof operator has not been used by other operator.");
         }
     }
 
     @Override
-    protected void doExecute() {
-        obj.loadToStack(getParent());
+    protected void doExecute(MethodContext context) {
+        obj.loadToStack(context);
         getInstructions().instanceOf(type.getType());
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
 
     @Override

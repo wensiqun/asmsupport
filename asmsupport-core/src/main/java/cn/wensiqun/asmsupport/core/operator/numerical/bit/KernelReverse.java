@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -37,12 +38,12 @@ public class KernelReverse extends KernelUnaryBitwise {
     }
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         if(LOG.isPrintEnabled()) {
-            LOG.print("Start inverts operaotr : " + getOperatorSymbol());
+            LOG.print("Start inverts operator : " + getOperatorSymbol());
             LOG.print("Factor to stack"); 
         }
-        factorToStack();
+        factorToStack(context);
         if(LOG.isPrintEnabled()) {
             LOG.print("Start invert");
         }

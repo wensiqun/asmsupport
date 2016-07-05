@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
@@ -106,7 +107,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
     }
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         AMethod method = getMethod();
         if (LOG.isPrintEnabled()) {
             StringBuilder str = new StringBuilder("Create method: ------------");
@@ -115,7 +116,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
         }
 
         for (Executable exe : getChildren()) {
-            exe.execute();
+            exe.execute(context);
         }
 
         for (ExceptionTableEntry tci : exceptions) {

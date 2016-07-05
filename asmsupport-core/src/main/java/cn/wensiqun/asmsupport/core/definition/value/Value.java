@@ -17,8 +17,8 @@
  */
 package cn.wensiqun.asmsupport.core.definition.value;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
@@ -506,8 +506,8 @@ public class Value implements IValue {
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        Instructions instructions = block.getMethod().getInstructions();
+    public void loadToStack(MethodContext context) {
+        Instructions instructions = context.getMethod().getInstructions();
         if (value == null) {
             instructions.push(this.getType());
             return;

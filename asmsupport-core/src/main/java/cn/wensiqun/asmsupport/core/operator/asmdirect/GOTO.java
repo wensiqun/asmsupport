@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -46,7 +47,7 @@ public class GOTO extends ASMDirect {
     }
     
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         getInstructions().goTo(to);
     }
 

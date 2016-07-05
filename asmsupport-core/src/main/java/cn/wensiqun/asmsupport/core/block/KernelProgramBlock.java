@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.block;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
@@ -132,7 +133,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * The specify the program block code you want to generate here.
      * In this method we just build a execute queue, but generate 
-     * java bytecode instruction in method {@link #execute()}
+     * java bytecode instruction in method {@link #execute(MethodContext)}
      * 
      */
     public abstract void generate();
@@ -146,11 +147,11 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public final void execute() {
+    public final void execute(MethodContext context) {
         getMethod()
                 .getInstructions()
                     .mark(scope.getStart());
-        doExecute();
+        doExecute(context);
         getMethod().getInstructions().mark(scope.getEnd());
     }
 
@@ -158,7 +159,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * Override this method in subclass, defined the generate instruction rule for
      * each block.
      */
-    protected abstract void doExecute();
+    protected abstract void doExecute(MethodContext context);
 
     // *******************************************************************************************//
     // Variable Operator //

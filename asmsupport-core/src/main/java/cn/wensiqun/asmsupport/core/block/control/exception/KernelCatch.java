@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -52,12 +53,12 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
     }
 
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         // the exception variable already exists at the top of the statck.
         getMethod().getInstructions().getMv().getStack().push(getExceptionType().getType());
 
         for (InstructionNode node : getChildren()) {
-            node.execute();
+            node.execute(context);
         }
     }
 

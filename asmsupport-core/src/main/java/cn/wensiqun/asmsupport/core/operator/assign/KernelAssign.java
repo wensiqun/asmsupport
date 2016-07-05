@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.IVariable;
@@ -68,9 +69,9 @@ public abstract class KernelAssign extends AbstractParamOperator {
     
     
     @Override
-	public void loadToStack(KernelProgramBlock block) {
-        this.execute();
-		var.loadToStack(block);
+	public void loadToStack(MethodContext context) {
+        this.execute(context);
+		var.loadToStack(context);
 	}
 
 	@Override

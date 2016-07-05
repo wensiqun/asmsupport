@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -51,18 +52,18 @@ public abstract class NumericalRelational extends AbstractRelational {
     }
     
     @Override
-    protected void factorsToStack() {
-        pushFactorToStack(leftFactor);
-        pushFactorToStack(rightFactor);
+    protected void factorsToStack(MethodContext context) {
+        pushFactorToStack(context, leftFactor);
+        pushFactorToStack(context, rightFactor);
     }
 
-    private void pushFactorToStack(KernelParam factor) {
+    private void pushFactorToStack(MethodContext context, KernelParam factor) {
     	IClass factorCls = factor.getResultType();
         Instructions instructions = getInstructions();
 
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
-        factor.loadToStack(getParent());
+        factor.loadToStack(context);
 
         IClass factorPrimitiveAClass = factorCls;
         // unbox if needs

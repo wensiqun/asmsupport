@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 
 public class BlockEndFlag extends AbstractOperator implements UnreachableCodeCheckSkipable {
@@ -23,7 +24,7 @@ public class BlockEndFlag extends AbstractOperator implements UnreachableCodeChe
 	}
 
 	@Override
-	protected void doExecute() {
+	protected void doExecute(MethodContext context) {
         // Do nothing
 	}
 

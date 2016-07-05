@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -42,8 +43,8 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     }
     
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
     
     @Override
@@ -74,9 +75,9 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     }
     
     @Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new ArithmeticException("the arithmetic operator " + leftFactor.getResultType() + " " + getOperatorSymbol() + " " + 
                                           rightFactor.getResultType() + " has not been used by other operator.");
@@ -84,9 +85,9 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     }
 
     @Override
-    protected void factorToStack() {
-        pushFactorToStack(leftFactor);
-        pushFactorToStack(rightFactor);
+    protected void factorToStack(MethodContext context) {
+        pushFactorToStack(context, leftFactor);
+        pushFactorToStack(context, rightFactor);
     }
     
     @Override

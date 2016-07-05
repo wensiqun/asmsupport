@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core;
 
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 
 /**
  * 
@@ -31,7 +31,7 @@ public interface PushStackable {
     /**
      * Push current to a stack of specify block
      * 
-     * @param block
+     * @param context
      */
-    void loadToStack(KernelProgramBlock block);
+    void loadToStack(MethodContext context);
 }

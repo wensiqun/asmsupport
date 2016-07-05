@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
 import cn.wensiqun.asmsupport.core.utils.memory.ScopeLogicVariable;
@@ -59,8 +59,8 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        block.getMethod().getInstructions().loadInsn(meta.getType().getType(), scopeLogicVar.getInitStartPos());
+    public void loadToStack(MethodContext context) {
+        context.getMethod().getInstructions().loadInsn(meta.getType().getType(), scopeLogicVar.getInitStartPos());
     }
 
     private class VariableOperatorException extends RuntimeException {

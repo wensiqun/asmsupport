@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.assign;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.NonStaticGlobalVariable;
@@ -40,7 +41,7 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     }
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
     	if(LOG.isPrintEnabled()){
             LOG.print("assign value to global variable '" + var.getMeta().getName() + "' from " + value  );
         }
@@ -48,9 +49,9 @@ public class NonStaticGlobalVariableAssigner extends KernelAssign {
     	if(Modifier.isStatic(block.getMethod().getMeta().getModifiers())){
             throw new ASMSupportException("Current method " + block.getMethod() + " is static cannot use non-static field " + var.getMeta().getName() );
         }
-        var.getOwner().loadToStack(block);
+        var.getOwner().loadToStack(context);
         
-        value.loadToStack(block);
+        value.loadToStack(context);
         
         autoCast();
 

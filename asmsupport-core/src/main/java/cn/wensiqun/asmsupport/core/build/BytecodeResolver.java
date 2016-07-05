@@ -18,6 +18,7 @@
 package cn.wensiqun.asmsupport.core.build;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
@@ -53,7 +54,7 @@ public interface BytecodeResolver {
     byte[] execute();
 
 	/**
-	 * Start create/modify class, this method will integrate those three phase({@link #create()}, {@link #prepare()}, {@link #execute()}). and get the
+	 * Start create/modify class, this method will integrate those three phase({@link #create()}, {@link #prepare()}, {@link #execute(MethodContext)}). and get the
 	 * byte[] as result.
 	 * 
 	 * @return

@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.standard.block.exception.IFinally;
@@ -26,9 +27,9 @@ public abstract class KernelFinally extends EpisodeBlock<ExceptionSerialBlock> i
     }
 
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         for (InstructionNode node : getChildren()) {
-            node.execute();
+            node.execute(context);
         }
     }
 

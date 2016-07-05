@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ArrayOperatorException;
@@ -55,7 +56,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
     
     
 	@Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
@@ -66,12 +67,12 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
         if(LOG.isPrintEnabled()) {
             LOG.print("start load array value");
         }
-        getValue();
+        getValue(context);
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
-        this.execute();
+    public void loadToStack(MethodContext context) {
+        this.execute(context);
     }
 
     @Override

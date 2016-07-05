@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -36,11 +37,11 @@ public class SuperConstructorInvoker extends MethodInvoker {
     }
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         LOG.print("call method '"+ name +"' by 'this' key word");
         LOG.print("put 'this' to stack");
         getInstructions().loadThis(getParent().getMethod().getMeta().getOwner().getType());
-        argumentsToStack();
+        argumentsToStack(context);
         
         IClass[] argTypes = new IClass[arguments.length];
         for(int i=0; i<argTypes.length; i++){

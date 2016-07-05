@@ -1,5 +1,6 @@
 package cn.wensiqun.asmsupport.core.utils;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -141,7 +142,7 @@ public class InstructionListTest {
         }
 
         @Override
-        public void execute() {
+        public void execute(MethodContext context) {
 
         }
     }

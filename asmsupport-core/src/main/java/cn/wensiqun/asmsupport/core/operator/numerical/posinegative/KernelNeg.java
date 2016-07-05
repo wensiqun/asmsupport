@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -36,9 +37,9 @@ public class KernelNeg extends AbstractPositiveNegative {
     }
     
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         LOG.print("run the negative operator");
-        factorToStack();
+        factorToStack(context);
         getInstructions().neg(factor.getResultType().getType());
     }
 

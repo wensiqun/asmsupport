@@ -17,6 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.arithmetic;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -38,11 +39,11 @@ public class KernelDiv extends AbstractArithmetic {
 
 
     @Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         if(LOG.isPrintEnabled()) {
             LOG.print("start execute sub arithmetic operator");
         }
-        factorToStack();
+        factorToStack(context);
         if(LOG.isPrintEnabled()) {
             LOG.print("execute the sub instruction");
         }

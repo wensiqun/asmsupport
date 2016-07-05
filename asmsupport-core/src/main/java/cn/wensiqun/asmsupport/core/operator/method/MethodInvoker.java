@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
@@ -68,7 +69,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
         this.arguments = arguments;
     }
 
-    protected void argumentsToStack() {
+    protected void argumentsToStack(MethodContext context) {
     	for(int i=0; i<arguments.length; i++){
             KernelParam arg = arguments[i];
             if(LOG.isPrintEnabled()) {
@@ -77,7 +78,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             if(arg instanceof IVariable){
                 ((IVariable) arg).availableFor(this);
             }
-            arg.loadToStack(getParent());
+            arg.loadToStack(context);
             cast(arg.getResultType(), methodMeta.getParameterTypes()[i]);
         }
     }
@@ -159,14 +160,14 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     }
 
     @Override
-    public void loadToStack(KernelProgramBlock block) {
+    public void loadToStack(MethodContext context) {
         if(getReturnType().equals(Type.VOID_TYPE)){
             throw new ASMSupportException("cannot push the void return type to stack!");
         }
         
         boolean saveRef = isSaveReference();
         setSaveReference(true);
-        this.execute();
+        this.execute(context);
         setSaveReference(saveRef);
     }
 

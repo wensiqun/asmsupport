@@ -15,13 +15,14 @@
 package cn.wensiqun.asmsupport.core.build;
 
 import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.FieldContext;
 
 /**
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface FieldBuilder extends Executable {
+public interface FieldBuilder extends Executable<FieldContext> {
     
     /**
      * Create a field.

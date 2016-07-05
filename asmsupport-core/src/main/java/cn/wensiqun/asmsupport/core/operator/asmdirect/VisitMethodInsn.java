@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -37,7 +38,7 @@ public class VisitMethodInsn extends AbstractOperator {
 	}
 
 	@Override
-	protected void doExecute() {
+	protected void doExecute(MethodContext context) {
         getInstructions().getMv().visitMethodInsn(opcode, owner, name, desc, itf);
 	}
 

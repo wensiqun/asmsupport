@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
@@ -140,7 +141,9 @@ public class AMethod {
     public void startup() {
         createMethodVisitor();
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            this.body.execute();
+            MethodContext context = new MethodContext();
+            context.setMethod(this);
+            this.body.execute(context);
             this.body.endMethodBody();
         }
         instructions.endMethod();

@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -61,9 +62,9 @@ public abstract class BinaryLogical extends AbstractLogical {
 	}
 
 	@Override
-    public void execute() {
+    public void execute(MethodContext context) {
         if(byOtherUsed){
-            super.execute();
+            super.execute(context);
         }else{
             throw new ArithmeticException("the logical operator " + leftFactor.getResultType() + " " + getOperatorSymbol() + " " + 
                                           rightFactor.getResultType() + " has not been used by other operator.");
@@ -71,14 +72,14 @@ public abstract class BinaryLogical extends AbstractLogical {
     }
 
     @Override
-    protected void factorToStack() {
+    protected void factorToStack(MethodContext context) {
         if(LOG.isPrintEnabled()) {
             LOG.print("Factors to stack");
         }
-        leftFactor.loadToStack(getParent());
+        leftFactor.loadToStack(context);
         getInstructions().unbox(leftFactor.getResultType().getType());
         
-        rightFactor.loadToStack(getParent());
+        rightFactor.loadToStack(context);
         getInstructions().unbox(rightFactor.getResultType().getType());
     }
 

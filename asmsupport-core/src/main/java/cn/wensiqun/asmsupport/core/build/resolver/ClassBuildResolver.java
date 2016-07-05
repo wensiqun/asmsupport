@@ -123,11 +123,11 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
 	@Override
 	public final byte[] execute() {
         for (FieldBuilder ifc : fields) {
-            ifc.execute();
+            ifc.execute(null);
         }
 
         for (MethodBuilder imc : methods) {
-            imc.execute();
+            imc.execute(null);
         }
         return cw.toByteArray();
 	}

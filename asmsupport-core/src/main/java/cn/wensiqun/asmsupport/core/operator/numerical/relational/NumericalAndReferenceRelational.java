@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -57,7 +58,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     }
 
     @Override
-    protected void factorsToStack() {
+    protected void factorsToStack(MethodContext context) {
     	IClass ftrCls1 = leftFactor.getResultType();
     	IClass ftrCls2 = rightFactor.getResultType();
         Instructions instructions = getInstructions();
@@ -65,7 +66,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             
             LOG.print("push the first factor to stack");
-            leftFactor.loadToStack(block);
+            leftFactor.loadToStack(context);
             
             if(!ftrCls1.isPrimitive()){
                 LOG.print("unbox " + ftrCls1);
@@ -84,7 +85,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             }
 
             LOG.print("push the second factor to stack");
-            rightFactor.loadToStack(block);
+            rightFactor.loadToStack(context);
             
             if(!ftrCls2.isPrimitive()){
                 LOG.print("unbox " + ftrCls1);
@@ -100,10 +101,10 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
             }
         }else{
             LOG.print("push the first factor to stack");
-            leftFactor.loadToStack(block);
+            leftFactor.loadToStack(context);
             
             LOG.print("push the second factor to stack");
-            rightFactor.loadToStack(block);
+            rightFactor.loadToStack(context);
         }
     }
     

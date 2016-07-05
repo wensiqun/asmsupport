@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -45,20 +46,20 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
     }
 
     @Override
-    protected void doExecute() {
+    protected void doExecute(MethodContext context) {
         Instructions instructions = getMethod().getInstructions();
         Label posLbl = new Label();
         if (condition instanceof Jumpable) {
-            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());
+            ((Jumpable) condition).jumpNegative(context, null, posLbl, getEnd());
         } else {
-            condition.loadToStack(this);
+            condition.loadToStack(context);
             instructions.unbox(condition.getResultType().getType());
             instructions.ifZCmp(Instructions.EQ, getEnd());
         }
 
         instructions.mark(posLbl);
         for (InstructionNode exe : getChildren()) {
-            exe.execute();
+            exe.execute(context);
         }
 
         if (nextBranch != null) {

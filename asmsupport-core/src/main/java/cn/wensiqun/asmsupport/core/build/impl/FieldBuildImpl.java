@@ -16,6 +16,7 @@ package cn.wensiqun.asmsupport.core.build.impl;
 
 import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.FieldBuilder;
+import cn.wensiqun.asmsupport.core.context.FieldContext;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
@@ -34,7 +35,7 @@ public class FieldBuildImpl implements FieldBuilder {
     private IClass type;
 
     private Field fe;
-    private BytecodeResolver context;
+    private BytecodeResolver resolver;
     private Object value;
     
     /**
@@ -68,7 +69,7 @@ public class FieldBuildImpl implements FieldBuilder {
 
     @Override
     public void create(BytecodeResolver cv) {
-    	this.context = cv;
+    	this.resolver = cv;
     	MutableClass owner = cv.getCurrentClass();
         owner.addField(fe = new Field(owner, owner, type, modifiers, name));
     }
@@ -89,7 +90,7 @@ public class FieldBuildImpl implements FieldBuilder {
     }
 
     @Override
-    public void execute() {
+    public void execute(FieldContext context) {
         if(value != null && !Modifiers.isStatic(modifiers)) {
             throw new ASMSupportException("The initial value '" + value + "' of field '" + name + 
                     "' is invaild, cause by the field is not static, and the initial value only support static field.");
@@ -97,7 +98,7 @@ public class FieldBuildImpl implements FieldBuilder {
         if(value != null && value instanceof Boolean) {
             value = (Boolean) value ? 1 : 0;
         }
-        context.getClassVisitor().visitField(
+        resolver.getClassVisitor().visitField(
                 fe.getModifiers(), name, 
                 fe.getType().getDescription(), null, value).visitEnd();
     }

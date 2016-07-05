@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -73,14 +74,14 @@ public class CommonMethodInvoker extends MethodInvoker {
     }
 
 	@Override
-	protected void doExecute() {
+	protected void doExecute(MethodContext context) {
         
         /* if method is non satic*/
         if(!Modifier.isStatic(getModifiers())){
             Instructions instructions = getInstructions();
             LOG.print("put reference to stack");
-            callObjReference.loadToStack(getParent());
-            argumentsToStack();
+            callObjReference.loadToStack(context);
+            argumentsToStack(context);
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);
                 instructions.invokeInterface(callObjReference.getResultType().getType(), this.name, getReturnType(), methodMeta.getParameterAsmTypes(), true);

@@ -15,6 +15,7 @@
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
@@ -68,15 +69,15 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
 	}
 
 	@Override
-    public void doExecute() {
+    public void doExecute(MethodContext context) {
         Instructions instructions = getMethod().getInstructions();
         for(Executable exe : getChildren()){
-            exe.execute();
+            exe.execute(context);
         }
         if(condition instanceof Jumpable){
-        	((Jumpable) condition).jumpPositive(null, startLbl, getEnd());
+        	((Jumpable) condition).jumpPositive(context, null, startLbl, getEnd());
         }else{
-            condition.loadToStack(this);
+            condition.loadToStack(context);
             instructions.unbox(condition.getResultType().getType());
             instructions.ifZCmp(Instructions.NE, startLbl);
         }

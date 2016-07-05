@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.build.impl;
 
+import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
@@ -94,7 +95,7 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	}
 
 	@Override
-	public void execute() {
+	public void execute(MethodContext context) {
         if(buildMode != MODE_DELEGATE) {
             method.startup();
         }
