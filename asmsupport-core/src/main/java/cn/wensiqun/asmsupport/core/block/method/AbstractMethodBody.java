@@ -114,7 +114,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
             LOG.print(str);
         }
 
-        for (Executable exe : getQueue()) {
+        for (Executable exe : getChildren()) {
             exe.execute();
         }
 

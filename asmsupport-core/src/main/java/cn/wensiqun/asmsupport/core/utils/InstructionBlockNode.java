@@ -12,32 +12,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cn.wensiqun.asmsupport.core.block;
+package cn.wensiqun.asmsupport.core.utils;
 
-import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.utils.InstructionList;
-import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 
-public abstract class AbstractKernelBlock extends InstructionNode implements Cloneable, Executable {
+public abstract class InstructionBlockNode extends InstructionNode {
 
-    private InstructionList queue;
-    
-	public AbstractKernelBlock() {
-		this.queue = new InstructionList();
-	}
+    /**
+     * The children of the node
+     */
+    private InstructionList children = new InstructionList();
 
-	public InstructionList getQueue() {
-		return queue;
-	}
+    /**
+     * Get the children.
+     * @return
+     */
+    public InstructionList getChildren() {
+        return children;
+    }
 
     /**
      * Remove an executor from execute queue.
-     * 
+     *
      * @param exe
      */
-    public void removeExe(InstructionNode exe) {
-        getQueue().remove(exe);
+    public void removeChild(InstructionNode exe) {
+        getChildren().remove(exe);
     }
-    
-    
+
 }

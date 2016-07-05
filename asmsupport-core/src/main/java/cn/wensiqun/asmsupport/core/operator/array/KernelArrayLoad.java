@@ -82,7 +82,7 @@ public class KernelArrayLoad extends AbstractArrayOperator implements KernelPara
     @Override
     public void asArgument() {
         useByOther = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
 	@Override

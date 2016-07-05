@@ -49,7 +49,7 @@ public class DUP extends ASMDirect implements KernelParam {
 
 	@Override
 	public void asArgument() {
-        block.removeExe(this);
+		getParent().removeChild(this);
 	}
 
 	@Override

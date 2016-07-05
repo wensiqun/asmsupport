@@ -64,8 +64,8 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 		
 		if(ArrayUtils.isNotEmpty(parDims)){
 			for(KernelParam par : parDims){
-				if(!IClassUtils.checkAssignable(par.getResultType(), block.getType(int.class))) {
-					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + block.getType(int.class) + "");
+				if(!IClassUtils.checkAssignable(par.getResultType(), getParent().getType(int.class))) {
+					throw new IllegalArgumentException("Type mismatch: cannot convert from " + par.getResultType() + " to " + getParent().getType(int.class));
 				}
 			}
 		}
@@ -77,6 +77,7 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");
         }
+        KernelProgramBlock block = getParent();
         arrayRef.loadToStack(block);
         
         for(int i=0; i<parDims.length; i++){

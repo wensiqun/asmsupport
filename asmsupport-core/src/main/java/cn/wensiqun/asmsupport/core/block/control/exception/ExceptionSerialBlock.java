@@ -14,7 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -23,6 +22,7 @@ import cn.wensiqun.asmsupport.core.operator.asmdirect.Marker;
 import cn.wensiqun.asmsupport.core.operator.asmdirect.Store;
 import cn.wensiqun.asmsupport.core.operator.common.KernelReturn;
 import cn.wensiqun.asmsupport.core.operator.numerical.OperatorFactory;
+import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.core.utils.common.ExceptionTableEntry;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -52,7 +52,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         super(parent);
         this.tryBlock = tryBlock;
         initEpisode(tryBlock);
-        getQueue().add(tryBlock);
+        getChildren().add(tryBlock);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class ExceptionSerialBlock extends SerialBlock {
     void appendEpisode(KernelCatch catchBlock) {
         if (catches == null) {
             catches = new ArrayList<>();
-            getQueue().addAfter(tryBlock, catchBlock);
+            getChildren().addAfter(tryBlock, catchBlock);
         } else {
             KernelCatch previous = catches.get(catches.size() - 1);
             IClass exceptionType = catchBlock.getExceptionType();
@@ -190,7 +190,7 @@ public class ExceptionSerialBlock extends SerialBlock {
                         + ". It is already handled by the catch block for " + exceptionType);
             }
 
-            getQueue().addAfter(previous, catchBlock);
+            getChildren().addAfter(previous, catchBlock);
         }
 
         initEpisode(catchBlock);
@@ -211,19 +211,19 @@ public class ExceptionSerialBlock extends SerialBlock {
         implicitCatch = new ImplicitCatch();
         implicitCatch.setParent(targetParent);
 
-        getQueue().setTail(implicitCatch);
-        getQueue().setTail(finallyBlock);
+        getChildren().setTail(implicitCatch);
+        getChildren().setTail(finallyBlock);
     }
 
     /**
      *
      * @param block
      */
-    private void insertFinallyBeforeReturn(AbstractKernelBlock block) {
+    private void insertFinallyBeforeReturn(InstructionBlockNode block) {
         List<KernelReturn> returns = fetchAllBreakStack(block, null);
 
         for (KernelReturn ret : returns) {
-            KernelProgramBlock breakBlock = ret.getBlock();
+            KernelProgramBlock breakBlock = ret.getParent();
 
             Label startLbl = new Label("implicit finally before break stack start");
             Label endLbl = new Label("implicit finally before break stack end");
@@ -231,7 +231,7 @@ public class ExceptionSerialBlock extends SerialBlock {
             addAnyExceptionCatchRange(endLbl);
 
             // first remove node start with b from list
-            breakBlock.getQueue().removeFrom(ret);
+            breakBlock.getChildren().removeFrom(ret);
 
             breakBlock.setFinish(false);
 
@@ -245,13 +245,13 @@ public class ExceptionSerialBlock extends SerialBlock {
             {
                 // *hard to understand*
                 // append the block to end of the list
-                breakBlock.getQueue().add(ret);
+                breakBlock.getChildren().add(ret);
 
                 // if already returned in inserted finally code
                 // remove only the break stack operator
                 if (breakBlock.isFinish()) {
                     // remove only break node
-                    breakBlock.getQueue().remove(ret);
+                    breakBlock.getChildren().remove(ret);
                 } else {
                     breakBlock.setFinish(true);
                 }
@@ -262,15 +262,15 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
     }
 
-    private List<KernelReturn> fetchAllBreakStack(AbstractKernelBlock block, List<KernelReturn> container) {
+    private List<KernelReturn> fetchAllBreakStack(InstructionBlockNode block, List<KernelReturn> container) {
         if (container == null) {
             container = new ArrayList<>();
         }
-        for (InstructionNode executor : block.getQueue()) {
+        for (InstructionNode executor : block.getChildren()) {
             if (executor instanceof KernelReturn) {
                 container.add((KernelReturn) executor);
-            } else if (executor instanceof AbstractKernelBlock && !(executor instanceof ImplicitCatch)) {
-                fetchAllBreakStack((AbstractKernelBlock) executor, container);
+            } else if (executor instanceof InstructionBlockNode && !(executor instanceof ImplicitCatch)) {
+                fetchAllBreakStack((InstructionBlockNode) executor, container);
             }
         }
         return container;
@@ -317,7 +317,7 @@ public class ExceptionSerialBlock extends SerialBlock {
         @Override
         public void doExecute() {
             getMethod().getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
-            for (InstructionNode node : getQueue()) {
+            for (InstructionNode node : getChildren()) {
                 node.execute();
             }
         }

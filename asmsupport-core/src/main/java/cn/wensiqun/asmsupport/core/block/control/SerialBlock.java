@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control;
 
-import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
 /**
@@ -37,13 +37,13 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
  * @author wensiqun(at)163.com
  *
  */
-public abstract class SerialBlock extends AbstractKernelBlock {
+public abstract class SerialBlock extends InstructionBlockNode {
 	
     protected KernelProgramBlock targetParent;
 
     protected SerialBlock(KernelProgramBlock targetParent) {
         this.targetParent = targetParent;
-        targetParent.getQueue().add(this);
+        targetParent.getChildren().add(this);
     }
 
     @SuppressWarnings("unchecked")

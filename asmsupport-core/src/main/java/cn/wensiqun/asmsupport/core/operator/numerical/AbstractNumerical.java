@@ -61,7 +61,7 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
         Instructions instructions = getInstructions();
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
-        factor.loadToStack(block);
+        factor.loadToStack((KernelProgramBlock)getParent());
 
         IClass factorPrimitiveAClass = factorCls;
         // unbox if needs

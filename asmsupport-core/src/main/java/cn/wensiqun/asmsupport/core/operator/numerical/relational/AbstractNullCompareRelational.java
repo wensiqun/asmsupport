@@ -31,14 +31,13 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
 		super(block, leftFactor, rightFactor, operator);
 	}
-	
-	
 
 	@Override
 	protected void doExecute() {
         //if those two factories are both null value
 		//direct push true or false
 		MethodVisitor mv = getInstructions().getMv();
+		KernelProgramBlock block = getParent();
 		if(isNullValue(leftFactor) && isNullValue(rightFactor)){
 			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
 				//push true to stack
@@ -85,6 +84,7 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	
 	@Override
 	protected void factorsToStack() {
+		KernelProgramBlock block = getParent();
 		if(isNullValue(leftFactor) && !isNullValue(rightFactor)){
 			rightFactor.loadToStack(block);
 		}else if(!isNullValue(leftFactor) && isNullValue(rightFactor)){

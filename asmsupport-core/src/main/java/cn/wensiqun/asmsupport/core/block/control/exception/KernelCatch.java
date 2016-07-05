@@ -56,7 +56,7 @@ public abstract class KernelCatch extends EpisodeBlock<ExceptionSerialBlock> imp
         // the exception variable already exists at the top of the statck.
         getMethod().getInstructions().getMv().getStack().push(getExceptionType().getType());
 
-        for (InstructionNode node : getQueue()) {
+        for (InstructionNode node : getChildren()) {
             node.execute();
         }
     }

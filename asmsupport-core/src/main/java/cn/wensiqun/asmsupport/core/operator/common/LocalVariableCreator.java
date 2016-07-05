@@ -30,7 +30,7 @@ public class LocalVariableCreator extends AbstractOperator {
 	protected LocalVariableCreator(KernelProgramBlock block, String name, Type declareClass,
             Type actuallyClass){
 	    super(block, Operator.COMMON);	
-		block.removeExe(this);
+		block.removeChild(this);
 		if(StringUtils.isBlank(name)){
 	        this.slv = new ScopeLogicVariable(block.getScope(), declareClass, actuallyClass, true);
 		}else{

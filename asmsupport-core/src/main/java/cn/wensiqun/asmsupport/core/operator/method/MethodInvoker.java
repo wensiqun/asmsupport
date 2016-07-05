@@ -77,7 +77,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             if(arg instanceof IVariable){
                 ((IVariable) arg).availableFor(this);
             }
-            arg.loadToStack(block);
+            arg.loadToStack(getParent());
             cast(arg.getResultType(), methodMeta.getParameterTypes()[i]);
         }
     }
@@ -103,7 +103,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
             argumentClassList.add(arguments[i].getResultType());
         }
         argumentClassList.toArray(argumentClasses);
-        
+        KernelProgramBlock block = getParent();
     	AMethod currentMethod = block.getMethod();
         if(currentMethod.getMode() == MethodBuilder.MODE_MODIFY && name.endsWith(ASConstants.METHOD_PROXY_SUFFIX)){
         	methodMeta = (AMethodMeta) currentMethod.getMeta().clone();
@@ -155,7 +155,7 @@ public abstract class MethodInvoker extends AbstractParamOperator {
     
     @Override
     public void asArgument() {
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
     @Override

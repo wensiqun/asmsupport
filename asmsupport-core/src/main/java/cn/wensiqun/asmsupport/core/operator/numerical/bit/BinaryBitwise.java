@@ -89,7 +89,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     protected final void factorToStack() {
         Instructions instructions = getInstructions();
         LOG.print("push the first arithmetic factor to stack");
-        leftFactor.loadToStack(block);
+        leftFactor.loadToStack(getParent());
         if(LOG.isPrintEnabled()){
             if(!leftFactor.getResultType().equals(targetClass)){
                 LOG.print("cast arithmetic factor from " + leftFactor.getResultType() + " to " + targetClass);
@@ -101,7 +101,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(LOG.isPrintEnabled()) {
             LOG.print("push the second arithmetic factor to stack");	
         }
-        rightFactor.loadToStack(block);
+        rightFactor.loadToStack(getParent());
         
         if(LOG.isPrintEnabled()){
             if(!rightFactor.getResultType().equals(targetClass)){

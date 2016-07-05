@@ -71,7 +71,7 @@ public abstract class UnaryLogical extends AbstractLogical {
 	@Override
     protected void factorToStack() {
         LOG.print("factors to stack");
-        factor.loadToStack(block);
+        factor.loadToStack(getParent());
         getInstructions().unbox(factor.getResultType().getType());
     }
 

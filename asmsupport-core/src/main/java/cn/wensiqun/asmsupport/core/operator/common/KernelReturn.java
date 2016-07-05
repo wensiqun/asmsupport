@@ -72,12 +72,12 @@ public class KernelReturn extends BreakStack {
             }
             getInstructions().returnInsn();
         }else{
-            returner.loadToStack(block);
+            returner.loadToStack(getParent());
             IClass actullyReturnType = returner.getResultType();
             if(actullyReturnType == null){
                 throw new NullPointerException("Return type must be non-null!");
             }
-            IClass methodReturnType = block.getMethod().getMeta().getReturnClass();
+            IClass methodReturnType = getParent().getMethod().getMeta().getReturnClass();
             autoCast(actullyReturnType, methodReturnType, false);
             getInstructions().returnInsn(methodReturnType.getType());
         }

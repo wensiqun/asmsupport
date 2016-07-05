@@ -30,7 +30,6 @@ public class InstructionList implements Iterable<InstructionNode>, Cloneable {
     
     private int size = 0;
 
-
     /**
      * Get size
      * @return

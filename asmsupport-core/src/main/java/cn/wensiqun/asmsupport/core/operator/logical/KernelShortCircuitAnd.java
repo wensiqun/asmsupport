@@ -56,7 +56,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
         mv.visitInsn(Opcodes.ICONST_0);
         mv.visitLabel(andEndLbl);
         
-        OperandStack stack = block.getMethod().getStack();
+        OperandStack stack = getParent().getMethod().getStack();
         stack.pop();
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);
@@ -72,7 +72,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
         } else if(leftFactor instanceof Jumpable) {
             ((Jumpable) leftFactor).jumpNegative(this, posLbl, negLbl);
         } else {
-            leftFactor.loadToStack(block);
+            leftFactor.loadToStack(getParent());
             instructions.unbox(leftFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
@@ -80,7 +80,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
         if(rightFactor instanceof Jumpable) {
             ((Jumpable) rightFactor).jumpPositive(this, posLbl, negLbl);
         } else {
-            rightFactor.loadToStack(block);
+            rightFactor.loadToStack(getParent());
             instructions.unbox(rightFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFNE, posLbl);
         }
@@ -98,7 +98,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
         } else if(leftFactor instanceof Jumpable) {
             ((Jumpable) leftFactor).jumpNegative(this, posLbl, negLbl);
         } else {
-            leftFactor.loadToStack(block);
+            leftFactor.loadToStack(getParent());
             instructions.unbox(leftFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }
@@ -106,7 +106,7 @@ public class KernelShortCircuitAnd extends ConditionOperator implements Jumpable
         if(rightFactor instanceof Jumpable) {
             ((Jumpable) rightFactor).jumpNegative(this, posLbl, negLbl);
         } else {
-            rightFactor.loadToStack(block);
+            rightFactor.loadToStack(getParent());
             instructions.unbox(rightFactor.getResultType().getType());
             mv.visitJumpInsn(Opcodes.IFEQ, negLbl);
         }

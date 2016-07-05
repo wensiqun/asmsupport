@@ -39,7 +39,7 @@ public class SuperConstructorInvoker extends MethodInvoker {
     public void doExecute() {
         LOG.print("call method '"+ name +"' by 'this' key word");
         LOG.print("put 'this' to stack");
-        getInstructions().loadThis(block.getMethod().getMeta().getOwner().getType());
+        getInstructions().loadThis(getParent().getMethod().getMeta().getOwner().getType());
         argumentsToStack();
         
         IClass[] argTypes = new IClass[arguments.length];

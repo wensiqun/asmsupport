@@ -26,7 +26,7 @@ public abstract class KernelElse extends ConditionBranchBlock implements IElse {
 
     @Override
     protected void doExecute() {
-        for (Executable exe : getQueue()) {
+        for (Executable exe : getChildren()) {
             exe.execute();
         }
     }

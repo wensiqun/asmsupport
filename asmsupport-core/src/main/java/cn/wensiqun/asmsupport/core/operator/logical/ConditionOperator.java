@@ -40,6 +40,6 @@ public abstract class ConditionOperator extends BinaryLogical {
     @Override
     protected void doExecute() {
         executing();
-        block.getMethod().getStack().printState();
+        getParent().getMethod().getStack().printState();
     }
 }

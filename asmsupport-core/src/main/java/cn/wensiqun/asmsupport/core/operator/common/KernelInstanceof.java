@@ -63,7 +63,7 @@ public class KernelInstanceof extends AbstractParamOperator {
 
     @Override
     protected void doExecute() {
-        obj.loadToStack(block);
+        obj.loadToStack(getParent());
         getInstructions().instanceOf(type.getType());
     }
 
@@ -80,7 +80,7 @@ public class KernelInstanceof extends AbstractParamOperator {
     @Override
     public void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
 }

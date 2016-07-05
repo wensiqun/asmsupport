@@ -50,7 +50,7 @@ public class KernelNot extends UnaryLogical {
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitLabel(falseLbl);
         
-        OperandStack stack = block.getMethod().getStack();
+        OperandStack stack = getParent().getMethod().getStack();
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);
         stack.printState();

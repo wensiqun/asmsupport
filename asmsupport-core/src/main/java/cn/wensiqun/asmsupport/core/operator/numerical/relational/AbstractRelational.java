@@ -112,7 +112,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     public void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
     protected abstract void factorsToStack();
@@ -141,6 +141,7 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
 	}
 	
 	protected void defaultStackOperator(){
+        KernelProgramBlock block = getParent();
 		block.getMethod().getStack().pop();
         block.getMethod().getStack().pop();
         block.getMethod().getStack().push(Type.INT_TYPE);

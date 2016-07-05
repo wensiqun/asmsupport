@@ -58,7 +58,7 @@ public abstract class AbstractBitwise extends AbstractNumerical {
     @Override
     public final void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
     @Override

@@ -61,6 +61,7 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     	IClass ftrCls1 = leftFactor.getResultType();
     	IClass ftrCls2 = rightFactor.getResultType();
         Instructions instructions = getInstructions();
+        KernelProgramBlock block = getParent();
         if(ftrCls1.isPrimitive() || ftrCls2.isPrimitive()){
             
             LOG.print("push the first factor to stack");

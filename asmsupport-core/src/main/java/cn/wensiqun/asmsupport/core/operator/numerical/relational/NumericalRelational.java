@@ -62,7 +62,7 @@ public abstract class NumericalRelational extends AbstractRelational {
 
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
-        factor.loadToStack(block);
+        factor.loadToStack(getParent());
 
         IClass factorPrimitiveAClass = factorCls;
         // unbox if needs

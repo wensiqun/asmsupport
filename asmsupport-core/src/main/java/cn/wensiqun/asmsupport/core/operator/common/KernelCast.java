@@ -55,6 +55,7 @@ public class KernelCast extends AbstractParamOperator {
 
     @Override
     public void doExecute() {
+        KernelProgramBlock block = getParent();
         orginal.loadToStack(block);
         IClass from = orginal.getResultType();
         if(to.equals(from)){
@@ -91,7 +92,7 @@ public class KernelCast extends AbstractParamOperator {
 
     @Override
     public void asArgument() {
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
 

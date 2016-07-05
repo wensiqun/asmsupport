@@ -31,7 +31,7 @@ public abstract class BreakStack extends AbstractOperator {
 
     @Override
 	protected void startingPrepare() {
-		block.setFinish(true);
+		getParent().setFinish(true);
 	}
 
 	public boolean isAutoCreate() {

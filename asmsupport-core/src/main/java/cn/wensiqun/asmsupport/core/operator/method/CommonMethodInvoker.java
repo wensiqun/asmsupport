@@ -63,12 +63,12 @@ public class CommonMethodInvoker extends MethodInvoker {
 		//change CommonMethodInvoker to StaticMethodInvoker
         if(Modifier.isStatic(getModifiers())){
         	//constructor a StaticMethodInvoker
-            MethodInvoker mi = new StaticMethodInvoker(block, getActuallyOwner(), name, arguments);
+            MethodInvoker mi = new StaticMethodInvoker(getParent(), getActuallyOwner(), name, arguments);
             //Remove the StaticMethodInvoker from execute queue cause 
             //by add to queue when construct StaticMethodInvoker default.
-            block.removeExe(mi);
+            getParent().removeChild(mi);
             //replace CommonMethodInvoker to StaticMethodInvoker
-            block.getQueue().replace(this, mi);
+            getParent().getChildren().replace(this, mi);
         }
     }
 
@@ -79,7 +79,7 @@ public class CommonMethodInvoker extends MethodInvoker {
         if(!Modifier.isStatic(getModifiers())){
             Instructions instructions = getInstructions();
             LOG.print("put reference to stack");
-            callObjReference.loadToStack(block);
+            callObjReference.loadToStack(getParent());
             argumentsToStack();
             if(callObjReference.getResultType().isInterface()){
             	LOG.print("invoke interface method : " + name);

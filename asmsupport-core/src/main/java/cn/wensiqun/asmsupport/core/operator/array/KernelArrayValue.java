@@ -141,6 +141,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     	if(allocateDims != null){
             for(KernelParam dim : allocateDims){
                 int order = IClassUtils.getPrimitiveAClass(dim.getResultType()).getCastOrder();
+                KernelProgramBlock block = getParent();
                 if(order > block.getType(int.class).getCastOrder() ||
                    order <= block.getType(boolean.class).getCastOrder()){
                     throw new RuntimeException("the allcate dim number must be byte, char, short or int type!");
@@ -186,7 +187,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 }
             }
         }else{
-            ((KernelParam) arrayOrElement).loadToStack(block);
+            ((KernelParam) arrayOrElement).loadToStack(getParent());
             //auto cast each value for array
             autoCast(((KernelParam)arrayOrElement).getResultType(), clazz, false);
         }
@@ -208,7 +209,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 instructions.checkCast(arrayCls.getType());
                 return;
             }
-            
+            KernelProgramBlock block = getParent();
             if(allocateDims.length == 1){
                 allocateDims[0].loadToStack(block);
                 instructions.unbox(allocateDims[0].getResultType().getType());
@@ -238,7 +239,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     @Override
     public void asArgument() {
         useByOther = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
 	@Override

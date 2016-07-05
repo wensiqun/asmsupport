@@ -32,21 +32,18 @@ import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
  */
 public abstract class AbstractOperator extends InstructionNode {
 
-    protected KernelProgramBlock block;
-
     private int compileOrder;
     
     private Operator operatorSymbol;
     
     protected AbstractOperator(KernelProgramBlock block, Operator operatorSymbol) {
-        this.block = block;
+        setParent(block);
         this.operatorSymbol = operatorSymbol;
-        // addQueue();
-        block.getQueue().add(this);
+        block.getChildren().add(this);
     }
 
-    public KernelProgramBlock getBlock() {
-        return block;
+    public KernelProgramBlock getParent() {
+        return (KernelProgramBlock) super.getParent();
     }
 
     @Override
@@ -117,7 +114,7 @@ public abstract class AbstractOperator extends InstructionNode {
 
     @Override
     public void execute() {
-        compileOrder = block.getMethod().getNextInstructionNumber();
+        compileOrder = getParent().getMethod().getNextInstructionNumber();
         try {
             doExecute();
         } catch (Exception e) {
@@ -203,11 +200,11 @@ public abstract class AbstractOperator extends InstructionNode {
     }
 
     protected IClass getType(Class<?> clazz) {
-        return block.getMethod()
+        return getParent().getMethod()
                 .getClassLoader().getType(clazz);
     }
 
     protected Instructions getInstructions() {
-        return block.getMethod().getInstructions();
+        return getParent().getMethod().getInstructions();
     }
 }

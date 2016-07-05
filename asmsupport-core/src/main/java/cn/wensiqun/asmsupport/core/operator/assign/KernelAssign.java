@@ -80,16 +80,7 @@ public abstract class KernelAssign extends AbstractParamOperator {
 
 	@Override
 	public void asArgument() {
-        block.removeExe(this);
+        getParent().removeChild(this);
 	}
-
-	protected static class AssignerException extends RuntimeException{
-
-        private static final long serialVersionUID = 5667984928208743770L;
-        
-        protected AssignerException(String msg){
-            super(msg);
-        } 
-    }
 
 }

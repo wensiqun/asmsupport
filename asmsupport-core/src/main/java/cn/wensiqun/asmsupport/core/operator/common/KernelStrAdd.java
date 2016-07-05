@@ -73,9 +73,9 @@ public class KernelStrAdd extends AbstractParamOperator {
     @Override
     protected void doExecute() {
         if(paras.length == 1){
-            paras[0].loadToStack(block);
+            paras[0].loadToStack(getParent());
         }else{
-            invoker.loadToStack(block);
+            invoker.loadToStack(getParent());
         }
     }
 
@@ -92,7 +92,7 @@ public class KernelStrAdd extends AbstractParamOperator {
     @Override
     public void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
         if(paras.length == 1){
             paras[0].asArgument();
         }else{

@@ -76,13 +76,13 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 
 	@Override
 	public void asArgument() {
-		block.removeExe(this);
+		getParent().removeChild(this);
 		byOtherUsed = true;
 	}
 
 	@Override
 	protected void factorToStack() {
-		factor.loadToStack(block);
+		factor.loadToStack((KernelProgramBlock) getParent());
 		getInstructions().unbox(factor.getResultType().getType());
 	}
 

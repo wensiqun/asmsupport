@@ -67,13 +67,13 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
 
     @Override
     public IClass getResultType() {
-        return block.getType(int.class);
+        return getParent().getType(int.class);
     }
 
     @Override
     public void asArgument() {
         useByOther = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
     
     @Override

@@ -77,6 +77,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
 		if(!IClassUtils.checkAssignable(value.getResultType(), storeClass)) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + value.getResultType() + " to " + storeClass + "");
 		}
+        KernelProgramBlock block = getParent();
 		if(!IClassUtils.checkAssignable(lastDim.getResultType(), block.getType(int.class))) {
 			throw new IllegalArgumentException("Type mismatch: cannot convert from " + lastDim.getResultType() + " to " + block.getType(int.class) + "");
 		}
@@ -89,6 +90,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
 	    }
         getValue();
         LOG.print("push the last dim index to stack");
+        KernelProgramBlock block = getParent();
         lastDim.loadToStack(block);
         autoCast(lastDim.getResultType(), block.getType(int.class), false);
         

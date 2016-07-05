@@ -46,7 +46,7 @@ public abstract class AbstractLogical extends AbstractParamOperator {
     @Override
     public void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
     
     protected abstract void factorToStack();

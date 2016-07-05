@@ -46,8 +46,8 @@ public abstract class KernelConstructorBody extends NoReturnMethodBody implement
         if(!calledSuper) {
             calledSuper = true;
             MethodInvoker superCall = supercall(UnreachableCodeCheckSkipableSuperConstructorInvoker.class);
-            getExecutor().getQueue().remove(superCall);
-            getExecutor().getQueue().setHead(superCall);
+            getExecutor().getChildren().remove(superCall);
+            getExecutor().getChildren().setHead(superCall);
         }
     }
 

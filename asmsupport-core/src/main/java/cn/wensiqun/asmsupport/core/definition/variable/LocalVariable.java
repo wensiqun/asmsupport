@@ -44,14 +44,14 @@ public class LocalVariable extends ExplicitVariable implements ILocVar{
     
     @Override
     public boolean availableFor(AbstractOperator operator) {
-        Scope operScope = operator.getBlock().getScope();
+        Scope operScope = operator.getParent().getScope();
         if (this.scopeLogicVar.isSubOf(operScope)) {
             if(scopeLogicVar.getCompileOrder() > operator.getCompileOrder()){
                 throw new VariableOperatorException();
             }
         } else {
             if (!this.scopeLogicVar
-                    .availableFor(operator.getBlock().getScope())) {
+                    .availableFor(operator.getParent().getScope())) {
                 throw new VariableOperatorException();
             }
         }

@@ -58,6 +58,7 @@ import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreDecrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.crement.KernelPreIncrment;
 import cn.wensiqun.asmsupport.core.operator.numerical.posinegative.KernelNeg;
 import cn.wensiqun.asmsupport.core.operator.numerical.relational.*;
+import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.core.utils.common.BlockStack;
 import cn.wensiqun.asmsupport.core.utils.common.BlockTracker;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
@@ -81,17 +82,12 @@ import cn.wensiqun.asmsupport.utils.lang.StringUtils;
  * 
  * @author wensiqun(at)163.com
  */
-public abstract class KernelProgramBlock extends AbstractKernelBlock implements 
+public abstract class KernelProgramBlock extends InstructionBlockNode implements
 ActionSet<KernelParam, IVariable,
 KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
 	/** The actually executor.*/
     private KernelProgramBlock executor = this;
-
-    /**
-     * Use it's in prepare phase.
-     */
-    private KernelProgramBlock parent;
 
     private Scope scope;
 
@@ -151,7 +147,9 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final void execute() {
-        getMethod().getInstructions().mark(scope.getStart());
+        getMethod()
+                .getInstructions()
+                    .mark(scope.getStart());
         doExecute();
         getMethod().getInstructions().mark(scope.getEnd());
     }
@@ -626,7 +624,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final KernelIF if_(KernelIF ifBlock) {
         ifBlock.setParent(getExecutor());
-        getQueue().add(ifBlock);
+        getChildren().add(ifBlock);
         ifBlock.prepare();
         return ifBlock;
     }
@@ -634,7 +632,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final KernelWhile while_(KernelWhile whileLoop) {
         whileLoop.setParent(getExecutor());
-        getQueue().add(whileLoop);
+        getChildren().add(whileLoop);
         whileLoop.prepare();
         return whileLoop;
     }
@@ -642,7 +640,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final KernelDoWhile dowhile(KernelDoWhile dowhile) {
         dowhile.setParent(getExecutor());
-        getQueue().add(dowhile);
+        getChildren().add(dowhile);
         dowhile.prepare();
         return dowhile;
     }
@@ -650,14 +648,14 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final KernelForEach for_(final KernelForEach forEach) {
         forEach.setParent(getExecutor());
-        getQueue().add(forEach);
+        getChildren().add(forEach);
         forEach.prepare();
         return forEach;
     }
 
     @Override
     public final void break_() {
-        KernelProgramBlock pb = getExecutor();
+        InstructionBlockNode pb = getExecutor();
         while (pb != null) {
             if (pb instanceof Loop) {
                 OperatorFactory.newOperator(GOTO.class, new Class<?>[] { KernelProgramBlock.class, Label.class },
@@ -672,7 +670,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     @Override
     public final void continue_() {
-        KernelProgramBlock pb = getExecutor();
+        InstructionBlockNode pb = getExecutor();
         while (pb != null) {
             if (pb instanceof Loop) {
                 OperatorFactory.newOperator(GOTO.class, new Class<?>[] { KernelProgramBlock.class, Label.class },
@@ -699,7 +697,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public final KernelSync sync(KernelSync s) {
         s.setParent(getExecutor());
-        getQueue().add(s);
+        getChildren().add(s);
         s.prepare();
         return s;
     }
@@ -753,7 +751,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * @return
      */
     private AbstractMethodBody getMethodBody() {
-        KernelProgramBlock block = this;
+        InstructionBlockNode block = this;
         while(block.getParent() != null) {
             block = block.getParent();
         }
@@ -927,7 +925,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     /**
      * Get block start label
-     * 
+     *
      * @return
      */
     public Label getStart() {
@@ -936,7 +934,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
 
     /**
      * Get block end label
-     * 
+     *
      * @return
      */
     public Label getEnd() {
@@ -953,17 +951,13 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     /**
-     * Get the parent of current block
-     * 
-     * @return
+     * Set parent, and set the scope
+     * @param parent
      */
-    public KernelProgramBlock getParent() {
-        return parent;
-    }
-
-    public void setParent(KernelProgramBlock block) {
-        parent = block;
-        setScope(new Scope(getMethod().getLocals(), block.getScope()));
+    @Override
+    public void setParent(InstructionBlockNode parent) {
+        super.setParent(parent);
+        setScope(new Scope(getMethod().getLocals(), ((KernelProgramBlock)parent).getScope()));
     }
 
     /**
@@ -997,6 +991,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     public BlockTracker getBlockTracker() {
-        return parent.getBlockTracker();
+        return ((KernelProgramBlock)getParent()).getBlockTracker();
     }
 }

@@ -29,6 +29,8 @@ public abstract class InstructionNode implements Cloneable, Executable {
      */
     private InstructionNode previous;
 
+    private InstructionBlockNode parent;
+
     public boolean hasNext() {
         return next != null;
     }
@@ -98,5 +100,13 @@ public abstract class InstructionNode implements Cloneable, Executable {
         newer.next = next;
 
         previous = next = null;
+    }
+
+    public InstructionBlockNode getParent() {
+        return parent;
+    }
+
+    public void setParent(InstructionBlockNode parent) {
+        this.parent = parent;
     }
 }

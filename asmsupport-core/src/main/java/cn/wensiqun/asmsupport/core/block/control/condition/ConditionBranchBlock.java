@@ -38,7 +38,7 @@ public abstract class ConditionBranchBlock extends KernelProgramBlock {
 
         block.setParent(getParent());
 
-        getParent().getQueue().add(block);
+        getParent().getChildren().add(block);
 
         block.prepare();
     }

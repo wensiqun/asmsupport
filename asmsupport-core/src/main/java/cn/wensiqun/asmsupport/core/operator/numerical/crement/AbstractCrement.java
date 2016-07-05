@@ -56,7 +56,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 	@Override
 	public void asArgument() {
-		block.removeExe(this);
+		getParent().removeChild(this);
 	}
 
 	@Override
@@ -87,7 +87,8 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	protected void doExecute() {
 		Instructions instructions = getInstructions();
 		Type type = targetClass.getType();
-		boolean asArgument = !block.getQueue().contains(this);
+		KernelProgramBlock block = getParent();
+		boolean asArgument = !block.getChildren().contains(this);
 		boolean isPos = Operator.POS_DEC.equals(getOperatorSymbol())
 				|| Operator.POS_INC.equals(getOperatorSymbol());
 		boolean isInc = Operator.PRE_INC.equals(getOperatorSymbol())
@@ -141,6 +142,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 
 	private Value getIncreaseValue() {
 		IClass type = factor.getResultType();
+		KernelProgramBlock block = getParent();
 		if (type.equals(getType(double.class))
 				|| type.equals(getType(Double.class))) {
 			return block.val(1d);

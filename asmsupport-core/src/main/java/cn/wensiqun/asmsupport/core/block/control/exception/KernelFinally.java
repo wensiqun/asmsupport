@@ -27,7 +27,7 @@ public abstract class KernelFinally extends EpisodeBlock<ExceptionSerialBlock> i
 
     @Override
     protected void doExecute() {
-        for (InstructionNode node : getQueue()) {
+        for (InstructionNode node : getChildren()) {
             node.execute();
         }
     }

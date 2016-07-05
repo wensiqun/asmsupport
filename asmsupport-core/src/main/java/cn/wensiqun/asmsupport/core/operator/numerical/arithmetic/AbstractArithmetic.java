@@ -91,7 +91,7 @@ public abstract class AbstractArithmetic extends AbstractNumerical {
     
     @Override
     public void asArgument() {
-        block.removeExe(this);
+        getParent().removeChild(this);
         byOtherUsed = true;
     }
     

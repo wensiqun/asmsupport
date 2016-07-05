@@ -45,7 +45,7 @@ public class LocalVariableAssigner extends KernelAssign {
             LOG.print("start execute assign value to variable '" + var.getMeta().getName() + "' from " + value.getResultType());
             LOG.print("load value to stack");
         }
-        value.loadToStack(block);
+        value.loadToStack(getParent());
         autoCast();
         if(LOG.isPrintEnabled()) { 
             LOG.print("store to local variable");
@@ -55,7 +55,7 @@ public class LocalVariableAssigner extends KernelAssign {
 
     @Override
     public void execute() {
-        var.setVariableCompileOrder(block.getMethod().getNextInstructionNumber());
+        var.setVariableCompileOrder(getParent().getMethod().getNextInstructionNumber());
         super.execute();
     }
 

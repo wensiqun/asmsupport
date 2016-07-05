@@ -16,9 +16,9 @@ package cn.wensiqun.asmsupport.core.definition.method;
 
 import cn.wensiqun.asmsupport.core.Executable;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
-import cn.wensiqun.asmsupport.core.block.AbstractKernelBlock;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
+import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
 import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
 import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
@@ -95,7 +95,7 @@ public class AMethod {
     /**
      * Get all exception that's need to throws.
      */
-    private void recheckThrows(AbstractKernelBlock block) {
+    private void recheckThrows(InstructionBlockNode block) {
         if (block instanceof KernelProgramBlock) {
             ThrowExceptionContainer blockExceptions = ((KernelProgramBlock) block).getThrowExceptions();
             if (blockExceptions != null) {
@@ -105,9 +105,9 @@ public class AMethod {
             }
         }
 
-        for (Executable exe : block.getQueue()) {
-            if (exe instanceof AbstractKernelBlock) {
-                recheckThrows((AbstractKernelBlock) exe);
+        for (Executable exe : block.getChildren()) {
+            if (exe instanceof InstructionBlockNode) {
+                recheckThrows((InstructionBlockNode) exe);
             }
         }
     }
@@ -118,9 +118,9 @@ public class AMethod {
     private void createMethodVisitor() {
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            for (Executable exe : getBody().getQueue()) {
-                if (exe instanceof AbstractKernelBlock) {
-                    recheckThrows((AbstractKernelBlock) exe);
+            for (Executable exe : getBody().getChildren()) {
+                if (exe instanceof InstructionBlockNode) {
+                    recheckThrows((InstructionBlockNode) exe);
                 }
             }
         }

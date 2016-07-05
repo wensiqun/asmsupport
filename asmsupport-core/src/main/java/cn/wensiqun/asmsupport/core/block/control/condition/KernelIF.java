@@ -49,8 +49,7 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
         Instructions instructions = getMethod().getInstructions();
         Label posLbl = new Label();
         if (condition instanceof Jumpable) {
-            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());// .executeJump(Opcodes.JUMP_NEGATIVE,
-                                                                        // endLbl);
+            ((Jumpable) condition).jumpNegative(null, posLbl, getEnd());
         } else {
             condition.loadToStack(this);
             instructions.unbox(condition.getResultType().getType());
@@ -58,7 +57,7 @@ public abstract class KernelIF extends ConditionBranchBlock implements IIF<Kerne
         }
 
         instructions.mark(posLbl);
-        for (InstructionNode exe : getQueue()) {
+        for (InstructionNode exe : getChildren()) {
             exe.execute();
         }
 

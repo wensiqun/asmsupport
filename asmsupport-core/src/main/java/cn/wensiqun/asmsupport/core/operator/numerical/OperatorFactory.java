@@ -65,7 +65,7 @@ public abstract class OperatorFactory {
         }
 
         KernelProgramBlock block = (KernelProgramBlock) arguments[0];
-        InstructionNode last = block.getQueue().getTail();
+        InstructionNode last = block.getChildren().getTail();
         if (checkSerial && last != null && last instanceof ExceptionSerialBlock) {
             last.prepare();
         }

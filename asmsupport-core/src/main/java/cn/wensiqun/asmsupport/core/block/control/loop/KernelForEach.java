@@ -70,7 +70,7 @@ public abstract class KernelForEach extends KernelProgramBlock implements Loop, 
 	@Override
     public void doExecute() {
         Instructions instructions = getMethod().getInstructions();
-        for(Executable exe : getQueue()){
+        for(Executable exe : getChildren()){
             exe.execute();
         }
         if(condition instanceof Jumpable){

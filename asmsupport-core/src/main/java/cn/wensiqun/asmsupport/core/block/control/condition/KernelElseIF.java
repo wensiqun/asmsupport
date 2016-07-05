@@ -59,7 +59,7 @@ public abstract class KernelElseIF extends ConditionBranchBlock implements IElse
         }
 
         instructions.mark(posLbl);
-        for (Executable exe : getQueue()) {
+        for (Executable exe : getChildren()) {
             exe.execute();
         }
 

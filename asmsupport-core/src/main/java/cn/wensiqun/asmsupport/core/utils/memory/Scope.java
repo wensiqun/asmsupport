@@ -42,7 +42,7 @@ public class Scope extends ScopeComponent {
         if(parent != null){
             parent.addComponent(this);
         }
-        this.components = new ArrayList<ScopeComponent>();
+        this.components = new ArrayList<>();
     }
 
     public ScopeComponent addComponent(ScopeComponent component) {

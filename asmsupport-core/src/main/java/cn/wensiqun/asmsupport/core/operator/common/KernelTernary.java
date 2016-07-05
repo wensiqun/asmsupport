@@ -114,18 +114,18 @@ public class KernelTernary extends AbstractParamOperator {
         	Jumpable jmp = (Jumpable) exp1;
         	jmp.jumpNegative(this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
-        	exp1.loadToStack(block);
+        	exp1.loadToStack(getParent());
             instructions.unbox(exp1.getResultType().getType());
             instructions.ifZCmp(Instructions.EQ, l1);
         }
 
         instructions.mark(posLbl);
-    	exp2.loadToStack(block);
-        block.getMethod().getStack().pop();
+    	exp2.loadToStack(getParent());
+        getParent().getMethod().getStack().pop();
         instructions.goTo(l2);
     	instructions.mark(l1);
     	
-        exp3.loadToStack(block);
+        exp3.loadToStack(getParent());
         instructions.mark(l2);
     }
     
@@ -151,7 +151,7 @@ public class KernelTernary extends AbstractParamOperator {
     @Override
     public void asArgument() {
         byOtherUsed = true;
-        block.removeExe(this);
+        getParent().removeChild(this);
     }
 
 
