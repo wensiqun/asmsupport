@@ -151,9 +151,8 @@ public class SynchronizedGeneratorTest extends AbstractExample {
 
 			@Override
 			public void body(LocalVariable... argus) {
-          	   supercall();
+          	    supercall();
 				assign(this_().field("sgst"), argus[0]);
-				this.return_();
 			}
         	
         });

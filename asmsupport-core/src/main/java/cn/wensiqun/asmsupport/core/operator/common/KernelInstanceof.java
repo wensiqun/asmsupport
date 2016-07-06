@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -54,7 +54,7 @@ public class KernelInstanceof extends AbstractParamOperator {
     }
 
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         if(byOtherUsed){
             super.execute(context);
         }else{
@@ -63,13 +63,13 @@ public class KernelInstanceof extends AbstractParamOperator {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
-        obj.loadToStack(context);
+    protected void doExecute(MethodExecuteContext context) {
+        obj.push(context);
         context.getInstructions().instanceOf(type.getType());
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

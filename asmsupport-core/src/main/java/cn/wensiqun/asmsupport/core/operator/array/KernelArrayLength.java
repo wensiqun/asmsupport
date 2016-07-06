@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -47,7 +47,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     
 
     @Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
 		if(!useByOther){
             throw new RuntimeException(this.toString() + " not use by other operator");
         }
@@ -62,7 +62,7 @@ public class KernelArrayLength extends AbstractArrayOperator implements KernelPa
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.variable;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -52,7 +52,7 @@ public class StaticGlobalVariable extends GlobalVariable {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         if (!IClassUtils.visible(context.getMethod().getDeclaringClass(), meta.getDirectOwnerType(), meta.getDeclaringClass(),
                 meta.getModifiers())) {
             throw new IllegalArgumentException("Cannot access field " + meta.getDeclaringClass() + "#"

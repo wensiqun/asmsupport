@@ -49,7 +49,7 @@ public class SemiClass extends MutableClass {
 
     @Override
     public Field getField(final String name) throws NoSuchFieldException {
-        final LinkedList<Field> found = new LinkedList<Field>();
+        final LinkedList<Field> found = new LinkedList<>();
         for (Field gv : getFields()) {
             if (gv.getName().equals(name)) {
                 found.add(gv);

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -62,7 +62,7 @@ public abstract class BinaryLogical extends AbstractLogical {
 	}
 
 	@Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         if(byOtherUsed){
             super.execute(context);
         }else{
@@ -72,14 +72,14 @@ public abstract class BinaryLogical extends AbstractLogical {
     }
 
     @Override
-    protected void factorToStack(MethodContext context) {
+    protected void factorToStack(MethodExecuteContext context) {
         if(LOG.isPrintEnabled()) {
             LOG.print("Factors to stack");
         }
-        leftFactor.loadToStack(context);
+        leftFactor.push(context);
         context.getInstructions().unbox(leftFactor.getResultType().getType());
         
-        rightFactor.loadToStack(context);
+        rightFactor.push(context);
         context.getInstructions().unbox(rightFactor.getResultType().getType());
     }
 

@@ -14,9 +14,10 @@
  */
 package cn.wensiqun.asmsupport.core.block.method;
 
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.LifeCycle;
+import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.SuperVariable;
@@ -107,7 +108,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
     }
 
     @Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
         AMethod method = getMethod();
         if (LOG.isPrintEnabled()) {
             StringBuilder str = new StringBuilder("Create method: ------------");
@@ -115,7 +116,7 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
             LOG.print(str);
         }
 
-        for (Executable exe : getChildren()) {
+        for (LifeCycle exe : getChildren()) {
             exe.execute(context);
         }
 
@@ -132,17 +133,17 @@ public abstract class AbstractMethodBody extends KernelProgramBlock {
     /**
      * Finish method body generated
      */
-    public void endMethodBody(MethodContext context) {
+    public void endMethodBody(MethodExecuteContext context) {
         declarationVariable(context, getScope());
-        int s = getMethod().getStack().getMaxSize();
-        int l = getScope().getLocals().getSize();
-        context.getInstructions().maxs(s, l);
+        Instructions instructions = context.getInstructions();
+        instructions.maxs(instructions.getOperandStack().getMaxSize(),
+                instructions.getLocals().getSize());
     }
 
     /**
      * local variable declaration.
      */
-    private void declarationVariable(MethodContext context, Scope parent) {
+    private void declarationVariable(MethodExecuteContext context, Scope parent) {
         List<ScopeComponent> components = parent.getComponents();
         ScopeComponent com;
         Scope lastBrotherScope;

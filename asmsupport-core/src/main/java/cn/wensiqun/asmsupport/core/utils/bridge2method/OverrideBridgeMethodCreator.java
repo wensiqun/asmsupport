@@ -14,9 +14,6 @@
  */
 package cn.wensiqun.asmsupport.core.utils.bridge2method;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -26,6 +23,9 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,7 +41,7 @@ public class OverrideBridgeMethodCreator {
 	}
 
 	public List<DefaultMethodBuilder> getList(){
-		List<DefaultMethodBuilder> creatorList = new ArrayList<DefaultMethodBuilder>();
+		List<DefaultMethodBuilder> creatorList = new ArrayList<>();
 		List<AMethodMeta> parentMethods = foundParentMethod();
 		for(AMethodMeta method : parentMethods){
 			if(needBridge(validateMethod, method)){
@@ -55,7 +55,7 @@ public class OverrideBridgeMethodCreator {
 	 * Get all super method
 	 */
     private List<AMethodMeta> foundParentMethod(){
-    	List<AMethodMeta> found = new ArrayList<AMethodMeta>();
+    	List<AMethodMeta> found = new ArrayList<>();
     	AMethodMeta overriden = MethodUtils.getOverriddenMethod(validateMethod);
     	if(overriden != null){
     		found.add(overriden);

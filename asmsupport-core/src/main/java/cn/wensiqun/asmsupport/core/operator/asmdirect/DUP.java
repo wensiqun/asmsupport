@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
@@ -39,7 +39,7 @@ public class DUP extends ASMDirect implements KernelParam {
 	}
 
 	@Override
-	public void loadToStack(MethodContext context) {
+	public void push(MethodExecuteContext context) {
 		this.execute(context);
 	}
 
@@ -54,7 +54,7 @@ public class DUP extends ASMDirect implements KernelParam {
 	}
 
 	@Override
-	protected void doExecute(MethodContext context) {
+	protected void doExecute(MethodExecuteContext context) {
 		if(LOG.isPrintEnabled()){
 			LOG.print("duplicate the top of stack and push it to stack");
 		}

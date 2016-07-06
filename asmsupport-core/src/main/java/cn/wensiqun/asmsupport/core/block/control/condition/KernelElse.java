@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
+import cn.wensiqun.asmsupport.core.LifeCycle;
 import cn.wensiqun.asmsupport.standard.block.branch.IElse;
 
 public abstract class KernelElse extends ConditionBranchBlock implements IElse {
@@ -26,8 +26,8 @@ public abstract class KernelElse extends ConditionBranchBlock implements IElse {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
-        for (Executable exe : getChildren()) {
+    protected void doExecute(MethodExecuteContext context) {
+        for (LifeCycle exe : getChildren()) {
             exe.execute(context);
         }
     }

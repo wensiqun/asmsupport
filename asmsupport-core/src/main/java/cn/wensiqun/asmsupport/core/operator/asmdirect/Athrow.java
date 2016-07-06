@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -37,7 +37,7 @@ public class Athrow extends ASMDirect {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
     	context.getInstructions().throwException();
     }
     

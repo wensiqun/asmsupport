@@ -24,7 +24,7 @@ public class DummyTest {
         
         String interface_field_string = "ExceptedInterface\n";
         
-        List<String> interface_field_list = new ArrayList<String>();
+        List<String> interface_field_list = new ArrayList<>();
         
         String method1() throws IllegalArgumentException;
         
@@ -59,7 +59,7 @@ public class DummyTest {
         
         private String field;
         
-        private ExceptedEnum(String field) {
+        ExceptedEnum(String field) {
             this.field = field;
         }
         

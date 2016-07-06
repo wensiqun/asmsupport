@@ -34,27 +34,6 @@ public class StringUtils {
      */
     public static final int INDEX_NOT_FOUND = -1;
     
-    /*
-     * Get all indexes
-     * 
-     * @param str
-     * @param searchStr
-     * @return
-     */
-    /*public static Integer[] findAllIndexes(String str, String searchStr){
-        
-    	List<Integer> list = new ArrayList<Integer>();
-        //int indexes[] = new int[0];
-        
-        int index = str.indexOf(searchStr);
-        while (index >=0){
-        	list.add(index);
-            index = str.indexOf(searchStr, index + searchStr.length())    ;
-        }
-
-        return list.toArray(new Integer[list.size()]);
-    }*/
-    
 	
 	/**
 	 * 
@@ -69,27 +48,6 @@ public class StringUtils {
         }
 		return new StringBuilder(str.substring(start, end).toUpperCase()).append(str.substring(end)).toString();
 	}
-	
-	
-	/*
-	 * 
-	 * @param str
-	 * @param len
-	 * @param chr
-	 * @return
-	 */
-	/*public static String appendIfBlank(String str, int len, char chr){
-		if(str.length() < len){
-			StringBuilder newStr = new StringBuilder(str);
-			int left = len - str.length();
-			while(left-- > 0){
-				newStr.append(chr);
-			}
-			return newStr.toString();
-		}else{
-			return str;
-		}
-	}*/
 	
 
     /**

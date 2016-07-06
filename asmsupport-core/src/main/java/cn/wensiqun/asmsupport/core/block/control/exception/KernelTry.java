@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.control.EpisodeBlock;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.standard.block.exception.ITry;
@@ -29,7 +29,7 @@ public abstract class KernelTry extends EpisodeBlock<ExceptionSerialBlock> imple
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         for (InstructionNode node : getChildren()) {
             node.execute(context);
         }

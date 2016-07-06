@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -85,17 +85,17 @@ public class KernelArrayStore extends AbstractArrayOperator {
 	}
 
 	@Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
 	    if(LOG.isPrintEnabled()) {
 	        LOG.print("start get value for store array");
 	    }
         getValue(context);
         LOG.print("push the last dim index to stack");
         KernelProgramBlock block = getParent();
-        lastDim.loadToStack(context);
+        lastDim.push(context);
         autoCast(context, lastDim.getResultType(), block.getType(int.class), false);
         
-        value.loadToStack(context);
+        value.push(context);
         autoCast(context, value.getResultType(), storeClass, false);
         if(LOG.isPrintEnabled()) { 
             LOG.print("store value to corresponse to index of the array");   
@@ -114,7 +114,7 @@ public class KernelArrayStore extends AbstractArrayOperator {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         throw new UnsupportedOperationException("Un imple");
     }
 

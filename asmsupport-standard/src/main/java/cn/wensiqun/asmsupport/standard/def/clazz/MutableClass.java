@@ -32,24 +32,27 @@ public abstract class MutableClass extends BaseClass {
      * 1. overried method that return type is child of super method return type.
      * 2. generice type method(implement future)
      */
-    private volatile List<AMethodMeta> bridgeMethods = new ArrayList<AMethodMeta>();
+    private volatile List<AMethodMeta> bridgeMethods = new ArrayList<>();
     
     /**
      * All method that declared in this class
      */
-    protected volatile ConcurrentMap<String, AMethodMeta> declaredMethods = new ConcurrentHashMap<String, AMethodMeta>();
+    protected volatile ConcurrentMap<String, AMethodMeta> declaredMethods = new ConcurrentHashMap<>();
 
     /**
      * All constructor that declared in this class
      */
-    protected volatile ConcurrentMap<String, AMethodMeta> constructors = new ConcurrentHashMap<String, AMethodMeta>();
+    protected volatile ConcurrentMap<String, AMethodMeta> constructors = new ConcurrentHashMap<>();
     
     /**
      * The static block
      */
     protected volatile AMethodMeta clinitMethod;
-    
-    private Set<Field> fields = new HashSet<Field>();
+
+    /**
+	 * All fields
+	 */
+    private Set<Field> fields = new HashSet<>();
     
     //available only create enum class
     private int enumNum;
@@ -68,7 +71,10 @@ public abstract class MutableClass extends BaseClass {
 		this.enumNum = enumNum;
 	}
 
-	
+	/**
+	 * Save bridge method in order to override method with different return type of method.
+	 * @return
+     */
     public List<AMethodMeta> getBridgeMethod() {
 		return bridgeMethods;
 	}

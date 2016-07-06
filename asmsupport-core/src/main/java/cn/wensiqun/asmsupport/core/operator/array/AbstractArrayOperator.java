@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
@@ -73,17 +73,17 @@ public abstract class AbstractArrayOperator extends AbstractParamOperator {
 		
 	}
 
-	protected void getValue(MethodContext context){
+	protected void getValue(MethodExecuteContext context){
         IClass cls = arrayRef.getResultType();
         if(LOG.isPrintEnabled()){
             LOG.print("load the array reference to stack");
         }
         KernelProgramBlock block = getParent();
-        arrayRef.loadToStack(context);
+        arrayRef.push(context);
 
         for(int i=0; i<parDims.length; i++){
             cls = cls.getNextDimType();
-            parDims[i].loadToStack(context);
+            parDims[i].push(context);
             autoCast(context, parDims[i].getResultType(), block.getType(int.class), false);
             context.getInstructions().arrayLoad(cls.getType());
         }

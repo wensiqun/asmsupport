@@ -18,7 +18,8 @@
 package cn.wensiqun.asmsupport.core.build;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.InitializedLifeCycle;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
@@ -31,30 +32,9 @@ import cn.wensiqun.asmsupport.standard.utils.ASMSupportClassLoader;
  *
  */
 public interface BytecodeResolver {
-    
-    /**
-     * First phase, asmsupport will create all of meta information such 
-     * as "Field information", "Method information" etc.
-     */
-    void create();
-    
-    /**
-     * Second phase, asmsupport will verify the code you want's to generated.
-     * such as : check the method call is legally.  must call {@link #create()}
-     * before call this method
-     */
-    void prepare();
-    
-    
-    /**
-     * Third phase, asmsupport will generate byte code. and 
-     * will return the byte array of class. must call {@link #prepare()}
-     * before call this method
-     */
-    byte[] execute();
 
 	/**
-	 * Start create/modify class, this method will integrate those three phase({@link #create()}, {@link #prepare()}, {@link #execute(MethodContext)}). and get the
+	 * Start create/modify class, this method will integrate those three phase({@link #create(ClassExecuteContext)}, {@link #prepare()}, {@link #execute()}). and get the
 	 * byte[] as result.
 	 * 
 	 * @return
@@ -68,14 +48,6 @@ public interface BytecodeResolver {
      */
     Class<?> resolve();
 
-	
-    /**
-     * Get {@ClassVisitor} of asm
-     * 
-     * @return
-     */
-    ClassVisitor getClassVisitor();
-    
     /**
      * Get the operating class.
      * <ol>
@@ -86,13 +58,13 @@ public interface BytecodeResolver {
      * @return
      */
     MutableClass getCurrentClass();
-    
+
     /**
-     * 
+     *
      * @return
      */
     ASMSupportClassLoader getClassLoader();
-    
+
     /**
      * If you want's the generated class save to local,
      * call this method set the output path.

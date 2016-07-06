@@ -57,10 +57,10 @@ public class DummyClass extends DummyAccessControl<DummyClass> {
     private LinkedList<DummyConstructor> constructorDummies = new LinkedList<DummyConstructor>();
     
     /** All fields */
-    private LinkedList<DummyField> fieldDummies = new LinkedList<DummyField>();
+    private LinkedList<DummyField> fieldDummies = new LinkedList<>();
     
     /** All methods */
-    private LinkedList<DummyMethod> methodDummies = new LinkedList<DummyMethod>();
+    private LinkedList<DummyMethod> methodDummies = new LinkedList<>();
     
     /** class static block */
     private StaticBlockBody staticBlock;

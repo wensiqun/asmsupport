@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -63,7 +63,7 @@ public class KernelStrAdd extends AbstractParamOperator {
     }
     
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         if(byOtherUsed){
             super.execute(context);
         }else{
@@ -72,16 +72,16 @@ public class KernelStrAdd extends AbstractParamOperator {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         if(paras.length == 1){
-            paras[0].loadToStack(context);
+            paras[0].push(context);
         }else{
-            invoker.loadToStack(context);
+            invoker.push(context);
         }
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

@@ -18,6 +18,7 @@ import cn.wensiqun.asmsupport.core.build.FieldBuilder;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.build.SemiClass;
 import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.core.exception.ClassException;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.bridge2method.OverrideBridgeMethodCreator;
@@ -43,8 +44,6 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
 
     protected SemiClass sc;
 
-    //protected boolean haveInitMethod;
-
     public ClassBuildResolver(int version, int access, String name, IClass superCls, IClass[] interfaces, ASMSupportClassLoader classLoader) {
     	super(classLoader);
     	CommonUtils.validateJavaClassName(name);
@@ -55,12 +54,11 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
                     + "\" is an interface");
         }
         sc = new SemiClass(classLoader, version, access, name, superCls, interfaces);
-        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     }
     
 
 	@Override
-	public final void create() {
+	public final void initialized(ClassExecuteContext context) {
         IClass[] interfaces = sc.getInterfaces();
         String[] interfaceStrings = new String[interfaces.length];
         for (int i = 0; i < interfaces.length; i++) {
@@ -72,9 +70,12 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
         }
         
         // create class
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         cw.visit(sc.getVersion(), sc.getModifiers(),
                 sc.getName().replace('.', '/'), null,
                 Type.getInternalName(sc.getSuperclass().getName()), interfaceStrings);
+		context.setClassVisitor(cw);
+		context.setOwner(sc);
 
         //beforeCreate        
         this.beforeCreate();
@@ -93,20 +94,20 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
         
         // create field
         for (FieldBuilder ifc : fields) {
-            ifc.create(this);
+            ifc.initialized(context);
         }
 
         // create method
         for (MethodBuilder imc : methods) {
-            imc.create(this);
+            imc.initialized(context);
         }
+
+		rebuildOverrideBridge(context);
 	}
 
 
 	@Override
 	public final void prepare() {
-
-        rebuildOverrideBridge();
         
         checkUnImplementMethod();
 
@@ -121,15 +122,14 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
 
 
 	@Override
-	public final byte[] execute() {
+	public final void execute(ClassExecuteContext context) {
         for (FieldBuilder ifc : fields) {
-            ifc.execute(null);
+            ifc.execute(context);
         }
 
         for (MethodBuilder imc : methods) {
-            imc.execute(null);
+            imc.execute(context);
         }
-        return cw.toByteArray();
 	}
 
     @Override
@@ -144,7 +144,7 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
     protected abstract void createDefaultConstructor();
 
 	/**
-	 * Call this method before call {@link #create()}
+	 * Call this method before call {@link #initialized(ClassExecuteContext)}
 	 */
     protected void beforeCreate(){}
 
@@ -153,8 +153,8 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
     		return;
     	}
     	
-    	List<AMethodMeta> abstractMethods = new ArrayList<AMethodMeta>();
-    	List<AMethodMeta> nonAbstractMethods = new ArrayList<AMethodMeta>();
+    	List<AMethodMeta> abstractMethods = new ArrayList<>();
+    	List<AMethodMeta> nonAbstractMethods = new ArrayList<>();
     	allMethodInClass(sc.getSuperclass(), abstractMethods, nonAbstractMethods);
     	
     	for(IClass itf : sc.getInterfaces()){
@@ -180,7 +180,7 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
     	}
     	
     	//#30205 [BUG]
-    	List<AMethodMeta> scImplMethods = new ArrayList<AMethodMeta>(sc.getDeclaredMethods());
+    	List<AMethodMeta> scImplMethods = new ArrayList<>(sc.getDeclaredMethods());
     	for(int i=0; i<abstractMethods.size(); ){
     		AMethodMeta abstractMethod = abstractMethods.get(i);
     		boolean exist = false;
@@ -265,14 +265,14 @@ public abstract class ClassBuildResolver extends AbstractBytecodeResolver {
      * Check if the created method is override, than check the return type, 
      * throw exception or make it to bridge if return type if different to 
      * parent
-     * 
+     * @param context
      */
-    private void rebuildOverrideBridge(){
+    private void rebuildOverrideBridge(ClassExecuteContext context){
     	for(AMethodMeta validateMethod : sc.getDeclaredMethods()){
     		OverrideBridgeMethodCreator obmc = new OverrideBridgeMethodCreator(validateMethod);
     		List<DefaultMethodBuilder> creatorList = obmc.getList();
     		for(DefaultMethodBuilder mc : creatorList){
-    			mc.create(this);
+    			mc.initialized(context);
     		}
     		this.methods.addAll(creatorList);
     	}

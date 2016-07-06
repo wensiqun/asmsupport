@@ -33,7 +33,7 @@ import cn.wensiqun.asmsupport.utils.lang.ArrayUtils;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public abstract class KernelEnumConstructorBody extends NoReturnMethodBody implements IEnumConstructorBody<LocalVariable> {
+public class KernelEnumConstructorBody extends NoReturnMethodBody implements IEnumConstructorBody<LocalVariable> {
     
     @Override
     public final void generateBody() {
@@ -41,6 +41,10 @@ public abstract class KernelEnumConstructorBody extends NoReturnMethodBody imple
         		new Class<?>[]{KernelProgramBlock.class, IClass.class, KernelParam[].class}, 
         		getExecutor(), getMethodDeclaringClass(), new KernelParam[]{arguments[0], arguments[1]});
         body((LocalVariable[]) ArrayUtils.subarray(arguments, 2, arguments.length));
+    }
+
+    @Override
+    public void body(LocalVariable... argus) {
     }
     
 

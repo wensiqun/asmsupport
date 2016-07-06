@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 
@@ -41,7 +41,7 @@ public interface Jumpable {
      * @param posLbl
      * @param negLbl
      */
-    void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl);
+    void jumpPositive(MethodExecuteContext context, KernelParam from, Label posLbl, Label negLbl);
     
     
     /**
@@ -58,6 +58,6 @@ public interface Jumpable {
      * @param posLbl
      * @param negLbl
      */
-    void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl);
+    void jumpNegative(MethodExecuteContext context, KernelParam from, Label posLbl, Label negLbl);
     
 }

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.exception;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.control.SerialBlock;
 import cn.wensiqun.asmsupport.core.definition.variable.LocalVariable;
@@ -163,7 +163,7 @@ public class ExceptionSerialBlock extends SerialBlock {
     }
 
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         tryBlock.execute(context);
 
         if (CollectionUtils.isNotEmpty(catches)) {
@@ -316,8 +316,8 @@ public class ExceptionSerialBlock extends SerialBlock {
         }
 
         @Override
-        public void doExecute(MethodContext context) {
-            context.getInstructions().getMv().getStack().push(Type.ANY_EXP_TYPE);
+        public void doExecute(MethodExecuteContext context) {
+            context.getInstructions().getOperandStack().push(Type.ANY_EXP_TYPE);
             for (InstructionNode node : getChildren()) {
                 node.execute(context);
             }

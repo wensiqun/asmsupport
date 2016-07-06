@@ -14,16 +14,15 @@
  */
 package cn.wensiqun.asmsupport.core.build.impl;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
-import cn.wensiqun.asmsupport.utils.Modifiers;
 import cn.wensiqun.asmsupport.utils.ASConstants;
+import cn.wensiqun.asmsupport.utils.Modifiers;
 
 /**
  * 
@@ -39,7 +38,6 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	private IClass[] exceptions;
 	private int access;
 	private AbstractMethodBody methodBody;
-	private AMethodMeta meta;
 	private AMethod method;
 	private int buildMode;
 
@@ -88,27 +86,13 @@ public class DefaultMethodBuilder implements MethodBuilder {
 	}
 
 	@Override
-	public void prepare() {
-		if(!Modifiers.isAbstract(access)){
-			methodBody.prepare();
+	public void initialized(ClassExecuteContext context){
+		if(buildMode == MODE_DELEGATE) {
+			return;
 		}
-	}
-
-	@Override
-	public void execute(MethodContext context) {
-        if(buildMode != MODE_DELEGATE) {
-            method.startup();
-        }
-	}
-
-	@Override
-	public void create(BytecodeResolver resolver){
-        if(buildMode == MODE_DELEGATE) {
-            return;
-        }
-		MutableClass owner = resolver.getCurrentClass();
-		meta = new AMethodMeta(resolver.getClassLoader(), name, owner, owner, arguments, argNames, returnType, exceptions, access);
-		method = new AMethod(meta, resolver.getClassVisitor(), resolver.getClassLoader(), methodBody, buildMode);
+		MutableClass owner = (MutableClass) context.getOwner();
+		AMethodMeta meta = new AMethodMeta(context.getClassLoader(), name, owner, owner, arguments, argNames, returnType, exceptions, access);
+		method = new AMethod(meta, context.getClassLoader(), methodBody, buildMode);
 		if(method.getMeta().getName().equals(ASConstants.INIT)){
 			owner.addConstructor(meta);
 		}else if(Modifiers.isBridge(method.getMeta().getModifiers())){
@@ -116,6 +100,20 @@ public class DefaultMethodBuilder implements MethodBuilder {
 		}else{
 			owner.addDeclaredMethod(meta);
 		}
+	}
+
+	@Override
+	public void prepare() {
+		if(!Modifiers.isAbstract(access)){
+			methodBody.prepare();
+		}
+	}
+
+	@Override
+	public void execute(ClassExecuteContext context) {
+        if(buildMode != MODE_DELEGATE) {
+            method.startup(context);
+        }
 	}
 
 	@Override

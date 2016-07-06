@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.bit;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -87,10 +87,10 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     }
 
     @Override
-    protected final void factorToStack(MethodContext context) {
+    protected final void factorToStack(MethodExecuteContext context) {
         Instructions instructions = context.getInstructions();
         LOG.print("push the first arithmetic factor to stack");
-        leftFactor.loadToStack(context);
+        leftFactor.push(context);
         if(LOG.isPrintEnabled()){
             if(!leftFactor.getResultType().equals(targetClass)){
                 LOG.print("cast arithmetic factor from " + leftFactor.getResultType() + " to " + targetClass);
@@ -102,7 +102,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         if(LOG.isPrintEnabled()) {
             LOG.print("push the second arithmetic factor to stack");	
         }
-        rightFactor.loadToStack(context);
+        rightFactor.push(context);
         
         if(LOG.isPrintEnabled()){
             if(!rightFactor.getResultType().equals(targetClass)){
@@ -122,7 +122,7 @@ public abstract class BinaryBitwise extends AbstractBitwise {
     }
     
     @Override
-    public final void doExecute(MethodContext context) {
+    public final void doExecute(MethodExecuteContext context) {
         if(LOG.isPrintEnabled()) {
             LOG.print("prepare operator " + getOperatorSymbol());
         }
@@ -133,6 +133,6 @@ public abstract class BinaryBitwise extends AbstractBitwise {
         innerRunExe(context);
     }
 
-    protected abstract void innerRunExe(MethodContext context);
+    protected abstract void innerRunExe(MethodExecuteContext context);
 
 }

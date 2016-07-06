@@ -14,6 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.build.resolver;
 
+import cn.wensiqun.asmsupport.core.InitializedLifeCycle;
 import cn.wensiqun.asmsupport.core.block.method.clinit.KernelStaticBlockBody;
 import cn.wensiqun.asmsupport.core.block.method.common.KernelMethodBody;
 import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
@@ -21,12 +22,11 @@ import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.FieldBuilder;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
-import cn.wensiqun.asmsupport.core.build.impl.FieldBuildImpl;
+import cn.wensiqun.asmsupport.core.build.impl.DefaultFieldBuild;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.core.utils.CommonUtils;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
-import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
-import cn.wensiqun.asmsupport.org.objectweb.asm.ClassWriter;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class AbstractBytecodeResolver implements BytecodeResolver {
+public abstract class AbstractBytecodeResolver implements BytecodeResolver, InitializedLifeCycle {
 	
     private static final Log LOG = LogFactory.getLog(AbstractBytecodeResolver.class);
 
@@ -47,21 +47,19 @@ public abstract class AbstractBytecodeResolver implements BytecodeResolver {
     protected List<FieldBuilder> fields = new ArrayList<>();
 
     protected String classOutPutPath;
-	
-    protected ClassWriter cw;
 
     protected ASMSupportClassLoader classLoader;
 
     private int clinitNum;
-    
+
     /**
-     * 
+     *
      * @param classLoader
      */
 	public AbstractBytecodeResolver(ASMSupportClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
-    
+
     protected Class<?> loadClass(String name, byte[] b) {
         try {
         	return classLoader.defineClass(name, b, getCurrentClass());
@@ -70,16 +68,11 @@ public abstract class AbstractBytecodeResolver implements BytecodeResolver {
         }
     }
 
-    @Override
-    public final ClassVisitor getClassVisitor() {
-        return cw;
-    }
-
 	@Override
 	public void setClassOutputPath(String classOutPutPath) {
 		this.classOutPutPath = classOutPutPath;
 	}
-	
+
 	@Override
 	public ASMSupportClassLoader getClassLoader() {
 		return classLoader;
@@ -87,9 +80,12 @@ public abstract class AbstractBytecodeResolver implements BytecodeResolver {
 
 	@Override
 	public byte[] toBytes() {
-		create();
+        ClassExecuteContext context = new ClassExecuteContext();
+        context.setClassLoader(classLoader);
+		initialized(context);
 		prepare();
-		return execute();
+		execute(context);
+        return context.getClassVisitor().toByteArray();
 	}
 
 	@Override
@@ -122,7 +118,7 @@ public abstract class AbstractBytecodeResolver implements BytecodeResolver {
      * @return
      */
     protected final FieldBuilder createFieldInternal(String name, int modifiers, IClass type, Object val) {
-        FieldBuilder fc = new FieldBuildImpl(name, modifiers, type, val);
+        FieldBuilder fc = new DefaultFieldBuild(name, modifiers, type, val);
         fields.add(fc);
         return fc;
     }

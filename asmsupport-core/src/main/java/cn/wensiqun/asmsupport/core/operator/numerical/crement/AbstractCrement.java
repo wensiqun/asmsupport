@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.crement;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -51,7 +51,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	}
 
 	@Override
-	public void loadToStack(MethodContext context) {
+	public void push(MethodExecuteContext context) {
 		execute(context);
 	}
 
@@ -61,7 +61,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	}
 
 	@Override
-	protected void factorToStack(MethodContext context) {}
+	protected void factorToStack(MethodExecuteContext context) {}
 
 	@Override
 	protected void initAdditionalProperties() {
@@ -83,7 +83,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 	}
 
 	@Override
-	protected void doExecute(MethodContext context) {
+	protected void doExecute(MethodExecuteContext context) {
 		Instructions instructions = context.getInstructions();
 		Type type = targetClass.getType();
 		KernelProgramBlock block = getParent();
@@ -95,21 +95,21 @@ public abstract class AbstractCrement extends AbstractNumerical {
 		if (factor instanceof LocalVariable
 				&& Type.INT_TYPE.equals(targetClass.getType())) {
 			if (asArgument && isPos) {
-				factor.loadToStack(context);
+				factor.push(context);
 			}
 
 			instructions.iinc(((LocalVariable) factor).getScopeLogicVar()
 					.getInitStartPos(), isInc ? 1 : -1);
 
 			if (asArgument && !isPos) {
-				factor.loadToStack(context);
+				factor.push(context);
 			}
 		} else {
 			IClass primitiveClass = IClassUtils.getPrimitiveAClass(targetClass);
 			Type primitiveType = primitiveClass.getType();
 
 			// factor load to stack
-			factor.loadToStack(context);
+			factor.push(context);
 
 			if (asArgument && isPos)
 				instructions.dup(type);
@@ -118,7 +118,7 @@ public abstract class AbstractCrement extends AbstractNumerical {
 			autoCast(context, targetClass, primitiveClass, true);
 
 			// load 1 to stack
-			getIncreaseValue().loadToStack(context);
+			getIncreaseValue().push(context);
 
 			// generate xadd/xsub for decrement
 			if (isInc) {

@@ -1,14 +1,13 @@
 package cn.wensiqun.asmsupport.core.block.common;
 
+import junit.framework.Assert;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
 
 public class SynchronizedGeneratorSampleTestJunit {
 	
@@ -16,7 +15,7 @@ public class SynchronizedGeneratorSampleTestJunit {
 	public void testSyncThis() throws Exception{
 		SynchronizedGeneratorSampleTest sgst = new SynchronizedGeneratorSampleTest();
 		ExecutorService es = Executors.newFixedThreadPool(10);
-		List<Future> objs = new ArrayList<Future>();
+		List<Future> objs = new ArrayList<>();
 		int i = 0;
 		while(i<10) {
 			objs.add(es.submit(new SyncThisThread(sgst)));
@@ -36,7 +35,7 @@ public class SynchronizedGeneratorSampleTestJunit {
 	public void testSyncLock() throws Exception{
 		SynchronizedGeneratorSampleTest sgst = new SynchronizedGeneratorSampleTest();
 		ExecutorService es = Executors.newFixedThreadPool(10);
-		List<Future> obj = new ArrayList<Future>();
+		List<Future> obj = new ArrayList<>();
 		int i = 0;
 		while(i<10) {
 			obj.add(es.submit(new SyncLockThread(sgst)));

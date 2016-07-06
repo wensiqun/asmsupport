@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator;
 
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.utils.InstructionNode;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -114,7 +114,7 @@ public abstract class AbstractOperator extends InstructionNode {
     }
 
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         compileOrder = getParent().getMethod().getNextInstructionNumber();
         try {
             doExecute(context);
@@ -123,7 +123,7 @@ public abstract class AbstractOperator extends InstructionNode {
         }
     }
 
-    protected abstract void doExecute(MethodContext context);
+    protected abstract void doExecute(MethodExecuteContext context);
 
     /**
      * <p>
@@ -142,7 +142,7 @@ public abstract class AbstractOperator extends InstructionNode {
      * @param target
      * @param enforce
      */
-    protected void autoCast(MethodContext context, IClass original, IClass target, boolean enforce) {
+    protected void autoCast(MethodExecuteContext context, IClass original, IClass target, boolean enforce) {
         Instructions instructions = context.getInstructions();
         if (enforce) {
             if (original.isPrimitive() && target.isPrimitive()) {

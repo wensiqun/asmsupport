@@ -16,12 +16,13 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -34,33 +35,33 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
 	}
 
 	@Override
-	protected void doExecute(MethodContext context) {
+	protected void doExecute(MethodExecuteContext context) {
         //if those two factories are both null value
 		//direct push true or false
 		MethodVisitor mv = context.getInstructions().getMv();
-		KernelProgramBlock block = getParent();
+		OperandStack stack = context.getInstructions().getOperandStack();
 		if(isNullValue(leftFactor) && isNullValue(rightFactor)){
 			if(Operator.EQUAL_TO.equals(getOperatorSymbol())){
 				//push true to stack
 		        mv.visitInsn(Opcodes.ICONST_0 + 1);
-		        block.getMethod().getStack().push(Type.INT_TYPE);
+				stack.push(Type.INT_TYPE);
 		        return;
 			}else if(Operator.NOT_EQUAL_TO.equals(getOperatorSymbol())){
 				//push false to stack
 		        mv.visitInsn(Opcodes.ICONST_0);
-		        block.getMethod().getStack().push(Type.INT_TYPE);
+				stack.push(Type.INT_TYPE);
 		        return;
 			}
 		}else if(isNullValue(leftFactor) || isNullValue(rightFactor)){
 			instructionGenerate(context);
-	        block.getMethod().getStack().pop();
-	        block.getMethod().getStack().push(Type.INT_TYPE);
+			stack.pop();
+			stack.push(Type.INT_TYPE);
 		}else{
 			super.doExecute(context);
 		}
 	}
 	
-	protected void ifCmp(MethodContext context, Type type, int mode, Label label) {
+	protected void ifCmp(MethodExecuteContext context, Type type, int mode, Label label) {
         //check null
         int sort = type.getSort();
         if(sort == Type.OBJECT || sort == Type.ARRAY){
@@ -84,11 +85,11 @@ public abstract class AbstractNullCompareRelational extends NumericalAndReferenc
     }
 	
 	@Override
-	protected void factorsToStack(MethodContext context) {
+	protected void factorsToStack(MethodExecuteContext context) {
 		if(isNullValue(leftFactor) && !isNullValue(rightFactor)){
-			rightFactor.loadToStack(context);
+			rightFactor.push(context);
 		}else if(!isNullValue(leftFactor) && isNullValue(rightFactor)){
-			leftFactor.loadToStack(context);
+			leftFactor.push(context);
 		}else{
 			super.factorsToStack(context);
 		}

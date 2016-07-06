@@ -15,10 +15,10 @@
 package cn.wensiqun.asmsupport.core.utils;
 
 
-import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.LifeCycle;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 
-public abstract class InstructionNode implements Cloneable, Executable<MethodContext> {
+public abstract class InstructionNode implements Cloneable, LifeCycle<MethodExecuteContext> {
 
     /**
      * The next node

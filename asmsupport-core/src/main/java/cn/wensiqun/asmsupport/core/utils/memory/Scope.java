@@ -34,7 +34,15 @@ public class Scope extends ScopeComponent {
     private Label start;
     private Label end;
 
-    public Scope(LocalVariables locals, Scope parent) {
+    public Scope() {
+        this(new LocalVariables(), null);
+    }
+
+    public Scope(Scope parent) {
+        this(parent.getLocals(), parent);
+    }
+
+    private Scope(LocalVariables locals, Scope parent) {
         super(locals);
         this.start = new Label("block start");
         this.end = new Label("block end");

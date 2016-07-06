@@ -1,15 +1,15 @@
 package cn.wensiqun.asmsupport.core.block.condition;
 
+import cn.wensiqun.asmsupport.core.utils.TesterStatics;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.wensiqun.asmsupport.core.utils.TesterStatics;
 
 public class ConditionBlockGeneratorSample {
 
 	public static List<String> allPossiable()
 	{
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		//1 char
 		char[] starts = "ABCD".toCharArray();
 		char[] charAt1s = "1234".toCharArray();

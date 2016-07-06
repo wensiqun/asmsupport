@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.BreakStack;
@@ -66,14 +66,14 @@ public class KernelReturn extends BreakStack {
     }
     
     @Override
-    public void breakStackExecuting(MethodContext context) {
+    public void breakStackExecuting(MethodExecuteContext context) {
         if(returner == null){
             if(LOG.isPrintEnabled()) {
                 LOG.print("direct return from method");
             }
             context.getInstructions().returnInsn();
         }else{
-            returner.loadToStack(context);
+            returner.push(context);
             IClass actullyReturnType = returner.getResultType();
             if(actullyReturnType == null){
                 throw new NullPointerException("Return type must be non-null!");

@@ -30,7 +30,12 @@ public class VirtualMethodVisitor extends MethodVisitor implements Opcodes {
     private OperandStack stack;
     private Type[] nextPushTypes;
 
-    public OperandStack getStack() {
+    /**
+     * Get the operand stack
+     *
+     * @return
+     */
+    OperandStack getOperandStack() {
         return stack;
     }
 
@@ -48,9 +53,9 @@ public class VirtualMethodVisitor extends MethodVisitor implements Opcodes {
         this.nextPushTypes = types;
     }
 
-    VirtualMethodVisitor(MethodVisitor mv, OperandStack stack) {
+    VirtualMethodVisitor(MethodVisitor mv) {
         super(ASConstants.ASM_VERSION, mv);
-        this.stack = stack;
+        this.stack = new OperandStack();
     }
 
     private void stackLocalOperator(int opcode) {

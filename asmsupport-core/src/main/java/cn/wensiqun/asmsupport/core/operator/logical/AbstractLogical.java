@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -35,7 +35,7 @@ public abstract class AbstractLogical extends AbstractParamOperator {
     }
     
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 
@@ -51,13 +51,13 @@ public abstract class AbstractLogical extends AbstractParamOperator {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         factorToStack(context);
         executing(context);
     }
 
-    protected abstract void factorToStack(MethodContext context);
+    protected abstract void factorToStack(MethodExecuteContext context);
     
-    protected abstract void executing(MethodContext context);
+    protected abstract void executing(MethodExecuteContext context);
 
 }

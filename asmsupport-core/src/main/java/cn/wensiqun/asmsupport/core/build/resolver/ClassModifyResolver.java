@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.block.method.init.KernelConstructorBody;
 import cn.wensiqun.asmsupport.core.build.FieldBuilder;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
 import cn.wensiqun.asmsupport.core.build.impl.DefaultMethodBuilder;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.core.loader.CachedThreadLocalClassLoader;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
@@ -53,9 +54,9 @@ public class ClassModifyResolver extends AbstractBytecodeResolver {
     protected List<MethodBuilder> methodModifiers = new ArrayList<>();
     
     private List<KernelModifiedMethodBody> modifyConstructorBodies;
-    
+
 	private ProductClass productClass;
-	
+
 	public ClassModifyResolver(Class<?> clazz) {
 		this(clazz, CachedThreadLocalClassLoader.getInstance());
 	}
@@ -192,13 +193,16 @@ public class ClassModifyResolver extends AbstractBytecodeResolver {
     }
 
 	@Override
-	public void create() {
+	public void initialized(ClassExecuteContext context) {
 		InputStream is = classLoader.getResourceAsStream(productClass.getName());
 		try {
 			//modify class
 			ClassReader cr = new ClassReader(is);
-			cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-			ClassModifierClassAdapter adapter = new ClassModifierClassAdapter(cw, this);
+			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+			context.setClassVisitor(cw);
+            context.setOwner(productClass);
+
+            ClassModifierClassAdapter adapter = new ClassModifierClassAdapter(cw, this);
 			cr.accept(adapter, ClassReader.SKIP_FRAMES);
 			
 			if(LOG.isPrintEnabled()){
@@ -207,17 +211,17 @@ public class ClassModifyResolver extends AbstractBytecodeResolver {
 	        
 	        // create field
 	        for (FieldBuilder ifc : fields) {
-	            ifc.create(this);
+	            ifc.initialized(context);
 	        }
 
 	        // create method
 	        for (MethodBuilder imc : methods) {
-	            imc.create(this);
+	            imc.initialized(context);
 	        }
 	        
 	        // modify method
 	        for (MethodBuilder imc : methodModifiers) {
-	            imc.create(this);
+	            imc.initialized(context);
 	        }
 
 	        Map<String, List<VisitXInsnAdapter>> superConstructorMap = adapter.getSuperConstructorMap();
@@ -251,27 +255,25 @@ public class ClassModifyResolver extends AbstractBytecodeResolver {
 	}
 
 	@Override
-	public byte[] execute() {
-	       
+	public void execute(ClassExecuteContext classExecuteContext) {
+
         for (FieldBuilder ifc : fields) {
-            ifc.execute(null);
+            ifc.execute(classExecuteContext);
         }
 
         for (MethodBuilder imc : methods) {
-            imc.execute(null);
+            imc.execute(classExecuteContext);
         }
-        
+
         for (MethodBuilder imc : methodModifiers) {
-            imc.execute(null);
+            imc.execute(classExecuteContext);
         }
 
         if(LOG.isPrintEnabled()){
             LOG.print("End modify class : " + productClass.getReallyClass());
         }
-		
-		return cw.toByteArray();
 	}
-    
+
 	@Override
 	public ProductClass getCurrentClass() {
 		return productClass;

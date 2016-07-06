@@ -14,17 +14,15 @@
  */
 package cn.wensiqun.asmsupport.core.definition.method;
 
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.LifeCycle;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.utils.InstructionBlockNode;
 import cn.wensiqun.asmsupport.core.utils.common.ThrowExceptionContainer;
-import cn.wensiqun.asmsupport.core.utils.memory.LocalVariables;
-import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.core.utils.memory.Scope;
-import cn.wensiqun.asmsupport.org.objectweb.asm.ClassVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
@@ -44,13 +42,7 @@ public class AMethod {
     /** Method Meta */
     private AMethodMeta meta;
 
-    /** A stack of current method */
-    private OperandStack stack;
-
     private int mode;
-
-    /** The local vairables container of current method*/
-    private LocalVariables locals;
 
     /** The method body of current method */
     private AbstractMethodBody body;
@@ -61,26 +53,20 @@ public class AMethod {
     /** Indicate the method that's need to throw in this method  */
     private ThrowExceptionContainer exceptions;
 
-    /** ASM ClassVisitor. */
-    private ClassVisitor classVisitor;
-
     /** ASMSupport Class Loader. */
     private ASMSupportClassLoader classLoader;
     
-    public AMethod(AMethodMeta meta, ClassVisitor classVisitor, ASMSupportClassLoader classLoader, AbstractMethodBody body, int mode) {
-        this.classVisitor = classVisitor;
+    public AMethod(AMethodMeta meta, ASMSupportClassLoader classLoader, AbstractMethodBody body, int mode) {
         this.classLoader = classLoader;
         this.meta = meta;
         this.mode = mode;
         this.exceptions = new ThrowExceptionContainer();
-        this.stack = new OperandStack();
-        this.locals = new LocalVariables();
         CollectionUtils.addAll(exceptions, meta.getExceptions());
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
             if (body != null) {
                 this.body = body;
-                this.body.setScope(new Scope(this.locals, null));
+                this.body.setScope(new Scope());
                 this.body.setMethod(this);
             } else {
                 throw new ASMSupportException("Error while create method '" + meta.getName()
@@ -102,7 +88,7 @@ public class AMethod {
             }
         }
 
-        for (Executable exe : block.getChildren()) {
+        for (LifeCycle exe : block.getChildren()) {
             if (exe instanceof InstructionBlockNode) {
                 recheckThrows((InstructionBlockNode) exe);
             }
@@ -113,10 +99,10 @@ public class AMethod {
     /**
      * Start create/modify method
      */
-    public void startup() {
+    public void startup(ClassExecuteContext context) {
         //Make Method Visitor
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-            for (Executable exe : getBody().getChildren()) {
+            for (LifeCycle exe : getBody().getChildren()) {
                 if (exe instanceof InstructionBlockNode) {
                     recheckThrows((InstructionBlockNode) exe);
                 }
@@ -127,38 +113,22 @@ public class AMethod {
         for (IClass te : this.exceptions) {
             exceptions[i++] = te.getType().getInternalName();
         }
-        MethodVisitor methodVisitor = classVisitor.visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
+        MethodVisitor methodVisitor = context.getClassVisitor()
+                .visitMethod(meta.getModifiers(), meta.getName(), meta.getDescription(), null,
                 exceptions);
 
         //Make Instructions
-        Instructions instructions = new Instructions(locals, stack, methodVisitor);
+        Instructions instructions = new Instructions(body == null ? null :
+                body.getScope().getLocals(), methodVisitor);
 
         if (!Modifiers.isAbstract(meta.getModifiers())) {
-
-            MethodContext context = new MethodContext();
-
-            context.setMethod(this);
-            context.setInstructions(instructions);
-
-            this.body.execute(context);
-            this.body.endMethodBody(context);
+            MethodExecuteContext methodExecuteContext = new MethodExecuteContext();
+            methodExecuteContext.setMethod(this);
+            methodExecuteContext.setInstructions(instructions);
+            body.execute(methodExecuteContext);
+            body.endMethodBody(methodExecuteContext);
         }
-
         instructions.endMethod();
-    }
-
-    /**
-     * Get the operand stack of current method
-     */
-    public OperandStack getStack() {
-        return stack;
-    }
-
-    /**
-     * Get the local variable container of current method
-     */
-    public LocalVariables getLocals() {
-        return locals;
     }
 
     /**

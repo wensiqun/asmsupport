@@ -19,18 +19,17 @@ package cn.wensiqun.asmsupport.core;
 
 
 import cn.wensiqun.asmsupport.core.context.Context;
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 
 /**
  * 
  * Indicate an executable, all executable object will save in
  * a execute queue. the queue will twice loop for method {@link #prepare()}
- * and {@link #execute(MethodContext)}
+ * and {@link #execute(Context)}
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface Executable<C extends Context> {
+public interface LifeCycle<C extends Context> {
     
     /**
      * Do some prepare before execute.

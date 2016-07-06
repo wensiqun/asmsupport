@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -50,20 +50,20 @@ public abstract class AbstractNumerical extends AbstractParamOperator {
      * Push the operand of numerical operation to stack
      * @param context
      */
-    protected abstract void factorToStack(MethodContext context);
+    protected abstract void factorToStack(MethodExecuteContext context);
 
     /**
      * Defined a common method use in sub class 
      * 
      * @param factor the operand
      */
-    protected void pushFactorToStack(MethodContext context, KernelParam factor) {
+    protected void pushFactorToStack(MethodExecuteContext context, KernelParam factor) {
 
     	IClass factorCls = factor.getResultType();
         Instructions instructions = context.getInstructions();
         // factor to stack
         LOG.print("push the first arithmetic factor to stack");
-        factor.loadToStack(context);
+        factor.push(context);
 
         IClass factorPrimitiveAClass = factorCls;
         // unbox if needs

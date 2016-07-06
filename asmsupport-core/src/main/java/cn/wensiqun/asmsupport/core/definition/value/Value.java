@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition.value;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.core.definition.variable.StaticGlobalVariable;
@@ -506,7 +506,7 @@ public class Value implements IValue {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         Instructions instructions = context.getInstructions();
         if (value == null) {
             instructions.push(this.getType());

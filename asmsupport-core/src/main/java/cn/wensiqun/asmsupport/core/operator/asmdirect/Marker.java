@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.UnreachableCodeCheckSkipable;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
@@ -40,7 +40,7 @@ public class Marker extends ASMDirect implements UnreachableCodeCheckSkipable {
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
     	if(label != null){
             context.getInstructions().mark(label);
     	}

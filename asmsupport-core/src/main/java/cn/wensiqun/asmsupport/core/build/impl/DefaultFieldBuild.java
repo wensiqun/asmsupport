@@ -14,9 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.build.impl;
 
-import cn.wensiqun.asmsupport.core.build.BytecodeResolver;
 import cn.wensiqun.asmsupport.core.build.FieldBuilder;
-import cn.wensiqun.asmsupport.core.context.FieldContext;
+import cn.wensiqun.asmsupport.core.context.ClassExecuteContext;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.clazz.MutableClass;
 import cn.wensiqun.asmsupport.standard.def.var.meta.Field;
@@ -28,25 +27,14 @@ import cn.wensiqun.asmsupport.utils.Modifiers;
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public class FieldBuildImpl implements FieldBuilder {
+public class DefaultFieldBuild implements FieldBuilder {
     
     private String name;
     private int modifiers;
     private IClass type;
 
     private Field fe;
-    private BytecodeResolver resolver;
     private Object value;
-    
-    /**
-     * 
-     * @param name
-     * @param modifiers
-     * @param type
-     */
-    public FieldBuildImpl(String name, int modifiers, IClass type) {
-        this(name, modifiers, type, null);
-    }
     
     /**
      * @param name
@@ -60,7 +48,7 @@ public class FieldBuildImpl implements FieldBuilder {
      *            ignored for non static fields, which must be initialized 
      *            through bytecode instructions in constructors or methods.
      */
-    public FieldBuildImpl(String name, int modifiers, IClass type, Object val) {
+    public DefaultFieldBuild(String name, int modifiers, IClass type, Object val) {
         this.name = name;
         this.modifiers = modifiers;
         this.type = type;
@@ -68,9 +56,8 @@ public class FieldBuildImpl implements FieldBuilder {
     }
 
     @Override
-    public void create(BytecodeResolver cv) {
-    	this.resolver = cv;
-    	MutableClass owner = cv.getCurrentClass();
+    public void initialized(ClassExecuteContext context) {
+    	MutableClass owner = (MutableClass) context.getOwner();
         owner.addField(fe = new Field(owner, owner, type, modifiers, name));
     }
 
@@ -90,15 +77,15 @@ public class FieldBuildImpl implements FieldBuilder {
     }
 
     @Override
-    public void execute(FieldContext context) {
+    public void execute(ClassExecuteContext context) {
         if(value != null && !Modifiers.isStatic(modifiers)) {
             throw new ASMSupportException("The initial value '" + value + "' of field '" + name + 
-                    "' is invaild, cause by the field is not static, and the initial value only support static field.");
+                    "' is invalided, cause by the field is not static, and the initial value only support static field.");
         }
         if(value != null && value instanceof Boolean) {
             value = (Boolean) value ? 1 : 0;
         }
-        resolver.getClassVisitor().visitField(
+        context.getClassVisitor().visitField(
                 fe.getModifiers(), name, 
                 fe.getType().getDescription(), null, value).visitEnd();
     }

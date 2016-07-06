@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.common;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.AbstractParamOperator;
@@ -55,9 +55,9 @@ public class KernelCast extends AbstractParamOperator {
     }
 
     @Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
         KernelProgramBlock block = getParent();
-        orginal.loadToStack(context);
+        orginal.push(context);
         IClass from = orginal.getResultType();
         if(to.equals(from)){
             return;
@@ -82,7 +82,7 @@ public class KernelCast extends AbstractParamOperator {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

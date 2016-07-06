@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.posinegative;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -40,12 +40,12 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 	}
 
 	@Override
-	public void loadToStack(MethodContext context) {
+	public void push(MethodExecuteContext context) {
 		this.execute(context);
 	}
 
 	@Override
-	public void execute(MethodContext context) {
+	public void execute(MethodExecuteContext context) {
 		if (byOtherUsed) {
 			super.execute(context);
 		} else {
@@ -82,8 +82,8 @@ public abstract class AbstractPositiveNegative extends AbstractNumerical {
 	}
 
 	@Override
-	protected void factorToStack(MethodContext context) {
-		factor.loadToStack(context);
+	protected void factorToStack(MethodExecuteContext context) {
+		factor.push(context);
 		context.getInstructions().unbox(factor.getResultType().getType());
 	}
 

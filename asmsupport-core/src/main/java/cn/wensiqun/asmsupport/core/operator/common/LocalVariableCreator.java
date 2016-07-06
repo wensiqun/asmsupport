@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.common;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -44,7 +44,7 @@ public class LocalVariableCreator extends AbstractOperator {
 	}
 	
 	@Override
-	protected void doExecute(MethodContext context) {
+	protected void doExecute(MethodExecuteContext context) {
         //Nothing TO DO
 	}
 

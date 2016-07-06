@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.condition;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
+import cn.wensiqun.asmsupport.core.LifeCycle;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Jumpable;
@@ -47,20 +47,20 @@ public abstract class KernelElseIF extends ConditionBranchBlock implements IElse
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         Label posLbl = new Label();
         Instructions instructions = context.getInstructions();
         instructions.nop();
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpNegative(context, null, posLbl, getEnd());
         } else {
-            condition.loadToStack(context);
+            condition.push(context);
             instructions.unbox(condition.getResultType().getType());
             instructions.ifZCmp(Instructions.EQ, getEnd());
         }
 
         instructions.mark(posLbl);
-        for (Executable exe : getChildren()) {
+        for (LifeCycle exe : getChildren()) {
             exe.execute(context);
         }
 

@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.method;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
@@ -50,7 +50,7 @@ public class ConstructorInvoker extends MethodInvoker {
     }
 
     @Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
         LOG.print("new a instance of class :" + this.methodOwner.getName());
         LOG.print("put class reference to stack");
         context.getInstructions().newInstance(methodOwner.getType());

@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.definition;
 
-import cn.wensiqun.asmsupport.core.PushStackable;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.variable.GlobalVariable;
 import cn.wensiqun.asmsupport.standard.def.IParam;
 
@@ -28,7 +28,7 @@ import cn.wensiqun.asmsupport.standard.def.IParam;
  * @author wensiqun at 163.com(Joe Wen)
  * 
  */
-public interface KernelParam extends IParam, PushStackable {
+public interface KernelParam extends IParam {
     
     /**
      * If current {@link KernelParam} has used by other, than need call this method.
@@ -39,4 +39,11 @@ public interface KernelParam extends IParam, PushStackable {
      * Override change return type.
      */
     GlobalVariable field(String name);
+
+    /**
+     * Push current to a stack of specify block
+     *
+     * @param context
+     */
+    void push(MethodExecuteContext context);
 }

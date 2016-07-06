@@ -19,7 +19,7 @@ package cn.wensiqun.asmsupport.core.operator.logical;
 
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -40,8 +40,10 @@ public class KernelNot extends UnaryLogical {
     }
 
     @Override
-    protected void executing(MethodContext context) {
+    protected void executing(MethodExecuteContext context) {
         MethodVisitor mv = context.getInstructions().getMv();
+        OperandStack stack = context.getInstructions().getOperandStack();
+
         mv.visitJumpInsn(Opcodes.IFEQ, trueLbl);
         
         mv.visitInsn(Opcodes.ICONST_0);
@@ -50,8 +52,7 @@ public class KernelNot extends UnaryLogical {
         mv.visitLabel(trueLbl);
         mv.visitInsn(Opcodes.ICONST_1);
         mv.visitLabel(falseLbl);
-        
-        OperandStack stack = getParent().getMethod().getStack();
+
         stack.pop();
         stack.push(Type.BOOLEAN_TYPE);
         stack.printState();

@@ -6,7 +6,7 @@ import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 /**
  * Created by sqwen on 2016/7/5.
  */
-public class MethodContext implements Context {
+public class MethodExecuteContext implements Context {
 
     private AMethod method;
 
@@ -27,4 +27,5 @@ public class MethodContext implements Context {
     public void setInstructions(Instructions instructions) {
         this.instructions = instructions;
     }
+
 }

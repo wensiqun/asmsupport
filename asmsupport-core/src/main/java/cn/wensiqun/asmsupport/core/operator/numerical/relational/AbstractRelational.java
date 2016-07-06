@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -23,6 +23,7 @@ import cn.wensiqun.asmsupport.core.operator.Jumpable;
 import cn.wensiqun.asmsupport.core.operator.Operator;
 import cn.wensiqun.asmsupport.core.utils.log.Log;
 import cn.wensiqun.asmsupport.core.utils.log.LogFactory;
+import cn.wensiqun.asmsupport.core.utils.memory.OperandStack;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
@@ -88,12 +89,12 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     }
     
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         if(byOtherUsed){
             if(LOG.isPrintEnabled()){
             	LOG.print("Run operator " + leftFactor.getResultType() + getOperatorSymbol().getSymbol() + rightFactor.getResultType());
@@ -116,15 +117,15 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
         getParent().removeChild(this);
     }
 
-    protected abstract void factorsToStack(MethodContext context);
+    protected abstract void factorsToStack(MethodExecuteContext context);
 
 	@Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
 		instructionGenerate(context);
-        defaultStackOperator();
+        defaultStackOperator(context);
     }
 	
-	protected void instructionGenerate(MethodContext context){
+	protected void instructionGenerate(MethodExecuteContext context){
 		factorsToStack(context);
 		
         negativeCmp(context, falseLbl);
@@ -141,27 +142,27 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
         mv.visitLabel(trueLbl);
 	}
 	
-	protected void defaultStackOperator(){
-        KernelProgramBlock block = getParent();
-		block.getMethod().getStack().pop();
-        block.getMethod().getStack().pop();
-        block.getMethod().getStack().push(Type.INT_TYPE);
+	protected void defaultStackOperator(MethodExecuteContext context){
+        OperandStack stack = context.getInstructions().getOperandStack();
+        stack.pop();
+        stack.pop();
+        stack.push(Type.INT_TYPE);
 	}
 	
     @Override
-    public void jumpPositive(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
+    public void jumpPositive(MethodExecuteContext context, KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack(context);
         positiveCmp(context, posLbl);
     }
 
     @Override
-    public void jumpNegative(MethodContext context, KernelParam from, Label posLbl, Label negLbl) {
+    public void jumpNegative(MethodExecuteContext context, KernelParam from, Label posLbl, Label negLbl) {
         factorsToStack(context);
         negativeCmp(context, negLbl);
     }
     
-    protected abstract void negativeCmp(MethodContext context, Label lbl);
+    protected abstract void negativeCmp(MethodExecuteContext context, Label lbl);
 
-    protected abstract void positiveCmp(MethodContext context, Label lbl);
+    protected abstract void positiveCmp(MethodExecuteContext context, Label lbl);
     
 }

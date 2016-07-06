@@ -218,7 +218,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	                    tempPotentially.add(directCallClass, method);
 	                }
 	                
-	                for(AMethodMeta me : getAllMethod((ProductClass) directCallClass, name)){
+	                for(AMethodMeta me : getAllMethod(directCallClass, name)){
 	                    tempPotentially.add(me.getActuallyOwner(), me);
 	                }
 	                
@@ -278,7 +278,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 	@Override
 	public AMethodMeta firstPhase(){
 		//final MultiValueMap<AClass, MethodEntity> map = new LinkedMultiValueMap<AClass, MethodEntity>();
-		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		final List<AMethodMeta> list = new ArrayList<>();
 		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
 			protected void process(IClass key, List<AMethodMeta> value) {
@@ -314,7 +314,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 
 	@Override
 	public AMethodMeta secondPhase(){
-		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		final List<AMethodMeta> list = new ArrayList<>();
 		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
 			protected void process(IClass key, List<AMethodMeta> value) {
@@ -344,7 +344,7 @@ public class MethodChooser implements IMethodChooser, DetermineMethodSignature {
 
 	@Override
 	public AMethodMeta thirdPhase(){
-		final List<AMethodMeta> list = new ArrayList<AMethodMeta>();
+		final List<AMethodMeta> list = new ArrayList<>();
 		new MapLooper<IClass, List<AMethodMeta>>(potentially){
 			@Override
 			protected void process(IClass key, List<AMethodMeta> value) {

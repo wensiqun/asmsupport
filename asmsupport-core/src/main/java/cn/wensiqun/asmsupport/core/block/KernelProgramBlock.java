@@ -17,7 +17,6 @@
  */
 package cn.wensiqun.asmsupport.core.block;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
 import cn.wensiqun.asmsupport.core.block.control.condition.KernelIF;
 import cn.wensiqun.asmsupport.core.block.control.exception.ExceptionSerialBlock;
 import cn.wensiqun.asmsupport.core.block.control.exception.KernelTry;
@@ -28,6 +27,7 @@ import cn.wensiqun.asmsupport.core.block.control.loop.Loop;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
 import cn.wensiqun.asmsupport.core.block.sync.KernelSync;
 import cn.wensiqun.asmsupport.core.build.MethodBuilder;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.method.AMethod;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
@@ -133,7 +133,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     /**
      * The specify the program block code you want to generate here.
      * In this method we just build a execute queue, but generate 
-     * java bytecode instruction in method {@link #execute(MethodContext)}
+     * java bytecode instruction in method {@link #execute(MethodExecuteContext)}
      * 
      */
     public abstract void generate();
@@ -147,7 +147,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     }
 
     @Override
-    public final void execute(MethodContext context) {
+    public final void execute(MethodExecuteContext context) {
         context.getInstructions()
                     .mark(scope.getStart());
         doExecute(context);
@@ -158,7 +158,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
      * Override this method in subclass, defined the generate instruction rule for
      * each block.
      */
-    protected abstract void doExecute(MethodContext context);
+    protected abstract void doExecute(MethodExecuteContext context);
 
     // *******************************************************************************************//
     // Variable Operator //
@@ -276,7 +276,7 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     	if(!type.isArray()) {
     		throw new IllegalArgumentException("Must be an array type, but actually a/an " + type);
     	}
-        return newarray((ArrayClass) getType(type), arrayObject);
+        return newarray(getType(type), arrayObject);
     }
 
     // *******************************************************************************************//
@@ -660,7 +660,6 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
             if (pb instanceof Loop) {
                 OperatorFactory.newOperator(GOTO.class, new Class<?>[] { KernelProgramBlock.class, Label.class },
                         getExecutor(), ((Loop) pb).getBreakLabel());
-                // new GOTO(getExecutor(), ((ILoop)pb).getBreakLabel());
                 return;
             }
             pb = pb.getParent();
@@ -957,7 +956,8 @@ KernelIF, KernelWhile, KernelDoWhile, KernelForEach, KernelTry, KernelSync> {
     @Override
     public void setParent(InstructionBlockNode parent) {
         super.setParent(parent);
-        setScope(new Scope(getMethod().getLocals(), ((KernelProgramBlock)parent).getScope()));
+        Scope scope = ((KernelProgramBlock)parent).getScope();
+        setScope(new Scope(scope));
     }
 
     /**

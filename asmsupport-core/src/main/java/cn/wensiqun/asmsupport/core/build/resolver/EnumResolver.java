@@ -195,12 +195,7 @@ public class EnumResolver extends ClassBuildResolver {
 
     @Override
     protected void createDefaultConstructor() {
-        createConstructor(null, null, new KernelEnumConstructorBody() {
-            @Override
-            public void body(LocalVariable... argus) {
-                return_();
-            }
-        });
+        createConstructor(null, null, new KernelEnumConstructorBody());
         boolean existClinit = false;
         for(MethodBuilder m : methods) {
             if(ASConstants.CLINIT.equals(m.getName())) {
@@ -273,7 +268,6 @@ public class EnumResolver extends ClassBuildResolver {
 
             @Override
             public void body(LocalVariable... argus) {
-                return_();
             }
         });
     }

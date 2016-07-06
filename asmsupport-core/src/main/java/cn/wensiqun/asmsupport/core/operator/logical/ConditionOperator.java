@@ -15,7 +15,7 @@
 package cn.wensiqun.asmsupport.core.operator.logical;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -39,8 +39,8 @@ public abstract class ConditionOperator extends BinaryLogical {
     }
     
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         executing(context);
-        getParent().getMethod().getStack().printState();
+        context.getInstructions().getOperandStack().printState();
     }
 }

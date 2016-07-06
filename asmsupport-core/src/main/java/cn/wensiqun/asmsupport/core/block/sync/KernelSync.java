@@ -18,8 +18,8 @@
 package cn.wensiqun.asmsupport.core.block.sync;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
+import cn.wensiqun.asmsupport.core.LifeCycle;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.block.method.AbstractMethodBody;
@@ -75,11 +75,11 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 	}
 
 	@Override
-	public void doExecute(MethodContext context) {
-        Executable returnInsn = null;
+	public void doExecute(MethodExecuteContext context) {
+        LifeCycle returnInsn = null;
 		Instructions instructions = context.getInstructions();
-		lock.loadToStack(context);
-		for (Executable e : getChildren()) {
+		lock.push(context);
+		for (LifeCycle e : getChildren()) {
 			if(e.equals(flag1)){
 				//e.execute();
 				instructions.monitorEnter();
@@ -93,7 +93,7 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
 			e.execute(context);
 		}
 
-		dupSynArgument.loadToStack(context);
+		dupSynArgument.push(context);
 		instructions.monitorExit();
 		instructions.mark(monitorexit);
 		instructions.goTo(returnLbl);
@@ -101,9 +101,9 @@ public abstract class KernelSync extends KernelProgramBlock implements ISynchron
         //for exception
 		instructions.nop();
 		instructions.mark(excetpionStart);
-		dupSynArgument.loadToStack(context);
+		dupSynArgument.push(context);
 		instructions.monitorExit();
-		instructions.getMv().getStack().push(getType(Throwable.class).getType());
+		instructions.getOperandStack().push(getType(Throwable.class).getType());
 		instructions.mark(excetpionEnd);
 		instructions.throwException();
 		

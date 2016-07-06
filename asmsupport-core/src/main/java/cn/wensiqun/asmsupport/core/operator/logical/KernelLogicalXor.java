@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.logical;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -34,7 +34,7 @@ public class KernelLogicalXor extends BinaryLogical {
     }
 
     @Override
-    protected void executing(MethodContext context) {
+    protected void executing(MethodExecuteContext context) {
         context.getInstructions().bitXor(getType(boolean.class).getType());
     }
 

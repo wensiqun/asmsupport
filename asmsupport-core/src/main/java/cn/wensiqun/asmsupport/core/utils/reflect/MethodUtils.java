@@ -14,13 +14,12 @@
  */
 package cn.wensiqun.asmsupport.core.utils.reflect;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
 import cn.wensiqun.asmsupport.standard.def.method.AMethodMeta;
 import cn.wensiqun.asmsupport.standard.utils.IClassUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -32,7 +31,7 @@ public class MethodUtils {
     /**
      * Return a method, that have overrided by passed method.
      * 
-     * @param overrideMethod the override method
+     * @param entity the override method
      */
     public static AMethodMeta getOverriddenMethod(AMethodMeta entity) {
         IClass superClass = entity.getActuallyOwner().getSuperclass();
@@ -56,13 +55,12 @@ public class MethodUtils {
     /**
      * 
      * 
-     * @param implementMethod
+     * @param entity
      */
-    //??????????????????????????
     public static AMethodMeta[] getImplementedMethod(AMethodMeta entity) {
         String methodName = entity.getName();
         IClass[] argClasses = entity.getParameterTypes() == null ? new IClass[0] : entity.getParameterTypes();
-        List<AMethodMeta> foundList = new ArrayList<AMethodMeta>();
+        List<AMethodMeta> foundList = new ArrayList<>();
         List<IClass> interfaces = IClassUtils.getAllInterfaces(entity.getActuallyOwner());
         for (IClass inter : interfaces) {
         	AMethodMeta method = inter.getDeclaredMethod(methodName, argClasses);
@@ -120,13 +118,13 @@ public class MethodUtils {
         return false;
     }
 
-    /**
+    /*
      * 
      * @param m1
      * @param m2
      * @return
      */
-    public static boolean methodEqualWithoutOwner(Method m1, Method m2) {
+    /*public static boolean methodEqualWithoutOwner(Method m1, Method m2) {
         if (m1.getName().equals(m2.getName())) {
             Class<?>[] params1 = m1.getParameterTypes();
             Class<?>[] params2 = m2.getParameterTypes();
@@ -140,5 +138,5 @@ public class MethodUtils {
             }
         }
         return false;
-    }
+    }*/
 }

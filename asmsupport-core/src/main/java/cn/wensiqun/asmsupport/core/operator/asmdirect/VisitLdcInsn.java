@@ -14,7 +14,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.asmdirect;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -29,7 +29,7 @@ public class VisitLdcInsn extends AbstractOperator {
 	}
 
 	@Override
-	protected void doExecute(MethodContext context) {
+	protected void doExecute(MethodExecuteContext context) {
 		context.getInstructions().getMv().visitLdcInsn(cts);
 	}
 

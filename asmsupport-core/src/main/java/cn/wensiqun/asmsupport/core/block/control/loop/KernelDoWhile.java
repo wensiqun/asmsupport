@@ -14,8 +14,8 @@
  */
 package cn.wensiqun.asmsupport.core.block.control.loop;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
-import cn.wensiqun.asmsupport.core.Executable;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
+import cn.wensiqun.asmsupport.core.LifeCycle;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -49,10 +49,10 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
     }
 
     @Override
-    public void doExecute(MethodContext context) {
+    public void doExecute(MethodExecuteContext context) {
         Instructions instructions = context.getInstructions();
         instructions.mark(contentStart);
-        for (Executable exe : getChildren()) {
+        for (LifeCycle exe : getChildren()) {
             exe.execute(context);
         }
 
@@ -61,7 +61,7 @@ public abstract class KernelDoWhile extends KernelProgramBlock implements Loop, 
         if (condition instanceof Jumpable) {
             ((Jumpable) condition).jumpPositive(context, null, contentStart, getEnd());
         } else {
-            condition.loadToStack(context);
+            condition.push(context);
             instructions.unbox(condition.getResultType().getType());
             instructions.ifZCmp(Instructions.NE, contentStart);
         }

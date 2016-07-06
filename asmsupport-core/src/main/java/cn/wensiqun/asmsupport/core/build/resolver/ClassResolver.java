@@ -121,7 +121,6 @@ public class ClassResolver extends ClassBuildResolver {
             @Override
             public void body(LocalVariable... argus) {
                 supercall();
-                return_();
             }
             
         });

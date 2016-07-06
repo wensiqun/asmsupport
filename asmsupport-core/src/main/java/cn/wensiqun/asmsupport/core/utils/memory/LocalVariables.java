@@ -103,19 +103,19 @@ public class LocalVariables implements Printable, Cloneable{
             }
         }
     }
-    
-    public List<ScopeLogicVariable> getFrameLocals(Scope scope) {
-        List<ScopeLogicVariable> locals = new ArrayList<ScopeLogicVariable>();
+
+    /*public List<ScopeLogicVariable> getFrameLocals(Scope scope) {
+        List<ScopeLogicVariable> locals = new ArrayList<>();
         for(LocalHistory his : histories) {
             ScopeLogicVariable var = his.getActiveVariable();
-            if(var.getParent().generation > scope.generation || 
+            if(var.getParent().generation > scope.generation ||
                var.equals(cursor)) {
-               break; 
+               break;
             }
             locals.add(var);
         }
         return locals;
-    }
+    }*/
     
     public String[][] generateGridArray() {
         int gridRowSize = getSize() + 1;

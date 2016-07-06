@@ -17,7 +17,7 @@
  */
 package cn.wensiqun.asmsupport.core.operator.array;
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -169,7 +169,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
         batchAsArgument(values);
     }
     
-    private void loopArray(MethodContext context, IClass clazz, Object arrayOrElement){
+    private void loopArray(MethodExecuteContext context, IClass clazz, Object arrayOrElement){
         Instructions instructions = context.getInstructions();
         if(arrayOrElement.getClass().isArray()){
             int len = Array.getLength(arrayOrElement);
@@ -188,14 +188,14 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 }
             }
         }else{
-            ((KernelParam) arrayOrElement).loadToStack(context);
+            ((KernelParam) arrayOrElement).push(context);
             //auto cast each value for array
             autoCast(context, ((KernelParam)arrayOrElement).getResultType(), clazz, false);
         }
     }
 
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         if(!useByOther){
             throw new RuntimeException("this array value not use by other operator");
         }
@@ -211,12 +211,12 @@ public class KernelArrayValue extends AbstractParamOperator  {
                 return;
             }
             if(allocateDims.length == 1){
-                allocateDims[0].loadToStack(context);
+                allocateDims[0].push(context);
                 instructions.unbox(allocateDims[0].getResultType().getType());
                 instructions.newArray(arrayCls.getNextDimType().getType());
             }else{
                 for(KernelParam allocate : allocateDims){
-                    allocate.loadToStack(context);
+                    allocate.push(context);
                     instructions.unbox(allocate.getResultType().getType());
                 }
                 instructions.multiANewArrayInsn(arrayCls.getType(), allocateDims.length);
@@ -227,7 +227,7 @@ public class KernelArrayValue extends AbstractParamOperator  {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

@@ -80,9 +80,9 @@ public class Instructions {
 
     private LocalVariables locals;
 
-    public Instructions(LocalVariables locals, OperandStack stack, MethodVisitor mv) {
+    public Instructions(LocalVariables locals, MethodVisitor mv) {
         this.locals = locals;
-        this.mv = new VirtualMethodVisitor(mv, stack);
+        this.mv = new VirtualMethodVisitor(mv);
     }
 
     /**
@@ -91,23 +91,19 @@ public class Instructions {
     Instructions() {
     }
 
-    public VirtualMethodVisitor getMv() {
-        return mv;
-    }
-
     // ------------------------------------------------------------------------
     // Instructions to push constants on the stack
     // ------------------------------------------------------------------------
 
     private void pushInt(final int value) {
         if (value >= -1 && value <= 5) {
-            getMv().visitInsn(Opcodes.ICONST_0 + value);
+            mv.visitInsn(Opcodes.ICONST_0 + value);
         } else if (value >= Byte.MIN_VALUE && value <= Byte.MAX_VALUE) {
-            getMv().visitIntInsn(Opcodes.BIPUSH, value);
+            mv.visitIntInsn(Opcodes.BIPUSH, value);
         } else if (value >= Short.MIN_VALUE && value <= Short.MAX_VALUE) {
-            getMv().visitIntInsn(Opcodes.SIPUSH, value);
+            mv.visitIntInsn(Opcodes.SIPUSH, value);
         } else {
-            getMv().visitLdcInsn(new Integer(value));
+            mv.visitLdcInsn(new Integer(value));
         }
     }
 
@@ -166,9 +162,9 @@ public class Instructions {
      */
     public void push(final long value) {
         if (value == 0L || value == 1L) {
-            getMv().visitInsn(Opcodes.LCONST_0 + (int) value);
+            mv.visitInsn(Opcodes.LCONST_0 + (int) value);
         } else {
-            getMv().visitLdcInsn(new Long(value));
+            mv.visitLdcInsn(new Long(value));
         }
     }
 
@@ -181,9 +177,9 @@ public class Instructions {
     public void push(final float value) {
         int bits = Float.floatToIntBits(value);
         if (bits == 0L || bits == 0x3f800000 || bits == 0x40000000) { // 0..2
-            getMv().visitInsn(Opcodes.FCONST_0 + (int) value);
+            mv.visitInsn(Opcodes.FCONST_0 + (int) value);
         } else {
-            getMv().visitLdcInsn(new Float(value));
+            mv.visitLdcInsn(new Float(value));
         }
     }
 
@@ -196,9 +192,9 @@ public class Instructions {
     public void push(final double value) {
         long bits = Double.doubleToLongBits(value);
         if (bits == 0L || bits == 0x3ff0000000000000L) { // +0.0d and 1.0d
-            getMv().visitInsn(Opcodes.DCONST_0 + (int) value);
+            mv.visitInsn(Opcodes.DCONST_0 + (int) value);
         } else {
-            getMv().visitLdcInsn(new Double(value));
+            mv.visitLdcInsn(new Double(value));
         }
     }
 
@@ -212,7 +208,7 @@ public class Instructions {
         if (value == null) {
             push(Type.getType(String.class));
         } else {
-            getMv().visitLdcInsn(value);
+            mv.visitLdcInsn(value);
         }
     }
 
@@ -220,8 +216,8 @@ public class Instructions {
      * push null
      */
     public void push(Type type) {
-        getMv().setNextPushTypes(type);
-        getMv().visitInsn(Opcodes.ACONST_NULL);
+        mv.setNextPushTypes(type);
+        mv.visitInsn(Opcodes.ACONST_NULL);
     }
 
     /**
@@ -497,14 +493,14 @@ public class Instructions {
      *            a label.
      */
     public void mark(final Label label) {
-        getMv().visitLabel(label);
+        mv.visitLabel(label);
     }
 
     /**
      * don't do any thing
      */
     public void nop() {
-        getMv().visitInsn(Opcodes.NOP);
+        mv.visitInsn(Opcodes.NOP);
     }
 
     /**
@@ -518,17 +514,17 @@ public class Instructions {
     public void loadInsn(final Type type, final int index) {
         int opcode = type.getOpcode(Opcodes.ILOAD);
         if (opcode == Opcodes.ALOAD) {
-            getMv().setNextPushTypes(type);
+            mv.setNextPushTypes(type);
         }
-        getMv().visitVarInsn(opcode, index);
+        mv.visitVarInsn(opcode, index);
     }
 
     /**
      * Generates the instruction to load 'this' on the stack.
      */
     public void loadThis(Type owner) {
-        getMv().setNextPushTypes(owner);
-        getMv().visitVarInsn(Opcodes.ALOAD, 0);
+        mv.setNextPushTypes(owner);
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
     }
 
     /**
@@ -540,7 +536,7 @@ public class Instructions {
     public void storeInsn(final LocalVariable var) {
         locals.setCursor(var.getScopeLogicVar());
         locals.printState();
-        getMv().visitVarInsn(var.getMeta().getType().getType().getOpcode(Opcodes.ISTORE),
+        mv.visitVarInsn(var.getMeta().getType().getType().getOpcode(Opcodes.ISTORE),
                 var.getScopeLogicVar().getInitStartPos());
     }
 
@@ -555,7 +551,7 @@ public class Instructions {
      * Generates a DUP instruction.
      */
     public void dup() {
-        getMv().visitInsn(Opcodes.DUP);
+        mv.visitInsn(Opcodes.DUP);
     }
 
     /**
@@ -576,7 +572,7 @@ public class Instructions {
      * Generates a DUP2 instruction.
      */
     public void dup2() {
-        getMv().visitInsn(Opcodes.DUP2);
+        mv.visitInsn(Opcodes.DUP2);
     }
 
     /**
@@ -605,7 +601,7 @@ public class Instructions {
      *            the instruction's operand.
      */
     private void typeInsn(final int opcode, final Type type) {
-        getMv().visitTypeInsn(opcode, type.getInternalName());
+        mv.visitTypeInsn(opcode, type.getInternalName());
     }
 
     /**
@@ -634,7 +630,7 @@ public class Instructions {
     private void invokeInsn(final int opcode, final Type type, final String name, final Type returnType,
             final Type[] arguTypes, boolean itf) {
         String owner = type.getSort() == Type.ARRAY ? type.getDescriptor() : type.getInternalName();
-        getMv().visitMethodInsn(opcode, owner, name, Type.getMethodDescriptor(returnType, arguTypes), itf);
+        mv.visitMethodInsn(opcode, owner, name, Type.getMethodDescriptor(returnType, arguTypes), itf);
     }
 
     /**
@@ -710,7 +706,7 @@ public class Instructions {
      *            the type of the field.
      */
     private void fieldInsn(final int opcode, final Type ownerType, final String name, final Type fieldType) {
-        getMv().visitFieldInsn(opcode, ownerType.getInternalName(), name, fieldType.getDescriptor());
+        mv.visitFieldInsn(opcode, ownerType.getInternalName(), name, fieldType.getDescriptor());
     }
 
     /**
@@ -1164,31 +1160,47 @@ public class Instructions {
 
     public void pop(int time) {
         while (time > 0) {
-            getMv().visitInsn(Opcodes.POP);
+            mv.visitInsn(Opcodes.POP);
             time--;
         }
     }
 
     public void returnInsn() {
-        getMv().visitInsn(Opcodes.RETURN);
+        mv.visitInsn(Opcodes.RETURN);
     }
 
     public void returnInsn(Type type) {
-        getMv().visitInsn(type.getOpcode(Opcodes.IRETURN));
+        mv.visitInsn(type.getOpcode(Opcodes.IRETURN));
     }
 
     public void declarationVariable(final String name, final String desc, final String signature, final Label start,
             final Label end, final int index) {
-        getMv().visitLocalVariable(name, desc, null, start, end, index);
+        mv.visitLocalVariable(name, desc, null, start, end, index);
     }
 
     public void maxs(int stack, int locals) {
         LOG.print("Method : Maxs(" + "stack:" + stack + " locals:" + locals + ")");
-        getMv().visitMaxs(stack, locals);
+        mv.visitMaxs(stack, locals);
     }
 
     public void endMethod() {
-        getMv().visitEnd();
+        mv.visitEnd();
+    }
+
+    /**
+     * Get the operand stack
+     * @return
+     */
+    public OperandStack getOperandStack() {
+        return mv.getOperandStack();
+    }
+
+    public LocalVariables getLocals() {
+        return locals;
+    }
+
+    public MethodVisitor getMv() {
+        return mv;
     }
 
 }

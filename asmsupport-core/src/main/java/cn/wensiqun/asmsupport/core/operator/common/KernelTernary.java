@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.operator.common;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
@@ -106,7 +106,7 @@ public class KernelTernary extends AbstractParamOperator {
     }
     
     @Override
-    protected void doExecute(MethodContext context) {
+    protected void doExecute(MethodExecuteContext context) {
         Instructions instructions = context.getInstructions();
         Label posLbl = new Label();
         Label l1 = new Label();
@@ -115,23 +115,23 @@ public class KernelTernary extends AbstractParamOperator {
         	Jumpable jmp = (Jumpable) exp1;
         	jmp.jumpNegative(context, this, posLbl, l1);//.executeJump(Opcodes.JUMP_NEGATIVE, l1);
         }else{
-        	exp1.loadToStack(context);
+        	exp1.push(context);
             instructions.unbox(exp1.getResultType().getType());
             instructions.ifZCmp(Instructions.EQ, l1);
         }
 
         instructions.mark(posLbl);
-    	exp2.loadToStack(context);
-        getParent().getMethod().getStack().pop();
+    	exp2.push(context);
+        context.getInstructions().getOperandStack().pop();
         instructions.goTo(l2);
     	instructions.mark(l1);
     	
-        exp3.loadToStack(context);
+        exp3.push(context);
         instructions.mark(l2);
     }
     
     @Override
-    public void execute(MethodContext context) {
+    public void execute(MethodExecuteContext context) {
         if(byOtherUsed){
             super.execute(context);
         }else{
@@ -140,7 +140,7 @@ public class KernelTernary extends AbstractParamOperator {
     }
 
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         this.execute(context);
     }
 

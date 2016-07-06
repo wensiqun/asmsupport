@@ -18,7 +18,7 @@
 package cn.wensiqun.asmsupport.core.definition.variable;
 
 
-import cn.wensiqun.asmsupport.core.context.MethodContext;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.operator.AbstractOperator;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.standard.def.clazz.IClass;
@@ -41,7 +41,7 @@ public class ThisVariable extends ImplicitVariable {
     }
     
     @Override
-    public void loadToStack(MethodContext context) {
+    public void push(MethodExecuteContext context) {
         context.getInstructions().loadThis(context.getMethod().getMeta().getOwner().getType());
     }
 

@@ -14,22 +14,14 @@
  */
 package cn.wensiqun.asmsupport.core.build;
 
-import cn.wensiqun.asmsupport.core.Executable;
-import cn.wensiqun.asmsupport.core.context.FieldContext;
+import cn.wensiqun.asmsupport.core.InitializedLifeCycle;
 
 /**
  * 
  * @author wensiqun at 163.com(Joe Wen)
  *
  */
-public interface FieldBuilder extends Executable<FieldContext> {
-    
-    /**
-     * Create a field.
-     * 
-     * @param cv
-     */
-    void create(BytecodeResolver cv);
+public interface FieldBuilder extends InitializedLifeCycle {
 
     /**
      * Get method name.
