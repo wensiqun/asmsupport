@@ -39,15 +39,12 @@ public abstract class NumericalAndReferenceRelational extends AbstractRelational
     
     @Override
     protected void verifyArgument() {
-    	IClass ftrCls1 = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-    	IClass ftrCls2 = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
-        
-        if(ftrCls1.equals(getType(boolean.class))&&
-           ftrCls2.equals(getType(boolean.class))){
-        
-        } else if(ftrCls1.isPrimitive() && ftrCls2.isPrimitive()){
-            checkFactorForNumerical(ftrCls1);
-            checkFactorForNumerical(ftrCls2);
+    	IClass leftPrimitiveType = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass rightPrimitiveType = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+        if(!(leftPrimitiveType.equals(getType(boolean.class)) && rightPrimitiveType.equals(getType(boolean.class))) &&
+            leftPrimitiveType.isPrimitive() && rightPrimitiveType.isPrimitive()){
+            checkFactorForNumerical(leftPrimitiveType);
+            checkFactorForNumerical(rightPrimitiveType);
         }
     }
 

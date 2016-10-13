@@ -65,19 +65,19 @@ public abstract class AbstractRelational extends AbstractParamOperator implement
     @Override
     protected void initAdditionalProperties() {
         //replace Value object
-    	IClass ftrCls1 = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
-    	IClass ftrCls2 = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
+    	IClass leftPrimitiveType = IClassUtils.getPrimitiveAClass(leftFactor.getResultType());
+    	IClass rightPrimitiveType = IClassUtils.getPrimitiveAClass(rightFactor.getResultType());
         
-        if(ftrCls1.getCastOrder() > ftrCls2.getCastOrder()){
-            targetClass = ftrCls1;
-        }else{
-            targetClass = ftrCls2;
+        if(leftPrimitiveType.getCastOrder() > rightPrimitiveType.getCastOrder()){
+            targetClass = leftPrimitiveType;
+        } else {
+            targetClass = rightPrimitiveType;
         }
-        
-        if(leftFactor instanceof Value)
+
+        if(leftFactor instanceof Value && ((Value) leftFactor).getValue() != null)
             ((Value)leftFactor).convert(targetClass);
         
-        if(rightFactor instanceof Value)
+        if(rightFactor instanceof Value && ((Value) rightFactor).getValue() != null)
             ((Value)rightFactor).convert(targetClass);
     }
     

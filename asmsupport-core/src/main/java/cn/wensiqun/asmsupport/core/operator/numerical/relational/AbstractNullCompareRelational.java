@@ -16,9 +16,9 @@ package cn.wensiqun.asmsupport.core.operator.numerical.relational;
 
 
 
-import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.asm.Instructions;
 import cn.wensiqun.asmsupport.core.block.KernelProgramBlock;
+import cn.wensiqun.asmsupport.core.context.MethodExecuteContext;
 import cn.wensiqun.asmsupport.core.definition.KernelParam;
 import cn.wensiqun.asmsupport.core.definition.value.Value;
 import cn.wensiqun.asmsupport.core.operator.Operator;
@@ -27,11 +27,33 @@ import cn.wensiqun.asmsupport.org.objectweb.asm.Label;
 import cn.wensiqun.asmsupport.org.objectweb.asm.MethodVisitor;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Opcodes;
 import cn.wensiqun.asmsupport.org.objectweb.asm.Type;
+import cn.wensiqun.asmsupport.standard.error.ASMSupportException;
 
 public abstract class AbstractNullCompareRelational extends NumericalAndReferenceRelational {
 
 	protected AbstractNullCompareRelational(KernelProgramBlock block, KernelParam leftFactor, KernelParam rightFactor, Operator operator) {
 		super(block, leftFactor, rightFactor, operator);
+	}
+
+    @Override
+    protected void initAdditionalProperties() {
+        if(isNullValue(leftFactor) || isNullValue(rightFactor)) {
+            targetClass = getType(Object.class);
+        } else {
+            super.initAdditionalProperties();
+        }
+    }
+
+    @Override
+	protected void verifyArgument() {
+        if(leftFactor.getResultType().isPrimitive() && isNullValue(rightFactor)) {
+            throw new ASMSupportException("The operator '" + getOperatorSymbol().getSymbol()
+                    + "' cannot be applied to " + leftFactor.getResultType().getName() + ", null");
+        } else if (rightFactor.getResultType().isPrimitive() && isNullValue(leftFactor)) {
+            throw new ASMSupportException("The operator '" + getOperatorSymbol().getSymbol()
+                    + "' cannot be applied to null, " + rightFactor.getResultType().getName());
+        }
+		super.verifyArgument();
 	}
 
 	@Override
