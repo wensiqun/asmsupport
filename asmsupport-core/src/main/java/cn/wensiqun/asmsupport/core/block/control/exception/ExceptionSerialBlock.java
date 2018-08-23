@@ -179,6 +179,8 @@ public class ExceptionSerialBlock extends SerialBlock {
     }
 
     void appendEpisode(KernelCatch catchBlock) {
+        initEpisode(catchBlock);
+
         if (catches == null) {
             catches = new ArrayList<>();
             getChildren().addAfter(tryBlock, catchBlock);
@@ -194,7 +196,6 @@ public class ExceptionSerialBlock extends SerialBlock {
             getChildren().addAfter(previous, catchBlock);
         }
 
-        initEpisode(catchBlock);
         catches.add(catchBlock);
 
         // Add Exception Table:
