@@ -368,7 +368,7 @@ public class Instructions {
     public static Type getUnBoxedType(final Type type) {
         if (type.equals(Type.getType(Byte.class))) {
             return Type.BYTE_TYPE;
-        } else if (type.equals(Type.getType(Byte.class))){
+        } else if (type.equals(Type.getType(Boolean.class))){
             return Type.BOOLEAN_TYPE;
         } else if (type.equals(Type.getType(Short.class))) {
             return Type.SHORT_TYPE;
